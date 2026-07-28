@@ -1,0 +1,10 @@
+# F13 매칭엔진 재현 — 같은 가격 주문을 병렬로 매칭하면 시간우선이 깨진다.
+# 실행: docker compose up   (자바 한 파일을 컨테이너에서 컴파일·실행, 버그·해소 순서대로 출력)
+services:
+  matching:
+    image: eclipse-temurin:21-jdk-alpine
+    container_name: lab-f13-matching
+    working_dir: /app
+    volumes:
+      - ./app:/app
+    command: sh -c "javac Matching.java && java -Dorders=200000 Matching"
