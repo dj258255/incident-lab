@@ -1,0 +1,60 @@
+{
+  "images": [
+    {
+      "type": "term",
+      "out": "01-buggy-run.png",
+      "title": "docker compose up  ·  F17 재현 (eclipse-temurin:21, 고정 시드)",
+      "font": 24,
+      "lines": [
+        "$ docker compose up --abort-on-container-exit",
+        "",
+        "lab-f17-money | [실험 1] 수수료 110.1원 x 1,000,000건 누적 합계 (정확값 110,100,000원)",
+        [["lab-f17-money |   double     합계 = ", "fg"], ["110099999.998313724994659423828125", "fg"], [" 원 (이진값의 정확한 십진 전개)", "dim"]],
+        [["lab-f17-money |   BigDecimal 합계 = ", "fg"], ["110100000.0", "green"], [" 원", "fg"]],
+        [["lab-f17-money |   double 오차 = ", "fg"], ["-0.001686275005340576171875 원", "red"], ["  <- 대사가 안 맞는다", "red"]],
+        "",
+        "lab-f17-money | [실험 2] 밴쿠버 방식: 지수 1000.000에서 무작위 갱신 60,000회 (고정 시드 42, 소수 3자리)",
+        [["lab-f17-money |   절삭(DOWN)        = ", "fg"], ["956.917", "red"]],
+        [["lab-f17-money |   반올림(HALF_EVEN) = ", "fg"], ["986.817", "green"]],
+        "lab-f17-money |   무반올림 정밀값    = 986.836802",
+        [["lab-f17-money |   정밀값 대비 절삭 오차   = ", "fg"], ["-29.919802 포인트", "red"], [" (버린 잔여 적산 29.919802와 크기 일치)", "dim"]],
+        "",
+        "lab-f17-money | [실험 3] 0.5원 경계 수수료 100,000건을 원 단위 반올림 (요율 0.15%, 고정 시드 7)",
+        [["lab-f17-money |   HALF_UP 합계   = 75,363,323 원 (정확 대비 ", "fg"], ["+50,000 원", "red"], [")", "fg"]],
+        [["lab-f17-money |   HALF_EVEN 합계 = 75,313,422 원 (정확 대비 ", "fg"], ["+99 원", "green"], [", 내림 49,901건/올림 50,099건)", "dim"]],
+        "",
+        "lab-f17-money | [실험 4] BigDecimal equals 함정: 같은 2,500원이 scale만 다르게 두 번 들어온다",
+        [["lab-f17-money |   a.equals(b) = ", "fg"], ["false", "red"], [" | a.compareTo(b) = ", "fg"], ["0", "green"]],
+        [["lab-f17-money |   HashSet에 둘 다 넣으면 size = ", "fg"], ["2", "red"], ["  <- 중복 제거 실패, 같은 돈이 두 번 산다", "red"]]
+      ]
+    },
+    {
+      "type": "term",
+      "out": "02-fixed-run.png",
+      "title": "docker compose up  ·  F17 해소 재계측 (scale·RoundingMode 명시)",
+      "font": 24,
+      "lines": [
+        "$ docker compose up --abort-on-container-exit",
+        "",
+        "lab-f17-money | == 해소 재계측 (scale·RoundingMode 명시, 최소 화폐단위 long) ==",
+        [["lab-f17-money | [해소 1] BigDecimal(\"110.1\") 누적 오차 = ", "fg"], ["0.0 원", "green"], [" | long(0.1원 단위) 누적 오차 = ", "fg"], ["0", "green"], [" (합계 110,100,000.0 원)", "fg"]],
+        [["lab-f17-money |   주의: new BigDecimal(0.1) = ", "fg"], ["0.1000000000000000055511151231257827021181583404541015625", "yellow"]],
+        [["lab-f17-money |         BigDecimal.valueOf(0.1) = 0.1  <- ", "fg"], ["문자열/valueOf로 만들어야 한다", "yellow"]],
+        [["lab-f17-money | [해소 2] HALF_EVEN 지수 오차 = ", "fg"], ["0.019802 포인트", "green"], [" (절삭 29.919802의 1/1511)", "fg"]],
+        [["lab-f17-money | [해소 3] HALF_EVEN 편향 ", "fg"], ["+99 원", "green"], [" vs HALF_UP 편향 ", "fg"], ["+50,000 원", "red"], [" (100,000건)", "fg"]],
+        [["lab-f17-money | [해소 4] setScale(2) 통일 HashSet.size() = ", "fg"], ["1", "green"], [" | TreeSet(compareTo).size() = ", "fg"], ["1", "green"]],
+        [["lab-f17-money |   주의: stripTrailingZeros().toString() = \"2.5E+3\" ", "fg"], ["(지수 표기가 된다, 출력은 toPlainString 사용)", "yellow"]]
+      ]
+    },
+    {
+      "type": "bar",
+      "out": "03-index-error.png",
+      "title": "지수 갱신 60,000회 뒤 무반올림 정밀값 대비 오차 (포인트)",
+      "bars": [
+        {"label": "절삭 (RoundingMode.DOWN)", "value": 29.919802, "color": "red"},
+        {"label": "반올림 (HALF_EVEN)", "value": 0.019802, "color": "green"}
+      ],
+      "note": "지수 1000.000 시작, 갱신 폭 ±0.1 무작위(고정 시드 42), 소수 3자리 처리. eclipse-temurin:21-jdk-alpine, 2026-07-28"
+    }
+  ]
+}

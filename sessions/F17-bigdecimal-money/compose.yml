@@ -1,0 +1,10 @@
+# F17 부동소수점 금지 재현 — 절삭과 이진 표현 오차가 돈과 지수를 조용히 깎는다.
+# 실행: docker compose up   (자바 한 파일을 컨테이너에서 컴파일·실행)
+services:
+  money:
+    image: eclipse-temurin:21-jdk-alpine
+    container_name: lab-f17-money
+    working_dir: /app
+    volumes:
+      - ./app:/app
+    command: sh -c "javac MoneyLab.java && java MoneyLab"
