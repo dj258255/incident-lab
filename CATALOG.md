@@ -122,13 +122,13 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 | B30 ★★★ | **스레드풀 무한대 큐 OOM** | **[E2]** `Executors.newFixedThreadPool()`이 **무제한 LinkedBlockingQueue**를 써서 유입>처리면 큐가 무한 증가. "무제한 큐는 프로덕션의 조용한 살인자" | `-Xmx128m` + 느린 태스크 폭주 → OOM → **힙 덤프로 LinkedBlockingQueue$Node 시각화** → 바운디드 큐+CallerRunsPolicy | 쉬움 |
 | B31 ★★ | **ThreadLocal·ClassLoader 누수** | **[E2]** remove() 누락 시 워커 스레드가 클래스로더를 붙잡아 재배포 반복에 Metaspace OOM. Tomcat이 경고를 찍는 고전 | WAR 반복 핫디플로이 + MaxMetaspaceSize 축소 → OOM (경량화: 스레드풀에 ThreadLocal 심고 반복) | 중간 |
 | B32 ★★ | **파일 디스크립터 누수** | **[E2]** close 누락으로 `Too many open files`. 원인은 HTTP·JDBC 커넥션 미반환·스트림 미종료·JNI 누수. **대표 단일 사건은 없음(§13 참조)** | ulimit -n 256 + close 안 하는 클라이언트 반복 → `/proc/[PID]/fd`·lsof로 증가 관측 → try-with-resources 비교 | 쉬움 |
-| B51 ★★ | **ForkJoinPool commonPool 오염** | **[E2]** parallelStream이 **JVM 전역 commonPool**을 공유(Baeldung). 여기서 블로킹 IO를 돌리면 무관한 병렬 작업까지 굶음. **국내 실장애 회고 "parallelStream 남용으로 인한 장애 경험기"(2019) 존재** | commonPool에서 긴 블로킹 작업 점유 → 다른 parallel stream 대기 관측 → 전용 풀 지정 비교 | 쉬움 |
+| B51 ★★ | **ForkJoinPool commonPool 오염** | **[E2]** **Oracle javadoc 원문 근거**: commonPool은 "used by any ForkJoinTask that is not explicitly submitted to a specified pool", 블로킹에 대해 "no such adjustments are guaranteed in the face of blocked I/O", `shutdown()`으로 종료도 안 됨. **~~국내 실장애 회고(2019)~~ 재검색 3회 실패 — 삭제(§12 참조)** | commonPool에서 긴 블로킹 작업 점유 → 다른 parallel stream 대기 관측 → 전용 풀 지정 비교 | 쉬움 |
 
 ### 3-5. 타임아웃·네트워크 계층
 
 | # | 문제 | 근거·출처 | 재현 | 난이도 |
 |---|---|---|---|---|
-| B33 ★★★ | **LB idle timeout < 앱 keep-alive → 간헐 502** | **[E2]** 백엔드가 먼저 닫은 커넥션을 프록시가 재사용하려다 502. **"간헐적 502의 1순위 원인"** (iximiuz, gunicorn/ELB 사례, 원문 확인) | nginx + 백엔드 keep-alive를 프록시 idle보다 짧게 → 간헐 502 → 순서 뒤집으면 소멸 | 중간 |
+| B33 ★★★ | **앱 keep-alive < LB idle timeout → 간헐 502** (부등호 정정 2026-07-28) | **[E2]** 백엔드가 먼저 닫은 커넥션을 프록시가 재사용하려다 502 — **AWS ALB 공식 문서가 502를 콕 집어 경고**("the load balancer sends an HTTP 502 Bad Gateway error to the client"). iximiuz 글은 기전 정리용이며 "1순위 원인"·gunicorn 사례는 그 글에 없음 | nginx + 백엔드 keep-alive를 프록시 idle보다 짧게 → 간헐 502 → 순서 뒤집으면 소멸 | 중간 |
 | B34 ★★ | **클라이언트 타임아웃 < 서버 타임아웃** | **[E2]** 클라가 먼저 끊고 재시도하는데 서버는 원 요청을 계속 처리 → 인플라이트 배가. 원칙은 **계층 정렬(client > 각 홉 합)** | 느린 엔드포인트 + 짧은 클라 타임아웃 + 재시도 → 인플라이트 폭증 → **데드라인 전파**로 방어 | 쉬움 |
 | B10 ★★ | **클럭 스큐(시간 역행)** | **[E1]** Cloudflare 2017 윤초로 음수 duration → panic(recover로 잡힘), DNS 쿼리 0.2%·HTTP 1% 미만 영향. **monotonic clock 제안은 이 사건 15개월 전(2015-10)에 이미 열려 있었으므로 "도입 계기"가 아니라 "실증 사례"** | libfaketime으로 시간 역행 → wall clock duration 음수 버그 → monotonic clock 비교 | 중간 |
 | B20 ★ | **500마일 이메일 (타임아웃=거리)** | **[E2·일화]** 전설의 디버깅 스토리 (ibiblio.org). **기업 포스트모템이 아니라 개인 회고담** — 저자가 FAQ에서 각색을 인정하고 로그·메모가 없다고 밝힘 | tc netem 지연 1/5/50ms + connect timeout 3ms(**원인은 타임아웃 0 설정, 3ms는 실측 abort 시간**) → "지연이 곧 거리" 시연 | 중간 |
@@ -149,9 +149,9 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 
 | # | 문제 | 근거·출처 | 재현 | 난이도 |
 |---|---|---|---|---|
-| B35 ★★★ | **Spring Actuator /heapdump 노출** | **[E1]** 노출 heapdump에서 자격증명 추출 → 폭스바겐 텔레매틱스 **GPS 9TB 유출**. Wiz 조사상 클라우드 환경 **11%가 공개 노출** | management 전부 노출 → `curl /actuator/heapdump` → 힙에서 시크릿 grep → 제한 후 재확인. **임팩트 대비 난이도 최저** | 쉬움 |
-| B36 ★★★ | **JWT alg=none / 서명 미검증** | **[E2]** 초기 다수 라이브러리가 `alg: none`을 유효로 취급(CVE-2015-9235 계보). 대소문자 변형·RS256↔HS256 confusion까지 | 알고리즘 미고정 로직 → 헤더 none + role=admin 위조로 인증 우회 → 화이트리스트·키 고정 | 쉬움 |
-| B37 ★★ | **압축 폭탄(gzip/zip bomb)** | **[E2]** 수 KB가 수 GB로 팽창. 42.zip·4.5PB 플랫 폭탄, OpenTelemetry Collector·Fluentd 실 CVE | 무한 해제 앱 + 메모리 제한 + 작은 폭탄 → OOM → LimitReader 상한 | 쉬움 |
+| B35 ★★★ | **Spring Actuator /heapdump 노출** | **[E1]** 노출 heapdump의 평문 AWS 자격증명 → 비보호 S3 → 폭스바겐 텔레매틱스 유출(CCC 38C3 공개). **~~9TB~~ 원문 미확인, "수 테라바이트"로만**. Wiz 2024-12: **Actuator 보유 환경의 11%가 인터넷 공개**, 그중 **2.3%가 heapdump 무인증 노출**(전체 클라우드의 11%가 아님) | management 전부 노출 → `curl /actuator/heapdump` → 힙에서 시크릿 grep → 제한 후 재확인. **임팩트 대비 난이도 최저** | 쉬움 |
+| B36 ★★★ | **JWT alg=none / 서명 미검증** | **[E2]** 2015년 Tim McLean이 두 결함을 함께 공개(Auth0 블로그): `alg: none`을 유효 서명으로 취급 + RS256↔HS256 컨퓨전. **CVE-2015-9235는 그중 컨퓨전 건이지 alg=none이 아님**(NVD 원문 확인, 등재는 2018). ~~대소문자 변형~~ 출처 미확인 | 알고리즘 미고정 로직 → 헤더 none + role=admin 위조로 인증 우회 → 화이트리스트·키 고정 | 쉬움 |
+| B37 ★★ | **압축 폭탄(gzip/zip bomb)** | **[E2]** 42.zip은 **6계층 재귀** 해제 시 4.5PB, 플랫 폭탄은 별개(Fifield zbsm 42kB→5.5GB, zbxl 46MB→4.5PB). CVE 특정: **OTel Collector CVE-2024-36129**(패치가 `io.LimitedReader`), **Fluentd CVE-2026-44160**(2026-06) | 무한 해제 앱 + 메모리 제한 + 작은 폭탄 → OOM → LimitReader 상한 | 쉬움 |
 | B38 ★★ | **Log4Shell (CVE-2021-44228)** | **[E1]** 로그의 `${jndi:ldap://...}` 치환으로 RCE, CVSS 10.0 (NVD 확인) | 취약 버전 + 로컬 LDAP(marshalsec) + 페이로드 서버. **부담되면 아웃바운드 콜백 관측까지만** | 중간 |
 | B39 ★★ | **XXE·billion laughs** | **[E2]** 엔티티 재귀 확장으로 소량 입력이 GB급 팽창, XXE는 파일 유출·SSRF까지 (OWASP 확인) | 기본 파서에 billion laughs → 메모리 폭증 → DTD·외부 엔티티 비활성화 | 쉬움 |
 | B40 ★★ | **Capital One SSRF → IMDSv1 탈취** | **[E1]** WAF의 SSRF로 EC2 메타데이터를 질의해 IAM 자격증명 획득, 1억 명 유출. **IMDSv2 도입 계기** | 사용자 URL을 서버가 fetch하는 SSRF + 목 메타데이터 서버 → 자격증명 유출 시연 | 중간 |
@@ -162,20 +162,20 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 
 | # | 문제 | 근거·출처 | 재현 | 난이도 |
 |---|---|---|---|---|
-| B43 ★★★ | **expand-contract 마이그레이션 실패** | **[E2]** 컬럼 추가·삭제 순서가 뒤집히면 배포 중 없는 컬럼 참조. 대형 테이블 `ADD COLUMN NOT NULL`이 ACCESS EXCLUSIVE 락으로 전 쿼리 차단 | 수백만 행 + 트래픽 중 ALTER → 락 대기 타임아웃 → **3단계(nullable→백필→제약)** 대비 | 쉬움~중간 |
+| B43 ★★★ | **expand-contract 마이그레이션 실패** | **[E2]** 컬럼 추가·삭제 순서가 뒤집히면 배포 중 없는 컬럼 참조(이 부분은 출처 없이 원리로만). `ADD COLUMN`은 ACCESS EXCLUSIVE라 SELECT까지 차단되는 건 사실이나, **PG 11(2018-10) 이후 상수 기본값은 재작성 없이 "very fast even on large tables" — 그냥 걸면 재현 실패한다.** 장시간 락은 PG 10 이하·volatile 기본값·타입 변경·기존 컬럼 NOT NULL 추가에 한정. `lock_timeout` 기본값 0(무제한)이 핵심 훅 | 수백만 행 + 트래픽 중 ALTER → 락 대기 타임아웃 → **3단계(nullable→백필→제약)** 대비 | 쉬움~중간 |
 | B44 ★★★ | **"설정 배포도 배포다"** | **[E1]** Fastly 2021(정상 고객 설정이 잠복 버그 촉발 → **네트워크 85% 에러**, 감지 1분·49분 내 95% 복구) / CrowdStrike 2024(Channel File이 Validator 버그 통과 → 경계 밖 메모리 읽기 → 대량 BSOD) / Datadog 2023(자동 systemd 업데이트가 Cilium 라우트 삭제, **업데이트 창이 06:00 UTC로 동기화돼 5개 리전·3개 클라우드 동시 다운**). 셋 다 원문 확인 | 설정 1줄이 전 인스턴스를 크래시 루프에 빠뜨리는 것 재현 → **카나리·검증 게이트 유무 대비** | 쉬움(개념) |
 | B45 ★★ | **스크립트 오류로 고객 데이터 삭제** | **[E1]** Atlassian 2022: 스크립트가 app ID 대신 **site ID를 받아 883개 사이트(775 고객) 영구 삭제**. 무검증 신뢰 + 소프트 딜리트 부재로 복구 최대 14일 (원문 확인) | 삭제 스크립트가 잘못된 스코프를 잡는 것 재현 → **dry-run·소프트딜리트·타입 검증·피어리뷰** 전후 | 쉬움 |
 | B46 ★★ | **left-pad 2016 공급망 중단** | **[E1]** 11줄 패키지 포함 273개 언퍼블리시로 2.5시간 빌드 연쇄 실패, npm 정책 변경의 계기 (공식 포스트 확인) | Verdaccio에 의존 패키지 게시 후 삭제 → 하위 빌드 실패 → 락파일·벤더링·프록시 캐시 | 쉬움 |
 | B19 ★★★ | **Knight Capital 플래그 재사용** | **[E1]** 45분에 4.6억 달러. 폐기 코드의 플래그를 신기능에 재사용 + 8대 중 1대 배포 누락 | 동일 서비스 8개 중 1개만 구버전 + 재사용 플래그 on → 그 1대만 폭주하는 미니 재현 | 쉬움 |
 | B21 ★★ | **AWS S3 2017 오타 가드레일** | **[E1]** playbook 명령의 입력값이 잘못 들어가 의도보다 많은 서버 제거 → US-EAST-1 S3와 의존 서비스 다수 중단, 정상화까지 약 4시간 17분(**"인터넷 절반"은 언론 표현, 공식 문서에 없음**) | "N대 제거" 스크립트의 상한·최소 잔존 검증 유무 비교(AWS 재발방지 문구와 동일) | 쉬움 |
 | B22 ★★ | **Facebook 2021 자기 철회 연쇄** | **[E1·축소]** BGP 철회로 자기 복구 도구까지 마비. **지속 시간은 Meta 공식 문서 두 편 모두에 없음 — "7시간" 인용 금지, 외부 관측 기준 약 6시간으로만** | 축소: "헬스체크 실패 시 스스로를 디스커버리에서 빼는" 로직이 연쇄 전멸을 만드는 시뮬레이션 | 중간 |
-| B47 ★ | **Roblox 2021 73시간 장애** | **[E1]** Consul streaming 경합 + **BoltDB freelist가 삭제 페이지를 회수 못 해** 4.2GB 로그에 실데이터 489MB. 텔레메트리가 Consul에 순환 의존해 진단 54시간 지연 (원문 확인) | 전체 재현 비현실적. **"관측성이 장애 대상에 의존하면 눈이 먼다"** 순환 의존만 최소 데모(X4와 통합) | 어려움 |
+| B47 ★ | **Roblox 2021 73시간 장애** | **[E1·축소]** Consul streaming 경합이 방아쇠, **BoltDB freelist가 삭제 페이지를 회수 못 해** 회복을 막은 증폭기(4.2GB 로그에 실데이터 489MB). 텔레메트리가 Consul에 순환 의존해 진단 지연(**~~54시간~~ 원문에 없는 수치 — "사흘째에야 원인 특정, 최종 규명은 장애 종료 후 HashiCorp가"로 쓸 것**) | 전체 재현 비현실적. **"관측성이 장애 대상에 의존하면 눈이 먼다"** 순환 의존만 최소 데모(X4와 통합) | 어려움 |
 
 ### 3-9. 관측성·기타
 
 | # | 문제 | 근거·출처 | 재현 | 난이도 |
 |---|---|---|---|---|
-| B48 ★★★ | **Prometheus 라벨 카디널리티 폭발** | **[E2]** `user_id`를 라벨로 붙이면 시계열 폭증 → OOM. **customer_id 1만 값이면 카운터 1개가 1,200만 시계열**. Prometheus가 알림·오토스케일 임계경로면 눈덩이 | 요청마다 고유 라벨 방출 → `prometheus_tsdb_head_series` 급증 → relabel drop 비교 | 쉬움 |
+| B48 ★★★ | **Prometheus 라벨 카디널리티 폭발** | **[E2]** Prometheus 공식 문서가 CAUTION으로 직접 경고 — "Do not use labels to store dimensions with high cardinality... such as user IDs", "keep the cardinality of your metrics below 10". **~~customer_id 1만이면 1,200만 시계열~~ 출처 없음 — 실측 `prometheus_tsdb_head_series` 값으로 대체할 것** | 요청마다 고유 라벨 방출 → `prometheus_tsdb_head_series` 급증 → relabel drop 비교 | 쉬움 |
 | B14 ★★★ | **Cloudflare 2019 정규식 백트래킹** | **[E1]** 정규식 하나로 **27분 글로벌 다운, 트래픽 82% 급락**. CPU 보호장치가 리팩토링에서 제거돼 있었고 카나리 없이 전 세계 동시 배포 | 문제의 정규식을 미들웨어에 + 특정 페이로드 → 요청 1개가 CPU 100% → RE2 교체 비교. **10분 재현, 시리즈 대표 편** | 쉬움 |
 
 ---
@@ -383,7 +383,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 ### 확인 완료 → 등급 승격
 - **Toyota 2023 [E4 → E1, 신규 세션 I11]**: 공식 뉴스룸 "Concerning the production order system malfunction"(2023-09-06) + 로이터(09-05) 확인. 정기 유지보수 중 DB 정리가 디스크 부족으로 실패 → 시스템 정지, **백업 서버가 같은 환경이라 동반 실패**, 14개 공장 28개 라인 중단, 익일 대용량 서버 이전 후 재개, 사이버 공격 아님
 - **전자금융감독규정 RTO [E4 → E2, F20 해제]**: 제23조 **"핵심업무 복구목표시간 3시간 이내, 보험회사 24시간 이내"** 조문 확인. AWS 금융 클라우드 가이드도 동일 인용
-- **ForkJoinPool commonPool [E4 → E2, B32에서 분리해 B51]**: Baeldung이 commonPool 공유를 명시 + **국내 실장애 회고 "parallelStream 남용으로 인한 장애 경험기"(2019)** 확인
+- **ForkJoinPool commonPool [E4 → E2, B32에서 분리해 B51]**: ~~Baeldung이 commonPool 공유를 명시 + 국내 실장애 회고 "parallelStream 남용으로 인한 장애 경험기"(2019) 확인~~ → **2026-07-28 재검증에서 승격 근거를 교체함.** 국내 회고는 제목 완전일치 + 키워드 변형으로 3회 재검색했으나 **재현되지 않았다**(URL을 남기지 않은 게 원인으로 보인다). 승격 근거는 2차 자료(Baeldung)와 미확인 회고 대신 **Oracle javadoc 원문**으로 세운다 — commonPool은 "used by any ForkJoinTask that is not explicitly submitted to a specified pool", 블로킹에 대해 "no such adjustments are guaranteed in the face of blocked I/O", 그리고 "its run state is unaffected by attempts to shutdown()". **교훈: 검증 로그에 URL을 안 남기면 다음 사람이 재확인할 수 없다. 앞으로 모든 근거에 URL을 남길 것** (`research/B-38-51.md`)
 - **XID Wraparound [E2 → E1, A14]**: Sentry 블로그 "Transaction ID Wraparound in Postgres" 확인. **2015-07-20 미국 업무시간 대부분 다운**, 방어 동작으로 PG가 쓰기 거부("stop accepting commands when fewer than one million transactions left"). 벤더 경고 수준을 넘어 1차 포스트모템이 실재하므로 "Sentry가 공개한 장애"로 쓸 수 있음 (2026-07-28 일괄 조사, `research/A-12-21.md`)
 
 ### 트랙 B 조사에서 나온 등급 변경 (2026-07-28)
@@ -401,6 +401,13 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 - **"Knight $440 million"**: 널리 도는 이 수치는 회사 8-K 공시 기준이고 **SEC 원문은 "over $460 million"**이다. 카탈로그의 4.6억이 맞다
 - **"컨슈머를 늘리면 lag이 더 커진다"(B09)**: 어떤 Kafka 공식 문서도 이 문장을 쓰지 않는다. 문서 서술로부터 재구성한 가설이므로 실험 결과로 제시할 것
 - **"Spring/HikariCP가 트랜잭션 내 외부 호출을 경고한다"(B26)**: 확인해봤고 **그런 문장은 없다.** 공식으로 확인되는 건 커넥션의 스레드 바인딩과 `LazyConnectionDataSourceProxy`의 존재뿐
+- **"customer_id 1만이면 1,200만 시계열"(B48)**: 1차 출처 없음. 널리 도는 "시계열당 RAM 3~4KB", "100만 시계열이면 4~6GB"도 마찬가지. 전부 실측 `prometheus_tsdb_head_series`로 대체
+- **"진단 54시간 지연"(B47)**: Roblox 원문에 없는 수치. 원문 타임라인상 약 46시간이고, 원문은 최종 원인을 **장애 종료 후 HashiCorp가 규명했다**고 명시한다
+- **"GPS 9TB"(B35)**: 어떤 원문에서도 확인 못 함. "80만 대·10cm 정밀도"도 언론 보도만 봤다. Wiz의 11%도 모집단이 "Actuator 보유 환경"이지 클라우드 전체가 아니다
+- **"CVE-2015-9235 = alg:none"(B36)**: NVD 원문은 RS/ES → HS* 컨퓨전만 다룬다. alg=none은 같은 날 함께 공개된 **별개 결함**이다. 뭉뚱그리면 NVD를 열어보는 순간 틀린 게 드러난다
+- **"42.zip = 4.5PB 플랫 폭탄"(B37)**: 42.zip의 4.5PB는 **6계층 재귀** 기준이고, 플랫 4.5PB는 Fifield의 zbxl.zip(46MB)이라는 **다른 물건**이다. 숫자가 같아 섞기 쉽다
+- **Google "Shakespeare Sonnet++" 포스트모템(B32)**: FD 고갈 사례로 검색 상위에 뜨지만 **SRE Book 부록의 가공된 교육용 예시**다("1.21 billion queries lost" 같은 수치도 창작). 실제 구글 장애로 인용하면 안 된다
+- **"CrowdStrike 8.5 million devices"·"21 vs 20 파라미터"(B44)**: CrowdStrike 공식 문서 두 편에 없다(각각 Microsoft 블로그와 별도 RCA 소관). **Fastly는 "고객 설정이 원인"이 아니라 5/12 배포로 심어진 잠복 버그를 6/8 정상 설정이 건드린 것** — 순서를 지킬 것
 
 ### 확인 결과 카탈로그 서술을 고친 것 (등급은 유지)
 - **A11 세미싱크 [출처 표기 수정]**: 폴백 동작·구 마스터 폐기 경고는 MySQL 공식 매뉴얼 원문에 있으나, 근거로 적혀 있던 PlanetScale 글은 **자사 장애 포스트모템이 아니라 Shlomi Noach의 기술 해설**이다. "PlanetScale이 겪은 장애"로 소개하면 왜곡이므로 표기를 좁혔다. 매뉴얼 Important 블록이 말하는 트랜잭션은 "커밋되지 않은" 것이고 우리가 재현할 폴백 창은 **커밋되고 응답까지 나간** 트랜잭션이라 한 단계 더 나쁜 구간이다. 둘을 뭉개지 말 것 (`research/A-01-11.md`)
