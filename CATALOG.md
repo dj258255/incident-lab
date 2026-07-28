@@ -120,7 +120,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 |---|---|---|---|---|
 | B08 ★★ | **GC 스톨 연쇄 타임아웃** | **[E2]** JVM STW → 상류 타임아웃·재시도 연쇄 | 작은 힙 + 할당 폭탄 + k6 → GC 로그와 상류 타임아웃·서킷브레이커 연결 | 중간 |
 | B30 ★★★ | **스레드풀 무한대 큐 OOM** | **[E2]** `Executors.newFixedThreadPool()`이 **무제한 LinkedBlockingQueue**를 써서 유입>처리면 큐가 무한 증가. "무제한 큐는 프로덕션의 조용한 살인자" | `-Xmx128m` + 느린 태스크 폭주 → OOM → **힙 덤프로 LinkedBlockingQueue$Node 시각화** → 바운디드 큐+CallerRunsPolicy | 쉬움 |
-| B31 ★★ | **ThreadLocal·ClassLoader 누수** | **[E2]** remove() 누락 시 워커 스레드가 클래스로더를 붙잡아 재배포 반복에 Metaspace OOM. Tomcat이 경고를 찍는 고전 | WAR 반복 핫디플로이 + MaxMetaspaceSize 축소 → OOM (경량화: 스레드풀에 ThreadLocal 심고 반복) | 중간 |
+| B31 ★★ | **ThreadLocal·ClassLoader 누수** | **[E2]** remove() 누락 시 워커 스레드가 클래스로더를 붙잡음. Tomcat이 전용 경고 메시지(`checkThreadLocalsForLeaks`)를 찍는 고전 | **[재현 검증 완료]** Tomcat·WAR 없이 URLClassLoader만으로 재현. **조건 3개 필수: 스레드풀 + 매 배포 새 클래스로더 + `ThreadLocal`이 웹앱 클래스로더 안 static 필드에 있을 것.** 3번이 빠지면 안 샌다(실측 생존 1/300). 계측은 OOM 대기 말고 약한참조 생존 수로 — 누수 300/300, remove() 0/300 | **쉬움** |
 | B32 ★★ | **파일 디스크립터 누수** | **[E2]** close 누락으로 `Too many open files`. 원인은 HTTP·JDBC 커넥션 미반환·스트림 미종료·JNI 누수. **대표 단일 사건은 없음(§13 참조)** | ulimit -n 256 + close 안 하는 클라이언트 반복 → `/proc/[PID]/fd`·lsof로 증가 관측 → try-with-resources 비교 | 쉬움 |
 | B51 ★★ | **ForkJoinPool commonPool 오염** | **[E2]** **Oracle javadoc 원문 근거**: commonPool은 "used by any ForkJoinTask that is not explicitly submitted to a specified pool", 블로킹에 대해 "no such adjustments are guaranteed in the face of blocked I/O", `shutdown()`으로 종료도 안 됨. **~~국내 실장애 회고(2019)~~ 재검색 3회 실패 — 삭제(§12 참조)** | commonPool에서 긴 블로킹 작업 점유 → 다른 parallel stream 대기 관측 → 전용 풀 지정 비교 | 쉬움 |
 
@@ -141,7 +141,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 | B15 ★★ | **ORDER BY RAND() 폭탄** | **[E2]** StackOverflow 단골, 100만 행 58분 vs 0.6초 | 100만 행 EXPLAIN·시간 비교 → 인덱스 기반 대안 | 쉬움 |
 | B16 ★★★ | **Soft Delete unique 충돌** | **[E2]** "탈퇴한 이메일로 재가입 불가" + deleted_at 누락 시 삭제 데이터 누수 | 재가입 실패 재현 → PG partial index vs MySQL generated column 비교 | 쉬움 |
 | ~~B17~~ ★★★ | ~~**Vancouver 지수 절삭 (FLOAT 돈 계산)**~~ **→ F17에 흡수, 폐기** | **[E1]** 1982-01 1000 시작, 소수 셋째 자리 절삭·하루 약 3,000회로 월 약 25포인트씩 손실, 1983-11-25~28 주말에 524.811 → 1098.892 정정 | **완성된 F17이 밴쿠버 서사·절삭 누적·double vs BigDecimal을 이미 다 다뤄 100% 중복.** 살리려면 DB 레벨(`double precision` 컬럼 SUM vs NUMERIC, 집계 순서 의존성, JDBC getDouble 손실)로 주제를 갈고 이름도 바꿀 것 | 쉬움 |
-| B18 ★★ | **DST 존재하지 않는 시간** | **[E2]** Jira가 공식 KB를 낼 정도의 반복 함정(HOUR_OF_DAY 예외) | TZ America/New_York에서 DST 갭 시각 저장 → 예외 재현 → UTC 저장 원칙 | 쉬움 |
+| B18 ★★ | **DST 존재하지 않는 시간** | **[E2]** Jira가 공식 KB를 낼 정도의 반복 함정(HOUR_OF_DAY 예외). KB의 예외 문자열을 실측 재현함 | **[재현 검증 완료]** **`java.time`은 예외를 안 낸다** — 02:30을 조용히 03:30으로 민다(`Timestamp.valueOf`도 동일). KB의 `IllegalArgumentException: HOUR_OF_DAY: 2 -> 3`은 `GregorianCalendar.setLenient(false)` 경로에서 나옴. 두 경로를 나란히("시끄럽게 터지는 쪽 vs 조용히 한 시간 밀리는 쪽") | 쉬움 |
 | B49 ★★ | **Protobuf 필드 번호 재사용** | **[E2]** 은퇴 번호를 재사용하면 구 바이너리가 새 의미로 **조용히 잘못 해석**("크래시 없이 틀린 결과") | v1 바이트를 번호 재사용 v2로 역직렬화 → 값 오염 → `reserved`·레지스트리 BACKWARD 체크 | 쉬움 |
 | B13 ★ | **Notion식 샤딩·재샤딩** | **[E1]** Postgres 모놀리스 한계와 수평 샤딩 전환기 | PG 여러 대 + workspace_id 라우팅 → 더블 라이트→백필→검증→스위치오버 축소 재연 | 이틀+ |
 
@@ -153,7 +153,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 | B36 ★★★ | **JWT alg=none / 서명 미검증** | **[E2]** 2015년 Tim McLean이 두 결함을 함께 공개(Auth0 블로그): `alg: none`을 유효 서명으로 취급 + RS256↔HS256 컨퓨전. **CVE-2015-9235는 그중 컨퓨전 건이지 alg=none이 아님**(NVD 원문 확인, 등재는 2018). ~~대소문자 변형~~ 출처 미확인 | 알고리즘 미고정 로직 → 헤더 none + role=admin 위조로 인증 우회 → 화이트리스트·키 고정 | 쉬움 |
 | B37 ★★ | **압축 폭탄(gzip/zip bomb)** | **[E2]** 42.zip은 **6계층 재귀** 해제 시 4.5PB, 플랫 폭탄은 별개(Fifield zbsm 42kB→5.5GB, zbxl 46MB→4.5PB). CVE 특정: **OTel Collector CVE-2024-36129**(패치가 `io.LimitedReader`), **Fluentd CVE-2026-44160**(2026-06) | 무한 해제 앱 + 메모리 제한 + 작은 폭탄 → OOM → LimitReader 상한 | 쉬움 |
 | B38 ★★ | **Log4Shell (CVE-2021-44228)** | **[E1]** 로그의 `${jndi:ldap://...}` 치환으로 RCE, CVSS 10.0 (NVD 확인) | 취약 버전 + 로컬 LDAP(marshalsec) + 페이로드 서버. **부담되면 아웃바운드 콜백 관측까지만** | 중간 |
-| B39 ★★ | **XXE·billion laughs** | **[E2]** 엔티티 재귀 확장으로 소량 입력이 GB급 팽창, XXE는 파일 유출·SSRF까지 (OWASP 확인) | 기본 파서에 billion laughs → 메모리 폭증 → DTD·외부 엔티티 비활성화 | 쉬움 |
+| B39 ★★ | **XXE·billion laughs** | **[E2]** 엔티티 재귀 확장으로 소량 입력이 GB급 팽창, XXE는 파일 유출·SSRF까지. OWASP 치트시트 + CWE-776 + CVE-2003-1564(이름이 "billion laughs attack") | **[재현 검증 완료]** **JDK 21 기본 파서는 이미 막는다** — `JAXP00010001: more than "64000" entity expansions`. 773B 폭탄으로 OOM을 보려면 `-Djdk.xml.entityExpansionLimit=0`으로 한도를 명시적으로 풀어야 함. "왜 옛날 얘기가 됐나 → 한도를 끄는 순간 773B가 200MB 힙을 날린다"로 구성 | 쉬움 |
 | B40 ★★ | **Capital One SSRF → IMDSv1 탈취** | **[E1]** WAF의 SSRF로 EC2 메타데이터를 질의해 IAM 자격증명 획득, 1억 명 유출. **IMDSv2 도입 계기** | 사용자 URL을 서버가 fetch하는 SSRF + 목 메타데이터 서버 → 자격증명 유출 시연 | 중간 |
 | B41 ★ | **Java 역직렬화 gadget chain** | **[E2]** commons-collections 체인으로 WebLogic·JBoss·Jenkins 동시 RCE. **classpath 내 기존 코드만으로** 연쇄 | 취약 버전 + ObjectInputStream → ysoserial 페이로드 → ObjectInputFilter 방어 | 중간 |
 | B42 ★ | **xz-utils 백도어 (CVE-2024-3094)** | **[E1]** sshd 로그인 지연 0.3→0.8초를 이상히 여겨 발견. **git엔 없고 릴리스 tarball에만 있는** 빌드 스크립트가 liblzma 하이재킹 | **실 백도어 재현 금지.** "tarball에만 있는 악성 빌드 스크립트가 산출물을 바꾸는" 원리만 무해한 데모로 | 어려움 |
@@ -162,7 +162,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 
 | # | 문제 | 근거·출처 | 재현 | 난이도 |
 |---|---|---|---|---|
-| B43 ★★★ | **expand-contract 마이그레이션 실패** | **[E2]** 컬럼 추가·삭제 순서가 뒤집히면 배포 중 없는 컬럼 참조(이 부분은 출처 없이 원리로만). `ADD COLUMN`은 ACCESS EXCLUSIVE라 SELECT까지 차단되는 건 사실이나, **PG 11(2018-10) 이후 상수 기본값은 재작성 없이 "very fast even on large tables" — 그냥 걸면 재현 실패한다.** 장시간 락은 PG 10 이하·volatile 기본값·타입 변경·기존 컬럼 NOT NULL 추가에 한정. `lock_timeout` 기본값 0(무제한)이 핵심 훅 | 수백만 행 + 트래픽 중 ALTER → 락 대기 타임아웃 → **3단계(nullable→백필→제약)** 대비 | 쉬움~중간 |
+| B43 ★★★ | **expand-contract 마이그레이션 실패** | **[E2]** 컬럼 추가·삭제 순서가 뒤집히면 배포 중 없는 컬럼 참조(이 부분은 출처 없이 원리로만). `ADD COLUMN`은 ACCESS EXCLUSIVE라 SELECT까지 차단되는 건 사실이나, **PG 11(2018-10) 이후 상수 기본값은 재작성 없이 "very fast even on large tables" — 그냥 걸면 재현 실패한다.** 장시간 락은 PG 10 이하·volatile 기본값·타입 변경·기존 컬럼 NOT NULL 추가에 한정. `lock_timeout` 기본값 0(무제한)이 핵심 훅 | **[재현 검증 완료]** PG 16·300만 행 실측 — 상수 기본값 **4.9ms**(재현 실패), `gen_random_uuid()` volatile **16.9초**, 컬럼추가+UPDATE+SET NOT NULL **37초**. ALTER 중 `SELECT count(*)`는 **19.4초**(기준 0.26~0.31초, 약 62배). **volatile 기본값으로 짜야 재현된다.** 트래픽 중 ALTER → 락 대기 → 3단계(nullable→백필→제약) 대비 | 쉬움~중간 |
 | B44 ★★★ | **"설정 배포도 배포다"** | **[E1]** Fastly 2021(정상 고객 설정이 잠복 버그 촉발 → **네트워크 85% 에러**, 감지 1분·49분 내 95% 복구) / CrowdStrike 2024(Channel File이 Validator 버그 통과 → 경계 밖 메모리 읽기 → 대량 BSOD) / Datadog 2023(자동 systemd 업데이트가 Cilium 라우트 삭제, **업데이트 창이 06:00 UTC로 동기화돼 5개 리전·3개 클라우드 동시 다운**). 셋 다 원문 확인 | 설정 1줄이 전 인스턴스를 크래시 루프에 빠뜨리는 것 재현 → **카나리·검증 게이트 유무 대비** | 쉬움(개념) |
 | B45 ★★ | **스크립트 오류로 고객 데이터 삭제** | **[E1]** Atlassian 2022: 스크립트가 app ID 대신 **site ID를 받아 883개 사이트(775 고객) 영구 삭제**. 무검증 신뢰 + 소프트 딜리트 부재로 복구 최대 14일 (원문 확인) | 삭제 스크립트가 잘못된 스코프를 잡는 것 재현 → **dry-run·소프트딜리트·타입 검증·피어리뷰** 전후 | 쉬움 |
 | B46 ★★ | **left-pad 2016 공급망 중단** | **[E1]** 11줄 패키지 포함 273개 언퍼블리시로 2.5시간 빌드 연쇄 실패, npm 정책 변경의 계기 (공식 포스트 확인) | Verdaccio에 의존 패키지 게시 후 삭제 → 하위 빌드 실패 → 락파일·벤더링·프록시 캐시 | 쉬움 |
