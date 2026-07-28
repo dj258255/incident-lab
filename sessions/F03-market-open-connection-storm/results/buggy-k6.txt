@@ -1,0 +1,42 @@
+# k6 run  ·  버그 경로 /quote/buggy (부하 차단 없음)
+# 부하: ramping-arrival-rate, 09:00 스파이크 초당 400건(풀 용량 약 200건/초의 2배), 5s 램프 + 20s 유지 + 5s 감소
+# 환경: Spring Boot 3.3 + HikariCP(pool=10, connection-timeout=2000ms) + Postgres 16, eclipse-temurin:21-jre
+# 풀 고갈 증거(앱 로그)는 hikari-timeout.txt 참고. 아래는 k6 요약.
+# dropped_iterations는 응답이 3~5초라 k6 VU(900)가 모자란 것이며, 앱은 풀 한계 약 200건/초로 처리했다.
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 19794  601.892722/s
+    checks_succeeded...: 33.33% 6598 out of 19794
+    checks_failed......: 66.66% 13196 out of 19794
+
+    ✗ 200 정상 응답
+      ↳  91% — ✓ 6057 / ✗ 541
+    ✗ 503 부하 차단(의도된 흘려보냄)
+      ↳  0% — ✓ 0 / ✗ 6598
+    ✗ 500 서버오류(커넥션 타임아웃)
+      ↳  8% — ✓ 541 / ✗ 6057
+
+    HTTP
+    http_req_duration..............: avg=3.16s min=51.36ms med=3.38s max=5.49s p(90)=5.25s p(95)=5.36s
+      { expected_response:true }...: avg=3.03s min=51.36ms med=3.35s max=5.49s p(90)=4.51s p(95)=5.28s
+    http_req_failed................: 8.19%  541 out of 6598
+    http_reqs......................: 6598   200.630907/s
+
+    EXECUTION
+    dropped_iterations.............: 3401   103.417053/s
+    iteration_duration.............: avg=3.16s min=51.43ms med=3.38s max=5.49s p(90)=5.25s p(95)=5.36s
+    iterations.....................: 6598   200.630907/s
+    vus............................: 193    min=4           max=900
+    vus_max........................: 900    min=200         max=900
+
+    NETWORK
+    data_received..................: 902 kB 27 kB/s
+    data_sent......................: 495 kB 15 kB/s
+
+
+
+
+running (0m32.9s), 000/900 VUs, 6598 complete and 0 interrupted iterations
+market_open ✓ [ 100% ] 000/900 VUs  30s  006.32 iters/s

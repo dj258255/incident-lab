@@ -1,0 +1,12 @@
+# 버그 경로(/quote/buggy) 부하 중 앱 로그 발췌.
+# docker logs lab-f03-app | grep "Connection is not available"
+# 풀 10개가 전부 active, idle 0, 획득 대기 큐에 약 189건이 쌓여 있다. 전형적인 커넥션 풀 고갈이다.
+# 2초(connection-timeout) 안에 커넥션을 못 받은 요청은 아래 예외로 500이 된다.
+
+java.sql.SQLTransientConnectionException: quote-pool - Connection is not available, request timed out after 2000ms (total=10, active=10, idle=0, waiting=189)
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java)
+	... (JdbcTemplate -> QuoteService.lookup -> QuoteController.buggy)
+
+# 이 실행에서 위 예외로 처리된 500이 27건. 부하 차단(/quote/fixed)에서는 0건이었다.

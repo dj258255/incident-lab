@@ -1,0 +1,25 @@
+# 재현 환경. Postgres 위에 MTS 시세 조회 앱을 올린다.
+# 부하는 별도 k6 컨테이너로 이 네트워크에 붙여 준다(reproduce.md 참고).
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: lab-f03-db
+    environment:
+      POSTGRES_DB: mts
+      POSTGRES_USER: mts
+      POSTGRES_PASSWORD: mts
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mts"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+  app:
+    build: ./app
+    container_name: lab-f03-app
+    depends_on:
+      db:
+        condition: service_healthy
+    # 호스트 포트는 게시하지 않는다. 부하(k6)는 같은 compose 네트워크에서 app:8080으로 붙는다.
+    expose:
+      - "8080"

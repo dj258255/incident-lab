@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS quote (
+    symbol VARCHAR(16) PRIMARY KEY,
+    price  INT NOT NULL
+);

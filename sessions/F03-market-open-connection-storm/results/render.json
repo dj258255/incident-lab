@@ -1,0 +1,58 @@
+{
+  "images": [
+    {
+      "type": "term",
+      "out": "01-buggy-storm.png",
+      "title": "k6 09:00 스파이크 400 req/s  ·  /quote/buggy (부하 차단 없음)",
+      "font": 24,
+      "lines": [
+        "$ TARGET=.../quote/buggy  k6 run spike.js",
+        "",
+        [["lab-f03-app | HikariPool quote-pool - Connection is not available, timed out after 2000ms", "fg"]],
+        [["lab-f03-app |   (total=10, active=10, idle=0, waiting=188)   <- ", "fg"], ["커넥션 풀 고갈", "red"]],
+        "",
+        [["  http_req_duration : med=", "fg"], ["3.38s", "red"], ["  p(95)=", "fg"], ["5.36s", "red"], ["   (평상시 약 50ms)", "dim"]],
+        [["  http_reqs .......... 200/s  ", "fg"], ["(풀 한계에서 처리량 정체)", "dim"]],
+        [["  500 서버오류(커넥션 타임아웃): ", "fg"], ["541건", "red"]]
+      ]
+    },
+    {
+      "type": "term",
+      "out": "02-fixed-shed.png",
+      "title": "k6 동일 400 req/s 스파이크  ·  /quote/fixed (부하 차단 load shedding)",
+      "font": 24,
+      "lines": [
+        "$ TARGET=.../quote/fixed  k6 run spike.js   # permits=10",
+        "",
+        [["  http_req_duration : med=", "fg"], ["51ms", "green"], ["  p(95)=", "fg"], ["519ms", "green"], ["   (지연 회복)", "dim"]],
+        [["  200 정상 응답 : 3,759건  ", "fg"], ["(중앙값 52ms)", "green"]],
+        [["  503 부하 차단 : 4,876건  ", "fg"], ["(대기 없이 빠르게 흘려보냄)", "yellow"]],
+        [["  500 서버오류(커넥션 타임아웃): ", "fg"], ["0건", "green"]],
+        "",
+        [["  받은 요청의 응답 시간을 지키고, 풀 여력을 넘는 요청은 즉시 돌려보낸다.", "dim"]]
+      ]
+    },
+    {
+      "type": "bar",
+      "out": "03-latency-median.png",
+      "w": 940,
+      "title": "응답 시간 중앙값 (09:00 스파이크 400 req/s, 동일 조건)",
+      "bars": [
+        {"label": "버그 (부하 차단 없음)", "value": 3380, "color": "red"},
+        {"label": "해소 (부하 차단)", "value": 51, "color": "green"}
+      ],
+      "note": "단위 ms. 평상시 시세 조회는 약 50ms. 버그 경로는 커넥션 대기로 중앙값 3,380ms까지 밀렸다."
+    },
+    {
+      "type": "bar",
+      "out": "04-timeouts.png",
+      "w": 940,
+      "title": "커넥션 타임아웃(HTTP 500) 건수 (동일 스파이크)",
+      "bars": [
+        {"label": "버그 (부하 차단 없음)", "value": 541, "color": "red"},
+        {"label": "해소 (부하 차단)", "value": 0, "color": "green"}
+      ],
+      "note": "HikariCP 커넥션을 2초 안에 받지 못해 실패한 요청 수. 부하 차단이 풀 고갈을 막아 0건."
+    }
+  ]
+}
