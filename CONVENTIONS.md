@@ -8,8 +8,10 @@ sessions/A02-mdl-storm/
 ├── reproduce.md     실행 명령과 출력 원문
 ├── compose.yml      재현 환경
 ├── scripts/         부하·주입·측정 스크립트
-└── results/         측정 데이터(csv·png)
+└── results/         측정 데이터(csv·png), 렌더 스펙(render.json), 실행 화면(png)
 ```
+
+저장소 루트의 `tools/render/`는 실행 화면과 수치를 PNG로 만드는 공용 렌더러입니다.
 
 이름은 `<트랙><번호>-<영문-슬러그>` 입니다. 번호는 [CATALOG.md](CATALOG.md)를 따릅니다.
 
@@ -42,6 +44,15 @@ sessions/A02-mdl-storm/
 - 평균만 쓰지 않습니다. 평균과 P95를 함께 적습니다
 - 개선 전을 먼저 재고, 고친 뒤 **같은 조건에서** 다시 잽니다
 - 재현할 수 없는 수치는 인용하지 않습니다
+
+### 수치의 시각 증거 (results/ 이미지)
+
+수치는 본문 서술과 reproduce.md 원문으로도 검증되지만, 재현 화면을 이미지로 남기면 신뢰가 더 붙습니다. 이미지는 손으로 만들지 않습니다. `results/render.json`에 캡처한 콘솔 출력과 측정값을 적고 렌더러가 생성하므로, 리뷰어가 다시 돌려 같은 그림을 얻을 수 있습니다.
+
+- 재현(2절)에 문제가 드러난 실행 화면 한 장, 재계측(5절)에 해소된 실행 화면과 전후 막대그래프를 넣습니다. 절마다 한두 장이면 충분합니다.
+- 콘솔 카드는 reproduce.md의 출력과 글자까지 일치해야 합니다. 없는 줄을 지어내지 않습니다.
+- 강조색은 의미로만 씁니다. 막아낸 지점은 초록, 문제가 드러난 수치는 빨강, 안전장치 발동은 노랑.
+- 생성은 `docker build -t incident-lab-render tools/render` 뒤 `docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/work incident-lab-render sessions/<세션>/results`. 사용법은 [tools/render/README.md](tools/render/README.md)에 있습니다.
 
 ## 5. 문체
 

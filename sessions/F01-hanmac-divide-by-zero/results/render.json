@@ -1,0 +1,43 @@
+{
+  "images": [
+    {
+      "type": "term",
+      "out": "01-buggy-run.png",
+      "title": "docker compose up  ·  F01 버그 검증 (eclipse-temurin:21)",
+      "font": 26,
+      "lines": [
+        "$ docker compose up --abort-on-container-exit",
+        "",
+        "lab-f01-hanmac | == 0으로 나눈 결과와 검증식 행동 ==",
+        [["lab-f01-hanmac |   Infinity 주문가 = Infinity | (px>upper)=", "fg"], ["true", "green"], ["  (px<lower)=false  ->  ", "fg"], ["거부됨", "green"]],
+        [["lab-f01-hanmac |   NaN      주문가 = NaN      | (px>upper)=", "fg"], ["false", "red"], ["  (px<lower)=", "fg"], ["false", "red"], ["  ->  둘 다 false라 ", "fg"], ["안 걸림", "red"]],
+        "",
+        "lab-f01-hanmac | == 버그 검증 결과 (총 120건) ==",
+        [["lab-f01-hanmac |   접수: 정상 100건, ", "fg"], ["비정상(NaN/Inf) 10건", "red"], ["   <- 비정상이 시장에 나간다", "red"]]
+      ]
+    },
+    {
+      "type": "term",
+      "out": "02-fixed-run.png",
+      "title": "docker compose up  ·  F01 해소 검증 (유한성 가드 + 킬스위치)",
+      "font": 26,
+      "lines": [
+        "$ docker compose up --abort-on-container-exit",
+        "",
+        [["lab-f01-hanmac |   ", "fg"], ["[킬스위치]", "yellow"], [" 비정상 주문 3건 감지 -> 103/120건 처리 지점에서 ", "fg"], ["접수 중단", "yellow"]],
+        "lab-f01-hanmac | == 해소 검증(유한성 가드 + 킬스위치) 결과 ==",
+        [["lab-f01-hanmac |   접수: 정상 100건, ", "fg"], ["비정상 0건", "green"], [" | 비정상 거부 3건, ", "fg"], ["킬스위치 발동=true", "green"]]
+      ]
+    },
+    {
+      "type": "bar",
+      "out": "03-bad-orders.png",
+      "title": "검증별 비정상 주문 접수 건수 (총 120건 · 비정상 20건 주입)",
+      "bars": [
+        {"label": "버그 검증", "value": 10, "color": "red"},
+        {"label": "해소 (유한성 가드 + 킬스위치)", "value": 0, "color": "green"}
+      ],
+      "note": "정상 주문 100건은 양쪽 모두 접수. 측정 환경 eclipse-temurin:21-jdk-alpine, 2026-07-22"
+    }
+  ]
+}
