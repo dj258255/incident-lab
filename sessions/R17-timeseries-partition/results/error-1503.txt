@@ -1,0 +1,1 @@
+ERROR 1503 (HY000) at line 1: A PRIMARY KEY must include all columns in the table's partitioning function (prefixed columns are not considered).

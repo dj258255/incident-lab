@@ -1,0 +1,9 @@
+/var/lib/mysql/spoon/watch_log_part#p#p20260721.ibd     58720256
+/var/lib/mysql/spoon/watch_log_part#p#p20260722.ibd     58720256
+/var/lib/mysql/spoon/watch_log_part#p#p20260723.ibd     58720256
+/var/lib/mysql/spoon/watch_log_part#p#p20260724.ibd     58720256
+/var/lib/mysql/spoon/watch_log_part#p#p20260725.ibd     58720256
+/var/lib/mysql/spoon/watch_log_part#p#p20260726.ibd     58720256
+/var/lib/mysql/spoon/watch_log_part#p#p20260727.ibd     58720256
+/var/lib/mysql/spoon/watch_log_part#p#pmax.ibd         41943040
+/var/lib/mysql/spoon/watch_log_plain.ibd              754974720
