@@ -59,22 +59,24 @@ sessions/<트랙><번호>-<슬러그>/
 
 | 상태 | 수 |
 |---|---|
-| 완료 | 2 |
+| 완료 | 3 |
 | 진행 중 | 0 |
-| 대기 | 167 |
+| 대기 | 166 |
 
 <!-- 세션이 완료되면 아래에 추가 -->
 - [F01 한맥 0으로 나눈 값이 주문 검증을 뚫다](sessions/F01-hanmac-divide-by-zero/) — NaN 비교가 상하한 검증을 무력화, 유한성 가드와 킬스위치로 해소. 최소 재현과 Spring 주문접수 API 재현
 - [F03 장 시작 9시 접속 폭주](sessions/F03-market-open-connection-storm/) — HikariCP 풀 고갈로 응답 지연 폭증, 부하 차단(load shedding)으로 중앙값 3.38초를 51ms로
+- [R13 라이브 후원 카운터의 핫 로우](sessions/R13-slotted-counter/) — 카운터 갱신 아홉 변형의 처리량·정합성 동시 측정. 실패율 0%로 후원 30.9%가 사라지는 갱신 유실을 슬롯 카운터로 해소
 
 ## 실행 환경
 
+미들웨어는 세션마다 `compose.yml`에 담았으므로 Docker만 있으면 뜹니다.
+
 - Docker / Docker Compose
-- 부하: k6, sysbench
 - 장애 주입: Toxiproxy, Pumba, tc(netem), libfaketime
 - 관측: Prometheus, Grafana
 
-세션마다 필요한 것만 `compose.yml`에 담았습니다. 사전 설치는 Docker 하나면 됩니다.
+다만 호스트에서 도는 것들이 있어 세션에 따라 추가 설치가 필요합니다. 부하 생성기(k6, sysbench)와 애플리케이션 런타임이 그렇습니다. 예를 들어 R13은 Spring Boot 앱을 호스트에서 띄우므로 Java 21과 Gradle, k6가 필요합니다. 무엇이 필요한지는 각 세션의 `reproduce.md` 첫 절에 적었습니다.
 
 ## 주의
 

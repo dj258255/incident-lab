@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.1'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'lab'
+version = '1.0.0'
+java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
+
+repositories { mavenCentral() }
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    // Lettuce 커넥션 풀은 이 라이브러리가 있을 때만 켜진다.
+    // 없으면 application.yml의 lettuce.pool 설정이 조용히 무시되고,
+    // executePipelined가 호출마다 새 커넥션을 열어 임시 포트를 고갈시킨다.
+    implementation 'org.apache.commons:commons-pool2'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+}
+
+bootJar { archiveFileName = 'sponsor-api.jar' }

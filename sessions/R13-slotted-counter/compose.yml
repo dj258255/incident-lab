@@ -1,0 +1,39 @@
+# R13 재현 환경
+# MySQL 자원을 고정해야 변형 간 비교가 성립한다. 4 vCPU / 2GB는 AWS db.t3.medium 급을 가정한 값이다.
+services:
+  mysql:
+    image: mysql:8.4.3
+    container_name: r13-mysql
+    cpus: 4
+    mem_limit: 2g
+    command:
+      - --innodb-buffer-pool-size=1G
+      - --max-connections=300
+      - --innodb-flush-log-at-trx-commit=1     # 후원은 돈이라 내구성을 낮추지 않는다
+      - --performance-schema=ON
+      - --performance-schema-instrument=wait/lock/table/sql/handler=ON
+      - --innodb-print-all-deadlocks=ON
+    environment:
+      MYSQL_ROOT_PASSWORD: lab
+      MYSQL_DATABASE: spoon
+    ports: ["13306:3306"]
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+  redis:
+    image: redis:7.4-alpine
+    container_name: r13-redis
+    cpus: 2
+    mem_limit: 512m
+    command: ["redis-server", "--appendonly", "no", "--save", ""]
+    ports: ["16379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 20

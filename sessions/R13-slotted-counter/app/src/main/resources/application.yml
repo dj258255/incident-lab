@@ -1,0 +1,36 @@
+server:
+  port: ${PORT:8080}    # 인스턴스를 두 대로 띄워 비교할 때 바꾼다
+  tomcat:
+    threads:
+      max: 200          # 변형 간 비교를 위해 고정한다
+
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:13306/spoon?rewriteBatchedStatements=true
+    username: root
+    password: lab
+    hikari:
+      maximum-pool-size: 64   # 모든 변형이 같은 풀을 쓴다. 풀이 다르면 비교가 성립하지 않는다
+      minimum-idle: 64
+      pool-name: r13-pool
+  jpa:
+    hibernate.ddl-auto: none  # 스키마는 schema.sql이 단일 원본이다
+    open-in-view: false
+    properties:
+      hibernate.jdbc.batch_size: 0
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 16379
+      lettuce.pool:
+        max-active: 64
+        max-idle: 64
+
+lab:
+  mode: ${MODE:atomic}
+  slots: ${COUNTER_SLOTS:16}
+  lives: ${LIVES:1000}
+  flush-sec: ${FLUSH_SEC:2}
+  optimistic-retry: ${OPTIMISTIC_RETRY:50}
+
+logging.level.root: WARN

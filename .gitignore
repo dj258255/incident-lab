@@ -8,5 +8,7 @@ results/**/*.raw
 data/
 tmp/
 
-# 컴파일 산출물
+# 컴파일·빌드 산출물
 *.class
+.gradle/
+**/app/build/
