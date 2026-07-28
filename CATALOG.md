@@ -91,11 +91,11 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 | B02 ★★ | **캐시 스탬피드** | **[E2]** 인기 키 TTL 동시 만료 → DB 직행 폭주(실무 빈출) | 만료 시점 k6 500 → 쿼리 폭주 → 뮤텍스/확률적 조기 갱신/jittered TTL 3안 | 쉬움 |
 | B03 ★★ | **read-your-writes** | **[E2]** "방금 쓴 게 안 보여요" CS의 원인 | 지연 상태에서 쓰기 직후 replica 읽기 → 세션 고정/임계 라우팅/primary 3안 | 쉬움(A10 선행) |
 | B04 ★ | **깊은 페이지네이션** | **[E2]** OFFSET 딥 페이지 비용, 실행계획 설명에 최적 | OFFSET 100만 vs 커서 + 실행계획 비교 | 2~3시간 |
-| B05 ★★★ | **리트라이 폭풍 / metastable** | **[E2]** HotOS 2021 논문으로 개념화, AWS 장애 복구 지연의 원인 | 짧은 타임아웃+무제한 재시도 → **부하를 내려도 회복 못 하는 그래프** → 백오프+지터+재시도 예산 | 중간 |
+| B05 ★★★ | **리트라이 폭풍 / metastable** | **[E2]** HotOS 2021 논문으로 개념화(논문 실사례는 Facebook 계열, **AWS 장애는 논문에 없음**) + AWS 공식 백오프·지터 권고 | 짧은 타임아웃+무제한 재시도 → **부하를 내려도 회복 못 하는 그래프** → 백오프+지터+재시도 예산 | 중간 |
 | B06 ★★ | **핫 로우 카운터 경합** | **[E2]** 단일 카운터 UPDATE 몰림 → 처리량 붕괴 | 1행 동시 UPDATE 락 대기 → 카운터 샤딩·Redis 집계 전후 | 쉬움 |
-| B07 ★★ | **핫 파티션 + request coalescing** | **[E1]** Discord가 인기 채널 쏠림을 동일 키 합치기로 해결 (InfoQ) | 단일 키 부하 쏠림 → singleflight식 coalescing 전후 | 중간 |
+| B07 ★★ | **핫 파티션 + request coalescing** | **[E1]** Discord가 인기 채널 쏠림을 동일 키 합치기로 해결 (Discord 공식 블로그 2023-03-06, Bo Ingram — InfoQ는 요약 보도). **단일 사건이 아니라 만성 운영 문제 회고** | 단일 키 부하 쏠림 → singleflight식 coalescing 전후 | 중간 |
 | B12 ★★ | **Facebook memcache lease** | **[E2]** NSDI 2013 논문의 thundering herd 해법 | B02 환경에서 lease 토큰 직접 구현 → 스탬피드 해법 4안째로 비교 | 반나절(B02 선행) |
-| B23 ★★ | **Shopify 테넌트 격리** | **[E1]** 한 상점 플래시 세일이 전체 용량 20% 잠식 → pod 격리 | 단일 DB vs 테넌트 분리 2DB에서 폭주 시 지연 격리 비교 | 중간 |
+| B23 ★★ | **Shopify 테넌트 격리** | **[E2]** Shopify가 공개한 pod 격리 아키텍처(**특정 장애 아님**). pod = "a set of shops that live on a fully isolated set of datastores"(쿠버네티스 pod 아님). ~~전체 용량 20% 잠식~~ **출처 없어 삭제** | 단일 DB vs 테넌트 분리 2DB에서 폭주 시 지연 격리 비교 | 중간 |
 
 ### 3-2. 동시성·트랜잭션
 
@@ -130,9 +130,9 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 |---|---|---|---|---|
 | B33 ★★★ | **LB idle timeout < 앱 keep-alive → 간헐 502** | **[E2]** 백엔드가 먼저 닫은 커넥션을 프록시가 재사용하려다 502. **"간헐적 502의 1순위 원인"** (iximiuz, gunicorn/ELB 사례, 원문 확인) | nginx + 백엔드 keep-alive를 프록시 idle보다 짧게 → 간헐 502 → 순서 뒤집으면 소멸 | 중간 |
 | B34 ★★ | **클라이언트 타임아웃 < 서버 타임아웃** | **[E2]** 클라가 먼저 끊고 재시도하는데 서버는 원 요청을 계속 처리 → 인플라이트 배가. 원칙은 **계층 정렬(client > 각 홉 합)** | 느린 엔드포인트 + 짧은 클라 타임아웃 + 재시도 → 인플라이트 폭증 → **데드라인 전파**로 방어 | 쉬움 |
-| B10 ★★ | **클럭 스큐(시간 역행)** | **[E1]** Cloudflare 2017 윤초로 음수 duration → panic, Go monotonic clock 도입 계기 | libfaketime으로 시간 역행 → wall clock duration 음수 버그 → monotonic clock 비교 | 중간 |
-| B20 ★ | **500마일 이메일 (타임아웃=거리)** | **[E1]** 전설의 디버깅 스토리 (ibiblio.org) | tc netem 지연 1/5/50ms + connect timeout 3ms → "지연이 곧 거리" 시연 | 중간 |
-| B11 ★★ | **우형 Redis New Connection** | **[E1]** 풀 LIFO·eviction 설정이 맞물려 신규 커넥션 지속 생성 (techblog.woowahan.com/23121) | Lettuce/Jedis 풀 설정 재현 → 커넥션 생성 지표 설정별 비교 | 중간 |
+| B10 ★★ | **클럭 스큐(시간 역행)** | **[E1]** Cloudflare 2017 윤초로 음수 duration → panic(recover로 잡힘), DNS 쿼리 0.2%·HTTP 1% 미만 영향. **monotonic clock 제안은 이 사건 15개월 전(2015-10)에 이미 열려 있었으므로 "도입 계기"가 아니라 "실증 사례"** | libfaketime으로 시간 역행 → wall clock duration 음수 버그 → monotonic clock 비교 | 중간 |
+| B20 ★ | **500마일 이메일 (타임아웃=거리)** | **[E2·일화]** 전설의 디버깅 스토리 (ibiblio.org). **기업 포스트모템이 아니라 개인 회고담** — 저자가 FAQ에서 각색을 인정하고 로그·메모가 없다고 밝힘 | tc netem 지연 1/5/50ms + connect timeout 3ms(**원인은 타임아웃 0 설정, 3ms는 실측 abort 시간**) → "지연이 곧 거리" 시연 | 중간 |
+| B11 ★★ | **우형 Redis New Connection** | **[E1]** 풀 LIFO·eviction **+ 서버 쪽 ElastiCache timeout=100초**가 맞물려 신규 커넥션 지속 생성 (techblog.woowahan.com/23121, 2025-10-14). **장애가 아니라 지표 이상 분석** | **Lettuce**+commons-pool2 풀 설정 재현(원문에 Jedis 없음, executePipelined가 풀을 쓰는 전제) → 커넥션 생성 지표 설정별 비교 | 중간 |
 
 ### 3-6. 데이터·스키마 함정
 
@@ -140,7 +140,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 |---|---|---|---|---|
 | B15 ★★ | **ORDER BY RAND() 폭탄** | **[E2]** StackOverflow 단골, 100만 행 58분 vs 0.6초 | 100만 행 EXPLAIN·시간 비교 → 인덱스 기반 대안 | 쉬움 |
 | B16 ★★★ | **Soft Delete unique 충돌** | **[E2]** "탈퇴한 이메일로 재가입 불가" + deleted_at 누락 시 삭제 데이터 누수 | 재가입 실패 재현 → PG partial index vs MySQL generated column 비교 | 쉬움 |
-| B17 ★★★ | **Vancouver 지수 절삭 (FLOAT 돈 계산)** | **[E1]** 1982년 절삭 누적으로 지수가 22개월 만에 절반으로. 부동소수점 돈 계산의 역사적 교본 | float 절삭 누적 시뮬레이션 + FLOAT vs DECIMAL 합계 오차 | 쉬움 |
+| ~~B17~~ ★★★ | ~~**Vancouver 지수 절삭 (FLOAT 돈 계산)**~~ **→ F17에 흡수, 폐기** | **[E1]** 1982-01 1000 시작, 소수 셋째 자리 절삭·하루 약 3,000회로 월 약 25포인트씩 손실, 1983-11-25~28 주말에 524.811 → 1098.892 정정 | **완성된 F17이 밴쿠버 서사·절삭 누적·double vs BigDecimal을 이미 다 다뤄 100% 중복.** 살리려면 DB 레벨(`double precision` 컬럼 SUM vs NUMERIC, 집계 순서 의존성, JDBC getDouble 손실)로 주제를 갈고 이름도 바꿀 것 | 쉬움 |
 | B18 ★★ | **DST 존재하지 않는 시간** | **[E2]** Jira가 공식 KB를 낼 정도의 반복 함정(HOUR_OF_DAY 예외) | TZ America/New_York에서 DST 갭 시각 저장 → 예외 재현 → UTC 저장 원칙 | 쉬움 |
 | B49 ★★ | **Protobuf 필드 번호 재사용** | **[E2]** 은퇴 번호를 재사용하면 구 바이너리가 새 의미로 **조용히 잘못 해석**("크래시 없이 틀린 결과") | v1 바이트를 번호 재사용 v2로 역직렬화 → 값 오염 → `reserved`·레지스트리 BACKWARD 체크 | 쉬움 |
 | B13 ★ | **Notion식 샤딩·재샤딩** | **[E1]** Postgres 모놀리스 한계와 수평 샤딩 전환기 | PG 여러 대 + workspace_id 라우팅 → 더블 라이트→백필→검증→스위치오버 축소 재연 | 이틀+ |
@@ -167,8 +167,8 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 | B45 ★★ | **스크립트 오류로 고객 데이터 삭제** | **[E1]** Atlassian 2022: 스크립트가 app ID 대신 **site ID를 받아 883개 사이트(775 고객) 영구 삭제**. 무검증 신뢰 + 소프트 딜리트 부재로 복구 최대 14일 (원문 확인) | 삭제 스크립트가 잘못된 스코프를 잡는 것 재현 → **dry-run·소프트딜리트·타입 검증·피어리뷰** 전후 | 쉬움 |
 | B46 ★★ | **left-pad 2016 공급망 중단** | **[E1]** 11줄 패키지 포함 273개 언퍼블리시로 2.5시간 빌드 연쇄 실패, npm 정책 변경의 계기 (공식 포스트 확인) | Verdaccio에 의존 패키지 게시 후 삭제 → 하위 빌드 실패 → 락파일·벤더링·프록시 캐시 | 쉬움 |
 | B19 ★★★ | **Knight Capital 플래그 재사용** | **[E1]** 45분에 4.6억 달러. 폐기 코드의 플래그를 신기능에 재사용 + 8대 중 1대 배포 누락 | 동일 서비스 8개 중 1개만 구버전 + 재사용 플래그 on → 그 1대만 폭주하는 미니 재현 | 쉬움 |
-| B21 ★★ | **AWS S3 2017 오타 가드레일** | **[E1]** runbook 오타 하나로 인터넷 절반 4시간 다운 | "N대 제거" 스크립트의 상한·최소 잔존 검증 유무 비교 | 쉬움 |
-| B22 ★★ | **Facebook 2021 자기 철회 연쇄** | **[E1]** BGP 철회로 자기 복구 도구까지 마비, 7시간 | 축소: "헬스체크 실패 시 스스로를 디스커버리에서 빼는" 로직이 연쇄 전멸을 만드는 시뮬레이션 | 중간 |
+| B21 ★★ | **AWS S3 2017 오타 가드레일** | **[E1]** playbook 명령의 입력값이 잘못 들어가 의도보다 많은 서버 제거 → US-EAST-1 S3와 의존 서비스 다수 중단, 정상화까지 약 4시간 17분(**"인터넷 절반"은 언론 표현, 공식 문서에 없음**) | "N대 제거" 스크립트의 상한·최소 잔존 검증 유무 비교(AWS 재발방지 문구와 동일) | 쉬움 |
+| B22 ★★ | **Facebook 2021 자기 철회 연쇄** | **[E1·축소]** BGP 철회로 자기 복구 도구까지 마비. **지속 시간은 Meta 공식 문서 두 편 모두에 없음 — "7시간" 인용 금지, 외부 관측 기준 약 6시간으로만** | 축소: "헬스체크 실패 시 스스로를 디스커버리에서 빼는" 로직이 연쇄 전멸을 만드는 시뮬레이션 | 중간 |
 | B47 ★ | **Roblox 2021 73시간 장애** | **[E1]** Consul streaming 경합 + **BoltDB freelist가 삭제 페이지를 회수 못 해** 4.2GB 로그에 실데이터 489MB. 텔레메트리가 Consul에 순환 의존해 진단 54시간 지연 (원문 확인) | 전체 재현 비현실적. **"관측성이 장애 대상에 의존하면 눈이 먼다"** 순환 의존만 최소 데모(X4와 통합) | 어려움 |
 
 ### 3-9. 관측성·기타
@@ -385,6 +385,22 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 - **전자금융감독규정 RTO [E4 → E2, F20 해제]**: 제23조 **"핵심업무 복구목표시간 3시간 이내, 보험회사 24시간 이내"** 조문 확인. AWS 금융 클라우드 가이드도 동일 인용
 - **ForkJoinPool commonPool [E4 → E2, B32에서 분리해 B51]**: Baeldung이 commonPool 공유를 명시 + **국내 실장애 회고 "parallelStream 남용으로 인한 장애 경험기"(2019)** 확인
 - **XID Wraparound [E2 → E1, A14]**: Sentry 블로그 "Transaction ID Wraparound in Postgres" 확인. **2015-07-20 미국 업무시간 대부분 다운**, 방어 동작으로 PG가 쓰기 거부("stop accepting commands when fewer than one million transactions left"). 벤더 경고 수준을 넘어 1차 포스트모템이 실재하므로 "Sentry가 공개한 장애"로 쓸 수 있음 (2026-07-28 일괄 조사, `research/A-12-21.md`)
+
+### 트랙 B 조사에서 나온 등급 변경 (2026-07-28)
+- **B12 memcache lease [E2 → E1]**: NSDI '13 "Scaling Memcache at Facebook" §3.2.1 원문 확인. Facebook이 자사 프로덕션 문제와 실측(**peak DB 쿼리 17K/s → 1.3K/s**)을 직접 공개한 1차 문헌이라 벤더 일반 경고보다 강도가 위다. 단 포스트모템은 아니므로 "장애"라 부르지 말 것. 수치는 "thundering herd에 특히 취약한 키 집합"에 한정된 peak값이니 조건을 떼고 쓰면 왜곡 (`research/B-01-13.md`)
+- **B20 500마일 이메일 [E1 → E2·일화]**: 저자 Trey Harris가 FAQ에서 **"I took license. It made a better story that way."**, **"I no longer have the notes I took at the time."**라고 밝힘. 기업 포스트모템이 아니라 개인 회고담이므로 E1 요건 미달. 항목은 유지하되 글 첫머리에 회고담임을 밝힐 것 (`research/B-14-26.md`)
+- **B23 Shopify [E1 → E2]**: 공식 글 두 편에 **퍼센트 수치가 단 하나도 없다.** 아키텍처 소개 글이지 장애 포스트모템이 아니다 (`research/B-14-26.md`)
+- **B17 밴쿠버 [세션 폐기 → F17 흡수]**: 사건 근거(E1)에는 문제가 없으나 완성된 F17과 재현 계획이 100% 겹친다. 같은 사건 서사를 두 세션에 쓰면 감점이므로, 살리려면 DB 레벨(컬럼 타입·SUM 집계 순서)로 주제를 갈 것 (`research/B-14-26.md`)
+
+### 지어낸 수치·통설 — 인용 금지 추가 (2026-07-28 트랙 B 조사)
+- **"한 상점 플래시 세일이 전체 용량 20% 잠식"(B23)**: 어떤 Shopify 공식 문서에도 없다. **삭제함.** 대체 가능한 정직한 문장은 "Sales that would take the entire platform down two years ago now go completely unnoticed."
+- **"인터넷 절반이 다운"(B21)**: 언론 프레이밍. AWS 공식 문서는 US-EAST-1 S3와 의존 서비스로만 서술한다. 공식 문서는 "typo"라는 단어도 쓰지 않는다("one of the inputs to the command was entered incorrectly")
+- **"7시간"(B22)**: Meta 공식 문서 두 편 모두 지속 시간을 밝히지 않는다. 외부 관측 약 6시간
+- **"Go monotonic clock 도입 계기"(B10)**: 제안 이슈 #12914는 사건보다 **15개월 앞선 2015-10-13**에 열렸다. "계기"가 아니라 "실증 사례"
+- **"AWS 장애 복구 지연의 원인"(B05)**: HotOS 2021 논문은 AWS를 한 번도 언급하지 않는다. 논문의 실사례는 Facebook 계열이고 retry budget 각주는 Google SRE Book이다
+- **"Knight $440 million"**: 널리 도는 이 수치는 회사 8-K 공시 기준이고 **SEC 원문은 "over $460 million"**이다. 카탈로그의 4.6억이 맞다
+- **"컨슈머를 늘리면 lag이 더 커진다"(B09)**: 어떤 Kafka 공식 문서도 이 문장을 쓰지 않는다. 문서 서술로부터 재구성한 가설이므로 실험 결과로 제시할 것
+- **"Spring/HikariCP가 트랜잭션 내 외부 호출을 경고한다"(B26)**: 확인해봤고 **그런 문장은 없다.** 공식으로 확인되는 건 커넥션의 스레드 바인딩과 `LazyConnectionDataSourceProxy`의 존재뿐
 
 ### 확인 결과 카탈로그 서술을 고친 것 (등급은 유지)
 - **A11 세미싱크 [출처 표기 수정]**: 폴백 동작·구 마스터 폐기 경고는 MySQL 공식 매뉴얼 원문에 있으나, 근거로 적혀 있던 PlanetScale 글은 **자사 장애 포스트모템이 아니라 Shlomi Noach의 기술 해설**이다. "PlanetScale이 겪은 장애"로 소개하면 왜곡이므로 표기를 좁혔다. 매뉴얼 Important 블록이 말하는 트랜잭션은 "커밋되지 않은" 것이고 우리가 재현할 폴백 창은 **커밋되고 응답까지 나간** 트랜잭션이라 한 단계 더 나쁜 구간이다. 둘을 뭉개지 말 것 (`research/A-01-11.md`)
