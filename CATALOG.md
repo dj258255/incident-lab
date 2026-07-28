@@ -69,7 +69,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 | A11 ★★★ | **세미싱크 페일오버 유실** | **[E2]** async 폴백 순간 마스터 사망 → 커밋 응답 받은 트랜잭션 유실 (PlanetScale) | 2노드 semi-sync → 폴백 유도 → kill → 승격 레플리카에 없음(GTID 증명) | 중간 |
 | A12 ★★★ | **GitHub 2018 스플릿 브레인** | **[E1·축소]** 43초 단절로 양쪽 프라이머리 분기, 24h 장애 (github.blog, 원문 확인) | Docker 네트워크 2개=리전 + Orchestrator → disconnect → 분기 → GTID로 페일백 불가 증명 | 어려움 |
 | A13 ★★ | **GitLab 2017 복제 재구축 실패** | **[E1·축소]** 잘못된 노드 rm -rf + 백업 5중 실패 (about.gitlab.com, 원문 확인) | WAL 세그먼트 유실 → 복제 단절 → pg_basebackup 재구축 재연. **"복제 재구축" 초점**(백업/PITR과 분리) | 중간 |
-| A14 ★★ | **XID Wraparound** | **[E2]** PG 최악 장애, 프로덕션 셧다운 사례 (Percona) | autovacuum_freeze_max_age 극단 축소 → age 증가·경고·aggressive vacuum 관측(방어선까지만) | 중간 |
+| A14 ★★ | **XID Wraparound** | **[E1]** Sentry 2015-07-20 업무시간 대부분 다운, 자사 블로그에 포스트모템 공개 (blog.sentry.io) | autovacuum_freeze_max_age 극단 축소 → age 증가·경고·aggressive vacuum 관측(방어선까지만) | 중간 |
 | A15 ★ | **fsyncgate** | **[E1·축소]** 리눅스 fsync 실패 후 조용한 유실, 2018 PANIC 전환 (danluu.com) | privileged + device-mapper flakey 위에 PG 데이터 디렉토리 → I/O 오류 주입 → `data_sync_retry` on/off. 대안: LD_PRELOAD로 EIO 주입 | 어려움 |
 | A16 ★★★ | **OOM Killer가 DB를 쏜다** | **[E2]** DB는 oom_score 1순위 타깃, Percona·Crunchy "The Linux Assassin" | docker --memory 제한 + 대량 정렬 → OOM kill → dmesg·크래시 리커버리 → oom_score_adj·overcommit | 쉬움 |
 | A17 ★★★ | **UUIDv4 PK 페이지 스플릿** | **[E2]** Percona·PlanetScale 반복 경고. 랜덤 PK가 페이지 충전율 붕괴·테이블 2배·insert 절벽 | AUTO_INCREMENT vs UUIDv4 vs UUIDv7 수백만 행 insert → 시간·크기·buffer_pool_reads 비교 | 쉬움 |
@@ -378,10 +378,13 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 
 ## 12. 근거 검증 로그 (2026-07-28 브라우저 직접 확인)
 
+세션별 상세 조사 기록은 `research/` 에 있습니다. 2026-07-28 일괄 조사로 53개 세션을 검증했고 나머지는 아직 미조사입니다. 어디까지 됐는지는 `research/README.md` 의 진행 표를 보세요. 아래 로그는 그중 등급이 바뀐 것과 인용 금지 사항만 모은 요약입니다.
+
 ### 확인 완료 → 등급 승격
 - **Toyota 2023 [E4 → E1, 신규 세션 I11]**: 공식 뉴스룸 "Concerning the production order system malfunction"(2023-09-06) + 로이터(09-05) 확인. 정기 유지보수 중 DB 정리가 디스크 부족으로 실패 → 시스템 정지, **백업 서버가 같은 환경이라 동반 실패**, 14개 공장 28개 라인 중단, 익일 대용량 서버 이전 후 재개, 사이버 공격 아님
 - **전자금융감독규정 RTO [E4 → E2, F20 해제]**: 제23조 **"핵심업무 복구목표시간 3시간 이내, 보험회사 24시간 이내"** 조문 확인. AWS 금융 클라우드 가이드도 동일 인용
 - **ForkJoinPool commonPool [E4 → E2, B32에서 분리해 B51]**: Baeldung이 commonPool 공유를 명시 + **국내 실장애 회고 "parallelStream 남용으로 인한 장애 경험기"(2019)** 확인
+- **XID Wraparound [E2 → E1, A14]**: Sentry 블로그 "Transaction ID Wraparound in Postgres" 확인. **2015-07-20 미국 업무시간 대부분 다운**, 방어 동작으로 PG가 쓰기 거부("stop accepting commands when fewer than one million transactions left"). 벤더 경고 수준을 넘어 1차 포스트모템이 실재하므로 "Sentry가 공개한 장애"로 쓸 수 있음 (2026-07-28 일괄 조사, `research/A-12-21.md`)
 
 ### 부분 확인 → 등급 유지
 - **파일 디스크립터 누수 [E2, B32]**: 진단 가이드 다수 확인(원인·`/proc/[PID]/fd`·lsof·ulimit). **대표 단일 사건은 없으므로 "○○사 사건"이라고 쓰지 말 것**
