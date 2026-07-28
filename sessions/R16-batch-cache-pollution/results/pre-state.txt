@@ -1,0 +1,2 @@
+bp_gb	@@innodb_old_blocks_pct	@@innodb_old_blocks_time
+1.125000000000	37	1000

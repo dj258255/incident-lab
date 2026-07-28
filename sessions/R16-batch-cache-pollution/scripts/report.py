@@ -12,10 +12,13 @@ import statistics as st
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "results")
 
-C = {"defense-off": "#d03b3b", "default": "#2a78d6", "no-batch": "#1baf7a"}
-KO = {"defense-off": "방어 꺼짐 (old_blocks_time=0)",
-      "default": "기본값 (old_blocks_time=1000)",
-      "no-batch": "배치 없음 (대조군)"}
+C = {"defense-off": "#e34948", "default": "#2a78d6", "no-batch": "#1baf7a",
+     "sustained-off": "#eb6834", "sustained-default": "#4a3aa7"}
+KO = {"defense-off": "방어 꺼짐 · 단발 스캔",
+      "default": "기본값 · 단발 스캔",
+      "no-batch": "배치 없음 (대조군)",
+      "sustained-off": "방어 꺼짐 · 60초 지속 스캔",
+      "sustained-default": "기본값 · 60초 지속 스캔"}
 C_TEXT = "#0b0b0b"
 C_MUTED = "#52514e"
 C_GRID = "#e4e3df"
@@ -75,6 +78,9 @@ def style(ax, xl, yl):
 def main():
     plt = font()
     cases = ["defense-off", "default", "no-batch"]
+    for extra in ("sustained-off", "sustained-default"):
+        if os.path.exists(os.path.join(OUT, f"{extra}-lat.csv")):
+            cases.append(extra)
 
     # 그림 1: p95 시계열
     fig, ax = plt.subplots(figsize=(11, 4.2), facecolor=C_SURFACE)
