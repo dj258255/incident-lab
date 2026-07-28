@@ -66,7 +66,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 | A08 ★ | **buffer pool 사이징** | **[E2]** DBA 파라미터 튜닝의 대표 주제 | innodb_buffer_pool_size 극단 변경 + 동일 부하 → hit ratio·p95 전후 | 쉬움 |
 | A09 ★★★ | **통계 오염 플랜 붕괴** | **[E1]** GoCardless + **Clerk 2026-02 실장애**(ANALYZE 샘플이 NULL만 잡아 오판) | 분포 왜곡 → ANALYZE 전후 플랜 플립 → statistics_target·확장 통계 방어 | 중간 |
 | A10 ★★ | **복제 지연 관측** | **[E2]** R/W 분리의 통과의례, Seconds_Behind_Master의 거짓말 | 대량 UPDATE로 지연 유발 → SBM 진동 vs GTID 실지연 비교 → 병렬 복제 파라미터 | 중간 |
-| A11 ★★★ | **세미싱크 페일오버 유실** | **[E2]** async 폴백 순간 마스터 사망 → 커밋 응답 받은 트랜잭션 유실 (PlanetScale) | 2노드 semi-sync → 폴백 유도 → kill → 승격 레플리카에 없음(GTID 증명) | 중간 |
+| A11 ★★★ | **세미싱크 페일오버 유실** | **[E2]** MySQL 공식 문서가 타임아웃 시 async 폴백과 구 마스터 폐기를 경고. 폴백 창의 유실은 PlanetScale(Shlomi Noach) 기술 해설 — **자사 장애 회고가 아님** | 2노드 semi-sync → 폴백 유도 → kill → 승격 레플리카에 없음(GTID 증명) | 중간 |
 | A12 ★★★ | **GitHub 2018 스플릿 브레인** | **[E1·축소]** 43초 단절로 양쪽 프라이머리 분기, 24h 장애 (github.blog, 원문 확인) | Docker 네트워크 2개=리전 + Orchestrator → disconnect → 분기 → GTID로 페일백 불가 증명 | 어려움 |
 | A13 ★★ | **GitLab 2017 복제 재구축 실패** | **[E1·축소]** 잘못된 노드 rm -rf + 백업 5중 실패 (about.gitlab.com, 원문 확인) | WAL 세그먼트 유실 → 복제 단절 → pg_basebackup 재구축 재연. **"복제 재구축" 초점**(백업/PITR과 분리) | 중간 |
 | A14 ★★ | **XID Wraparound** | **[E1]** Sentry 2015-07-20 업무시간 대부분 다운, 자사 블로그에 포스트모템 공개 (blog.sentry.io) | autovacuum_freeze_max_age 극단 축소 → age 증가·경고·aggressive vacuum 관측(방어선까지만) | 중간 |
@@ -75,8 +75,8 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 | A17 ★★★ | **UUIDv4 PK 페이지 스플릿** | **[E2]** Percona·PlanetScale 반복 경고. 랜덤 PK가 페이지 충전율 붕괴·테이블 2배·insert 절벽 | AUTO_INCREMENT vs UUIDv4 vs UUIDv7 수백만 행 insert → 시간·크기·buffer_pool_reads 비교 | 쉬움 |
 | A18 ★★ | **Uber Postgres 쓰기 증폭** | **[E1]** DB 커뮤니티 사상 최다 논쟁 글(2016). 세컨더리 인덱스 전부 갱신·HOT 실패 | 인덱스 10개 테이블에서 무관 컬럼 UPDATE → PG vs MySQL WAL량·인덱스 갱신 계측. **논쟁 글을 직접 검증하는 구도** | 중간 |
 | A19 ★★★ | **GitLab 서브트랜잭션 SLRU 절벽** | **[E1]** 몇 주마다 랜덤 발생한 "네시" 장애. SAVEPOINT 64개 초과+롱 트랜잭션 → replica TPS 360k→50k (공개 재현 스크립트 존재) | primary+replica, pgbench에 SAVEPOINT 중첩 → TPS 절벽. **ORM이 SAVEPOINT를 몰래 만든다는 각도가 백미** | 중간 |
-| A20 ★★ | **데브시스터즈 CockroachDB 쿼럼 손실** | **[E1]** 쿠키런 킹덤 36시간 복구, 국내 전설 회고 (tech.devsisters.com) | CRDB 3노드 → 2노드 kill → Raft 쿼럼 손실로 SQL 전면 중단(비트 복구는 원문 소개로) | 중간 |
-| A21 ★★ | **Figma식 수직 분할·논리 복제 이전** | **[E1]** 단일 RDS 포화 → 테이블 그룹 분리, 논리 복제 무중단 이전 (figma.com) | PG 2대 + logical replication으로 특정 테이블만 무중단 이전 → 커넥션 스위칭 | 중간 |
+| A20 ★★ | **데브시스터즈 CockroachDB 쿼럼 손실** | **[E1]** 쿠키런 킹덤 총 점검 36시간 29분, 국내 전설 회고 (tech.devsisters.com). 원문은 **24노드 중 16노드 영향·RF 7·ballast 스크립트가 Block Device 덮어씀** | CRDB 3노드 → 2노드 kill → Raft 쿼럼 손실로 SQL 전면 중단(**축소 재현임을 명시**, 비트 복구는 원문 소개로) | 중간 |
+| A21 ★★ | **Figma식 수직 분할·논리 복제 이전** | **[E1]** 피크 CPU 65%(이미 r5.24xlarge) → 테이블 그룹 분리, 논리 복제로 이전. **무중단 아님 — 작업당 약 30초 부분 저하·요청 약 2% 드롭** (figma.com) | PG 2대 + logical replication으로 특정 테이블만 이전 → PgBouncer pause·권한 revoke·LSN 대기·승격·역방향 복제 | 중간 |
 
 
 ---
@@ -385,6 +385,11 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 - **전자금융감독규정 RTO [E4 → E2, F20 해제]**: 제23조 **"핵심업무 복구목표시간 3시간 이내, 보험회사 24시간 이내"** 조문 확인. AWS 금융 클라우드 가이드도 동일 인용
 - **ForkJoinPool commonPool [E4 → E2, B32에서 분리해 B51]**: Baeldung이 commonPool 공유를 명시 + **국내 실장애 회고 "parallelStream 남용으로 인한 장애 경험기"(2019)** 확인
 - **XID Wraparound [E2 → E1, A14]**: Sentry 블로그 "Transaction ID Wraparound in Postgres" 확인. **2015-07-20 미국 업무시간 대부분 다운**, 방어 동작으로 PG가 쓰기 거부("stop accepting commands when fewer than one million transactions left"). 벤더 경고 수준을 넘어 1차 포스트모템이 실재하므로 "Sentry가 공개한 장애"로 쓸 수 있음 (2026-07-28 일괄 조사, `research/A-12-21.md`)
+
+### 확인 결과 카탈로그 서술을 고친 것 (등급은 유지)
+- **A11 세미싱크 [출처 표기 수정]**: 폴백 동작·구 마스터 폐기 경고는 MySQL 공식 매뉴얼 원문에 있으나, 근거로 적혀 있던 PlanetScale 글은 **자사 장애 포스트모템이 아니라 Shlomi Noach의 기술 해설**이다. "PlanetScale이 겪은 장애"로 소개하면 왜곡이므로 표기를 좁혔다. 매뉴얼 Important 블록이 말하는 트랜잭션은 "커밋되지 않은" 것이고 우리가 재현할 폴백 창은 **커밋되고 응답까지 나간** 트랜잭션이라 한 단계 더 나쁜 구간이다. 둘을 뭉개지 말 것 (`research/A-01-11.md`)
+- **A20 데브시스터즈 [원문 사실 보강]**: 원문은 24노드 중 16노드 영향·복제본 7개이고 원인은 **ballast 스크립트 경로가 Block Device를 가리켜 파티션을 덮어쓴 사고**다. 노드를 kill한 게 아니다. 3노드→2노드 kill은 우리 축소 재현이므로 글에서 반드시 구분할 것. 시간은 서비스 재개 30시간 50분, 총 점검 종료 36시간 29분. **"총 56시간 긴급 점검 회고"는 2021-02 AWS 도쿄 AZ 장애로 다른 사건이니 섞지 말 것** (`research/A-12-21.md`)
+- **A21 Figma [과장 수정]**: "무중단"은 원문 주장이 아니다. 원문은 작업당 "~30 second period of partial availability impact (~2% of requests dropped)". 또 포화 근거는 **피크 CPU 65%**(이미 r5.24xlarge까지 올린 상태)이고, 최종 형태는 "a dozen vertically partitioned databases"라 "PG 2대"는 우리 축소판이다. **"10초 부분 가용성"·"2023-09 첫 수평 샤딩"은 수평 샤딩 단계 수치라 이 세션에 쓰면 오보** (`research/A-12-21.md`)
 
 ### 부분 확인 → 등급 유지
 - **파일 디스크립터 누수 [E2, B32]**: 진단 가이드 다수 확인(원인·`/proc/[PID]/fd`·lsof·ulimit). **대표 단일 사건은 없으므로 "○○사 사건"이라고 쓰지 말 것**
