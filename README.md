@@ -59,9 +59,9 @@ sessions/<트랙><번호>-<슬러그>/
 
 | 상태 | 수 |
 |---|---|
-| 완료 | 10 |
+| 완료 | 11 |
 | 진행 중 | 0 |
-| 대기 | 159 |
+| 대기 | 158 |
 
 <!-- 세션이 완료되면 아래에 추가 -->
 - [F01 한맥 0으로 나눈 값이 주문 검증을 뚫다](sessions/F01-hanmac-divide-by-zero/) — NaN 비교가 상하한 검증을 무력화, 유한성 가드와 킬스위치로 해소. 최소 재현과 Spring 주문접수 API 재현
@@ -73,6 +73,7 @@ sessions/<트랙><번호>-<슬러그>/
 - [R01 복제 지연 중 승격의 커밋 유실](sessions/R01-replica-promotion-loss/) — 성공 응답을 받은 후원 927건 중 555건이 승격본에 없음을 GTID 차집합으로 특정. 반동기는 유실 0이지만 타임아웃 강등 창에서 유실이 되살아남. Seconds_Behind_Source가 분단 후 19초간 0을 표시하는 것까지
 - [R16 정산 배치의 버퍼 풀 오염](sessions/R16-batch-cache-pollution/) — 풀 스캔이 히트율을 7%까지 떨어뜨려도 NVMe에서는 p95가 안 무너짐을 실측. midpoint 방어의 실효는 워킹셋 회복 시간(15.2초 대 0.7초)에서 분리 계측
 - [R17 시계열 로그 보존 삭제](sessions/R17-timeseries-partition/) — 같은 350만 행을 DELETE(20.5초, 파일 회수 없음)와 DROP PARTITION(0.12초, 0.35GB 회수)으로 비교. LOCK=NONE DDL을 막아 세우는 MDL 행렬과 프루닝 깨지는 조건 실측
+- [R12 Performance Insights 클론](sessions/R12-perf-insights-clone/) — PI의 1초 샘플링·wait 분해 루프를 직접 구현하고 병목을 아는 3구간으로 검증. 행 락이 wait/io/table/sql/handler로 표면화되는 유명한 혼란과 data_lock_waits 판별법 실측
 - [R13 라이브 후원 카운터의 핫 로우](sessions/R13-slotted-counter/) — 카운터 갱신 아홉 변형의 처리량·정합성 동시 측정. 실패율 0%로 후원 30.9%가 사라지는 갱신 유실을 슬롯 카운터로 해소
 
 ## 실행 환경

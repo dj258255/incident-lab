@@ -224,7 +224,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 | R08 ★★ | **파라미터 그룹 pending-reboot** | **[E2]** static 파라미터는 수동 리부트 전까지 미반영, **유지보수 윈도우에도 자동 재부팅 안 됨**. Terraform apply만으로 pending 전환 이슈 다수 | `[L]` MySQL `SET GLOBAL` 가능 여부·PG `pg_settings.context` 구분 실습 | 하 |
 | R09 ★★ | **gp2 burst credit 고갈 IOPS 절벽** | **[E2]** 1GiB당 3 IOPS 베이스라인, 크레딧 0이면 I/O 큐잉으로 레이턴시 계단식 급등 | `[L]` `--device-write-iops` 100 제한 → sysbench p99 급변(리눅스 VM 권장) | 중 |
 | R10 ★★ | **binlog 오버헤드 정량화** | **[E2]** AWS 공식: binlog 활성화 시 컴퓨트 오버헤드 최대 50%, enhanced binlog는 약 13%. Aurora는 내부 복제에 binlog를 안 씀 | `[L]` log_bin OFF/ON × sync_binlog × row_image 조합별 TPS 표 | 하 |
-| R12 ★ | **Performance Insights 클론 만들기** | **[E2]** PI의 본질은 "DB Load = Active Sessions를 wait event로 분해". **2026-07-31 PI 대시보드가 CloudWatch DBI로 전환** 예정 | `[L-부분]` PG `wait_event_type`/MySQL `events_waits_*` 1초 샘플링 → Prometheus+Grafana로 PI 클론 | 상 |
+| R12 **[완료](sessions/R12-perf-insights-clone/)** ★ | **Performance Insights 클론 만들기** | **[E2]** PI의 본질은 "DB Load = Active Sessions를 wait event로 분해". **2026-07-31 PI 대시보드가 CloudWatch DBI로 전환** 예정 | `[L-부분]` PG `wait_event_type`/MySQL `events_waits_*` 1초 샘플링 → Prometheus+Grafana로 PI 클론 | 상 |
 
 ### 5-3. 글로벌·라이브 도메인 (콘텐츠 플랫폼 대응)
 
@@ -487,7 +487,7 @@ B38(Log4Shell)·B40(SSRF)·B41(역직렬화)·B42(xz)는 **격리된 로컬 환�
 
 **R 트랙 (18)**
 - [x] R01 승격 유실 · [ ] R02 DNS 캐시 · [ ] R03 리더 쏠림 · [ ] R04 복제슬롯 WAL · [ ] R05 스토리지 풀 · [ ] R06 커넥션 스톰 · [ ] R07 Proxy 피닝 · [ ] R08 pending-reboot · [ ] R09 gp2 절벽
-- [ ] R10 binlog · [ ] R11 콜드 캐시 · [ ] R12 PI 클론 · [x] R13 슬롯 카운터 · [x] R14 문자셋·타임존 · [ ] R15 RPO 스위치오버 · [x] R16 배치 캐시오염 · [x] R17 시계열 파티션 · [ ] R18 채팅 RDB
+- [ ] R10 binlog · [ ] R11 콜드 캐시 · [x] R12 PI 클론 · [x] R13 슬롯 카운터 · [x] R14 문자셋·타임존 · [ ] R15 RPO 스위치오버 · [x] R16 배치 캐시오염 · [x] R17 시계열 파티션 · [ ] R18 채팅 RDB
 
 **S 트랙 (12)**
 - [ ] S01 매핑 폭발 · [ ] S02 딥 페이지네이션 · [ ] S03 워터마크 · [ ] S04 bulk 리젝션 · [ ] S05 Nori · [ ] S06 서킷브레이커 · [ ] S07 오버샤딩 · [ ] S08 값비싼 쿼리 · [ ] S09 무중단 reindex · [ ] S10 refresh_interval · [ ] S11 머지 폭풍 · [ ] S12 GitHub 2013

@@ -1,0 +1,22 @@
+# R12 재현 환경
+# Performance Insights의 핵심(1초 샘플링, wait event 분해)을 직접 구현해 검증한다.
+# 버퍼 풀을 256MB로 작게 잡는 이유는 IO 대기 구간을 만들기 위해서다.
+services:
+  mysql:
+    image: mysql:8.4.3
+    container_name: r12-mysql
+    cpus: 4
+    mem_limit: 2g
+    command:
+      - --innodb-buffer-pool-size=256M
+      - --max-connections=200
+      - --performance-schema=ON
+    environment:
+      MYSQL_ROOT_PASSWORD: lab
+      MYSQL_DATABASE: spoon
+    ports: ["13312:3306"]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
