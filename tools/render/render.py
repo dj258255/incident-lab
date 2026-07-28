@@ -119,7 +119,12 @@ def render_term(spec, out_path):
 
 
 def render_bar(spec, out_path):
-    W, H = spec.get("w", 940), spec.get("h", 560)
+    req_w, H = spec.get("w", 940), spec.get("h", 560)
+    # 제목과 하단 노트가 잘리지 않도록 캔버스 폭을 텍스트에 맞춰 넓힌다.
+    probe = ImageDraw.Draw(Image.new("RGB", (10, 10)))
+    title_w = probe.textlength(spec["title"], font=font(30))
+    note_w = probe.textlength(spec.get("note", ""), font=font(20))
+    W = int(max(req_w, title_w + 88, note_w + 88))
     img = Image.new("RGB", (W, H), BG)
     draw = ImageDraw.Draw(img)
     draw.text((44, 30), spec["title"], font=font(30), fill=FG)

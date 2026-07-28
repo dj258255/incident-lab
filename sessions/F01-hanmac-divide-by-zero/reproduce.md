@@ -59,3 +59,38 @@ $ docker compose down
 |---|---|---|---|
 | 버그 검증 | 100 | 10 (NaN) | Infinity 10건은 `>상한`에 걸려 거부, NaN 10건만 뚫림 |
 | 해소(유한성 가드+킬스위치) | 100 | 0 | 비정상 3건 감지 시점(103/120)에 접수 중단 |
+
+## 실제 스택(Spring Boot) 재현
+
+최소 재현이 검증 로직만 떼어냈다면, 같은 버그가 실제 Spring Boot 주문접수 API를 통과하는지도 확인했습니다. 코드는 `spring/` 아래에 있고, `docker compose up --build`로 Spring Boot 3.3(내장 Tomcat)이 뜬 뒤 드라이버가 주문 120건을 세 엔드포인트에 실제 HTTP로 보냅니다. 환경은 gradle:8.10-jdk21로 빌드하고 eclipse-temurin:21-jre-alpine로 실행했습니다.
+
+```console
+$ cd spring && docker compose up --build
+INFO 1 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer : Tomcat started on port 8080 (http) with context path '/'
+INFO 1 --- [main] lab.OrderApp : Started OrderApp in 7.516 seconds (process running for 9.146)
+
+== [Spring] 실제 주문접수 API 재현 (POST /orders, 내장 Tomcat + Jackson + @Valid) ==
+  /orders/buggy      : 201 접수 110건 (정상 100 + NaN 10), 422 거부 10건 (Infinity는 상한 초과)
+  /orders/bigdecimal : 201 접수 100건, 500 서버오류 20건 (BigDecimal.valueOf(NaN/Inf) 예외)
+  /orders/fixed      : 201 접수 100건, 422 거부 3건, 503 킬스위치 17건 (비정상 3건에서 발동)
+  입력 @Valid 검증은 전부 통과했다. 문제는 입력이 아니라 서버가 계산한 파생값이다.
+```
+
+`/orders/bigdecimal`이 500을 낸 원인은 `BigDecimal`이 NaN과 Infinity를 표현하지 못해서입니다. `BigDecimal.valueOf(double)`은 내부에서 `Double.toString`의 결과를 파싱하므로 "Infinity"의 첫 글자 `I`에서 예외가 납니다. 실제 예외 원문 발췌는 [results/spring-run.txt](results/spring-run.txt)에 남겼습니다.
+
+```console
+java.lang.NumberFormatException: Character I is neither a decimal digit number, decimal point, nor "e" notation exponential mark.
+    at java.base/java.math.BigDecimal.<init>(Unknown Source)
+    at java.base/java.math.BigDecimal.valueOf(Unknown Source)
+    at lab.OrderController.bigdecimal(OrderController.java)
+```
+
+### Spring 측정값 요약
+
+| 엔드포인트 | 201 접수 | 422 거부 | 500 오류 | 503 킬스위치 |
+|---|---|---|---|---|
+| `/orders/buggy` | 110 (정상 100 + NaN 10) | 10 (Inf) | 0 | 0 |
+| `/orders/bigdecimal` | 100 | 0 | 20 | 0 |
+| `/orders/fixed` | 100 | 3 | 0 | 17 |
+
+최소 재현(정상 100 접수, NaN 10 통과, 킬스위치 3건째 발동)과 수치가 그대로 맞물립니다.

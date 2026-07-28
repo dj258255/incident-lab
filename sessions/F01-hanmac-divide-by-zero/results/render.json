@@ -38,6 +38,36 @@
         {"label": "해소 (유한성 가드 + 킬스위치)", "value": 0, "color": "green"}
       ],
       "note": "정상 주문 100건은 양쪽 모두 접수. 측정 환경 eclipse-temurin:21-jdk-alpine, 2026-07-22"
+    },
+    {
+      "type": "term",
+      "out": "04-spring-run.png",
+      "title": "docker compose up  ·  spring/  (Spring Boot 3.3 · 내장 Tomcat)",
+      "font": 24,
+      "lines": [
+        "$ docker compose up --build   # sessions/F01-.../spring",
+        "",
+        [["... o.s.b.w.embedded.tomcat.TomcatWebServer : ", "dim"], ["Tomcat started on port 8080 (http)", "fg"]],
+        [["... lab.OrderApp : ", "dim"], ["Started OrderApp in 7.516 seconds", "fg"]],
+        "",
+        "== [Spring] 실제 주문접수 API 재현 (POST /orders, @Valid) ==",
+        [["  /orders/buggy      : 201 접수 110건 (정상 100 + ", "fg"], ["NaN 10 통과", "red"], ["), 422 거부 10 (Inf)", "fg"]],
+        [["  /orders/bigdecimal : 201 접수 100건, ", "fg"], ["500 서버오류 20건", "red"], [" (NumberFormatException)", "dim"]],
+        [["  /orders/fixed      : 201 접수 100건, 422 거부 3건, ", "fg"], ["503 킬스위치 17건", "green"]],
+        [["  입력 @Valid는 전부 통과  ->  문제는 서버가 계산한 ", "dim"], ["파생값", "yellow"], ["이다", "dim"]]
+      ]
+    },
+    {
+      "type": "bar",
+      "out": "05-spring-endpoints.png",
+      "w": 1040,
+      "title": "엔드포인트별 비정상 주문이 초래한 잘못된 응답 (총 120건 · 비정상 20건)",
+      "bars": [
+        {"label": "버그 (NaN 접수)", "value": 10, "color": "red"},
+        {"label": "BigDecimal 시도", "value": 20, "color": "yellow"},
+        {"label": "해소", "value": 0, "color": "green"}
+      ],
+      "note": "버그=NaN 10건 조용히 접수 · BigDecimal 강화 시도=500 서버오류 20건 · 해소=0. 측정 Spring Boot 3.3, 2026-07-28"
     }
   ]
 }

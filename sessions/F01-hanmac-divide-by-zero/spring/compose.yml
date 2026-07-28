@@ -1,0 +1,8 @@
+# 실제 스택 재현. docker compose up 한 번으로 Spring Boot 앱이 뜨고,
+# 내장 드라이버가 자기 REST API로 주문 120건을 쏜 뒤 집계를 출력하고 종료한다.
+services:
+  app:
+    build: .
+    container_name: lab-f01-hanmac-spring
+    ports:
+      - "8080:8080"
