@@ -59,12 +59,13 @@ sessions/<트랙><번호>-<슬러그>/
 
 | 상태 | 수 |
 |---|---|
-| 완료 | 1 |
+| 완료 | 2 |
 | 진행 중 | 0 |
-| 대기 | 168 |
+| 대기 | 167 |
 
 <!-- 세션이 완료되면 아래에 추가 -->
-- [F01 한맥 0으로 나눈 값이 주문 검증을 뚫다](sessions/F01-hanmac-divide-by-zero/) — NaN 비교가 상하한 검증을 무력화, 유한성 가드와 킬스위치로 해소
+- [F01 한맥 0으로 나눈 값이 주문 검증을 뚫다](sessions/F01-hanmac-divide-by-zero/) — NaN 비교가 상하한 검증을 무력화, 유한성 가드와 킬스위치로 해소. 최소 재현과 Spring 주문접수 API 재현
+- [F03 장 시작 9시 접속 폭주](sessions/F03-market-open-connection-storm/) — HikariCP 풀 고갈로 응답 지연 폭증, 부하 차단(load shedding)으로 중앙값 3.38초를 51ms로
 
 ## 실행 환경
 
