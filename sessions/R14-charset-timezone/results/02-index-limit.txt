@@ -1,0 +1,16 @@
+--- COMPACT + utf8mb4 VARCHAR(255) 인덱스: 767바이트 초과
+ERROR 1071 (42000) at line 1: Specified key was too long; max key length is 767 bytes
+--- 같은 조건에서 191자로 줄이면 성공 (191 x 4 = 764바이트)
+*************************** 1. row ***************************
+       Table: t_compact191
+Create Table: CREATE TABLE `t_compact191` (
+  `name` varchar(255) DEFAULT NULL,
+  KEY `name` (`name`(191))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=COMPACT
+--- 기본 ROW_FORMAT(DYNAMIC)이면 3072바이트라 255자도 성공
++--------------+------------+
+| TABLE_NAME   | ROW_FORMAT |
++--------------+------------+
+| t_compact191 | Compact    |
+| t_dynamic    | Dynamic    |
++--------------+------------+

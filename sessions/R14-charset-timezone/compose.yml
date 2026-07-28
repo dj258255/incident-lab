@@ -1,0 +1,16 @@
+# R14 재현 환경
+# 성능 측정이 아니라 동작 재현이라 자원 상한은 걸지 않는다.
+# 타임존 테이블을 일부러 적재하지 않은 초기 상태가 실험 대상이다.
+services:
+  mysql:
+    image: mysql:8.4.3
+    container_name: r14-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: lab
+      MYSQL_DATABASE: spoon
+    ports: ["13309:3306"]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
