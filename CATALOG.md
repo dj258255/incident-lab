@@ -486,7 +486,7 @@ B38(Log4Shell)·B40(SSRF)·B41(역직렬화)·B42(xz)는 **격리된 로컬 환�
 - [ ] I01 인증서 만료 · [ ] I02 CPU 스로틀링 · [ ] I03 conntrack · [ ] I04 포트/TIME_WAIT · [ ] I05 컨테이너 JVM · [ ] I06 헬스체크 · [ ] I07 롤링 유실 · [ ] I08 디스크 풀 · [ ] I09 DNS TTL · [ ] I10 IOPS 절벽 · [ ] I11 Toyota
 
 **R 트랙 (18)**
-- [ ] R01 승격 유실 · [ ] R02 DNS 캐시 · [ ] R03 리더 쏠림 · [ ] R04 복제슬롯 WAL · [ ] R05 스토리지 풀 · [ ] R06 커넥션 스톰 · [ ] R07 Proxy 피닝 · [ ] R08 pending-reboot · [ ] R09 gp2 절벽
+- [x] R01 승격 유실 · [ ] R02 DNS 캐시 · [ ] R03 리더 쏠림 · [ ] R04 복제슬롯 WAL · [ ] R05 스토리지 풀 · [ ] R06 커넥션 스톰 · [ ] R07 Proxy 피닝 · [ ] R08 pending-reboot · [ ] R09 gp2 절벽
 - [ ] R10 binlog · [ ] R11 콜드 캐시 · [ ] R12 PI 클론 · [x] R13 슬롯 카운터 · [x] R14 문자셋·타임존 · [ ] R15 RPO 스위치오버 · [x] R16 배치 캐시오염 · [x] R17 시계열 파티션 · [ ] R18 채팅 RDB
 
 **S 트랙 (12)**

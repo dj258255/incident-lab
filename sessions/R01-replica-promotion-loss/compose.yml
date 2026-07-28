@@ -1,0 +1,49 @@
+# R01 재현 환경: 비동기 복제 2노드
+#
+# 네트워크를 두 개로 나눈다.
+#   repl-net : 소스-레플리카 사이 복제 전용. 분단 실험에서 이것만 끊는다
+#   default  : 호스트가 두 노드에 접속하는 경로. 분단 중에도 관측은 계속돼야 한다
+services:
+  source:
+    image: mysql:8.4.3
+    container_name: r01-source
+    command:
+      - --server-id=1
+      - --log-bin=binlog
+      - --gtid-mode=ON
+      - --enforce-gtid-consistency=ON
+      - --innodb-flush-log-at-trx-commit=1   # 커밋은 디스크까지. 그런데도 사라진다는 것이 요점이다
+    environment:
+      MYSQL_ROOT_PASSWORD: lab
+      MYSQL_DATABASE: spoon
+    ports: ["13310:3306"]
+    networks: [default, repl-net]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+  replica:
+    image: mysql:8.4.3
+    container_name: r01-replica
+    command:
+      - --server-id=2
+      - --log-bin=binlog
+      - --gtid-mode=ON
+      - --enforce-gtid-consistency=ON
+      - --replica-net-timeout=20   # 기본 60초. "지표가 0인 채로 버티는 구간"을 20초로 줄여 관측한다
+    environment:
+      MYSQL_ROOT_PASSWORD: lab
+      MYSQL_DATABASE: spoon
+    ports: ["13311:3306"]
+    networks: [default, repl-net]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+networks:
+  repl-net:
+    name: r01-repl-net
