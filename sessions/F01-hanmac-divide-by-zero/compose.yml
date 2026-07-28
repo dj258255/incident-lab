@@ -1,0 +1,10 @@
+# F01 한맥 재현 — 잔존일수 0으로 나눈 주문가가 상·하한 검증을 뚫는다.
+# 실행: docker compose up   (자바 한 파일을 컨테이너에서 컴파일·실행)
+services:
+  hanmac:
+    image: eclipse-temurin:21-jdk-alpine
+    container_name: lab-f01-hanmac
+    working_dir: /app
+    volumes:
+      - ./app:/app
+    command: sh -c "javac Hanmac.java && java Hanmac"
