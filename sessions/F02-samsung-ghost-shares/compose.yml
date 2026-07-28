@@ -1,0 +1,32 @@
+# 재현 환경. 이 버그의 무대는 DB 원장이므로 Postgres 하나로 충분하다.
+# runner가 db 준비를 기다렸다가 sql/ 스크립트를 순서대로 실행하고 종료한다.
+# docker compose up --abort-on-container-exit 한 번으로 버그와 해소 시나리오가 순서대로 출력된다.
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: lab-f02-db
+    environment:
+      POSTGRES_DB: ledger
+      POSTGRES_USER: lab
+      POSTGRES_PASSWORD: lab
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lab -d ledger"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+  runner:
+    image: postgres:16-alpine
+    container_name: lab-f02-runner
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGHOST: db
+      PGUSER: lab
+      PGPASSWORD: lab
+      PGDATABASE: ledger
+    volumes:
+      - ./sql:/sql:ro
+      - ./scripts:/scripts:ro
+    entrypoint: ["sh", "/scripts/run.sh"]
