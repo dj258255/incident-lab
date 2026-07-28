@@ -1,0 +1,39 @@
+== 1. 기동 (Spring Boot 3.3.5 WAR -> Tomcat 10.1) ==
+  배포 대기.. 완료
+  Server version: Apache Tomcat/10.1.57
+  JVM Version:    21.0.11+10-LTS
+
+== 2. remove() 누락 경로 ==
+$ curl -H 'X-User: alice' http://localhost:18031/lab/api/leaky/whoami
+  thread=http-nio-8080-exec-1 seenUser=alice requestNo=1
+$ curl http://localhost:18031/lab/api/leaky/whoami          # 헤더 없이, 인증 안 한 요청
+  thread=http-nio-8080-exec-1 seenUser=alice requestNo=1
+
+== 3. try/finally remove() 경로 ==
+$ curl -H 'X-User: bob' http://localhost:18031/lab/api/safe/whoami
+  thread=http-nio-8080-exec-1 seenUser=bob requestNo=2
+$ curl http://localhost:18031/lab/api/safe/whoami           # 헤더 없이, 인증 안 한 요청
+  thread=http-nio-8080-exec-1 seenUser=(none) requestNo=-
+
+== 4. 언디플로이(재배포의 앞단계) 후 Tomcat이 찍는 것 ==
+  thread=http-nio-8080-exec-1 seenUser=carol requestNo=3
+$ docker compose exec tomcat rm webapps/lab.war
+  언디플로이 대기(HostConfig 백그라운드 주기 10초).... 완료
+  lab-b31-tomcat  | 28-Jul-2026 22:20:10.353 INFO [Catalina-utility-2] org.apache.catalina.startup.HostConfig.undeploy Undeploying context [/lab]
+  lab-b31-tomcat  | 28-Jul-2026 22:20:10.433 SEVERE [Catalina-utility-2] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [lab] created a ThreadLocal with key of type [org.springframework.boot.SpringBootExceptionHandler.LoggedExceptionHandlerThreadLocal] (value [org.springframework.boot.SpringBootExceptionHandler$LoggedExceptionHandlerThreadLocal@6ab6dbeb]) and a value of type [org.springframework.boot.SpringBootExceptionHandler] (value [org.springframework.boot.SpringBootExceptionHandler@6b429437]) but failed to remove it when the web application was stopped. Threads are going to be renewed over time to try and avoid a probable memory leak.
+  lab-b31-tomcat  | 28-Jul-2026 22:20:10.442 SEVERE [Catalina-utility-2] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [lab] created a ThreadLocal with key of type [java.lang.ThreadLocal] (value [java.lang.ThreadLocal@26fce64d]) and a value of type [lab.RequestContext.UserCtx] (value [UserCtx[user=carol, requestNo=3]]) but failed to remove it when the web application was stopped. Threads are going to be renewed over time to try and avoid a probable memory leak.
+
+== 5. 대조군: --add-opens 없이 띄우면 ==
+  배포 대기.. 완료
+  thread=http-nio-8080-exec-1 seenUser=dave requestNo=1
+  언디플로이 대기..... 완료
+  lab-b31-tomcat-noopen  | 28-Jul-2026 22:20:40.657 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.undeploy Undeploying context [/lab]
+  lab-b31-tomcat-noopen  | 28-Jul-2026 22:20:40.828 WARNING [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalsForLeaks You need to add "--add-opens=java.base/java.lang=ALL-UNNAMED" to the JVM command line arguments to enable ThreadLocal memory leak detection. Alternatively, you can suppress this warning by disabling ThreadLocal memory leak detection.
+
+== 6. 정리 ==
+   Container lab-b31-tomcat-noopen Stopping 
+   Container lab-b31-tomcat-noopen Stopped 
+   Container lab-b31-tomcat-noopen Removing 
+   Container lab-b31-tomcat-noopen Removed 
+   Network spring_default Removing 
+   Network spring_default Removed 

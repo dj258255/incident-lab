@@ -1,0 +1,41 @@
+# A09 재현 환경
+# 플래너 통계가 실제 분포를 못 잡는 조건을 만든다. Postgres 하나로 충분하다.
+# 다른 세션과 겹치지 않도록 컨테이너 이름은 lab-a09-pg, 호스트 포트는 55433을 쓴다.
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: lab-a09-pg
+    cpus: 2
+    mem_limit: 3g
+    environment:
+      POSTGRES_DB: ratelimit
+      POSTGRES_USER: lab
+      POSTGRES_PASSWORD: lab
+    command:
+      - postgres
+      - -c
+      - shared_buffers=512MB
+      - -c
+      - work_mem=32MB
+      - -c
+      - maintenance_work_mem=256MB
+      # 2코어 공유 서버라 병렬 플랜이 실행 시간을 흔든다. 플랜 비교가 목적이므로 꺼서 고정한다.
+      - -c
+      - max_parallel_workers_per_gather=0
+      # 자동 analyze가 실험 중간에 통계를 바꾸면 측정이 흔들린다. 통계 갱신 시점을 스크립트가 쥔다.
+      - -c
+      - autovacuum=off
+      # JIT는 추정 비용이 임계를 넘는 플랜에서만 켜져서, 플랜이 바뀔 때 컴파일 시간이 같이 붙는다.
+      # 플랜 자체를 비교하는 게 목적이라 꺼 둔다.
+      - -c
+      - jit=off
+      - -c
+      - track_io_timing=on
+    ports: ["55433:5432"]
+    volumes:
+      - ./scripts:/scripts:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lab -d ratelimit"]
+      interval: 2s
+      timeout: 3s
+      retries: 30

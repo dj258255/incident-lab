@@ -1,0 +1,68 @@
+-- 두 표의 행 내용은 같다. payout_id 하나에 20행씩, 실제 distinct = 150,000.
+-- clustered는 payout_id 순으로, shuffled는 흩어서 넣었다.
+
+-- statistics target = 1 (샘플 300행)
+      tablename       | n_distinct | correlation 
+----------------------+------------+-------------
+ payout_txn_clustered |       3308 |      1.0000
+ payout_txn_shuffled  |      44192 |      0.0724
+(2 rows)
+
+                                QUERY PLAN                                 
+---------------------------------------------------------------------------
+ Seq Scan on payout_txn_clustered  (cost=0.00..53718.81 rows=907 width=16)
+   Filter: (payout_id = 777)
+(2 rows)
+
+                               QUERY PLAN                                
+-------------------------------------------------------------------------
+ Seq Scan on payout_txn_shuffled  (cost=0.00..53718.81 rows=68 width=16)
+   Filter: (payout_id = 777)
+(2 rows)
+
+
+-- statistics target = 10 (샘플 3000행)
+      tablename       | n_distinct | correlation 
+----------------------+------------+-------------
+ payout_txn_clustered |      28394 |      1.0000
+ payout_txn_shuffled  |     182437 |      0.0780
+(2 rows)
+
+                                QUERY PLAN                                 
+---------------------------------------------------------------------------
+ Seq Scan on payout_txn_clustered  (cost=0.00..53718.81 rows=106 width=16)
+   Filter: (payout_id = 777)
+(2 rows)
+
+                               QUERY PLAN                                
+-------------------------------------------------------------------------
+ Seq Scan on payout_txn_shuffled  (cost=0.00..53718.81 rows=16 width=16)
+   Filter: (payout_id = 777)
+(2 rows)
+
+
+-- statistics target = 100 (샘플 30000행)
+      tablename       | n_distinct | correlation 
+----------------------+------------+-------------
+ payout_txn_clustered |     149375 |      1.0000
+ payout_txn_shuffled  |     148339 |      0.0476
+(2 rows)
+
+                                QUERY PLAN                                
+--------------------------------------------------------------------------
+ Seq Scan on payout_txn_clustered  (cost=0.00..53717.00 rows=20 width=16)
+   Filter: (payout_id = 777)
+(2 rows)
+
+                               QUERY PLAN                                
+-------------------------------------------------------------------------
+ Seq Scan on payout_txn_shuffled  (cost=0.00..53717.00 rows=20 width=16)
+   Filter: (payout_id = 777)
+(2 rows)
+
+-- 실제 매칭 행수
+ clustered | shuffled 
+-----------+----------
+        20 |       20
+(1 row)
+

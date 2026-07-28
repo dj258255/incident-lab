@@ -1,0 +1,23 @@
+                                                                          QUERY PLAN                                                                          
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=41931.50..41931.51 rows=1 width=8) (actual time=174.147..174.149 rows=1 loops=1)
+   Buffers: shared hit=16675
+   ->  Hash Join  (cost=87.03..41927.95 rows=1420 width=0) (actual time=0.819..173.963 rows=2400 loops=1)
+         Hash Cond: (i.org_id = r.org_id)
+         Buffers: shared hit=16675
+         ->  Seq Scan on ip_rule i  (cost=0.00..41649.00 rows=67 width=4) (actual time=0.021..172.648 rows=100 loops=1)
+               Filter: (rule_kind = 'burst'::text)
+               Rows Removed by Filter: 1999900
+               Buffers: shared hit=16649
+         ->  Hash  (cost=60.53..60.53 rows=2120 width=4) (actual time=0.772..0.773 rows=2400 loops=1)
+               Buckets: 4096  Batches: 1  Memory Usage: 117kB
+               Buffers: shared hit=26
+               ->  Index Scan using req_log_blocked_until_idx on req_log r  (cost=0.43..60.53 rows=2120 width=4) (actual time=0.027..0.456 rows=2400 loops=1)
+                     Index Cond: (blocked_until IS NOT NULL)
+                     Buffers: shared hit=26
+ Planning:
+   Buffers: shared hit=195
+ Planning Time: 1.325 ms
+ Execution Time: 174.258 ms
+(19 rows)
+

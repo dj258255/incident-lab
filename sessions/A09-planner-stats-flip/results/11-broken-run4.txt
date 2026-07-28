@@ -1,0 +1,20 @@
+                                                                     QUERY PLAN                                                                     
+----------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=646.89..646.90 rows=1 width=8) (actual time=7734.102..7734.103 rows=1 loops=1)
+   Buffers: shared hit=449402
+   ->  Nested Loop  (cost=0.86..646.89 rows=1 width=0) (actual time=0.077..7733.237 rows=2400 loops=1)
+         Buffers: shared hit=449402
+         ->  Index Scan using req_log_blocked_until_idx on req_log r  (cost=0.43..8.45 rows=1 width=4) (actual time=0.053..1.509 rows=2400 loops=1)
+               Index Cond: (blocked_until IS NOT NULL)
+               Buffers: shared hit=26
+         ->  Index Scan using ip_rule_org_id_idx on ip_rule i  (cost=0.43..638.43 rows=1 width=4) (actual time=0.007..3.218 rows=1 loops=2400)
+               Index Cond: (org_id = r.org_id)
+               Filter: (rule_kind = 'burst'::text)
+               Rows Removed by Filter: 19999
+               Buffers: shared hit=449376
+ Planning:
+   Buffers: shared hit=202
+ Planning Time: 1.474 ms
+ Execution Time: 7734.195 ms
+(16 rows)
+

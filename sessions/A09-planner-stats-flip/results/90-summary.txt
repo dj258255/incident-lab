@@ -1,0 +1,7 @@
+PostgreSQL 16.14, req_log 12,000,000행 중 non-null 2,400행(99.98% NULL), 5회 중앙값
+상태                        null_frac   추정행수   중앙값
+target 1, 샘플이 다 NULL    1           1          7734.195 ms
+target 1, non-null 1행 잡음 0.99666667   39982      356.168 ms
+target 1000                 0.99982333     2120       164.090 ms
+대조군(org_plan) 오추정                             1.506 ms
+대조군(org_plan) 해소                               1.498 ms

@@ -1,0 +1,4 @@
+target=1 sample=300행 null_frac=1 이 40회 중 39회
+target=10 sample=3000행 null_frac=1 이 40회 중 20회
+target=100 sample=30000행 null_frac=1 이 10회 중 1회
+target=1000 sample=300000행 null_frac=1 이 5회 중 0회

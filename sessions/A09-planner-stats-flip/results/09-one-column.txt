@@ -1,0 +1,21 @@
+ALTER TABLE
+ANALYZE
+    attname    | attstattarget 
+---------------+---------------
+ id            |            -1
+ org_id        |            -1
+ status_code   |            -1
+ blocked_until |             1
+(4 rows)
+
+    attname    | null_frac |   n_distinct   
+---------------+-----------+----------------
+ blocked_until |    0.9998 | -0.00019997358
+(1 row)
+
+                                         QUERY PLAN                                          
+---------------------------------------------------------------------------------------------
+ Index Scan using req_log_blocked_until_idx on req_log  (cost=0.43..70.44 rows=2400 width=8)
+   Index Cond: (blocked_until IS NOT NULL)
+(2 rows)
+

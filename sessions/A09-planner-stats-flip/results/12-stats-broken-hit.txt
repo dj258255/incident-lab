@@ -1,0 +1,14 @@
+$ ANALYZE req_log;   -- 같은 statistics target 1, 샘플이 non-null을 잡은 회차 (62회째)
+    attname    | null_frac  |  n_distinct   
+---------------+------------+---------------
+ blocked_until | 0.99666667 | -0.0033333302
+(1 row)
+
+                                          QUERY PLAN                                          
+----------------------------------------------------------------------------------------------
+ Bitmap Heap Scan on req_log  (cost=446.30..60162.91 rows=39982 width=8)
+   Recheck Cond: (blocked_until IS NOT NULL)
+   ->  Bitmap Index Scan on req_log_blocked_until_idx  (cost=0.00..436.30 rows=39982 width=0)
+         Index Cond: (blocked_until IS NOT NULL)
+(4 rows)
+

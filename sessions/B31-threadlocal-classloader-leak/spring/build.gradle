@@ -1,0 +1,26 @@
+plugins {
+    id 'org.springframework.boot' version '3.3.5'
+    id 'io.spring.dependency-management' version '1.1.6'
+    id 'war'
+    id 'java'
+}
+
+group = 'lab'
+version = '0.0.1'
+
+java {
+    toolchain { languageVersion = JavaLanguageVersion.of(21) }
+}
+
+repositories { mavenCentral() }
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // 외부 Tomcat에 배포하므로 내장 톰캣은 provided로 뺀다.
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+}
+
+// 컨텍스트 경로를 /lab 으로 고정한다.
+bootWar {
+    archiveFileName = 'lab.war'
+}

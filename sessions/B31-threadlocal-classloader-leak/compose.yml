@@ -1,0 +1,32 @@
+# B31 ThreadLocal·ClassLoader 누수 재현 — 재배포마다 클래스로더는 새로 생기고 워커 스레드는 그대로 산다.
+# 실행: docker compose up --abort-on-container-exit   (자바 두 파일을 컨테이너에서 컴파일·실행)
+#
+# 웹앱 역할 클래스는 실행기 클래스패스 밖(/tmp/webapp)에 따로 컴파일한다. 그래야 URLClassLoader만
+# 그 클래스를 적재하고, 재배포마다 같은 이름의 클래스가 새 클래스로더에서 새로 생긴다.
+services:
+  leak:
+    image: eclipse-temurin:21-jdk-alpine
+    container_name: lab-b31-leak
+    working_dir: /app
+    volumes:
+      - ./app:/app
+    command: >
+      sh -c "javac -d /tmp/webapp webapp/RequestContextHolder.java &&
+             javac -d /tmp/lab LeakLab.java &&
+             java -cp /tmp/lab LeakLab /tmp/webapp"
+
+  # Metaspace를 좁게 잡아 실제로 OutOfMemoryError까지 가는지 본다. 순진한 설계(덮어쓰기)를 먼저
+  # 10,000회 돌려 OOM이 나지 않는 것을 보이고, 같은 설정에서 누수 조건을 돌린다.
+  # 실행: docker compose --profile oom up --abort-on-container-exit
+  oom:
+    profiles: ["oom"]
+    image: eclipse-temurin:21-jdk-alpine
+    container_name: lab-b31-oom
+    working_dir: /app
+    volumes:
+      - ./app:/app
+    command: >
+      sh -c "javac -d /tmp/webapp webapp/RequestContextHolder.java &&
+             javac -d /tmp/lab LeakLab.java &&
+             java -cp /tmp/lab -Xmx256m -XX:MaxMetaspaceSize=24m LeakLab /tmp/webapp naive 10000 ;
+             java -cp /tmp/lab -Xmx256m -XX:MaxMetaspaceSize=24m LeakLab /tmp/webapp leak 6000"

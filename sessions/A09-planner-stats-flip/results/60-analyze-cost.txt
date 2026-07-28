@@ -1,0 +1,21 @@
+-- ANALYZE 소요 시간 (req_log 12,000,000행 / 507MB, psql \timing, target별 3회)
+target=1 (샘플 300행)
+Time: 12.892 ms
+Time: 4.235 ms
+Time: 4.252 ms
+  pg_statistic 총 크기 = 504 kB, blocked_until 히스토그램 = 없음, null_frac = 1
+target=100 (샘플 30000행)
+Time: 285.955 ms
+Time: 272.199 ms
+Time: 294.761 ms
+  pg_statistic 총 크기 = 512 kB, blocked_until 히스토그램 = 4, null_frac = 0.99986666
+target=1000 (샘플 300000행)
+Time: 1072.964 ms (00:01.073)
+Time: 1212.967 ms (00:01.213)
+Time: 1170.064 ms (00:01.170)
+  pg_statistic 총 크기 = 520 kB, blocked_until 히스토그램 = 55, null_frac = 0.99981666
+target=10000 (샘플 3000000행)
+Time: 6562.940 ms (00:06.563)
+Time: 6368.828 ms (00:06.369)
+Time: 6269.833 ms (00:06.270)
+  pg_statistic 총 크기 = 664 kB, blocked_until 히스토그램 = 605, null_frac = 0.99979836

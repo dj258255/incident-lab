@@ -1,0 +1,29 @@
+                                                                      QUERY PLAN                                                                       
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=101857.00..101857.01 rows=1 width=8) (actual time=358.158..358.159 rows=1 loops=1)
+   Buffers: shared hit=18750
+   ->  Nested Loop  (cost=446.73..101790.03 rows=26788 width=0) (actual time=0.167..357.954 rows=2400 loops=1)
+         Buffers: shared hit=18750
+         ->  Bitmap Heap Scan on req_log r  (cost=446.30..60162.91 rows=39982 width=4) (actual time=0.105..2.944 rows=2400 loops=1)
+               Recheck Cond: (blocked_until IS NOT NULL)
+               Heap Blocks: exact=17
+               Buffers: shared hit=26
+               ->  Bitmap Index Scan on req_log_blocked_until_idx  (cost=0.00..436.30 rows=39982 width=0) (actual time=0.094..0.094 rows=2400 loops=1)
+                     Index Cond: (blocked_until IS NOT NULL)
+                     Buffers: shared hit=9
+         ->  Memoize  (cost=0.44..402.27 rows=1 width=4) (actual time=0.001..0.148 rows=1 loops=2400)
+               Cache Key: r.org_id
+               Cache Mode: logical
+               Hits: 2300  Misses: 100  Evictions: 0  Overflows: 0  Memory Usage: 11kB
+               Buffers: shared hit=18724
+               ->  Index Scan using ip_rule_org_id_idx on ip_rule i  (cost=0.43..402.26 rows=1 width=4) (actual time=0.010..3.534 rows=1 loops=100)
+                     Index Cond: (org_id = r.org_id)
+                     Filter: (rule_kind = 'burst'::text)
+                     Rows Removed by Filter: 19999
+                     Buffers: shared hit=18724
+ Planning:
+   Buffers: shared hit=202
+ Planning Time: 1.322 ms
+ Execution Time: 358.332 ms
+(25 rows)
+

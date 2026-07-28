@@ -1,0 +1,30 @@
+                                            version                                             
+------------------------------------------------------------------------------------------------
+ PostgreSQL 16.14 on aarch64-unknown-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+(1 row)
+
+ default_statistics_target 
+---------------------------
+ 100
+(1 row)
+
+ shared_buffers 
+----------------
+ 512MB
+(1 row)
+
+ max_parallel_workers_per_gather 
+---------------------------------
+ 0
+(1 row)
+
+ autovacuum 
+------------
+ off
+(1 row)
+
+ jit 
+-----
+ off
+(1 row)
+

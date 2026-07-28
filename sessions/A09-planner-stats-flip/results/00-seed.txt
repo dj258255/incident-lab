@@ -1,0 +1,62 @@
+Timing is on.
+psql:/scripts/00-seed.sql:18: NOTICE:  table "req_log" does not exist, skipping
+DROP TABLE
+Time: 0.768 ms
+CREATE TABLE
+Time: 3.582 ms
+INSERT 0 11997600
+Time: 47025.281 ms (00:47.025)
+INSERT 0 2400
+Time: 6.252 ms
+CREATE INDEX
+Time: 14034.671 ms (00:14.035)
+DROP TABLE
+Time: 5.182 ms
+psql:/scripts/00-seed.sql:39: NOTICE:  table "ip_rule" does not exist, skipping
+CREATE TABLE
+Time: 12.092 ms
+INSERT 0 2000000
+Time: 14180.781 ms (00:14.181)
+CREATE INDEX
+Time: 900.333 ms
+DROP TABLE
+Time: 1.320 ms
+psql:/scripts/00-seed.sql:55: NOTICE:  table "org_plan" does not exist, skipping
+CREATE TABLE
+Time: 5.737 ms
+INSERT 0 200000
+Time: 324.860 ms
+CREATE INDEX
+Time: 195.363 ms
+psql:/scripts/00-seed.sql:68: NOTICE:  table "payout_txn_clustered" does not exist, skipping
+DROP TABLE
+Time: 0.370 ms
+CREATE TABLE
+Time: 1.904 ms
+INSERT 0 3000000
+Time: 7702.556 ms (00:07.703)
+psql:/scripts/00-seed.sql:79: NOTICE:  table "payout_txn_shuffled" does not exist, skipping
+DROP TABLE
+Time: 0.583 ms
+CREATE TABLE
+Time: 2.316 ms
+INSERT 0 3000000
+Time: 10941.459 ms (00:10.941)
+VACUUM
+Time: 1181.184 ms (00:01.181)
+       relname        |  heap   | pages 
+----------------------+---------+-------
+ ip_rule              | 130 MB  | 16649
+ org_plan             | 8656 kB |  1082
+ payout_txn_clustered | 127 MB  | 16217
+ payout_txn_shuffled  | 127 MB  | 16217
+ req_log              | 507 MB  | 64868
+(5 rows)
+
+Time: 10.043 ms
+ total_rows | non_null |  nulls   | null_pct 
+------------+----------+----------+----------
+   12000000 |     2400 | 11997600 |  99.9800
+(1 row)
+
+Time: 1234.460 ms (00:01.234)

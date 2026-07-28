@@ -1,0 +1,20 @@
+# B31 실제 스택 재현. Spring Boot WAR를 Tomcat 10.1에 배포한다.
+# 실행은 drive.sh가 순서대로 몰아준다: 요청 -> 컨텍스트 유출 관측 -> 언디플로이 -> Tomcat 로그.
+services:
+  tomcat:
+    build: .
+    image: lab-b31-tomcat
+    container_name: lab-b31-tomcat
+    ports:
+      - "18031:8080"
+
+  # --add-opens 없이 띄운 대조군. Tomcat 10.1의 catalina.sh는 이 옵션을 기본으로 붙이므로
+  # 그 줄을 지우고 띄워, 옵션이 없을 때 무슨 메시지가 나오는지 본다.
+  # 실행: docker compose --profile noopen up -d tomcat-noopen
+  tomcat-noopen:
+    profiles: ["noopen"]
+    image: lab-b31-tomcat
+    container_name: lab-b31-tomcat-noopen
+    ports:
+      - "18032:8080"
+    command: sh -c "sed -i '/java.lang=ALL-UNNAMED/d' bin/catalina.sh && catalina.sh run"

@@ -64,7 +64,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 | A06 ★★★ | **갭 락 데드락** | **[E2]** REPEATABLE READ 갭 락·insert intention 조합, 실무 데드락 최다 빈출 (Tecoble·우형) | 두 세션 SELECT FOR UPDATE 범위 겹침+INSERT → **SHOW ENGINE INNODB STATUS 그래프 해석이 백미** → 해소 3안 | 중간 |
 | A07 ★★ | **롱 트랜잭션 2차 피해** | **[E2]** idle in transaction 하나가 undo 폭증(MySQL)·VACUUM 무력화(PG) | 트랜잭션 열어두고 UPDATE 폭탄 → history list length·n_dead_tup → 종료 후 회복 | 쉬움 |
 | A08 ★ | **buffer pool 사이징** | **[E2]** DBA 파라미터 튜닝의 대표 주제 | innodb_buffer_pool_size 극단 변경 + 동일 부하 → hit ratio·p95 전후 | 쉬움 |
-| A09 ★★★ | **통계 오염 플랜 붕괴** | **[E1]** GoCardless + **Clerk 2026-02 실장애**(ANALYZE 샘플이 NULL만 잡아 오판) | 분포 왜곡 → ANALYZE 전후 플랜 플립 → statistics_target·확장 통계 방어 | 중간 |
+| A09 ★★★ **완료** | **[샘플이 못 본 분포가 만든 플랜 뒤집힘](sessions/A09-planner-stats-flip/)** | **[E1]** GoCardless + **Clerk 2026-02 실장애**(ANALYZE 샘플이 NULL만 잡아 오판) | 분포 왜곡 → ANALYZE 전후 플랜 플립 → statistics_target·확장 통계 방어 | 중간 |
 | A10 ★★ | **복제 지연 관측** | **[E2]** R/W 분리의 통과의례, Seconds_Behind_Master의 거짓말 | 대량 UPDATE로 지연 유발 → SBM 진동 vs GTID 실지연 비교 → 병렬 복제 파라미터 | 중간 |
 | A11 ★★★ | **세미싱크 페일오버 유실** | **[E2]** MySQL 공식 문서가 타임아웃 시 async 폴백과 구 마스터 폐기를 경고. 폴백 창의 유실은 PlanetScale(Shlomi Noach) 기술 해설 — **자사 장애 회고가 아님** | 2노드 semi-sync → 폴백 유도 → kill → 승격 레플리카에 없음(GTID 증명) | 중간 |
 | A12 ★★★ | **GitHub 2018 스플릿 브레인** | **[E1·축소]** 43초 단절로 양쪽 프라이머리 분기, 24h 장애 (github.blog, 원문 확인) | Docker 네트워크 2개=리전 + Orchestrator → disconnect → 분기 → GTID로 페일백 불가 증명 | 어려움 |
@@ -120,7 +120,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 |---|---|---|---|---|
 | B08 ★★ | **GC 스톨 연쇄 타임아웃** | **[E2]** JVM STW → 상류 타임아웃·재시도 연쇄 | 작은 힙 + 할당 폭탄 + k6 → GC 로그와 상류 타임아웃·서킷브레이커 연결 | 중간 |
 | B30 ★★★ | **스레드풀 무한대 큐 OOM** | **[E2]** `Executors.newFixedThreadPool()`이 **무제한 LinkedBlockingQueue**를 써서 유입>처리면 큐가 무한 증가. "무제한 큐는 프로덕션의 조용한 살인자" | `-Xmx128m` + 느린 태스크 폭주 → OOM → **힙 덤프로 LinkedBlockingQueue$Node 시각화** → 바운디드 큐+CallerRunsPolicy | 쉬움 |
-| B31 ★★ | **ThreadLocal·ClassLoader 누수** | **[E2]** remove() 누락 시 워커 스레드가 클래스로더를 붙잡음. Tomcat이 전용 경고 메시지(`checkThreadLocalsForLeaks`)를 찍는 고전 | **[재현 검증 완료]** Tomcat·WAR 없이 URLClassLoader만으로 재현. **조건 3개 필수: 스레드풀 + 매 배포 새 클래스로더 + `ThreadLocal`이 웹앱 클래스로더 안 static 필드에 있을 것.** 3번이 빠지면 안 샌다(실측 생존 1/300). 계측은 OOM 대기 말고 약한참조 생존 수로 — 누수 300/300, remove() 0/300 | **쉬움** |
+| B31 ★★ **완료** | **[ThreadLocal이 붙잡은 클래스로더](sessions/B31-threadlocal-classloader-leak/)** | **[E2]** remove() 누락 시 워커 스레드가 클래스로더를 붙잡음. Tomcat이 전용 경고 메시지(`checkThreadLocalsForLeaks`)를 찍는 고전 | **[재현 검증 완료]** Tomcat·WAR 없이 URLClassLoader만으로 재현. **조건 3개 필수: 스레드풀 + 매 배포 새 클래스로더 + `ThreadLocal`이 웹앱 클래스로더 안 static 필드에 있을 것.** 3번이 빠지면 안 샌다(실측 생존 1/300). 계측은 OOM 대기 말고 약한참조 생존 수로 — 누수 300/300, remove() 0/300 | **쉬움** |
 | B32 ★★ | **파일 디스크립터 누수** | **[E2]** close 누락으로 `Too many open files`. 원인은 HTTP·JDBC 커넥션 미반환·스트림 미종료·JNI 누수. **대표 단일 사건은 없음(§13 참조)** | ulimit -n 256 + close 안 하는 클라이언트 반복 → `/proc/[PID]/fd`·lsof로 증가 관측 → try-with-resources 비교 | 쉬움 |
 | B51 ★★ | **ForkJoinPool commonPool 오염** | **[E2]** **Oracle javadoc 원문 근거**: commonPool은 "used by any ForkJoinTask that is not explicitly submitted to a specified pool", 블로킹에 대해 "no such adjustments are guaranteed in the face of blocked I/O", `shutdown()`으로 종료도 안 됨. **~~국내 실장애 회고(2019)~~ 재검색 3회 실패 — 삭제(§12 참조)** | commonPool에서 긴 블로킹 작업 점유 → 다른 parallel stream 대기 관측 → 전용 풀 지정 비교 | 쉬움 |
 
@@ -162,7 +162,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 
 | # | 문제 | 근거·출처 | 재현 | 난이도 |
 |---|---|---|---|---|
-| B43 ★★★ | **expand-contract 마이그레이션 실패** | **[E2]** 컬럼 추가·삭제 순서가 뒤집히면 배포 중 없는 컬럼 참조(이 부분은 출처 없이 원리로만). `ADD COLUMN`은 ACCESS EXCLUSIVE라 SELECT까지 차단되는 건 사실이나, **PG 11(2018-10) 이후 상수 기본값은 재작성 없이 "very fast even on large tables" — 그냥 걸면 재현 실패한다.** 장시간 락은 PG 10 이하·volatile 기본값·타입 변경·기존 컬럼 NOT NULL 추가에 한정. `lock_timeout` 기본값 0(무제한)이 핵심 훅 | **[재현 검증 완료]** PG 16·300만 행 실측 — 상수 기본값 **4.9ms**(재현 실패), `gen_random_uuid()` volatile **16.9초**, 컬럼추가+UPDATE+SET NOT NULL **37초**. ALTER 중 `SELECT count(*)`는 **19.4초**(기준 0.26~0.31초, 약 62배). **volatile 기본값으로 짜야 재현된다.** 트래픽 중 ALTER → 락 대기 → 3단계(nullable→백필→제약) 대비 | 쉬움~중간 |
+| B43 ★★★ **완료** | **[빠른 DDL도 줄을 서면 전체를 세운다](sessions/B43-expand-contract/)** | **[E2]** 컬럼 추가·삭제 순서가 뒤집히면 배포 중 없는 컬럼 참조(이 부분은 출처 없이 원리로만). `ADD COLUMN`은 ACCESS EXCLUSIVE라 SELECT까지 차단되는 건 사실이나, **PG 11(2018-10) 이후 상수 기본값은 재작성 없이 "very fast even on large tables" — 그냥 걸면 재현 실패한다.** 장시간 락은 PG 10 이하·volatile 기본값·타입 변경·기존 컬럼 NOT NULL 추가에 한정. `lock_timeout` 기본값 0(무제한)이 핵심 훅 | **[재현 검증 완료]** PG 16·300만 행 실측 — 상수 기본값 **4.9ms**(재현 실패), `gen_random_uuid()` volatile **16.9초**, 컬럼추가+UPDATE+SET NOT NULL **37초**. ALTER 중 `SELECT count(*)`는 **19.4초**(기준 0.26~0.31초, 약 62배). **volatile 기본값으로 짜야 재현된다.** 트래픽 중 ALTER → 락 대기 → 3단계(nullable→백필→제약) 대비 | 쉬움~중간 |
 | B44 ★★★ | **"설정 배포도 배포다"** | **[E1]** Fastly 2021(정상 고객 설정이 잠복 버그 촉발 → **네트워크 85% 에러**, 감지 1분·49분 내 95% 복구) / CrowdStrike 2024(Channel File이 Validator 버그 통과 → 경계 밖 메모리 읽기 → 대량 BSOD) / Datadog 2023(자동 systemd 업데이트가 Cilium 라우트 삭제, **업데이트 창이 06:00 UTC로 동기화돼 5개 리전·3개 클라우드 동시 다운**). 셋 다 원문 확인 | 설정 1줄이 전 인스턴스를 크래시 루프에 빠뜨리는 것 재현 → **카나리·검증 게이트 유무 대비** | 쉬움(개념) |
 | B45 ★★ | **스크립트 오류로 고객 데이터 삭제** | **[E1]** Atlassian 2022: 스크립트가 app ID 대신 **site ID를 받아 883개 사이트(775 고객) 영구 삭제**. 무검증 신뢰 + 소프트 딜리트 부재로 복구 최대 14일 (원문 확인) | 삭제 스크립트가 잘못된 스코프를 잡는 것 재현 → **dry-run·소프트딜리트·타입 검증·피어리뷰** 전후 | 쉬움 |
 | B46 ★★ | **left-pad 2016 공급망 중단** | **[E1]** 11줄 패키지 포함 273개 언퍼블리시로 2.5시간 빌드 연쇄 실패, npm 정책 변경의 계기 (공식 포스트 확인) | Verdaccio에 의존 패키지 게시 후 삭제 → 하위 빌드 실패 → 락파일·벤더링·프록시 캐시 | 쉬움 |
@@ -472,15 +472,15 @@ B38(Log4Shell)·B40(SSRF)·B41(역직렬화)·B42(xz)는 **격리된 로컬 환�
 ## 13. 진행 체크리스트 (169개, 전 세션 미시작)
 
 **A 트랙 (21)**
-- [ ] A01 정수 PK 고갈 · [ ] A02 MDL 폭풍 · [ ] A03 utf8mb4 · [ ] A04 락 에스컬레이션 · [ ] A05 커넥션 폭풍 · [ ] A06 갭 락 · [ ] A07 롱 트랜잭션 · [ ] A08 buffer pool · [ ] A09 통계 오염 · [ ] A10 복제 지연 · [ ] A11 세미싱크 유실
+- [ ] A01 정수 PK 고갈 · [ ] A02 MDL 폭풍 · [ ] A03 utf8mb4 · [ ] A04 락 에스컬레이션 · [ ] A05 커넥션 폭풍 · [ ] A06 갭 락 · [ ] A07 롱 트랜잭션 · [ ] A08 buffer pool · [x] A09 통계 오염 · [ ] A10 복제 지연 · [ ] A11 세미싱크 유실
 - [ ] A12 GitHub 스플릿브레인 · [ ] A13 GitLab 재구축 · [ ] A14 XID · [ ] A15 fsyncgate · [ ] A16 OOM Killer · [ ] A17 UUID 스플릿 · [x] A18 Uber 쓰기 증폭 · [ ] A19 SLRU 절벽 · [ ] A20 CRDB 쿼럼 · [ ] A21 Figma 논리복제
 
 **B 트랙 (50)**
 - [ ] B01 HikariCP · [ ] B02 스탬피드 · [ ] B03 read-your-writes · [ ] B04 페이지네이션 · [ ] B05 리트라이 폭풍 · [ ] B06 핫 로우 · [ ] B07 coalescing · [ ] B08 GC 스톨 · [ ] B09 Kafka 리밸런스 · [ ] B10 클럭 스큐 · [ ] B11 Redis 커넥션 · [ ] B12 memcache lease · [ ] B13 샤딩
 - [ ] B14 정규식 백트래킹 · [ ] B15 ORDER BY RAND · [ ] B16 Soft Delete · [ ] B17 FLOAT 돈 계산 · [ ] B18 DST · [ ] B19 Knight 플래그 · [ ] B20 500마일 · [ ] B21 S3 가드레일 · [ ] B22 자기 철회 · [ ] B23 테넌트 격리
-- [ ] B24 분산락 펜싱 · [ ] B25 self-invocation · [ ] B26 트랜잭션 내 외부호출 · [ ] B27 exactly-once · [ ] B28 poison DLQ · [ ] B29 스케줄러 중복 · [ ] B30 무한큐 OOM · [ ] B31 ThreadLocal 누수 · [ ] B32 FD 누수 · [ ] B51 commonPool 오염
+- [ ] B24 분산락 펜싱 · [ ] B25 self-invocation · [ ] B26 트랜잭션 내 외부호출 · [ ] B27 exactly-once · [ ] B28 poison DLQ · [ ] B29 스케줄러 중복 · [ ] B30 무한큐 OOM · [x] B31 ThreadLocal 누수 · [ ] B32 FD 누수 · [ ] B51 commonPool 오염
 - [ ] B33 keep-alive 502 · [ ] B34 타임아웃 계층 · [ ] B35 Actuator heapdump · [ ] B36 JWT alg=none · [ ] B37 압축폭탄 · [ ] B38 Log4Shell · [ ] B39 XXE · [ ] B40 SSRF IMDS · [ ] B41 역직렬화 · [ ] B42 xz
-- [ ] B43 expand-contract · [ ] B44 설정배포 · [ ] B45 삭제 스크립트 · [ ] B46 left-pad · [ ] B47 Roblox · [ ] B48 카디널리티 · [ ] B49 protobuf
+- [x] B43 expand-contract · [ ] B44 설정배포 · [ ] B45 삭제 스크립트 · [ ] B46 left-pad · [ ] B47 Roblox · [ ] B48 카디널리티 · [ ] B49 protobuf
 
 **I 트랙 (11)**
 - [ ] I01 인증서 만료 · [ ] I02 CPU 스로틀링 · [ ] I03 conntrack · [ ] I04 포트/TIME_WAIT · [ ] I05 컨테이너 JVM · [ ] I06 헬스체크 · [ ] I07 롤링 유실 · [ ] I08 디스크 풀 · [ ] I09 DNS TTL · [ ] I10 IOPS 절벽 · [ ] I11 Toyota

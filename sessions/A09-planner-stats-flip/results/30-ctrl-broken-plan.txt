@@ -1,0 +1,22 @@
+                                                                        QUERY PLAN                                                                        
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=12.44..12.45 rows=1 width=12) (actual time=1.389..1.390 rows=1 loops=1)
+   Buffers: shared hit=30
+   ->  Merge Join  (cost=8.88..12.43 rows=1 width=4) (actual time=0.786..1.215 rows=2400 loops=1)
+         Merge Cond: (p.org_id = r.org_id)
+         Buffers: shared hit=30
+         ->  Index Scan using org_plan_org_id_idx on org_plan p  (cost=0.42..6289.42 rows=200000 width=8) (actual time=0.009..0.028 rows=101 loops=1)
+               Buffers: shared hit=4
+         ->  Sort  (cost=8.46..8.47 rows=1 width=4) (actual time=0.766..0.886 rows=2400 loops=1)
+               Sort Key: r.org_id
+               Sort Method: quicksort  Memory: 97kB
+               Buffers: shared hit=26
+               ->  Index Scan using req_log_blocked_until_idx on req_log r  (cost=0.43..8.45 rows=1 width=4) (actual time=0.025..0.475 rows=2400 loops=1)
+                     Index Cond: (blocked_until IS NOT NULL)
+                     Buffers: shared hit=26
+ Planning:
+   Buffers: shared hit=202
+ Planning Time: 1.573 ms
+ Execution Time: 1.506 ms
+(18 rows)
+

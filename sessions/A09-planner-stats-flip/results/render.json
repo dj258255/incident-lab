@@ -1,0 +1,95 @@
+{
+  "images": [
+    {
+      "type": "term",
+      "out": "01-flip.png",
+      "title": "statistics target 1  ·  ANALYZE 뒤 null_frac=1, 추정 1행 대 실제 2,400행",
+      "font": 20,
+      "lines": [
+        "$ ALTER TABLE req_log ALTER COLUMN ... SET STATISTICS 1;   -- 샘플 300행",
+        "$ ANALYZE req_log;",
+        "    attname    | null_frac | n_distinct | hist",
+        "---------------+-----------+------------+------",
+        [[" blocked_until |         ", "fg"], ["1", "red"], [" |          0 |", "fg"]],
+        " id            |         0 |         -1 |    2",
+        " org_id        |         0 |         98 |    2",
+        " status_code   |         0 |          1 |",
+        "(4 rows)",
+        "",
+        "-- 실제 분포",
+        "  total   | non_null |     real_null_frac",
+        "----------+----------+------------------------",
+        [[" 12000000 |     ", "fg"], ["2400", "green"], [" | ", "fg"], ["0.99980000000000000000", "green"]],
+        "(1 row)",
+        "",
+        "$ EXPLAIN (ANALYZE, BUFFERS)",
+        "  SELECT count(*) FROM req_log r",
+        "    JOIN ip_rule i ON i.org_id = r.org_id AND i.rule_kind = 'burst'",
+        "   WHERE r.blocked_until IS NOT NULL;",
+        " Aggregate  (cost=646.89..646.90 rows=1 width=8) (actual time=7734.102..7734.103 rows=1 loops=1)",
+        [["   Buffers: shared hit=", "fg"], ["449402", "red"]],
+        [["   ->  ", "fg"], ["Nested Loop", "red"], ["  (cost=0.86..646.89 ", "fg"], ["rows=1", "red"], [" width=0) (actual time=0.077..7733.237 ", "fg"], ["rows=2400", "red"], [" loops=1)", "fg"]],
+        [["         ->  Index Scan using req_log_blocked_until_idx on req_log r  (cost=0.43..8.45 ", "fg"], ["rows=1", "red"], [" width=4) (actual time=0.053..1.509 ", "fg"], ["rows=2400", "red"], [" loops=1)", "fg"]],
+        "               Index Cond: (blocked_until IS NOT NULL)",
+        [["         ->  Index Scan using ip_rule_org_id_idx on ip_rule i  (cost=0.43..638.43 rows=1 width=4) (actual time=0.007..3.218 rows=1 ", "fg"], ["loops=2400", "red"], [")", "fg"]],
+        "               Index Cond: (org_id = r.org_id)",
+        "               Filter: (rule_kind = 'burst'::text)",
+        [["               Rows Removed by Filter: ", "fg"], ["19999", "red"]],
+        [[" Execution Time: ", "fg"], ["7734.195 ms", "red"]]
+      ]
+    },
+    {
+      "type": "term",
+      "out": "02-fixed.png",
+      "title": "statistics target 1000  ·  ANALYZE 한 번으로 플랜이 해시 조인으로 돌아온다",
+      "font": 20,
+      "lines": [
+        "$ ALTER TABLE req_log ALTER COLUMN ... SET STATISTICS 1000;   -- 샘플 300,000행",
+        "$ ANALYZE req_log;",
+        "    attname    | null_frac  |   n_distinct   | hist",
+        "---------------+------------+----------------+------",
+        [[" blocked_until | ", "fg"], ["0.99982333", "green"], [" | -0.00017666817 |   53", "fg"]],
+        " id            |          0 |             -1 | 1001",
+        " org_id        |          0 |            100 |",
+        " status_code   |          0 |              2 |",
+        "(4 rows)",
+        "",
+        "$ EXPLAIN (ANALYZE, BUFFERS) ...같은 쿼리...",
+        " Aggregate  (cost=41931.50..41931.51 rows=1 width=8) (actual time=163.975..163.978 rows=1 loops=1)",
+        [["   Buffers: shared hit=", "fg"], ["16675", "green"]],
+        [["   ->  ", "fg"], ["Hash Join", "green"], ["  (cost=87.03..41927.95 rows=1420 width=0) (actual time=0.964..163.772 rows=2400 loops=1)", "fg"]],
+        "         Hash Cond: (i.org_id = r.org_id)",
+        "         ->  Seq Scan on ip_rule i  (cost=0.00..41649.00 rows=67 width=4) (actual time=0.034..162.344 rows=100 loops=1)",
+        "               Filter: (rule_kind = 'burst'::text)",
+        "               Rows Removed by Filter: 1999900",
+        "         ->  Hash  (cost=60.53..60.53 rows=2120 width=4) (actual time=0.900..0.901 rows=2400 loops=1)",
+        "               Buckets: 4096  Batches: 1  Memory Usage: 117kB",
+        [["               ->  Index Scan using req_log_blocked_until_idx on req_log r  (cost=0.43..60.53 ", "fg"], ["rows=2120", "green"], [" width=4) (actual time=0.027..0.529 ", "fg"], ["rows=2400", "green"], [" loops=1)", "fg"]],
+        "                     Index Cond: (blocked_until IS NOT NULL)",
+        [[" Execution Time: ", "fg"], ["164.090 ms", "green"]]
+      ]
+    },
+    {
+      "type": "bar",
+      "out": "03-exec-time.png",
+      "title": "같은 쿼리, 같은 데이터. ANALYZE 한 번으로 갈린 실행 시간 (ms, 5회 중앙값)",
+      "bars": [
+        {"label": "target 1 (샘플 300행)", "value": 7734.195, "color": "red"},
+        {"label": "target 1000 (샘플 300,000행)", "value": 164.09, "color": "green"}
+      ],
+      "note": "PostgreSQL 16.14, req_log 12,000,000행 중 non-null 2,400행(99.98% NULL), EXPLAIN (ANALYZE, BUFFERS) 5회 중앙값, 2026-07-28"
+    },
+    {
+      "type": "bar",
+      "out": "04-sampling.png",
+      "title": "statistics target별로 ANALYZE가 null_frac을 1(=100% NULL)로 잡은 비율 (%)",
+      "bars": [
+        {"label": "1 (300행)", "value": 97.5, "color": "red"},
+        {"label": "10 (3,000행)", "value": 50.0, "color": "red"},
+        {"label": "100 (30,000행)", "value": 10.0, "color": "yellow"},
+        {"label": "1000 (300,000행)", "value": 0.0, "color": "green"}
+      ],
+      "note": "샘플 = 300 x target. 같은 데이터에 ANALYZE만 반복(40/40/10/5회). 실제 null_frac 0.9998, non-null 2,400행. PostgreSQL 16.14, 2026-07-28"
+    }
+  ]
+}

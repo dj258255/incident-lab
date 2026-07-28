@@ -1,0 +1,23 @@
+$ ALTER TABLE req_log ALTER COLUMN ... SET STATISTICS 1;   -- 샘플 300행
+$ ANALYZE req_log;                                          -- 1회째에 아래 상태
+    attname    | null_frac | n_distinct | hist 
+---------------+-----------+------------+------
+ blocked_until |         1 |          0 |     
+ id            |         0 |         -1 |    2
+ org_id        |         0 |         98 |    2
+ status_code   |         0 |          1 |     
+(4 rows)
+
+-- 실제 분포
+  total   | non_null |     real_null_frac     
+----------+----------+------------------------
+ 12000000 |     2400 | 0.99980000000000000000
+(1 row)
+
+-- 플래너가 잡은 추정 행수
+                                       QUERY PLAN                                        
+-----------------------------------------------------------------------------------------
+ Index Scan using req_log_blocked_until_idx on req_log  (cost=0.43..8.45 rows=1 width=8)
+   Index Cond: (blocked_until IS NOT NULL)
+(2 rows)
+

@@ -1,0 +1,34 @@
+lab-b31-leak  | == B31 ThreadLocal·ClassLoader 누수 재현 (JDK 21.0.11+10-LTS) ==
+lab-b31-leak  |   웹앱 클래스 경로 = /tmp/webapp (실행기 클래스패스에는 없다)
+lab-b31-leak  |   JVM 인자 = []
+lab-b31-leak  |   계측 = 폐기한 클래스로더에 WeakReference를 걸고 GC 후 생존 수를 센다
+lab-b31-leak  | 
+lab-b31-leak  | [구조 확인] 재배포 1회분으로 참조 고리를 확인한다
+lab-b31-leak  |   웹앱 클래스   = webapp.RequestContextHolder  <- webapp-probe (URLClassLoader)
+lab-b31-leak  |   키(맵에 들어갈 ThreadLocal)를 담은 static 필드 = RequestContextHolder.CTX (java.lang.ThreadLocal, ThreadLocal 여부 true)
+lab-b31-leak  |   값 타입       = webapp.RequestContextHolder$Ctx  <- webapp-probe
+lab-b31-leak  |   값과 키의 클래스로더가 같은가 = true   <- 값에서 클래스로더를 거쳐 키로 되짚어진다, 그래서 약한참조 키가 죽지 않는다
+lab-b31-leak  | 
+lab-b31-leak  | [실험 1] 누수: ThreadLocal이 웹앱 클래스로더 안 static 필드 + remove() 없음
+lab-b31-leak  |   재배포(새 클래스로더) 300회, 워커 스레드 1개를 끝까지 유지
+lab-b31-leak  |   생존 클래스로더 = 300 / 300   <- 폐기했어야 할 클래스로더가 전부 남았다
+lab-b31-leak  |   Metaspace 증가분 = 2.0 MB (총 3.1 MB)
+lab-b31-leak  | 
+lab-b31-leak  | [실험 2] 해소: 같은 조건에서 try/finally로 remove() 호출
+lab-b31-leak  |   재배포(새 클래스로더) 300회, 워커 스레드 1개를 끝까지 유지
+lab-b31-leak  |   생존 클래스로더 = 0 / 300   <- 전부 수거됐다
+lab-b31-leak  |   Metaspace 증가분 = 0.2 MB (총 3.3 MB)
+lab-b31-leak  | 
+lab-b31-leak  | [실험 3] 대조: ThreadLocal이 웹앱 클래스로더 밖 + remove() 없음
+lab-b31-leak  |   재배포(새 클래스로더) 300회, 워커 스레드 1개를 끝까지 유지
+lab-b31-leak  |   생존 클래스로더 = 1 / 300   <- 마지막 값 하나만 남는다. 덮어쓰기가 이전 것을 놓아주기 때문이다
+lab-b31-leak  |   Metaspace 증가분 = 0.0 MB (총 3.4 MB)
+lab-b31-leak  | 
+lab-b31-leak  | [해소 2] 누수 실험의 워커 스레드를 종료(스레드 갱신)한 뒤 다시 셈
+lab-b31-leak  |   생존 클래스로더 = 0 / 300   <- 스레드가 죽으면 그 스레드의 ThreadLocalMap도 같이 죽는다
+lab-b31-leak  |   Metaspace 총 사용량 = 1.9 MB
+lab-b31-leak  | 
+lab-b31-leak  | == 요약 (재배포 300회, JDK 21) ==
+lab-b31-leak  |   누수 (웹앱 안 ThreadLocal, remove 없음)    생존 300 / 300  Metaspace 증가분 2.0 MB
+lab-b31-leak  |   해소 (같은 조건 + try/finally remove)      생존 0 / 300    Metaspace 증가분 0.2 MB
+lab-b31-leak  |   대조 (ThreadLocal이 웹앱 밖, remove 없음)  생존 1 / 300    Metaspace 증가분 0.0 MB
