@@ -1,0 +1,23 @@
+--- 인덱스 10개 테이블(ff100), 비인덱스 컬럼 1만 행 갱신
+                                      QUERY PLAN                                      
+--------------------------------------------------------------------------------------
+ Update on t10 (actual time=192.693..192.693 rows=0 loops=1)
+   WAL: records=132851 fpi=1434 bytes=17683522
+   ->  Index Scan using t10_pkey on t10 (actual time=0.066..5.901 rows=10000 loops=1)
+         Index Cond: (id <= 10000)
+         WAL: records=224 fpi=224 bytes=65504
+ Planning Time: 4.084 ms
+ Execution Time: 192.764 ms
+(7 rows)
+
+--- 인덱스 0개 테이블(ff100), 같은 갱신
+                                     QUERY PLAN                                     
+------------------------------------------------------------------------------------
+ Update on t0 (actual time=23.195..23.196 rows=0 loops=1)
+   WAL: records=30017 fpi=224 bytes=5245672
+   ->  Index Scan using t0_pkey on t0 (actual time=0.052..2.972 rows=10000 loops=1)
+         Index Cond: (id <= 10000)
+ Planning Time: 0.575 ms
+ Execution Time: 23.235 ms
+(6 rows)
+

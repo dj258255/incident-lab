@@ -1,0 +1,21 @@
+# A18 재현 환경
+# Uber 2016 글의 쓰기 증폭 주장을 PostgreSQL에서 조건별로 계측한다.
+services:
+  postgres:
+    image: postgres:17.5
+    container_name: a18-pg
+    command:
+      - postgres
+      - -c
+      - shared_buffers=1GB
+      - -c
+      - wal_compression=off      # WAL 크기를 비교 지표로 쓰므로 압축을 꺼서 왜곡을 없앤다
+    environment:
+      POSTGRES_PASSWORD: lab
+      POSTGRES_DB: spoon
+    ports: ["15432:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
