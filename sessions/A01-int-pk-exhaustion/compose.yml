@@ -1,0 +1,22 @@
+# A01 재현 환경
+# INT PK가 21억에 닿는 순간과, 그 뒤 무중단으로 BIGINT로 옮기는 과정을 잰다.
+# 전환 중에도 쓰기가 계속 들어와야 "무중단"이 검증되므로 자원을 고정한다.
+services:
+  mysql:
+    image: mysql:8.4.3
+    container_name: a01-mysql
+    cpus: 4
+    mem_limit: 2g
+    command:
+      - --innodb-buffer-pool-size=1G
+      - --innodb-flush-log-at-trx-commit=1
+      - --log-bin=binlog
+    environment:
+      MYSQL_ROOT_PASSWORD: lab
+      MYSQL_DATABASE: spoon
+    ports: ["13318:3306"]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      interval: 3s
+      timeout: 3s
+      retries: 30

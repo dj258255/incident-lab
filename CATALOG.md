@@ -56,7 +56,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 
 | # | 문제 | 근거·출처 | 재현 | 난이도 |
 |---|---|---|---|---|
-| A01 ★★★ | **정수 PK 고갈** | **[E1]** Basecamp 2018 int 최대치로 5h 쓰기 중단, GitLab 전사 bigint 전환 (crunchydata.com) | 시퀀스를 21억 직전으로 → INSERT 에러 → 무중단 bigint 마이그레이션(신규 컬럼+백필+스왑). MySQL·PG 비교 | 쉬움 |
+| A01 ★★★ **완료** | **[정수 PK 고갈](sessions/A01-int-pk-exhaustion/)** | **[E1]** Basecamp 2018 int 최대치로 5h 쓰기 중단, GitLab 전사 bigint 전환 (crunchydata.com) | 시퀀스를 21억 직전으로 → INSERT 에러 → 무중단 bigint 마이그레이션(신규 컬럼+백필+스왑). MySQL·PG 비교 | 쉬움 |
 | A02 ★★★ **완료** | **[0.09초짜리 DDL이 20초 동안 조회를 세웠다](sessions/A02-mdl-storm/)** | **[E2]** 매뉴얼이 "a pending exclusive metadata lock ... blocks subsequent transactions on the table"로 직접 서술. 8.4는 ADD COLUMN이 INSTANT라 실행 시간이 0에 가까움 | 롱 트랜잭션·DDL·조회를 한 타임라인에 올려 4조건 대조 → 겹칠 때만 20초 전면 정지. **각각은 무해한데 만나는 순간 장애가 되는 구도와, 완료 0건인 초가 집계에서 사라지는 함정이 백미** | 쉬움 |
 | A03 ★ | **utf8 vs utf8mb4** | **[E2]** MySQL utf8=3바이트 가짜 UTF-8, 이모지 절단 만년 함정 | 이모지 INSERT 에러 → utf8mb4 전환 + 인덱스 767바이트 제한 | 쉬움 |
 | A04 ★★ | **MSSQL 락 에스컬레이션** | **[E2]** 약 5,000 로우 락 초과 시 테이블 락 승격(금융권 상용 DBMS 운영) | 대량 UPDATE → sys.dm_tran_locks 관찰 → LOCK_ESCALATION·배치 분할 | 쉬움 |
@@ -475,7 +475,7 @@ B38(Log4Shell)·B40(SSRF)·B41(역직렬화)·B42(xz)는 **격리된 로컬 환�
 ## 13. 진행 체크리스트 (169개, 전 세션 미시작)
 
 **A 트랙 (21)**
-- [ ] A01 정수 PK 고갈 · [x] A02 MDL 폭풍 · [ ] A03 utf8mb4 · [ ] A04 락 에스컬레이션 · [ ] A05 커넥션 폭풍 · [x] A06 갭 락 · [ ] A07 롱 트랜잭션 · [x] A08 buffer pool · [x] A09 통계 오염 · [ ] A10 복제 지연 · [ ] A11 세미싱크 유실
+- [x] A01 정수 PK 고갈 · [x] A02 MDL 폭풍 · [ ] A03 utf8mb4 · [ ] A04 락 에스컬레이션 · [ ] A05 커넥션 폭풍 · [x] A06 갭 락 · [ ] A07 롱 트랜잭션 · [x] A08 buffer pool · [x] A09 통계 오염 · [ ] A10 복제 지연 · [ ] A11 세미싱크 유실
 - [ ] A12 GitHub 스플릿브레인 · [ ] A13 GitLab 재구축 · [ ] A14 XID · [ ] A15 fsyncgate · [ ] A16 OOM Killer · [x] A17 UUID 스플릿 · [x] A18 Uber 쓰기 증폭 · [ ] A19 SLRU 절벽 · [ ] A20 CRDB 쿼럼 · [ ] A21 Figma 논리복제
 
 **B 트랙 (50)**

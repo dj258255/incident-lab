@@ -1,0 +1,38 @@
+# R04 재현 환경
+# CDC 컨슈머가 멈춰도 복제 슬롯이 열려 있으면 WAL이 무한 누적된다.
+# 디스크가 차는 것까지 보이려면 볼륨 크기를 제한해야 하는데, Docker Desktop에서는
+# 블록 장치 쿼터를 걸 수 없다. 대신 max_slot_wal_keep_size로 상한을 두고
+# 그 상한에 닿았을 때 슬롯이 어떻게 되는지를 본다.
+services:
+  postgres:
+    image: postgres:17.5
+    container_name: r04-pg
+    cpus: 4
+    mem_limit: 2g
+    command:
+      - postgres
+      - -c
+      - wal_level=logical
+      - -c
+      - max_replication_slots=10
+      - -c
+      - max_wal_senders=10
+      # 체크포인트를 자주 돌게 해서 WAL 재활용이 정상 동작하는 상태를 만든다.
+      # 그래야 "슬롯 때문에 못 지운다"가 슬롯 탓임을 분리할 수 있다.
+      - -c
+      - checkpoint_timeout=30s
+      - -c
+      - max_wal_size=256MB
+      - -c
+      - min_wal_size=64MB
+      - -c
+      - log_checkpoints=on
+    environment:
+      POSTGRES_PASSWORD: lab
+      POSTGRES_DB: spoon
+    ports: ["15433:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
