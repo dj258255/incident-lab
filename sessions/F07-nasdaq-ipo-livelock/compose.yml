@@ -1,0 +1,10 @@
+# F07 IPO 크로스 재계산 라이브락 재현. 기록 직전 취소가 오면 처음부터 다시 계산한다.
+# 실행: docker compose up   (자바 한 파일을 컨테이너에서 컴파일·실행, 버그·해소 A·해소 B 순서대로 출력)
+services:
+  cross:
+    image: eclipse-temurin:21-jdk-alpine
+    container_name: lab-f07-cross
+    working_dir: /app
+    volumes:
+      - ./app:/app
+    command: sh -c "javac Cross.java && java -Dorders=8000 -Dticks=400 -DmaxRecalc=200 -DcapMs=1000 Cross"
