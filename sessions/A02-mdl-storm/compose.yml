@@ -1,0 +1,49 @@
+# A02 재현 환경
+# 메타데이터 락은 트랜잭션이 끝날 때까지 유지된다. 그래서 열어 둔 트랜잭션 하나가 DDL을
+# 막고, 막힌 DDL이 그 뒤의 조회를 막는다.
+#
+# performance_schema를 켠 것이 이 세션의 조건이다. metadata_locks 테이블이 없으면
+# 누가 무엇을 쥐고 누가 기다리는지 보여줄 수 없다. 다른 세션에서는 메모리를 아끼려고 껐다.
+services:
+  mysql:
+    image: mysql:8.4.3
+    container_name: a02-mysql
+    cpus: 2
+    mem_limit: 2g
+    command:
+      - --innodb-buffer-pool-size=1G
+      - --innodb-buffer-pool-instances=1
+      - --max-connections=200
+      - --performance-schema=ON
+      # 기본값은 31536000초(1년)다. 즉 DDL은 사실상 무한정 기다린다.
+      # 조건별로 세션에서 SET SESSION lock_wait_timeout 으로 바꿔 가며 잰다.
+      - --skip-log-bin
+    environment:
+      MYSQL_ROOT_PASSWORD: lab
+      MYSQL_DATABASE: lab
+    ports: ["13311:3306"]
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - a02-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+
+  load:
+    build: ./scripts
+    image: a02-load
+    profiles: ["tools"]
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./scripts:/app:ro
+      - ./results:/results
+    working_dir: /app
+    environment:
+      MYSQL_HOST: mysql
+
+volumes:
+  a02-data:
