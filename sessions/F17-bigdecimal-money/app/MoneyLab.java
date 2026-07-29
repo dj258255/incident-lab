@@ -135,15 +135,17 @@ public class MoneyLab {
             sumEven = sumEven.add(ev);
         }
 
-        long exactSum = sumExact.setScale(0).longValueExact(); // .5원 짝수 개의 합이라 정수
+        // 자리를 줄이는 호출에는 모드를 반드시 붙인다. 이 세 값은 .5원 짝수 개의 합이라 정수이므로
+        // UNNECESSARY로 선언해 두면, 전제가 깨지는 날 조용히 반올림되는 대신 예외로 드러난다.
+        long exactSum = sumExact.setScale(0, RoundingMode.UNNECESSARY).longValueExact();
         BigDecimal upBias = sumUp.subtract(sumExact);
         BigDecimal evenBias = sumEven.subtract(sumExact);
         System.out.println("[실험 3] 0.5원 경계 수수료 100,000건을 원 단위 반올림 (요율 0.15%, 고정 시드 7)");
         System.out.println(String.format(Locale.US, "  정확 합계      = %,d 원", exactSum));
         System.out.println(String.format(Locale.US, "  HALF_UP 합계   = %,d 원 (정확 대비 %+,d 원)",
-                sumUp.longValueExact(), upBias.setScale(0).longValueExact()));
+                sumUp.longValueExact(), upBias.setScale(0, RoundingMode.UNNECESSARY).longValueExact()));
         System.out.println(String.format(Locale.US, "  HALF_EVEN 합계 = %,d 원 (정확 대비 %+,d 원, 내림 %,d건/올림 %,d건)",
-                sumEven.longValueExact(), evenBias.setScale(0).longValueExact(), evenDown, evenUp));
+                sumEven.longValueExact(), evenBias.setScale(0, RoundingMode.UNNECESSARY).longValueExact(), evenDown, evenUp));
         System.out.println();
         return new Exp3(exactSum, upBias, evenBias, evenDown, evenUp);
     }
@@ -183,7 +185,8 @@ public class MoneyLab {
 
         // 3) 수수료 반올림은 HALF_EVEN으로: 편향 비교
         System.out.println(String.format(Locale.US, "[해소 3] HALF_EVEN 편향 %+,d 원 vs HALF_UP 편향 %+,d 원 (100,000건)",
-                e3.evenBias().setScale(0).longValueExact(), e3.upBias().setScale(0).longValueExact()));
+                e3.evenBias().setScale(0, RoundingMode.UNNECESSARY).longValueExact(),
+                e3.upBias().setScale(0, RoundingMode.UNNECESSARY).longValueExact()));
 
         // 4) 중복 제거는 scale 통일 또는 compareTo 기반 컬렉션으로
         BigDecimal a = new BigDecimal("2500.0");

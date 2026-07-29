@@ -14,6 +14,6 @@ BEGIN
         RAISE EXCEPTION '원장 불변식 위반: 잔고 합계 %주가 발행총수 %주를 초과', v_total, v_issued;
     END IF;
     RETURN NULL;
-END $$ LANGUAGE plpgsql;
+END $$ LANGUAGE plpgsql VOLATILE;   -- 04와 같은 이유로 명시한다. 06 참고
 
 \echo '재설정 완료. 잔고 합계 970,000주, 발행총수까지 여유분 30,000주. 트리거는 잠금 없는 기본형.'

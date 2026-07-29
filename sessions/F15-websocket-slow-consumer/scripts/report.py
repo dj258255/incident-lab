@@ -85,8 +85,14 @@ for m in arms:
                          "color": "red" if blocked > 5 else "green"})
 
 print("\n발행/초는 서버가 실제로 만들어 내보낸 틱이다. 대조군 2,909가 정상값이다.")
+print("다만 unbounded는 110초, direct-stalled는 세션이 끊기기 전후가 섞인 값이라")
+print("다른 조건과 같은 잣대가 아니다. 자세한 것은 reproduce.md를 보라.")
 print("생산자 정지는 브로드캐스트 스레드가 전송에 막혀 있던 누적 시간이다.")
-print("느린큐는 느린 구독자 몫으로 서버가 들고 있던 메모리의 최댓값이다.")
+print("느린큐는 느린 구독자에게 보내려고 큐에 걸어 둔 페이로드 바이트의 합계다.")
+print("힙 점유량이 아니다. 메시지 객체와 큐 노드의 부가 비용은 빠져 있다.")
+print("느린구독자 칸은 클라이언트 측정에서 뽑는다. 한 바이트도 안 읽는 클라이언트는")
+print("서버가 세션을 닫아도 그것을 감지하지 못하므로 stalled 조건의 '끊지 않음'은")
+print("믿으면 안 된다. results/raw/serverlog-*-stalled-*.txt 의 disconnect 줄을 볼 것.")
 
 # 무제한 큐의 힙 증가 곡선
 curve = []

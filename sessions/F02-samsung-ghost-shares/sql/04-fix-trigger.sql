@@ -16,7 +16,7 @@ BEGIN
         RAISE EXCEPTION '원장 불변식 위반: 잔고 합계 %주가 발행총수 %주를 초과', v_total, v_issued;
     END IF;
     RETURN NULL;
-END $$ LANGUAGE plpgsql;
+END $$ LANGUAGE plpgsql VOLATILE;   -- VOLATILE은 기본값이지만 명시한다. 06의 advisory lock 해소가 이 값에 달려 있다
 
 CREATE TRIGGER trg_total_cap
 AFTER INSERT OR UPDATE OF shares ON holdings
