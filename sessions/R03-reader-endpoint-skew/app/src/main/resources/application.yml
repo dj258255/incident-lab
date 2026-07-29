@@ -1,0 +1,14 @@
+server.port: 8080
+spring:
+  datasource:
+    url: jdbc:mysql://reader.internal:3306/spoon?connectTimeout=2000
+    username: root
+    password: lab
+    hikari:
+      maximum-pool-size: ${POOL:12}
+      minimum-idle: ${POOL:12}
+      # 이 값이 모든 커넥션에서 같으면 만료 시각이 뭉친다.
+      # Hikari는 실제로는 여기에 소량의 흔들림을 준다. 그 크기가 충분한지가 이 세션의 질문이다.
+      max-lifetime: ${MAXLIFE:30000}
+      connection-timeout: 3000
+logging.level.root: WARN

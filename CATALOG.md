@@ -56,7 +56,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 
 | # | 문제 | 근거·출처 | 재현 | 난이도 |
 |---|---|---|---|---|
-| A01 ★★★ | **정수 PK 고갈** | **[E1]** Basecamp 2018 int 최대치로 5h 쓰기 중단, GitLab 전사 bigint 전환 (crunchydata.com) | 시퀀스를 21억 직전으로 → INSERT 에러 → 무중단 bigint 마이그레이션(신규 컬럼+백필+스왑). MySQL·PG 비교 | 쉬움 |
+| A01 ★★★ **완료** | **[정수 PK 고갈](sessions/A01-int-pk-exhaustion/)** | **[E1]** Basecamp 2018 int 최대치로 5h 쓰기 중단, GitLab 전사 bigint 전환 (crunchydata.com) | 시퀀스를 21억 직전으로 → INSERT 에러 → 무중단 bigint 마이그레이션(신규 컬럼+백필+스왑). MySQL·PG 비교 | 쉬움 |
 | A02 ★★★ **완료** | **[0.09초짜리 DDL이 20초 동안 조회를 세웠다](sessions/A02-mdl-storm/)** | **[E2]** 매뉴얼이 "a pending exclusive metadata lock ... blocks subsequent transactions on the table"로 직접 서술. 8.4는 ADD COLUMN이 INSTANT라 실행 시간이 0에 가까움 | 롱 트랜잭션·DDL·조회를 한 타임라인에 올려 4조건 대조 → 겹칠 때만 20초 전면 정지. **각각은 무해한데 만나는 순간 장애가 되는 구도와, 완료 0건인 초가 집계에서 사라지는 함정이 백미** | 쉬움 |
 | A03 ★ | **utf8 vs utf8mb4** | **[E2]** MySQL utf8=3바이트 가짜 UTF-8, 이모지 절단 만년 함정 | 이모지 INSERT 에러 → utf8mb4 전환 + 인덱스 767바이트 제한 | 쉬움 |
 | A04 ★★ | **MSSQL 락 에스컬레이션** | **[E2]** 약 5,000 로우 락 초과 시 테이블 락 승격(금융권 상용 DBMS 운영) | 대량 UPDATE → sys.dm_tran_locks 관찰 → LOCK_ESCALATION·배치 분할 | 쉬움 |
@@ -212,7 +212,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 |---|---|---|---|---|
 | R01 ★★★ | **비동기 복제본 승격 시 데이터 유실(RPO)** | **[E2]** 리드 리플리카는 비동기라 승격 시 ReplicaLag만큼 커밋이 사라진다고 AWS 문서가 직접 인정 | `[L]` 쓰기 중 primary kill → 승격 → **유실 트랜잭션 수 카운트** → 반동기로 유실 0 + TPS 손해 측정 | 중 |
 | R02 ★★★ **완료** | **[Multi-AZ 페일오버 DNS vs JVM 캐시](sessions/R02-failover-dns-cache/)** | **[E2]** 페일오버는 DNS 레코드 교체 방식. JVM이 호스트명을 사실상 영구 캐시해 **DB는 1분에 복구됐는데 앱만 몇 분 죽는** 전형 | `[L]` dnsmasq로 A레코드 전환, `networkaddress.cache.ttl` -1 vs 30 비교 | 중 |
-| R03 ★★★ | **Aurora 리더 엔드포인트 쏠림** | **[E2]** 리더 엔드포인트는 **커넥션 단위 분산이지 쿼리 단위가 아님**(공식 문서 확인). HikariCP `maxLifetime`이 같으면 풀 전체 동시 재생성으로 한 대에 몰림(이슈 #1247) | `[L-부분]` 리플리카 3대 + DNS 라운드로빈, maxLifetime 지터 유무별 **커넥션 분포 그래프** | 중상 |
+| R03 ★★★ **완료** | **[Aurora 리더 엔드포인트 쏠림](sessions/R03-reader-endpoint-skew/)** | **[E2]** 리더 엔드포인트는 **커넥션 단위 분산이지 쿼리 단위가 아님**(공식 문서 확인). HikariCP `maxLifetime`이 같으면 풀 전체 동시 재생성으로 한 대에 몰림(이슈 #1247) | `[L-부분]` 리플리카 3대 + DNS 라운드로빈, maxLifetime 지터 유무별 **커넥션 분포 그래프** | 중상 |
 | R11 ★★ | **페일오버 후 콜드 버퍼 캐시** | **[E2]** 승격 인스턴스는 캐시가 비어 성능 급락. Aurora PG의 Cluster Cache Management가 이걸 푸는 기능 | `[L]` 재시작 직후 vs pg_prewarm 적용 후 p99. **R01과 한 편으로 묶기 좋음** | 중 |
 | R15 ★★ | **계획 스위치오버 RPO 0 vs 강제 RPO>0** | **[E2]** Aurora Global DB는 계획 스위치오버만 RPO 0, **계획되지 않은 페일오버는 초 단위 유실**. "글로벌 DB면 무손실" 오해 깨기 | `[L-부분]` 네트워크 2개=리전 + netem 150ms → 계획 승격 vs 강제 kill 승격의 유실 건수 | 중상 |
 
@@ -220,7 +220,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 
 | # | 문제 | 근거·출처 | 재현 | 난이도 |
 |---|---|---|---|---|
-| R04 ★★★ | **비활성 복제 슬롯 WAL 폭증** | **[E2]** "CDC 파이프라인이 프로덕션 DB를 죽이는 가장 흔한 경로". 컨슈머가 멈춰도 슬롯이 열려 있으면 WAL 무한 누적 | `[L]` `pg_recvlogical` kill 후 쓰기 지속 → restart_lsn 정지·pg_wal 폭증 → `max_slot_wal_keep_size` 전후 | 중 |
+| R04 ★★★ **완료** | **[비활성 복제 슬롯 WAL 폭증](sessions/R04-replication-slot-wal/)** | **[E2]** "CDC 파이프라인이 프로덕션 DB를 죽이는 가장 흔한 경로". 컨슈머가 멈춰도 슬롯이 열려 있으면 WAL 무한 누적 | `[L]` `pg_recvlogical` kill 후 쓰기 지속 → restart_lsn 정지·pg_wal 폭증 → `max_slot_wal_keep_size` 전후 | 중 |
 | R05 ★★ | **스토리지 풀로 읽기 전용 전락** | **[E2]** 꽉 차면 쓰기 전면 실패. 복구도 함정(증설 최소 10%, **최대 6시간 재변경 불가**) | `[L]` 500MB loopback에 대량 INSERT → PG `PANIC: No space left` → 복구 절차(VACUUM FULL 공간 역설) | 하~중 |
 | R06 ★★ | **커넥션 스톰 + 풀러 도입** | **[E2]** 배포·페일오버 직후 전 인스턴스 동시 재연결로 max_connections 고갈, 헬스체크까지 실패해 재시작 루프 | `[L]` max_connections=50에 앱 20개 동시 기동 → too many clients → 풀러·백오프 전후 | 하~중 |
 | R07 ★★ | **RDS Proxy 커넥션 피닝** | **[E2]** prepared statement·임시 테이블·`SET`·**16KB 초과 SQL**이 피닝을 유발해 멀티플렉싱 무력화 | `[L-부분]` PgBouncer transaction 모드로 동일 개념 → "왜 트랜잭션 풀링에서 세션 상태를 쓰면 안 되는가" | 중상 |
@@ -475,7 +475,7 @@ B38(Log4Shell)·B40(SSRF)·B41(역직렬화)·B42(xz)는 **격리된 로컬 환�
 ## 13. 진행 체크리스트 (169개, 전 세션 미시작)
 
 **A 트랙 (21)**
-- [ ] A01 정수 PK 고갈 · [x] A02 MDL 폭풍 · [ ] A03 utf8mb4 · [ ] A04 락 에스컬레이션 · [ ] A05 커넥션 폭풍 · [x] A06 갭 락 · [ ] A07 롱 트랜잭션 · [x] A08 buffer pool · [x] A09 통계 오염 · [ ] A10 복제 지연 · [ ] A11 세미싱크 유실
+- [x] A01 정수 PK 고갈 · [x] A02 MDL 폭풍 · [ ] A03 utf8mb4 · [ ] A04 락 에스컬레이션 · [ ] A05 커넥션 폭풍 · [x] A06 갭 락 · [ ] A07 롱 트랜잭션 · [x] A08 buffer pool · [x] A09 통계 오염 · [ ] A10 복제 지연 · [ ] A11 세미싱크 유실
 - [ ] A12 GitHub 스플릿브레인 · [ ] A13 GitLab 재구축 · [ ] A14 XID · [ ] A15 fsyncgate · [ ] A16 OOM Killer · [x] A17 UUID 스플릿 · [x] A18 Uber 쓰기 증폭 · [ ] A19 SLRU 절벽 · [ ] A20 CRDB 쿼럼 · [ ] A21 Figma 논리복제
 
 **B 트랙 (50)**
@@ -489,7 +489,7 @@ B38(Log4Shell)·B40(SSRF)·B41(역직렬화)·B42(xz)는 **격리된 로컬 환�
 - [ ] I01 인증서 만료 · [ ] I02 CPU 스로틀링 · [ ] I03 conntrack · [ ] I04 포트/TIME_WAIT · [ ] I05 컨테이너 JVM · [ ] I06 헬스체크 · [ ] I07 롤링 유실 · [ ] I08 디스크 풀 · [ ] I09 DNS TTL · [ ] I10 IOPS 절벽 · [ ] I11 Toyota
 
 **R 트랙 (18)**
-- [x] R01 승격 유실 · [x] R02 DNS 캐시 · [ ] R03 리더 쏠림 · [ ] R04 복제슬롯 WAL · [ ] R05 스토리지 풀 · [ ] R06 커넥션 스톰 · [ ] R07 Proxy 피닝 · [ ] R08 pending-reboot · [ ] R09 gp2 절벽
+- [x] R01 승격 유실 · [x] R02 DNS 캐시 · [x] R03 리더 쏠림 · [x] R04 복제슬롯 WAL · [ ] R05 스토리지 풀 · [ ] R06 커넥션 스톰 · [ ] R07 Proxy 피닝 · [ ] R08 pending-reboot · [ ] R09 gp2 절벽
 - [ ] R10 binlog · [ ] R11 콜드 캐시 · [x] R12 PI 클론 · [x] R13 슬롯 카운터 · [x] R14 문자셋·타임존 · [ ] R15 RPO 스위치오버 · [x] R16 배치 캐시오염 · [x] R17 시계열 파티션 · [ ] R18 채팅 RDB
 
 **S 트랙 (12)**
