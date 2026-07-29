@@ -2,8 +2,9 @@
 --
 -- 파티션 키 규칙 (MySQL 공식 제약):
 --   파티션 식에 쓰인 컬럼은 테이블의 모든 UNIQUE 키(PK 포함)에 들어가야 한다.
---   그래서 watch_log_part의 PK는 (id, created_at)이다. id 하나만 두면 ERROR 1491이 난다.
---   그 에러는 재현 기록에 원문으로 남긴다.
+--   그래서 watch_log_part의 PK는 (id, created_at)이다. id 하나만 두면 ERROR 1503이 난다.
+--   (조사 자료에는 1491로 인용돼 있었으나 8.4.3 실측은 1503이다.)
+--   그 에러는 재현 기록에 원문으로 남긴다 (results/error-1503.txt).
 
 -- 1) 파티션 없는 판. 삭제는 DELETE로만 가능하다.
 CREATE TABLE watch_log_plain (

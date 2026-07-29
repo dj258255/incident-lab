@@ -2,7 +2,16 @@
 """샘플러 출력으로 PI풍 대시보드(누적 영역 그래프)를 그린다.
 
 세로축이 AAS(평균 활성 세션)이고, 색이 대기 분류다. PI 화면의 핵심이 이 한 장이다.
-vCPU 수(4)를 가로선으로 긋는다. AAS가 이 선을 넘으면 세션들이 CPU를 기다리며 줄을 선 상태다.
+
+가로 점선은 compose.yml이 컨테이너에 준 CPU 할당량(cpus: 4)이다. 호스트의 코어 수가 아니다.
+이 세션은 호스트 사양을 기록하지 않았으므로 실제 vCPU 수는 확인되지 않는다.
+
+이 선의 의미를 잘못 읽지 말 것.
+AAS가 선을 넘는다는 것은 "활성 세션 수가 CPU 할당량보다 많다"는 뜻일 뿐이고,
+그 자체로 CPU 경합을 뜻하지 않는다. 무엇 때문에 많은지는 색(대기 분류)으로 읽어야 한다.
+이 세션의 구간 2가 그 반례다. AAS 7.52로 선을 훌쩍 넘었지만 CPU 분류는 0.30이고,
+나머지는 전부 행 락 대기가 io_table로 표면화된 것이었다.
+CPU 경합을 보려면 총합이 아니라 cpu 계열 면적의 높이를 선과 비교해야 한다.
 """
 import csv
 import os
@@ -86,16 +95,28 @@ def draw(name, title, out_png, bucket=1):
 
 
 def phase_table(name):
+    """구간별 AAS 분해를 인쇄한다.
+
+    other(기타)는 분류기가 못 알아본 이벤트다. 이 세션은 분류기의 정확도를 검증하는 것이
+    목적이므로 other 열을 빼고 인용하면 검증이 아니라 자기 확인이 된다. 반드시 함께 싣는다.
+
+    '6열 합'과 '활성 세션'이 어긋나는 구간이 있다. sampler.py의 classify()가 idle로 분류한
+    세션은 active_sessions(len(by_session))에는 들어가지만 counts의 여섯 열 어디에도
+    안 들어가기 때문이다. 알려진 구현 결함이라 두 값을 같이 인쇄해 어긋남이 보이게 한다.
+    """
     rows = load(name)
     t0 = float(rows[0]["ts"])
     print(f"\n[{name}] 구간별 평균 활성 세션 (AAS) 분해")
-    print(f"{'구간':<26}" + "".join(f"{KO[c]:>10}" for c in CATS))
+    head = f"{'구간':<26}" + "".join(f"{KO[c]:>10}" for c in CATS)
+    print(head + f"{'6열 합':>10}{'활성 세션':>10}{'샘플':>7}")
     for lo, hi, label in ((0, 60, "1: CPU 점조회"), (60, 120, "2: 핫 로우 UPDATE"), (120, 180, "3: 콜드 IO 조회")):
         seg = [r for r in rows if lo <= float(r["ts"]) - t0 < hi]
         if not seg:
             continue
         means = {c: st.mean(int(r[c]) for r in seg) for c in CATS}
-        print(f"{label:<26}" + "".join(f"{means[c]:>10.2f}" for c in CATS))
+        active = st.mean(int(r["active_sessions"]) for r in seg)
+        print(f"{label:<26}" + "".join(f"{means[c]:>10.2f}" for c in CATS)
+              + f"{sum(means.values()):>10.2f}{active:>10.2f}{len(seg):>7d}")
 
 
 if __name__ == "__main__":

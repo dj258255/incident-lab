@@ -1,6 +1,10 @@
 # R12 재현 환경
 # Performance Insights의 핵심(1초 샘플링, wait event 분해)을 직접 구현해 검증한다.
 # 버퍼 풀을 256MB로 작게 잡는 이유는 IO 대기 구간을 만들기 위해서다.
+#
+# 이 세션은 호스트 사양(uname -srm, nproc, free -g, 저장 장치)을 기록하지 않았다.
+# 아래 cpus 는 컨테이너에 준 CPU 할당량이지 호스트의 코어 수가 아니다.
+# report.py가 차트에 긋는 점선도 이 값이며, 실제 vCPU 수는 확인되지 않는다.
 services:
   mysql:
     image: mysql:8.4.3

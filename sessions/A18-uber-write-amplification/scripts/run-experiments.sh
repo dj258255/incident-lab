@@ -5,8 +5,15 @@
 #   변형 축 2: fillfactor (100 = 페이지가 꽉 참, 70 = HOT용 여유 공간)
 #   변형 축 3: 갱신 컬럼 (비인덱스 val / 인덱스 걸린 c1)
 #
-# 각 측정: CHECKPOINT로 조건을 맞춘 뒤 50만 행 전체를 UPDATE 한 문장으로 갱신하고
+# 각 측정: CHECKPOINT를 친 뒤 50만 행 전체를 UPDATE 한 문장으로 갱신하고
 # WAL 증가량(pg_wal_lsn_diff), HOT 비율(pg_stat_user_tables), 소요 시간을 기록한다.
+#
+# 주의 1: 앞의 CHECKPOINT는 조건을 "같게 맞추는" 것이 아니다. 체크포인트 직후에는
+#   손대는 모든 페이지가 그 이후 첫 변경이 되므로 전부 full-page image를 쓴다.
+#   즉 FPI를 최대로 만드는 조작이고, 여기서 재는 WAL은 FPI가 가장 무거운 값이다.
+# 주의 2: pg_current_wal_lsn()은 인스턴스 전역이고 compose.yml이 autovacuum을 끄지
+#   않는다. 앞 조건이 남긴 죽은 튜플을 치우는 autovacuum WAL이 뒤 조건 측정 창에
+#   섞일 수 있고, 측정 순서가 인덱스 0->3->6->10이라 오염 방향이 결론 방향과 같다.
 set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$ROOT/results"
@@ -74,6 +81,22 @@ measure ff70-idx10  u10 "val = val + 1"
 
 # 축 3: 인덱스가 걸린 컬럼을 갱신하면 HOT이 원천 불가능하다. fillfactor와 무관하게.
 measure ff70-idx10-indexedcol u10 "c1 = c1 + 1"
+
+# 축 4: 2차 갱신(정상 상태). 1차가 남긴 죽은 버전을 페이지 프루닝이 치우면서
+#   공간이 재활용되고 HOT 비율이 오른다.
+#
+#   기록된 results/measure.csv의 이 두 줄은 스크립트가 아니라 실행이 끝난 뒤
+#   같은 함수를 손으로 한 번 더 불러 덧붙인 것이다. 재실행으로 아홉 줄이 다
+#   나오도록 여기에 넣어 둔다. 스크립트 종료와 수동 실행 사이에 얼마나 시간이
+#   지났는지, 그 사이 autovacuum이 얼마나 돌았는지는 기록하지 않았다.
+#
+#   설계 결함: u10은 바로 위 인덱스 컬럼 갱신에 한 번 더 동원돼서 이 시점에
+#   누적 갱신 100만 건이고, u0은 50만 건이다. 갱신 이력이 두 배 다르므로
+#   이 두 줄을 나란히 놓고 "인덱스 수만 다른 비교"라고 말할 수 없다.
+#   (HOT 83.5% 대 69.9%가 그 결과다.) 다시 잴 때는 인덱스 컬럼 갱신에
+#   별도 테이블을 써서 u10을 오염시키지 말 것.
+measure ff70-idx10-2ndpass u10 "val = val + 1"
+measure ff70-idx0-2ndpass  u0  "val = val + 1"
 
 echo "== 2. 쿼리 단위 증거: EXPLAIN (ANALYZE, WAL) =="
 {

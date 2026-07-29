@@ -12,13 +12,18 @@ import java.math.RoundingMode;
  *   (2) 요구증거금이 min(계약 명목가치, 하우스 증거금) 구조라 가격이 0에 가까워지자
  *       명목가치까지 함께 붕괴했고, 원문 표현으로 "3배 넘는 계약을 열 수 있었다".
  * 아래 코드는 그 구조를 축소해 옮긴 것이고, 실제 IB 시스템의 구현이 아니다.
- * 증거금 파라미터(계약승수, 하우스 증거금, 자본, 유지증거금 비율)는 전부 우리가 고른 값이다.
+ * 증거금 파라미터 넷 중 하우스 증거금만 명령서에 근거가 있다.
+ * 원문은 "On April 20, 2020, the initial house margin for long WTI was $8,462.50 per contract." 이고
+ * 여기서는 8,000 으로 반올림해 쓴다. 계약승수·자본·유지증거금 비율은 우리가 고른 값이다.
+ * 8,462.50 을 그대로 넣으면 붕괴 분기점이 8.4625, 기준 수량이 11계약이 되고 배수가 그만큼 커진다.
+ * 분기점 아래 구간은 min 이 명목가치를 고르므로 1,000계약·10,000계약과 과대계상 폭은 그대로다.
+ * 아래 출력의 "우리가 고른 값" 라벨은 기록된 실행 출력과 맞추려고 그대로 둔다.
  */
 public class NegativePrice {
 
-    // ---- 우리가 고른 파라미터. CFTC 문서의 수치가 아니다 ----
+    // ---- 파라미터. 하우스 증거금만 CFTC 문서 근거가 있고 나머지는 우리가 골랐다 ----
     static final BigDecimal MULTIPLIER   = new BigDecimal("1000");   // 계약당 배럴
-    static final BigDecimal HOUSE_MARGIN = new BigDecimal("8000");   // 계약당 하우스 증거금(달러)
+    static final BigDecimal HOUSE_MARGIN = new BigDecimal("8000");   // 계약당 하우스 증거금(달러). 명령서 $8,462.50 을 반올림
     static final BigDecimal EQUITY       = new BigDecimal("100000"); // 계좌 자본(달러)
     static final BigDecimal MAINT_RATIO  = new BigDecimal("0.75");   // 유지증거금 = 요구증거금의 75%
 

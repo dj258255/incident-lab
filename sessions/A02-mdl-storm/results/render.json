@@ -264,7 +264,7 @@
     {
       "type": "bar",
       "out": "01-stall.png",
-      "title": "조회가 한 건도 완료되지 않은 시간 (초)",
+      "title": "완료 건수가 DDL 이전 중앙값의 10% 아래로 떨어진 시간 (초)",
       "bars": [
         {
           "label": "롱txn만",
@@ -287,7 +287,7 @@
           "color": "red"
         }
       ],
-      "note": "네 조건 모두 같은 부하, 같은 일정. 25초에 ALTER TABLE ADD COLUMN 실행"
+      "note": "네 조건 모두 같은 부하, 같은 일정. 25초에 ALTER TABLE ADD COLUMN 실행. 완료가 정확히 0건인 초는 겹침+기본 19개(26~44초), 겹침+2초 1개(26초)"
     },
     {
       "type": "bar",

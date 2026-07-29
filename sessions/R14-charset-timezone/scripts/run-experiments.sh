@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# 문자셋·타임존 지뢰 5종을 순서대로 밟고 출력을 원문으로 남긴다.
+# 문자셋·타임존 지뢰 6종을 순서대로 밟고 출력을 원문으로 남긴다.
+# 장애 하나를 재현하는 스크립트가 아니라 독립된 함정 여섯 개의 카탈로그다.
 set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$ROOT/results"
@@ -15,14 +16,14 @@ echo "== 0. 기본값 확인 =="
 M "SELECT @@version, @@character_set_server, @@collation_server; SELECT @@sql_mode\G" \
   | tee "$OUT/00-defaults.txt"
 
-echo "== 1. utf8mb3 이모지 절단 =="
+echo "== 1. utf8mb3에 이모지가 들어올 때 =="
 {
   M "CREATE TABLE chat_mb3 (id INT AUTO_INCREMENT PRIMARY KEY, body TEXT) CHARACTER SET utf8mb3;"
   echo '--- strict(기본값)에서: 에러로 거부된다'
   M "INSERT INTO chat_mb3 (body) VALUES ('좋은 방송 😀 후원했어요');"
-  echo '--- non-strict로 바꾸면: 에러 없이 이모지 앞에서 잘린다'
+  echo '--- non-strict로 바꾸면: 에러 없이 이모지가 ?로 치환된다 (뒤 문자열은 살아남는다)'
   M "SET SESSION sql_mode=''; INSERT INTO chat_mb3 (body) VALUES ('좋은 방송 😀 후원했어요'); SHOW WARNINGS; SELECT id, body, CHAR_LENGTH(body) AS len FROM chat_mb3;"
-  echo '--- 절단이 보안 문제가 되는 구조 (WordPress 4.1.2와 같은 메커니즘, 무해한 예시)'
+  echo '--- WordPress 4.1.2(5.5/5.6 시절)라면 절단이라 닫는 태그가 날아간다. 8.4는 치환이라 남는다'
   M "SET SESSION sql_mode=''; INSERT INTO chat_mb3 (body) VALUES ('<b>공지</b> 😀 </b>닫는 태그는 여기 있었다'); SELECT body FROM chat_mb3 ORDER BY id DESC LIMIT 1;"
 } | tee "$OUT/01-truncation.txt"
 

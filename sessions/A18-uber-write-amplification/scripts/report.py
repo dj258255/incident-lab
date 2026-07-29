@@ -104,11 +104,18 @@ def main():
                 fontsize=9, color=C_TEXT)
     ax.set_xlim(0, 115)
 
-    # 제목은 실측에서 뽑는다
+    # 제목은 실측에서 뽑는다.
+    #
+    # 구판 제목은 "꽉 찬 페이지에서 2.2배, HOT이 도는 정상 상태에서 1.4배"였다.
+    # 뒤쪽 1.4배는 철회했다. 2차 갱신 시점에 u10은 누적 갱신 100만 건, u0은 50만 건이라
+    # (u10이 인덱스 컬럼 갱신 조건에 한 번 더 동원됐다) 인덱스 수만 다른 비교가 아니다.
+    # HOT 83.5% 대 69.9%가 그 차이의 결과다. 그래서 제목에는 갱신 이력이 같은 쌍만 쓴다.
     by = {r["label"]: r for r in rows}
     cold = by["ff100-idx10"]["wal_mb"] / by["ff100-idx0"]["wal_mb"]
-    warm = by["ff70-idx10-2ndpass"]["wal_mb"] / by["ff70-idx0-2ndpass"]["wal_mb"]
-    fig.suptitle(f"인덱스 10개의 WAL 비용: 꽉 찬 페이지에서 {cold:.1f}배, HOT이 도는 정상 상태에서 {warm:.1f}배  ·  50만 행 UPDATE",
+    ff70 = by["ff70-idx10"]["wal_mb"] / by["ff70-idx0"]["wal_mb"]
+    step = (by["ff100-idx10"]["wal_mb"] - by["ff100-idx0"]["wal_mb"]) / 10
+    fig.suptitle(f"인덱스 수는 곱해지지 않고 더해진다: 고정비 {by['ff100-idx0']['wal_mb']:.0f}MB + 인덱스당 약 {step:.0f}MB"
+                 f"  ·  10개는 0개의 {cold:.1f}배(꽉 찬 페이지) · {ff70:.1f}배(ff70 첫 갱신)  ·  50만 행 UPDATE",
                  color=C_TEXT, fontsize=12, fontweight="bold", x=0.014, ha="left", y=0.95)
     out = os.path.join(OUT, "chart-wal.png")
     fig.savefig(out, dpi=160, facecolor=C_SURFACE)

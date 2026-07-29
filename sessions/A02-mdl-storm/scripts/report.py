@@ -31,13 +31,19 @@ print(f"A02 메타데이터 락 폭풍   (MySQL {one['mysql_version']}, {one['ro
 print(f"일정: {one['schedule']['long_at']}초 롱 트랜잭션 시작, "
       f"{one['schedule']['ddl_at']}초 DDL 실행, {one['schedule']['long_end']}초 롱 트랜잭션 커밋")
 print("=" * 80)
-print(f"\n{'조건':>26}{'평시 초당':>10}{'전면 정지':>10}{'최대 지연':>12}{'DDL 결과':>22}")
-print("-" * 80)
+print(f"\n{'조건':>26}{'DDL 전 초당':>12}{'전면 정지':>10}{'0건인 초':>10}{'최대 지연':>12}{'DDL 결과':>22}")
+print("-" * 92)
 
 stall_bars, ddl_bars, lat_bars = [], [], []
+zeros = {}
 for c in arms:
     d = cases[c]
     mx = max((t["max_ms"] or 0) for t in d["timeline"])
+    # 완료 건수가 정확히 0인 초. "정지"(기준선의 10% 미만)와 같지 않다.
+    # 마지막 초는 측정 창 경계라 mdl.py의 정지 판정에서 빠지므로 여기서도 뺀다.
+    zsecs = [t["sec"] for t in d["timeline"]
+             if t["count"] == 0 and t["sec"] < d["duration_s"] - 1]
+    zeros[c] = zsecs
     ddl = d.get("ddl")
     if not ddl:
         dtxt = "실행 안 함"
@@ -49,7 +55,7 @@ for c in arms:
         code = ddl["error"].split(",")[0].strip("( ")
         dtxt = f"실패({code}), {ddl['elapsed_s']}초"
         dval = ddl["elapsed_s"]
-    print(f"{KO[c]:>26}{d['median_qps']:>9,}건{d['stall_len_s']:>9}초"
+    print(f"{KO[c]:>26}{d['median_qps']:>11,}건{d['stall_len_s']:>9}초{len(zsecs):>9}초"
           f"{mx:>10,.0f}ms{dtxt:>22}")
     bad = d["stall_len_s"] > 5
     stall_bars.append({"label": SHORT[c], "value": d["stall_len_s"],
@@ -60,6 +66,17 @@ for c in arms:
         ddl_bars.append({"label": SHORT[c], "value": dval,
                          "color": "green" if ddl["ok"] and dval < 1 else
                                   ("yellow" if not ddl["ok"] else "red")})
+
+print("-" * 92)
+print("'DDL 전 초당'은 0초부터 ddl_at(25초) 직전까지 초당 완료 건수의 중앙값이다.")
+print("네 조건 모두 개입이 들어가기 전 구간이므로 조건 사이의 차이는 설정의 효과가 아니라")
+print("실행 간 편차다. 처리량 비교에 쓰지 말 것.")
+print("'전면 정지'는 완료 건수가 그 기준선의 10% 아래인 초, '0건인 초'는 완료가 정확히 0인 초다.")
+for c in arms:
+    z = zeros[c]
+    span = ("없음" if not z else
+            f"{z[0]}초" if z[0] == z[-1] else f"{z[0]}~{z[-1]}초")
+    print(f"  {KO[c]:>26}  정지 {cases[c]['stall_len_s']}초 / 0건 {len(z)}초 ({span})")
 
 # 대기 큐 증거: 정지 구간의 메타데이터 락 스냅샷
 print("\n메타데이터 락 (performance_schema.metadata_locks, 정지 구간)")
@@ -102,9 +119,10 @@ if d:
 
 images = [
     {"type": "bar", "out": "01-stall.png",
-     "title": "조회가 한 건도 완료되지 않은 시간 (초)",
+     "title": "완료 건수가 DDL 이전 중앙값의 10% 아래로 떨어진 시간 (초)",
      "bars": stall_bars,
-     "note": "네 조건 모두 같은 부하, 같은 일정. 25초에 ALTER TABLE ADD COLUMN 실행"},
+     "note": ("네 조건 모두 같은 부하, 같은 일정. 25초에 ALTER TABLE ADD COLUMN 실행. "
+              "완료가 정확히 0건인 초는 겹침+기본 19개(26~44초), 겹침+2초 1개(26초)")},
     {"type": "bar", "out": "02-latency.png",
      "title": "조회 한 건이 기다린 최대 시간 (밀리초)",
      "bars": lat_bars,

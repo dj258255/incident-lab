@@ -74,12 +74,12 @@ sessions/<트랙><번호>-<슬러그>/
 - [A23 백업은 있는데 복구가 안 된다](sessions/A23-backup-pitr/) — GitLab 2017의 백업 5중 실패를 앵커로 MySQL PITR을 실행. 백업만 복원하면 500건 유실, binlog를 사고 직전까지 이으면 0건. 복구를 막는 다섯 함정 중 넷을 만들면서 직접 밟았다
 - [A06 갭 락 데드락](sessions/A06-gap-lock-deadlock/) — "없으면 넣는다" 한 패턴이 만드는 교착. 갭 락 둘이 공존하고 그 위의 insert intention이 서로를 막는 순간을 data_locks로 포착. 원래 방식 30회 데드락이 ON DUPLICATE KEY UPDATE로 0회
 - [A22 인덱스는 있는데 쿼리가 못 쓴다](sessions/A22-index-not-used/) — 형변환·문자셋·함수·선행 와일드카드·비트 연산 다섯 조건에서 인덱스를 그대로 두고 쿼리만 고쳐 최대 1,969배. 읽은 행을 EXPLAIN 추정이 아니라 Handler_read 카운터로 실측
-- [A18 Uber의 PostgreSQL 쓰기 증폭](sessions/A18-uber-write-amplification/) — 인덱스 수 x fillfactor x 갱신 컬럼 9조건의 WAL·HOT 실측. 꽉 찬 페이지에서 인덱스 10개는 WAL 2.2배(Uber가 옳은 조건), 정상 상태 HOT 83.5%에서는 1.4배(반론이 옳은 조건)
+- [A18 Uber의 PostgreSQL 쓰기 증폭](sessions/A18-uber-write-amplification/) — 인덱스 수 x fillfactor x 갱신 컬럼 9조건의 WAL·HOT 실측. 꽉 찬 페이지의 WAL이 인덱스 0·3·6·10에서 267·364·462·595MB로, 인덱스 수에 비례하지 않고 고정비 위에 인덱스당 32~34MB가 더해지는 구조. HOT 45.2%는 페이지 정원 45행 대 적재 31행의 기하학으로 설명됨. 초고 헤드라인이던 정상 상태 1.4배는 두 조건의 갱신 이력이 달라 철회
 - [R02 페일오버 후 DB는 살아 있는데 앱만 못 붙는다](sessions/R02-failover-dns-cache/) — DNS는 바뀌었는데 JVM이 옛 주소를 30초 더 붙잡아 복구가 49.5초. sun.net.inetaddr.ttl=0으로 5.9초. 커넥션 풀 설정은 이 구간에서 효과가 없다는 것까지 실측
 - [R01 복제 지연 중 승격의 커밋 유실](sessions/R01-replica-promotion-loss/) — 성공 응답을 받은 후원 927건 중 555건이 승격본에 없음을 GTID 차집합으로 특정. 반동기는 유실 0이지만 타임아웃 강등 창에서 유실이 되살아남. Seconds_Behind_Source가 분단 후 19초간 0을 표시하는 것까지
 - [R16 정산 배치의 버퍼 풀 오염](sessions/R16-batch-cache-pollution/) — 풀 스캔이 히트율을 7%까지 떨어뜨려도 NVMe에서는 p95가 안 무너짐을 실측. midpoint 방어의 실효는 워킹셋 회복 시간(15.2초 대 0.7초)에서 분리 계측
-- [R17 시계열 로그 보존 삭제](sessions/R17-timeseries-partition/) — 같은 350만 행을 DELETE(20.5초, 파일 회수 없음)와 DROP PARTITION(0.12초, 0.35GB 회수)으로 비교. LOCK=NONE DDL을 막아 세우는 MDL 행렬과 프루닝 깨지는 조건 실측
-- [R12 Performance Insights 클론](sessions/R12-perf-insights-clone/) — PI의 1초 샘플링·wait 분해 루프를 직접 구현하고 병목을 아는 3구간으로 검증. 행 락이 wait/io/table/sql/handler로 표면화되는 유명한 혼란과 data_lock_waits 판별법 실측
+- [R17 시계열 로그 보존 삭제](sessions/R17-timeseries-partition/) — 같은 350만 행을 DELETE(20.5초, 파일은 회수는커녕 8MiB 증가)와 DROP PARTITION(0.12초, 0.35GB 회수)으로 비교. 삭제 후 p95는 방향이 뒤집혀 DELETE가 기준선 복귀, DROP이 기준선의 1.8배. 열린 트랜잭션 하나가 DDL을 막아 세우는 MDL 행렬과 프루닝 깨지는 조건 실측
+- [R12 Performance Insights 클론](sessions/R12-perf-insights-clone/) — PI의 1초 샘플링·wait 분해 루프를 직접 구현. 행 락 대기가 lock이 아니라 wait/io/table/sql/handler로 표면화되고(핫 로우 구간 AAS 7.52 중 io_table 6.50, lock 0.00), data_lock_waits를 함께 세면 갈린다는 것을 실측(락 구간 평균 26.1, 콜드 IO 구간 29샘플 전부 0). CPU 구간은 부하 생성기가 DB를 못 채워(8스레드에 AAS 0.55) 검증하지 못했고 활성 세션의 21%가 미분류로 남음
 - [R13 라이브 후원 카운터의 핫 로우](sessions/R13-slotted-counter/) — 카운터 갱신 아홉 변형의 처리량·정합성 동시 측정. 실패율 0%로 후원 30.9%가 사라지는 갱신 유실을 슬롯 카운터로 해소
 - [A09 300행짜리 표본이 1,200만 행을 100% NULL이라고 단정했다](sessions/A09-planner-stats-flip/) — 표본 300행이 null_frac을 1로 적어 추정 1행 대 실제 2,400행, 중첩 루프로 7,734ms. statistics target 1000으로 164ms(47배)에 버퍼는 27분의 1이고, 기본값 100에서도 10회 중 1회 오판
 - [B31 지우지 않은 ThreadLocal 하나가 클래스로더를 통째로 붙잡는다](sessions/B31-threadlocal-classloader-leak/) — 재배포 300회에 폐기됐어야 할 클래스로더 300개가 전부 생존, try/finally의 remove() 한 줄로 0개. Metaspace 24MB에서 3,773 사이클에 OOM, 워커 스레드를 갱신하자 이미 샌 300개도 전부 회수

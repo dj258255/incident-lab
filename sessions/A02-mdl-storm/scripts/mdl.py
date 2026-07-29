@@ -204,11 +204,21 @@ def main():
 
     # 평시 기준선은 DDL이 끼어들기 전 구간에서 잡는다. 정지 구간이 섞인 전체 중앙값을
     # 쓰면 기준선 자체가 내려가 정지가 덜 심해 보인다.
+    #
+    # 주의: 이 값(median_qps)은 조건 사이의 비교용이 아니다. 구간이 sec < ddl_at이고
+    # ddl_at은 네 조건 모두 25로 고정이라, ddl-timeout 조건의 SET lock_wait_timeout=2가
+    # 실행되는 25.0초보다 앞이다. 즉 어떤 조건에서도 개입이 들어가기 전 구간이므로,
+    # 조건별로 이 값이 다르면 그것은 설정의 효과가 아니라 실행 간 편차다.
+    # (실제로 ddl-default 실행은 0초부터 다른 세 조건보다 30%가량 낮게 나왔다.)
     pre = [t["count"] for t in timeline if t["sec"] < args.ddl_at and t["count"] > 0]
     base = sorted(pre)[len(pre) // 2] if pre else 0
     # 마지막 초는 측정 창 경계라 건수가 적게 잡히므로 판정에서 뺀다.
+    # "정지"는 완료 건수가 기준선의 10% 아래인 초다. 완료가 정확히 0인 초와 같지 않다.
+    # 겹침 조건에서 stalled는 25~44초 20개지만 0건인 초는 26~44초 19개다(25초는 104건).
     stalled = [t["sec"] for t in timeline
                if base and t["sec"] < args.duration - 1 and t["count"] < base * 0.1]
+    zero_secs = [t["sec"] for t in timeline
+                 if t["sec"] < args.duration - 1 and t["count"] == 0]
 
     out = {
         "case": args.case,
@@ -224,6 +234,8 @@ def main():
         "median_qps": base,
         "stalled_seconds": stalled,
         "stall_len_s": len(stalled),
+        "zero_seconds": zero_secs,
+        "zero_len_s": len(zero_secs),
         "ddl": ddl_result or None,
         "events": events,
         "timeline": timeline,
@@ -233,6 +245,7 @@ def main():
         json.dump(out, f, ensure_ascii=False, indent=2)
 
     print(f"  평시 초당 {base}건, 정지된 초 {len(stalled)}개 {stalled}", flush=True)
+    print(f"  그중 완료 0건인 초 {len(zero_secs)}개 {zero_secs}", flush=True)
     admin.close()
 
 

@@ -48,9 +48,16 @@ SQLT "SELECT COUNT(*) AS remaining FROM watch_log_plain;" | tee -a "$OUT/delete-
 
 echo
 echo "== 안정화 대기 (퍼지 소진 확인) =="
+# 임계값 주의. 예전 판은 임계값이 1000이었는데 이 환경에서 실측된 히스토리 리스트
+# 길이는 최대 3이라, 루프가 첫 판정에서 무조건 통과했다. 실질 대기가 0이었다는 뜻이다.
+# 그래서 results/ 아래 기록에서는 실험 2의 관측이 실험 1의 관측이 끝난 3.1초 뒤에 시작됐고,
+# 실험 1의 INSERT 8스레드 부하가 3초 전까지 같은 인스턴스에서 돌고 있었다.
+# 블로그에 적은 "DROP 뒤 30초 급등"의 후보 중 하나가 이 간섭이다.
+# 지금은 (1) 최소 60초를 무조건 쉬고 (2) 그 뒤에 임계값 10으로 판정한다.
+sleep 60
 for i in $(seq 1 60); do
   HLL=$(SQL "SELECT count FROM information_schema.INNODB_METRICS WHERE name='trx_rseg_history_len';" | tail -1)
-  [ "$HLL" -lt 1000 ] && break
+  [ "$HLL" -lt 10 ] && break
   sleep 5
 done
 echo "히스토리 리스트 길이: $HLL"
@@ -88,7 +95,10 @@ docker exec r17-mysql mysql -uroot -plab spoon -e \
 HOLDER=$!
 sleep 2
 
-# 세션 B: LOCK=NONE을 명시해도 MDL 대기에 걸린다
+# 세션 B: DROP PARTITION이 배타 MDL을 요청하며 대기 행렬에 선다.
+# 주의. 아래 실행문에는 LOCK 절이 없다. 이 실험은 LOCK=NONE 조건을 재지 않았으므로
+# "LOCK=NONE을 명시해도 걸린다"의 근거로 이 결과를 인용하면 안 된다.
+# LOCK=NONE 대조군을 넣으려면 실행문과 결과 파일을 따로 두고 비교해야 한다.
 ( T0=$(date +%s.%N)
   SQL "ALTER TABLE watch_log_part DROP PARTITION p20260721;"
   T1=$(date +%s.%N)
@@ -133,12 +143,13 @@ echo "== 실험 4: 파티션 프루닝 ($(stamp)) =="
 cat "$OUT/pruning-explain.txt"
 
 echo
-echo "== 실험 5: ERROR 1491 원문 =="
+echo "== 실험 5: ERROR 1503 원문 =="
+# 조사 자료에는 1491로 인용돼 있었으나 8.4.3 실측은 1503이다. 파일명도 실측 번호에 맞춘다.
 SQL "CREATE TABLE bad_part (
        id BIGINT AUTO_INCREMENT PRIMARY KEY,
        created_at DATETIME NOT NULL
      ) PARTITION BY RANGE (TO_DAYS(created_at)) (
-       PARTITION p0 VALUES LESS THAN MAXVALUE);" 2>&1 | tee "$OUT/error-1491.txt" || true
+       PARTITION p0 VALUES LESS THAN MAXVALUE);" 2>&1 | tee "$OUT/error-1503.txt" || true
 
 echo
 echo "실험 종료 ($(stamp))"

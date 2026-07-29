@@ -1,7 +1,7 @@
 # A02 0.09초짜리 DDL이 20초 동안 조회를 세웠다
 
 > 근거 등급: `E2`
-> 출처: [MySQL 8.4 Reference, Metadata Locking](https://dev.mysql.com/doc/refman/8.4/en/metadata-locking.html), [Online DDL Performance, Concurrency, and Space Requirements](https://dev.mysql.com/doc/refman/8.4/en/innodb-online-ddl-performance.html), [Online DDL Operations](https://dev.mysql.com/doc/refman/8.4/en/innodb-online-ddl-operations.html)
+> 출처: [MySQL 8.4 Reference, Metadata Locking](https://dev.mysql.com/doc/refman/8.4/en/metadata-locking.html), [Online DDL Performance, Concurrency, and Space Requirements](https://dev.mysql.com/doc/refman/8.4/en/innodb-online-ddl-performance.html), [Online DDL Operations](https://dev.mysql.com/doc/refman/8.4/en/innodb-online-ddl-operations.html), [Server System Variables, `lock_wait_timeout`](https://dev.mysql.com/doc/refman/8.4/en/server-system-variables.html#sysvar_lock_wait_timeout), [InnoDB Startup Options and System Variables, `innodb_lock_wait_timeout`](https://dev.mysql.com/doc/refman/8.4/en/innodb-parameters.html#sysvar_innodb_lock_wait_timeout)
 
 ## 1. 유명한 이유
 
@@ -51,16 +51,18 @@ MySQL 8.4에는 반전이 하나 더 붙습니다. 매뉴얼은 `INSTANT is the 
 
 ### 결과
 
-| 조건 | 평시 초당 | 전면 정지 | 최대 지연 | DDL 결과 |
+| 조건 | DDL 이전 초당 | 전면 정지 | 최대 지연 | DDL 결과 |
 |---|---|---|---|---|
 | 롱 트랜잭션만 (DDL 없음) | 3,464건 | 0초 | 183ms | 실행 안 함 |
 | DDL만 (롱 트랜잭션 없음) | 3,658건 | 0초 | 139ms | 성공, 0.09초 |
 | 겹침 + `lock_wait_timeout` 2초 | 3,576건 | 2초 | 2,005ms | 실패(1205), 2.02초 |
 | 겹침 + 기본 타임아웃 | 2,462건 | 20초 | 20,021ms | 성공, 20.09초 |
 
-![조회가 완료되지 않은 시간](results/01-stall.png)
+"DDL 이전 초당"은 0초부터 24초까지 초당 완료 건수의 중앙값입니다. 네 조건 모두 DDL이 25초에 들어가므로 이 구간에는 아직 아무 개입도 없습니다. 조건 사이의 차이를 설정의 효과로 읽으면 안 되고, 그 이유는 5절에 따로 적었습니다.
 
-"전면 정지"는 그 초에 완료된 조회가 평시의 10% 아래인 초를 셉니다. 겹침 조건에서는 20초 동안 조회가 **한 건도** 완료되지 않았습니다.
+![전면 정지 구간의 길이](results/01-stall.png)
+
+"전면 정지"는 그 초의 완료 건수가 위 중앙값의 10% 아래인 초를 셉니다. 겹침 + 기본 타임아웃 조건에서 여기 걸린 초는 25초부터 44초까지 20개입니다. 그중 완료 건수가 정확히 0인 초는 26초부터 44초까지 19개이고, 25초에는 104건이 완료됐습니다. `lock_wait_timeout` 2초 조건의 정지 2초도 마찬가지로 25초(68건)와 26초(0건)입니다. 정지 길이와 완전 무응답 길이가 1초씩 다릅니다.
 
 ![MDL 폭풍 구간](results/00-timeline.png)
 
@@ -106,6 +108,17 @@ DDL의 배타적 락 요청이 뒤에 오는 읽기 락 요청보다 우선합�
 
 8.4에서 `ADD COLUMN`이 `INSTANT`로 처리되는 것도 같은 이야기입니다. 실행 단계가 사라져도 락을 잡는 단계는 남습니다. 이 실험에서 DDL 단독 조건의 소요가 0.09초였고 겹침 조건이 20.09초였는데, 그 차이 20초는 전부 대기입니다.
 
+`INSTANT`가 늘 되는 것은 아닙니다. 매뉴얼은 테이블 하나가 가질 수 있는 행 버전을 64개로 제한합니다(9.1.0부터 255개). 컬럼을 즉시 붙이거나 지울 때마다 행 버전이 하나 늘고, 상한을 넘기면 `ADD COLUMN`과 `DROP COLUMN`이 거부됩니다.
+
+```
+ERROR 4092 (HY000): Maximum row versions reached for table test/t1.
+No more columns can be added or dropped instantly. Please use COPY/INPLACE.
+```
+
+번호만 보고 원인을 단정하면 안 됩니다. 매뉴얼은 행 크기가 상한을 넘길 때도 같은 4092를 보여줍니다. `Column can't be added with ALGORITHM=INSTANT as after this max possible row size crosses max permissible row size` 쪽입니다. 두 경우는 대응이 다르니 메시지 본문까지 읽어야 합니다. 그리고 `ROW_FORMAT=COMPRESSED` 테이블, FULLTEXT 인덱스가 있는 테이블, 데이터 딕셔너리 테이블스페이스에 있는 테이블은 `INSTANT`로 컬럼을 붙이거나 지울 수 없고, 임시 테이블은 `ALGORITHM=COPY`만 됩니다. 이 조건에 걸리면 8.4에서도 `ADD COLUMN`이 0.09초로 끝나지 않으므로 정지 구간의 모양이 달라집니다.
+
+이 세션의 `scripts/mdl.py`가 그 상한에 직접 걸리는 코드입니다. 조건마다 같은 `orders` 테이블에 `memo`를 붙이고, 다음 조건을 시작하기 전에 남아 있으면 지웁니다. 붙이는 것도 지우는 것도 행 버전을 하나씩 올리므로 반복 실행이 쌓이면 4092에 닿습니다. 이번에는 몇 바퀴만 돌려서 실제로 보지는 못했습니다. 반복 측정으로 회차를 늘린다면 조건 사이에 테이블을 다시 만들어 행 버전을 되돌려야 합니다.
+
 ## 4. 해소
 
 `lock_wait_timeout`을 짧게 잡고 DDL을 던집니다. 기본값은 31,536,000초, 곧 1년입니다. 사실상 무한정 기다린다는 뜻이고, 기다리는 내내 조회를 막습니다.
@@ -116,6 +129,20 @@ ALTER TABLE orders ADD COLUMN memo VARCHAR(64) NULL;
 ```
 
 2초 안에 락을 못 얻으면 DDL이 `ERROR 1205 (HY000): Lock wait timeout exceeded` 로 죽습니다. DDL이 죽으면 대기 큐가 풀리고 조회가 돌아옵니다. 장애 시간이 DDL의 인내심과 같아지므로, 그 인내심을 짧게 두는 것이 방어입니다.
+
+여기서 번호 하나를 갈라 두어야 합니다. 1205를 내는 타임아웃은 두 개이고, 서로 다른 변수가 관장합니다. 메타데이터 락 쪽은 `lock_wait_timeout` 문서가 적습니다.
+
+> A given statement can require more than one lock, so it is possible for the statement to block for longer than the lock_wait_timeout value before reporting a timeout error. When lock timeout occurs, ER_LOCK_WAIT_TIMEOUT is reported.
+
+`ER_LOCK_WAIT_TIMEOUT`이 1205입니다. 그런데 `innodb_lock_wait_timeout` 문서에도 같은 번호가 있습니다.
+
+> The length of time in seconds an InnoDB transaction waits for a row lock before giving up. The default value is 50 seconds. A transaction that tries to access a row that is locked by another InnoDB transaction waits at most this many seconds for row locks before issuing the following error:
+>
+> `ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction`
+
+두 변수는 대상도 기본값도 다릅니다. `lock_wait_timeout`은 테이블 정의를 지키는 메타데이터 락에 걸리고 기본값이 31,536,000초입니다. `innodb_lock_wait_timeout`은 행 락에 걸리고 기본값이 50초입니다. 이 세션이 줄인 것은 앞의 것이고, 뒤의 것은 건드리지 않았습니다.
+
+에러 사전은 1205를 InnoDB 관점으로만 설명해서 메타데이터 락 쪽이 잘 보이지 않습니다. 그래서 1205 로그를 보고 `innodb_lock_wait_timeout`부터 줄이는 일이 생기는데, 그렇게 하면 이 세션이 보인 정지는 1초도 줄지 않습니다. 어느 문장이 1205를 냈는지부터 갈라야 합니다. `ALTER`나 `RENAME`이나 `TRUNCATE`가 냈으면 메타데이터 락이고, `UPDATE`나 `SELECT ... FOR UPDATE`가 냈으면 행 락입니다.
 
 DDL은 실패하므로 재시도가 따라와야 합니다. 실무에서는 마이그레이션 도구가 짧은 타임아웃으로 여러 번 시도하고, 매번 실패하면 사람에게 알립니다. 반복해서 실패한다면 그것은 DDL의 문제가 아니라 그 테이블에 롱 트랜잭션이 상주한다는 신호입니다.
 
@@ -129,13 +156,19 @@ DDL은 실패하므로 재시도가 따라와야 합니다. 실무에서는 마�
 |---|---|---|---|
 | 전면 정지 | 20초 | 2초 | 18초 단축 |
 | 조회 최대 지연 | 20,021ms | 2,005ms | 90% 감소 |
-| 평시 초당 처리 | 2,462건 | 3,576건 | 대조군 수준으로 회복 |
 | DDL | 성공, 20.09초 | 실패(1205), 2.02초 | 재시도 필요 |
+| DDL 이전 초당 (0~24초) | 2,462건 | 3,576건 | 개입 이전 구간이라 효과가 아님 |
 
 ![조회 최대 대기 시간](results/02-latency.png)
 ![ALTER 문장 소요 시간](results/03-ddl.png)
 
 정지가 20초에서 2초로 줄었고, 그 2초는 DDL이 기다리기로 정한 시간과 같습니다. 장애 시간을 설정값 하나로 정할 수 있게 됩니다.
+
+**마지막 행은 이 설정의 성과가 아닙니다.** 처음 쓴 표에는 "평시 초당 처리가 2,462건에서 3,576건으로 대조군 수준으로 회복됐다"고 적혀 있었는데 틀린 귀속이었습니다. `scripts/mdl.py`가 평시 기준선을 잡는 구간은 `sec < args.ddl_at`, 곧 0초부터 24초까지입니다. `ddl_at`은 네 조건 모두 25로 고정이고 `SET SESSION lock_wait_timeout = 2`는 그 25.0초에 실행됩니다. 기준선을 다 잰 다음에 설정이 들어가므로 설정이 그 구간에 영향을 줄 경로가 없습니다.
+
+`results/case-*.json`의 원시값을 보면 더 분명합니다. 겹침 + 기본 타임아웃 조건은 측정이 시작된 0초부터 이미 초당 2,400~2,700건대였고 0~24초 평균이 2,473건입니다. 나머지 세 조건은 같은 구간 평균이 3,549건, 3,692건, 3,715건입니다. DDL 직전 5초만 떼어 보면 2,129건 대 3,537~3,580건으로 40% 차이입니다. 아무 일도 일어나지 않은 구간에서 벌어진 차이이므로 통제하지 못한 실행 간 편차입니다. 2코어 호스트에서 조건마다 60초씩 한 번만 돌렸고, 컨테이너 CPU 할당 말고는 다른 부하를 격리하지 않았습니다.
+
+이 표에서 개입의 효과로 읽어도 되는 것은 정지 길이와 최대 지연과 DDL 결과, 이 셋뿐입니다. 셋 다 25초 이후, 곧 설정이 적용된 뒤 구간에서 나온 값입니다.
 
 대가는 DDL이 실패한다는 것입니다. 이 트레이드오프는 한쪽으로만 기울지 않습니다. 마이그레이션을 반드시 이번 배포에 통과시켜야 한다면 긴 타임아웃이 필요하고, 그 경우 트래픽이 적은 시간대를 골라야 합니다. 다만 기본값 1년은 어느 쪽 선택도 아닙니다.
 
@@ -145,7 +178,7 @@ DDL 단독 조건이 기준선을 줍니다. 롱 트랜잭션이 없을 때 같�
 
 **정지 구간이 집계에서 통째로 사라졌습니다.** 첫 실행에서 스크립트가 "정지된 초 1개"라고 찍었습니다. 20초 정지를 눈으로 보고도 코드가 못 잡은 것인데, 원인은 집계 방식이었습니다. 초당 버킷을 실제로 완료된 조회에서만 만들었기 때문에, 완료가 0건인 초는 버킷 자체가 생기지 않았습니다. 있는 버킷만 훑으며 정지를 세니 26초부터 44초까지가 표에서 빠졌습니다. 가장 심한 구간이 데이터에 아예 없는 상태로 "정상"이라고 보고될 뻔했습니다. 모니터링에서도 같은 일이 일어납니다. 완료된 요청의 지연만 그리는 대시보드는 아무것도 완료되지 않는 구간을 빈 구간으로 그립니다.
 
-**롱 트랜잭션 단독은 무해했습니다.** 롱 트랜잭션이 위험하다는 말을 자주 듣지만, 이 실험에서 30초짜리 트랜잭션이 락을 쥐고 있는 동안 조회는 초당 3,464건으로 멀쩡했고 최대 지연도 183ms였습니다. DDL이 끼어들어야 문제가 됩니다. 위험한 것은 롱 트랜잭션 자체가 아니라 롱 트랜잭션과 DDL이 만나는 시점입니다.
+**롱 트랜잭션 단독은 무해했습니다.** 롱 트랜잭션이 위험하다는 말을 자주 듣지만, 이 실험에서 30초짜리 트랜잭션이 락을 쥐고 있던 15초부터 44초까지 초당 완료 건수의 중앙값은 3,446건이었고 전면 정지는 0초, 60초 전체의 최대 지연은 183ms였습니다. DDL이 끼어들어야 문제가 됩니다. 위험한 것은 롱 트랜잭션 자체가 아니라 롱 트랜잭션과 DDL이 만나는 시점입니다.
 
 **DDL이 20.09초 걸렸다는 기록만 보면 원인을 잘못 짚습니다.** 로그에 남는 것은 "ALTER가 20초 걸렸다"입니다. 이 숫자를 보면 테이블이 커서 오래 걸렸다고 읽기 쉽고, 실제로는 DDL이 일한 시간이 0.09초입니다. 나머지 20초는 남의 트랜잭션을 기다린 시간입니다. 같은 DDL을 빈 시간에 돌리면 0.09초에 끝납니다.
 
@@ -154,7 +187,8 @@ DDL 단독 조건이 기준선을 줍니다. 롱 트랜잭션이 없을 때 같�
 - **gh-ost와 pt-online-schema-change를 돌리지 않았습니다.** 카탈로그의 원래 설계에는 들어 있었는데 이번에는 빼고 `lock_wait_timeout` 쪽만 다뤘습니다. 두 도구도 최종 전환 시점에 배타적 락이 필요하므로 이 세션이 보인 사슬에서 자유롭지 않지만, 그것을 실측하지는 않았습니다.
 - **쓰기 부하를 넣지 않았습니다.** 조회만 걸었습니다. `INSERT`나 `UPDATE`도 `SHARED_WRITE` 락을 잡으므로 같은 큐에 서지만, 이 세션의 수치는 읽기 경로만 잰 것입니다.
 - **테이블 재작성이 필요한 DDL은 안 다뤘습니다.** `ADD COLUMN`은 8.4에서 `INSTANT`라 실행 자체가 0.09초입니다. `ALGORITHM=COPY`가 필요한 변경은 락을 얻은 뒤에도 오래 걸리므로 정지 구간의 모양이 다릅니다.
-- **반복 측정을 하지 않았습니다.** 조건마다 60초 한 번입니다. 겹침 조건의 평시 초당 처리가 2,462건으로 다른 조건(3,464~3,658건)보다 낮게 나온 것은 평시 구간이 25초로 짧아 표본이 적은 탓으로 봅니다.
+- **반복 측정을 하지 않았습니다.** 조건마다 60초 한 번입니다. 그래서 겹침 + 기본 타임아웃 조건의 DDL 이전 처리량이 30%가량 낮게 나온 것을 실행 간 편차 말고 다른 것으로 설명할 방법이 없습니다. 5절에 적은 대로 이 차이는 개입이 들어가기 전 구간에서 났습니다. 조건별로 여러 번 돌려 분포를 봐야 이 자리에서 처리량을 이야기할 수 있습니다.
+- **커넥션 풀 고갈로 번지는 경로를 재지 않았습니다.** 부하가 프로세스 2개, 곧 커넥션 2개입니다. 실무에서 MDL 폭풍이 사고가 되는 이유는 그 테이블 조회가 느려져서가 아니라, 막힌 커넥션이 풀을 다 채워 그 테이블과 상관없는 API까지 커넥션을 못 받고 죽기 때문입니다. 이 세션은 막힌 조회의 지연까지만 쟀고 거기서 애플리케이션 전체로 번지는 구간은 재현하지 않았습니다. 재려면 풀 크기가 정해진 애플리케이션을 앞에 두고, 그 테이블을 쓰는 엔드포인트와 안 쓰는 엔드포인트를 함께 때려 봐야 합니다.
 - **복제는 다루지 않았습니다.** 단일 인스턴스입니다. DDL이 레플리카에서 재생될 때의 지연은 이 세션 밖입니다.
 
 ## 파일

@@ -2,13 +2,27 @@
 """Performance Insights의 핵심 루프를 그대로 구현한 샘플러.
 
 AWS 문서가 서술하는 PI의 동작은 "매초, 쿼리를 실행 중인 세션 수를 샘플링하고
-그 세션들이 무엇을 기다리는지(wait event)로 쪼갠다"이다. 그 luop이 이 파일이다.
+그 세션들이 무엇을 기다리는지(wait event)로 쪼갠다"이다. 그 루프가 이 파일이다.
 
 매초 performance_schema.threads에서 활성 포그라운드 세션을 세고,
 events_waits_current의 현재 대기 이벤트로 분류한다.
 대기 이벤트가 없는 활성 세션은 CPU로 분류한다(PI와 같은 해석).
 
   사용법: sampler.py <지속초> <출력.csv> [간격초=1.0]
+
+알려진 결함 두 가지. 저장된 CSV와의 대조를 위해 동작은 그대로 두고 여기 적어 둔다.
+
+1) other 열에 무엇이 들어갔는지 알 수 없다.
+   classify()가 여섯 갈래 어디에도 못 넣은 이벤트를 other로 세는데, 개수만 CSV에 쓰고
+   이벤트 이름을 안 남긴다. 실측에서 1구간 활성 세션의 21%, 3구간의 8.8%가 other였다.
+   분류기의 정확도를 검증하는 것이 이 세션의 목적인데 그 오차의 정체를 못 밝힌다.
+   다음 실행에서는 미분류 이벤트 이름을 따로 기록해야 한다.
+
+2) idle로 분류된 세션이 어느 열에도 안 들어간다.
+   classify()는 'idle' 접두어에 "idle"을 돌려주는데 cats에 idle이 없어서 counts에 안 쌓인다.
+   그런데 active_sessions는 len(by_session)이라 그 세션을 포함한다.
+   그래서 active_sessions가 여섯 열의 합보다 클 수 있다. 실측 pi-1s.csv의 1구간에서
+   60샘플 중 1건이 그랬다(열 합 0.53, 활성 세션 0.55).
 """
 import csv
 import sys

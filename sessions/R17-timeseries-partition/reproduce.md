@@ -105,6 +105,14 @@ $ python3 scripts/report.py
 파일 크기  plain 0.70 → 0.70GB, part 0.77 → 0.42GB
 ```
 
+`plain 0.70 → 0.70GB`는 GB 단위 반올림입니다. `results/delete-poll.csv`의 원값은 746,586,112 → 754,974,720바이트로, 줄어든 게 아니라 **8MiB(4MiB 익스텐트 두 번) 늘었습니다.** 삭제 중에도 INSERT 8스레드가 돌고 있었기 때문입니다. 테이블별 .ibd가 따로 있는 것은 `innodb_file_per_table`이 켜져 있어서이고(8.4 기본값 ON, 이 세션에서 끄지 않음), 공간을 OS로 돌려받으려면 `OPTIMIZE TABLE`이 필요한데 이 세션에서는 돌리지 않았습니다.
+
+관측 창이 두 실험에서 다릅니다. DELETE는 480초(삭제 후 450초), DROP은 120초(삭제 후 110초)입니다. "삭제 후" p95의 5.3ms와 8.8ms를 같은 조건의 평균으로 비교할 수 없습니다.
+
+실험 1과 2 사이의 안정화 대기도 이 기록을 만든 판본에서는 무효였습니다. 임계값이 히스토리 리스트 길이 1000인데 실측 최대가 3이라 첫 판정에서 통과했고, 타임스탬프상 DELETE 쪽 관측 종료 3.1초 뒤에 DROP 쪽 관측이 시작됐습니다. 스크립트는 최소 대기 60초와 임계값 10으로 고쳤으나 그 뒤로 다시 돌리지 않았습니다.
+
+실험 3의 세션 B는 `LOCK` 절 없이 `ALTER TABLE watch_log_part DROP PARTITION p20260721;`을 실행했습니다. `LOCK=NONE` 조건은 이 세션에서 재지 않았습니다. `results/fig-mdl.png`의 제목에 `LOCK=NONE`이 남아 있어 재생성이 필요합니다.
+
 ## 원문 파일 위치
 
 | 내용 | 경로 |
@@ -113,4 +121,6 @@ $ python3 scripts/report.py
 | 히스토리 리스트·파일 크기 1초 시계열 | `results/*-poll.csv` |
 | MDL 대기 행렬 스냅샷 | `results/mdl-locks.txt` |
 | 프루닝 EXPLAIN 원문 | `results/pruning-explain.txt` |
-| 실험 로그 전체 | `results/experiments.log` |
+| 소요 시간과 남은 행 수 | `results/delete-elapsed.txt`, `results/drop-elapsed.txt`, `results/chunked-elapsed.txt` |
+| 파티션 키 제약 에러 원문 | `results/error-1503.txt` |
+| 사후 .ibd 파일 목록 | `results/post-ibd.txt` |

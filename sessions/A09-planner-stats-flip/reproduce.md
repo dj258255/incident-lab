@@ -6,10 +6,13 @@
 
 - 호스트: Rocky Linux 9 (aarch64, 2코어), Docker 29.4.2, Docker Compose v5.1.3
 - 이미지: postgres:16-alpine
+- 컨테이너 자원 한도: `cpus: 2`, `mem_limit: 3g` ([compose.yml](compose.yml))
+- Postgres 설정: `shared_buffers=512MB`, `work_mem=32MB`, `maintenance_work_mem=256MB`, `max_parallel_workers_per_gather=0`, `autovacuum=off`, `jit=off`, `track_io_timing=on`
 - 일시: 2026-07-28
 - 실행: 세션 디렉터리에서 `bash scripts/run.sh` 하나로 아래 전부가 순서대로 돕니다. 아래 출력은 그 실행의 원문입니다.
 - 콘솔 로그: [results/99-run-log.txt](results/99-run-log.txt)입니다. 아래 2절(컬럼 하나만 낮추기)과 10절(ANALYZE 소요 시간)은 본 순서를 다 돌린 뒤 같은 컨테이너, 같은 데이터에서 이어서 잰 것이라 이 로그에는 없습니다. 두 단계 모두 그 뒤 `scripts/run.sh`에 제자리로 넣었으므로, 지금 새로 돌리면 아래 순서 그대로 나옵니다.
 - 무작위성: ANALYZE의 표본 추출은 시드를 고정할 수 없습니다. 그래서 스크립트가 원하는 상태(null_frac이 1인 회차, 1이 아닌 회차)가 나올 때까지 ANALYZE를 다시 돌리고 몇 회째였는지를 기록합니다. 실행마다 이 횟수는 달라집니다.
+- 두 설정의 대가: `max_parallel_workers_per_gather=0`은 해소 후 값을 실제보다 나쁘게 잡을 수 있습니다. 해소 플랜의 164.090 ms 중 162.344 ms가 `ip_rule` 순차 스캔이고, 병렬이 허용되면 그 부분이 나뉘기 때문입니다. `autovacuum=off`는 사건의 방아쇠였던 자동 analyze 자체를 재현 대상에서 뺍니다. 둘 다 재보지 않았습니다.
 
 ```console
 $ docker compose up -d
@@ -110,6 +113,8 @@ ANALYZE
 ```
 
 아무 일도 일어나지 않습니다. null_frac 0.9998, 추정 2,400행으로 정확합니다. 표본 크기는 컬럼별이 아니라 ANALYZE 한 번 단위로 정해지고, 남아 있는 기본값 100이 표본을 30,000행으로 유지하기 때문입니다. 그래서 아래부터는 네 컬럼을 함께 낮춥니다.
+
+이 규칙은 고칠 때도 그대로 걸립니다. 컬럼 하나만 1000으로 올려도 표본은 똑같이 300,000행이 되고 ANALYZE가 읽는 페이지도 똑같습니다. 컬럼을 골라서 줄일 수 있는 것은 나머지 컬럼의 통계 계산분까지입니다. 10절에 이어 적었습니다.
 
 ## 3. statistics target 1에서 ANALYZE
 

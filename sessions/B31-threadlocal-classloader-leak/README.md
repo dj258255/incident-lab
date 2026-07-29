@@ -18,6 +18,12 @@ to try and avoid a probable memory leak.
 - [Apache Tomcat Wiki, MemoryLeakProtection](https://cwiki.apache.org/confluence/display/TOMCAT/MemoryLeakProtection): "Classloader leaks because of uncleaned ThreadLocal variables are quite common."
 - [Apache Tomcat Wiki, OutOfMemory](https://cwiki.apache.org/confluence/display/TOMCAT/OutOfMemory): "Hard references to classes can prevent the garbage collector from reclaiming the memory allocated for them when a ClassLoader is discarded."
 
+4절에서 스레드 갱신 경로를 따로 파고들었습니다. 거기서 인용하는 출처는 이렇습니다.
+
+- Apache Tomcat 10.1.x 소스: `java/org/apache/catalina/loader/WebappClassLoaderBase.java`의 `checkThreadLocalsForLeaks()`·`checkThreadLocalMapForLeaks()`, `java/org/apache/catalina/core/ThreadLocalLeakPreventionListener.java`, `java/org/apache/tomcat/util/threads/ThreadPoolExecutor.java`의 `stopCurrentThreadIfNeeded()`, 그리고 배포본 `conf/server.xml`
+- [Apache Tomcat 10.1 Configuration Reference, Context](https://tomcat.apache.org/tomcat-10.1-doc/config/context.html): `renewThreadsWhenStoppingContext` "If `true`, when this context is stopped, Tomcat renews all the threads from the thread pool that was used to serve this context. This also requires that the `ThreadLocalLeakPreventionListener` be configured in `server.xml` and that the `threadRenewalDelay` property of the `Executor` be >=0. If not specified, the default value of `true` will be used."
+- [Apache Tomcat 10.1 Configuration Reference, Executor](https://tomcat.apache.org/tomcat-10.1-doc/config/executor.html): `threadRenewalDelay` 기본값 1,000ms
+
 인용에서 조심한 것이 하나 있습니다. Tomcat 위키는 이 누수가 채우는 영역을 "PermGen space"라고만 부릅니다. Java 7 시절에 쓰인 문서라 그렇습니다. Java 8부터 PermGen이 없어지고 클래스 메타데이터가 Metaspace로 옮겨졌으므로, JDK 21에서 돌린 이 세션에서 터지는 것은 `OutOfMemoryError: Metaspace`입니다. 원문에 없는 "Metaspace OOM"을 Tomcat 인용처럼 쓰지 않았습니다. 탐지가 Tomcat 몇 버전부터 들어갔는지는 위키 서술 외에 확인하지 못해 버전 수치는 적지 않습니다.
 
 ## 2. 재현
@@ -48,11 +54,13 @@ to try and avoid a probable memory leak.
 
 ### Metaspace를 좁게 잡으면 실제로 터집니다
 
-`-Xmx256m -XX:MaxMetaspaceSize=24m`으로 고정하고 같은 코드를 돌렸습니다. 힙을 넉넉히 준 것은 힙 OOM이 먼저 터져 원인이 흐려지는 것을 막기 위해서입니다. 누수 조건은 **3,773 사이클에서 `java.lang.OutOfMemoryError: Metaspace`**로 죽었고, 3회 실행에서 지점이 모두 같았습니다. 같은 설정에서 순진한 설계(ThreadLocal이 웹앱 밖)는 10,000 사이클을 완주했습니다.
+`-Xmx256m -XX:MaxMetaspaceSize=24m`으로 고정하고 같은 코드를 돌렸습니다. 힙을 넉넉히 준 것은 힙 OOM이 먼저 터져 원인이 흐려지는 것을 막기 위해서입니다. 누수 조건은 **3,773 사이클에서 `java.lang.OutOfMemoryError: Metaspace`**로 죽었고, 같은 설정에서 순진한 설계(ThreadLocal이 웹앱 밖)는 10,000 사이클을 완주했습니다. 이 OOM 실행은 1회분만 남아 있습니다([results/oom-output.txt](results/oom-output.txt)). 지점이 반복되는지는 확인하지 않았습니다.
+
+3,773이라는 수 자체에는 의미가 없습니다. 24m은 결과를 30초 안에 보려고 인위적으로 조인 값입니다. `MaxMetaspaceSize`의 JVM 기본값은 무제한이고(같은 이미지에서 `-XX:+PrintFlagsFinal`로 찍으면 `size_t`의 최댓값이 나옵니다), 실무에서 이 플래그를 명시적으로 거는 경우도 흔하지 않습니다. 그래서 현실의 실패는 대개 이 오류로 오지 않습니다. Metaspace가 컨테이너 메모리 한도를 밀어 올려 커널이 프로세스를 OOM-Kill로 죽이거나, 클래스 메타데이터가 쌓이면서 GC 압박이 커져 응답이 느려지는 쪽으로 나타납니다. 이 세션은 두 경로 중 어느 쪽도 재현하지 않았습니다. 위 실행이 보여 주는 것은 메타데이터가 실제로 해제되지 않고 한 방향으로만 쌓인다는 사실까지입니다.
 
 ![B31 Metaspace OOM 화면](results/02-oom.png)
 
-*그림 2. 같은 JVM 설정에서 위는 10,000회를 완주하고 아래는 3,773회에서 죽습니다. 차이는 ThreadLocal 객체가 어디에 선언돼 있느냐 하나입니다.*
+*그림 2. 같은 JVM 설정에서 위는 10,000회를 완주하고 아래는 3,773회에서 죽습니다. 차이는 ThreadLocal 객체가 어디에 선언돼 있느냐 하나입니다. `MaxMetaspaceSize=24m`은 결과를 빨리 보려고 조인 값이라, 사이클 수 자체는 실무의 수명을 뜻하지 않습니다.*
 
 ### 실제 스택: Spring Boot WAR를 Tomcat 10.1에 올리고 내리기
 
@@ -79,9 +87,11 @@ was stopped. Threads are going to be renewed over time to try and avoid a probab
 
 ## 3. 내부 원리
 
-`ThreadLocal`의 값은 `ThreadLocal` 객체가 아니라 **스레드**가 들고 있습니다. 각 `Thread`에 `ThreadLocalMap`이 하나 붙고, 그 엔트리의 키가 `ThreadLocal` 인스턴스입니다. 이 키는 약한참조입니다. 그래서 `ThreadLocal` 객체가 아무 데서도 참조되지 않으면 키가 끊기고, 그 엔트리는 stale이 되어 다음 `set`이나 `get`이 훑고 지나갈 때 정리됩니다. 자바가 이 정도는 알아서 치워 준다는 이야기가 여기서 나옵니다.
+`ThreadLocal`의 값은 `ThreadLocal` 객체가 아니라 **스레드**가 들고 있습니다. 각 `Thread`에 `ThreadLocalMap`이 하나 붙고, 그 엔트리의 키가 `ThreadLocal` 인스턴스입니다. 이 키는 약한참조입니다. 그래서 `ThreadLocal` 객체가 아무 데서도 참조되지 않으면 키가 끊기고, 그 엔트리는 값만 남은 stale 상태가 됩니다. 자바가 이 정도는 알아서 치워 준다는 이야기가 여기서 나옵니다.
 
-문제는 참조가 한 바퀴 돌아올 때입니다. 조건 3번이 맞으면 이렇게 됩니다.
+그런데 그 청소는 확정적이지 않습니다. JDK 21의 `ThreadLocalMap` 코드를 그대로 읽으면 이렇습니다. 확실히 지우는 것은 `remove()`뿐입니다. `get()`은 해시 슬롯이 한 번에 맞으면 아무것도 치우지 않고 그대로 돌아가고, 슬롯이 빗나가 탐사를 시작했을 때에 한해 그 탐사 경로에서 만난 stale 엔트리를 치웁니다. `set()`은 기존 키를 바로 찾으면 값만 덮어쓰고 끝나며, 새 엔트리를 넣을 때 `cleanSomeSlots`로 엔트리 수의 로그(log2)에 해당하는 횟수만 부분적으로 훑습니다. 테이블 전체를 훑는 것은 재해시가 걸릴 때뿐입니다. 그러니 stale 엔트리는 언젠가 지워질 수도 있는 것이지 지워지는 것이 아닙니다. 이 글이 반박하려는 통념을 정확히 옮기면 "자바가 알아서 치워 준다"가 아니라 "자바가 기회가 닿을 때 일부를 치운다"입니다.
+
+그리고 지금부터 볼 누수는 애초에 키가 stale이 되지 않는 경우라, 위 청소 경로는 시작조차 하지 않습니다. 문제는 참조가 한 바퀴 돌아올 때입니다. 조건 3번이 맞으면 이렇게 됩니다.
 
 ```
 워커 스레드 -> ThreadLocalMap -> 엔트리의 값(Ctx 인스턴스)
@@ -93,7 +103,9 @@ was stopped. Threads are going to be renewed over time to try and avoid a probab
 
 반대로 `ThreadLocal` 객체가 웹앱 **밖**(컨테이너나 공용 클래스로더)에 있으면 재배포를 몇 번 하든 키가 하나뿐입니다. 매번 같은 엔트리를 덮어쓰므로 직전 값은 참조를 잃고 정상 수거됩니다. 실측에서 300회 중 1개만 살아남은 것이 마지막으로 덮어쓴 값 하나입니다. 이 경우도 값 하나만큼은 새지만, 재배포 횟수에 비례해 쌓이지 않으므로 장애가 되지 않습니다.
 
-폐기되지 않은 클래스로더가 붙잡는 것은 힙이 아니라 클래스 메타데이터입니다. Java 8부터 이 영역이 Metaspace이고, 한 클래스로더가 적재한 메타데이터는 그 로더가 통째로 도달 불가가 될 때만 해제됩니다. 실측에서 클래스 두 개짜리 웹앱이 재배포 1회당 약 7KB(300회에 2.0MB)를 남겼습니다. 클래스가 수천 개인 실제 WAR라면 재배포 몇 번으로 자릿수가 달라집니다.
+폐기되지 않은 클래스로더가 붙잡는 것은 힙이 아니라 클래스 메타데이터입니다. Java 8부터 이 영역이 Metaspace이고, 한 클래스로더가 적재한 메타데이터는 그 로더가 통째로 도달 불가가 될 때만 해제됩니다. 실측에서 클래스 두 개짜리 웹앱이 재배포 1회당 약 7KB(300회에 2.0MB)를 남겼습니다.
+
+이 7KB에 실제 WAR의 클래스 수를 곱해서 쓰면 안 됩니다. 여기서 말하는 "웹앱"은 클래스 두 개를 적재하는 맨 `URLClassLoader`이고, Tomcat이 재배포마다 만드는 것은 `WebappClassLoader`입니다. 둘은 무게가 다릅니다. `WebappClassLoader`는 웹앱 쪽을 부모보다 먼저 뒤지는 위임 순서(`delegate` 기본값 `false`, 이른바 parent-last)를 쓰려고 자기 탐색 경로를 따로 들고 있고, `WEB-INF/lib`의 JAR 목록과 수정 시각을 기록해 두며, 한 번 찾은 클래스와 리소스를 `resourceEntries` 맵에 캐시하고 `WebResourceRoot` 참조까지 붙잡습니다. 그래서 재배포 1회가 남기는 양은 적재한 클래스 수만으로 정해지지 않습니다. JAR 개수와 캐시에 올라간 리소스 양이 함께 결정합니다. 클래스가 수천 개인 실제 WAR라면 재배포 1회당 남는 양의 자릿수가 이 재현과 다릅니다. 얼마나 다른지는 이 세션에서 재지 않았습니다.
 
 ## 4. 해소
 
@@ -110,7 +122,15 @@ try {
 
 `finally`가 중요합니다. 컨트롤러가 예외를 던지는 경로에서 정리가 빠지면 그 요청이 처리된 스레드에만 값이 남아, 재현하기 어려운 형태로 문제가 나타납니다. 요청 처리 흐름의 가장 바깥 필터에 두어야 안쪽에서 무슨 일이 생겨도 정리가 실행됩니다. 최소 재현에서 이 한 줄만 넣은 대조군이 300/300에서 0/300이 됐습니다.
 
-둘째, 지금까지 이 문제가 잘 안 보였던 이유를 짚어 둘 필요가 있습니다. **막아 주고 있던 것은 JVM이 아니라 WAS입니다.** Tomcat은 `clearReferencesThreadLocals`의 기본값이 `true`이고(위 Tomcat 9 문서), 경고 문구 자체가 "Threads are going to be renewed over time"이라고 말합니다. 스레드를 갱신하면 실제로 회수되는지를 최소 재현에서 직접 확인했습니다(Tomcat의 구현을 검증한 것이 아니라, 스레드 갱신이라는 수단이 통하는지를 잰 것입니다). 누수 실험의 워커 스레드를 종료하자 생존 클래스로더가 300에서 0이 되고 Metaspace 총 사용량이 3.4MB에서 1.9MB로 떨어졌습니다. 스레드가 죽으면 그 스레드의 `ThreadLocalMap`도 같이 죽기 때문입니다. 애플리케이션 코드가 `remove()`를 빼먹어도 컨테이너가 스레드를 갈아 끼우며 뒤를 닦아 주고 있었던 것입니다.
+둘째, 회수를 만든 수단이 무엇이었는지 짚어 둘 필요가 있습니다. **GC는 이 고리를 끊지 못했고, 끊은 것은 스레드의 종료였습니다.** 스레드를 갱신하면 실제로 회수되는지를 최소 재현에서 직접 확인했습니다(Tomcat의 구현을 검증한 것이 아니라, 스레드 갱신이라는 수단이 통하는지를 잰 것입니다). 누수 실험의 워커 스레드를 종료하자 생존 클래스로더가 300에서 0이 되고 Metaspace 총 사용량이 3.4MB에서 1.9MB로 떨어졌습니다. 스레드가 죽으면 그 스레드의 `ThreadLocalMap`도 같이 죽기 때문입니다.
+
+그러면 Tomcat은 실제로 무엇을 할까요. 이 글을 쓰면서 답을 못 하고 있다는 것을 알아서 소스와 설정 문서를 열었습니다. 확인된 것만 적습니다.
+
+- `clearReferencesThreadLocals`가 `true`(기본값)일 때도 Tomcat은 엔트리를 직접 지우지 않습니다. `WebappClassLoaderBase.checkThreadLocalsForLeaks()`는 리플렉션으로 각 스레드의 `ThreadLocalMap`을 열어 `expungeStaleEntries()`를 부른 뒤 `checkThreadLocalMapForLeaks()`로 테이블을 훑습니다. 그 메서드가 하는 일은 웹앱이 적재한 키나 값을 찾았을 때 `log.error(...)`를 찍는 것까지입니다. 살아 있는 엔트리를 지우는 호출이 없습니다. `expungeStaleEntries()`가 치우는 것은 이미 키가 끊긴 엔트리뿐이라, 키가 끊기지 않는 바로 이 누수에는 닿지 않습니다. 즉 이 설정이 켜고 끄는 것은 경고이지 회수가 아닙니다.
+- 회수를 실제로 거는 것은 별도 장치입니다. `ThreadLocalLeakPreventionListener`가 컨텍스트 정지(`AFTER_STOP_EVENT`)를 받아 커넥터 스레드풀에 정지 시각을 기록하고, 그 시각보다 먼저 만들어진 스레드는 다음 작업을 끝내고 풀로 돌아올 때 `StopPooledThreadException`으로 스스로 죽습니다. 이 리스너는 Tomcat이 배포하는 `conf/server.xml`에 기본으로 들어 있습니다.
+- 갱신 주기 파라미터는 `Executor`의 `threadRenewalDelay`이고 기본값은 1,000ms입니다. 문서 원문은 "To avoid renewing all threads at the same time, this option sets a delay between renewal of any 2 threads. The value is in ms, default value is `1000` ms. If value is negative, threads are not renewed."입니다. 스레드는 한 번에 하나씩, 최소 1초 간격으로 갈립니다. `Context`의 `renewThreadsWhenStoppingContext`(기본 `true`)도 함께 켜져 있어야 합니다.
+
+여기서 조건이 하나 드러납니다. 갱신은 스레드가 작업을 하나 끝내고 풀로 돌아올 때 일어납니다. 재배포 뒤 트래픽이 없어 그 스레드가 다음 요청을 받지 않으면 갱신도 일어나지 않습니다. 그래서 "WAS가 알아서 뒤를 닦아 준다"보다는 "리스너와 `threadRenewalDelay`가 켜져 있고 그 스레드가 다시 일을 받는 한, 초당 하나씩 닦인다"가 정확합니다. 위 세 항목은 소스와 설정 문서로 확인한 것이고 실측이 아닙니다. Tomcat이 실제 재배포에서 몇 초 만에 몇 개를 회수하는지는 이 세션에서 재지 않았습니다.
 
 셋째, 그 보호장치가 조용히 꺼질 수 있습니다. JDK 9 이상에서는 `--add-opens=java.base/java.lang=ALL-UNNAMED`가 없으면 Tomcat이 `ThreadLocalMap`을 들여다볼 수 없어 누수 탐지 자체가 동작하지 않습니다. 그 줄을 지우고 같은 시나리오를 다시 돌리자 누수 경고 대신 이 메시지만 나왔습니다.
 
@@ -140,7 +160,7 @@ Tomcat 10.1의 `bin/catalina.sh`는 이 옵션을 기본으로 붙이지만, 기
 
 ![B31 해소 재계측 화면](results/04-fixed-run.png)
 
-*그림 4. 해소 재계측입니다. `remove()` 한 줄로 0/300이 되고, 스레드를 갱신하면 이미 새어 있던 300개도 회수됩니다. 노랑은 안전장치가 대신 막아 준 지점입니다.*
+*그림 4. 해소 재계측입니다. `remove()` 한 줄로 0/300이 되고, 워커 스레드를 종료하면 이미 새어 있던 300개도 회수됩니다. 노랑은 스레드를 직접 종료해 회수시킨 지점입니다. Tomcat이 이 회수를 실제로 언제 하는지는 재지 않았습니다.*
 
 `remove()`를 부른 경로는 생존 0개, Metaspace 증가분 0.2MB입니다. 누수 경로의 2.0MB와 비교하면 남는 것은 실행 자체의 잡음 수준입니다. 이미 새어 있던 300개도 워커 스레드를 종료하자 전부 회수되어, Metaspace 총 사용량이 3.4MB에서 1.9MB로 내려갔습니다.
 
@@ -160,15 +180,19 @@ Tomcat 10.1의 `bin/catalina.sh`는 이 옵션을 기본으로 붙이지만, 기
 
 **경고가 없다는 것이 안전하다는 뜻은 아니었습니다.** `--add-opens=java.base/java.lang=ALL-UNNAMED`를 뺀 채로 같은 시나리오를 돌리자 누수 경고가 통째로 사라지고 "옵션을 추가하라"는 안내만 남았습니다. 새는 코드는 그대로인데 로그만 조용해집니다. 탐지가 리플렉션에 의존하고 있어서 생기는 일이라, JDK를 올리면서 JVM 옵션을 정리한 팀이 자기도 모르게 탐지를 끄게 될 수 있습니다.
 
-**막아 주던 주체가 JVM이 아니었습니다.** 이 문제가 흔한데도 대형 장애로 잘 안 번지는 이유를 처음에는 GC가 어떻게든 처리해 주기 때문이라고 생각했습니다. 실측은 반대였습니다. GC는 참조 고리가 살아 있는 한 아무것도 하지 않았고, 워커 스레드를 죽이자 그 즉시 300개가 전부 회수됐습니다. Tomcat 경고문의 "Threads are going to be renewed over time"이 바로 그 회수 경로입니다. 애플리케이션이 아니라 WAS가 뒤를 닦아 주고 있었고, 그래서 WAS 밖에서 직접 만든 스레드풀이나 `clearReferencesThreadLocals`를 끈 환경에서는 같은 코드가 그대로 장애가 됩니다.
+**GC가 처리해 줄 것이라는 예상이 틀렸습니다.** 이 문제가 흔한데도 대형 장애로 잘 안 번지는 이유를 처음에는 GC가 어떻게든 처리해 주기 때문이라고 생각했습니다. 실측은 반대였습니다. GC는 참조 고리가 살아 있는 한 아무것도 하지 않았고, 워커 스레드를 죽이자 그 즉시 300개가 전부 회수됐습니다. 회수를 만든 것은 GC의 판단이 아니라 스레드의 종료였습니다. Tomcat 경고문의 "Threads are going to be renewed over time"이 가리키는 것도 같은 수단입니다. 다만 여기까지가 이 세션이 잰 것이고, Tomcat이 실제로 언제 어떤 조건에서 스레드를 갱신하는지는 재지 않았습니다.
+
+**`clearReferencesThreadLocals`의 역할도 예상과 달랐습니다.** 이 설정을 끄면 누수가 그대로 커진다고 봤는데, 소스를 열어 보니 그 설정이 끄는 것은 경고 로그이고 회수 경로가 아니었습니다. `true`일 때도 Tomcat은 살아 있는 엔트리를 지우지 않고 `log.error`만 찍습니다. 회수 쪽 스위치는 `renewThreadsWhenStoppingContext`와 `Executor`의 `threadRenewalDelay`이고, 자세한 것은 4절에 적었습니다. 이 세션의 초고는 두 스위치를 하나로 뭉개고 있었습니다.
 
 ## 한계
 
-Tomcat에서 재배포를 반복해 실제 Metaspace OOM까지 몰고 가지는 않았습니다. 실제 스택 쪽은 언디플로이 1회와 경고 관측까지이고, OOM은 최소 재현에서만 봤습니다. `clearReferencesThreadLocals="false"`로 두었을 때 재배포 몇 번에 Tomcat이 무너지는지도 재지 않았습니다.
+Tomcat에서 재배포를 반복해 실제 Metaspace OOM까지 몰고 가지는 않았습니다. 실제 스택 쪽은 언디플로이 1회와 경고 관측까지이고, OOM은 최소 재현에서만 봤습니다. Metaspace OOM 실행도 1회분만 남아 있어, 3,773이라는 지점이 반복되는지는 확인하지 않았습니다.
+
+Tomcat의 스레드 갱신을 실측하지 않은 것이 이 세션의 가장 큰 구멍입니다. 4절에 적은 갱신 경로는 소스와 설정 문서를 읽어 확인한 것이지, 재배포 후 실제로 몇 초 만에 몇 개의 클래스로더가 회수되는지를 잰 것이 아닙니다. `renewThreadsWhenStoppingContext="false"`나 `threadRenewalDelay="-1"`로 두었을 때 재배포 몇 번에 Tomcat이 무너지는지도 재지 않았습니다. 최소 재현에서 잰 것은 스레드를 직접 종료했을 때 300개가 회수된다는 사실 하나입니다.
 
 참조 경로를 힙 덤프의 GC root path로 확인하지 않았습니다. 약한참조 생존 수와 Metaspace 사용량, 그리고 코드에서 읽어 낸 클래스로더 동일성까지가 이 세션의 증거입니다.
 
-인용한 `clearReferencesThreadLocals` 기본값은 Tomcat 9 문서에서 확인한 것이고, 실제 실행은 Tomcat 10.1.57입니다. 10.1 문서를 따로 열어 대조하지는 않았습니다. 실행 로그에서 확인한 것은 그 버전이 같은 경고를 찍는다는 사실까지입니다.
+`clearReferencesThreadLocals` 기본값은 Tomcat 9 문서에서 먼저 확인했고, 실제 실행은 Tomcat 10.1.57입니다. 뒤에 10.1 설정 문서와 10.1.x 소스를 열어 대조했고 그 결과가 4절입니다.
 
 MDC(SLF4J)나 Spring의 요청 스코프처럼 실무에서 자주 쓰는 다른 `ThreadLocal` 사용처는 확인하지 않았습니다. 비동기 처리나 `CompletableFuture`로 스레드를 넘나드는 경로에서 컨텍스트가 어떻게 되는지도 이 세션의 범위 밖입니다.
 
