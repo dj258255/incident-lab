@@ -32,6 +32,11 @@ log "쓰기 시작"
 
 echo "ts,wal_mb,lag_mb,wal_status,safe_wal_mb" > "$OUT/keepsize.csv"
 PREV=""
+# 2026-07-29 실행분(results/exp2.txt)은 이 자리에서 "t=${i}s"를 찍었다. i는 반복 횟수이고
+# 경과 초가 아니다. 한 바퀴에 psql 왕복이 네 번 들어가 실제로는 평균 2.32초가 걸렸고,
+# 그래서 로그의 t=19s는 실제 41.7초였다. 이후 실행은 아래처럼 시작 시각과의 차이를 찍는다.
+# 이미 기록된 exp2.txt는 원문이므로 고치지 않았다. 실제 경과는 keepsize.csv로 확인한다.
+T0=$(date +%s)
 for i in $(seq 1 100); do
   WAL=$(P "SELECT ROUND(SUM(size)/1024/1024) FROM pg_ls_waldir()")
   LAG=$(P "SELECT ROUND(pg_wal_lsn_diff(pg_current_wal_lsn(), restart_lsn)/1024/1024) FROM pg_replication_slots WHERE slot_name='cdc_slot'")
@@ -39,7 +44,7 @@ for i in $(seq 1 100); do
   SAFE=$(P "SELECT ROUND(COALESCE(safe_wal_size,0)/1024/1024) FROM pg_replication_slots WHERE slot_name='cdc_slot'")
   echo "$(date +%s.%N),${WAL:-0},${LAG:-0},${ST:-none},${SAFE:-0}" >> "$OUT/keepsize.csv"
   if [ "$ST" != "$PREV" ]; then
-    log "  t=${i}s  WAL ${WAL}MB  슬롯지연 ${LAG}MB  상태 ${ST}  여유 ${SAFE}MB"
+    log "  t=$(( $(date +%s) - T0 ))s(경과) 반복 ${i}회  WAL ${WAL}MB  슬롯지연 ${LAG}MB  상태 ${ST}  여유 ${SAFE}MB"
     PREV="$ST"
   fi
   [ "$ST" = "lost" ] && { log "  슬롯이 무효화됐다. 더 쌓지 않는다."; break; }

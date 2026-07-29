@@ -1,0 +1,7 @@
+# [smoke] 측정 직전 호스트 상태
+2026-07-29T15:35:00+00:00
+ 15:35:00 up 103 days,  2:49,  0 users,  load average: 6.82, 4.01, 2.24
+route=buggy TOMCAT_MAX_THREADS=200 RATE=50 VUS=100 RAMP=2s HOLD=5s DOWN=1s
+# [smoke] 측정 직후 호스트 상태
+2026-07-29T15:35:10+00:00
+ 15:35:10 up 103 days,  2:49,  0 users,  load average: 6.40, 4.01, 2.26

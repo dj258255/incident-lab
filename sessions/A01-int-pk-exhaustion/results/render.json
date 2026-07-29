@@ -1,0 +1,48 @@
+{
+  "_note": "results/exp1.txt의 12~31행을 글자 그대로 옮긴 카드입니다. 줄을 줄이거나 고치지 않았고 강조색만 얹었습니다. 생성: docker run --rm -u $(id -u):$(id -g) -v $PWD:/work incident-lab-render sessions/A01-int-pk-exhaustion/results",
+  "images": [
+    {
+      "type": "term",
+      "out": "fig-1062.png",
+      "font": 22,
+      "title": "행이 두 개인 테이블에서 중복 키 에러가 난다  ·  results/exp1.txt",
+      "lines": [
+        "$ ALTER TABLE sponsor_int AUTO_INCREMENT = 2147483646;",
+        "  현재 카운터 2147483646",
+        "",
+        "후원 세 건을 넣어 본다.",
+        "",
+        "  [1번째] INSERT",
+        "    성공. id = 2147483646",
+        "",
+        "  [2번째] INSERT",
+        [
+          ["    성공. id = ", "fg"],
+          ["2147483647", "yellow"]
+        ],
+        "",
+        "  [3번째] INSERT",
+        [
+          ["    ", "fg"],
+          ["ERROR 1062", "red"],
+          [" (23000) at line 1: ", "fg"],
+          ["Duplicate entry '2147483647'", "red"],
+          [" for key 'sponsor_int.PRIMARY'", "fg"]
+        ],
+        "",
+        "상한에 닿으면 INSERT가 에러로 거부된다. 서비스로 치면 쓰기 전면 중단이다.",
+        "Basecamp가 2018년에 이 상태로 5시간 동안 쓰기를 받지 못했다.",
+        "",
+        [
+          ["$ SELECT COUNT(*) FROM sponsor_int;", "green"],
+          ["   # 행은 두 개뿐인데", "dim"]
+        ],
+        [
+          ["  ", "fg"],
+          ["2", "yellow"]
+        ],
+        "  행 수와 무관하게 카운터가 상한이라 더 넣을 수 없다."
+      ]
+    }
+  ]
+}

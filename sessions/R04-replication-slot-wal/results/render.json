@@ -1,0 +1,50 @@
+{
+  "_주": [
+    "fig-lost.png의 lines는 results/exp2.txt를 한 줄도 고치지 않고 그대로 옮긴 것이다.",
+    "그 출력의 't=1s / t=10s / t=19s'는 exp2-keepsize.sh 루프의 반복 횟수이지 경과 초가 아니다.",
+    "한 바퀴에 psql 왕복 네 번이 들어가 평균 2.32초가 걸렸다. 실제 경과는 keepsize.csv 타임스탬프로만 알 수 있다.",
+    "출력은 원문이므로 고치지 않고, 실제 경과는 fig-keepsize.png로 따로 그린다.",
+    "fig-keepsize.png의 값은 keepsize.csv의 첫 행 대비 경과 초이고 소수 첫째 자리까지 적었다."
+  ],
+  "images": [
+    {
+      "type": "term",
+      "out": "fig-lost.png",
+      "title": "안전장치는 디스크를 지키고 CDC를 버린다",
+      "font": 24,
+      "lines": [
+        "[20:07:39] 안전장치 설정: max_slot_wal_keep_size = 64MB",
+        "[20:07:40] 현재값 64MB",
+        "[20:07:41] 슬롯 생성. 컨슈머는 붙이지 않는다 (죽은 CDC 상태로 시작)",
+        "[20:07:41] 쓰기 시작",
+        [["[20:07:41]   t=1s  WAL 80MB  슬롯지연 0MB  상태 ", "fg"], ["reserved", "green"], ["  여유 70MB", "fg"]],
+        [["[20:08:02]   t=10s  WAL 96MB  슬롯지연 73MB  상태 ", "fg"], ["unreserved", "yellow"], ["  여유 ", "fg"], ["-1MB", "red"]],
+        [["[20:08:23]   t=19s  WAL 128MB  슬롯지연 MB  상태 ", "fg"], ["lost", "red"], ["  여유 0MB", "fg"]],
+        "[20:08:23]   슬롯이 무효화됐다. 더 쌓지 않는다.",
+        "[20:08:23] 최종 상태",
+        " slot_name | active | wal_status | lag | safe_wal ",
+        "-----------+--------+------------+-----+----------",
+        [[" cdc_slot  | f      | ", "fg"], ["lost", "red"], ["       |     | ", "fg"]],
+        "(1 row)",
+        "",
+        "[20:08:23] WAL 128 MB, 파일 8개",
+        "[20:08:23] 무효화된 슬롯에 컨슈머를 다시 붙이면",
+        [["  pg_recvlogical: error: could not send replication command \"START_REPLICATION SLOT \"cdc_slot\" LOGICAL 0/0\": ERROR:  ", "fg"], ["can no longer get changes", "red"], [" from replication slot \"cdc_slot\"", "fg"]],
+        [["  DETAIL:  This slot has been invalidated because it exceeded the maximum ", "fg"], ["reserved", "red"], [" size.", "fg"]],
+        "  pg_recvlogical: disconnected; waiting 5 seconds to try again",
+        "[20:08:28] 종료"
+      ]
+    },
+    {
+      "type": "bar",
+      "out": "fig-keepsize.png",
+      "title": "상한 64MB에서 슬롯이 lost가 되기까지 실제 경과 41.7초",
+      "bars": [
+        {"label": "reserved 마지막 관측", "value": 18.6, "color": "green"},
+        {"label": "unreserved 첫 관측", "value": 20.9, "color": "yellow"},
+        {"label": "lost 확인", "value": 41.7, "color": "red"}
+      ],
+      "note": "단위 초. results/keepsize.csv 타임스탬프 기준 경과. 관측 간격 평균 2.32초, 1회 실행. 콘솔의 t=Ns는 반복 횟수라 실제 경과와 다르다."
+    }
+  ]
+}

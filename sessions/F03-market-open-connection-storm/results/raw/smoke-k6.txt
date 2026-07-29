@@ -1,0 +1,727 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: /scripts/spike.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 100 max VUs, 38s max duration (incl. graceful stop):
+              * market_open: Up to 50.00 iterations/s for 8s over 3 stages (maxVUs: 100, gracefulStop: 30s)
+
+time="2026-07-29T15:35:02Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:02Z" level=info msg="NORESP t=0.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:02Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:02Z" level=info msg="NORESP t=0.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:02Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:02Z" level=info msg="NORESP t=0.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:02Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:02Z" level=info msg="NORESP t=0.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:02Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:02Z" level=info msg="NORESP t=0.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:02Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:02Z" level=info msg="NORESP t=0.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:02Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:02Z" level=info msg="NORESP t=0.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:02Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:02Z" level=info msg="NORESP t=0.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:02Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:02Z" level=info msg="NORESP t=0.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:02Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:02Z" level=info msg="NORESP t=0.9 code=1101 lookup: no such host" source=console
+
+running (00.9s), 000/100 VUs, 10 complete and 0 interrupted iterations
+market_open   [  12% ] 000/100 VUs  0.9s/8s  22.91 iters/s
+time="2026-07-29T15:35:02Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:02Z" level=info msg="NORESP t=1.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:02Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:02Z" level=info msg="NORESP t=1.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:02Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:02Z" level=info msg="NORESP t=1.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:02Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:02Z" level=info msg="NORESP t=1.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:02Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:02Z" level=info msg="NORESP t=1.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:02Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:02Z" level=info msg="NORESP t=1.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.9 code=1101 lookup: no such host" source=console
+
+running (01.9s), 000/100 VUs, 46 complete and 0 interrupted iterations
+market_open   [  24% ] 000/100 VUs  1.9s/8s  48.22 iters/s
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=1.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=2.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=2.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=2.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=2.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=2.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=2.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=2.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=2.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:03Z" level=info msg="NORESP t=2.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.9 code=1101 lookup: no such host" source=console
+
+running (02.9s), 001/100 VUs, 95 complete and 0 interrupted iterations
+market_open   [  37% ] 001/100 VUs  2.9s/8s  50.00 iters/s
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=2.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=3.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=3.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=3.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=3.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=3.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=3.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=3.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=3.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:04Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:04Z" level=info msg="NORESP t=3.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=3.9 code=1101 lookup: no such host" source=console
+
+running (03.9s), 000/100 VUs, 146 complete and 0 interrupted iterations
+market_open   [  49% ] 000/100 VUs  3.9s/8s  50.00 iters/s
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=4.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=4.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=4.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=4.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=4.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=4.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=4.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=4.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=4.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:05Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:05Z" level=info msg="NORESP t=4.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.9 code=1101 lookup: no such host" source=console
+
+running (04.9s), 001/100 VUs, 195 complete and 0 interrupted iterations
+market_open   [  62% ] 001/100 VUs  4.9s/8s  50.00 iters/s
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=4.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=5.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=5.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=5.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=5.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=5.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=5.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=5.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=5.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:06Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:06Z" level=info msg="NORESP t=5.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.9 code=1101 lookup: no such host" source=console
+
+running (05.9s), 000/100 VUs, 246 complete and 0 interrupted iterations
+market_open   [  74% ] 000/100 VUs  5.9s/8s  50.00 iters/s
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=5.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=6.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=6.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=6.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=6.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=6.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=6.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=6.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=6.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:07Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:07Z" level=info msg="NORESP t=6.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.8 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.9 code=1101 lookup: no such host" source=console
+
+running (06.9s), 001/100 VUs, 295 complete and 0 interrupted iterations
+market_open   [  87% ] 001/100 VUs  6.9s/8s  50.00 iters/s
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=6.9 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=7.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=7.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=7.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=7.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=7.0 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=7.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=7.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=7.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:08Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:08Z" level=info msg="NORESP t=7.1 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:09Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:09Z" level=info msg="NORESP t=7.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:09Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:09Z" level=info msg="NORESP t=7.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:09Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:09Z" level=info msg="NORESP t=7.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:09Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:09Z" level=info msg="NORESP t=7.2 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:09Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:09Z" level=info msg="NORESP t=7.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:09Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:09Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:09Z" level=info msg="NORESP t=7.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:09Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:09Z" level=info msg="NORESP t=7.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:09Z" level=info msg="NORESP t=7.3 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:09Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:09Z" level=info msg="NORESP t=7.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:09Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:09Z" level=info msg="NORESP t=7.4 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:09Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:09Z" level=info msg="NORESP t=7.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:09Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:09Z" level=info msg="NORESP t=7.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:09Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:09Z" level=info msg="NORESP t=7.5 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:09Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:09Z" level=info msg="NORESP t=7.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:09Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:09Z" level=info msg="NORESP t=7.6 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:09Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:09Z" level=info msg="NORESP t=7.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:09Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:09Z" level=info msg="NORESP t=7.7 code=1101 lookup: no such host" source=console
+time="2026-07-29T15:35:09Z" level=warning msg="Request Failed" error="Get \"http://app:8080/quote/buggy\": lookup app on 127.0.0.11:53: no such host"
+time="2026-07-29T15:35:09Z" level=info msg="NORESP t=7.8 code=1101 lookup: no such host" source=console
+
+running (07.9s), 000/100 VUs, 324 complete and 0 interrupted iterations
+market_open   [  99% ] 000/100 VUs  7.9s/8s  05.00 iters/s
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 1296   161.981617/s
+    checks_succeeded...: 25.00% 324 out of 1296
+    checks_failed......: 75.00% 972 out of 1296
+
+    ✗ 200 정상 응답
+      ↳  0% — ✓ 0 / ✗ 324
+    ✗ 503 부하 차단(의도된 흘려보냄)
+      ↳  0% — ✓ 0 / ✗ 324
+    ✗ 500 서버오류(커넥션 타임아웃)
+      ↳  0% — ✓ 0 / ✗ 324
+    ✓ 응답 못 받음(status 0)
+
+    CUSTOM
+    cnt_noresp...........: 324     40.495404/s
+    dur_noresp...........: avg=0s     min=0s     med=0s     max=0s      p(90)=0s     p(95)=0s    
+
+    HTTP
+    http_req_duration....: avg=0s     min=0s     med=0s     max=0s      p(90)=0s     p(95)=0s    
+    http_req_failed......: 100.00% 324 out of 324
+    http_reqs............: 324     40.495404/s
+
+    EXECUTION
+    iteration_duration...: avg=5.48ms min=1.03ms med=2.48ms max=60.94ms p(90)=12.3ms p(95)=20.3ms
+    iterations...........: 324     40.495404/s
+    vus..................: 0       min=0          max=1  
+    vus_max..............: 100     min=100        max=100
+
+    NETWORK
+    data_received........: 0 B     0 B/s
+    data_sent............: 0 B     0 B/s
+
+
+
+
+running (08.0s), 000/100 VUs, 324 complete and 0 interrupted iterations
+market_open ✓ [ 100% ] 000/100 VUs  8s  05.00 iters/s

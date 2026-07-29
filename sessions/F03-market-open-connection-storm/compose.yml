@@ -20,6 +20,10 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    # 호스트 포트는 게시하지 않는다. 부하(k6)는 같은 compose 네트워크에서 app:8080으로 붙는다.
+    environment:
+      # 계층별 몫을 가르는 조건에서만 바꾼다. 기본 200은 Spring Boot 기본값과 같다.
+      TOMCAT_MAX_THREADS: ${TOMCAT_MAX_THREADS:-200}
     expose:
       - "8080"
+    # 부하(k6)는 같은 compose 네트워크에서 app:8080으로 붙는다. 아래 18083은 부하 경로가 아니라
+    # 기동 대기(/health)와 계측 회수(/stats)에만 쓰는 관측용 포트다.

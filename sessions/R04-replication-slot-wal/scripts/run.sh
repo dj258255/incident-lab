@@ -54,7 +54,11 @@ docker exec -d r04-pg bash -c "
       SELECT (random()*1000)::int, repeat(md5(random()::text), 32) FROM generate_series(1,200);\" >/dev/null 2>&1
     sleep 0.2
   done"
-log "쓰기 시작 (초당 약 1,000행, 행당 1KB)"
+# 이 루프의 목표치는 초당 1,000행이지만 psql을 매번 새로 띄우는 비용 때문에 그대로 나오지 않는다.
+# 2026-07-29 실행분(results/timeline.txt)은 여기서 "초당 약 1,000행"이라고 찍었고, 같은 실행의
+# metrics.csv로 다시 재니 859.6행/초(구간별 400~1,000)였다. 목표치를 기록하면 나중에 실측과 헷갈리므로
+# 로그에는 루프 구성만 적는다. 이미 기록된 timeline.txt는 원문이라 고치지 않았다.
+log "쓰기 시작 (200행 INSERT 뒤 0.2초 대기 반복, 행당 약 1KB. 실제 속도는 metrics.csv로 잰다)"
 
 sleep 30
 log "논리 복제 슬롯 생성 + pg_recvlogical 시작"

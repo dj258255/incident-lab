@@ -1,0 +1,2 @@
+# [smoke] route=buggy TOMCAT_MAX_THREADS=200 RATE=50 VUS=100 RAMP=2s HOLD=5s DOWN=1s
+curl: (7) Failed to connect to 127.0.0.1 port 18083: Connection refused

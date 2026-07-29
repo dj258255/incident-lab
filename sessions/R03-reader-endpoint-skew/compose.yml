@@ -2,22 +2,28 @@
 # Aurora 리더 엔드포인트는 커넥션을 맺을 때 DNS로 리플리카 하나를 골라 준다.
 # 쿼리마다 고르는 것이 아니라 커넥션 단위라, 한 번 맺힌 커넥션은 그 인스턴스에 고정된다.
 # 그 구조를 라운드로빈 DNS로 흉내 낸다.
+#
+# --server-id는 반드시 세 대가 서로 달라야 한다. mysql:8.4.3의 기본값은 셋 다 1이라,
+# 이 옵션이 없으면 SELECT @@server_id가 어디에 붙어도 1을 돌려주고 쏠림이 보이지 않는다.
 services:
   db-1:
     image: mysql:8.4.3
     container_name: r03-db-1
+    command: ["--server-id=1"]
     environment: {MYSQL_ROOT_PASSWORD: lab, MYSQL_DATABASE: spoon}
     networks: {lab: {ipv4_address: 172.32.0.11}}
     healthcheck: {test: ["CMD","mysqladmin","ping","-h","127.0.0.1","-plab"], interval: 3s, retries: 30}
   db-2:
     image: mysql:8.4.3
     container_name: r03-db-2
+    command: ["--server-id=2"]
     environment: {MYSQL_ROOT_PASSWORD: lab, MYSQL_DATABASE: spoon}
     networks: {lab: {ipv4_address: 172.32.0.12}}
     healthcheck: {test: ["CMD","mysqladmin","ping","-h","127.0.0.1","-plab"], interval: 3s, retries: 30}
   db-3:
     image: mysql:8.4.3
     container_name: r03-db-3
+    command: ["--server-id=3"]
     environment: {MYSQL_ROOT_PASSWORD: lab, MYSQL_DATABASE: spoon}
     networks: {lab: {ipv4_address: 172.32.0.13}}
     healthcheck: {test: ["CMD","mysqladmin","ping","-h","127.0.0.1","-plab"], interval: 3s, retries: 30}
