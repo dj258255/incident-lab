@@ -1,0 +1,39 @@
+# R03 재현 환경
+# Aurora 리더 엔드포인트는 커넥션을 맺을 때 DNS로 리플리카 하나를 골라 준다.
+# 쿼리마다 고르는 것이 아니라 커넥션 단위라, 한 번 맺힌 커넥션은 그 인스턴스에 고정된다.
+# 그 구조를 라운드로빈 DNS로 흉내 낸다.
+services:
+  db-1:
+    image: mysql:8.4.3
+    container_name: r03-db-1
+    environment: {MYSQL_ROOT_PASSWORD: lab, MYSQL_DATABASE: spoon}
+    networks: {lab: {ipv4_address: 172.32.0.11}}
+    healthcheck: {test: ["CMD","mysqladmin","ping","-h","127.0.0.1","-plab"], interval: 3s, retries: 30}
+  db-2:
+    image: mysql:8.4.3
+    container_name: r03-db-2
+    environment: {MYSQL_ROOT_PASSWORD: lab, MYSQL_DATABASE: spoon}
+    networks: {lab: {ipv4_address: 172.32.0.12}}
+    healthcheck: {test: ["CMD","mysqladmin","ping","-h","127.0.0.1","-plab"], interval: 3s, retries: 30}
+  db-3:
+    image: mysql:8.4.3
+    container_name: r03-db-3
+    environment: {MYSQL_ROOT_PASSWORD: lab, MYSQL_DATABASE: spoon}
+    networks: {lab: {ipv4_address: 172.32.0.13}}
+    healthcheck: {test: ["CMD","mysqladmin","ping","-h","127.0.0.1","-plab"], interval: 3s, retries: 30}
+
+  # 리더 엔드포인트. 세 리플리카를 A 레코드 셋으로 돌려준다.
+  # Aurora도 같은 방식이고, TTL이 짧아 커넥션마다 다른 인스턴스로 갈 수 있다.
+  # dnsmasq의 address= 항목은 A 레코드 순서를 고정해 돌려준다.
+  # 리더 엔드포인트를 흉내 내려면 응답마다 순서가 바뀌어야 해서 CoreDNS를 쓴다.
+  dns:
+    image: coredns/coredns:1.11.3
+    container_name: r03-dns
+    command: ["-conf", "/Corefile"]
+    volumes: ["./Corefile:/Corefile:ro"]
+    networks: {lab: {ipv4_address: 172.32.0.53}}
+
+networks:
+  lab:
+    name: r03-lab
+    ipam: {config: [{subnet: 172.32.0.0/24}]}

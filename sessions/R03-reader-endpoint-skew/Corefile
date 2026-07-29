@@ -1,0 +1,17 @@
+# 리더 엔드포인트를 흉내 낸다.
+# loadbalance 플러그인이 A 레코드 순서를 응답마다 돌린다. Aurora 리더 엔드포인트도
+# 조회할 때마다 다른 리플리카를 앞에 놓는 방식이다.
+internal:53 {
+    hosts {
+        172.32.0.11 reader.internal
+        172.32.0.12 reader.internal
+        172.32.0.13 reader.internal
+        ttl 1
+        fallthrough
+    }
+    loadbalance round_robin
+    log
+}
+. {
+    forward . 1.1.1.1
+}
