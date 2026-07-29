@@ -1,0 +1,24 @@
+# A06 재현 환경
+# 데드락은 자원 경합이지 부하 문제가 아니라서 자원 상한을 크게 걸 필요가 없다.
+# innodb_print_all_deadlocks를 켜서 모든 데드락을 에러 로그에 남긴다.
+# 기본값은 OFF라, SHOW ENGINE INNODB STATUS는 "마지막 한 건"만 보여준다.
+services:
+  mysql:
+    image: mysql:8.4.3
+    container_name: a06-mysql
+    command:
+      - --innodb-print-all-deadlocks=ON
+      - --transaction-isolation=REPEATABLE-READ    # 기본값이지만 이 세션의 전제라 명시한다
+      - --innodb-lock-wait-timeout=10
+      - --log-error-verbosity=3
+    environment:
+      MYSQL_ROOT_PASSWORD: lab
+      MYSQL_DATABASE: spoon
+    ports: ["13315:3306"]
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
