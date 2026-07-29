@@ -1,0 +1,125 @@
+=============== 버퍼 풀 128M / uniform ===============
+ Network a08-buffer-pool-sizing_default Creating 
+ Network a08-buffer-pool-sizing_default Created 
+ Container a08-mysql Creating 
+ Container a08-mysql Created 
+ Container a08-mysql Starting 
+ Container a08-mysql Started 
+ Container a08-mysql Waiting 
+ Container a08-mysql Healthy 
+ Container a08-mysql Running 
+ Container a08-mysql Waiting 
+ Container a08-mysql Healthy 
+ Container a08-buffer-pool-sizing-load-run-4fa212d1ffe6 Creating 
+ Container a08-buffer-pool-sizing-load-run-4fa212d1ffe6 Created 
+[uniform-128M] 버퍼 풀 128MB (chunk 128M x instances 1), flush O_DIRECT, MySQL 8.4.3
+  조회 범위 id 1~7,412,245 (7,000,000행)
+  워밍업 30초
+  1,367.4 q/s  p50 1.331ms  p95 2.483ms  p99 4.913ms  히트율 77.2801%  디스크 읽기 72,931페이지 / 1139.5MB
+=============== 버퍼 풀 128M / hot ===============
+ Network a08-buffer-pool-sizing_default Creating 
+ Network a08-buffer-pool-sizing_default Created 
+ Container a08-mysql Creating 
+ Container a08-mysql Created 
+ Container a08-mysql Starting 
+ Container a08-mysql Started 
+ Container a08-mysql Waiting 
+ Container a08-mysql Healthy 
+ Container a08-mysql Running 
+ Container a08-mysql Waiting 
+ Container a08-mysql Healthy 
+ Container a08-buffer-pool-sizing-load-run-b97d705144f5 Creating 
+ Container a08-buffer-pool-sizing-load-run-b97d705144f5 Created 
+[hot-128M] 버퍼 풀 128MB (chunk 128M x instances 1), flush O_DIRECT, MySQL 8.4.3
+  조회 범위 id 1~7,412,245 (7,000,000행), 핫셋 id 1~1,853,062 확률 0.95
+  워밍업 30초
+  1,554.6 q/s  p50 1.136ms  p95 2.809ms  p99 5.494ms  히트율 82.8962%  디스크 읽기 58,138페이지 / 908.4MB
+=============== 버퍼 풀 256M / uniform ===============
+ Network a08-buffer-pool-sizing_default Creating 
+ Network a08-buffer-pool-sizing_default Created 
+ Container a08-mysql Creating 
+ Container a08-mysql Created 
+ Container a08-mysql Starting 
+ Container a08-mysql Started 
+ Container a08-mysql Waiting 
+ Container a08-mysql Healthy 
+ Container a08-mysql Running 
+ Container a08-mysql Waiting 
+ Container a08-mysql Healthy 
+ Container a08-buffer-pool-sizing-load-run-cb862c01eb14 Creating 
+ Container a08-buffer-pool-sizing-load-run-cb862c01eb14 Created 
+[uniform-256M] 버퍼 풀 256MB (chunk 128M x instances 1), flush O_DIRECT, MySQL 8.4.3
+  조회 범위 id 1~7,412,245 (7,000,000행)
+  워밍업 30초
+  1,442.0 q/s  p50 1.206ms  p95 2.542ms  p99 5.865ms  히트율 79.0398%  디스크 읽기 69,244페이지 / 1081.9MB
+=============== 버퍼 풀 256M / hot ===============
+ Network a08-buffer-pool-sizing_default Creating 
+ Network a08-buffer-pool-sizing_default Created 
+ Container a08-mysql Creating 
+ Container a08-mysql Created 
+ Container a08-mysql Starting 
+ Container a08-mysql Started 
+ Container a08-mysql Waiting 
+ Container a08-mysql Healthy 
+ Container a08-mysql Running 
+ Container a08-mysql Waiting 
+ Container a08-mysql Healthy 
+ Container a08-buffer-pool-sizing-load-run-96769552bdb0 Creating 
+ Container a08-buffer-pool-sizing-load-run-96769552bdb0 Created 
+[hot-256M] 버퍼 풀 256MB (chunk 128M x instances 1), flush O_DIRECT, MySQL 8.4.3
+  조회 범위 id 1~7,412,245 (7,000,000행), 핫셋 id 1~1,853,062 확률 0.95
+  워밍업 30초
+  2,092.5 q/s  p50 0.56ms  p95 2.434ms  p99 5.891ms  히트율 90.8809%  디스크 읽기 38,081페이지 / 595.0MB
+=============== 버퍼 풀 512M / uniform ===============
+ Network a08-buffer-pool-sizing_default Creating 
+ Network a08-buffer-pool-sizing_default Created 
+ Container a08-mysql Creating 
+ Container a08-mysql Created 
+ Container a08-mysql Starting 
+ Container a08-mysql Started 
+ Container a08-mysql Waiting 
+ Container a08-mysql Healthy 
+ Container a08-mysql Running 
+ Container a08-mysql Waiting 
+=============== 버퍼 풀 512M / uniform ===============
+[uniform-512M] 버퍼 풀 512MB (chunk 128M x instances 1), flush O_DIRECT, MySQL 8.4.3
+  조회 범위 id 1~7,412,245 (7,000,000행)
+  워밍업 30초
+  1,680.6 q/s  p50 1.127ms  p95 2.267ms  p99 4.784ms  히트율 82.8444%  디스크 읽기 63,100페이지 / 986.0MB
+=============== 버퍼 풀 512M / hot ===============
+[hot-512M] 버퍼 풀 512MB (chunk 128M x instances 1), flush O_DIRECT, MySQL 8.4.3
+  조회 범위 id 1~7,412,245 (7,000,000행), 핫셋 id 1~1,853,062 확률 0.95
+  워밍업 30초
+  3,616.8 q/s  p50 0.522ms  p95 1.112ms  p99 2.303ms  히트율 98.9252%  디스크 읽기 7,127페이지 / 111.4MB
+=============== 버퍼 풀 1G / uniform ===============
+[uniform-1G] 버퍼 풀 1024MB (chunk 128M x instances 1), flush O_DIRECT, MySQL 8.4.3
+  조회 범위 id 1~7,412,245 (7,000,000행)
+  워밍업 30초
+  2,396.1 q/s  p50 0.548ms  p95 1.916ms  p99 4.092ms  히트율 91.6639%  디스크 읽기 39,526페이지 / 617.6MB
+=============== 버퍼 풀 1G / hot ===============
+[hot-1G] 버퍼 풀 1024MB (chunk 128M x instances 1), flush O_DIRECT, MySQL 8.4.3
+  조회 범위 id 1~7,412,245 (7,000,000행), 핫셋 id 1~1,853,062 확률 0.95
+  워밍업 30초
+  3,311.3 q/s  p50 0.522ms  p95 1.261ms  p99 3.867ms  히트율 99.5281%  디스크 읽기 2,848페이지 / 44.5MB
+스윕 완료
+=============== 버퍼 풀 1536M / uniform ===============
+[uniform-1536M] 버퍼 풀 1536MB (chunk 128M x instances 1), flush O_DIRECT, MySQL 8.4.3
+  조회 범위 id 1~7,412,245 (7,000,000행)
+  워밍업 30초
+  4,277.1 q/s  p50 0.298ms  p95 0.845ms  p99 2.983ms  히트율 100.0%  디스크 읽기 0페이지 / 0.0MB
+=============== 버퍼 풀 1536M / hot ===============
+[hot-1536M] 버퍼 풀 1536MB (chunk 128M x instances 1), flush O_DIRECT, MySQL 8.4.3
+  조회 범위 id 1~7,412,245 (7,000,000행), 핫셋 id 1~1,853,062 확률 0.95
+  워밍업 30초
+  4,024.6 q/s  p50 0.3ms  p95 1.049ms  p99 3.442ms  히트율 100.0%  디스크 읽기 0페이지 / 0.0MB
+=============== 버퍼 풀 2G / uniform ===============
+[uniform-2G] 버퍼 풀 2048MB (chunk 128M x instances 1), flush O_DIRECT, MySQL 8.4.3
+  조회 범위 id 1~7,412,245 (7,000,000행)
+  워밍업 30초
+  4,132.1 q/s  p50 0.3ms  p95 0.913ms  p99 2.98ms  히트율 100.0%  디스크 읽기 0페이지 / 0.0MB
+=============== 버퍼 풀 2G / hot ===============
+[hot-2G] 버퍼 풀 2048MB (chunk 128M x instances 1), flush O_DIRECT, MySQL 8.4.3
+  조회 범위 id 1~7,412,245 (7,000,000행), 핫셋 id 1~1,853,062 확률 0.95
+  워밍업 30초
+  4,224.4 q/s  p50 0.3ms  p95 0.874ms  p99 2.831ms  히트율 100.0%  디스크 읽기 0페이지 / 0.0MB
+스윕 완료

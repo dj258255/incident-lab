@@ -118,6 +118,18 @@ def render_term(spec, out_path):
     return img.size
 
 
+def axis_label(v):
+    """눈금값을 문자열로. 정수로 떨어지면 정수로, 아니면 자릿수를 살린다.
+
+    반올림만 하면 최대값이 1 미만인 그래프(예: 조회당 디스크 읽기 0.889페이지)에서
+    눈금이 전부 0과 1로 뭉개진다. 눈금이 정수인 경우의 표기는 그대로 두어
+    기존 세션 그림이 바뀌지 않게 했다.
+    """
+    if abs(v - round(v)) < 1e-9:
+        return str(int(round(v)))
+    return f"{v:.2f}" if abs(v) < 1 else f"{v:.1f}"
+
+
 def render_bar(spec, out_path):
     req_w, H = spec.get("w", 940), spec.get("h", 560)
     # 제목과 하단 노트가 잘리지 않도록 캔버스 폭을 텍스트에 맞춰 넓힌다.
@@ -140,7 +152,7 @@ def render_bar(spec, out_path):
     for k in range(0, 5):
         gy = bottom - plot_h * k / 4
         draw.line([left, gy, right, gy], fill=GRID, width=1)
-        draw.text((left - 44, gy - 14), str(round(maxv * k / 4)), font=font(20), fill=DIM)
+        draw.text((left - 44, gy - 14), axis_label(maxv * k / 4), font=font(20), fill=DIM)
     draw.line([left, bottom, right, bottom], fill=DIM, width=2)
 
     val_fnt, lab_fnt = font(38), font(24)
@@ -158,7 +170,13 @@ def render_bar(spec, out_path):
             y0 = bottom
         vs = str(v)
         vw = draw.textlength(vs, font=val_fnt)
-        draw.text((cx - vw / 2, y0 - 50), vs, font=val_fnt, fill=FG)
+        # 가장 큰 막대는 꼭대기까지 차므로 값 라벨을 막대 위에 그리면 제목과 겹친다.
+        # 겹칠 자리면 막대 안쪽에 배경색으로 적는다. 막대가 짧으면 안쪽에도 자리가 없으니
+        # 그때는 원래대로 위에 둔다.
+        if y0 - 50 < 76 and h > 60:
+            draw.text((cx - vw / 2, y0 + 10), vs, font=val_fnt, fill=BG)
+        else:
+            draw.text((cx - vw / 2, y0 - 50), vs, font=val_fnt, fill=FG)
         lw = draw.textlength(b["label"], font=lab_fnt)
         draw.text((cx - lw / 2, bottom + 18), b["label"], font=lab_fnt, fill=DIM)
 

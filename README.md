@@ -59,9 +59,9 @@ sessions/<트랙><번호>-<슬러그>/
 
 | 상태 | 수 |
 |---|---|
-| 완료 | 12 |
+| 완료 | 18 |
 | 진행 중 | 0 |
-| 대기 | 157 |
+| 대기 | 151 |
 
 <!-- 세션이 완료되면 아래에 추가 -->
 - [F01 한맥 0으로 나눈 값이 주문 검증을 뚫다](sessions/F01-hanmac-divide-by-zero/) — NaN 비교가 상하한 검증을 무력화, 유한성 가드와 킬스위치로 해소. 최소 재현과 Spring 주문접수 API 재현
@@ -76,6 +76,7 @@ sessions/<트랙><번호>-<슬러그>/
 - [R17 시계열 로그 보존 삭제](sessions/R17-timeseries-partition/) — 같은 350만 행을 DELETE(20.5초, 파일 회수 없음)와 DROP PARTITION(0.12초, 0.35GB 회수)으로 비교. LOCK=NONE DDL을 막아 세우는 MDL 행렬과 프루닝 깨지는 조건 실측
 - [R12 Performance Insights 클론](sessions/R12-perf-insights-clone/) — PI의 1초 샘플링·wait 분해 루프를 직접 구현하고 병목을 아는 3구간으로 검증. 행 락이 wait/io/table/sql/handler로 표면화되는 유명한 혼란과 data_lock_waits 판별법 실측
 - [R13 라이브 후원 카운터의 핫 로우](sessions/R13-slotted-counter/) — 카운터 갱신 아홉 변형의 처리량·정합성 동시 측정. 실패율 0%로 후원 30.9%가 사라지는 갱신 유실을 슬롯 카운터로 해소
+- [A08 버퍼 풀 사이징과 리사이즈의 값](sessions/A08-buffer-pool-sizing/) — 128M~2G 스윕에서 무릎 위치가 접근 분포로 갈리는 것(핫셋 512M, 균등 1536M), 히트율 77%가 실제로는 조회당 0.889페이지 디스크행이라는 것, flush_method만 바꿔 같은 히트율에 처리량 2.6배가 갈리는 것
 
 ## 실행 환경
 

@@ -1,0 +1,59 @@
+# A08 재현 환경
+# 버퍼 풀 크기만 바꿔 가며 같은 부하를 거는 것이 이 세션의 전부다.
+# 그래서 크기 말고 다른 변수가 결과를 흔들면 실험이 통째로 거짓말이 된다. 아래 설정은 대부분
+# 그 오염원을 하나씩 막으려고 켜 둔 것이다.
+services:
+  mysql:
+    image: mysql:8.4.3
+    container_name: a08-mysql
+    cpus: 2
+    mem_limit: 3g
+    command:
+      # 스윕 대상. sweep.sh가 BP_SIZE를 바꿔 가며 재기동한다.
+      - --innodb-buffer-pool-size=${BP_SIZE:-1G}
+      # 인스턴스를 1로 고정한다. 버퍼 풀 크기는 chunk_size * instances의 배수로 자동 반올림되는데,
+      # 8.4 기본값(1GB 이상이면 instances=8)을 그대로 두면 1536M 같은 값이 조용히 2G로 올라간다.
+      # 1로 고정하면 반올림 단위가 chunk_size(128M)라서 스윕 값이 지정한 그대로 잡힌다.
+      - --innodb-buffer-pool-instances=1
+      # O_DIRECT로 데이터 파일을 읽는다. 이걸 끄면 버퍼 풀에서 miss가 나도 호스트 페이지 캐시가
+      # 받아 주기 때문에 "풀이 작아서 느려지는" 그림이 흐려진다. 그 차이 자체도 exp-pagecache.sh에서 잰다.
+      - --innodb-flush-method=${FLUSH_METHOD:-O_DIRECT}
+      # 종료 시 덤프, 기동 시 로드를 끈다. 8.4 기본값은 둘 다 ON이라 그냥 두면 재기동한 다음 실행이
+      # 직전 실행의 워킹셋을 그대로 물려받는다. 스윕은 매 조건이 콜드에서 출발해야 한다.
+      - --innodb-buffer-pool-dump-at-shutdown=OFF
+      - --innodb-buffer-pool-load-at-startup=OFF
+      # 읽기 전용 부하라 바이너리 로그는 디스크만 먹는다.
+      - --skip-log-bin
+      - --max-connections=200
+      - --performance-schema=OFF
+    environment:
+      MYSQL_ROOT_PASSWORD: lab
+      MYSQL_DATABASE: lab
+    ports: ["13309:3306"]
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - a08-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+
+  # 부하 생성기와 계측 스크립트. 호스트에 파이썬 패키지를 깔지 않으려고 컨테이너에 가뒀다.
+  # 기본 기동에서 빠지도록 프로파일을 걸어 두었고, docker compose run --rm load ... 로 부른다.
+  load:
+    build: ./scripts
+    image: a08-load
+    profiles: ["tools"]
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./scripts:/app:ro
+      - ./results:/results
+    working_dir: /app
+    environment:
+      MYSQL_HOST: mysql
+
+volumes:
+  a08-data:

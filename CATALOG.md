@@ -63,7 +63,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 | A05 ★★ | **커넥션 폭풍 + PgBouncer** | **[E2]** PG 프로세스 모델에서 재배포 직후 대량 재연결로 DB는 정상인데 서비스 마비 | max_connections 축소 + k6 → FATAL too many connections → PgBouncer 전후 | 쉬움 |
 | A06 ★★★ | **갭 락 데드락** | **[E2]** REPEATABLE READ 갭 락·insert intention 조합, 실무 데드락 최다 빈출 (Tecoble·우형) | 두 세션 SELECT FOR UPDATE 범위 겹침+INSERT → **SHOW ENGINE INNODB STATUS 그래프 해석이 백미** → 해소 3안 | 중간 |
 | A07 ★★ | **롱 트랜잭션 2차 피해** | **[E2]** idle in transaction 하나가 undo 폭증(MySQL)·VACUUM 무력화(PG) | 트랜잭션 열어두고 UPDATE 폭탄 → history list length·n_dead_tup → 종료 후 회복 | 쉬움 |
-| A08 ★ | **buffer pool 사이징** | **[E2]** DBA 파라미터 튜닝의 대표 주제 | innodb_buffer_pool_size 극단 변경 + 동일 부하 → hit ratio·p95 전후 | 쉬움 |
+| A08 ★ **완료** | **[버퍼 풀 사이징과 리사이즈의 값](sessions/A08-buffer-pool-sizing/)** | **[E2]** DBA 파라미터 튜닝의 대표 주제. 공식 권고가 50~75%와 80%로 갈리고 둘 다 기준이 시스템 메모리라 워킹셋을 말하지 않음 | 128M~2G 스윕을 균등·핫셋 두 분포로 → 무릎 위치가 분포로 갈림. 부하 중 온라인 리사이즈의 정지를 확대·축소 따로 계측. **히트율 77%가 실제로는 조회의 89%가 디스크행이라는 것과, flush_method만 바꿔 같은 히트율에 2.6배가 갈리는 것이 백미** | 쉬움 |
 | A09 ★★★ **완료** | **[샘플이 못 본 분포가 만든 플랜 뒤집힘](sessions/A09-planner-stats-flip/)** | **[E1]** GoCardless + **Clerk 2026-02 실장애**(ANALYZE 샘플이 NULL만 잡아 오판) | 분포 왜곡 → ANALYZE 전후 플랜 플립 → statistics_target·확장 통계 방어 | 중간 |
 | A10 ★★ | **복제 지연 관측** | **[E2]** R/W 분리의 통과의례, Seconds_Behind_Master의 거짓말 | 대량 UPDATE로 지연 유발 → SBM 진동 vs GTID 실지연 비교 → 병렬 복제 파라미터 | 중간 |
 | A11 ★★★ | **세미싱크 페일오버 유실** | **[E2]** MySQL 공식 문서가 타임아웃 시 async 폴백과 구 마스터 폐기를 경고. 폴백 창의 유실은 PlanetScale(Shlomi Noach) 기술 해설 — **자사 장애 회고가 아님** | 2노드 semi-sync → 폴백 유도 → kill → 승격 레플리카에 없음(GTID 증명) | 중간 |
@@ -472,7 +472,7 @@ B38(Log4Shell)·B40(SSRF)·B41(역직렬화)·B42(xz)는 **격리된 로컬 환�
 ## 13. 진행 체크리스트 (169개, 전 세션 미시작)
 
 **A 트랙 (21)**
-- [ ] A01 정수 PK 고갈 · [ ] A02 MDL 폭풍 · [ ] A03 utf8mb4 · [ ] A04 락 에스컬레이션 · [ ] A05 커넥션 폭풍 · [ ] A06 갭 락 · [ ] A07 롱 트랜잭션 · [ ] A08 buffer pool · [x] A09 통계 오염 · [ ] A10 복제 지연 · [ ] A11 세미싱크 유실
+- [ ] A01 정수 PK 고갈 · [ ] A02 MDL 폭풍 · [ ] A03 utf8mb4 · [ ] A04 락 에스컬레이션 · [ ] A05 커넥션 폭풍 · [ ] A06 갭 락 · [ ] A07 롱 트랜잭션 · [x] A08 buffer pool · [x] A09 통계 오염 · [ ] A10 복제 지연 · [ ] A11 세미싱크 유실
 - [ ] A12 GitHub 스플릿브레인 · [ ] A13 GitLab 재구축 · [ ] A14 XID · [ ] A15 fsyncgate · [ ] A16 OOM Killer · [ ] A17 UUID 스플릿 · [x] A18 Uber 쓰기 증폭 · [ ] A19 SLRU 절벽 · [ ] A20 CRDB 쿼럼 · [ ] A21 Figma 논리복제
 
 **B 트랙 (50)**

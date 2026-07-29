@@ -1,0 +1,296 @@
+{
+  "images": [
+    {
+      "type": "bar",
+      "out": "02-p95-uniform.png",
+      "title": "버퍼 풀 크기별 조회 지연 P95 · 균등 분포",
+      "bars": [
+        {
+          "label": "128M",
+          "value": 2.48,
+          "color": "fg"
+        },
+        {
+          "label": "256M",
+          "value": 2.54,
+          "color": "red"
+        },
+        {
+          "label": "512M",
+          "value": 2.27,
+          "color": "fg"
+        },
+        {
+          "label": "1G",
+          "value": 1.92,
+          "color": "fg"
+        },
+        {
+          "label": "1536M",
+          "value": 0.84,
+          "color": "green"
+        },
+        {
+          "label": "2G",
+          "value": 0.91,
+          "color": "fg"
+        }
+      ],
+      "note": "MySQL 8.4.3, 6스레드 PK 점조회, 워밍업 30초 뒤 60초 측정. 값은 밀리초"
+    },
+    {
+      "type": "bar",
+      "out": "04-hitrate-uniform.png",
+      "title": "버퍼 풀 크기별 히트율 · 균등 분포",
+      "bars": [
+        {
+          "label": "128M",
+          "value": 77.28,
+          "color": "red"
+        },
+        {
+          "label": "256M",
+          "value": 79.04,
+          "color": "red"
+        },
+        {
+          "label": "512M",
+          "value": 82.84,
+          "color": "red"
+        },
+        {
+          "label": "1G",
+          "value": 91.66,
+          "color": "yellow"
+        },
+        {
+          "label": "1536M",
+          "value": 100.0,
+          "color": "green"
+        },
+        {
+          "label": "2G",
+          "value": 100.0,
+          "color": "green"
+        }
+      ],
+      "note": "누적 카운터 차이로 계산. (1 - Innodb_buffer_pool_reads / read_requests) x 100"
+    },
+    {
+      "type": "bar",
+      "out": "08-perquery-uniform.png",
+      "title": "조회 한 건이 디스크에서 읽은 페이지 수 · 균등 분포",
+      "bars": [
+        {
+          "label": "128M",
+          "value": 0.889,
+          "color": "red"
+        },
+        {
+          "label": "256M",
+          "value": 0.8,
+          "color": "red"
+        },
+        {
+          "label": "512M",
+          "value": 0.626,
+          "color": "red"
+        },
+        {
+          "label": "1G",
+          "value": 0.275,
+          "color": "yellow"
+        },
+        {
+          "label": "1536M",
+          "value": 0.0,
+          "color": "green"
+        },
+        {
+          "label": "2G",
+          "value": 0.0,
+          "color": "green"
+        }
+      ],
+      "note": "같은 데이터의 히트율 그래프와 나란히 볼 것. 히트율은 B-Tree 상위 페이지 적중이 섞여 바닥이 높다"
+    },
+    {
+      "type": "bar",
+      "out": "03-p95-hot.png",
+      "title": "버퍼 풀 크기별 조회 지연 P95 · 핫셋 분포",
+      "bars": [
+        {
+          "label": "128M",
+          "value": 2.81,
+          "color": "red"
+        },
+        {
+          "label": "256M",
+          "value": 2.43,
+          "color": "fg"
+        },
+        {
+          "label": "512M",
+          "value": 1.11,
+          "color": "fg"
+        },
+        {
+          "label": "1G",
+          "value": 1.26,
+          "color": "fg"
+        },
+        {
+          "label": "1536M",
+          "value": 1.05,
+          "color": "fg"
+        },
+        {
+          "label": "2G",
+          "value": 0.87,
+          "color": "green"
+        }
+      ],
+      "note": "MySQL 8.4.3, 6스레드 PK 점조회, 워밍업 30초 뒤 60초 측정. 값은 밀리초"
+    },
+    {
+      "type": "bar",
+      "out": "05-hitrate-hot.png",
+      "title": "버퍼 풀 크기별 히트율 · 핫셋 분포",
+      "bars": [
+        {
+          "label": "128M",
+          "value": 82.9,
+          "color": "red"
+        },
+        {
+          "label": "256M",
+          "value": 90.88,
+          "color": "yellow"
+        },
+        {
+          "label": "512M",
+          "value": 98.93,
+          "color": "yellow"
+        },
+        {
+          "label": "1G",
+          "value": 99.53,
+          "color": "yellow"
+        },
+        {
+          "label": "1536M",
+          "value": 100.0,
+          "color": "green"
+        },
+        {
+          "label": "2G",
+          "value": 100.0,
+          "color": "green"
+        }
+      ],
+      "note": "누적 카운터 차이로 계산. (1 - Innodb_buffer_pool_reads / read_requests) x 100"
+    },
+    {
+      "type": "bar",
+      "out": "09-perquery-hot.png",
+      "title": "조회 한 건이 디스크에서 읽은 페이지 수 · 핫셋 분포",
+      "bars": [
+        {
+          "label": "128M",
+          "value": 0.623,
+          "color": "red"
+        },
+        {
+          "label": "256M",
+          "value": 0.303,
+          "color": "yellow"
+        },
+        {
+          "label": "512M",
+          "value": 0.033,
+          "color": "yellow"
+        },
+        {
+          "label": "1G",
+          "value": 0.014,
+          "color": "yellow"
+        },
+        {
+          "label": "1536M",
+          "value": 0.0,
+          "color": "green"
+        },
+        {
+          "label": "2G",
+          "value": 0.0,
+          "color": "green"
+        }
+      ],
+      "note": "같은 데이터의 히트율 그래프와 나란히 볼 것. 히트율은 B-Tree 상위 페이지 적중이 섞여 바닥이 높다"
+    },
+    {
+      "type": "bar",
+      "out": "06-resize-stall.png",
+      "title": "리사이즈 직후 5초의 최대 지연 vs 같은 실행의 나머지 구간",
+      "bars": [
+        {
+          "label": "확대 직후",
+          "value": 102.2,
+          "color": "yellow"
+        },
+        {
+          "label": "확대 그 밖",
+          "value": 164.8,
+          "color": "dim"
+        },
+        {
+          "label": "축소 직후",
+          "value": 374.9,
+          "color": "red"
+        },
+        {
+          "label": "축소 그 밖",
+          "value": 139.6,
+          "color": "dim"
+        }
+      ],
+      "note": "확대는 128M에서 2G로, 축소는 2G에서 128M로. 핫셋 부하를 건 채로 실행. 단위는 밀리초"
+    },
+    {
+      "type": "bar",
+      "out": "10-blockio.png",
+      "title": "측정 창 60초 동안 블록 디바이스에서 실제로 읽은 양",
+      "bars": [
+        {
+          "label": "O_DIRECT",
+          "value": 2427,
+          "color": "red"
+        },
+        {
+          "label": "fsync",
+          "value": 0,
+          "color": "green"
+        }
+      ],
+      "note": "두 조건의 버퍼 풀 히트율은 79.09%와 79.15%로 같다. 단위는 MB"
+    },
+    {
+      "type": "bar",
+      "out": "07-flush-method.png",
+      "title": "같은 버퍼 풀 256M, flush_method만 다를 때 P95",
+      "bars": [
+        {
+          "label": "O_DIRECT",
+          "value": 2.25,
+          "color": "red"
+        },
+        {
+          "label": "fsync",
+          "value": 0.96,
+          "color": "green"
+        }
+      ],
+      "note": "히트율은 두 조건이 사실상 같다. 차이는 miss가 디스크로 가느냐 페이지 캐시로 가느냐다"
+    }
+  ]
+}

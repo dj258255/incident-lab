@@ -1,0 +1,26 @@
+=============== 대조군 (리사이즈 없음, 128M 고정) ===============
+[control-128M] 버퍼 풀 128MB (chunk 128M x instances 1), flush O_DIRECT, MySQL 8.4.3
+  조회 범위 id 1~7,412,245 (7,000,000행), 핫셋 id 1~1,853,062 확률 0.95
+  워밍업 30초
+  1,696.8 q/s  p50 1.123ms  p95 2.199ms  p99 4.588ms  히트율 82.8677%  디스크 읽기 95,438페이지 / 1491.2MB
+=============== 리사이즈 128M -> 2G ===============
+[grow-128M-to-2G] 버퍼 풀 128MB (chunk 128M x instances 1), flush O_DIRECT, MySQL 8.4.3
+  조회 범위 id 1~7,412,245 (7,000,000행), 핫셋 id 1~1,853,062 확률 0.95
+  워밍업 30초
+  실행: SET GLOBAL innodb_buffer_pool_size = 2147483648
+  문장 반환 28ms, 상태 안정까지 0.4초, 최종 풀 2048MB
+    +0.18초  Resizing also other hash tables.
+    +0.38초  Completed resizing buffer pool at 260729  0:23:15.
+  2,187.1 q/s  p50 0.584ms  p95 2.031ms  p99 4.526ms  히트율 91.8615%  디스크 읽기 52,709페이지 / 823.6MB
+=============== 리사이즈 2G -> 128M ===============
+[shrink-2G-to-128M] 버퍼 풀 2048MB (chunk 128M x instances 1), flush O_DIRECT, MySQL 8.4.3
+  조회 범위 id 1~7,412,245 (7,000,000행), 핫셋 id 1~1,853,062 확률 0.95
+  워밍업 30초
+  실행: SET GLOBAL innodb_buffer_pool_size = 134217728
+  문장 반환 5ms, 상태 안정까지 3.5초, 최종 풀 128MB
+    +0.01초  buffer pool 0 : withdrawing blocks. (38969/122868)
+    +3.28초  buffer pool 0 : resizing with chunks 16 to 1.
+    +3.38초  Resizing also other hash tables.
+    +3.48초  Completed resizing buffer pool at 260729  0:25:58.
+  2,533.9 q/s  p50 0.387ms  p95 1.978ms  p99 4.188ms  히트율 91.8664%  디스크 읽기 61,027페이지 / 953.6MB
+리사이즈 실험 완료
