@@ -1,0 +1,57 @@
+# R02 재현 환경
+# RDS Multi-AZ 페일오버는 DNS 레코드를 새 인스턴스로 바꾸는 방식이다.
+# 그 구조를 로컬에서 흉내 낸다.
+#   - db-a, db-b   : 프라이머리와 스탠바이 역할의 MySQL 두 대
+#   - dnsmasq      : "db.internal"을 A나 B로 가리키는 DNS. 페일오버는 이 레코드를 바꾸는 것
+# 앱은 db.internal로만 접속하므로, 레코드가 바뀌면 새 연결은 새 인스턴스로 가야 한다.
+# 가지 않는다면 원인은 DB가 아니라 앱 쪽 캐시다.
+services:
+  db-a:
+    image: mysql:8.4.3
+    container_name: r02-db-a
+    environment:
+      MYSQL_ROOT_PASSWORD: lab
+      MYSQL_DATABASE: spoon
+    networks:
+      lab:
+        ipv4_address: 172.31.0.11
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+  db-b:
+    image: mysql:8.4.3
+    container_name: r02-db-b
+    environment:
+      MYSQL_ROOT_PASSWORD: lab
+      MYSQL_DATABASE: spoon
+    networks:
+      lab:
+        ipv4_address: 172.31.0.12
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+  # TTL 5초짜리 A 레코드를 준다. RDS의 페일오버 DNS TTL도 짧다.
+  # 문제는 TTL이 짧아도 JVM이 그 값을 보지 않을 수 있다는 데 있다.
+  dns:
+    image: dockurr/dnsmasq:2.91
+    container_name: r02-dns
+    entrypoint: ["dnsmasq", "--no-daemon", "--conf-file=/etc/dnsmasq.conf"]
+    volumes:
+      - ./dnsmasq.conf:/etc/dnsmasq.conf:ro
+    cap_add: [NET_ADMIN]
+    networks:
+      lab:
+        ipv4_address: 172.31.0.53
+
+networks:
+  lab:
+    name: r02-lab
+    ipam:
+      config:
+        - subnet: 172.31.0.0/24

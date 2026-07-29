@@ -59,9 +59,9 @@ sessions/<트랙><번호>-<슬러그>/
 
 | 상태 | 수 |
 |---|---|
-| 완료 | 24 |
+| 완료 | 25 |
 | 진행 중 | 0 |
-| 대기 | 145 |
+| 대기 | 144 |
 
 <!-- 세션이 완료되면 아래에 추가 -->
 - [F01 한맥 0으로 나눈 값이 주문 검증을 뚫다](sessions/F01-hanmac-divide-by-zero/) — NaN 비교가 상하한 검증을 무력화, 유한성 가드와 킬스위치로 해소. 최소 재현과 Spring 주문접수 API 재현
@@ -75,6 +75,7 @@ sessions/<트랙><번호>-<슬러그>/
 - [A06 갭 락 데드락](sessions/A06-gap-lock-deadlock/) — "없으면 넣는다" 한 패턴이 만드는 교착. 갭 락 둘이 공존하고 그 위의 insert intention이 서로를 막는 순간을 data_locks로 포착. 원래 방식 30회 데드락이 ON DUPLICATE KEY UPDATE로 0회
 - [A22 인덱스는 있는데 쿼리가 못 쓴다](sessions/A22-index-not-used/) — 형변환·문자셋·함수·선행 와일드카드·비트 연산 다섯 조건에서 인덱스를 그대로 두고 쿼리만 고쳐 최대 1,969배. 읽은 행을 EXPLAIN 추정이 아니라 Handler_read 카운터로 실측
 - [A18 Uber의 PostgreSQL 쓰기 증폭](sessions/A18-uber-write-amplification/) — 인덱스 수 x fillfactor x 갱신 컬럼 9조건의 WAL·HOT 실측. 꽉 찬 페이지에서 인덱스 10개는 WAL 2.2배(Uber가 옳은 조건), 정상 상태 HOT 83.5%에서는 1.4배(반론이 옳은 조건)
+- [R02 페일오버 후 DB는 살아 있는데 앱만 못 붙는다](sessions/R02-failover-dns-cache/) — DNS는 바뀌었는데 JVM이 옛 주소를 30초 더 붙잡아 복구가 49.5초. sun.net.inetaddr.ttl=0으로 5.9초. 커넥션 풀 설정은 이 구간에서 효과가 없다는 것까지 실측
 - [R01 복제 지연 중 승격의 커밋 유실](sessions/R01-replica-promotion-loss/) — 성공 응답을 받은 후원 927건 중 555건이 승격본에 없음을 GTID 차집합으로 특정. 반동기는 유실 0이지만 타임아웃 강등 창에서 유실이 되살아남. Seconds_Behind_Source가 분단 후 19초간 0을 표시하는 것까지
 - [R16 정산 배치의 버퍼 풀 오염](sessions/R16-batch-cache-pollution/) — 풀 스캔이 히트율을 7%까지 떨어뜨려도 NVMe에서는 p95가 안 무너짐을 실측. midpoint 방어의 실효는 워킹셋 회복 시간(15.2초 대 0.7초)에서 분리 계측
 - [R17 시계열 로그 보존 삭제](sessions/R17-timeseries-partition/) — 같은 350만 행을 DELETE(20.5초, 파일 회수 없음)와 DROP PARTITION(0.12초, 0.35GB 회수)으로 비교. LOCK=NONE DDL을 막아 세우는 MDL 행렬과 프루닝 깨지는 조건 실측

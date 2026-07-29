@@ -1,0 +1,19 @@
+server.port: 8080
+
+spring:
+  datasource:
+    # 호스트명으로만 접속한다. 페일오버는 이 이름이 가리키는 곳이 바뀌는 것이다.
+    url: jdbc:mysql://db.internal:3306/spoon?connectTimeout=2000&socketTimeout=3000
+    username: root
+    password: lab
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 5
+      connection-timeout: 3000
+      # maxLifetime을 길게 두면 커넥션이 오래 살아남아 이름을 다시 해석할 일이 없다.
+      # 이 값을 줄이는 것이 해소안 중 하나다.
+      max-lifetime: ${MAX_LIFETIME:1800000}
+      # 검증 쿼리를 붙이면 죽은 커넥션을 빨리 버린다.
+      keepalive-time: ${KEEPALIVE:0}
+
+logging.level.root: WARN

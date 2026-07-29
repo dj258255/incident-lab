@@ -16,3 +16,5 @@ tmp/
 # 덤프와 binlog는 재현 시 생성되므로 커밋하지 않는다
 results/dump/
 results/*.binlog
+
+results/*-app.log
