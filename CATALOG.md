@@ -78,6 +78,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 | A20 ★★ | **데브시스터즈 CockroachDB 쿼럼 손실** | **[E1]** 쿠키런 킹덤 총 점검 36시간 29분, 국내 전설 회고 (tech.devsisters.com). 원문은 **24노드 중 16노드 영향·RF 7·ballast 스크립트가 Block Device 덮어씀** | CRDB 3노드 → 2노드 kill → Raft 쿼럼 손실로 SQL 전면 중단(**축소 재현임을 명시**, 비트 복구는 원문 소개로) | 중간 |
 | A21 ★★ | **Figma식 수직 분할·논리 복제 이전** | **[E1]** 피크 CPU 65%(이미 r5.24xlarge) → 테이블 그룹 분리, 논리 복제로 이전. **무중단 아님 — 작업당 약 30초 부분 저하·요청 약 2% 드롭** (figma.com) | PG 2대 + logical replication으로 특정 테이블만 이전 → PgBouncer pause·권한 revoke·LSN 대기·승격·역방향 복제 | 중간 |
 | A22 ★★★ **완료** | **[인덱스는 있는데 쿼리가 못 쓴다](sessions/A22-index-not-used/)** | **[E2]** MySQL 공식 문서가 조건을 직접 명시(형변환·문자셋 불일치·선행 와일드카드). 실무 앵커는 LINE VOOM 비트 연산 30초 타임아웃 사례 | `[L]` 주문 300만 행에서 5조건 전후. EXPLAIN + Handler_read 실측, 함수형 인덱스(8.0.13)와 역순 생성 컬럼으로 해소 | 하 |
+| A23 ★★★ **완료** | **[백업은 있는데 복구가 안 된다(PITR)](sessions/A23-backup-pitr/)** | **[E1]** GitLab 2017 "five backup techniques, none working reliably" 원문 확인. MySQL 공식 PITR 절차와 GTID 조용한 스킵("No error is raised") | `[L]` mysqldump+binlog로 DROP 직전 복구. 백업만 복원 시 유실 500건 대 PITR 0건, RTO 3단 분해. GTID 겹침·도구 부재·조용한 스킵·binlog 만료 4함정 | 중 |
 
 
 ---

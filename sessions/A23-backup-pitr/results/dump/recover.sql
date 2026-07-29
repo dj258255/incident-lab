@@ -1,0 +1,13539 @@
+# The proper term is pseudo_replica_mode, but we use this compatibility alias
+# to make the statement usable on server versions 8.0.24 and older.
+/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=1*/;
+/*!50003 SET @OLD_COMPLETION_TYPE=@@COMPLETION_TYPE,COMPLETION_TYPE=0*/;
+DELIMITER /*!*/;
+# at 158
+#260729  6:14:54 server id 1  end_log_pos 127 CRC32 0x0a17e165 	Start: binlog v 4, server v 8.4.3 created 260729  6:14:54 at startup
+# Warning: this binlog is either in use or was not closed properly.
+ROLLBACK/*!*/;
+BINLOG '
+Xpppag8BAAAAewAAAH8AAAABAAQAOC40LjMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAABemmlqEwANAAgAAAAABAAEAAAAYwAEGggAAAAAAAACAAAACgoKKioAEjQA
+CigAAAFl4RcK
+'/*!*/;
+# at 21472
+#260729  6:14:55 server id 1  end_log_pos 21551 CRC32 0xe14548b8 	GTID	last_committed=4	sequence_number=6	rbr_only=yes	original_committed_timestamp=1785305695264535	immediate_commit_timestamp=1785305695264535	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695264535 (2026-07-29 06:14:55.264535 UTC)
+# immediate_commit_timestamp=1785305695264535 (2026-07-29 06:14:55.264535 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695264535*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:6'/*!*/;
+# at 21551
+#260729  6:14:55 server id 1  end_log_pos 21639 CRC32 0x6b8b2056 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.264069/*!*/;
+SET @@session.pseudo_thread_id=327/*!*/;
+SET @@session.foreign_key_checks=1, @@session.sql_auto_is_null=0, @@session.unique_checks=1, @@session.autocommit=1/*!*/;
+SET @@session.sql_mode=1168113696/*!*/;
+SET @@session.auto_increment_increment=1, @@session.auto_increment_offset=1/*!*/;
+/*!\C latin1 *//*!*/;
+SET @@session.character_set_client=8,@@session.collation_connection=8,@@session.collation_server=255/*!*/;
+SET @@session.time_zone='SYSTEM'/*!*/;
+SET @@session.lc_time_names=0/*!*/;
+SET @@session.collation_database=DEFAULT/*!*/;
+/*!80011 SET @@session.default_collation_for_utf8mb4=255*//*!*/;
+BEGIN
+/*!*/;
+# at 21639
+#260729  6:14:55 server id 1  end_log_pos 21696 CRC32 0xce965b79 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 21696
+#260729  6:14:55 server id 1  end_log_pos 21751 CRC32 0xe25a5349 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMBUAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB5W5bO
+X5ppah4BAAAANwAAAPdUAAAAAHcBAAAAAAEAAgAD/wAABAAAAAAAANAHAACZunpjtwpQSVNa4g==
+'/*!*/;
+# at 21751
+#260729  6:14:55 server id 1  end_log_pos 21782 CRC32 0x7139bb62 	Xid = 3098
+COMMIT/*!*/;
+# at 21782
+#260729  6:14:55 server id 1  end_log_pos 21861 CRC32 0xb68f5172 	GTID	last_committed=4	sequence_number=7	rbr_only=yes	original_committed_timestamp=1785305695265439	immediate_commit_timestamp=1785305695265439	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695265439 (2026-07-29 06:14:55.265439 UTC)
+# immediate_commit_timestamp=1785305695265439 (2026-07-29 06:14:55.265439 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695265439*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:7'/*!*/;
+# at 21861
+#260729  6:14:55 server id 1  end_log_pos 21949 CRC32 0x994a2162 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.265178/*!*/;
+BEGIN
+/*!*/;
+# at 21949
+#260729  6:14:55 server id 1  end_log_pos 22006 CRC32 0x133e3383 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 22006
+#260729  6:14:55 server id 1  end_log_pos 22061 CRC32 0xdbd7a9d6 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPZVAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCDMz4T
+X5ppah4BAAAANwAAAC1WAAAAAHcBAAAAAAEAAgAD/wABBAAAAAAAANAHAACZunpjtwpa1qnX2w==
+'/*!*/;
+# at 22061
+#260729  6:14:55 server id 1  end_log_pos 22092 CRC32 0xf565c634 	Xid = 3099
+COMMIT/*!*/;
+# at 22092
+#260729  6:14:55 server id 1  end_log_pos 22171 CRC32 0x1c19cbfd 	GTID	last_committed=4	sequence_number=8	rbr_only=yes	original_committed_timestamp=1785305695266192	immediate_commit_timestamp=1785305695266192	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695266192 (2026-07-29 06:14:55.266192 UTC)
+# immediate_commit_timestamp=1785305695266192 (2026-07-29 06:14:55.266192 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695266192*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:8'/*!*/;
+# at 22171
+#260729  6:14:55 server id 1  end_log_pos 22259 CRC32 0x2b2e8fc4 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.265956/*!*/;
+BEGIN
+/*!*/;
+# at 22259
+#260729  6:14:55 server id 1  end_log_pos 22316 CRC32 0x2ac28191 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 22316
+#260729  6:14:55 server id 1  end_log_pos 22371 CRC32 0x6f98054f 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACxXAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCRgcIq
+X5ppah4BAAAANwAAAGNXAAAAAHcBAAAAAAEAAgAD/wACBAAAAAAAANAHAACZunpjtwpaTwWYbw==
+'/*!*/;
+# at 22371
+#260729  6:14:55 server id 1  end_log_pos 22402 CRC32 0x2b675b3b 	Xid = 3100
+COMMIT/*!*/;
+# at 22402
+#260729  6:14:55 server id 1  end_log_pos 22481 CRC32 0xb547d879 	GTID	last_committed=4	sequence_number=9	rbr_only=yes	original_committed_timestamp=1785305695266997	immediate_commit_timestamp=1785305695266997	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695266997 (2026-07-29 06:14:55.266997 UTC)
+# immediate_commit_timestamp=1785305695266997 (2026-07-29 06:14:55.266997 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695266997*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:9'/*!*/;
+# at 22481
+#260729  6:14:55 server id 1  end_log_pos 22569 CRC32 0xb20f7249 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.266747/*!*/;
+BEGIN
+/*!*/;
+# at 22569
+#260729  6:14:55 server id 1  end_log_pos 22626 CRC32 0x4ba30191 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 22626
+#260729  6:14:55 server id 1  end_log_pos 22681 CRC32 0xf5b00720 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGJYAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCRAaNL
+X5ppah4BAAAANwAAAJlYAAAAAHcBAAAAAAEAAgAD/wADBAAAAAAAANAHAACZunpjtwpkIAew9Q==
+'/*!*/;
+# at 22681
+#260729  6:14:55 server id 1  end_log_pos 22712 CRC32 0xb95c10bf 	Xid = 3101
+COMMIT/*!*/;
+# at 22712
+#260729  6:14:55 server id 1  end_log_pos 22791 CRC32 0xc4c361e6 	GTID	last_committed=4	sequence_number=10	rbr_only=yes	original_committed_timestamp=1785305695267696	immediate_commit_timestamp=1785305695267696	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695267696 (2026-07-29 06:14:55.267696 UTC)
+# immediate_commit_timestamp=1785305695267696 (2026-07-29 06:14:55.267696 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695267696*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:10'/*!*/;
+# at 22791
+#260729  6:14:55 server id 1  end_log_pos 22879 CRC32 0x585a080c 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.267480/*!*/;
+BEGIN
+/*!*/;
+# at 22879
+#260729  6:14:55 server id 1  end_log_pos 22936 CRC32 0x937baec5 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 22936
+#260729  6:14:55 server id 1  end_log_pos 22991 CRC32 0x4a9146be 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJhZAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDFrnuT
+X5ppah4BAAAANwAAAM9ZAAAAAHcBAAAAAAEAAgAD/wAEBAAAAAAAANAHAACZunpjtwpuvkaRSg==
+'/*!*/;
+# at 22991
+#260729  6:14:55 server id 1  end_log_pos 23022 CRC32 0x358c4ef2 	Xid = 3102
+COMMIT/*!*/;
+# at 23022
+#260729  6:14:55 server id 1  end_log_pos 23101 CRC32 0x5ddf0034 	GTID	last_committed=4	sequence_number=11	rbr_only=yes	original_committed_timestamp=1785305695268225	immediate_commit_timestamp=1785305695268225	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695268225 (2026-07-29 06:14:55.268225 UTC)
+# immediate_commit_timestamp=1785305695268225 (2026-07-29 06:14:55.268225 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695268225*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:11'/*!*/;
+# at 23101
+#260729  6:14:55 server id 1  end_log_pos 23189 CRC32 0xf988600b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.268030/*!*/;
+BEGIN
+/*!*/;
+# at 23189
+#260729  6:14:55 server id 1  end_log_pos 23246 CRC32 0x8400d3aa 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 23246
+#260729  6:14:55 server id 1  end_log_pos 23301 CRC32 0xd2af1303 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAM5aAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCq0wCE
+X5ppah4BAAAANwAAAAVbAAAAAHcBAAAAAAEAAgAD/wAFBAAAAAAAANAHAACZunpjtwp4AxOv0g==
+'/*!*/;
+# at 23301
+#260729  6:14:55 server id 1  end_log_pos 23332 CRC32 0x898739af 	Xid = 3103
+COMMIT/*!*/;
+# at 23332
+#260729  6:14:55 server id 1  end_log_pos 23411 CRC32 0x25251477 	GTID	last_committed=4	sequence_number=12	rbr_only=yes	original_committed_timestamp=1785305695269299	immediate_commit_timestamp=1785305695269299	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695269299 (2026-07-29 06:14:55.269299 UTC)
+# immediate_commit_timestamp=1785305695269299 (2026-07-29 06:14:55.269299 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695269299*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:12'/*!*/;
+# at 23411
+#260729  6:14:55 server id 1  end_log_pos 23499 CRC32 0xe8c5ac09 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.268697/*!*/;
+BEGIN
+/*!*/;
+# at 23499
+#260729  6:14:55 server id 1  end_log_pos 23556 CRC32 0xa84e4aa3 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 23556
+#260729  6:14:55 server id 1  end_log_pos 23611 CRC32 0x6cdc15db 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAARcAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCjSk6o
+X5ppah4BAAAANwAAADtcAAAAAHcBAAAAAAEAAgAD/wAGBAAAAAAAANAHAACZunpjtwp42xXcbA==
+'/*!*/;
+# at 23611
+#260729  6:14:55 server id 1  end_log_pos 23642 CRC32 0x89ed98e3 	Xid = 3104
+COMMIT/*!*/;
+# at 23642
+#260729  6:14:55 server id 1  end_log_pos 23721 CRC32 0x47ec55f4 	GTID	last_committed=4	sequence_number=13	rbr_only=yes	original_committed_timestamp=1785305695270051	immediate_commit_timestamp=1785305695270051	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695270051 (2026-07-29 06:14:55.270051 UTC)
+# immediate_commit_timestamp=1785305695270051 (2026-07-29 06:14:55.270051 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695270051*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:13'/*!*/;
+# at 23721
+#260729  6:14:55 server id 1  end_log_pos 23809 CRC32 0x63221e22 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.269805/*!*/;
+BEGIN
+/*!*/;
+# at 23809
+#260729  6:14:55 server id 1  end_log_pos 23866 CRC32 0x0f95a3a6 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 23866
+#260729  6:14:55 server id 1  end_log_pos 23921 CRC32 0xaaff59fa 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADpdAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCmo5UP
+X5ppah4BAAAANwAAAHFdAAAAAHcBAAAAAAEAAgAD/wAHBAAAAAAAANAHAACZunpjtwqC+ln/qg==
+'/*!*/;
+# at 23921
+#260729  6:14:55 server id 1  end_log_pos 23952 CRC32 0x882c8370 	Xid = 3105
+COMMIT/*!*/;
+# at 23952
+#260729  6:14:55 server id 1  end_log_pos 24031 CRC32 0x4d47ca89 	GTID	last_committed=4	sequence_number=14	rbr_only=yes	original_committed_timestamp=1785305695271864	immediate_commit_timestamp=1785305695271864	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695271864 (2026-07-29 06:14:55.271864 UTC)
+# immediate_commit_timestamp=1785305695271864 (2026-07-29 06:14:55.271864 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695271864*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:14'/*!*/;
+# at 24031
+#260729  6:14:55 server id 1  end_log_pos 24119 CRC32 0x78cd5b15 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.271633/*!*/;
+BEGIN
+/*!*/;
+# at 24119
+#260729  6:14:55 server id 1  end_log_pos 24176 CRC32 0x46fb1f17 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 24176
+#260729  6:14:55 server id 1  end_log_pos 24231 CRC32 0x91219852 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHBeAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAXH/tG
+X5ppah4BAAAANwAAAKdeAAAAAHcBAAAAAAEAAgAD/wAIBAAAAAAAANAHAACZunpjtwqWUpghkQ==
+'/*!*/;
+# at 24231
+#260729  6:14:55 server id 1  end_log_pos 24262 CRC32 0x64a06876 	Xid = 3106
+COMMIT/*!*/;
+# at 24262
+#260729  6:14:55 server id 1  end_log_pos 24341 CRC32 0x1a80febb 	GTID	last_committed=4	sequence_number=15	rbr_only=yes	original_committed_timestamp=1785305695272533	immediate_commit_timestamp=1785305695272533	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695272533 (2026-07-29 06:14:55.272533 UTC)
+# immediate_commit_timestamp=1785305695272533 (2026-07-29 06:14:55.272533 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695272533*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:15'/*!*/;
+# at 24341
+#260729  6:14:55 server id 1  end_log_pos 24429 CRC32 0xc91f2e8f 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.272323/*!*/;
+BEGIN
+/*!*/;
+# at 24429
+#260729  6:14:55 server id 1  end_log_pos 24486 CRC32 0x066e73de 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 24486
+#260729  6:14:55 server id 1  end_log_pos 24541 CRC32 0xc076491e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKZfAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDec24G
+X5ppah4BAAAANwAAAN1fAAAAAHcBAAAAAAEAAgAD/wAJBAAAAAAAANAHAACZunpjtwqgHkl2wA==
+'/*!*/;
+# at 24541
+#260729  6:14:55 server id 1  end_log_pos 24572 CRC32 0x0c7d2f42 	Xid = 3107
+COMMIT/*!*/;
+# at 24572
+#260729  6:14:55 server id 1  end_log_pos 24651 CRC32 0x4613a28c 	GTID	last_committed=4	sequence_number=16	rbr_only=yes	original_committed_timestamp=1785305695273168	immediate_commit_timestamp=1785305695273168	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695273168 (2026-07-29 06:14:55.273168 UTC)
+# immediate_commit_timestamp=1785305695273168 (2026-07-29 06:14:55.273168 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695273168*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:16'/*!*/;
+# at 24651
+#260729  6:14:55 server id 1  end_log_pos 24739 CRC32 0xd0687282 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.272956/*!*/;
+BEGIN
+/*!*/;
+# at 24739
+#260729  6:14:55 server id 1  end_log_pos 24796 CRC32 0x250d4378 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 24796
+#260729  6:14:55 server id 1  end_log_pos 24851 CRC32 0x97294c4e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANxgAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB4Qw0l
+X5ppah4BAAAANwAAABNhAAAAAHcBAAAAAAEAAgAD/wAKBAAAAAAAANAHAACZunpjtwqgTkwplw==
+'/*!*/;
+# at 24851
+#260729  6:14:55 server id 1  end_log_pos 24882 CRC32 0xf2768a57 	Xid = 3108
+COMMIT/*!*/;
+# at 24882
+#260729  6:14:55 server id 1  end_log_pos 24961 CRC32 0xc6c81753 	GTID	last_committed=4	sequence_number=17	rbr_only=yes	original_committed_timestamp=1785305695274077	immediate_commit_timestamp=1785305695274077	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695274077 (2026-07-29 06:14:55.274077 UTC)
+# immediate_commit_timestamp=1785305695274077 (2026-07-29 06:14:55.274077 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695274077*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:17'/*!*/;
+# at 24961
+#260729  6:14:55 server id 1  end_log_pos 25049 CRC32 0x249cbe09 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.273788/*!*/;
+BEGIN
+/*!*/;
+# at 25049
+#260729  6:14:55 server id 1  end_log_pos 25106 CRC32 0x3897b14b 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 25106
+#260729  6:14:55 server id 1  end_log_pos 25161 CRC32 0x83942961 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABJiAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBLsZc4
+X5ppah4BAAAANwAAAEliAAAAAHcBAAAAAAEAAgAD/wALBAAAAAAAANAHAACZunpjtwqqYSmUgw==
+'/*!*/;
+# at 25161
+#260729  6:14:55 server id 1  end_log_pos 25192 CRC32 0x762af701 	Xid = 3109
+COMMIT/*!*/;
+# at 25192
+#260729  6:14:55 server id 1  end_log_pos 25271 CRC32 0xe2cf6fd4 	GTID	last_committed=4	sequence_number=18	rbr_only=yes	original_committed_timestamp=1785305695274824	immediate_commit_timestamp=1785305695274824	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695274824 (2026-07-29 06:14:55.274824 UTC)
+# immediate_commit_timestamp=1785305695274824 (2026-07-29 06:14:55.274824 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695274824*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:18'/*!*/;
+# at 25271
+#260729  6:14:55 server id 1  end_log_pos 25359 CRC32 0xfb44b2e9 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.274594/*!*/;
+BEGIN
+/*!*/;
+# at 25359
+#260729  6:14:55 server id 1  end_log_pos 25416 CRC32 0x180c1956 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 25416
+#260729  6:14:55 server id 1  end_log_pos 25471 CRC32 0x2d239b6e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEhjAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBWGQwY
+X5ppah4BAAAANwAAAH9jAAAAAHcBAAAAAAEAAgAD/wAMBAAAAAAAANAHAACZunpjtwq0bpsjLQ==
+'/*!*/;
+# at 25471
+#260729  6:14:55 server id 1  end_log_pos 25502 CRC32 0xb4ed3e76 	Xid = 3110
+COMMIT/*!*/;
+# at 25502
+#260729  6:14:55 server id 1  end_log_pos 25581 CRC32 0x9c43111b 	GTID	last_committed=4	sequence_number=19	rbr_only=yes	original_committed_timestamp=1785305695275535	immediate_commit_timestamp=1785305695275535	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695275535 (2026-07-29 06:14:55.275535 UTC)
+# immediate_commit_timestamp=1785305695275535 (2026-07-29 06:14:55.275535 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695275535*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:19'/*!*/;
+# at 25581
+#260729  6:14:55 server id 1  end_log_pos 25669 CRC32 0x7fb2df0b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.275329/*!*/;
+BEGIN
+/*!*/;
+# at 25669
+#260729  6:14:55 server id 1  end_log_pos 25726 CRC32 0xb9e34e1b 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 25726
+#260729  6:14:55 server id 1  end_log_pos 25781 CRC32 0x4fbfd33c 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAH5kAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAbTuO5
+X5ppah4BAAAANwAAALVkAAAAAHcBAAAAAAEAAgAD/wANBAAAAAAAANAHAACZunpjtwq+PNO/Tw==
+'/*!*/;
+# at 25781
+#260729  6:14:55 server id 1  end_log_pos 25812 CRC32 0x96ba15da 	Xid = 3111
+COMMIT/*!*/;
+# at 25812
+#260729  6:14:55 server id 1  end_log_pos 25891 CRC32 0x84825c7b 	GTID	last_committed=4	sequence_number=20	rbr_only=yes	original_committed_timestamp=1785305695276303	immediate_commit_timestamp=1785305695276303	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695276303 (2026-07-29 06:14:55.276303 UTC)
+# immediate_commit_timestamp=1785305695276303 (2026-07-29 06:14:55.276303 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695276303*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:20'/*!*/;
+# at 25891
+#260729  6:14:55 server id 1  end_log_pos 25979 CRC32 0x67f6476e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.276025/*!*/;
+BEGIN
+/*!*/;
+# at 25979
+#260729  6:14:55 server id 1  end_log_pos 26036 CRC32 0xa763e30c 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 26036
+#260729  6:14:55 server id 1  end_log_pos 26091 CRC32 0xf72458c1 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALRlAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAM42On
+X5ppah4BAAAANwAAAOtlAAAAAHcBAAAAAAEAAgAD/wAOBAAAAAAAANAHAACZunpjtwrIwVgk9w==
+'/*!*/;
+# at 26091
+#260729  6:14:55 server id 1  end_log_pos 26122 CRC32 0x4025c3c2 	Xid = 3112
+COMMIT/*!*/;
+# at 26122
+#260729  6:14:55 server id 1  end_log_pos 26201 CRC32 0xbe118399 	GTID	last_committed=4	sequence_number=21	rbr_only=yes	original_committed_timestamp=1785305695279498	immediate_commit_timestamp=1785305695279498	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695279498 (2026-07-29 06:14:55.279498 UTC)
+# immediate_commit_timestamp=1785305695279498 (2026-07-29 06:14:55.279498 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695279498*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:21'/*!*/;
+# at 26201
+#260729  6:14:55 server id 1  end_log_pos 26289 CRC32 0x786bf72d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.277546/*!*/;
+BEGIN
+/*!*/;
+# at 26289
+#260729  6:14:55 server id 1  end_log_pos 26346 CRC32 0xca6b1f9c 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 26346
+#260729  6:14:55 server id 1  end_log_pos 26401 CRC32 0x66ac4157 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOpmAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCcH2vK
+X5ppah4BAAAANwAAACFnAAAAAHcBAAAAAAEAAgAD/wAPBAAAAAAAANAHAACZunpjtwrSV0GsZg==
+'/*!*/;
+# at 26401
+#260729  6:14:55 server id 1  end_log_pos 26432 CRC32 0xc29737b3 	Xid = 3113
+COMMIT/*!*/;
+# at 26432
+#260729  6:14:55 server id 1  end_log_pos 26511 CRC32 0xc30130ef 	GTID	last_committed=4	sequence_number=22	rbr_only=yes	original_committed_timestamp=1785305695280165	immediate_commit_timestamp=1785305695280165	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695280165 (2026-07-29 06:14:55.280165 UTC)
+# immediate_commit_timestamp=1785305695280165 (2026-07-29 06:14:55.280165 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695280165*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:22'/*!*/;
+# at 26511
+#260729  6:14:55 server id 1  end_log_pos 26599 CRC32 0x1859ceb5 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.279982/*!*/;
+BEGIN
+/*!*/;
+# at 26599
+#260729  6:14:55 server id 1  end_log_pos 26656 CRC32 0xfffed11e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 26656
+#260729  6:14:55 server id 1  end_log_pos 26711 CRC32 0xda7f08c8 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACBoAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAe0f7/
+X5ppah4BAAAANwAAAFdoAAAAAHcBAAAAAAEAAgAD/wAQBAAAAAAAANAHAACZunpjtwrmyAh/2g==
+'/*!*/;
+# at 26711
+#260729  6:14:55 server id 1  end_log_pos 26742 CRC32 0x387cea67 	Xid = 3114
+COMMIT/*!*/;
+# at 26742
+#260729  6:14:55 server id 1  end_log_pos 26821 CRC32 0xfe8e451a 	GTID	last_committed=4	sequence_number=23	rbr_only=yes	original_committed_timestamp=1785305695280872	immediate_commit_timestamp=1785305695280872	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695280872 (2026-07-29 06:14:55.280872 UTC)
+# immediate_commit_timestamp=1785305695280872 (2026-07-29 06:14:55.280872 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695280872*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:23'/*!*/;
+# at 26821
+#260729  6:14:55 server id 1  end_log_pos 26909 CRC32 0xfa107a27 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.280669/*!*/;
+BEGIN
+/*!*/;
+# at 26909
+#260729  6:14:55 server id 1  end_log_pos 26966 CRC32 0x4728ba9e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 26966
+#260729  6:14:55 server id 1  end_log_pos 27021 CRC32 0xad929178 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFZpAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCeuihH
+X5ppah4BAAAANwAAAI1pAAAAAHcBAAAAAAEAAgAD/wARBAAAAAAAANAHAACZunpjtwrweJGSrQ==
+'/*!*/;
+# at 27021
+#260729  6:14:55 server id 1  end_log_pos 27052 CRC32 0x5f0fcd98 	Xid = 3115
+COMMIT/*!*/;
+# at 27052
+#260729  6:14:55 server id 1  end_log_pos 27131 CRC32 0x0c37b126 	GTID	last_committed=4	sequence_number=24	rbr_only=yes	original_committed_timestamp=1785305695281515	immediate_commit_timestamp=1785305695281515	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695281515 (2026-07-29 06:14:55.281515 UTC)
+# immediate_commit_timestamp=1785305695281515 (2026-07-29 06:14:55.281515 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695281515*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:24'/*!*/;
+# at 27131
+#260729  6:14:55 server id 1  end_log_pos 27219 CRC32 0x18507e61 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.281331/*!*/;
+BEGIN
+/*!*/;
+# at 27219
+#260729  6:14:55 server id 1  end_log_pos 27276 CRC32 0x305d0325 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 27276
+#260729  6:14:55 server id 1  end_log_pos 27331 CRC32 0x2399fc80 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIxqAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAlA10w
+X5ppah4BAAAANwAAAMNqAAAAAHcBAAAAAAEAAgAD/wASBAAAAAAAANAHAACZunpjtwr6gPyZIw==
+'/*!*/;
+# at 27331
+#260729  6:14:55 server id 1  end_log_pos 27362 CRC32 0x62220a3e 	Xid = 3116
+COMMIT/*!*/;
+# at 27362
+#260729  6:14:55 server id 1  end_log_pos 27441 CRC32 0x785459aa 	GTID	last_committed=4	sequence_number=25	rbr_only=yes	original_committed_timestamp=1785305695282244	immediate_commit_timestamp=1785305695282244	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695282244 (2026-07-29 06:14:55.282244 UTC)
+# immediate_commit_timestamp=1785305695282244 (2026-07-29 06:14:55.282244 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695282244*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:25'/*!*/;
+# at 27441
+#260729  6:14:55 server id 1  end_log_pos 27529 CRC32 0xda8e445d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.281965/*!*/;
+BEGIN
+/*!*/;
+# at 27529
+#260729  6:14:55 server id 1  end_log_pos 27586 CRC32 0x34a0eb19 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 27586
+#260729  6:14:55 server id 1  end_log_pos 27641 CRC32 0x062c7f22 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMJrAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAZ66A0
+X5ppah4BAAAANwAAAPlrAAAAAHcBAAAAAAEAAgAD/wATBAAAAAAAANAHAACZunpjtwr6In8sBg==
+'/*!*/;
+# at 27641
+#260729  6:14:55 server id 1  end_log_pos 27672 CRC32 0xb5465341 	Xid = 3117
+COMMIT/*!*/;
+# at 27672
+#260729  6:14:55 server id 1  end_log_pos 27751 CRC32 0xe0e35124 	GTID	last_committed=4	sequence_number=26	rbr_only=yes	original_committed_timestamp=1785305695283451	immediate_commit_timestamp=1785305695283451	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695283451 (2026-07-29 06:14:55.283451 UTC)
+# immediate_commit_timestamp=1785305695283451 (2026-07-29 06:14:55.283451 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695283451*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:26'/*!*/;
+# at 27751
+#260729  6:14:55 server id 1  end_log_pos 27839 CRC32 0x603c86a1 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.282717/*!*/;
+BEGIN
+/*!*/;
+# at 27839
+#260729  6:14:55 server id 1  end_log_pos 27896 CRC32 0x3fbd7e74 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 27896
+#260729  6:14:55 server id 1  end_log_pos 27951 CRC32 0x8334d888 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPhsAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB0fr0/
+X5ppah4BAAAANwAAAC9tAAAAAHcBAAAAAAEAAgAD/wAUBAAAAAAAANAHAACZunpjtwsEiNg0gw==
+'/*!*/;
+# at 27951
+#260729  6:14:55 server id 1  end_log_pos 27982 CRC32 0x39960d0c 	Xid = 3118
+COMMIT/*!*/;
+# at 27982
+#260729  6:14:55 server id 1  end_log_pos 28061 CRC32 0xdedb5470 	GTID	last_committed=4	sequence_number=27	rbr_only=yes	original_committed_timestamp=1785305695285464	immediate_commit_timestamp=1785305695285464	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695285464 (2026-07-29 06:14:55.285464 UTC)
+# immediate_commit_timestamp=1785305695285464 (2026-07-29 06:14:55.285464 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695285464*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:27'/*!*/;
+# at 28061
+#260729  6:14:55 server id 1  end_log_pos 28149 CRC32 0x2cf4a56a 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.285257/*!*/;
+BEGIN
+/*!*/;
+# at 28149
+#260729  6:14:55 server id 1  end_log_pos 28206 CRC32 0xacb30e46 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 28206
+#260729  6:14:55 server id 1  end_log_pos 28261 CRC32 0x10e32229 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAC5uAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBGDrOs
+X5ppah4BAAAANwAAAGVuAAAAAHcBAAAAAAEAAgAD/wAVBAAAAAAAANAHAACZunpjtwsiKSLjEA==
+'/*!*/;
+# at 28261
+#260729  6:14:55 server id 1  end_log_pos 28292 CRC32 0x580ba3d4 	Xid = 3119
+COMMIT/*!*/;
+# at 28292
+#260729  6:14:55 server id 1  end_log_pos 28371 CRC32 0x388f2e08 	GTID	last_committed=4	sequence_number=28	rbr_only=yes	original_committed_timestamp=1785305695286183	immediate_commit_timestamp=1785305695286183	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695286183 (2026-07-29 06:14:55.286183 UTC)
+# immediate_commit_timestamp=1785305695286183 (2026-07-29 06:14:55.286183 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695286183*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:28'/*!*/;
+# at 28371
+#260729  6:14:55 server id 1  end_log_pos 28459 CRC32 0x3af8877f 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.285950/*!*/;
+BEGIN
+/*!*/;
+# at 28459
+#260729  6:14:55 server id 1  end_log_pos 28516 CRC32 0x78cfa5a5 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 28516
+#260729  6:14:55 server id 1  end_log_pos 28571 CRC32 0x0cca15e9 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGRvAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQClpc94
+X5ppah4BAAAANwAAAJtvAAAAAHcBAAAAAAEAAgAD/wAWBAAAAAAAANAHAACZunpjtwsi6RXKDA==
+'/*!*/;
+# at 28571
+#260729  6:14:55 server id 1  end_log_pos 28602 CRC32 0x404b48e2 	Xid = 3120
+COMMIT/*!*/;
+# at 28602
+#260729  6:14:55 server id 1  end_log_pos 28681 CRC32 0x8fa5191e 	GTID	last_committed=4	sequence_number=29	rbr_only=yes	original_committed_timestamp=1785305695287069	immediate_commit_timestamp=1785305695287069	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695287069 (2026-07-29 06:14:55.287069 UTC)
+# immediate_commit_timestamp=1785305695287069 (2026-07-29 06:14:55.287069 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695287069*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:29'/*!*/;
+# at 28681
+#260729  6:14:55 server id 1  end_log_pos 28769 CRC32 0x6b74230b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.286810/*!*/;
+BEGIN
+/*!*/;
+# at 28769
+#260729  6:14:55 server id 1  end_log_pos 28826 CRC32 0x26bc8e04 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 28826
+#260729  6:14:55 server id 1  end_log_pos 28881 CRC32 0x7a61e0ce 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJpwAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAEjrwm
+X5ppah4BAAAANwAAANFwAAAAAHcBAAAAAAEAAgAD/wAXBAAAAAAAANAHAACZunpjtwsszuBheg==
+'/*!*/;
+# at 28881
+#260729  6:14:55 server id 1  end_log_pos 28912 CRC32 0x8c1816f9 	Xid = 3121
+COMMIT/*!*/;
+# at 28912
+#260729  6:14:55 server id 1  end_log_pos 28991 CRC32 0xe078b0e4 	GTID	last_committed=4	sequence_number=30	rbr_only=yes	original_committed_timestamp=1785305695287790	immediate_commit_timestamp=1785305695287790	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695287790 (2026-07-29 06:14:55.287790 UTC)
+# immediate_commit_timestamp=1785305695287790 (2026-07-29 06:14:55.287790 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695287790*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:30'/*!*/;
+# at 28991
+#260729  6:14:55 server id 1  end_log_pos 29079 CRC32 0x594123f7 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.287565/*!*/;
+BEGIN
+/*!*/;
+# at 29079
+#260729  6:14:55 server id 1  end_log_pos 29136 CRC32 0xf2c025e7 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 29136
+#260729  6:14:55 server id 1  end_log_pos 29191 CRC32 0x26f71b7e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANBxAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDnJcDy
+X5ppah4BAAAANwAAAAdyAAAAAHcBAAAAAAEAAgAD/wAYBAAAAAAAANAHAACZunpjtws2fhv3Jg==
+'/*!*/;
+# at 29191
+#260729  6:14:55 server id 1  end_log_pos 29222 CRC32 0x3e71cb98 	Xid = 3122
+COMMIT/*!*/;
+# at 29222
+#260729  6:14:55 server id 1  end_log_pos 29301 CRC32 0xa20809bf 	GTID	last_committed=4	sequence_number=31	rbr_only=yes	original_committed_timestamp=1785305695288595	immediate_commit_timestamp=1785305695288595	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695288595 (2026-07-29 06:14:55.288595 UTC)
+# immediate_commit_timestamp=1785305695288595 (2026-07-29 06:14:55.288595 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695288595*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:31'/*!*/;
+# at 29301
+#260729  6:14:55 server id 1  end_log_pos 29389 CRC32 0xdb455632 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.288372/*!*/;
+BEGIN
+/*!*/;
+# at 29389
+#260729  6:14:55 server id 1  end_log_pos 29446 CRC32 0x61ce55d5 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 29446
+#260729  6:14:55 server id 1  end_log_pos 29501 CRC32 0xba244cd5 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAZzAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDVVc5h
+X5ppah4BAAAANwAAAD1zAAAAAHcBAAAAAAEAAgAD/wAZBAAAAAAAANAHAACZunpjtwtA1Uwkug==
+'/*!*/;
+# at 29501
+#260729  6:14:55 server id 1  end_log_pos 29532 CRC32 0x17157b5d 	Xid = 3123
+COMMIT/*!*/;
+# at 29532
+#260729  6:14:55 server id 1  end_log_pos 29611 CRC32 0xf7f83272 	GTID	last_committed=4	sequence_number=32	rbr_only=yes	original_committed_timestamp=1785305695289396	immediate_commit_timestamp=1785305695289396	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695289396 (2026-07-29 06:14:55.289396 UTC)
+# immediate_commit_timestamp=1785305695289396 (2026-07-29 06:14:55.289396 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695289396*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:32'/*!*/;
+# at 29611
+#260729  6:14:55 server id 1  end_log_pos 29699 CRC32 0x2a3bb197 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.289171/*!*/;
+BEGIN
+/*!*/;
+# at 29699
+#260729  6:14:55 server id 1  end_log_pos 29756 CRC32 0x6ad3c0b8 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 29756
+#260729  6:14:55 server id 1  end_log_pos 29811 CRC32 0x5a7c7792 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADx0AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC4wNNq
+X5ppah4BAAAANwAAAHN0AAAAAHcBAAAAAAEAAgAD/wAaBAAAAAAAANAHAACZunpjtwtKknd8Wg==
+'/*!*/;
+# at 29811
+#260729  6:14:55 server id 1  end_log_pos 29842 CRC32 0x69f2398f 	Xid = 3124
+COMMIT/*!*/;
+# at 29842
+#260729  6:14:55 server id 1  end_log_pos 29921 CRC32 0xbb75257c 	GTID	last_committed=4	sequence_number=33	rbr_only=yes	original_committed_timestamp=1785305695290082	immediate_commit_timestamp=1785305695290082	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695290082 (2026-07-29 06:14:55.290082 UTC)
+# immediate_commit_timestamp=1785305695290082 (2026-07-29 06:14:55.290082 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695290082*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:33'/*!*/;
+# at 29921
+#260729  6:14:55 server id 1  end_log_pos 30009 CRC32 0xfe298d03 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.289858/*!*/;
+BEGIN
+/*!*/;
+# at 30009
+#260729  6:14:55 server id 1  end_log_pos 30066 CRC32 0x6e2e2884 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 30066
+#260729  6:14:55 server id 1  end_log_pos 30121 CRC32 0xd9455b73 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHJ1AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCEKC5u
+X5ppah4BAAAANwAAAKl1AAAAAHcBAAAAAAEAAgAD/wAbBAAAAAAAANAHAACZunpjtwtKc1tF2Q==
+'/*!*/;
+# at 30121
+#260729  6:14:55 server id 1  end_log_pos 30152 CRC32 0x8df2f192 	Xid = 3125
+COMMIT/*!*/;
+# at 30152
+#260729  6:14:55 server id 1  end_log_pos 30231 CRC32 0x62628d15 	GTID	last_committed=4	sequence_number=34	rbr_only=yes	original_committed_timestamp=1785305695290808	immediate_commit_timestamp=1785305695290808	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695290808 (2026-07-29 06:14:55.290808 UTC)
+# immediate_commit_timestamp=1785305695290808 (2026-07-29 06:14:55.290808 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695290808*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:34'/*!*/;
+# at 30231
+#260729  6:14:55 server id 1  end_log_pos 30319 CRC32 0xb35238e0 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.290565/*!*/;
+BEGIN
+/*!*/;
+# at 30319
+#260729  6:14:55 server id 1  end_log_pos 30376 CRC32 0x195b913f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 30376
+#260729  6:14:55 server id 1  end_log_pos 30431 CRC32 0x163b0674 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKh2AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA/kVsZ
+X5ppah4BAAAANwAAAN92AAAAAHcBAAAAAAEAAgAD/wAcBAAAAAAAANAHAACZunpjtwtUdAY7Fg==
+'/*!*/;
+# at 30431
+#260729  6:14:55 server id 1  end_log_pos 30462 CRC32 0xeda395bd 	Xid = 3126
+COMMIT/*!*/;
+# at 30462
+#260729  6:14:55 server id 1  end_log_pos 30541 CRC32 0xb5688d15 	GTID	last_committed=4	sequence_number=35	rbr_only=yes	original_committed_timestamp=1785305695291507	immediate_commit_timestamp=1785305695291507	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695291507 (2026-07-29 06:14:55.291507 UTC)
+# immediate_commit_timestamp=1785305695291507 (2026-07-29 06:14:55.291507 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695291507*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:35'/*!*/;
+# at 30541
+#260729  6:14:55 server id 1  end_log_pos 30629 CRC32 0x8125a838 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.291298/*!*/;
+BEGIN
+/*!*/;
+# at 30629
+#260729  6:14:55 server id 1  end_log_pos 30686 CRC32 0xa18dfabf 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 30686
+#260729  6:14:55 server id 1  end_log_pos 30741 CRC32 0x28f1f447 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAN53AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC/+o2h
+X5ppah4BAAAANwAAABV4AAAAAHcBAAAAAAEAAgAD/wAdBAAAAAAAANAHAACZunpjtwteR/TxKA==
+'/*!*/;
+# at 30741
+#260729  6:14:55 server id 1  end_log_pos 30772 CRC32 0xcb125b1b 	Xid = 3127
+COMMIT/*!*/;
+# at 30772
+#260729  6:14:55 server id 1  end_log_pos 30851 CRC32 0x84cb2307 	GTID	last_committed=4	sequence_number=36	rbr_only=yes	original_committed_timestamp=1785305695293732	immediate_commit_timestamp=1785305695293732	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695293732 (2026-07-29 06:14:55.293732 UTC)
+# immediate_commit_timestamp=1785305695293732 (2026-07-29 06:14:55.293732 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695293732*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:36'/*!*/;
+# at 30851
+#260729  6:14:55 server id 1  end_log_pos 30939 CRC32 0x1825fe3d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.293523/*!*/;
+BEGIN
+/*!*/;
+# at 30939
+#260729  6:14:55 server id 1  end_log_pos 30996 CRC32 0x9418343d 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 30996
+#260729  6:14:55 server id 1  end_log_pos 31051 CRC32 0x1bd4c750 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABR5AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA9NBiU
+X5ppah4BAAAANwAAAEt5AAAAAHcBAAAAAAEAAgAD/wAeBAAAAAAAANAHAACZunpjtwtyUMfUGw==
+'/*!*/;
+# at 31051
+#260729  6:14:55 server id 1  end_log_pos 31082 CRC32 0x23340e2f 	Xid = 3128
+COMMIT/*!*/;
+# at 31082
+#260729  6:14:55 server id 1  end_log_pos 31161 CRC32 0x5f152c12 	GTID	last_committed=4	sequence_number=37	rbr_only=yes	original_committed_timestamp=1785305695294447	immediate_commit_timestamp=1785305695294447	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695294447 (2026-07-29 06:14:55.294447 UTC)
+# immediate_commit_timestamp=1785305695294447 (2026-07-29 06:14:55.294447 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695294447*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:37'/*!*/;
+# at 31161
+#260729  6:14:55 server id 1  end_log_pos 31249 CRC32 0xd1e81e8d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.294217/*!*/;
+BEGIN
+/*!*/;
+# at 31249
+#260729  6:14:55 server id 1  end_log_pos 31306 CRC32 0xf910c8ad 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 31306
+#260729  6:14:55 server id 1  end_log_pos 31361 CRC32 0x10761da4 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEp6AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCtyBD5
+X5ppah4BAAAANwAAAIF6AAAAAHcBAAAAAAEAAgAD/wAfBAAAAAAAANAHAACZunpjtwt8pB12EA==
+'/*!*/;
+# at 31361
+#260729  6:14:55 server id 1  end_log_pos 31392 CRC32 0x42a9a0f7 	Xid = 3129
+COMMIT/*!*/;
+# at 31392
+#260729  6:14:55 server id 1  end_log_pos 31471 CRC32 0xbe44c652 	GTID	last_committed=4	sequence_number=38	rbr_only=yes	original_committed_timestamp=1785305695295066	immediate_commit_timestamp=1785305695295066	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695295066 (2026-07-29 06:14:55.295066 UTC)
+# immediate_commit_timestamp=1785305695295066 (2026-07-29 06:14:55.295066 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695295066*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:38'/*!*/;
+# at 31471
+#260729  6:14:55 server id 1  end_log_pos 31559 CRC32 0xa17fd7e0 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.294849/*!*/;
+BEGIN
+/*!*/;
+# at 31559
+#260729  6:14:55 server id 1  end_log_pos 31616 CRC32 0xe79065ba 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 31616
+#260729  6:14:55 server id 1  end_log_pos 31671 CRC32 0x78a9c253 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIB7AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC6ZZDn
+X5ppah4BAAAANwAAALd7AAAAAHcBAAAAAAEAAgAD/wAgBAAAAAAAANAHAACZunpjtwt8U8KpeA==
+'/*!*/;
+# at 31671
+#260729  6:14:55 server id 1  end_log_pos 31702 CRC32 0x031d8662 	Xid = 3130
+COMMIT/*!*/;
+# at 31702
+#260729  6:14:55 server id 1  end_log_pos 31781 CRC32 0xe46b704e 	GTID	last_committed=4	sequence_number=39	rbr_only=yes	original_committed_timestamp=1785305695295717	immediate_commit_timestamp=1785305695295717	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695295717 (2026-07-29 06:14:55.295717 UTC)
+# immediate_commit_timestamp=1785305695295717 (2026-07-29 06:14:55.295717 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695295717*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:39'/*!*/;
+# at 31781
+#260729  6:14:55 server id 1  end_log_pos 31869 CRC32 0x1204ebcc 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.295519/*!*/;
+BEGIN
+/*!*/;
+# at 31869
+#260729  6:14:55 server id 1  end_log_pos 31926 CRC32 0x467f32f7 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 31926
+#260729  6:14:55 server id 1  end_log_pos 31981 CRC32 0xbffa03df 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALZ8AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQD3Mn9G
+X5ppah4BAAAANwAAAO18AAAAAHcBAAAAAAEAAgAD/wAhBAAAAAAAANAHAACZunpjtwuG3wP6vw==
+'/*!*/;
+# at 31981
+#260729  6:14:55 server id 1  end_log_pos 32012 CRC32 0x191da7c5 	Xid = 3131
+COMMIT/*!*/;
+# at 32012
+#260729  6:14:55 server id 1  end_log_pos 32091 CRC32 0x48409bf0 	GTID	last_committed=4	sequence_number=40	rbr_only=yes	original_committed_timestamp=1785305695296264	immediate_commit_timestamp=1785305695296264	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695296264 (2026-07-29 06:14:55.296264 UTC)
+# immediate_commit_timestamp=1785305695296264 (2026-07-29 06:14:55.296264 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695296264*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:40'/*!*/;
+# at 32091
+#260729  6:14:55 server id 1  end_log_pos 32179 CRC32 0xc843c102 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.296043/*!*/;
+BEGIN
+/*!*/;
+# at 32179
+#260729  6:14:55 server id 1  end_log_pos 32236 CRC32 0x66e49aea 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 32236
+#260729  6:14:55 server id 1  end_log_pos 32291 CRC32 0x08c0add8 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOx9AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDqmuRm
+X5ppah4BAAAANwAAACN+AAAAAHcBAAAAAAEAAgAD/wAiBAAAAAAAANAHAACZunpjtwuQ2K3ACA==
+'/*!*/;
+# at 32291
+#260729  6:14:55 server id 1  end_log_pos 32322 CRC32 0x24306063 	Xid = 3132
+COMMIT/*!*/;
+# at 32322
+#260729  6:14:55 server id 1  end_log_pos 32401 CRC32 0x5ceda67b 	GTID	last_committed=4	sequence_number=41	rbr_only=yes	original_committed_timestamp=1785305695297201	immediate_commit_timestamp=1785305695297201	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695297201 (2026-07-29 06:14:55.297201 UTC)
+# immediate_commit_timestamp=1785305695297201 (2026-07-29 06:14:55.297201 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695297201*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:41'/*!*/;
+# at 32401
+#260729  6:14:55 server id 1  end_log_pos 32489 CRC32 0xd467eae9 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.296707/*!*/;
+BEGIN
+/*!*/;
+# at 32489
+#260729  6:14:55 server id 1  end_log_pos 32546 CRC32 0x7b7e68d9 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 32546
+#260729  6:14:55 server id 1  end_log_pos 32601 CRC32 0x962de90d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACJ/AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDZaH57
+X5ppah4BAAAANwAAAFl/AAAAAHcBAAAAAAEAAgAD/wAjBAAAAAAAANAHAACZunpjtwuQDektlg==
+'/*!*/;
+# at 32601
+#260729  6:14:55 server id 1  end_log_pos 32632 CRC32 0x4ced2757 	Xid = 3133
+COMMIT/*!*/;
+# at 32632
+#260729  6:14:55 server id 1  end_log_pos 32711 CRC32 0xf7ddd265 	GTID	last_committed=4	sequence_number=42	rbr_only=yes	original_committed_timestamp=1785305695297892	immediate_commit_timestamp=1785305695297892	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695297892 (2026-07-29 06:14:55.297892 UTC)
+# immediate_commit_timestamp=1785305695297892 (2026-07-29 06:14:55.297892 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695297892*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:42'/*!*/;
+# at 32711
+#260729  6:14:55 server id 1  end_log_pos 32799 CRC32 0xaddd04c7 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.297662/*!*/;
+BEGIN
+/*!*/;
+# at 32799
+#260729  6:14:55 server id 1  end_log_pos 32856 CRC32 0xd0039ad6 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 32856
+#260729  6:14:55 server id 1  end_log_pos 32911 CRC32 0xbe6c8b9a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFiAAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDWmgPQ
+X5ppah4BAAAANwAAAI+AAAAAAHcBAAAAAAEAAgAD/wAkBAAAAAAAANAHAACZunpjtwuamotsvg==
+'/*!*/;
+# at 32911
+#260729  6:14:55 server id 1  end_log_pos 32942 CRC32 0xa336c3db 	Xid = 3134
+COMMIT/*!*/;
+# at 32942
+#260729  6:14:55 server id 1  end_log_pos 33021 CRC32 0x9e7b761f 	GTID	last_committed=4	sequence_number=43	rbr_only=yes	original_committed_timestamp=1785305695298655	immediate_commit_timestamp=1785305695298655	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695298655 (2026-07-29 06:14:55.298655 UTC)
+# immediate_commit_timestamp=1785305695298655 (2026-07-29 06:14:55.298655 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695298655*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:43'/*!*/;
+# at 33021
+#260729  6:14:55 server id 1  end_log_pos 33109 CRC32 0xbff0e53c 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.298364/*!*/;
+BEGIN
+/*!*/;
+# at 33109
+#260729  6:14:55 server id 1  end_log_pos 33166 CRC32 0x9096f61f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 33166
+#260729  6:14:55 server id 1  end_log_pos 33221 CRC32 0xe446c112 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAI6BAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAf9paQ
+X5ppah4BAAAANwAAAMWBAAAAAHcBAAAAAAEAAgAD/wAlBAAAAAAAANAHAACZunpjtwukEsFG5A==
+'/*!*/;
+# at 33221
+#260729  6:14:55 server id 1  end_log_pos 33252 CRC32 0x218437aa 	Xid = 3135
+COMMIT/*!*/;
+# at 33252
+#260729  6:14:55 server id 1  end_log_pos 33331 CRC32 0x7e15b6ff 	GTID	last_committed=4	sequence_number=44	rbr_only=yes	original_committed_timestamp=1785305695299335	immediate_commit_timestamp=1785305695299335	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695299335 (2026-07-29 06:14:55.299335 UTC)
+# immediate_commit_timestamp=1785305695299335 (2026-07-29 06:14:55.299335 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695299335*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:44'/*!*/;
+# at 33331
+#260729  6:14:55 server id 1  end_log_pos 33419 CRC32 0xcf188a0e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.299131/*!*/;
+BEGIN
+/*!*/;
+# at 33419
+#260729  6:14:55 server id 1  end_log_pos 33476 CRC32 0xd9f84aae 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 33476
+#260729  6:14:55 server id 1  end_log_pos 33531 CRC32 0xd4b3786b 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMSCAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCuSvjZ
+X5ppah4BAAAANwAAAPuCAAAAAHcBAAAAAAEAAgAD/wAmBAAAAAAAANAHAACZunpjtwuua3iz1A==
+'/*!*/;
+# at 33531
+#260729  6:14:55 server id 1  end_log_pos 33562 CRC32 0x962f08fa 	Xid = 3136
+COMMIT/*!*/;
+# at 33562
+#260729  6:14:55 server id 1  end_log_pos 33641 CRC32 0x7deace68 	GTID	last_committed=4	sequence_number=45	rbr_only=yes	original_committed_timestamp=1785305695300928	immediate_commit_timestamp=1785305695300928	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695300928 (2026-07-29 06:14:55.300928 UTC)
+# immediate_commit_timestamp=1785305695300928 (2026-07-29 06:14:55.300928 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695300928*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:45'/*!*/;
+# at 33641
+#260729  6:14:55 server id 1  end_log_pos 33729 CRC32 0xa28e50cc 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.300710/*!*/;
+BEGIN
+/*!*/;
+# at 33729
+#260729  6:14:55 server id 1  end_log_pos 33786 CRC32 0x7e23a3ab 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 33786
+#260729  6:14:55 server id 1  end_log_pos 33841 CRC32 0x22de7b69 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPqDAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCroyN+
+X5ppah4BAAAANwAAADGEAAAAAHcBAAAAAAEAAgAD/wAnBAAAAAAAANAHAACZunpjtwu4aXveIg==
+'/*!*/;
+# at 33841
+#260729  6:14:55 server id 1  end_log_pos 33872 CRC32 0xb4782356 	Xid = 3137
+COMMIT/*!*/;
+# at 33872
+#260729  6:14:55 server id 1  end_log_pos 33951 CRC32 0x4f5c1843 	GTID	last_committed=4	sequence_number=46	rbr_only=yes	original_committed_timestamp=1785305695301597	immediate_commit_timestamp=1785305695301597	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695301597 (2026-07-29 06:14:55.301597 UTC)
+# immediate_commit_timestamp=1785305695301597 (2026-07-29 06:14:55.301597 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695301597*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:46'/*!*/;
+# at 33951
+#260729  6:14:55 server id 1  end_log_pos 34039 CRC32 0x58f31404 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.301401/*!*/;
+BEGIN
+/*!*/;
+# at 34039
+#260729  6:14:55 server id 1  end_log_pos 34096 CRC32 0x526d3aa2 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 34096
+#260729  6:14:55 server id 1  end_log_pos 34151 CRC32 0xc45b564e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADCFAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCiOm1S
+X5ppah4BAAAANwAAAGeFAAAAAHcBAAAAAAEAAgAD/wAoBAAAAAAAANAHAACZunpjtwvCTlZbxA==
+'/*!*/;
+# at 34151
+#260729  6:14:55 server id 1  end_log_pos 34182 CRC32 0xbbdb92f9 	Xid = 3138
+COMMIT/*!*/;
+# at 34182
+#260729  6:14:55 server id 1  end_log_pos 34261 CRC32 0x29b40949 	GTID	last_committed=4	sequence_number=47	rbr_only=yes	original_committed_timestamp=1785305695302270	immediate_commit_timestamp=1785305695302270	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695302270 (2026-07-29 06:14:55.302270 UTC)
+# immediate_commit_timestamp=1785305695302270 (2026-07-29 06:14:55.302270 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695302270*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:47'/*!*/;
+# at 34261
+#260729  6:14:55 server id 1  end_log_pos 34349 CRC32 0x7d39a633 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.302046/*!*/;
+BEGIN
+/*!*/;
+# at 34349
+#260729  6:14:55 server id 1  end_log_pos 34406 CRC32 0x451647cd 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 34406
+#260729  6:14:55 server id 1  end_log_pos 34461 CRC32 0xca5f9f4c 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGaGAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDNRxZF
+X5ppah4BAAAANwAAAJ2GAAAAAHcBAAAAAAEAAgAD/wApBAAAAAAAANAHAACZunpjtwvMTJ9fyg==
+'/*!*/;
+# at 34461
+#260729  6:14:55 server id 1  end_log_pos 34492 CRC32 0xb35a6086 	Xid = 3139
+COMMIT/*!*/;
+# at 34492
+#260729  6:14:55 server id 1  end_log_pos 34571 CRC32 0x0f28453a 	GTID	last_committed=4	sequence_number=48	rbr_only=yes	original_committed_timestamp=1785305695303071	immediate_commit_timestamp=1785305695303071	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695303071 (2026-07-29 06:14:55.303071 UTC)
+# immediate_commit_timestamp=1785305695303071 (2026-07-29 06:14:55.303071 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695303071*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:48'/*!*/;
+# at 34571
+#260729  6:14:55 server id 1  end_log_pos 34659 CRC32 0xdaa5cf4b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.302822/*!*/;
+BEGIN
+/*!*/;
+# at 34659
+#260729  6:14:55 server id 1  end_log_pos 34716 CRC32 0x9dcee899 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 34716
+#260729  6:14:55 server id 1  end_log_pos 34771 CRC32 0x7e1033d5 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJyHAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCZ6M6d
+X5ppah4BAAAANwAAANOHAAAAAHcBAAAAAAEAAgAD/wAqBAAAAAAAANAHAACZunpjtwvM1TMQfg==
+'/*!*/;
+# at 34771
+#260729  6:14:55 server id 1  end_log_pos 34802 CRC32 0xee2b126b 	Xid = 3140
+COMMIT/*!*/;
+# at 34802
+#260729  6:14:55 server id 1  end_log_pos 34881 CRC32 0x39dd598f 	GTID	last_committed=4	sequence_number=49	rbr_only=yes	original_committed_timestamp=1785305695303792	immediate_commit_timestamp=1785305695303792	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695303792 (2026-07-29 06:14:55.303792 UTC)
+# immediate_commit_timestamp=1785305695303792 (2026-07-29 06:14:55.303792 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695303792*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:49'/*!*/;
+# at 34881
+#260729  6:14:55 server id 1  end_log_pos 34969 CRC32 0x861f908e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.303564/*!*/;
+BEGIN
+/*!*/;
+# at 34969
+#260729  6:14:55 server id 1  end_log_pos 35026 CRC32 0xfcaf6899 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 35026
+#260729  6:14:55 server id 1  end_log_pos 35081 CRC32 0xe8df22ef 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANKIAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCZaK/8
+X5ppah4BAAAANwAAAAmJAAAAAHcBAAAAAAEAAgAD/wArBAAAAAAAANAHAACZunpjtwvW7yLf6A==
+'/*!*/;
+# at 35081
+#260729  6:14:55 server id 1  end_log_pos 35112 CRC32 0xae28e0a1 	Xid = 3141
+COMMIT/*!*/;
+# at 35112
+#260729  6:14:55 server id 1  end_log_pos 35191 CRC32 0xbca29a0b 	GTID	last_committed=4	sequence_number=50	rbr_only=yes	original_committed_timestamp=1785305695305994	immediate_commit_timestamp=1785305695305994	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695305994 (2026-07-29 06:14:55.305994 UTC)
+# immediate_commit_timestamp=1785305695305994 (2026-07-29 06:14:55.305994 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695305994*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:50'/*!*/;
+# at 35191
+#260729  6:14:55 server id 1  end_log_pos 35279 CRC32 0x5325042c 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.305786/*!*/;
+BEGIN
+/*!*/;
+# at 35279
+#260729  6:14:55 server id 1  end_log_pos 35336 CRC32 0xc553da8b 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 35336
+#260729  6:14:55 server id 1  end_log_pos 35391 CRC32 0x4999f97b 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAiKAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCL2lPF
+X5ppah4BAAAANwAAAD+KAAAAAHcBAAAAAAEAAgAD/wAsBAAAAAAAANAHAACZunpjtwvqe/mZSQ==
+'/*!*/;
+# at 35391
+#260729  6:14:55 server id 1  end_log_pos 35422 CRC32 0x8fc0737f 	Xid = 3142
+COMMIT/*!*/;
+# at 35422
+#260729  6:14:55 server id 1  end_log_pos 35501 CRC32 0xc7b4550f 	GTID	last_committed=4	sequence_number=51	rbr_only=yes	original_committed_timestamp=1785305695306644	immediate_commit_timestamp=1785305695306644	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695306644 (2026-07-29 06:14:55.306644 UTC)
+# immediate_commit_timestamp=1785305695306644 (2026-07-29 06:14:55.306644 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695306644*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:51'/*!*/;
+# at 35501
+#260729  6:14:55 server id 1  end_log_pos 35589 CRC32 0x9bdf75df 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.306444/*!*/;
+BEGIN
+/*!*/;
+# at 35589
+#260729  6:14:55 server id 1  end_log_pos 35646 CRC32 0x18fbb271 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 35646
+#260729  6:14:55 server id 1  end_log_pos 35701 CRC32 0x28dd933b 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAD6LAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBxsvsY
+X5ppah4BAAAANwAAAHWLAAAAAHcBAAAAAAEAAgAD/wAtBAAAAAAAANAHAACZunpjtwv0O5PdKA==
+'/*!*/;
+# at 35701
+#260729  6:14:55 server id 1  end_log_pos 35732 CRC32 0x8e0168ec 	Xid = 3143
+COMMIT/*!*/;
+# at 35732
+#260729  6:14:55 server id 1  end_log_pos 35811 CRC32 0x6c8342ae 	GTID	last_committed=4	sequence_number=52	rbr_only=yes	original_committed_timestamp=1785305695307227	immediate_commit_timestamp=1785305695307227	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695307227 (2026-07-29 06:14:55.307227 UTC)
+# immediate_commit_timestamp=1785305695307227 (2026-07-29 06:14:55.307227 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695307227*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:52'/*!*/;
+# at 35811
+#260729  6:14:55 server id 1  end_log_pos 35899 CRC32 0xa97dcdc1 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.307005/*!*/;
+BEGIN
+/*!*/;
+# at 35899
+#260729  6:14:55 server id 1  end_log_pos 35956 CRC32 0xb0c02625 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 35956
+#260729  6:14:55 server id 1  end_log_pos 36011 CRC32 0xd0f7d3be 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHSMAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAlJsCw
+X5ppah4BAAAANwAAAKuMAAAAAHcBAAAAAAEAAgAD/wAuBAAAAAAAANAHAACZunpjtwv+vtP30A==
+'/*!*/;
+# at 36011
+#260729  6:14:55 server id 1  end_log_pos 36042 CRC32 0xc6c2e205 	Xid = 3144
+COMMIT/*!*/;
+# at 36042
+#260729  6:14:55 server id 1  end_log_pos 36121 CRC32 0x45d26264 	GTID	last_committed=4	sequence_number=53	rbr_only=yes	original_committed_timestamp=1785305695307936	immediate_commit_timestamp=1785305695307936	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695307936 (2026-07-29 06:14:55.307936 UTC)
+# immediate_commit_timestamp=1785305695307936 (2026-07-29 06:14:55.307936 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695307936*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:53'/*!*/;
+# at 36121
+#260729  6:14:55 server id 1  end_log_pos 36209 CRC32 0x54308cbd 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.307709/*!*/;
+BEGIN
+/*!*/;
+# at 36209
+#260729  6:14:55 server id 1  end_log_pos 36266 CRC32 0x8a26cb13 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 36266
+#260729  6:14:55 server id 1  end_log_pos 36321 CRC32 0x4bbc849d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKqNAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQATyyaK
+X5ppah4BAAAANwAAAOGNAAAAAHcBAAAAAAEAAgAD/wAvBAAAAAAAANAHAACZunpjtwv+nYS8Sw==
+'/*!*/;
+# at 36321
+#260729  6:14:55 server id 1  end_log_pos 36352 CRC32 0x7ac99558 	Xid = 3145
+COMMIT/*!*/;
+# at 36352
+#260729  6:14:55 server id 1  end_log_pos 36431 CRC32 0x9497ec3f 	GTID	last_committed=4	sequence_number=54	rbr_only=yes	original_committed_timestamp=1785305695308616	immediate_commit_timestamp=1785305695308616	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695308616 (2026-07-29 06:14:55.308616 UTC)
+# immediate_commit_timestamp=1785305695308616 (2026-07-29 06:14:55.308616 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695308616*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:54'/*!*/;
+# at 36431
+#260729  6:14:55 server id 1  end_log_pos 36519 CRC32 0xcf1a0d56 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.308393/*!*/;
+BEGIN
+/*!*/;
+# at 36519
+#260729  6:14:55 server id 1  end_log_pos 36576 CRC32 0xc34877a2 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 36576
+#260729  6:14:55 server id 1  end_log_pos 36631 CRC32 0x52819c28 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOCOAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCid0jD
+X5ppah4BAAAANwAAABePAAAAAHcBAAAAAAEAAgAD/wAwBAAAAAAAANAHAACZunpjtwwIKJyBUg==
+'/*!*/;
+# at 36631
+#260729  6:14:55 server id 1  end_log_pos 36662 CRC32 0x7ac4443c 	Xid = 3146
+COMMIT/*!*/;
+# at 36662
+#260729  6:14:55 server id 1  end_log_pos 36741 CRC32 0x8b1382ed 	GTID	last_committed=4	sequence_number=55	rbr_only=yes	original_committed_timestamp=1785305695309688	immediate_commit_timestamp=1785305695309688	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695309688 (2026-07-29 06:14:55.309688 UTC)
+# immediate_commit_timestamp=1785305695309688 (2026-07-29 06:14:55.309688 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695309688*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:55'/*!*/;
+# at 36741
+#260729  6:14:55 server id 1  end_log_pos 36829 CRC32 0x2d8515a3 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.309079/*!*/;
+BEGIN
+/*!*/;
+# at 36829
+#260729  6:14:55 server id 1  end_log_pos 36886 CRC32 0xa9c1d655 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 36886
+#260729  6:14:55 server id 1  end_log_pos 36941 CRC32 0x8b424e1f 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABaQAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBV1sGp
+X5ppah4BAAAANwAAAE2QAAAAAHcBAAAAAAEAAgAD/wAxBAAAAAAAANAHAACZunpjtwwSH05Ciw==
+'/*!*/;
+# at 36941
+#260729  6:14:55 server id 1  end_log_pos 36972 CRC32 0xd025264b 	Xid = 3147
+COMMIT/*!*/;
+# at 36972
+#260729  6:14:55 server id 1  end_log_pos 37051 CRC32 0x62ae4076 	GTID	last_committed=4	sequence_number=56	rbr_only=yes	original_committed_timestamp=1785305695311562	immediate_commit_timestamp=1785305695311562	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695311562 (2026-07-29 06:14:55.311562 UTC)
+# immediate_commit_timestamp=1785305695311562 (2026-07-29 06:14:55.311562 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695311562*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:56'/*!*/;
+# at 37051
+#260729  6:14:55 server id 1  end_log_pos 37139 CRC32 0x412f13ff 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.311324/*!*/;
+BEGIN
+/*!*/;
+# at 37139
+#260729  6:14:55 server id 1  end_log_pos 37196 CRC32 0x895a7e48 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 37196
+#260729  6:14:55 server id 1  end_log_pos 37251 CRC32 0xb3799e9c 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEyRAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBIflqJ
+X5ppah4BAAAANwAAAIORAAAAAHcBAAAAAAEAAgAD/wAyBAAAAAAAANAHAACZunpjtwwmnJ55sw==
+'/*!*/;
+# at 37251
+#260729  6:14:55 server id 1  end_log_pos 37282 CRC32 0x0e27bb44 	Xid = 3148
+COMMIT/*!*/;
+# at 37282
+#260729  6:14:55 server id 1  end_log_pos 37361 CRC32 0x06858f55 	GTID	last_committed=4	sequence_number=57	rbr_only=yes	original_committed_timestamp=1785305695312369	immediate_commit_timestamp=1785305695312369	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695312369 (2026-07-29 06:14:55.312369 UTC)
+# immediate_commit_timestamp=1785305695312369 (2026-07-29 06:14:55.312369 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695312369*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:57'/*!*/;
+# at 37361
+#260729  6:14:55 server id 1  end_log_pos 37449 CRC32 0x61fbd93d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.312125/*!*/;
+BEGIN
+/*!*/;
+# at 37449
+#260729  6:14:55 server id 1  end_log_pos 37506 CRC32 0xda4987d2 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 37506
+#260729  6:14:55 server id 1  end_log_pos 37561 CRC32 0xb8898010 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIKSAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDSh0na
+X5ppah4BAAAANwAAALmSAAAAAHcBAAAAAAEAAgAD/wAzBAAAAAAAANAHAACZunpjtwwwEICJuA==
+'/*!*/;
+# at 37561
+#260729  6:14:55 server id 1  end_log_pos 37592 CRC32 0x471fbeca 	Xid = 3149
+COMMIT/*!*/;
+# at 37592
+#260729  6:14:55 server id 1  end_log_pos 37671 CRC32 0x8d7238de 	GTID	last_committed=4	sequence_number=58	rbr_only=yes	original_committed_timestamp=1785305695313066	immediate_commit_timestamp=1785305695313066	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695313066 (2026-07-29 06:14:55.313066 UTC)
+# immediate_commit_timestamp=1785305695313066 (2026-07-29 06:14:55.313066 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695313066*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:58'/*!*/;
+# at 37671
+#260729  6:14:55 server id 1  end_log_pos 37759 CRC32 0xf23d035e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.312859/*!*/;
+BEGIN
+/*!*/;
+# at 37759
+#260729  6:14:55 server id 1  end_log_pos 37816 CRC32 0xad132d08 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 37816
+#260729  6:14:55 server id 1  end_log_pos 37871 CRC32 0xe77d2890 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALiTAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAILROt
+X5ppah4BAAAANwAAAO+TAAAAAHcBAAAAAAEAAgAD/wA0BAAAAAAAANAHAACZunpjtwwwkCh95w==
+'/*!*/;
+# at 37871
+#260729  6:14:55 server id 1  end_log_pos 37902 CRC32 0x35cf093d 	Xid = 3150
+COMMIT/*!*/;
+# at 37902
+#260729  6:14:55 server id 1  end_log_pos 37981 CRC32 0xebaac944 	GTID	last_committed=4	sequence_number=59	rbr_only=yes	original_committed_timestamp=1785305695313769	immediate_commit_timestamp=1785305695313769	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695313769 (2026-07-29 06:14:55.313769 UTC)
+# immediate_commit_timestamp=1785305695313769 (2026-07-29 06:14:55.313769 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695313769*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:59'/*!*/;
+# at 37981
+#260729  6:14:55 server id 1  end_log_pos 38069 CRC32 0xc2693b0c 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.313555/*!*/;
+BEGIN
+/*!*/;
+# at 38069
+#260729  6:14:55 server id 1  end_log_pos 38126 CRC32 0x5b3d7882 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 38126
+#260729  6:14:55 server id 1  end_log_pos 38181 CRC32 0x051177dd 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAO6UAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCCeD1b
+X5ppah4BAAAANwAAACWVAAAAAHcBAAAAAAEAAgAD/wA1BAAAAAAAANAHAACZunpjtww63XcRBQ==
+'/*!*/;
+# at 38181
+#260729  6:14:55 server id 1  end_log_pos 38212 CRC32 0xb77dfd4c 	Xid = 3151
+COMMIT/*!*/;
+# at 38212
+#260729  6:14:55 server id 1  end_log_pos 38291 CRC32 0x5c06830f 	GTID	last_committed=4	sequence_number=60	rbr_only=yes	original_committed_timestamp=1785305695314451	immediate_commit_timestamp=1785305695314451	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695314451 (2026-07-29 06:14:55.314451 UTC)
+# immediate_commit_timestamp=1785305695314451 (2026-07-29 06:14:55.314451 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695314451*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:60'/*!*/;
+# at 38291
+#260729  6:14:55 server id 1  end_log_pos 38379 CRC32 0xca524402 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.314245/*!*/;
+BEGIN
+/*!*/;
+# at 38379
+#260729  6:14:55 server id 1  end_log_pos 38436 CRC32 0x9626c96e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 38436
+#260729  6:14:55 server id 1  end_log_pos 38491 CRC32 0xd9d4bcf6 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACSWAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBuySaW
+X5ppah4BAAAANwAAAFuWAAAAAHcBAAAAAAEAAgAD/wA2BAAAAAAAANAHAACZunpjtwxE9rzU2Q==
+'/*!*/;
+# at 38491
+#260729  6:14:55 server id 1  end_log_pos 38522 CRC32 0xcf61a331 	Xid = 3152
+COMMIT/*!*/;
+# at 38522
+#260729  6:14:55 server id 1  end_log_pos 38601 CRC32 0x91a08b8a 	GTID	last_committed=4	sequence_number=61	rbr_only=yes	original_committed_timestamp=1785305695315190	immediate_commit_timestamp=1785305695315190	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695315190 (2026-07-29 06:14:55.315190 UTC)
+# immediate_commit_timestamp=1785305695315190 (2026-07-29 06:14:55.315190 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695315190*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:61'/*!*/;
+# at 38601
+#260729  6:14:55 server id 1  end_log_pos 38689 CRC32 0x55ec2b79 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.314944/*!*/;
+BEGIN
+/*!*/;
+# at 38689
+#260729  6:14:55 server id 1  end_log_pos 38746 CRC32 0x54832311 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 38746
+#260729  6:14:55 server id 1  end_log_pos 38801 CRC32 0xef5f637a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFqXAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQARI4NU
+X5ppah4BAAAANwAAAJGXAAAAAHcBAAAAAAEAAgAD/wA3BAAAAAAAANAHAACZunpjtwxEemNf7w==
+'/*!*/;
+# at 38801
+#260729  6:14:55 server id 1  end_log_pos 38832 CRC32 0xcea0b8a2 	Xid = 3153
+COMMIT/*!*/;
+# at 38832
+#260729  6:14:55 server id 1  end_log_pos 38911 CRC32 0x928b7ff4 	GTID	last_committed=4	sequence_number=62	rbr_only=yes	original_committed_timestamp=1785305695315874	immediate_commit_timestamp=1785305695315874	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695315874 (2026-07-29 06:14:55.315874 UTC)
+# immediate_commit_timestamp=1785305695315874 (2026-07-29 06:14:55.315874 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695315874*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:62'/*!*/;
+# at 38911
+#260729  6:14:55 server id 1  end_log_pos 38999 CRC32 0x72f8558a 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.315626/*!*/;
+BEGIN
+/*!*/;
+# at 38999
+#260729  6:14:55 server id 1  end_log_pos 39056 CRC32 0x2f9fe63a 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 39056
+#260729  6:14:55 server id 1  end_log_pos 39111 CRC32 0x31bbecdf 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJCYAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA65p8v
+X5ppah4BAAAANwAAAMeYAAAAAHcBAAAAAAEAAgAD/wA4BAAAAAAAANAHAACZunpjtwxO3+y7MQ==
+'/*!*/;
+# at 39111
+#260729  6:14:55 server id 1  end_log_pos 39142 CRC32 0xb896ea5f 	Xid = 3154
+COMMIT/*!*/;
+# at 39142
+#260729  6:14:55 server id 1  end_log_pos 39221 CRC32 0xafba8369 	GTID	last_committed=4	sequence_number=63	rbr_only=yes	original_committed_timestamp=1785305695316534	immediate_commit_timestamp=1785305695316534	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695316534 (2026-07-29 06:14:55.316534 UTC)
+# immediate_commit_timestamp=1785305695316534 (2026-07-29 06:14:55.316534 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695316534*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:63'/*!*/;
+# at 39221
+#260729  6:14:55 server id 1  end_log_pos 39309 CRC32 0xf53a908d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.316333/*!*/;
+BEGIN
+/*!*/;
+# at 39309
+#260729  6:14:55 server id 1  end_log_pos 39366 CRC32 0xa5f68c07 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 39366
+#260729  6:14:55 server id 1  end_log_pos 39421 CRC32 0xe0dada2c 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMaZAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAHjPal
+X5ppah4BAAAANwAAAP2ZAAAAAHcBAAAAAAEAAgAD/wA5BAAAAAAAANAHAACZunpjtwxYLNra4A==
+'/*!*/;
+# at 39421
+#260729  6:14:55 server id 1  end_log_pos 39452 CRC32 0xaf4bd9b6 	Xid = 3155
+COMMIT/*!*/;
+# at 39452
+#260729  6:14:55 server id 1  end_log_pos 39531 CRC32 0xad56d026 	GTID	last_committed=4	sequence_number=64	rbr_only=yes	original_committed_timestamp=1785305695318492	immediate_commit_timestamp=1785305695318492	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695318492 (2026-07-29 06:14:55.318492 UTC)
+# immediate_commit_timestamp=1785305695318492 (2026-07-29 06:14:55.318492 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695318492*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:64'/*!*/;
+# at 39531
+#260729  6:14:55 server id 1  end_log_pos 39619 CRC32 0xbb8d01bd 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.318266/*!*/;
+BEGIN
+/*!*/;
+# at 39619
+#260729  6:14:55 server id 1  end_log_pos 39676 CRC32 0x4fbe318f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 39676
+#260729  6:14:55 server id 1  end_log_pos 39731 CRC32 0x828035cf 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPyaAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCPMb5P
+X5ppah4BAAAANwAAADObAAAAAHcBAAAAAAEAAgAD/wA6BAAAAAAAANAHAACZunpjtwxszzWAgg==
+'/*!*/;
+# at 39731
+#260729  6:14:55 server id 1  end_log_pos 39762 CRC32 0xf23aab5b 	Xid = 3156
+COMMIT/*!*/;
+# at 39762
+#260729  6:14:55 server id 1  end_log_pos 39841 CRC32 0xfcca4a1b 	GTID	last_committed=4	sequence_number=65	rbr_only=yes	original_committed_timestamp=1785305695319206	immediate_commit_timestamp=1785305695319206	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695319206 (2026-07-29 06:14:55.319206 UTC)
+# immediate_commit_timestamp=1785305695319206 (2026-07-29 06:14:55.319206 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695319206*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:65'/*!*/;
+# at 39841
+#260729  6:14:55 server id 1  end_log_pos 39929 CRC32 0xc41e78f7 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.318967/*!*/;
+BEGIN
+/*!*/;
+# at 39929
+#260729  6:14:55 server id 1  end_log_pos 39986 CRC32 0xb371eb59 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 39986
+#260729  6:14:55 server id 1  end_log_pos 40041 CRC32 0x18bbef41 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADKcAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBZ63Gz
+X5ppah4BAAAANwAAAGmcAAAAAHcBAAAAAAEAAgAD/wA7BAAAAAAAANAHAACZunpjtwxsQe+7GA==
+'/*!*/;
+# at 40041
+#260729  6:14:55 server id 1  end_log_pos 40072 CRC32 0x35ac5379 	Xid = 3157
+COMMIT/*!*/;
+# at 40072
+#260729  6:14:55 server id 1  end_log_pos 40151 CRC32 0x631cc5fa 	GTID	last_committed=4	sequence_number=66	rbr_only=yes	original_committed_timestamp=1785305695319918	immediate_commit_timestamp=1785305695319918	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695319918 (2026-07-29 06:14:55.319918 UTC)
+# immediate_commit_timestamp=1785305695319918 (2026-07-29 06:14:55.319918 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695319918*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:66'/*!*/;
+# at 40151
+#260729  6:14:55 server id 1  end_log_pos 40239 CRC32 0x3fb2b698 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.319706/*!*/;
+BEGIN
+/*!*/;
+# at 40239
+#260729  6:14:55 server id 1  end_log_pos 40296 CRC32 0x93ea4344 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 40296
+#260729  6:14:55 server id 1  end_log_pos 40351 CRC32 0xa7f9d68f 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGidAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBEQ+qT
+X5ppah4BAAAANwAAAJ+dAAAAAHcBAAAAAAEAAgAD/wA8BAAAAAAAANAHAACZunpjtwx2j9b5pw==
+'/*!*/;
+# at 40351
+#260729  6:14:55 server id 1  end_log_pos 40382 CRC32 0x35a1821d 	Xid = 3158
+COMMIT/*!*/;
+# at 40382
+#260729  6:14:55 server id 1  end_log_pos 40461 CRC32 0x18ec17cf 	GTID	last_committed=4	sequence_number=67	rbr_only=yes	original_committed_timestamp=1785305695320540	immediate_commit_timestamp=1785305695320540	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695320540 (2026-07-29 06:14:55.320540 UTC)
+# immediate_commit_timestamp=1785305695320540 (2026-07-29 06:14:55.320540 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695320540*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:67'/*!*/;
+# at 40461
+#260729  6:14:55 server id 1  end_log_pos 40549 CRC32 0x9a5cb15b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.320355/*!*/;
+BEGIN
+/*!*/;
+# at 40549
+#260729  6:14:55 server id 1  end_log_pos 40606 CRC32 0x7cd23962 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 40606
+#260729  6:14:55 server id 1  end_log_pos 40661 CRC32 0xb2fdfefa 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJ6eAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBiOdJ8
+X5ppah4BAAAANwAAANWeAAAAAHcBAAAAAAEAAgAD/wA9BAAAAAAAANAHAACZunpjtwyA+v79sg==
+'/*!*/;
+# at 40661
+#260729  6:14:55 server id 1  end_log_pos 40692 CRC32 0xd74fc327 	Xid = 3159
+COMMIT/*!*/;
+# at 40692
+#260729  6:14:55 server id 1  end_log_pos 40771 CRC32 0x8d628342 	GTID	last_committed=4	sequence_number=68	rbr_only=yes	original_committed_timestamp=1785305695321107	immediate_commit_timestamp=1785305695321107	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695321107 (2026-07-29 06:14:55.321107 UTC)
+# immediate_commit_timestamp=1785305695321107 (2026-07-29 06:14:55.321107 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695321107*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:68'/*!*/;
+# at 40771
+#260729  6:14:55 server id 1  end_log_pos 40859 CRC32 0x95d9f8ff 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.320883/*!*/;
+BEGIN
+/*!*/;
+# at 40859
+#260729  6:14:55 server id 1  end_log_pos 40916 CRC32 0xa8ae9281 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 40916
+#260729  6:14:55 server id 1  end_log_pos 40971 CRC32 0x501008c7 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANSfAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCBkq6o
+X5ppah4BAAAANwAAAAugAAAAAHcBAAAAAAEAAgAD/wA+BAAAAAAAANAHAACZunpjtwyAxwgQUA==
+'/*!*/;
+# at 40971
+#260729  6:14:55 server id 1  end_log_pos 41002 CRC32 0x9c1341eb 	Xid = 3160
+COMMIT/*!*/;
+# at 41002
+#260729  6:14:55 server id 1  end_log_pos 41081 CRC32 0x44d47b54 	GTID	last_committed=4	sequence_number=69	rbr_only=yes	original_committed_timestamp=1785305695321942	immediate_commit_timestamp=1785305695321942	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695321942 (2026-07-29 06:14:55.321942 UTC)
+# immediate_commit_timestamp=1785305695321942 (2026-07-29 06:14:55.321942 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695321942*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:69'/*!*/;
+# at 41081
+#260729  6:14:55 server id 1  end_log_pos 41169 CRC32 0x987e381b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.321718/*!*/;
+BEGIN
+/*!*/;
+# at 41169
+#260729  6:14:55 server id 1  end_log_pos 41226 CRC32 0xed86ed18 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 41226
+#260729  6:14:55 server id 1  end_log_pos 41281 CRC32 0x2b8eb6fa 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAqhAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAY7Ybt
+X5ppah4BAAAANwAAAEGhAAAAAHcBAAAAAAEAAgAD/wA/BAAAAAAAANAHAACZunpjtwyK+raOKw==
+'/*!*/;
+# at 41281
+#260729  6:14:55 server id 1  end_log_pos 41312 CRC32 0x1ea1b59a 	Xid = 3161
+COMMIT/*!*/;
+# at 41312
+#260729  6:14:55 server id 1  end_log_pos 41391 CRC32 0xc825b4b5 	GTID	last_committed=4	sequence_number=70	rbr_only=yes	original_committed_timestamp=1785305695324003	immediate_commit_timestamp=1785305695324003	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695324003 (2026-07-29 06:14:55.324003 UTC)
+# immediate_commit_timestamp=1785305695324003 (2026-07-29 06:14:55.324003 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695324003*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:70'/*!*/;
+# at 41391
+#260729  6:14:55 server id 1  end_log_pos 41479 CRC32 0x75ad1042 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.322413/*!*/;
+BEGIN
+/*!*/;
+# at 41479
+#260729  6:14:55 server id 1  end_log_pos 41536 CRC32 0xa4e851a9 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 41536
+#260729  6:14:55 server id 1  end_log_pos 41591 CRC32 0x2ec79039 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAECiAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCpUeik
+X5ppah4BAAAANwAAAHeiAAAAAHcBAAAAAAEAAgAD/wBABAAAAAAAANAHAACZunpjtwyUOZDHLg==
+'/*!*/;
+# at 41591
+#260729  6:14:55 server id 1  end_log_pos 41622 CRC32 0xbc3ac9a6 	Xid = 3162
+COMMIT/*!*/;
+# at 41622
+#260729  6:14:55 server id 1  end_log_pos 41701 CRC32 0xb58ad03c 	GTID	last_committed=4	sequence_number=71	rbr_only=yes	original_committed_timestamp=1785305695324583	immediate_commit_timestamp=1785305695324583	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695324583 (2026-07-29 06:14:55.324583 UTC)
+# immediate_commit_timestamp=1785305695324583 (2026-07-29 06:14:55.324583 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695324583*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:71'/*!*/;
+# at 41701
+#260729  6:14:55 server id 1  end_log_pos 41789 CRC32 0x9bd95195 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.324370/*!*/;
+BEGIN
+/*!*/;
+# at 41789
+#260729  6:14:55 server id 1  end_log_pos 41846 CRC32 0x79403953 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 41846
+#260729  6:14:55 server id 1  end_log_pos 41901 CRC32 0x8291c05f 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHajAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBTOUB5
+X5ppah4BAAAANwAAAK2jAAAAAHcBAAAAAAEAAgAD/wBBBAAAAAAAANAHAACZunpjtwyoX8CRgg==
+'/*!*/;
+# at 41901
+#260729  6:14:55 server id 1  end_log_pos 41932 CRC32 0x583a01bb 	Xid = 3163
+COMMIT/*!*/;
+# at 41932
+#260729  6:14:55 server id 1  end_log_pos 42011 CRC32 0x0e12ca68 	GTID	last_committed=4	sequence_number=72	rbr_only=yes	original_committed_timestamp=1785305695325309	immediate_commit_timestamp=1785305695325309	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695325309 (2026-07-29 06:14:55.325309 UTC)
+# immediate_commit_timestamp=1785305695325309 (2026-07-29 06:14:55.325309 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695325309*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:72'/*!*/;
+# at 42011
+#260729  6:14:55 server id 1  end_log_pos 42099 CRC32 0x9fd431e5 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.325091/*!*/;
+BEGIN
+/*!*/;
+# at 42099
+#260729  6:14:55 server id 1  end_log_pos 42156 CRC32 0xef60a80d 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 42156
+#260729  6:14:55 server id 1  end_log_pos 42211 CRC32 0x7f7eeb7c 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKykAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQANqGDv
+X5ppah4BAAAANwAAAOOkAAAAAHcBAAAAAAEAAgAD/wBCBAAAAAAAANAHAACZunpjtwyyfOt+fw==
+'/*!*/;
+# at 42211
+#260729  6:14:55 server id 1  end_log_pos 42242 CRC32 0xfb4b9aec 	Xid = 3164
+COMMIT/*!*/;
+# at 42242
+#260729  6:14:55 server id 1  end_log_pos 42321 CRC32 0x87e3ee83 	GTID	last_committed=4	sequence_number=73	rbr_only=yes	original_committed_timestamp=1785305695326007	immediate_commit_timestamp=1785305695326007	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695326007 (2026-07-29 06:14:55.326007 UTC)
+# immediate_commit_timestamp=1785305695326007 (2026-07-29 06:14:55.326007 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695326007*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:73'/*!*/;
+# at 42321
+#260729  6:14:55 server id 1  end_log_pos 42409 CRC32 0xcc3aeec5 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.325793/*!*/;
+BEGIN
+/*!*/;
+# at 42409
+#260729  6:14:55 server id 1  end_log_pos 42466 CRC32 0xeb9d4031 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 42466
+#260729  6:14:55 server id 1  end_log_pos 42521 CRC32 0x16321866 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOKlAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAxQJ3r
+X5ppah4BAAAANwAAABmmAAAAAHcBAAAAAAEAAgAD/wBDBAAAAAAAANAHAACZunpjtwyyZhgyFg==
+'/*!*/;
+# at 42521
+#260729  6:14:55 server id 1  end_log_pos 42552 CRC32 0xf3ca6893 	Xid = 3165
+COMMIT/*!*/;
+# at 42552
+#260729  6:14:55 server id 1  end_log_pos 42631 CRC32 0x8510bf9d 	GTID	last_committed=4	sequence_number=74	rbr_only=yes	original_committed_timestamp=1785305695326635	immediate_commit_timestamp=1785305695326635	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695326635 (2026-07-29 06:14:55.326635 UTC)
+# immediate_commit_timestamp=1785305695326635 (2026-07-29 06:14:55.326635 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695326635*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:74'/*!*/;
+# at 42631
+#260729  6:14:55 server id 1  end_log_pos 42719 CRC32 0x32abf07d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.326443/*!*/;
+BEGIN
+/*!*/;
+# at 42719
+#260729  6:14:55 server id 1  end_log_pos 42776 CRC32 0xe0def39e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 42776
+#260729  6:14:55 server id 1  end_log_pos 42831 CRC32 0xae7e9de1 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABinAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCe897g
+X5ppah4BAAAANwAAAE+nAAAAAHcBAAAAAAEAAgAD/wBEBAAAAAAAANAHAACZunpjtwy84Z1+rg==
+'/*!*/;
+# at 42831
+#260729  6:14:55 server id 1  end_log_pos 42862 CRC32 0x7f1a36de 	Xid = 3166
+COMMIT/*!*/;
+# at 42862
+#260729  6:14:55 server id 1  end_log_pos 42941 CRC32 0x6f9fc293 	GTID	last_committed=4	sequence_number=75	rbr_only=yes	original_committed_timestamp=1785305695328504	immediate_commit_timestamp=1785305695328504	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695328504 (2026-07-29 06:14:55.328504 UTC)
+# immediate_commit_timestamp=1785305695328504 (2026-07-29 06:14:55.328504 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695328504*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:75'/*!*/;
+# at 42941
+#260729  6:14:55 server id 1  end_log_pos 43029 CRC32 0x9ca162e4 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.328265/*!*/;
+BEGIN
+/*!*/;
+# at 43029
+#260729  6:14:55 server id 1  end_log_pos 43086 CRC32 0x0f2bf19f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 43086
+#260729  6:14:55 server id 1  end_log_pos 43141 CRC32 0xb495bca0 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAE6oAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCf8SsP
+X5ppah4BAAAANwAAAIWoAAAAAHcBAAAAAAEAAgAD/wBFBAAAAAAAANAHAACZunpjtwzQoLyVtA==
+'/*!*/;
+# at 43141
+#260729  6:14:55 server id 1  end_log_pos 43172 CRC32 0x843d21fd 	Xid = 3167
+COMMIT/*!*/;
+# at 43172
+#260729  6:14:55 server id 1  end_log_pos 43251 CRC32 0x8799e7af 	GTID	last_committed=4	sequence_number=76	rbr_only=yes	original_committed_timestamp=1785305695329194	immediate_commit_timestamp=1785305695329194	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695329194 (2026-07-29 06:14:55.329194 UTC)
+# immediate_commit_timestamp=1785305695329194 (2026-07-29 06:14:55.329194 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695329194*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:76'/*!*/;
+# at 43251
+#260729  6:14:55 server id 1  end_log_pos 43339 CRC32 0xd05c0353 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.328974/*!*/;
+BEGIN
+/*!*/;
+# at 43339
+#260729  6:14:55 server id 1  end_log_pos 43396 CRC32 0x11ab5c88 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 43396
+#260729  6:14:55 server id 1  end_log_pos 43451 CRC32 0xbe24c4b8 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAISpAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCIXKsR
+X5ppah4BAAAANwAAALupAAAAAHcBAAAAAAEAAgAD/wBGBAAAAAAAANAHAACZunpjtwzQuMQkvg==
+'/*!*/;
+# at 43451
+#260729  6:14:55 server id 1  end_log_pos 43482 CRC32 0x24b25f6c 	Xid = 3168
+COMMIT/*!*/;
+# at 43482
+#260729  6:14:55 server id 1  end_log_pos 43561 CRC32 0x3cab41a4 	GTID	last_committed=4	sequence_number=77	rbr_only=yes	original_committed_timestamp=1785305695329864	immediate_commit_timestamp=1785305695329864	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695329864 (2026-07-29 06:14:55.329864 UTC)
+# immediate_commit_timestamp=1785305695329864 (2026-07-29 06:14:55.329864 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695329864*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:77'/*!*/;
+# at 43561
+#260729  6:14:55 server id 1  end_log_pos 43649 CRC32 0xceed9ad3 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.329653/*!*/;
+BEGIN
+/*!*/;
+# at 43649
+#260729  6:14:55 server id 1  end_log_pos 43706 CRC32 0x2b62a2df 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 43706
+#260729  6:14:55 server id 1  end_log_pos 43761 CRC32 0x1f2b52fa 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALqqAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDfomIr
+X5ppah4BAAAANwAAAPGqAAAAAHcBAAAAAAEAAgAD/wBHBAAAAAAAANAHAACZunpjtwza+lIrHw==
+'/*!*/;
+# at 43761
+#260729  6:14:55 server id 1  end_log_pos 43792 CRC32 0x98b92831 	Xid = 3169
+COMMIT/*!*/;
+# at 43792
+#260729  6:14:55 server id 1  end_log_pos 43871 CRC32 0xf463aa6a 	GTID	last_committed=4	sequence_number=78	rbr_only=yes	original_committed_timestamp=1785305695330582	immediate_commit_timestamp=1785305695330582	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695330582 (2026-07-29 06:14:55.330582 UTC)
+# immediate_commit_timestamp=1785305695330582 (2026-07-29 06:14:55.330582 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695330582*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:78'/*!*/;
+# at 43871
+#260729  6:14:55 server id 1  end_log_pos 43959 CRC32 0x52db5703 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.330360/*!*/;
+BEGIN
+/*!*/;
+# at 43959
+#260729  6:14:55 server id 1  end_log_pos 44016 CRC32 0xff1e093c 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 44016
+#260729  6:14:55 server id 1  end_log_pos 44071 CRC32 0x11ed1b24 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPCrAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA8CR7/
+X5ppah4BAAAANwAAACesAAAAAHcBAAAAAAEAAgAD/wBIBAAAAAAAANAHAACZunpjtwzkJBvtEQ==
+'/*!*/;
+# at 44071
+#260729  6:14:55 server id 1  end_log_pos 44102 CRC32 0xb48ca9a1 	Xid = 3170
+COMMIT/*!*/;
+# at 44102
+#260729  6:14:55 server id 1  end_log_pos 44181 CRC32 0x063e5c0b 	GTID	last_committed=4	sequence_number=79	rbr_only=yes	original_committed_timestamp=1785305695331338	immediate_commit_timestamp=1785305695331338	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695331338 (2026-07-29 06:14:55.331338 UTC)
+# immediate_commit_timestamp=1785305695331338 (2026-07-29 06:14:55.331338 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695331338*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:79'/*!*/;
+# at 44181
+#260729  6:14:55 server id 1  end_log_pos 44269 CRC32 0x2f14d39d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.331086/*!*/;
+BEGIN
+/*!*/;
+# at 44269
+#260729  6:14:55 server id 1  end_log_pos 44326 CRC32 0x8d4551eb 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 44326
+#260729  6:14:55 server id 1  end_log_pos 44381 CRC32 0x6fd5b6ef 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACatAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDrUUWN
+X5ppah4BAAAANwAAAF2tAAAAAHcBAAAAAAEAAgAD/wBJBAAAAAAAANAHAACZunpjtwzu77bVbw==
+'/*!*/;
+# at 44381
+#260729  6:14:55 server id 1  end_log_pos 44412 CRC32 0xdc51ee95 	Xid = 3171
+COMMIT/*!*/;
+# at 44412
+#260729  6:14:55 server id 1  end_log_pos 44491 CRC32 0x4f8f9a08 	GTID	last_committed=4	sequence_number=80	rbr_only=yes	original_committed_timestamp=1785305695332027	immediate_commit_timestamp=1785305695332027	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695332027 (2026-07-29 06:14:55.332027 UTC)
+# immediate_commit_timestamp=1785305695332027 (2026-07-29 06:14:55.332027 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695332027*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:80'/*!*/;
+# at 44491
+#260729  6:14:55 server id 1  end_log_pos 44579 CRC32 0x4ac9d523 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.331825/*!*/;
+BEGIN
+/*!*/;
+# at 44579
+#260729  6:14:55 server id 1  end_log_pos 44636 CRC32 0x0273ef19 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 44636
+#260729  6:14:55 server id 1  end_log_pos 44691 CRC32 0xaccbbaa6 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFyuAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAZ73MC
+X5ppah4BAAAANwAAAJOuAAAAAHcBAAAAAAEAAgAD/wBKBAAAAAAAANAHAACZunpjtwzuprrLrA==
+'/*!*/;
+# at 44691
+#260729  6:14:55 server id 1  end_log_pos 44722 CRC32 0x620fc6d1 	Xid = 3172
+COMMIT/*!*/;
+# at 44722
+#260729  6:14:55 server id 1  end_log_pos 44801 CRC32 0xf35f842b 	GTID	last_committed=4	sequence_number=81	rbr_only=yes	original_committed_timestamp=1785305695332683	immediate_commit_timestamp=1785305695332683	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695332683 (2026-07-29 06:14:55.332683 UTC)
+# immediate_commit_timestamp=1785305695332683 (2026-07-29 06:14:55.332683 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695332683*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:81'/*!*/;
+# at 44801
+#260729  6:14:55 server id 1  end_log_pos 44889 CRC32 0x96247eb8 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.332474/*!*/;
+BEGIN
+/*!*/;
+# at 44889
+#260729  6:14:55 server id 1  end_log_pos 44946 CRC32 0xcc7201d1 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 44946
+#260729  6:14:55 server id 1  end_log_pos 45001 CRC32 0x76e6abb9 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJKvAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDRAXLM
+X5ppah4BAAAANwAAAMmvAAAAAHcBAAAAAAEAAgAD/wBLBAAAAAAAANAHAACZunpjtwz4uavmdg==
+'/*!*/;
+# at 45001
+#260729  6:14:55 server id 1  end_log_pos 45032 CRC32 0x860f0ecc 	Xid = 3173
+COMMIT/*!*/;
+# at 45032
+#260729  6:14:55 server id 1  end_log_pos 45111 CRC32 0xda524e32 	GTID	last_committed=4	sequence_number=82	rbr_only=yes	original_committed_timestamp=1785305695333381	immediate_commit_timestamp=1785305695333381	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695333381 (2026-07-29 06:14:55.333381 UTC)
+# immediate_commit_timestamp=1785305695333381 (2026-07-29 06:14:55.333381 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695333381*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:82'/*!*/;
+# at 45111
+#260729  6:14:55 server id 1  end_log_pos 45199 CRC32 0xcd558d16 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.333162/*!*/;
+BEGIN
+/*!*/;
+# at 45199
+#260729  6:14:55 server id 1  end_log_pos 45256 CRC32 0xbac36ee6 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 45256
+#260729  6:14:55 server id 1  end_log_pos 45311 CRC32 0x6c758195 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMiwAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDmbsO6
+X5ppah4BAAAANwAAAP+wAAAAAHcBAAAAAAEAAgAD/wBMBAAAAAAAANAHAACZunpjtw0ClYF1bA==
+'/*!*/;
+# at 45311
+#260729  6:14:55 server id 1  end_log_pos 45342 CRC32 0xd7bfb454 	Xid = 3174
+COMMIT/*!*/;
+# at 45342
+#260729  6:14:55 server id 1  end_log_pos 45421 CRC32 0x83461f32 	GTID	last_committed=4	sequence_number=83	rbr_only=yes	original_committed_timestamp=1785305695335222	immediate_commit_timestamp=1785305695335222	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695335222 (2026-07-29 06:14:55.335222 UTC)
+# immediate_commit_timestamp=1785305695335222 (2026-07-29 06:14:55.335222 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695335222*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:83'/*!*/;
+# at 45421
+#260729  6:14:55 server id 1  end_log_pos 45509 CRC32 0xa2518f73 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.334988/*!*/;
+BEGIN
+/*!*/;
+# at 45509
+#260729  6:14:55 server id 1  end_log_pos 45566 CRC32 0x676b061c 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 45566
+#260729  6:14:55 server id 1  end_log_pos 45621 CRC32 0xe7274c7e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAP6xAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAcBmtn
+X5ppah4BAAAANwAAADWyAAAAAHcBAAAAAAEAAgAD/wBNBAAAAAAAANAHAACZunpjtw0Mfkwn5w==
+'/*!*/;
+# at 45621
+#260729  6:14:55 server id 1  end_log_pos 45652 CRC32 0x3551f56e 	Xid = 3175
+COMMIT/*!*/;
+# at 45652
+#260729  6:14:55 server id 1  end_log_pos 45731 CRC32 0x09f55ebe 	GTID	last_committed=4	sequence_number=84	rbr_only=yes	original_committed_timestamp=1785305695336329	immediate_commit_timestamp=1785305695336329	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695336329 (2026-07-29 06:14:55.336329 UTC)
+# immediate_commit_timestamp=1785305695336329 (2026-07-29 06:14:55.336329 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695336329*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:84'/*!*/;
+# at 45731
+#260729  6:14:55 server id 1  end_log_pos 45819 CRC32 0x49f6ad36 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.335673/*!*/;
+BEGIN
+/*!*/;
+# at 45819
+#260729  6:14:55 server id 1  end_log_pos 45876 CRC32 0xaa70b7f0 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 45876
+#260729  6:14:55 server id 1  end_log_pos 45931 CRC32 0x1bb8eaf0 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADSzAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDwt3Cq
+X5ppah4BAAAANwAAAGuzAAAAAHcBAAAAAAEAAgAD/wBOBAAAAAAAANAHAACZunpjtw0W8Oq4Gw==
+'/*!*/;
+# at 45931
+#260729  6:14:55 server id 1  end_log_pos 45962 CRC32 0x5e044fb8 	Xid = 3176
+COMMIT/*!*/;
+# at 45962
+#260729  6:14:55 server id 1  end_log_pos 46041 CRC32 0x7fcdd97d 	GTID	last_committed=4	sequence_number=85	rbr_only=yes	original_committed_timestamp=1785305695336969	immediate_commit_timestamp=1785305695336969	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695336969 (2026-07-29 06:14:55.336969 UTC)
+# immediate_commit_timestamp=1785305695336969 (2026-07-29 06:14:55.336969 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695336969*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:85'/*!*/;
+# at 46041
+#260729  6:14:55 server id 1  end_log_pos 46129 CRC32 0x3d23accf 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.336750/*!*/;
+BEGIN
+/*!*/;
+# at 46129
+#260729  6:14:55 server id 1  end_log_pos 46186 CRC32 0x262d6385 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 46186
+#260729  6:14:55 server id 1  end_log_pos 46241 CRC32 0x564bde25 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGq0AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCFYy0m
+X5ppah4BAAAANwAAAKG0AAAAAHcBAAAAAAEAAgAD/wBPBAAAAAAAANAHAACZunpjtw0gJd5LVg==
+'/*!*/;
+# at 46241
+#260729  6:14:55 server id 1  end_log_pos 46272 CRC32 0x7c536414 	Xid = 3177
+COMMIT/*!*/;
+# at 46272
+#260729  6:14:55 server id 1  end_log_pos 46351 CRC32 0x0928d7d6 	GTID	last_committed=4	sequence_number=86	rbr_only=yes	original_committed_timestamp=1785305695337627	immediate_commit_timestamp=1785305695337627	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695337627 (2026-07-29 06:14:55.337627 UTC)
+# immediate_commit_timestamp=1785305695337627 (2026-07-29 06:14:55.337627 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695337627*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:86'/*!*/;
+# at 46351
+#260729  6:14:55 server id 1  end_log_pos 46439 CRC32 0x7ccb3b5e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.337435/*!*/;
+BEGIN
+/*!*/;
+# at 46439
+#260729  6:14:55 server id 1  end_log_pos 46496 CRC32 0x38adce92 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 46496
+#260729  6:14:55 server id 1  end_log_pos 46551 CRC32 0x439d59af 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKC1AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCSzq04
+X5ppah4BAAAANwAAANe1AAAAAHcBAAAAAAEAAgAD/wBQBAAAAAAAANAHAACZunpjtw0qr1mdQw==
+'/*!*/;
+# at 46551
+#260729  6:14:55 server id 1  end_log_pos 46582 CRC32 0x7c5eb570 	Xid = 3178
+COMMIT/*!*/;
+# at 46582
+#260729  6:14:55 server id 1  end_log_pos 46661 CRC32 0x7c9c8b19 	GTID	last_committed=4	sequence_number=87	rbr_only=yes	original_committed_timestamp=1785305695338174	immediate_commit_timestamp=1785305695338174	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695338174 (2026-07-29 06:14:55.338174 UTC)
+# immediate_commit_timestamp=1785305695338174 (2026-07-29 06:14:55.338174 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695338174*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:87'/*!*/;
+# at 46661
+#260729  6:14:55 server id 1  end_log_pos 46749 CRC32 0x0313202d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.337957/*!*/;
+BEGIN
+/*!*/;
+# at 46749
+#260729  6:14:55 server id 1  end_log_pos 46806 CRC32 0x1d69b240 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 46806
+#260729  6:14:55 server id 1  end_log_pos 46861 CRC32 0x9ac54a2e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANa2AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBAsmkd
+X5ppah4BAAAANwAAAA23AAAAAHcBAAAAAAEAAgAD/wBRBAAAAAAAANAHAACZunpjtw0qLkrFmg==
+'/*!*/;
+# at 46861
+#260729  6:14:55 server id 1  end_log_pos 46892 CRC32 0xa6e7fe41 	Xid = 3179
+COMMIT/*!*/;
+# at 46892
+#260729  6:14:55 server id 1  end_log_pos 46971 CRC32 0xa6d9eebc 	GTID	last_committed=4	sequence_number=88	rbr_only=yes	original_committed_timestamp=1785305695338841	immediate_commit_timestamp=1785305695338841	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695338841 (2026-07-29 06:14:55.338841 UTC)
+# immediate_commit_timestamp=1785305695338841 (2026-07-29 06:14:55.338841 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695338841*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:88'/*!*/;
+# at 46971
+#260729  6:14:55 server id 1  end_log_pos 47059 CRC32 0xe8c97ed7 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.338627/*!*/;
+BEGIN
+/*!*/;
+# at 47059
+#260729  6:14:55 server id 1  end_log_pos 47116 CRC32 0xdc1b7f3c 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 47116
+#260729  6:14:55 server id 1  end_log_pos 47171 CRC32 0xbce1086a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAy4AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA8fxvc
+X5ppah4BAAAANwAAAEO4AAAAAHcBAAAAAAEAAgAD/wBSBAAAAAAAANAHAACZunpjtw00agjhvA==
+'/*!*/;
+# at 47171
+#260729  6:14:55 server id 1  end_log_pos 47202 CRC32 0x0170801c 	Xid = 3180
+COMMIT/*!*/;
+# at 47202
+#260729  6:14:55 server id 1  end_log_pos 47281 CRC32 0xf4ce3611 	GTID	last_committed=4	sequence_number=89	rbr_only=yes	original_committed_timestamp=1785305695339587	immediate_commit_timestamp=1785305695339587	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695339587 (2026-07-29 06:14:55.339587 UTC)
+# immediate_commit_timestamp=1785305695339587 (2026-07-29 06:14:55.339587 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695339587*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:89'/*!*/;
+# at 47281
+#260729  6:14:55 server id 1  end_log_pos 47369 CRC32 0xf68ff158 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.339381/*!*/;
+BEGIN
+/*!*/;
+# at 47369
+#260729  6:14:55 server id 1  end_log_pos 47426 CRC32 0xd8e69700 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 47426
+#260729  6:14:55 server id 1  end_log_pos 47481 CRC32 0x798162d6 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEK5AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAAl+bY
+X5ppah4BAAAANwAAAHm5AAAAAHcBAAAAAAEAAgAD/wBTBAAAAAAAANAHAACZunpjtw0+1mKBeQ==
+'/*!*/;
+# at 47481
+#260729  6:14:55 server id 1  end_log_pos 47512 CRC32 0xab67df3b 	Xid = 3181
+COMMIT/*!*/;
+# at 47512
+#260729  6:14:55 server id 1  end_log_pos 47591 CRC32 0x44c12118 	GTID	last_committed=4	sequence_number=90	rbr_only=yes	original_committed_timestamp=1785305695340229	immediate_commit_timestamp=1785305695340229	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695340229 (2026-07-29 06:14:55.340229 UTC)
+# immediate_commit_timestamp=1785305695340229 (2026-07-29 06:14:55.340229 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695340229*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:90'/*!*/;
+# at 47591
+#260729  6:14:55 server id 1  end_log_pos 47679 CRC32 0xe4b2dc77 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.340025/*!*/;
+BEGIN
+/*!*/;
+# at 47679
+#260729  6:14:55 server id 1  end_log_pos 47736 CRC32 0x32ae2a88 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 47736
+#260729  6:14:55 server id 1  end_log_pos 47791 CRC32 0xe842be8f 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHi6AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCIKq4y
+X5ppah4BAAAANwAAAK+6AAAAAHcBAAAAAAEAAgAD/wBUBAAAAAAAANAHAACZunpjtw1Ij75C6A==
+'/*!*/;
+# at 47791
+#260729  6:14:55 server id 1  end_log_pos 47822 CRC32 0x47eb343d 	Xid = 3182
+COMMIT/*!*/;
+# at 47822
+#260729  6:14:55 server id 1  end_log_pos 47901 CRC32 0xfc2cb320 	GTID	last_committed=4	sequence_number=91	rbr_only=yes	original_committed_timestamp=1785305695342332	immediate_commit_timestamp=1785305695342332	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695342332 (2026-07-29 06:14:55.342332 UTC)
+# immediate_commit_timestamp=1785305695342332 (2026-07-29 06:14:55.342332 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695342332*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:91'/*!*/;
+# at 47901
+#260729  6:14:55 server id 1  end_log_pos 47989 CRC32 0xde9b0c3c 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.342069/*!*/;
+BEGIN
+/*!*/;
+# at 47989
+#260729  6:14:55 server id 1  end_log_pos 48046 CRC32 0x723b4641 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 48046
+#260729  6:14:55 server id 1  end_log_pos 48101 CRC32 0x69d33dd1 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAK67AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBBRjty
+X5ppah4BAAAANwAAAOW7AAAAAHcBAAAAAAEAAgAD/wBVBAAAAAAAANAHAACZunpjtw1c0T3TaQ==
+'/*!*/;
+# at 48101
+#260729  6:14:55 server id 1  end_log_pos 48132 CRC32 0x3b5929f6 	Xid = 3183
+COMMIT/*!*/;
+# at 48132
+#260729  6:14:55 server id 1  end_log_pos 48211 CRC32 0x679f57b3 	GTID	last_committed=4	sequence_number=92	rbr_only=yes	original_committed_timestamp=1785305695342999	immediate_commit_timestamp=1785305695342999	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695342999 (2026-07-29 06:14:55.342999 UTC)
+# immediate_commit_timestamp=1785305695342999 (2026-07-29 06:14:55.342999 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695342999*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:92'/*!*/;
+# at 48211
+#260729  6:14:55 server id 1  end_log_pos 48299 CRC32 0xab0625a8 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.342801/*!*/;
+BEGIN
+/*!*/;
+# at 48299
+#260729  6:14:55 server id 1  end_log_pos 48356 CRC32 0xda00d215 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 48356
+#260729  6:14:55 server id 1  end_log_pos 48411 CRC32 0x41c863ce 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOS8AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAV0gDa
+X5ppah4BAAAANwAAABu9AAAAAHcBAAAAAAEAAgAD/wBWBAAAAAAAANAHAACZunpjtw1czmPIQQ==
+'/*!*/;
+# at 48411
+#260729  6:14:55 server id 1  end_log_pos 48442 CRC32 0x2319c2c0 	Xid = 3184
+COMMIT/*!*/;
+# at 48442
+#260729  6:14:55 server id 1  end_log_pos 48521 CRC32 0x03c0f2c4 	GTID	last_committed=4	sequence_number=93	rbr_only=yes	original_committed_timestamp=1785305695343770	immediate_commit_timestamp=1785305695343770	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695343770 (2026-07-29 06:14:55.343770 UTC)
+# immediate_commit_timestamp=1785305695343770 (2026-07-29 06:14:55.343770 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695343770*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:93'/*!*/;
+# at 48521
+#260729  6:14:55 server id 1  end_log_pos 48609 CRC32 0x0bccb861 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.343545/*!*/;
+BEGIN
+/*!*/;
+# at 48609
+#260729  6:14:55 server id 1  end_log_pos 48666 CRC32 0x01c22265 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 48666
+#260729  6:14:55 server id 1  end_log_pos 48721 CRC32 0xc61ec520 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABq+AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBlIsIB
+X5ppah4BAAAANwAAAFG+AAAAAHcBAAAAAAEAAgAD/wBXBAAAAAAAANAHAACZunpjtw1mIMUexg==
+'/*!*/;
+# at 48721
+#260729  6:14:55 server id 1  end_log_pos 48752 CRC32 0xc1f783fa 	Xid = 3185
+COMMIT/*!*/;
+# at 48752
+#260729  6:14:55 server id 1  end_log_pos 48831 CRC32 0x78027326 	GTID	last_committed=4	sequence_number=94	rbr_only=yes	original_committed_timestamp=1785305695344462	immediate_commit_timestamp=1785305695344462	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695344462 (2026-07-29 06:14:55.344462 UTC)
+# immediate_commit_timestamp=1785305695344462 (2026-07-29 06:14:55.344462 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695344462*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:94'/*!*/;
+# at 48831
+#260729  6:14:55 server id 1  end_log_pos 48919 CRC32 0x960cef39 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.344258/*!*/;
+BEGIN
+/*!*/;
+# at 48919
+#260729  6:14:55 server id 1  end_log_pos 48976 CRC32 0xd5be8986 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 48976
+#260729  6:14:55 server id 1  end_log_pos 49031 CRC32 0xc95f4ddb 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFC/AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCGib7V
+X5ppah4BAAAANwAAAIe/AAAAAHcBAAAAAAEAAgAD/wBYBAAAAAAAANAHAACZunpjtw1w201fyQ==
+'/*!*/;
+# at 49031
+#260729  6:14:55 server id 1  end_log_pos 49062 CRC32 0xce543255 	Xid = 3186
+COMMIT/*!*/;
+# at 49062
+#260729  6:14:55 server id 1  end_log_pos 49141 CRC32 0x87c8d454 	GTID	last_committed=4	sequence_number=95	rbr_only=yes	original_committed_timestamp=1785305695345252	immediate_commit_timestamp=1785305695345252	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695345252 (2026-07-29 06:14:55.345252 UTC)
+# immediate_commit_timestamp=1785305695345252 (2026-07-29 06:14:55.345252 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695345252*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:95'/*!*/;
+# at 49141
+#260729  6:14:55 server id 1  end_log_pos 49229 CRC32 0xb4dcca2e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.344934/*!*/;
+BEGIN
+/*!*/;
+# at 49229
+#260729  6:14:55 server id 1  end_log_pos 49286 CRC32 0x6ab6c011 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 49286
+#260729  6:14:55 server id 1  end_log_pos 49341 CRC32 0x714a8cb5 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIbAAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQARwLZq
+X5ppah4BAAAANwAAAL3AAAAAAHcBAAAAAAEAAgAD/wBZBAAAAAAAANAHAACZunpjtw1wtYxKcQ==
+'/*!*/;
+# at 49341
+#260729  6:14:55 server id 1  end_log_pos 49372 CRC32 0xa722f2a4 	Xid = 3187
+COMMIT/*!*/;
+# at 49372
+#260729  6:14:55 server id 1  end_log_pos 49451 CRC32 0x0a246c50 	GTID	last_committed=4	sequence_number=96	rbr_only=yes	original_committed_timestamp=1785305695346035	immediate_commit_timestamp=1785305695346035	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695346035 (2026-07-29 06:14:55.346035 UTC)
+# immediate_commit_timestamp=1785305695346035 (2026-07-29 06:14:55.346035 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695346035*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:96'/*!*/;
+# at 49451
+#260729  6:14:55 server id 1  end_log_pos 49539 CRC32 0xd693976f 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.345839/*!*/;
+BEGIN
+/*!*/;
+# at 49539
+#260729  6:14:55 server id 1  end_log_pos 49596 CRC32 0x1dec6acb 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 49596
+#260729  6:14:55 server id 1  end_log_pos 49651 CRC32 0x25d0c932 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALzBAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDLauwd
+X5ppah4BAAAANwAAAPPBAAAAAHcBAAAAAAEAAgAD/wBaBAAAAAAAANAHAACZunpjtw16MsnQJQ==
+'/*!*/;
+# at 49651
+#260729  6:14:55 server id 1  end_log_pos 49682 CRC32 0xc4ea0365 	Xid = 3188
+COMMIT/*!*/;
+# at 49682
+#260729  6:14:55 server id 1  end_log_pos 49761 CRC32 0x2ed405e6 	GTID	last_committed=4	sequence_number=97	rbr_only=yes	original_committed_timestamp=1785305695346652	immediate_commit_timestamp=1785305695346652	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695346652 (2026-07-29 06:14:55.346652 UTC)
+# immediate_commit_timestamp=1785305695346652 (2026-07-29 06:14:55.346652 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695346652*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:97'/*!*/;
+# at 49761
+#260729  6:14:55 server id 1  end_log_pos 49849 CRC32 0x3cc542d1 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.346468/*!*/;
+BEGIN
+/*!*/;
+# at 49849
+#260729  6:14:55 server id 1  end_log_pos 49906 CRC32 0x840395a5 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 49906
+#260729  6:14:55 server id 1  end_log_pos 49961 CRC32 0xa68d05a8 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPLCAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCllQOE
+X5ppah4BAAAANwAAACnDAAAAAHcBAAAAAAEAAgAD/wBbBAAAAAAAANAHAACZunpjtw2EqAWNpg==
+'/*!*/;
+# at 49961
+#260729  6:14:55 server id 1  end_log_pos 49992 CRC32 0x20eacb78 	Xid = 3189
+COMMIT/*!*/;
+# at 49992
+#260729  6:14:55 server id 1  end_log_pos 50071 CRC32 0xbf5de6b2 	GTID	last_committed=4	sequence_number=98	rbr_only=yes	original_committed_timestamp=1785305695348580	immediate_commit_timestamp=1785305695348580	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695348580 (2026-07-29 06:14:55.348580 UTC)
+# immediate_commit_timestamp=1785305695348580 (2026-07-29 06:14:55.348580 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695348580*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:98'/*!*/;
+# at 50071
+#260729  6:14:55 server id 1  end_log_pos 50159 CRC32 0x84e1f6d8 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.347076/*!*/;
+BEGIN
+/*!*/;
+# at 50159
+#260729  6:14:55 server id 1  end_log_pos 50216 CRC32 0x5caa0f52 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 50216
+#260729  6:14:55 server id 1  end_log_pos 50271 CRC32 0x1d7ada6d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACjEAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBSD6pc
+X5ppah4BAAAANwAAAF/EAAAAAHcBAAAAAAEAAgAD/wBcBAAAAAAAANAHAACZunpjtw2Obdp6HQ==
+'/*!*/;
+# at 50271
+#260729  6:14:55 server id 1  end_log_pos 50302 CRC32 0x8002c5c1 	Xid = 3190
+COMMIT/*!*/;
+# at 50302
+#260729  6:14:55 server id 1  end_log_pos 50381 CRC32 0xd814deca 	GTID	last_committed=4	sequence_number=99	rbr_only=yes	original_committed_timestamp=1785305695349268	immediate_commit_timestamp=1785305695349268	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695349268 (2026-07-29 06:14:55.349268 UTC)
+# immediate_commit_timestamp=1785305695349268 (2026-07-29 06:14:55.349268 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695349268*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:99'/*!*/;
+# at 50381
+#260729  6:14:55 server id 1  end_log_pos 50469 CRC32 0xfa535c3d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.349043/*!*/;
+BEGIN
+/*!*/;
+# at 50469
+#260729  6:14:55 server id 1  end_log_pos 50526 CRC32 0xe47c64d2 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 50526
+#260729  6:14:55 server id 1  end_log_pos 50581 CRC32 0x19296902 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAF7FAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDSZHzk
+X5ppah4BAAAANwAAAJXFAAAAAHcBAAAAAAEAAgAD/wBdBAAAAAAAANAHAACZunpjtw2iAmkpGQ==
+'/*!*/;
+# at 50581
+#260729  6:14:55 server id 1  end_log_pos 50612 CRC32 0x81c3de52 	Xid = 3191
+COMMIT/*!*/;
+# at 50612
+#260729  6:14:55 server id 1  end_log_pos 50691 CRC32 0x74119840 	GTID	last_committed=4	sequence_number=100	rbr_only=yes	original_committed_timestamp=1785305695349958	immediate_commit_timestamp=1785305695349958	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695349958 (2026-07-29 06:14:55.349958 UTC)
+# immediate_commit_timestamp=1785305695349958 (2026-07-29 06:14:55.349958 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695349958*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:100'/*!*/;
+# at 50691
+#260729  6:14:55 server id 1  end_log_pos 50779 CRC32 0x70d6da70 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.349759/*!*/;
+BEGIN
+/*!*/;
+# at 50779
+#260729  6:14:55 server id 1  end_log_pos 50836 CRC32 0x67eede97 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 50836
+#260729  6:14:55 server id 1  end_log_pos 50891 CRC32 0xc2451e89 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJTGAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCX3u5n
+X5ppah4BAAAANwAAAMvGAAAAAHcBAAAAAAEAAgAD/wBeBAAAAAAAANAHAACZunpjtw2iiR5Fwg==
+'/*!*/;
+# at 50891
+#260729  6:14:55 server id 1  end_log_pos 50922 CRC32 0x09b93e2d 	Xid = 3192
+COMMIT/*!*/;
+# at 50922
+#260729  6:14:55 server id 1  end_log_pos 51001 CRC32 0x2062ed05 	GTID	last_committed=4	sequence_number=101	rbr_only=yes	original_committed_timestamp=1785305695350672	immediate_commit_timestamp=1785305695350672	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695350672 (2026-07-29 06:14:55.350672 UTC)
+# immediate_commit_timestamp=1785305695350672 (2026-07-29 06:14:55.350672 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695350672*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:101'/*!*/;
+# at 51001
+#260729  6:14:55 server id 1  end_log_pos 51089 CRC32 0xd28c1957 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.350373/*!*/;
+BEGIN
+/*!*/;
+# at 51089
+#260729  6:14:55 server id 1  end_log_pos 51146 CRC32 0x97f43555 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 51146
+#260729  6:14:55 server id 1  end_log_pos 51201 CRC32 0xfbe228a3 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMrHAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBVNfSX
+X5ppah4BAAAANwAAAAHIAAAAAHcBAAAAAAEAAgAD/wBfBAAAAAAAANAHAACZunpjtw2soyji+w==
+'/*!*/;
+# at 51201
+#260729  6:14:55 server id 1  end_log_pos 51232 CRC32 0x2f08f08b 	Xid = 3193
+COMMIT/*!*/;
+# at 51232
+#260729  6:14:55 server id 1  end_log_pos 51311 CRC32 0xf6cc8b73 	GTID	last_committed=4	sequence_number=102	rbr_only=yes	original_committed_timestamp=1785305695351279	immediate_commit_timestamp=1785305695351279	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695351279 (2026-07-29 06:14:55.351279 UTC)
+# immediate_commit_timestamp=1785305695351279 (2026-07-29 06:14:55.351279 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695351279*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:102'/*!*/;
+# at 51311
+#260729  6:14:55 server id 1  end_log_pos 51399 CRC32 0x9435b093 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.351043/*!*/;
+BEGIN
+/*!*/;
+# at 51399
+#260729  6:14:55 server id 1  end_log_pos 51456 CRC32 0xa261fbd7 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 51456
+#260729  6:14:55 server id 1  end_log_pos 51511 CRC32 0x6e5f0e2e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAADJAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDX+2Gi
+X5ppah4BAAAANwAAADfJAAAAAHcBAAAAAAEAAgAD/wBgBAAAAAAAANAHAACZunpjtw22Lg5fbg==
+'/*!*/;
+# at 51511
+#260729  6:14:55 server id 1  end_log_pos 51542 CRC32 0x6ebcd61e 	Xid = 3194
+COMMIT/*!*/;
+# at 51542
+#260729  6:14:55 server id 1  end_log_pos 51621 CRC32 0x208ce98f 	GTID	last_committed=4	sequence_number=103	rbr_only=yes	original_committed_timestamp=1785305695351943	immediate_commit_timestamp=1785305695351943	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695351943 (2026-07-29 06:14:55.351943 UTC)
+# immediate_commit_timestamp=1785305695351943 (2026-07-29 06:14:55.351943 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695351943*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:103'/*!*/;
+# at 51621
+#260729  6:14:55 server id 1  end_log_pos 51709 CRC32 0x1fe55594 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.351727/*!*/;
+BEGIN
+/*!*/;
+# at 51709
+#260729  6:14:55 server id 1  end_log_pos 51766 CRC32 0xe2db847f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 51766
+#260729  6:14:55 server id 1  end_log_pos 51821 CRC32 0x9a37821f 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADbKAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB/hNvi
+X5ppah4BAAAANwAAAG3KAAAAAHcBAAAAAAEAAgAD/wBhBAAAAAAAANAHAACZunpjtw22H4I3mg==
+'/*!*/;
+# at 51821
+#260729  6:14:55 server id 1  end_log_pos 51852 CRC32 0x699344aa 	Xid = 3195
+COMMIT/*!*/;
+# at 51852
+#260729  6:14:55 server id 1  end_log_pos 51931 CRC32 0xad74a390 	GTID	last_committed=4	sequence_number=104	rbr_only=yes	original_committed_timestamp=1785305695352581	immediate_commit_timestamp=1785305695352581	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695352581 (2026-07-29 06:14:55.352581 UTC)
+# immediate_commit_timestamp=1785305695352581 (2026-07-29 06:14:55.352581 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695352581*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:104'/*!*/;
+# at 51931
+#260729  6:14:55 server id 1  end_log_pos 52019 CRC32 0xcfdca530 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.352395/*!*/;
+BEGIN
+/*!*/;
+# at 52019
+#260729  6:14:55 server id 1  end_log_pos 52076 CRC32 0xc2402c62 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 52076
+#260729  6:14:55 server id 1  end_log_pos 52131 CRC32 0x3ade7220 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGzLAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBiLEDC
+X5ppah4BAAAANwAAAKPLAAAAAHcBAAAAAAEAAgAD/wBiBAAAAAAAANAHAACZunpjtw3AIHLeOg==
+'/*!*/;
+# at 52131
+#260729  6:14:55 server id 1  end_log_pos 52162 CRC32 0x34e23647 	Xid = 3196
+COMMIT/*!*/;
+# at 52162
+#260729  6:14:55 server id 1  end_log_pos 52241 CRC32 0xa44f1a8e 	GTID	last_committed=4	sequence_number=105	rbr_only=yes	original_committed_timestamp=1785305695353228	immediate_commit_timestamp=1785305695353228	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695353228 (2026-07-29 06:14:55.353228 UTC)
+# immediate_commit_timestamp=1785305695353228 (2026-07-29 06:14:55.353228 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695353228*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:105'/*!*/;
+# at 52241
+#260729  6:14:55 server id 1  end_log_pos 52329 CRC32 0x50d6195c 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.353030/*!*/;
+BEGIN
+/*!*/;
+# at 52329
+#260729  6:14:55 server id 1  end_log_pos 52386 CRC32 0x7006fd1d 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 52386
+#260729  6:14:55 server id 1  end_log_pos 52441 CRC32 0xf024a12b 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKLMAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAd/QZw
+X5ppah4BAAAANwAAANnMAAAAAHcBAAAAAAEAAgAD/wBjBAAAAAAAANAHAACZunpjtw3KK6Ek8A==
+'/*!*/;
+# at 52441
+#260729  6:14:55 server id 1  end_log_pos 52472 CRC32 0xfcdaaeae 	Xid = 3197
+COMMIT/*!*/;
+# at 52472
+#260729  6:14:55 server id 1  end_log_pos 52551 CRC32 0xc2e54f6b 	GTID	last_committed=4	sequence_number=106	rbr_only=yes	original_committed_timestamp=1785305695353914	immediate_commit_timestamp=1785305695353914	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695353914 (2026-07-29 06:14:55.353914 UTC)
+# immediate_commit_timestamp=1785305695353914 (2026-07-29 06:14:55.353914 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695353914*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:106'/*!*/;
+# at 52551
+#260729  6:14:55 server id 1  end_log_pos 52639 CRC32 0x17bc1b44 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.353690/*!*/;
+BEGIN
+/*!*/;
+# at 52639
+#260729  6:14:55 server id 1  end_log_pos 52696 CRC32 0x622254bd 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 52696
+#260729  6:14:55 server id 1  end_log_pos 52751 CRC32 0x5871be64 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANjNAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC9VCJi
+X5ppah4BAAAANwAAAA/OAAAAAHcBAAAAAAEAAgAD/wBkBAAAAAAAANAHAACZunpjtw3KZL5xWA==
+'/*!*/;
+# at 52751
+#260729  6:14:55 server id 1  end_log_pos 52782 CRC32 0x4eb373cf 	Xid = 3198
+COMMIT/*!*/;
+# at 52782
+#260729  6:14:55 server id 1  end_log_pos 52861 CRC32 0x1fe32a42 	GTID	last_committed=4	sequence_number=107	rbr_only=yes	original_committed_timestamp=1785305695354574	immediate_commit_timestamp=1785305695354574	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695354574 (2026-07-29 06:14:55.354574 UTC)
+# immediate_commit_timestamp=1785305695354574 (2026-07-29 06:14:55.354574 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695354574*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:107'/*!*/;
+# at 52861
+#260729  6:14:55 server id 1  end_log_pos 52949 CRC32 0xf38b1e30 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.354382/*!*/;
+BEGIN
+/*!*/;
+# at 52949
+#260729  6:14:55 server id 1  end_log_pos 53006 CRC32 0xf12c248f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 53006
+#260729  6:14:55 server id 1  end_log_pos 53061 CRC32 0x3935d424 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAA7PAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCPJCzx
+X5ppah4BAAAANwAAAEXPAAAAAHcBAAAAAAEAAgAD/wBlBAAAAAAAANAHAACZunpjtw3UJNQ1OQ==
+'/*!*/;
+# at 53061
+#260729  6:14:55 server id 1  end_log_pos 53092 CRC32 0xcc0187be 	Xid = 3199
+COMMIT/*!*/;
+# at 53092
+#260729  6:14:55 server id 1  end_log_pos 53171 CRC32 0x7e22254a 	GTID	last_committed=4	sequence_number=108	rbr_only=yes	original_committed_timestamp=1785305695355268	immediate_commit_timestamp=1785305695355268	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695355268 (2026-07-29 06:14:55.355268 UTC)
+# immediate_commit_timestamp=1785305695355268 (2026-07-29 06:14:55.355268 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695355268*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:108'/*!*/;
+# at 53171
+#260729  6:14:55 server id 1  end_log_pos 53259 CRC32 0x3d803a8f 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.355045/*!*/;
+BEGIN
+/*!*/;
+# at 53259
+#260729  6:14:55 server id 1  end_log_pos 53316 CRC32 0x737a4846 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 53316
+#260729  6:14:55 server id 1  end_log_pos 53371 CRC32 0xd909ca21 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAETQAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBGSHpz
+X5ppah4BAAAANwAAAHvQAAAAAHcBAAAAAAEAAgAD/wBmBAAAAAAAANAHAACZunpjtw3eIcoJ2Q==
+'/*!*/;
+# at 53371
+#260729  6:14:55 server id 1  end_log_pos 53402 CRC32 0xdbbafb90 	Xid = 3200
+COMMIT/*!*/;
+# at 53402
+#260729  6:14:55 server id 1  end_log_pos 53481 CRC32 0xbcf28e01 	GTID	last_committed=4	sequence_number=109	rbr_only=yes	original_committed_timestamp=1785305695355920	immediate_commit_timestamp=1785305695355920	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695355920 (2026-07-29 06:14:55.355920 UTC)
+# immediate_commit_timestamp=1785305695355920 (2026-07-29 06:14:55.355920 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695355920*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:109'/*!*/;
+# at 53481
+#260729  6:14:55 server id 1  end_log_pos 53569 CRC32 0x135d3a5d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.355694/*!*/;
+BEGIN
+/*!*/;
+# at 53569
+#260729  6:14:55 server id 1  end_log_pos 53626 CRC32 0xd4a1a143 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 53626
+#260729  6:14:55 server id 1  end_log_pos 53681 CRC32 0xef8215ad 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHrRAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBDoaHU
+X5ppah4BAAAANwAAALHRAAAAAHcBAAAAAAEAAgAD/wBnBAAAAAAAANAHAACZunpjtw3erRWC7w==
+'/*!*/;
+# at 53681
+#260729  6:14:55 server id 1  end_log_pos 53712 CRC32 0x59080fe1 	Xid = 3201
+COMMIT/*!*/;
+# at 53712
+#260729  6:14:55 server id 1  end_log_pos 53791 CRC32 0x56c726f6 	GTID	last_committed=4	sequence_number=110	rbr_only=yes	original_committed_timestamp=1785305695357970	immediate_commit_timestamp=1785305695357970	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695357970 (2026-07-29 06:14:55.357970 UTC)
+# immediate_commit_timestamp=1785305695357970 (2026-07-29 06:14:55.357970 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695357970*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:110'/*!*/;
+# at 53791
+#260729  6:14:55 server id 1  end_log_pos 53879 CRC32 0x857ec375 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.357745/*!*/;
+BEGIN
+/*!*/;
+# at 53879
+#260729  6:14:55 server id 1  end_log_pos 53936 CRC32 0x57331b06 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 53936
+#260729  6:14:55 server id 1  end_log_pos 53991 CRC32 0x519ee434 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALDSAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAGGzNX
+X5ppah4BAAAANwAAAOfSAAAAAHcBAAAAAAEAAgAD/wBoBAAAAAAAANAHAACZunpjtw3yNOSeUQ==
+'/*!*/;
+# at 53991
+#260729  6:14:55 server id 1  end_log_pos 54022 CRC32 0xeb61d280 	Xid = 3202
+COMMIT/*!*/;
+# at 54022
+#260729  6:14:55 server id 1  end_log_pos 54101 CRC32 0x41491612 	GTID	last_committed=4	sequence_number=111	rbr_only=yes	original_committed_timestamp=1785305695358628	immediate_commit_timestamp=1785305695358628	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695358628 (2026-07-29 06:14:55.358628 UTC)
+# immediate_commit_timestamp=1785305695358628 (2026-07-29 06:14:55.358628 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695358628*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:111'/*!*/;
+# at 54101
+#260729  6:14:55 server id 1  end_log_pos 54189 CRC32 0x850a47d1 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.358448/*!*/;
+BEGIN
+/*!*/;
+# at 54189
+#260729  6:14:55 server id 1  end_log_pos 54246 CRC32 0xdd5a713b 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 54246
+#260729  6:14:55 server id 1  end_log_pos 54301 CRC32 0xb1396c96 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAObTAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA7cVrd
+X5ppah4BAAAANwAAAB3UAAAAAHcBAAAAAAEAAgAD/wBpBAAAAAAAANAHAACZunpjtw38lmw5sQ==
+'/*!*/;
+# at 54301
+#260729  6:14:55 server id 1  end_log_pos 54332 CRC32 0x23594a69 	Xid = 3203
+COMMIT/*!*/;
+# at 54332
+#260729  6:14:55 server id 1  end_log_pos 54411 CRC32 0xbb7b73b3 	GTID	last_committed=4	sequence_number=112	rbr_only=yes	original_committed_timestamp=1785305695359826	immediate_commit_timestamp=1785305695359826	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695359826 (2026-07-29 06:14:55.359826 UTC)
+# immediate_commit_timestamp=1785305695359826 (2026-07-29 06:14:55.359826 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695359826*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:112'/*!*/;
+# at 54411
+#260729  6:14:55 server id 1  end_log_pos 54499 CRC32 0xe5be3592 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.359091/*!*/;
+BEGIN
+/*!*/;
+# at 54499
+#260729  6:14:55 server id 1  end_log_pos 54556 CRC32 0x374cea71 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 54556
+#260729  6:14:55 server id 1  end_log_pos 54611 CRC32 0x733388ce 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABzVAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBx6kw3
+X5ppah4BAAAANwAAAFPVAAAAAHcBAAAAAAEAAgAD/wBqBAAAAAAAANAHAACZunpjtw4Gzogzcw==
+'/*!*/;
+# at 54611
+#260729  6:14:55 server id 1  end_log_pos 54642 CRC32 0x7e283884 	Xid = 3204
+COMMIT/*!*/;
+# at 54642
+#260729  6:14:55 server id 1  end_log_pos 54721 CRC32 0xf7a22245 	GTID	last_committed=4	sequence_number=113	rbr_only=yes	original_committed_timestamp=1785305695360543	immediate_commit_timestamp=1785305695360543	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695360543 (2026-07-29 06:14:55.360543 UTC)
+# immediate_commit_timestamp=1785305695360543 (2026-07-29 06:14:55.360543 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695360543*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:113'/*!*/;
+# at 54721
+#260729  6:14:55 server id 1  end_log_pos 54809 CRC32 0x6d75d1bb 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.360328/*!*/;
+BEGIN
+/*!*/;
+# at 54809
+#260729  6:14:55 server id 1  end_log_pos 54866 CRC32 0xaea3151f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 54866
+#260729  6:14:55 server id 1  end_log_pos 54921 CRC32 0xde4f3901 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFLWAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAfFaOu
+X5ppah4BAAAANwAAAInWAAAAAHcBAAAAAAEAAgAD/wBrBAAAAAAAANAHAACZunpjtw4QATlP3g==
+'/*!*/;
+# at 54921
+#260729  6:14:55 server id 1  end_log_pos 54952 CRC32 0x7907aa30 	Xid = 3205
+COMMIT/*!*/;
+# at 54952
+#260729  6:14:55 server id 1  end_log_pos 55031 CRC32 0xf815ddef 	GTID	last_committed=4	sequence_number=114	rbr_only=yes	original_committed_timestamp=1785305695361219	immediate_commit_timestamp=1785305695361219	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695361219 (2026-07-29 06:14:55.361219 UTC)
+# immediate_commit_timestamp=1785305695361219 (2026-07-29 06:14:55.361219 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695361219*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:114'/*!*/;
+# at 55031
+#260729  6:14:55 server id 1  end_log_pos 55119 CRC32 0x9904a4f3 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.360998/*!*/;
+BEGIN
+/*!*/;
+# at 55119
+#260729  6:14:55 server id 1  end_log_pos 55176 CRC32 0x44c4bbf6 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 55176
+#260729  6:14:55 server id 1  end_log_pos 55231 CRC32 0x8af7b66d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIjXAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQD2u8RE
+X5ppah4BAAAANwAAAL/XAAAAAHcBAAAAAAEAAgAD/wBsBAAAAAAAANAHAACZunpjtw4Qbbb3ig==
+'/*!*/;
+# at 55231
+#260729  6:14:55 server id 1  end_log_pos 55262 CRC32 0x38b38ca5 	Xid = 3206
+COMMIT/*!*/;
+# at 55262
+#260729  6:14:55 server id 1  end_log_pos 55341 CRC32 0xb2550218 	GTID	last_committed=4	sequence_number=115	rbr_only=yes	original_committed_timestamp=1785305695361997	immediate_commit_timestamp=1785305695361997	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695361997 (2026-07-29 06:14:55.361997 UTC)
+# immediate_commit_timestamp=1785305695361997 (2026-07-29 06:14:55.361997 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695361997*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:115'/*!*/;
+# at 55341
+#260729  6:14:55 server id 1  end_log_pos 55429 CRC32 0x773fbeab 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.361684/*!*/;
+BEGIN
+/*!*/;
+# at 55429
+#260729  6:14:55 server id 1  end_log_pos 55486 CRC32 0xfcf0bb30 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 55486
+#260729  6:14:55 server id 1  end_log_pos 55541 CRC32 0x990ddbee 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAL7YAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAwu/D8
+X5ppah4BAAAANwAAAPXYAAAAAHcBAAAAAAEAAgAD/wBtBAAAAAAAANAHAACZunpjtw4a7tsNmQ==
+'/*!*/;
+# at 55541
+#260729  6:14:55 server id 1  end_log_pos 55572 CRC32 0x1e024203 	Xid = 3207
+COMMIT/*!*/;
+# at 55572
+#260729  6:14:55 server id 1  end_log_pos 55651 CRC32 0x39a79801 	GTID	last_committed=4	sequence_number=116	rbr_only=yes	original_committed_timestamp=1785305695362691	immediate_commit_timestamp=1785305695362691	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695362691 (2026-07-29 06:14:55.362691 UTC)
+# immediate_commit_timestamp=1785305695362691 (2026-07-29 06:14:55.362691 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695362691*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:116'/*!*/;
+# at 55651
+#260729  6:14:55 server id 1  end_log_pos 55739 CRC32 0x7cf926ff 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.362446/*!*/;
+BEGIN
+/*!*/;
+# at 55739
+#260729  6:14:55 server id 1  end_log_pos 55796 CRC32 0x288c10d3 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 55796
+#260729  6:14:55 server id 1  end_log_pos 55851 CRC32 0xae302e7e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPTZAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDTEIwo
+X5ppah4BAAAANwAAACvaAAAAAHcBAAAAAAEAAgAD/wBuBAAAAAAAANAHAACZunpjtw4kfi4wrg==
+'/*!*/;
+# at 55851
+#260729  6:14:55 server id 1  end_log_pos 55882 CRC32 0x9678a27c 	Xid = 3208
+COMMIT/*!*/;
+# at 55882
+#260729  6:14:55 server id 1  end_log_pos 55961 CRC32 0xa43b534c 	GTID	last_committed=4	sequence_number=117	rbr_only=yes	original_committed_timestamp=1785305695364731	immediate_commit_timestamp=1785305695364731	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695364731 (2026-07-29 06:14:55.364731 UTC)
+# immediate_commit_timestamp=1785305695364731 (2026-07-29 06:14:55.364731 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695364731*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:117'/*!*/;
+# at 55961
+#260729  6:14:55 server id 1  end_log_pos 56049 CRC32 0x07d2de86 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.363236/*!*/;
+BEGIN
+/*!*/;
+# at 56049
+#260729  6:14:55 server id 1  end_log_pos 56106 CRC32 0xc1f1e11e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 56106
+#260729  6:14:55 server id 1  end_log_pos 56161 CRC32 0xd5ae9043 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACrbAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAe4fHB
+X5ppah4BAAAANwAAAGHbAAAAAHcBAAAAAAEAAgAD/wBvBAAAAAAAANAHAACZunpjtw4uQ5Cu1Q==
+'/*!*/;
+# at 56161
+#260729  6:14:55 server id 1  end_log_pos 56192 CRC32 0x97b9b9ef 	Xid = 3209
+COMMIT/*!*/;
+# at 56192
+#260729  6:14:55 server id 1  end_log_pos 56271 CRC32 0x66be1755 	GTID	last_committed=4	sequence_number=118	rbr_only=yes	original_committed_timestamp=1785305695365595	immediate_commit_timestamp=1785305695365595	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695365595 (2026-07-29 06:14:55.365595 UTC)
+# immediate_commit_timestamp=1785305695365595 (2026-07-29 06:14:55.365595 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695365595*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:118'/*!*/;
+# at 56271
+#260729  6:14:55 server id 1  end_log_pos 56359 CRC32 0xe4a718e7 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.365348/*!*/;
+BEGIN
+/*!*/;
+# at 56359
+#260729  6:14:55 server id 1  end_log_pos 56416 CRC32 0x69ca754a 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 56416
+#260729  6:14:55 server id 1  end_log_pos 56471 CRC32 0x7dab25cb 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGDcAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBKdcpp
+X5ppah4BAAAANwAAAJfcAAAAAHcBAAAAAAEAAgAD/wBwBAAAAAAAANAHAACZunpjtw5CyyWrfQ==
+'/*!*/;
+# at 56471
+#260729  6:14:55 server id 1  end_log_pos 56502 CRC32 0x3751b756 	Xid = 3210
+COMMIT/*!*/;
+# at 56502
+#260729  6:14:55 server id 1  end_log_pos 56581 CRC32 0xea513aa7 	GTID	last_committed=4	sequence_number=119	rbr_only=yes	original_committed_timestamp=1785305695366352	immediate_commit_timestamp=1785305695366352	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695366352 (2026-07-29 06:14:55.366352 UTC)
+# immediate_commit_timestamp=1785305695366352 (2026-07-29 06:14:55.366352 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695366352*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:119'/*!*/;
+# at 56581
+#260729  6:14:55 server id 1  end_log_pos 56669 CRC32 0x155770e2 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.366108/*!*/;
+BEGIN
+/*!*/;
+# at 56669
+#260729  6:14:55 server id 1  end_log_pos 56726 CRC32 0x1be0183e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 56726
+#260729  6:14:55 server id 1  end_log_pos 56781 CRC32 0xb4eaac82 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJbdAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA+GOAb
+X5ppah4BAAAANwAAAM3dAAAAAHcBAAAAAAEAAgAD/wBxBAAAAAAAANAHAACZunpjtw5MgqzqtA==
+'/*!*/;
+# at 56781
+#260729  6:14:55 server id 1  end_log_pos 56812 CRC32 0xd3517f4b 	Xid = 3211
+COMMIT/*!*/;
+# at 56812
+#260729  6:14:55 server id 1  end_log_pos 56891 CRC32 0x89073d37 	GTID	last_committed=4	sequence_number=120	rbr_only=yes	original_committed_timestamp=1785305695368323	immediate_commit_timestamp=1785305695368323	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695368323 (2026-07-29 06:14:55.368323 UTC)
+# immediate_commit_timestamp=1785305695368323 (2026-07-29 06:14:55.368323 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695368323*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:120'/*!*/;
+# at 56891
+#260729  6:14:55 server id 1  end_log_pos 56979 CRC32 0xcef7d38a 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.368076/*!*/;
+BEGIN
+/*!*/;
+# at 56979
+#260729  6:14:55 server id 1  end_log_pos 57036 CRC32 0xa669a771 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 57036
+#260729  6:14:55 server id 1  end_log_pos 57091 CRC32 0xc5dcdb37 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMzeAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBxp2mm
+X5ppah4BAAAANwAAAAPfAAAAAHcBAAAAAAEAAgAD/wByBAAAAAAAANAHAACZunpjtw5gN9vcxQ==
+'/*!*/;
+# at 57091
+#260729  6:14:55 server id 1  end_log_pos 57122 CRC32 0xb0998e8a 	Xid = 3212
+COMMIT/*!*/;
+# at 57122
+#260729  6:14:55 server id 1  end_log_pos 57201 CRC32 0x1b6f75be 	GTID	last_committed=4	sequence_number=121	rbr_only=yes	original_committed_timestamp=1785305695370229	immediate_commit_timestamp=1785305695370229	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695370229 (2026-07-29 06:14:55.370229 UTC)
+# immediate_commit_timestamp=1785305695370229 (2026-07-29 06:14:55.370229 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695370229*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:121'/*!*/;
+# at 57201
+#260729  6:14:55 server id 1  end_log_pos 57289 CRC32 0x22270644 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.369987/*!*/;
+BEGIN
+/*!*/;
+# at 57289
+#260729  6:14:55 server id 1  end_log_pos 57346 CRC32 0x17a6db16 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 57346
+#260729  6:14:55 server id 1  end_log_pos 57401 CRC32 0xce9c87f2 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAALgAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAW26YX
+X5ppah4BAAAANwAAADngAAAAAHcBAAAAAAEAAgAD/wBzBAAAAAAAANAHAACZunpjtw5q8oeczg==
+'/*!*/;
+# at 57401
+#260729  6:14:55 server id 1  end_log_pos 57432 CRC32 0x6462dfd0 	Xid = 3213
+COMMIT/*!*/;
+# at 57432
+#260729  6:14:55 server id 1  end_log_pos 57511 CRC32 0xe6b6b076 	GTID	last_committed=4	sequence_number=122	rbr_only=yes	original_committed_timestamp=1785305695371061	immediate_commit_timestamp=1785305695371061	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695371061 (2026-07-29 06:14:55.371061 UTC)
+# immediate_commit_timestamp=1785305695371061 (2026-07-29 06:14:55.371061 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695371061*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:122'/*!*/;
+# at 57511
+#260729  6:14:55 server id 1  end_log_pos 57599 CRC32 0x9645591d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.370843/*!*/;
+BEGIN
+/*!*/;
+# at 57599
+#260729  6:14:55 server id 1  end_log_pos 57656 CRC32 0x60fc71cc 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 57656
+#260729  6:14:55 server id 1  end_log_pos 57711 CRC32 0x6b671211 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADjhAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDMcfxg
+X5ppah4BAAAANwAAAG/hAAAAAHcBAAAAAAEAAgAD/wB0BAAAAAAAANAHAACZunpjtw50ERJnaw==
+'/*!*/;
+# at 57711
+#260729  6:14:55 server id 1  end_log_pos 57742 CRC32 0x6bc16e7f 	Xid = 3214
+COMMIT/*!*/;
+# at 57742
+#260729  6:14:55 server id 1  end_log_pos 57821 CRC32 0x2db40d14 	GTID	last_committed=4	sequence_number=123	rbr_only=yes	original_committed_timestamp=1785305695371748	immediate_commit_timestamp=1785305695371748	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695371748 (2026-07-29 06:14:55.371748 UTC)
+# immediate_commit_timestamp=1785305695371748 (2026-07-29 06:14:55.371748 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695371748*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:123'/*!*/;
+# at 57821
+#260729  6:14:55 server id 1  end_log_pos 57909 CRC32 0x51b42b5c 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.371556/*!*/;
+BEGIN
+/*!*/;
+# at 57909
+#260729  6:14:55 server id 1  end_log_pos 57966 CRC32 0x77870ca3 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 57966
+#260729  6:14:55 server id 1  end_log_pos 58021 CRC32 0x67a80cfc 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAG7iAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCjDId3
+X5ppah4BAAAANwAAAKXiAAAAAHcBAAAAAAEAAgAD/wB1BAAAAAAAANAHAACZunpjtw5+/AyoZw==
+'/*!*/;
+# at 58021
+#260729  6:14:55 server id 1  end_log_pos 58052 CRC32 0x892f2f45 	Xid = 3215
+COMMIT/*!*/;
+# at 58052
+#260729  6:14:55 server id 1  end_log_pos 58131 CRC32 0xf961becc 	GTID	last_committed=4	sequence_number=124	rbr_only=yes	original_committed_timestamp=1785305695372403	immediate_commit_timestamp=1785305695372403	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695372403 (2026-07-29 06:14:55.372403 UTC)
+# immediate_commit_timestamp=1785305695372403 (2026-07-29 06:14:55.372403 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695372403*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:124'/*!*/;
+# at 58131
+#260729  6:14:55 server id 1  end_log_pos 58219 CRC32 0x4655d674 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.372206/*!*/;
+BEGIN
+/*!*/;
+# at 58219
+#260729  6:14:55 server id 1  end_log_pos 58276 CRC32 0x6907a1b4 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 58276
+#260729  6:14:55 server id 1  end_log_pos 58331 CRC32 0x829fe4ba 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKTjAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC0oQdp
+X5ppah4BAAAANwAAANvjAAAAAHcBAAAAAAEAAgAD/wB2BAAAAAAAANAHAACZunpjtw6IuuSfgg==
+'/*!*/;
+# at 58331
+#260729  6:14:55 server id 1  end_log_pos 58362 CRC32 0x916fc473 	Xid = 3216
+COMMIT/*!*/;
+# at 58362
+#260729  6:14:55 server id 1  end_log_pos 58441 CRC32 0xe5ed5f9d 	GTID	last_committed=4	sequence_number=125	rbr_only=yes	original_committed_timestamp=1785305695373119	immediate_commit_timestamp=1785305695373119	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695373119 (2026-07-29 06:14:55.373119 UTC)
+# immediate_commit_timestamp=1785305695373119 (2026-07-29 06:14:55.373119 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695373119*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:125'/*!*/;
+# at 58441
+#260729  6:14:55 server id 1  end_log_pos 58529 CRC32 0xbd36cf66 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.372887/*!*/;
+BEGIN
+/*!*/;
+# at 58529
+#260729  6:14:55 server id 1  end_log_pos 58586 CRC32 0xd7e5747c 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 58586
+#260729  6:14:55 server id 1  end_log_pos 58641 CRC32 0x802652e9 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANrkAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB8dOXX
+X5ppah4BAAAANwAAABHlAAAAAHcBAAAAAAEAAgAD/wB3BAAAAAAAANAHAACZunpjtw6I6VImgA==
+'/*!*/;
+# at 58641
+#260729  6:14:55 server id 1  end_log_pos 58672 CRC32 0xedddd9b8 	Xid = 3217
+COMMIT/*!*/;
+# at 58672
+#260729  6:14:55 server id 1  end_log_pos 58751 CRC32 0x939c797c 	GTID	last_committed=4	sequence_number=126	rbr_only=yes	original_committed_timestamp=1785305695373768	immediate_commit_timestamp=1785305695373768	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695373768 (2026-07-29 06:14:55.373768 UTC)
+# immediate_commit_timestamp=1785305695373768 (2026-07-29 06:14:55.373768 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695373768*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:126'/*!*/;
+# at 58751
+#260729  6:14:55 server id 1  end_log_pos 58839 CRC32 0x895082d8 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.373575/*!*/;
+BEGIN
+/*!*/;
+# at 58839
+#260729  6:14:55 server id 1  end_log_pos 58896 CRC32 0x1afec590 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 58896
+#260729  6:14:55 server id 1  end_log_pos 58951 CRC32 0xf18036e9 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABDmAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCQxf4a
+X5ppah4BAAAANwAAAEfmAAAAAHcBAAAAAAEAAgAD/wB4BAAAAAAAANAHAACZunpjtw6S6TaA8Q==
+'/*!*/;
+# at 58951
+#260729  6:14:55 server id 1  end_log_pos 58982 CRC32 0x015132be 	Xid = 3218
+COMMIT/*!*/;
+# at 58982
+#260729  6:14:55 server id 1  end_log_pos 59061 CRC32 0x89ae4f41 	GTID	last_committed=4	sequence_number=127	rbr_only=yes	original_committed_timestamp=1785305695375342	immediate_commit_timestamp=1785305695375342	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695375342 (2026-07-29 06:14:55.375342 UTC)
+# immediate_commit_timestamp=1785305695375342 (2026-07-29 06:14:55.375342 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695375342*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:127'/*!*/;
+# at 59061
+#260729  6:14:55 server id 1  end_log_pos 59149 CRC32 0xe75af1a4 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.374106/*!*/;
+BEGIN
+/*!*/;
+# at 59149
+#260729  6:14:55 server id 1  end_log_pos 59206 CRC32 0x9097afad 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 59206
+#260729  6:14:55 server id 1  end_log_pos 59261 CRC32 0x338d984c 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEbnAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCtr5eQ
+X5ppah4BAAAANwAAAH3nAAAAAHcBAAAAAAEAAgAD/wB5BAAAAAAAANAHAACZunpjtw6cTJiNMw==
+'/*!*/;
+# at 59261
+#260729  6:14:55 server id 1  end_log_pos 59292 CRC32 0xab466d99 	Xid = 3219
+COMMIT/*!*/;
+# at 59292
+#260729  6:14:55 server id 1  end_log_pos 59371 CRC32 0x6cbe2cb3 	GTID	last_committed=4	sequence_number=128	rbr_only=yes	original_committed_timestamp=1785305695376053	immediate_commit_timestamp=1785305695376053	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695376053 (2026-07-29 06:14:55.376053 UTC)
+# immediate_commit_timestamp=1785305695376053 (2026-07-29 06:14:55.376053 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695376053*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:128'/*!*/;
+# at 59371
+#260729  6:14:55 server id 1  end_log_pos 59459 CRC32 0x2c38e1a8 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.375823/*!*/;
+BEGIN
+/*!*/;
+# at 59459
+#260729  6:14:55 server id 1  end_log_pos 59516 CRC32 0x82516d4b 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 59516
+#260729  6:14:55 server id 1  end_log_pos 59571 CRC32 0x846ab676 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHzoAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBLbVGC
+X5ppah4BAAAANwAAALPoAAAAAHcBAAAAAAEAAgAD/wB6BAAAAAAAANAHAACZunpjtw6mdrZqhA==
+'/*!*/;
+# at 59571
+#260729  6:14:55 server id 1  end_log_pos 59602 CRC32 0x0cd113c4 	Xid = 3220
+COMMIT/*!*/;
+# at 59602
+#260729  6:14:55 server id 1  end_log_pos 59681 CRC32 0xe472af8d 	GTID	last_committed=4	sequence_number=129	rbr_only=yes	original_committed_timestamp=1785305695376726	immediate_commit_timestamp=1785305695376726	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695376726 (2026-07-29 06:14:55.376726 UTC)
+# immediate_commit_timestamp=1785305695376726 (2026-07-29 06:14:55.376726 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695376726*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:129'/*!*/;
+# at 59681
+#260729  6:14:55 server id 1  end_log_pos 59769 CRC32 0x6465a194 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.376535/*!*/;
+BEGIN
+/*!*/;
+# at 59769
+#260729  6:14:55 server id 1  end_log_pos 59826 CRC32 0x4c508383 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 59826
+#260729  6:14:55 server id 1  end_log_pos 59881 CRC32 0x5e47a769 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALLpAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCDg1BM
+X5ppah4BAAAANwAAAOnpAAAAAHcBAAAAAAEAAgAD/wB7BAAAAAAAANAHAACZunpjtw6waadHXg==
+'/*!*/;
+# at 59881
+#260729  6:14:55 server id 1  end_log_pos 59912 CRC32 0xd66858f5 	Xid = 3221
+COMMIT/*!*/;
+# at 59912
+#260729  6:14:55 server id 1  end_log_pos 59991 CRC32 0xd263b3be 	GTID	last_committed=4	sequence_number=130	rbr_only=yes	original_committed_timestamp=1785305695377370	immediate_commit_timestamp=1785305695377370	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695377370 (2026-07-29 06:14:55.377370 UTC)
+# immediate_commit_timestamp=1785305695377370 (2026-07-29 06:14:55.377370 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695377370*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:130'/*!*/;
+# at 59991
+#260729  6:14:55 server id 1  end_log_pos 60079 CRC32 0x4058a099 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.377159/*!*/;
+BEGIN
+/*!*/;
+# at 60079
+#260729  6:14:55 server id 1  end_log_pos 60136 CRC32 0xf1d93ccc 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 60136
+#260729  6:14:55 server id 1  end_log_pos 60191 CRC32 0xa6d3b1a3 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOjqAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDMPNnx
+X5ppah4BAAAANwAAAB/rAAAAAHcBAAAAAAEAAgAD/wB8BAAAAAAAANAHAACZunpjtw66o7HTpg==
+'/*!*/;
+# at 60191
+#260729  6:14:55 server id 1  end_log_pos 60222 CRC32 0xd6658991 	Xid = 3222
+COMMIT/*!*/;
+# at 60222
+#260729  6:14:55 server id 1  end_log_pos 60301 CRC32 0xa80689a1 	GTID	last_committed=4	sequence_number=131	rbr_only=yes	original_committed_timestamp=1785305695378094	immediate_commit_timestamp=1785305695378094	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695378094 (2026-07-29 06:14:55.378094 UTC)
+# immediate_commit_timestamp=1785305695378094 (2026-07-29 06:14:55.378094 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695378094*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:131'/*!*/;
+# at 60301
+#260729  6:14:55 server id 1  end_log_pos 60389 CRC32 0x8ff55bbd 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.377831/*!*/;
+BEGIN
+/*!*/;
+# at 60389
+#260729  6:14:55 server id 1  end_log_pos 60446 CRC32 0xb13d65a6 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 60446
+#260729  6:14:55 server id 1  end_log_pos 60501 CRC32 0x895a9840 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAB7sAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCmZT2x
+X5ppah4BAAAANwAAAFXsAAAAAHcBAAAAAAEAAgAD/wB9BAAAAAAAANAHAACZunpjtw66QJhaiQ==
+'/*!*/;
+# at 60501
+#260729  6:14:55 server id 1  end_log_pos 60532 CRC32 0xf432a23d 	Xid = 3223
+COMMIT/*!*/;
+# at 60532
+#260729  6:14:55 server id 1  end_log_pos 60611 CRC32 0xf0940827 	GTID	last_committed=4	sequence_number=132	rbr_only=yes	original_committed_timestamp=1785305695378764	immediate_commit_timestamp=1785305695378764	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695378764 (2026-07-29 06:14:55.378764 UTC)
+# immediate_commit_timestamp=1785305695378764 (2026-07-29 06:14:55.378764 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695378764*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:132'/*!*/;
+# at 60611
+#260729  6:14:55 server id 1  end_log_pos 60699 CRC32 0xd7b7012e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.378570/*!*/;
+BEGIN
+/*!*/;
+# at 60699
+#260729  6:14:55 server id 1  end_log_pos 60756 CRC32 0x6541ce45 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 60756
+#260729  6:14:55 server id 1  end_log_pos 60811 CRC32 0x92da1320 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFTtAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBFzkFl
+X5ppah4BAAAANwAAAIvtAAAAAHcBAAAAAAEAAgAD/wB+BAAAAAAAANAHAACZunpjtw7EIBPakg==
+'/*!*/;
+# at 60811
+#260729  6:14:55 server id 1  end_log_pos 60842 CRC32 0x9f6718eb 	Xid = 3224
+COMMIT/*!*/;
+# at 60842
+#260729  6:14:55 server id 1  end_log_pos 60921 CRC32 0xdf59bae3 	GTID	last_committed=4	sequence_number=133	rbr_only=yes	original_committed_timestamp=1785305695379318	immediate_commit_timestamp=1785305695379318	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695379318 (2026-07-29 06:14:55.379318 UTC)
+# immediate_commit_timestamp=1785305695379318 (2026-07-29 06:14:55.379318 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695379318*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:133'/*!*/;
+# at 60921
+#260729  6:14:55 server id 1  end_log_pos 61009 CRC32 0x85544da5 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.379104/*!*/;
+BEGIN
+/*!*/;
+# at 61009
+#260729  6:14:55 server id 1  end_log_pos 61066 CRC32 0xc2b53421 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 61066
+#260729  6:14:55 server id 1  end_log_pos 61121 CRC32 0x33d58562 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIruAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAhNLXC
+X5ppah4BAAAANwAAAMHuAAAAAHcBAAAAAAEAAgAD/wB/BAAAAAAAANAHAACZunpjtw7OYoXVMw==
+'/*!*/;
+# at 61121
+#260729  6:14:55 server id 1  end_log_pos 61152 CRC32 0x7d8959d1 	Xid = 3225
+COMMIT/*!*/;
+# at 61152
+#260729  6:14:55 server id 1  end_log_pos 61231 CRC32 0x5ac03c28 	GTID	last_committed=4	sequence_number=134	rbr_only=yes	original_committed_timestamp=1785305695379995	immediate_commit_timestamp=1785305695379995	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695379995 (2026-07-29 06:14:55.379995 UTC)
+# immediate_commit_timestamp=1785305695379995 (2026-07-29 06:14:55.379995 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695379995*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:134'/*!*/;
+# at 61231
+#260729  6:14:55 server id 1  end_log_pos 61319 CRC32 0x821abc02 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.379799/*!*/;
+BEGIN
+/*!*/;
+# at 61319
+#260729  6:14:55 server id 1  end_log_pos 61376 CRC32 0x16c99fc2 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 61376
+#260729  6:14:55 server id 1  end_log_pos 61431 CRC32 0x8c136eed 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMDvAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDCn8kW
+X5ppah4BAAAANwAAAPfvAAAAAHcBAAAAAAEAAgAD/wCABAAAAAAAANAHAACZunpjtw7O7W4TjA==
+'/*!*/;
+# at 61431
+#260729  6:14:55 server id 1  end_log_pos 61462 CRC32 0x2c39e349 	Xid = 3226
+COMMIT/*!*/;
+# at 61462
+#260729  6:14:55 server id 1  end_log_pos 61541 CRC32 0x0a8c4cac 	GTID	last_committed=4	sequence_number=135	rbr_only=yes	original_committed_timestamp=1785305695382547	immediate_commit_timestamp=1785305695382547	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695382547 (2026-07-29 06:14:55.382547 UTC)
+# immediate_commit_timestamp=1785305695382547 (2026-07-29 06:14:55.382547 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695382547*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:135'/*!*/;
+# at 61541
+#260729  6:14:55 server id 1  end_log_pos 61629 CRC32 0x63cd4a78 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.382285/*!*/;
+BEGIN
+/*!*/;
+# at 61629
+#260729  6:14:55 server id 1  end_log_pos 61686 CRC32 0x9d4b3012 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 61686
+#260729  6:14:55 server id 1  end_log_pos 61741 CRC32 0x50e29bf4 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPbwAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQASMEud
+X5ppah4BAAAANwAAAC3xAAAAAHcBAAAAAAEAAgAD/wCBBAAAAAAAANAHAACZunpjtw7s9JviUA==
+'/*!*/;
+# at 61741
+#260729  6:14:55 server id 1  end_log_pos 61772 CRC32 0xc8392b54 	Xid = 3227
+COMMIT/*!*/;
+# at 61772
+#260729  6:14:55 server id 1  end_log_pos 61851 CRC32 0xc82d29c9 	GTID	last_committed=4	sequence_number=136	rbr_only=yes	original_committed_timestamp=1785305695383338	immediate_commit_timestamp=1785305695383338	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695383338 (2026-07-29 06:14:55.383338 UTC)
+# immediate_commit_timestamp=1785305695383338 (2026-07-29 06:14:55.383338 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695383338*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:136'/*!*/;
+# at 61851
+#260729  6:14:55 server id 1  end_log_pos 61939 CRC32 0x3b3a03d2 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.383054/*!*/;
+BEGIN
+/*!*/;
+# at 61939
+#260729  6:14:55 server id 1  end_log_pos 61996 CRC32 0xa4b78200 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 61996
+#260729  6:14:55 server id 1  end_log_pos 62051 CRC32 0xc35ee668 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACzyAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAAgrek
+X5ppah4BAAAANwAAAGPyAAAAAHcBAAAAAAEAAgAD/wCCBAAAAAAAANAHAACZunpjtw72aOZeww==
+'/*!*/;
+# at 62051
+#260729  6:14:55 server id 1  end_log_pos 62082 CRC32 0x76670310 	Xid = 3228
+COMMIT/*!*/;
+# at 62082
+#260729  6:14:55 server id 1  end_log_pos 62161 CRC32 0xacb245dc 	GTID	last_committed=4	sequence_number=137	rbr_only=yes	original_committed_timestamp=1785305695384100	immediate_commit_timestamp=1785305695384100	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695384100 (2026-07-29 06:14:55.384100 UTC)
+# immediate_commit_timestamp=1785305695384100 (2026-07-29 06:14:55.384100 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695384100*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:137'/*!*/;
+# at 62161
+#260729  6:14:55 server id 1  end_log_pos 62249 CRC32 0x5250c4c6 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.383856/*!*/;
+BEGIN
+/*!*/;
+# at 62249
+#260729  6:14:55 server id 1  end_log_pos 62306 CRC32 0xa04a6a3c 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 62306
+#260729  6:14:55 server id 1  end_log_pos 62361 CRC32 0xf0732a12 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGLzAAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA8akqg
+X5ppah4BAAAANwAAAJnzAAAAAHcBAAAAAAEAAgAD/wCDBAAAAAAAANAHAACZunpjtw72Eipz8A==
+'/*!*/;
+# at 62361
+#260729  6:14:55 server id 1  end_log_pos 62392 CRC32 0x1eba4424 	Xid = 3229
+COMMIT/*!*/;
+# at 62392
+#260729  6:14:55 server id 1  end_log_pos 62471 CRC32 0xe4ff6c24 	GTID	last_committed=4	sequence_number=138	rbr_only=yes	original_committed_timestamp=1785305695384840	immediate_commit_timestamp=1785305695384840	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695384840 (2026-07-29 06:14:55.384840 UTC)
+# immediate_commit_timestamp=1785305695384840 (2026-07-29 06:14:55.384840 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695384840*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:138'/*!*/;
+# at 62471
+#260729  6:14:55 server id 1  end_log_pos 62559 CRC32 0x52306626 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.384603/*!*/;
+BEGIN
+/*!*/;
+# at 62559
+#260729  6:14:55 server id 1  end_log_pos 62616 CRC32 0x04d5fadf 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 62616
+#260729  6:14:55 server id 1  end_log_pos 62671 CRC32 0x56809a3a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJj0AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDf+tUE
+X5ppah4BAAAANwAAAM/0AAAAAHcBAAAAAAEAAgAD/wCEBAAAAAAAANAHAACZunpjtw8AOpqAVg==
+'/*!*/;
+# at 62671
+#260729  6:14:55 server id 1  end_log_pos 62702 CRC32 0x328fc5b4 	Xid = 3230
+COMMIT/*!*/;
+# at 62702
+#260729  6:14:55 server id 1  end_log_pos 62781 CRC32 0xe56858ee 	GTID	last_committed=4	sequence_number=139	rbr_only=yes	original_committed_timestamp=1785305695385516	immediate_commit_timestamp=1785305695385516	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695385516 (2026-07-29 06:14:55.385516 UTC)
+# immediate_commit_timestamp=1785305695385516 (2026-07-29 06:14:55.385516 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695385516*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:139'/*!*/;
+# at 62781
+#260729  6:14:55 server id 1  end_log_pos 62869 CRC32 0x712274e8 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.385329/*!*/;
+BEGIN
+/*!*/;
+# at 62869
+#260729  6:14:55 server id 1  end_log_pos 62926 CRC32 0x8ebc90e2 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 62926
+#260729  6:14:55 server id 1  end_log_pos 62981 CRC32 0xdabf93c8 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAM71AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDikLyO
+X5ppah4BAAAANwAAAAX2AAAAAHcBAAAAAAEAAgAD/wCFBAAAAAAAANAHAACZunpjtw8KyJO/2g==
+'/*!*/;
+# at 62981
+#260729  6:14:55 server id 1  end_log_pos 63012 CRC32 0x8e84b2e9 	Xid = 3231
+COMMIT/*!*/;
+# at 63012
+#260729  6:14:55 server id 1  end_log_pos 63091 CRC32 0x261ccdd8 	GTID	last_committed=4	sequence_number=140	rbr_only=yes	original_committed_timestamp=1785305695386479	immediate_commit_timestamp=1785305695386479	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695386479 (2026-07-29 06:14:55.386479 UTC)
+# immediate_commit_timestamp=1785305695386479 (2026-07-29 06:14:55.386479 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695386479*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:140'/*!*/;
+# at 63091
+#260729  6:14:55 server id 1  end_log_pos 63179 CRC32 0xf6f449fb 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.386277/*!*/;
+BEGIN
+/*!*/;
+# at 63179
+#260729  6:14:55 server id 1  end_log_pos 63236 CRC32 0x43a7210e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 63236
+#260729  6:14:55 server id 1  end_log_pos 63291 CRC32 0x2a01d6b3 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAT3AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAOIadD
+X5ppah4BAAAANwAAADv3AAAAAHcBAAAAAAEAAgAD/wCGBAAAAAAAANAHAACZunpjtw8Us9YBKg==
+'/*!*/;
+# at 63291
+#260729  6:14:55 server id 1  end_log_pos 63322 CRC32 0x2e0bcc78 	Xid = 3232
+COMMIT/*!*/;
+# at 63322
+#260729  6:14:55 server id 1  end_log_pos 63401 CRC32 0xff98a01e 	GTID	last_committed=4	sequence_number=141	rbr_only=yes	original_committed_timestamp=1785305695387484	immediate_commit_timestamp=1785305695387484	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695387484 (2026-07-29 06:14:55.387484 UTC)
+# immediate_commit_timestamp=1785305695387484 (2026-07-29 06:14:55.387484 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695387484*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:141'/*!*/;
+# at 63401
+#260729  6:14:55 server id 1  end_log_pos 63489 CRC32 0xfd9ff5ca 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.386940/*!*/;
+BEGIN
+/*!*/;
+# at 63489
+#260729  6:14:55 server id 1  end_log_pos 63546 CRC32 0x81e0a037 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 63546
+#260729  6:14:55 server id 1  end_log_pos 63601 CRC32 0xd92e522e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADr4AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA3oOCB
+X5ppah4BAAAANwAAAHH4AAAAAHcBAAAAAAEAAgAD/wCHBAAAAAAAANAHAACZunpjtw8ULlIu2Q==
+'/*!*/;
+# at 63601
+#260729  6:14:55 server id 1  end_log_pos 63632 CRC32 0xd52cdb5b 	Xid = 3233
+COMMIT/*!*/;
+# at 63632
+#260729  6:14:55 server id 1  end_log_pos 63711 CRC32 0xd10f155c 	GTID	last_committed=4	sequence_number=142	rbr_only=yes	original_committed_timestamp=1785305695388159	immediate_commit_timestamp=1785305695388159	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695388159 (2026-07-29 06:14:55.388159 UTC)
+# immediate_commit_timestamp=1785305695388159 (2026-07-29 06:14:55.388159 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695388159*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:142'/*!*/;
+# at 63711
+#260729  6:14:55 server id 1  end_log_pos 63799 CRC32 0x8f3fb09f 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.387959/*!*/;
+BEGIN
+/*!*/;
+# at 63799
+#260729  6:14:55 server id 1  end_log_pos 63856 CRC32 0x559c0bd4 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 63856
+#260729  6:14:55 server id 1  end_log_pos 63911 CRC32 0xc26e869a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHD5AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDUC5xV
+X5ppah4BAAAANwAAAKf5AAAAAHcBAAAAAAEAAgAD/wCIBAAAAAAAANAHAACZunpjtw8emoZuwg==
+'/*!*/;
+# at 63911
+#260729  6:14:55 server id 1  end_log_pos 63942 CRC32 0x59fc8516 	Xid = 3234
+COMMIT/*!*/;
+# at 63942
+#260729  6:14:55 server id 1  end_log_pos 64021 CRC32 0xe22a2779 	GTID	last_committed=4	sequence_number=143	rbr_only=yes	original_committed_timestamp=1785305695388862	immediate_commit_timestamp=1785305695388862	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695388862 (2026-07-29 06:14:55.388862 UTC)
+# immediate_commit_timestamp=1785305695388862 (2026-07-29 06:14:55.388862 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695388862*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:143'/*!*/;
+# at 64021
+#260729  6:14:55 server id 1  end_log_pos 64109 CRC32 0x491d7762 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.388665/*!*/;
+BEGIN
+/*!*/;
+# at 64109
+#260729  6:14:55 server id 1  end_log_pos 64166 CRC32 0x881b704f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 64166
+#260729  6:14:55 server id 1  end_log_pos 64221 CRC32 0x49a87fa9 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKb6AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBPcBuI
+X5ppah4BAAAANwAAAN36AAAAAHcBAAAAAAEAAgAD/wCJBAAAAAAAANAHAACZunpjtw8oqX+oSQ==
+'/*!*/;
+# at 64221
+#260729  6:14:55 server id 1  end_log_pos 64252 CRC32 0x517d7769 	Xid = 3235
+COMMIT/*!*/;
+# at 64252
+#260729  6:14:55 server id 1  end_log_pos 64331 CRC32 0xdb7c0745 	GTID	last_committed=4	sequence_number=144	rbr_only=yes	original_committed_timestamp=1785305695390781	immediate_commit_timestamp=1785305695390781	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695390781 (2026-07-29 06:14:55.390781 UTC)
+# immediate_commit_timestamp=1785305695390781 (2026-07-29 06:14:55.390781 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695390781*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:144'/*!*/;
+# at 64331
+#260729  6:14:55 server id 1  end_log_pos 64419 CRC32 0xa2e25431 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.390553/*!*/;
+BEGIN
+/*!*/;
+# at 64419
+#260729  6:14:55 server id 1  end_log_pos 64476 CRC32 0x9a3fd9ef 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 64476
+#260729  6:14:55 server id 1  end_log_pos 64531 CRC32 0x7ecfe63d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANz7AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDv2T+a
+X5ppah4BAAAANwAAABP8AAAAAHcBAAAAAAEAAgAD/wCKBAAAAAAAANAHAACZunpjtw88PebPfg==
+'/*!*/;
+# at 64531
+#260729  6:14:55 server id 1  end_log_pos 64562 CRC32 0xf20cec3e 	Xid = 3236
+COMMIT/*!*/;
+# at 64562
+#260729  6:14:55 server id 1  end_log_pos 64641 CRC32 0x785728dc 	GTID	last_committed=4	sequence_number=145	rbr_only=yes	original_committed_timestamp=1785305695391721	immediate_commit_timestamp=1785305695391721	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695391721 (2026-07-29 06:14:55.391721 UTC)
+# immediate_commit_timestamp=1785305695391721 (2026-07-29 06:14:55.391721 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695391721*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:145'/*!*/;
+# at 64641
+#260729  6:14:55 server id 1  end_log_pos 64729 CRC32 0xc4e845ae 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.391402/*!*/;
+BEGIN
+/*!*/;
+# at 64729
+#260729  6:14:55 server id 1  end_log_pos 64786 CRC32 0x66f00339 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 64786
+#260729  6:14:55 server id 1  end_log_pos 64841 CRC32 0xe0e6da51 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABL9AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA5A/Bm
+X5ppah4BAAAANwAAAEn9AAAAAHcBAAAAAAEAAgAD/wCLBAAAAAAAANAHAACZunpjtw9GUdrm4A==
+'/*!*/;
+# at 64841
+#260729  6:14:55 server id 1  end_log_pos 64872 CRC32 0x160c2423 	Xid = 3237
+COMMIT/*!*/;
+# at 64872
+#260729  6:14:55 server id 1  end_log_pos 64951 CRC32 0x84982bcb 	GTID	last_committed=4	sequence_number=146	rbr_only=yes	original_committed_timestamp=1785305695392414	immediate_commit_timestamp=1785305695392414	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695392414 (2026-07-29 06:14:55.392414 UTC)
+# immediate_commit_timestamp=1785305695392414 (2026-07-29 06:14:55.392414 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695392414*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:146'/*!*/;
+# at 64951
+#260729  6:14:55 server id 1  end_log_pos 65039 CRC32 0x5be9abba 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.392189/*!*/;
+BEGIN
+/*!*/;
+# at 65039
+#260729  6:14:55 server id 1  end_log_pos 65096 CRC32 0xdb79bc76 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 65096
+#260729  6:14:55 server id 1  end_log_pos 65151 CRC32 0x9a1bc813 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEj+AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB2vHnb
+X5ppah4BAAAANwAAAH/+AAAAAHcBAAAAAAEAAgAD/wCMBAAAAAAAANAHAACZunpjtw9QE8gbmg==
+'/*!*/;
+# at 65151
+#260729  6:14:55 server id 1  end_log_pos 65182 CRC32 0xb497581f 	Xid = 3238
+COMMIT/*!*/;
+# at 65182
+#260729  6:14:55 server id 1  end_log_pos 65261 CRC32 0x98790cac 	GTID	last_committed=4	sequence_number=147	rbr_only=yes	original_committed_timestamp=1785305695393164	immediate_commit_timestamp=1785305695393164	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695393164 (2026-07-29 06:14:55.393164 UTC)
+# immediate_commit_timestamp=1785305695393164 (2026-07-29 06:14:55.393164 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695393164*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:147'/*!*/;
+# at 65261
+#260729  6:14:55 server id 1  end_log_pos 65349 CRC32 0x2270b5e0 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.392901/*!*/;
+BEGIN
+/*!*/;
+# at 65349
+#260729  6:14:55 server id 1  end_log_pos 65406 CRC32 0x06d1d48c 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 65406
+#260729  6:14:55 server id 1  end_log_pos 65461 CRC32 0xac90179f 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAH7/AAAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCM1NEG
+X5ppah4BAAAANwAAALX/AAAAAHcBAAAAAAEAAgAD/wCNBAAAAAAAANAHAACZunpjtw9QnxeQrA==
+'/*!*/;
+# at 65461
+#260729  6:14:55 server id 1  end_log_pos 65492 CRC32 0x3625ac6e 	Xid = 3239
+COMMIT/*!*/;
+# at 65492
+#260729  6:14:55 server id 1  end_log_pos 65571 CRC32 0xf31160bf 	GTID	last_committed=4	sequence_number=148	rbr_only=yes	original_committed_timestamp=1785305695393875	immediate_commit_timestamp=1785305695393875	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695393875 (2026-07-29 06:14:55.393875 UTC)
+# immediate_commit_timestamp=1785305695393875 (2026-07-29 06:14:55.393875 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695393875*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:148'/*!*/;
+# at 65571
+#260729  6:14:55 server id 1  end_log_pos 65659 CRC32 0xbbe28f92 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.393651/*!*/;
+BEGIN
+/*!*/;
+# at 65659
+#260729  6:14:55 server id 1  end_log_pos 65716 CRC32 0x2c80dfd6 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 65716
+#260729  6:14:55 server id 1  end_log_pos 65771 CRC32 0xe268de46 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALQAAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDW34As
+X5ppah4BAAAANwAAAOsAAQAAAHcBAAAAAAEAAgAD/wCOBAAAAAAAANAHAACZunpjtw9aRt5o4g==
+'/*!*/;
+# at 65771
+#260729  6:14:55 server id 1  end_log_pos 65802 CRC32 0xfb3bd671 	Xid = 3240
+COMMIT/*!*/;
+# at 65802
+#260729  6:14:55 server id 1  end_log_pos 65881 CRC32 0x844fb982 	GTID	last_committed=4	sequence_number=149	rbr_only=yes	original_committed_timestamp=1785305695394922	immediate_commit_timestamp=1785305695394922	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695394922 (2026-07-29 06:14:55.394922 UTC)
+# immediate_commit_timestamp=1785305695394922 (2026-07-29 06:14:55.394922 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695394922*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:149'/*!*/;
+# at 65881
+#260729  6:14:55 server id 1  end_log_pos 65969 CRC32 0x216020d1 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.394672/*!*/;
+BEGIN
+/*!*/;
+# at 65969
+#260729  6:14:55 server id 1  end_log_pos 66026 CRC32 0xdc9a3414 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 66026
+#260729  6:14:55 server id 1  end_log_pos 66081 CRC32 0x4fe32301 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOoBAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAUNJrc
+X5ppah4BAAAANwAAACECAQAAAHcBAAAAAAEAAgAD/wCPBAAAAAAAANAHAACZunpjtw9kASPjTw==
+'/*!*/;
+# at 66081
+#260729  6:14:55 server id 1  end_log_pos 66112 CRC32 0x19d5974b 	Xid = 3241
+COMMIT/*!*/;
+# at 66112
+#260729  6:14:55 server id 1  end_log_pos 66191 CRC32 0xdc1150f7 	GTID	last_committed=4	sequence_number=150	rbr_only=yes	original_committed_timestamp=1785305695395706	immediate_commit_timestamp=1785305695395706	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695395706 (2026-07-29 06:14:55.395706 UTC)
+# immediate_commit_timestamp=1785305695395706 (2026-07-29 06:14:55.395706 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695395706*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:150'/*!*/;
+# at 66191
+#260729  6:14:55 server id 1  end_log_pos 66279 CRC32 0xe09ed08e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.395439/*!*/;
+BEGIN
+/*!*/;
+# at 66279
+#260729  6:14:55 server id 1  end_log_pos 66336 CRC32 0x118185f8 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 66336
+#260729  6:14:55 server id 1  end_log_pos 66391 CRC32 0x5a35a48b 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACADAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQD4hYER
+X5ppah4BAAAANwAAAFcDAQAAAHcBAAAAAAEAAgAD/wCQBAAAAAAAANAHAACZunpjtw9ui6Q1Wg==
+'/*!*/;
+# at 66391
+#260729  6:14:55 server id 1  end_log_pos 66422 CRC32 0x19d8462f 	Xid = 3242
+COMMIT/*!*/;
+# at 66422
+#260729  6:14:55 server id 1  end_log_pos 66501 CRC32 0x519272e2 	GTID	last_committed=4	sequence_number=151	rbr_only=yes	original_committed_timestamp=1785305695396509	immediate_commit_timestamp=1785305695396509	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695396509 (2026-07-29 06:14:55.396509 UTC)
+# immediate_commit_timestamp=1785305695396509 (2026-07-29 06:14:55.396509 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695396509*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:151'/*!*/;
+# at 66501
+#260729  6:14:55 server id 1  end_log_pos 66589 CRC32 0xb9dd5b87 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.396253/*!*/;
+BEGIN
+/*!*/;
+# at 66589
+#260729  6:14:55 server id 1  end_log_pos 66646 CRC32 0xd510d1cf 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 66646
+#260729  6:14:55 server id 1  end_log_pos 66701 CRC32 0x991a43fb 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFYEAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDP0RDV
+X5ppah4BAAAANwAAAI0EAQAAAHcBAAAAAAEAAgAD/wCRBAAAAAAAANAHAACZunpjtw94+0MamQ==
+'/*!*/;
+# at 66701
+#260729  6:14:55 server id 1  end_log_pos 66732 CRC32 0xde4ebe0d 	Xid = 3243
+COMMIT/*!*/;
+# at 66732
+#260729  6:14:55 server id 1  end_log_pos 66811 CRC32 0x41ad4450 	GTID	last_committed=4	sequence_number=152	rbr_only=yes	original_committed_timestamp=1785305695397755	immediate_commit_timestamp=1785305695397755	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695397755 (2026-07-29 06:14:55.397755 UTC)
+# immediate_commit_timestamp=1785305695397755 (2026-07-29 06:14:55.397755 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695397755*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:152'/*!*/;
+# at 66811
+#260729  6:14:55 server id 1  end_log_pos 66899 CRC32 0x54bbbeb7 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.397009/*!*/;
+BEGIN
+/*!*/;
+# at 66899
+#260729  6:14:55 server id 1  end_log_pos 66956 CRC32 0x3f777f26 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 66956
+#260729  6:14:55 server id 1  end_log_pos 67011 CRC32 0x703df460 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIwFAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAmf3c/
+X5ppah4BAAAANwAAAMMFAQAAAHcBAAAAAAEAAgAD/wCSBAAAAAAAANAHAACZunpjtw+CYPQ9cA==
+'/*!*/;
+# at 67011
+#260729  6:14:55 server id 1  end_log_pos 67042 CRC32 0x833fcce0 	Xid = 3244
+COMMIT/*!*/;
+# at 67042
+#260729  6:14:55 server id 1  end_log_pos 67121 CRC32 0x432f393e 	GTID	last_committed=4	sequence_number=153	rbr_only=yes	original_committed_timestamp=1785305695401730	immediate_commit_timestamp=1785305695401730	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695401730 (2026-07-29 06:14:55.401730 UTC)
+# immediate_commit_timestamp=1785305695401730 (2026-07-29 06:14:55.401730 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695401730*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:153'/*!*/;
+# at 67121
+#260729  6:14:55 server id 1  end_log_pos 67209 CRC32 0x01f34999 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.399194/*!*/;
+BEGIN
+/*!*/;
+# at 67209
+#260729  6:14:55 server id 1  end_log_pos 67266 CRC32 0xa6988048 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 67266
+#260729  6:14:55 server id 1  end_log_pos 67321 CRC32 0x95c38bc0 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMIGAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBIgJim
+X5ppah4BAAAANwAAAPkGAQAAAHcBAAAAAAEAAgAD/wCTBAAAAAAAANAHAACZunpjtw+WwIvDlQ==
+'/*!*/;
+# at 67321
+#260729  6:14:55 server id 1  end_log_pos 67352 CRC32 0x94e2ff09 	Xid = 3245
+COMMIT/*!*/;
+# at 67352
+#260729  6:14:55 server id 1  end_log_pos 67431 CRC32 0x07488d4e 	GTID	last_committed=4	sequence_number=154	rbr_only=yes	original_committed_timestamp=1785305695402533	immediate_commit_timestamp=1785305695402533	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695402533 (2026-07-29 06:14:55.402533 UTC)
+# immediate_commit_timestamp=1785305695402533 (2026-07-29 06:14:55.402533 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695402533*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:154'/*!*/;
+# at 67431
+#260729  6:14:55 server id 1  end_log_pos 67519 CRC32 0x64adcef0 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.402233/*!*/;
+BEGIN
+/*!*/;
+# at 67519
+#260729  6:14:55 server id 1  end_log_pos 67576 CRC32 0xd1c22a92 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 67576
+#260729  6:14:55 server id 1  end_log_pos 67631 CRC32 0x5a032eaa 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPgHAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCSKsLR
+X5ppah4BAAAANwAAAC8IAQAAAHcBAAAAAAEAAgAD/wCUBAAAAAAAANAHAACZunpjtw+0qi4DWg==
+'/*!*/;
+# at 67631
+#260729  6:14:55 server id 1  end_log_pos 67662 CRC32 0xe2d4adf4 	Xid = 3246
+COMMIT/*!*/;
+# at 67662
+#260729  6:14:55 server id 1  end_log_pos 67741 CRC32 0xc9df6ffb 	GTID	last_committed=4	sequence_number=155	rbr_only=yes	original_committed_timestamp=1785305695403660	immediate_commit_timestamp=1785305695403660	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695403660 (2026-07-29 06:14:55.403660 UTC)
+# immediate_commit_timestamp=1785305695403660 (2026-07-29 06:14:55.403660 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695403660*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:155'/*!*/;
+# at 67741
+#260729  6:14:55 server id 1  end_log_pos 67829 CRC32 0x3e240bf8 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.402983/*!*/;
+BEGIN
+/*!*/;
+# at 67829
+#260729  6:14:55 server id 1  end_log_pos 67886 CRC32 0xba4225ce 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 67886
+#260729  6:14:55 server id 1  end_log_pos 67941 CRC32 0xc1487989 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAC4JAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDOJUK6
+X5ppah4BAAAANwAAAGUJAQAAAHcBAAAAAAEAAgAD/wCVBAAAAAAAANAHAACZunpjtw+0iXlIwQ==
+'/*!*/;
+# at 67941
+#260729  6:14:55 server id 1  end_log_pos 67972 CRC32 0xe315b667 	Xid = 3247
+COMMIT/*!*/;
+# at 67972
+#260729  6:14:55 server id 1  end_log_pos 68051 CRC32 0xcaf80e04 	GTID	last_committed=4	sequence_number=156	rbr_only=yes	original_committed_timestamp=1785305695404455	immediate_commit_timestamp=1785305695404455	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695404455 (2026-07-29 06:14:55.404455 UTC)
+# immediate_commit_timestamp=1785305695404455 (2026-07-29 06:14:55.404455 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695404455*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:156'/*!*/;
+# at 68051
+#260729  6:14:55 server id 1  end_log_pos 68139 CRC32 0x9e0aa853 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.404238/*!*/;
+BEGIN
+/*!*/;
+# at 68139
+#260729  6:14:55 server id 1  end_log_pos 68196 CRC32 0xf32c997f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 68196
+#260729  6:14:55 server id 1  end_log_pos 68251 CRC32 0x5e435b21 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGQKAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB/mSzz
+X5ppah4BAAAANwAAAJsKAQAAAHcBAAAAAAEAAgAD/wCWBAAAAAAAANAHAACZunpjtw/IIVtDXg==
+'/*!*/;
+# at 68251
+#260729  6:14:55 server id 1  end_log_pos 68282 CRC32 0x9b09e81a 	Xid = 3248
+COMMIT/*!*/;
+# at 68282
+#260729  6:14:55 server id 1  end_log_pos 68361 CRC32 0x13d78340 	GTID	last_committed=4	sequence_number=157	rbr_only=yes	original_committed_timestamp=1785305695405255	immediate_commit_timestamp=1785305695405255	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695405255 (2026-07-29 06:14:55.405255 UTC)
+# immediate_commit_timestamp=1785305695405255 (2026-07-29 06:14:55.405255 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695405255*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:157'/*!*/;
+# at 68361
+#260729  6:14:55 server id 1  end_log_pos 68449 CRC32 0x728bde58 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.405050/*!*/;
+BEGIN
+/*!*/;
+# at 68449
+#260729  6:14:55 server id 1  end_log_pos 68506 CRC32 0xfb7575f4 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 68506
+#260729  6:14:55 server id 1  end_log_pos 68561 CRC32 0x386af578 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJoLAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQD0dXX7
+X5ppah4BAAAANwAAANELAQAAAHcBAAAAAAEAAgAD/wCXBAAAAAAAANAHAACZunpjtw/SePVqOA==
+'/*!*/;
+# at 68561
+#260729  6:14:55 server id 1  end_log_pos 68592 CRC32 0x19bb1c6b 	Xid = 3249
+COMMIT/*!*/;
+# at 68592
+#260729  6:14:55 server id 1  end_log_pos 68671 CRC32 0xf47bc1cb 	GTID	last_committed=4	sequence_number=158	rbr_only=yes	original_committed_timestamp=1785305695405979	immediate_commit_timestamp=1785305695405979	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695405979 (2026-07-29 06:14:55.405979 UTC)
+# immediate_commit_timestamp=1785305695405979 (2026-07-29 06:14:55.405979 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695405979*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:158'/*!*/;
+# at 68671
+#260729  6:14:55 server id 1  end_log_pos 68759 CRC32 0xf70106f4 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.405775/*!*/;
+BEGIN
+/*!*/;
+# at 68759
+#260729  6:14:55 server id 1  end_log_pos 68816 CRC32 0x534ee1a0 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 68816
+#260729  6:14:55 server id 1  end_log_pos 68871 CRC32 0xf7cda10d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANAMAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCg4U5T
+X5ppah4BAAAANwAAAAcNAQAAAHcBAAAAAAEAAgAD/wCYBAAAAAAAANAHAACZunpjtw/SDaHN9w==
+'/*!*/;
+# at 68871
+#260729  6:14:55 server id 1  end_log_pos 68902 CRC32 0x6b6bab9c 	Xid = 3250
+COMMIT/*!*/;
+# at 68902
+#260729  6:14:55 server id 1  end_log_pos 68981 CRC32 0x51f42428 	GTID	last_committed=4	sequence_number=159	rbr_only=yes	original_committed_timestamp=1785305695406665	immediate_commit_timestamp=1785305695406665	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695406665 (2026-07-29 06:14:55.406665 UTC)
+# immediate_commit_timestamp=1785305695406665 (2026-07-29 06:14:55.406665 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695406665*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:159'/*!*/;
+# at 68981
+#260729  6:14:55 server id 1  end_log_pos 69069 CRC32 0xc49a8242 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.406465/*!*/;
+BEGIN
+/*!*/;
+# at 69069
+#260729  6:14:55 server id 1  end_log_pos 69126 CRC32 0xc0409192 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 69126
+#260729  6:14:55 server id 1  end_log_pos 69181 CRC32 0xef5127d7 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAYOAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCSkUDA
+X5ppah4BAAAANwAAAD0OAQAAAHcBAAAAAAEAAgAD/wCZBAAAAAAAANAHAACZunpjtw/c1ydR7w==
+'/*!*/;
+# at 69181
+#260729  6:14:55 server id 1  end_log_pos 69212 CRC32 0x2253ae12 	Xid = 3251
+COMMIT/*!*/;
+# at 69212
+#260729  6:14:55 server id 1  end_log_pos 69291 CRC32 0xdc2f4f57 	GTID	last_committed=4	sequence_number=160	rbr_only=yes	original_committed_timestamp=1785305695407251	immediate_commit_timestamp=1785305695407251	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695407251 (2026-07-29 06:14:55.407251 UTC)
+# immediate_commit_timestamp=1785305695407251 (2026-07-29 06:14:55.407251 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695407251*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:160'/*!*/;
+# at 69291
+#260729  6:14:55 server id 1  end_log_pos 69379 CRC32 0x52435739 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.407027/*!*/;
+BEGIN
+/*!*/;
+# at 69379
+#260729  6:14:55 server id 1  end_log_pos 69436 CRC32 0xb71a3b48 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 69436
+#260729  6:14:55 server id 1  end_log_pos 69491 CRC32 0x9d1252fc 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADwPAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBIOxq3
+X5ppah4BAAAANwAAAHMPAQAAAHcBAAAAAAEAAgAD/wCaBAAAAAAAANAHAACZunpjtw/m/FISnQ==
+'/*!*/;
+# at 69491
+#260729  6:14:55 server id 1  end_log_pos 69522 CRC32 0xfc51331d 	Xid = 3252
+COMMIT/*!*/;
+# at 69522
+#260729  6:14:55 server id 1  end_log_pos 69601 CRC32 0xf07fde44 	GTID	last_committed=4	sequence_number=161	rbr_only=yes	original_committed_timestamp=1785305695408386	immediate_commit_timestamp=1785305695408386	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695408386 (2026-07-29 06:14:55.408386 UTC)
+# immediate_commit_timestamp=1785305695408386 (2026-07-29 06:14:55.408386 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695408386*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:161'/*!*/;
+# at 69601
+#260729  6:14:55 server id 1  end_log_pos 69689 CRC32 0x8dd1632d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.408148/*!*/;
+BEGIN
+/*!*/;
+# at 69689
+#260729  6:14:55 server id 1  end_log_pos 69746 CRC32 0xe5cd145e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 69746
+#260729  6:14:55 server id 1  end_log_pos 69801 CRC32 0xe0a7444f 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHIQAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBeFM3l
+X5ppah4BAAAANwAAAKkQAQAAAHcBAAAAAAEAAgAD/wCbBAAAAAAAANAHAACZunpjtw/wT0Sn4A==
+'/*!*/;
+# at 69801
+#260729  6:14:55 server id 1  end_log_pos 69832 CRC32 0x56b0516a 	Xid = 3253
+COMMIT/*!*/;
+# at 69832
+#260729  6:14:55 server id 1  end_log_pos 69911 CRC32 0x09753890 	GTID	last_committed=4	sequence_number=162	rbr_only=yes	original_committed_timestamp=1785305695409864	immediate_commit_timestamp=1785305695409864	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695409864 (2026-07-29 06:14:55.409864 UTC)
+# immediate_commit_timestamp=1785305695409864 (2026-07-29 06:14:55.409864 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695409864*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:162'/*!*/;
+# at 69911
+#260729  6:14:55 server id 1  end_log_pos 69999 CRC32 0x8f0b838d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.409644/*!*/;
+BEGIN
+/*!*/;
+# at 69999
+#260729  6:14:55 server id 1  end_log_pos 70056 CRC32 0x0faabab7 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 70056
+#260729  6:14:55 server id 1  end_log_pos 70111 CRC32 0xef92e54a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKgRAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC3uqoP
+X5ppah4BAAAANwAAAN8RAQAAAHcBAAAAAAEAAgAD/wCcBAAAAAAAANAHAACZunpjtw/6SuWS7w==
+'/*!*/;
+# at 70111
+#260729  6:14:55 server id 1  end_log_pos 70142 CRC32 0x56bd800e 	Xid = 3254
+COMMIT/*!*/;
+# at 70142
+#260729  6:14:55 server id 1  end_log_pos 70221 CRC32 0xdac58456 	GTID	last_committed=4	sequence_number=163	rbr_only=yes	original_committed_timestamp=1785305695411650	immediate_commit_timestamp=1785305695411650	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695411650 (2026-07-29 06:14:55.411650 UTC)
+# immediate_commit_timestamp=1785305695411650 (2026-07-29 06:14:55.411650 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695411650*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:163'/*!*/;
+# at 70221
+#260729  6:14:55 server id 1  end_log_pos 70309 CRC32 0x74124ad7 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.411405/*!*/;
+BEGIN
+/*!*/;
+# at 70309
+#260729  6:14:55 server id 1  end_log_pos 70366 CRC32 0x2a6ec665 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 70366
+#260729  6:14:55 server id 1  end_log_pos 70421 CRC32 0xf4f23d3d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAN4SAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBlxm4q
+X5ppah4BAAAANwAAABUTAQAAAHcBAAAAAAEAAgAD/wCdBAAAAAAAANAHAACZunpjtxAOPT3y9A==
+'/*!*/;
+# at 70421
+#260729  6:14:55 server id 1  end_log_pos 70452 CRC32 0xeab6f753 	Xid = 3255
+COMMIT/*!*/;
+# at 70452
+#260729  6:14:55 server id 1  end_log_pos 70531 CRC32 0xef358d28 	GTID	last_committed=4	sequence_number=164	rbr_only=yes	original_committed_timestamp=1785305695412371	immediate_commit_timestamp=1785305695412371	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695412371 (2026-07-29 06:14:55.412371 UTC)
+# immediate_commit_timestamp=1785305695412371 (2026-07-29 06:14:55.412371 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695412371*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:164'/*!*/;
+# at 70531
+#260729  6:14:55 server id 1  end_log_pos 70619 CRC32 0x32ca4096 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.412151/*!*/;
+BEGIN
+/*!*/;
+# at 70619
+#260729  6:14:55 server id 1  end_log_pos 70676 CRC32 0x06205f6c 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 70676
+#260729  6:14:55 server id 1  end_log_pos 70731 CRC32 0xb519a958 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABQUAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBsXyAG
+X5ppah4BAAAANwAAAEsUAQAAAHcBAAAAAAEAAgAD/wCeBAAAAAAAANAHAACZunpjtxAYWKkZtQ==
+'/*!*/;
+# at 70731
+#260729  6:14:55 server id 1  end_log_pos 70762 CRC32 0xa2757dba 	Xid = 3256
+COMMIT/*!*/;
+# at 70762
+#260729  6:14:55 server id 1  end_log_pos 70841 CRC32 0x4abc37e4 	GTID	last_committed=4	sequence_number=165	rbr_only=yes	original_committed_timestamp=1785305695413054	immediate_commit_timestamp=1785305695413054	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695413054 (2026-07-29 06:14:55.413054 UTC)
+# immediate_commit_timestamp=1785305695413054 (2026-07-29 06:14:55.413054 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695413054*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:165'/*!*/;
+# at 70841
+#260729  6:14:55 server id 1  end_log_pos 70929 CRC32 0x3c096bb9 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.412862/*!*/;
+BEGIN
+/*!*/;
+# at 70929
+#260729  6:14:55 server id 1  end_log_pos 70986 CRC32 0xf63ab4ae 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 70986
+#260729  6:14:55 server id 1  end_log_pos 71041 CRC32 0x839276d4 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEoVAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCutDr2
+X5ppah4BAAAANwAAAIEVAQAAAHcBAAAAAAEAAgAD/wCfBAAAAAAAANAHAACZunpjtxAY1HaSgw==
+'/*!*/;
+# at 71041
+#260729  6:14:55 server id 1  end_log_pos 71072 CRC32 0xa3b46629 	Xid = 3257
+COMMIT/*!*/;
+# at 71072
+#260729  6:14:55 server id 1  end_log_pos 71151 CRC32 0x92a39863 	GTID	last_committed=4	sequence_number=166	rbr_only=yes	original_committed_timestamp=1785305695413663	immediate_commit_timestamp=1785305695413663	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695413663 (2026-07-29 06:14:55.413663 UTC)
+# immediate_commit_timestamp=1785305695413663 (2026-07-29 06:14:55.413663 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695413663*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:166'/*!*/;
+# at 71151
+#260729  6:14:55 server id 1  end_log_pos 71239 CRC32 0x98893ef7 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.413470/*!*/;
+BEGIN
+/*!*/;
+# at 71239
+#260729  6:14:55 server id 1  end_log_pos 71296 CRC32 0x75a80eeb 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 71296
+#260729  6:14:55 server id 1  end_log_pos 71351 CRC32 0xf7d058ee 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIAWAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDrDqh1
+X5ppah4BAAAANwAAALcWAQAAAHcBAAAAAAEAAgAD/wCgBAAAAAAAANAHAACZunpjtxAi7ljQ9w==
+'/*!*/;
+# at 71351
+#260729  6:14:55 server id 1  end_log_pos 71382 CRC32 0x825cf5f7 	Xid = 3258
+COMMIT/*!*/;
+# at 71382
+#260729  6:14:55 server id 1  end_log_pos 71461 CRC32 0xab95fe2d 	GTID	last_committed=4	sequence_number=167	rbr_only=yes	original_committed_timestamp=1785305695414191	immediate_commit_timestamp=1785305695414191	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695414191 (2026-07-29 06:14:55.414191 UTC)
+# immediate_commit_timestamp=1785305695414191 (2026-07-29 06:14:55.414191 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695414191*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:167'/*!*/;
+# at 71461
+#260729  6:14:55 server id 1  end_log_pos 71549 CRC32 0xed321b61 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.413997/*!*/;
+BEGIN
+/*!*/;
+# at 71549
+#260729  6:14:55 server id 1  end_log_pos 71606 CRC32 0xa8006611 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 71606
+#260729  6:14:55 server id 1  end_log_pos 71661 CRC32 0xd929fca0 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALYXAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQARZgCo
+X5ppah4BAAAANwAAAO0XAQAAAHcBAAAAAAEAAgAD/wChBAAAAAAAANAHAACZunpjtxAioPwp2Q==
+'/*!*/;
+# at 71661
+#260729  6:14:55 server id 1  end_log_pos 71692 CRC32 0xc25f073d 	Xid = 3259
+COMMIT/*!*/;
+# at 71692
+#260729  6:14:55 server id 1  end_log_pos 71771 CRC32 0x9033adb0 	GTID	last_committed=4	sequence_number=168	rbr_only=yes	original_committed_timestamp=1785305695416257	immediate_commit_timestamp=1785305695416257	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695416257 (2026-07-29 06:14:55.416257 UTC)
+# immediate_commit_timestamp=1785305695416257 (2026-07-29 06:14:55.416257 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695416257*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:168'/*!*/;
+# at 71771
+#260729  6:14:55 server id 1  end_log_pos 71859 CRC32 0xf2652f83 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.416048/*!*/;
+BEGIN
+/*!*/;
+# at 71859
+#260729  6:14:55 server id 1  end_log_pos 71916 CRC32 0xed07a630 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 71916
+#260729  6:14:55 server id 1  end_log_pos 71971 CRC32 0x8b8e1c43 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOwYAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAwpgft
+X5ppah4BAAAANwAAACMZAQAAAHcBAAAAAAEAAgAD/wCiBAAAAAAAANAHAACZunpjtxBAQxyOiw==
+'/*!*/;
+# at 71971
+#260729  6:14:55 server id 1  end_log_pos 72002 CRC32 0x9f2e75d0 	Xid = 3260
+COMMIT/*!*/;
+# at 72002
+#260729  6:14:55 server id 1  end_log_pos 72081 CRC32 0xed615a29 	GTID	last_committed=4	sequence_number=169	rbr_only=yes	original_committed_timestamp=1785305695416955	immediate_commit_timestamp=1785305695416955	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695416955 (2026-07-29 06:14:55.416955 UTC)
+# immediate_commit_timestamp=1785305695416955 (2026-07-29 06:14:55.416955 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695416955*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:169'/*!*/;
+# at 72081
+#260729  6:14:55 server id 1  end_log_pos 72169 CRC32 0x29dfaa1a 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.416721/*!*/;
+BEGIN
+/*!*/;
+# at 72169
+#260729  6:14:55 server id 1  end_log_pos 72226 CRC32 0xf09d5403 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 72226
+#260729  6:14:55 server id 1  end_log_pos 72281 CRC32 0xcff270e9 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACIaAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQADVJ3w
+X5ppah4BAAAANwAAAFkaAQAAAHcBAAAAAAEAAgAD/wCjBAAAAAAAANAHAACZunpjtxBA6XDyzw==
+'/*!*/;
+# at 72281
+#260729  6:14:55 server id 1  end_log_pos 72312 CRC32 0x97af87af 	Xid = 3261
+COMMIT/*!*/;
+# at 72312
+#260729  6:14:55 server id 1  end_log_pos 72391 CRC32 0xadc74c37 	GTID	last_committed=4	sequence_number=170	rbr_only=yes	original_committed_timestamp=1785305695418061	immediate_commit_timestamp=1785305695418061	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695418061 (2026-07-29 06:14:55.418061 UTC)
+# immediate_commit_timestamp=1785305695418061 (2026-07-29 06:14:55.418061 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695418061*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:170'/*!*/;
+# at 72391
+#260729  6:14:55 server id 1  end_log_pos 72479 CRC32 0xba5c2cb2 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.417429/*!*/;
+BEGIN
+/*!*/;
+# at 72479
+#260729  6:14:55 server id 1  end_log_pos 72536 CRC32 0xe2b9fda3 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 72536
+#260729  6:14:55 server id 1  end_log_pos 72591 CRC32 0xdd13b9d8 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFgbAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCj/bni
+X5ppah4BAAAANwAAAI8bAQAAAHcBAAAAAAEAAgAD/wCkBAAAAAAAANAHAACZunpjtxBK2LkT3Q==
+'/*!*/;
+# at 72591
+#260729  6:14:55 server id 1  end_log_pos 72622 CRC32 0x980c3600 	Xid = 3262
+COMMIT/*!*/;
+# at 72622
+#260729  6:14:55 server id 1  end_log_pos 72701 CRC32 0x87e0ffd0 	GTID	last_committed=4	sequence_number=171	rbr_only=yes	original_committed_timestamp=1785305695418784	immediate_commit_timestamp=1785305695418784	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695418784 (2026-07-29 06:14:55.418784 UTC)
+# immediate_commit_timestamp=1785305695418784 (2026-07-29 06:14:55.418784 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695418784*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:171'/*!*/;
+# at 72701
+#260729  6:14:55 server id 1  end_log_pos 72789 CRC32 0xaacca1a2 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.418569/*!*/;
+BEGIN
+/*!*/;
+# at 72789
+#260729  6:14:55 server id 1  end_log_pos 72846 CRC32 0xde6baedd 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 72846
+#260729  6:14:55 server id 1  end_log_pos 72901 CRC32 0x0895ad58 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAI4cAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDdrmve
+X5ppah4BAAAANwAAAMUcAQAAAHcBAAAAAAEAAgAD/wClBAAAAAAAANAHAACZunpjtxBUWK2VCA==
+'/*!*/;
+# at 72901
+#260729  6:14:55 server id 1  end_log_pos 72932 CRC32 0xba5b1dac 	Xid = 3263
+COMMIT/*!*/;
+# at 72932
+#260729  6:14:55 server id 1  end_log_pos 73011 CRC32 0xe6d188e0 	GTID	last_committed=4	sequence_number=172	rbr_only=yes	original_committed_timestamp=1785305695419556	immediate_commit_timestamp=1785305695419556	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695419556 (2026-07-29 06:14:55.419556 UTC)
+# immediate_commit_timestamp=1785305695419556 (2026-07-29 06:14:55.419556 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695419556*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:172'/*!*/;
+# at 73011
+#260729  6:14:55 server id 1  end_log_pos 73099 CRC32 0x04f0908e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.419261/*!*/;
+BEGIN
+/*!*/;
+# at 73099
+#260729  6:14:55 server id 1  end_log_pos 73156 CRC32 0x0a17053e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 73156
+#260729  6:14:55 server id 1  end_log_pos 73211 CRC32 0xe2f13c5e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMQdAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA+BRcK
+X5ppah4BAAAANwAAAPsdAQAAAHcBAAAAAAEAAgAD/wCmBAAAAAAAANAHAACZunpjtxBeXjzx4g==
+'/*!*/;
+# at 73211
+#260729  6:14:55 server id 1  end_log_pos 73242 CRC32 0x0df022fc 	Xid = 3264
+COMMIT/*!*/;
+# at 73242
+#260729  6:14:55 server id 1  end_log_pos 73321 CRC32 0xec1108a9 	GTID	last_committed=4	sequence_number=173	rbr_only=yes	original_committed_timestamp=1785305695420206	immediate_commit_timestamp=1785305695420206	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695420206 (2026-07-29 06:14:55.420206 UTC)
+# immediate_commit_timestamp=1785305695420206 (2026-07-29 06:14:55.420206 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695420206*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:173'/*!*/;
+# at 73321
+#260729  6:14:55 server id 1  end_log_pos 73409 CRC32 0x43c6f91f 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.420026/*!*/;
+BEGIN
+/*!*/;
+# at 73409
+#260729  6:14:55 server id 1  end_log_pos 73466 CRC32 0x30defb69 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 73466
+#260729  6:14:55 server id 1  end_log_pos 73521 CRC32 0x41a1492b 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPoeAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBp+94w
+X5ppah4BAAAANwAAADEfAQAAAHcBAAAAAAEAAgAD/wCnBAAAAAAAANAHAACZunpjtxBoK0mhQQ==
+'/*!*/;
+# at 73521
+#260729  6:14:55 server id 1  end_log_pos 73552 CRC32 0x8f42d68d 	Xid = 3265
+COMMIT/*!*/;
+# at 73552
+#260729  6:14:55 server id 1  end_log_pos 73631 CRC32 0xcd64da2c 	GTID	last_committed=4	sequence_number=174	rbr_only=yes	original_committed_timestamp=1785305695420874	immediate_commit_timestamp=1785305695420874	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695420874 (2026-07-29 06:14:55.420874 UTC)
+# immediate_commit_timestamp=1785305695420874 (2026-07-29 06:14:55.420874 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695420874*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:174'/*!*/;
+# at 73631
+#260729  6:14:55 server id 1  end_log_pos 73719 CRC32 0xc382234d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.420670/*!*/;
+BEGIN
+/*!*/;
+# at 73719
+#260729  6:14:55 server id 1  end_log_pos 73776 CRC32 0x5190c4d1 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 73776
+#260729  6:14:55 server id 1  end_log_pos 73831 CRC32 0xd9d4ca57 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADAgAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDRxJBR
+X5ppah4BAAAANwAAAGcgAQAAAHcBAAAAAAEAAgAD/wCoBAAAAAAAANAHAACZunpjtxBoV8rU2Q==
+'/*!*/;
+# at 73831
+#260729  6:14:55 server id 1  end_log_pos 73862 CRC32 0x7d7e86bd 	Xid = 3266
+COMMIT/*!*/;
+# at 73862
+#260729  6:14:55 server id 1  end_log_pos 73941 CRC32 0x93da1f0c 	GTID	last_committed=4	sequence_number=175	rbr_only=yes	original_committed_timestamp=1785305695421667	immediate_commit_timestamp=1785305695421667	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695421667 (2026-07-29 06:14:55.421667 UTC)
+# immediate_commit_timestamp=1785305695421667 (2026-07-29 06:14:55.421667 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695421667*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:175'/*!*/;
+# at 73941
+#260729  6:14:55 server id 1  end_log_pos 74029 CRC32 0xbceefb3a 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.421449/*!*/;
+BEGIN
+/*!*/;
+# at 74029
+#260729  6:14:55 server id 1  end_log_pos 74086 CRC32 0xdbf9aeec 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 74086
+#260729  6:14:55 server id 1  end_log_pos 74141 CRC32 0x179bff57 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGYhAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDsrvnb
+X5ppah4BAAAANwAAAJ0hAQAAAHcBAAAAAAEAAgAD/wCpBAAAAAAAANAHAACZunpjtxByV/+bFw==
+'/*!*/;
+# at 74141
+#260729  6:14:55 server id 1  end_log_pos 74172 CRC32 0x15a3c189 	Xid = 3267
+COMMIT/*!*/;
+# at 74172
+#260729  6:14:55 server id 1  end_log_pos 74251 CRC32 0xa4cc6b76 	GTID	last_committed=4	sequence_number=176	rbr_only=yes	original_committed_timestamp=1785305695422543	immediate_commit_timestamp=1785305695422543	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695422543 (2026-07-29 06:14:55.422543 UTC)
+# immediate_commit_timestamp=1785305695422543 (2026-07-29 06:14:55.422543 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695422543*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:176'/*!*/;
+# at 74251
+#260729  6:14:55 server id 1  end_log_pos 74339 CRC32 0xda9ce2fb 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.422264/*!*/;
+BEGIN
+/*!*/;
+# at 74339
+#260729  6:14:55 server id 1  end_log_pos 74396 CRC32 0x9e3316ea 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 74396
+#260729  6:14:55 server id 1  end_log_pos 74451 CRC32 0x9efd56b6 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJwiAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDqFjOe
+X5ppah4BAAAANwAAANMiAQAAAHcBAAAAAAEAAgAD/wCqBAAAAAAAANAHAACZunpjtxB8tlb9ng==
+'/*!*/;
+# at 74451
+#260729  6:14:55 server id 1  end_log_pos 74482 CRC32 0x288e062f 	Xid = 3268
+COMMIT/*!*/;
+# at 74482
+#260729  6:14:55 server id 1  end_log_pos 74561 CRC32 0x084a9550 	GTID	last_committed=4	sequence_number=177	rbr_only=yes	original_committed_timestamp=1785305695424127	immediate_commit_timestamp=1785305695424127	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695424127 (2026-07-29 06:14:55.424127 UTC)
+# immediate_commit_timestamp=1785305695424127 (2026-07-29 06:14:55.424127 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695424127*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:177'/*!*/;
+# at 74561
+#260729  6:14:55 server id 1  end_log_pos 74649 CRC32 0x7c21205f 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.423865/*!*/;
+BEGIN
+/*!*/;
+# at 74649
+#260729  6:14:55 server id 1  end_log_pos 74706 CRC32 0x9acefed6 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 74706
+#260729  6:14:55 server id 1  end_log_pos 74761 CRC32 0x749e088a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANIjAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDW/s6a
+X5ppah4BAAAANwAAAAkkAQAAAHcBAAAAAAEAAgAD/wCrBAAAAAAAANAHAACZunpjtxCGigiedA==
+'/*!*/;
+# at 74761
+#260729  6:14:55 server id 1  end_log_pos 74792 CRC32 0x328e2788 	Xid = 3269
+COMMIT/*!*/;
+# at 74792
+#260729  6:14:55 server id 1  end_log_pos 74871 CRC32 0x3e4902c3 	GTID	last_committed=4	sequence_number=178	rbr_only=yes	original_committed_timestamp=1785305695424928	immediate_commit_timestamp=1785305695424928	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695424928 (2026-07-29 06:14:55.424928 UTC)
+# immediate_commit_timestamp=1785305695424928 (2026-07-29 06:14:55.424928 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695424928*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:178'/*!*/;
+# at 74871
+#260729  6:14:55 server id 1  end_log_pos 74959 CRC32 0x5b9f6876 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.424699/*!*/;
+BEGIN
+/*!*/;
+# at 74959
+#260729  6:14:55 server id 1  end_log_pos 75016 CRC32 0x42676421 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 75016
+#260729  6:14:55 server id 1  end_log_pos 75071 CRC32 0xd4f232b7 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAglAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAhZGdC
+X5ppah4BAAAANwAAAD8lAQAAAHcBAAAAAAEAAgAD/wCsBAAAAAAAANAHAACZunpjtxCQtzLy1A==
+'/*!*/;
+# at 75071
+#260729  6:14:55 server id 1  end_log_pos 75102 CRC32 0x733a011d 	Xid = 3270
+COMMIT/*!*/;
+# at 75102
+#260729  6:14:55 server id 1  end_log_pos 75181 CRC32 0xbef8d8ed 	GTID	last_committed=4	sequence_number=179	rbr_only=yes	original_committed_timestamp=1785305695425686	immediate_commit_timestamp=1785305695425686	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695425686 (2026-07-29 06:14:55.425686 UTC)
+# immediate_commit_timestamp=1785305695425686 (2026-07-29 06:14:55.425686 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695425686*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:179'/*!*/;
+# at 75181
+#260729  6:14:55 server id 1  end_log_pos 75269 CRC32 0x26027d5e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.425442/*!*/;
+BEGIN
+/*!*/;
+# at 75269
+#260729  6:14:55 server id 1  end_log_pos 75326 CRC32 0x02dd1b89 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 75326
+#260729  6:14:55 server id 1  end_log_pos 75381 CRC32 0x75fda4f5 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAD4mAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCJG90C
+X5ppah4BAAAANwAAAHUmAQAAAHcBAAAAAAEAAgAD/wCtBAAAAAAAANAHAACZunpjtxCa9aT9dQ==
+'/*!*/;
+# at 75381
+#260729  6:14:55 server id 1  end_log_pos 75412 CRC32 0x12a7afc5 	Xid = 3271
+COMMIT/*!*/;
+# at 75412
+#260729  6:14:55 server id 1  end_log_pos 75491 CRC32 0x7a27d2fc 	GTID	last_committed=4	sequence_number=180	rbr_only=yes	original_committed_timestamp=1785305695426432	immediate_commit_timestamp=1785305695426432	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695426432 (2026-07-29 06:14:55.426432 UTC)
+# immediate_commit_timestamp=1785305695426432 (2026-07-29 06:14:55.426432 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695426432*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:180'/*!*/;
+# at 75491
+#260729  6:14:55 server id 1  end_log_pos 75579 CRC32 0x466e3028 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.426192/*!*/;
+BEGIN
+/*!*/;
+# at 75579
+#260729  6:14:55 server id 1  end_log_pos 75636 CRC32 0xd6a1b06a 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 75636
+#260729  6:14:55 server id 1  end_log_pos 75691 CRC32 0x18a16e05 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHQnAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBqsKHW
+X5ppah4BAAAANwAAAKsnAQAAAHcBAAAAAAEAAgAD/wCuBAAAAAAAANAHAACZunpjtxCkBW6hGA==
+'/*!*/;
+# at 75691
+#260729  6:14:55 server id 1  end_log_pos 75722 CRC32 0xfa81faf1 	Xid = 3272
+COMMIT/*!*/;
+# at 75722
+#260729  6:14:55 server id 1  end_log_pos 75801 CRC32 0xf83dab12 	GTID	last_committed=4	sequence_number=181	rbr_only=yes	original_committed_timestamp=1785305695427215	immediate_commit_timestamp=1785305695427215	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695427215 (2026-07-29 06:14:55.427215 UTC)
+# immediate_commit_timestamp=1785305695427215 (2026-07-29 06:14:55.427215 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695427215*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:181'/*!*/;
+# at 75801
+#260729  6:14:55 server id 1  end_log_pos 75889 CRC32 0x397cf1a5 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.426931/*!*/;
+BEGIN
+/*!*/;
+# at 75889
+#260729  6:14:55 server id 1  end_log_pos 75946 CRC32 0x89db3560 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 75946
+#260729  6:14:55 server id 1  end_log_pos 76001 CRC32 0xeb8eea98 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKooAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBgNduJ
+X5ppah4BAAAANwAAAOEoAQAAAHcBAAAAAAEAAgAD/wCvBAAAAAAAANAHAACZunpjtxCkmOqO6w==
+'/*!*/;
+# at 76001
+#260729  6:14:55 server id 1  end_log_pos 76032 CRC32 0xdc303457 	Xid = 3273
+COMMIT/*!*/;
+# at 76032
+#260729  6:14:55 server id 1  end_log_pos 76111 CRC32 0x37002447 	GTID	last_committed=4	sequence_number=182	rbr_only=yes	original_committed_timestamp=1785305695427979	immediate_commit_timestamp=1785305695427979	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695427979 (2026-07-29 06:14:55.427979 UTC)
+# immediate_commit_timestamp=1785305695427979 (2026-07-29 06:14:55.427979 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695427979*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:182'/*!*/;
+# at 76111
+#260729  6:14:55 server id 1  end_log_pos 76199 CRC32 0x51bef80e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.427753/*!*/;
+BEGIN
+/*!*/;
+# at 76199
+#260729  6:14:55 server id 1  end_log_pos 76256 CRC32 0x5da79e83 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 76256
+#260729  6:14:55 server id 1  end_log_pos 76311 CRC32 0x09f9dadd 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOApAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCDnqdd
+X5ppah4BAAAANwAAABcqAQAAAHcBAAAAAAEAAgAD/wCwBAAAAAAAANAHAACZunpjtxCu3dr5CQ==
+'/*!*/;
+# at 76311
+#260729  6:14:55 server id 1  end_log_pos 76342 CRC32 0xbc615078 	Xid = 3274
+COMMIT/*!*/;
+# at 76342
+#260729  6:14:55 server id 1  end_log_pos 76421 CRC32 0x296c3faf 	GTID	last_committed=4	sequence_number=183	rbr_only=yes	original_committed_timestamp=1785305695428758	immediate_commit_timestamp=1785305695428758	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695428758 (2026-07-29 06:14:55.428758 UTC)
+# immediate_commit_timestamp=1785305695428758 (2026-07-29 06:14:55.428758 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695428758*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:183'/*!*/;
+# at 76421
+#260729  6:14:55 server id 1  end_log_pos 76509 CRC32 0x1caef8cc 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.428531/*!*/;
+BEGIN
+/*!*/;
+# at 76509
+#260729  6:14:55 server id 1  end_log_pos 76566 CRC32 0xfc16ef0c 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 76566
+#260729  6:14:55 server id 1  end_log_pos 76621 CRC32 0xd3d4cbc2 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABYrAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAM7xb8
+X5ppah4BAAAANwAAAE0rAQAAAHcBAAAAAAEAAgAD/wCxBAAAAAAAANAHAACZunpjtxC4wsvU0w==
+'/*!*/;
+# at 76621
+#260729  6:14:55 server id 1  end_log_pos 76652 CRC32 0x58619865 	Xid = 3275
+COMMIT/*!*/;
+# at 76652
+#260729  6:14:55 server id 1  end_log_pos 76731 CRC32 0x02125c16 	GTID	last_committed=4	sequence_number=184	rbr_only=yes	original_committed_timestamp=1785305695429828	immediate_commit_timestamp=1785305695429828	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695429828 (2026-07-29 06:14:55.429828 UTC)
+# immediate_commit_timestamp=1785305695429828 (2026-07-29 06:14:55.429828 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695429828*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:184'/*!*/;
+# at 76731
+#260729  6:14:55 server id 1  end_log_pos 76819 CRC32 0xdf0ce651 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.429183/*!*/;
+BEGIN
+/*!*/;
+# at 76819
+#260729  6:14:55 server id 1  end_log_pos 76876 CRC32 0xa0ca78a6 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 76876
+#260729  6:14:55 server id 1  end_log_pos 76931 CRC32 0xce490916 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEwsAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCmeMqg
+X5ppah4BAAAANwAAAIMsAQAAAHcBAAAAAAEAAgAD/wCyBAAAAAAAANAHAACZunpjtxDCFglJzg==
+'/*!*/;
+# at 76931
+#260729  6:14:55 server id 1  end_log_pos 76962 CRC32 0x2686dab7 	Xid = 3276
+COMMIT/*!*/;
+# at 76962
+#260729  6:14:55 server id 1  end_log_pos 77041 CRC32 0xfceae362 	GTID	last_committed=4	sequence_number=185	rbr_only=yes	original_committed_timestamp=1785305695430604	immediate_commit_timestamp=1785305695430604	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695430604 (2026-07-29 06:14:55.430604 UTC)
+# immediate_commit_timestamp=1785305695430604 (2026-07-29 06:14:55.430604 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695430604*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:185'/*!*/;
+# at 77041
+#260729  6:14:55 server id 1  end_log_pos 77129 CRC32 0x637de59e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.430357/*!*/;
+BEGIN
+/*!*/;
+# at 77129
+#260729  6:14:55 server id 1  end_log_pos 77186 CRC32 0x6ecb966e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 77186
+#260729  6:14:55 server id 1  end_log_pos 77241 CRC32 0x0c44a7b3 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIItAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBulstu
+X5ppah4BAAAANwAAALktAQAAAHcBAAAAAAEAAgAD/wCzBAAAAAAAANAHAACZunpjtxDMs6dEDA==
+'/*!*/;
+# at 77241
+#260729  6:14:55 server id 1  end_log_pos 77272 CRC32 0x0fe26a72 	Xid = 3277
+COMMIT/*!*/;
+# at 77272
+#260729  6:14:55 server id 1  end_log_pos 77351 CRC32 0xb6cd0354 	GTID	last_committed=4	sequence_number=186	rbr_only=yes	original_committed_timestamp=1785305695432388	immediate_commit_timestamp=1785305695432388	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695432388 (2026-07-29 06:14:55.432388 UTC)
+# immediate_commit_timestamp=1785305695432388 (2026-07-29 06:14:55.432388 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695432388*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:186'/*!*/;
+# at 77351
+#260729  6:14:55 server id 1  end_log_pos 77439 CRC32 0xa19e5e1a 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.432160/*!*/;
+BEGIN
+/*!*/;
+# at 77439
+#260729  6:14:55 server id 1  end_log_pos 77496 CRC32 0x84832be6 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 77496
+#260729  6:14:55 server id 1  end_log_pos 77551 CRC32 0xbbf94baf 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALguAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDmK4OE
+X5ppah4BAAAANwAAAO8uAQAAAHcBAAAAAAEAAgAD/wC0BAAAAAAAANAHAACZunpjtxDgr0v5uw==
+'/*!*/;
+# at 77551
+#260729  6:14:55 server id 1  end_log_pos 77582 CRC32 0xbd8bb713 	Xid = 3278
+COMMIT/*!*/;
+# at 77582
+#260729  6:14:55 server id 1  end_log_pos 77661 CRC32 0xebbc5d3f 	GTID	last_committed=4	sequence_number=187	rbr_only=yes	original_committed_timestamp=1785305695433159	immediate_commit_timestamp=1785305695433159	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695433159 (2026-07-29 06:14:55.433159 UTC)
+# immediate_commit_timestamp=1785305695433159 (2026-07-29 06:14:55.433159 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695433159*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:187'/*!*/;
+# at 77661
+#260729  6:14:55 server id 1  end_log_pos 77749 CRC32 0xe6777567 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.432932/*!*/;
+BEGIN
+/*!*/;
+# at 77749
+#260729  6:14:55 server id 1  end_log_pos 77806 CRC32 0x0eea41db 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 77806
+#260729  6:14:55 server id 1  end_log_pos 77861 CRC32 0x07da0c3f 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAO4vAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDbQeoO
+X5ppah4BAAAANwAAACUwAQAAAHcBAAAAAAEAAgAD/wC1BAAAAAAAANAHAACZunpjtxDgPwzaBw==
+'/*!*/;
+# at 77861
+#260729  6:14:55 server id 1  end_log_pos 77892 CRC32 0x71d8e908 	Xid = 3279
+COMMIT/*!*/;
+# at 77892
+#260729  6:14:55 server id 1  end_log_pos 77971 CRC32 0x794a3bd0 	GTID	last_committed=4	sequence_number=188	rbr_only=yes	original_committed_timestamp=1785305695434130	immediate_commit_timestamp=1785305695434130	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695434130 (2026-07-29 06:14:55.434130 UTC)
+# immediate_commit_timestamp=1785305695434130 (2026-07-29 06:14:55.434130 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695434130*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:188'/*!*/;
+# at 77971
+#260729  6:14:55 server id 1  end_log_pos 78059 CRC32 0xcf4c8f3e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.433911/*!*/;
+BEGIN
+/*!*/;
+# at 78059
+#260729  6:14:55 server id 1  end_log_pos 78116 CRC32 0x08c9204f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 78116
+#260729  6:14:55 server id 1  end_log_pos 78171 CRC32 0x56e65a4e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACQxAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBPIMkI
+X5ppah4BAAAANwAAAFsxAQAAAHcBAAAAAAEAAgAD/wC2BAAAAAAAANAHAACZunpjtxDqTlrmVg==
+'/*!*/;
+# at 78171
+#260729  6:14:55 server id 1  end_log_pos 78202 CRC32 0x6998023e 	Xid = 3280
+COMMIT/*!*/;
+# at 78202
+#260729  6:14:55 server id 1  end_log_pos 78281 CRC32 0xb1139993 	GTID	last_committed=4	sequence_number=189	rbr_only=yes	original_committed_timestamp=1785305695434867	immediate_commit_timestamp=1785305695434867	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695434867 (2026-07-29 06:14:55.434867 UTC)
+# immediate_commit_timestamp=1785305695434867 (2026-07-29 06:14:55.434867 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695434867*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:189'/*!*/;
+# at 78281
+#260729  6:14:55 server id 1  end_log_pos 78369 CRC32 0x480c13ab 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.434640/*!*/;
+BEGIN
+/*!*/;
+# at 78369
+#260729  6:14:55 server id 1  end_log_pos 78426 CRC32 0x577edd62 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 78426
+#260729  6:14:55 server id 1  end_log_pos 78481 CRC32 0x40f390de 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFoyAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBi3X5X
+X5ppah4BAAAANwAAAJEyAQAAAHcBAAAAAAEAAgAD/wC3BAAAAAAAANAHAACZunpjtxD03pDzQA==
+'/*!*/;
+# at 78481
+#260729  6:14:55 server id 1  end_log_pos 78512 CRC32 0x0805ace6 	Xid = 3281
+COMMIT/*!*/;
+# at 78512
+#260729  6:14:55 server id 1  end_log_pos 78591 CRC32 0xfaf790eb 	GTID	last_committed=4	sequence_number=190	rbr_only=yes	original_committed_timestamp=1785305695435704	immediate_commit_timestamp=1785305695435704	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695435704 (2026-07-29 06:14:55.435704 UTC)
+# immediate_commit_timestamp=1785305695435704 (2026-07-29 06:14:55.435704 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695435704*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:190'/*!*/;
+# at 78591
+#260729  6:14:55 server id 1  end_log_pos 78679 CRC32 0xc0b75ef6 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.435470/*!*/;
+BEGIN
+/*!*/;
+# at 78679
+#260729  6:14:55 server id 1  end_log_pos 78736 CRC32 0x49fe7075 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 78736
+#260729  6:14:55 server id 1  end_log_pos 78791 CRC32 0xf673ccc5 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJAzAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB1cP5J
+X5ppah4BAAAANwAAAMczAQAAAHcBAAAAAAEAAgAD/wC4BAAAAAAAANAHAACZunpjtxD+xcxz9g==
+'/*!*/;
+# at 78791
+#260729  6:14:55 server id 1  end_log_pos 78822 CRC32 0x84d5f2ab 	Xid = 3282
+COMMIT/*!*/;
+# at 78822
+#260729  6:14:55 server id 1  end_log_pos 78901 CRC32 0x8825dbf7 	GTID	last_committed=4	sequence_number=191	rbr_only=yes	original_committed_timestamp=1785305695436443	immediate_commit_timestamp=1785305695436443	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695436443 (2026-07-29 06:14:55.436443 UTC)
+# immediate_commit_timestamp=1785305695436443 (2026-07-29 06:14:55.436443 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695436443*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:191'/*!*/;
+# at 78901
+#260729  6:14:55 server id 1  end_log_pos 78989 CRC32 0xb27a6df3 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.436219/*!*/;
+BEGIN
+/*!*/;
+# at 78989
+#260729  6:14:55 server id 1  end_log_pos 79046 CRC32 0xbfd025ff 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 79046
+#260729  6:14:55 server id 1  end_log_pos 79101 CRC32 0x2ac157cf 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMY0AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQD/JdC/
+X5ppah4BAAAANwAAAP00AQAAAHcBAAAAAAEAAgAD/wC5BAAAAAAAANAHAACZunpjtxEIz1fBKg==
+'/*!*/;
+# at 79101
+#260729  6:14:55 server id 1  end_log_pos 79132 CRC32 0x53b1abd4 	Xid = 3283
+COMMIT/*!*/;
+# at 79132
+#260729  6:14:55 server id 1  end_log_pos 79211 CRC32 0x6280185e 	GTID	last_committed=4	sequence_number=192	rbr_only=yes	original_committed_timestamp=1785305695437211	immediate_commit_timestamp=1785305695437211	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695437211 (2026-07-29 06:14:55.437211 UTC)
+# immediate_commit_timestamp=1785305695437211 (2026-07-29 06:14:55.437211 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695437211*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:192'/*!*/;
+# at 79211
+#260729  6:14:55 server id 1  end_log_pos 79299 CRC32 0x1e23c8d5 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.436989/*!*/;
+BEGIN
+/*!*/;
+# at 79299
+#260729  6:14:55 server id 1  end_log_pos 79356 CRC32 0xc88a8f25 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 79356
+#260729  6:14:55 server id 1  end_log_pos 79411 CRC32 0x692f4c99 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPw1AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAlj4rI
+X5ppah4BAAAANwAAADM2AQAAAHcBAAAAAAEAAgAD/wC6BAAAAAAAANAHAACZunpjtxEImUwvaQ==
+'/*!*/;
+# at 79411
+#260729  6:14:55 server id 1  end_log_pos 79442 CRC32 0x6e9c6c72 	Xid = 3284
+COMMIT/*!*/;
+# at 79442
+#260729  6:14:55 server id 1  end_log_pos 79521 CRC32 0xcf334090 	GTID	last_committed=4	sequence_number=193	rbr_only=yes	original_committed_timestamp=1785305695439072	immediate_commit_timestamp=1785305695439072	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695439072 (2026-07-29 06:14:55.439072 UTC)
+# immediate_commit_timestamp=1785305695439072 (2026-07-29 06:14:55.439072 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695439072*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:193'/*!*/;
+# at 79521
+#260729  6:14:55 server id 1  end_log_pos 79609 CRC32 0x63d3641d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.438861/*!*/;
+BEGIN
+/*!*/;
+# at 79609
+#260729  6:14:55 server id 1  end_log_pos 79666 CRC32 0xd5107d16 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 79666
+#260729  6:14:55 server id 1  end_log_pos 79721 CRC32 0x5d0c3caa 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADI3AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAWfRDV
+X5ppah4BAAAANwAAAGk3AQAAAHcBAAAAAAEAAgAD/wC7BAAAAAAAANAHAACZunpjtxEcqjwMXQ==
+'/*!*/;
+# at 79721
+#260729  6:14:55 server id 1  end_log_pos 79752 CRC32 0x09ef4b8d 	Xid = 3285
+COMMIT/*!*/;
+# at 79752
+#260729  6:14:55 server id 1  end_log_pos 79831 CRC32 0x3bc06001 	GTID	last_committed=4	sequence_number=194	rbr_only=yes	original_committed_timestamp=1785305695439703	immediate_commit_timestamp=1785305695439703	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695439703 (2026-07-29 06:14:55.439703 UTC)
+# immediate_commit_timestamp=1785305695439703 (2026-07-29 06:14:55.439703 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695439703*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:194'/*!*/;
+# at 79831
+#260729  6:14:55 server id 1  end_log_pos 79919 CRC32 0x77d6e905 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.439513/*!*/;
+BEGIN
+/*!*/;
+# at 79919
+#260729  6:14:55 server id 1  end_log_pos 79976 CRC32 0x9017bd37 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 79976
+#260729  6:14:55 server id 1  end_log_pos 80031 CRC32 0xb144f612 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGg4AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA3vReQ
+X5ppah4BAAAANwAAAJ84AQAAAHcBAAAAAAEAAgAD/wC8BAAAAAAAANAHAACZunpjtxEmEvZEsQ==
+'/*!*/;
+# at 80031
+#260729  6:14:55 server id 1  end_log_pos 80062 CRC32 0xf3049659 	Xid = 3286
+COMMIT/*!*/;
+# at 80062
+#260729  6:14:55 server id 1  end_log_pos 80141 CRC32 0x9d3c0ac0 	GTID	last_committed=4	sequence_number=195	rbr_only=yes	original_committed_timestamp=1785305695440273	immediate_commit_timestamp=1785305695440273	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695440273 (2026-07-29 06:14:55.440273 UTC)
+# immediate_commit_timestamp=1785305695440273 (2026-07-29 06:14:55.440273 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695440273*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:195'/*!*/;
+# at 80141
+#260729  6:14:55 server id 1  end_log_pos 80229 CRC32 0x52353188 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.440078/*!*/;
+BEGIN
+/*!*/;
+# at 80229
+#260729  6:14:55 server id 1  end_log_pos 80286 CRC32 0xe23dd043 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 80286
+#260729  6:14:55 server id 1  end_log_pos 80341 CRC32 0xdedb1460 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJ45AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBD0D3i
+X5ppah4BAAAANwAAANU5AQAAAHcBAAAAAAEAAgAD/wC9BAAAAAAAANAHAACZunpjtxEwYBTb3g==
+'/*!*/;
+# at 80341
+#260729  6:14:55 server id 1  end_log_pos 80372 CRC32 0x71b66228 	Xid = 3287
+COMMIT/*!*/;
+# at 80372
+#260729  6:14:55 server id 1  end_log_pos 80451 CRC32 0x74c973a6 	GTID	last_committed=4	sequence_number=196	rbr_only=yes	original_committed_timestamp=1785305695440868	immediate_commit_timestamp=1785305695440868	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695440868 (2026-07-29 06:14:55.440868 UTC)
+# immediate_commit_timestamp=1785305695440868 (2026-07-29 06:14:55.440868 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695440868*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:196'/*!*/;
+# at 80451
+#260729  6:14:55 server id 1  end_log_pos 80539 CRC32 0x7f7d9285 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.440687/*!*/;
+BEGIN
+/*!*/;
+# at 80539
+#260729  6:14:55 server id 1  end_log_pos 80596 CRC32 0xab536cf2 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 80596
+#260729  6:14:55 server id 1  end_log_pos 80651 CRC32 0x2887fc5b 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANQ6AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDybFOr
+X5ppah4BAAAANwAAAAs7AQAAAHcBAAAAAAEAAgAD/wC+BAAAAAAAANAHAACZunpjtxEwW/yHKA==
+'/*!*/;
+# at 80651
+#260729  6:14:55 server id 1  end_log_pos 80682 CRC32 0xa729b430 	Xid = 3288
+COMMIT/*!*/;
+# at 80682
+#260729  6:14:55 server id 1  end_log_pos 80761 CRC32 0x914966b0 	GTID	last_committed=4	sequence_number=197	rbr_only=yes	original_committed_timestamp=1785305695441457	immediate_commit_timestamp=1785305695441457	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695441457 (2026-07-29 06:14:55.441457 UTC)
+# immediate_commit_timestamp=1785305695441457 (2026-07-29 06:14:55.441457 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695441457*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:197'/*!*/;
+# at 80761
+#260729  6:14:55 server id 1  end_log_pos 80849 CRC32 0xf119e1f6 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.441253/*!*/;
+BEGIN
+/*!*/;
+# at 80849
+#260729  6:14:55 server id 1  end_log_pos 80906 CRC32 0xa37bb5da 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 80906
+#260729  6:14:55 server id 1  end_log_pos 80961 CRC32 0xe7db3ca6 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAo8AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDatXuj
+X5ppah4BAAAANwAAAEE8AQAAAHcBAAAAAAEAAgAD/wC/BAAAAAAAANAHAACZunpjtxE6pjzb5w==
+'/*!*/;
+# at 80961
+#260729  6:14:55 server id 1  end_log_pos 80992 CRC32 0x857e9f9c 	Xid = 3289
+COMMIT/*!*/;
+# at 80992
+#260729  6:14:55 server id 1  end_log_pos 81071 CRC32 0x8bb34b7b 	GTID	last_committed=4	sequence_number=198	rbr_only=yes	original_committed_timestamp=1785305695442114	immediate_commit_timestamp=1785305695442114	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695442114 (2026-07-29 06:14:55.442114 UTC)
+# immediate_commit_timestamp=1785305695442114 (2026-07-29 06:14:55.442114 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695442114*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:198'/*!*/;
+# at 81071
+#260729  6:14:55 server id 1  end_log_pos 81159 CRC32 0x4f0b57a3 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.441899/*!*/;
+BEGIN
+/*!*/;
+# at 81159
+#260729  6:14:55 server id 1  end_log_pos 81216 CRC32 0x77071e39 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 81216
+#260729  6:14:55 server id 1  end_log_pos 81271 CRC32 0xc20c0f79 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEA9AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA5Hgd3
+X5ppah4BAAAANwAAAHc9AQAAAHcBAAAAAAEAAgAD/wDABAAAAAAAANAHAACZunpjtxE6eQ8Mwg==
+'/*!*/;
+# at 81271
+#260729  6:14:55 server id 1  end_log_pos 81302 CRC32 0x47b956eb 	Xid = 3290
+COMMIT/*!*/;
+# at 81302
+#260729  6:14:55 server id 1  end_log_pos 81381 CRC32 0xd3713d0f 	GTID	last_committed=4	sequence_number=199	rbr_only=yes	original_committed_timestamp=1785305695443141	immediate_commit_timestamp=1785305695443141	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695443141 (2026-07-29 06:14:55.443141 UTC)
+# immediate_commit_timestamp=1785305695443141 (2026-07-29 06:14:55.443141 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695443141*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:199'/*!*/;
+# at 81381
+#260729  6:14:55 server id 1  end_log_pos 81469 CRC32 0x12d19340 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.442543/*!*/;
+BEGIN
+/*!*/;
+# at 81469
+#260729  6:14:55 server id 1  end_log_pos 81526 CRC32 0x37bd6191 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 81526
+#260729  6:14:55 server id 1  end_log_pos 81581 CRC32 0x2c1957dc 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHY+AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCRYb03
+X5ppah4BAAAANwAAAK0+AQAAAHcBAAAAAAEAAgAD/wDBBAAAAAAAANAHAACZunpjtxFE3FcZLA==
+'/*!*/;
+# at 81581
+#260729  6:14:55 server id 1  end_log_pos 81612 CRC32 0xc3e52bbd 	Xid = 3291
+COMMIT/*!*/;
+# at 81612
+#260729  6:14:55 server id 1  end_log_pos 81691 CRC32 0x411f4293 	GTID	last_committed=4	sequence_number=200	rbr_only=yes	original_committed_timestamp=1785305695443812	immediate_commit_timestamp=1785305695443812	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695443812 (2026-07-29 06:14:55.443812 UTC)
+# immediate_commit_timestamp=1785305695443812 (2026-07-29 06:14:55.443812 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695443812*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:200'/*!*/;
+# at 81691
+#260729  6:14:55 server id 1  end_log_pos 81779 CRC32 0x0c998215 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.443619/*!*/;
+BEGIN
+/*!*/;
+# at 81779
+#260729  6:14:55 server id 1  end_log_pos 81836 CRC32 0xdddacf78 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 81836
+#260729  6:14:55 server id 1  end_log_pos 81891 CRC32 0x7883125b 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKw/AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB4z9rd
+X5ppah4BAAAANwAAAOM/AQAAAHcBAAAAAAEAAgAD/wDCBAAAAAAAANAHAACZunpjtxFOWxKDeA==
+'/*!*/;
+# at 81891
+#260729  6:14:55 server id 1  end_log_pos 81922 CRC32 0x80631f03 	Xid = 3292
+COMMIT/*!*/;
+# at 81922
+#260729  6:14:55 server id 1  end_log_pos 82001 CRC32 0x37ac2a1a 	GTID	last_committed=4	sequence_number=201	rbr_only=yes	original_committed_timestamp=1785305695446066	immediate_commit_timestamp=1785305695446066	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695446066 (2026-07-29 06:14:55.446066 UTC)
+# immediate_commit_timestamp=1785305695446066 (2026-07-29 06:14:55.446066 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695446066*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:201'/*!*/;
+# at 82001
+#260729  6:14:55 server id 1  end_log_pos 82089 CRC32 0x141a2d08 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.445864/*!*/;
+BEGIN
+/*!*/;
+# at 82089
+#260729  6:14:55 server id 1  end_log_pos 82146 CRC32 0x26ba021a 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 82146
+#260729  6:14:55 server id 1  end_log_pos 82201 CRC32 0x6426e711 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOJAAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAaArom
+X5ppah4BAAAANwAAABlBAQAAAHcBAAAAAAEAAgAD/wDDBAAAAAAAANAHAACZunpjtxFiEecmZA==
+'/*!*/;
+# at 82201
+#260729  6:14:55 server id 1  end_log_pos 82232 CRC32 0xe8be5837 	Xid = 3293
+COMMIT/*!*/;
+# at 82232
+#260729  6:14:55 server id 1  end_log_pos 82311 CRC32 0x590c21c9 	GTID	last_committed=4	sequence_number=202	rbr_only=yes	original_committed_timestamp=1785305695446786	immediate_commit_timestamp=1785305695446786	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695446786 (2026-07-29 06:14:55.446786 UTC)
+# immediate_commit_timestamp=1785305695446786 (2026-07-29 06:14:55.446786 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695446786*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:202'/*!*/;
+# at 82311
+#260729  6:14:55 server id 1  end_log_pos 82399 CRC32 0xd4f577da 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.446578/*!*/;
+BEGIN
+/*!*/;
+# at 82399
+#260729  6:14:55 server id 1  end_log_pos 82456 CRC32 0x2df9b1b5 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 82456
+#260729  6:14:55 server id 1  end_log_pos 82511 CRC32 0x06fb4ae9 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABhCAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC1sfkt
+X5ppah4BAAAANwAAAE9CAQAAAHcBAAAAAAEAAgAD/wDEBAAAAAAAANAHAACZunpjtxFs6Ur7Bg==
+'/*!*/;
+# at 82511
+#260729  6:14:55 server id 1  end_log_pos 82542 CRC32 0x0432b331 	Xid = 3294
+COMMIT/*!*/;
+# at 82542
+#260729  6:14:55 server id 1  end_log_pos 82621 CRC32 0x01fd98f2 	GTID	last_committed=4	sequence_number=203	rbr_only=yes	original_committed_timestamp=1785305695447560	immediate_commit_timestamp=1785305695447560	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695447560 (2026-07-29 06:14:55.447560 UTC)
+# immediate_commit_timestamp=1785305695447560 (2026-07-29 06:14:55.447560 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695447560*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:203'/*!*/;
+# at 82621
+#260729  6:14:55 server id 1  end_log_pos 82709 CRC32 0xfffdaf98 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.447251/*!*/;
+BEGIN
+/*!*/;
+# at 82709
+#260729  6:14:55 server id 1  end_log_pos 82766 CRC32 0xa790db88 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 82766
+#260729  6:14:55 server id 1  end_log_pos 82821 CRC32 0xcd126c1f 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAE5DAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCI25Cn
+X5ppah4BAAAANwAAAIVDAQAAAHcBAAAAAAEAAgAD/wDFBAAAAAAAANAHAACZunpjtxF2H2wSzQ==
+'/*!*/;
+# at 82821
+#260729  6:14:55 server id 1  end_log_pos 82852 CRC32 0x05f3a8a2 	Xid = 3295
+COMMIT/*!*/;
+# at 82852
+#260729  6:14:55 server id 1  end_log_pos 82931 CRC32 0xb7c9176b 	GTID	last_committed=4	sequence_number=204	rbr_only=yes	original_committed_timestamp=1785305695448273	immediate_commit_timestamp=1785305695448273	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695448273 (2026-07-29 06:14:55.448273 UTC)
+# immediate_commit_timestamp=1785305695448273 (2026-07-29 06:14:55.448273 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695448273*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:204'/*!*/;
+# at 82931
+#260729  6:14:55 server id 1  end_log_pos 83019 CRC32 0xba21fd9a 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.448044/*!*/;
+BEGIN
+/*!*/;
+# at 83019
+#260729  6:14:55 server id 1  end_log_pos 83076 CRC32 0xc5574928 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 83076
+#260729  6:14:55 server id 1  end_log_pos 83131 CRC32 0x27bf3dee 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIREAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAoSVfF
+X5ppah4BAAAANwAAALtEAQAAAHcBAAAAAAEAAgAD/wDGBAAAAAAAANAHAACZunpjtxGA7j2/Jw==
+'/*!*/;
+# at 83131
+#260729  6:14:55 server id 1  end_log_pos 83162 CRC32 0x059909ee 	Xid = 3296
+COMMIT/*!*/;
+# at 83162
+#260729  6:14:55 server id 1  end_log_pos 83241 CRC32 0x6fb554b1 	GTID	last_committed=4	sequence_number=205	rbr_only=yes	original_committed_timestamp=1785305695448954	immediate_commit_timestamp=1785305695448954	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695448954 (2026-07-29 06:14:55.448954 UTC)
+# immediate_commit_timestamp=1785305695448954 (2026-07-29 06:14:55.448954 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695448954*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:205'/*!*/;
+# at 83241
+#260729  6:14:55 server id 1  end_log_pos 83329 CRC32 0x18964e7c 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.448722/*!*/;
+BEGIN
+/*!*/;
+# at 83329
+#260729  6:14:55 server id 1  end_log_pos 83386 CRC32 0x628ca02d 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 83386
+#260729  6:14:55 server id 1  end_log_pos 83441 CRC32 0xbcf46acd 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALpFAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAtoIxi
+X5ppah4BAAAANwAAAPFFAQAAAHcBAAAAAAEAAgAD/wDHBAAAAAAAANAHAACZunpjtxGAzWr0vA==
+'/*!*/;
+# at 83441
+#260729  6:14:55 server id 1  end_log_pos 83472 CRC32 0xb9927eb3 	Xid = 3297
+COMMIT/*!*/;
+# at 83472
+#260729  6:14:55 server id 1  end_log_pos 83551 CRC32 0x14351791 	GTID	last_committed=4	sequence_number=206	rbr_only=yes	original_committed_timestamp=1785305695449611	immediate_commit_timestamp=1785305695449611	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695449611 (2026-07-29 06:14:55.449611 UTC)
+# immediate_commit_timestamp=1785305695449611 (2026-07-29 06:14:55.449611 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695449611*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:206'/*!*/;
+# at 83551
+#260729  6:14:55 server id 1  end_log_pos 83639 CRC32 0xe2ad999c 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.449406/*!*/;
+BEGIN
+/*!*/;
+# at 83639
+#260729  6:14:55 server id 1  end_log_pos 83696 CRC32 0x2be21c9c 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 83696
+#260729  6:14:55 server id 1  end_log_pos 83751 CRC32 0xfdd58119 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPBGAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCcHOIr
+X5ppah4BAAAANwAAACdHAQAAAHcBAAAAAAEAAgAD/wDIBAAAAAAAANAHAACZunpjtxGKGYHV/Q==
+'/*!*/;
+# at 83751
+#260729  6:14:55 server id 1  end_log_pos 83782 CRC32 0x354220fe 	Xid = 3298
+COMMIT/*!*/;
+# at 83782
+#260729  6:14:55 server id 1  end_log_pos 83861 CRC32 0xf4b21705 	GTID	last_committed=4	sequence_number=207	rbr_only=yes	original_committed_timestamp=1785305695450246	immediate_commit_timestamp=1785305695450246	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695450246 (2026-07-29 06:14:55.450246 UTC)
+# immediate_commit_timestamp=1785305695450246 (2026-07-29 06:14:55.450246 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695450246*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:207'/*!*/;
+# at 83861
+#260729  6:14:55 server id 1  end_log_pos 83949 CRC32 0x8c7da49e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.450034/*!*/;
+BEGIN
+/*!*/;
+# at 83949
+#260729  6:14:55 server id 1  end_log_pos 84006 CRC32 0x406213c0 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 84006
+#260729  6:14:55 server id 1  end_log_pos 84061 CRC32 0xf1532b11 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACZIAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDAE2JA
+X5ppah4BAAAANwAAAF1IAQAAAHcBAAAAAAEAAgAD/wDJBAAAAAAAANAHAACZunpjtxGUEStT8Q==
+'/*!*/;
+# at 84061
+#260729  6:14:55 server id 1  end_log_pos 84092 CRC32 0xa7796b7a 	Xid = 3299
+COMMIT/*!*/;
+# at 84092
+#260729  6:14:55 server id 1  end_log_pos 84171 CRC32 0xaf30471e 	GTID	last_committed=4	sequence_number=208	rbr_only=yes	original_committed_timestamp=1785305695451992	immediate_commit_timestamp=1785305695451992	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695451992 (2026-07-29 06:14:55.451992 UTC)
+# immediate_commit_timestamp=1785305695451992 (2026-07-29 06:14:55.451992 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695451992*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:208'/*!*/;
+# at 84171
+#260729  6:14:55 server id 1  end_log_pos 84259 CRC32 0x7d1d7d4a 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.451776/*!*/;
+BEGIN
+/*!*/;
+# at 84259
+#260729  6:14:55 server id 1  end_log_pos 84316 CRC32 0x5246ba60 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 84316
+#260729  6:14:55 server id 1  end_log_pos 84371 CRC32 0x0809e639 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFxJAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBgukZS
+X5ppah4BAAAANwAAAJNJAQAAAHcBAAAAAAEAAgAD/wDKBAAAAAAAANAHAACZunpjtxGeOeYJCA==
+'/*!*/;
+# at 84371
+#260729  6:14:55 server id 1  end_log_pos 84402 CRC32 0x797bf675 	Xid = 3300
+COMMIT/*!*/;
+# at 84402
+#260729  6:14:55 server id 1  end_log_pos 84481 CRC32 0xca9f0667 	GTID	last_committed=4	sequence_number=209	rbr_only=yes	original_committed_timestamp=1785305695452610	immediate_commit_timestamp=1785305695452610	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695452610 (2026-07-29 06:14:55.452610 UTC)
+# immediate_commit_timestamp=1785305695452610 (2026-07-29 06:14:55.452610 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695452610*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:209'/*!*/;
+# at 84481
+#260729  6:14:55 server id 1  end_log_pos 84569 CRC32 0xaae8de2a 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.452415/*!*/;
+BEGIN
+/*!*/;
+# at 84569
+#260729  6:14:55 server id 1  end_log_pos 84626 CRC32 0x015543fa 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 84626
+#260729  6:14:55 server id 1  end_log_pos 84681 CRC32 0x33dbff91 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJJKAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQD6Q1UB
+X5ppah4BAAAANwAAAMlKAQAAAHcBAAAAAAEAAgAD/wDLBAAAAAAAANAHAACZunpjtxGokf/bMw==
+'/*!*/;
+# at 84681
+#260729  6:14:55 server id 1  end_log_pos 84712 CRC32 0xfd278b23 	Xid = 3301
+COMMIT/*!*/;
+# at 84712
+#260729  6:14:55 server id 1  end_log_pos 84791 CRC32 0x49b7e882 	GTID	last_committed=4	sequence_number=210	rbr_only=yes	original_committed_timestamp=1785305695453163	immediate_commit_timestamp=1785305695453163	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695453163 (2026-07-29 06:14:55.453163 UTC)
+# immediate_commit_timestamp=1785305695453163 (2026-07-29 06:14:55.453163 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695453163*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:210'/*!*/;
+# at 84791
+#260729  6:14:55 server id 1  end_log_pos 84879 CRC32 0x81912bf0 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.452946/*!*/;
+BEGIN
+/*!*/;
+# at 84879
+#260729  6:14:55 server id 1  end_log_pos 84936 CRC32 0x21ceebe7 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 84936
+#260729  6:14:55 server id 1  end_log_pos 84991 CRC32 0x676370fd 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMhLAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDn684h
+X5ppah4BAAAANwAAAP9LAQAAAHcBAAAAAAEAAgAD/wDMBAAAAAAAANAHAACZunpjtxGo/XBjZw==
+'/*!*/;
+# at 84991
+#260729  6:14:55 server id 1  end_log_pos 85022 CRC32 0x4293440c 	Xid = 3302
+COMMIT/*!*/;
+# at 85022
+#260729  6:14:55 server id 1  end_log_pos 85101 CRC32 0xbb9710ad 	GTID	last_committed=4	sequence_number=211	rbr_only=yes	original_committed_timestamp=1785305695453891	immediate_commit_timestamp=1785305695453891	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695453891 (2026-07-29 06:14:55.453891 UTC)
+# immediate_commit_timestamp=1785305695453891 (2026-07-29 06:14:55.453891 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695453891*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:211'/*!*/;
+# at 85101
+#260729  6:14:55 server id 1  end_log_pos 85189 CRC32 0x399c955b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.453691/*!*/;
+BEGIN
+/*!*/;
+# at 85189
+#260729  6:14:55 server id 1  end_log_pos 85246 CRC32 0x8021bcaa 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 85246
+#260729  6:14:55 server id 1  end_log_pos 85301 CRC32 0x98b83fd4 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAP5MAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCqvCGA
+X5ppah4BAAAANwAAADVNAQAAAHcBAAAAAAEAAgAD/wDNBAAAAAAAANAHAACZunpjtxGy1D+4mA==
+'/*!*/;
+# at 85301
+#260729  6:14:55 server id 1  end_log_pos 85332 CRC32 0xc021b07d 	Xid = 3303
+COMMIT/*!*/;
+# at 85332
+#260729  6:14:55 server id 1  end_log_pos 85411 CRC32 0xd7b230b2 	GTID	last_committed=4	sequence_number=212	rbr_only=yes	original_committed_timestamp=1785305695454976	immediate_commit_timestamp=1785305695454976	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695454976 (2026-07-29 06:14:55.454976 UTC)
+# immediate_commit_timestamp=1785305695454976 (2026-07-29 06:14:55.454976 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695454976*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:212'/*!*/;
+# at 85411
+#260729  6:14:55 server id 1  end_log_pos 85499 CRC32 0xf7808d1f 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.454362/*!*/;
+BEGIN
+/*!*/;
+# at 85499
+#260729  6:14:55 server id 1  end_log_pos 85556 CRC32 0x4d3a0d46 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 85556
+#260729  6:14:55 server id 1  end_log_pos 85611 CRC32 0xa46c6558 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADROAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBGDTpN
+X5ppah4BAAAANwAAAGtOAQAAAHcBAAAAAAEAAgAD/wDOBAAAAAAAANAHAACZunpjtxG8WGVspA==
+'/*!*/;
+# at 85611
+#260729  6:14:55 server id 1  end_log_pos 85642 CRC32 0xcb28bfe0 	Xid = 3304
+COMMIT/*!*/;
+# at 85642
+#260729  6:14:55 server id 1  end_log_pos 85721 CRC32 0x56df1cc2 	GTID	last_committed=4	sequence_number=213	rbr_only=yes	original_committed_timestamp=1785305695455651	immediate_commit_timestamp=1785305695455651	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695455651 (2026-07-29 06:14:55.455651 UTC)
+# immediate_commit_timestamp=1785305695455651 (2026-07-29 06:14:55.455651 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695455651*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:213'/*!*/;
+# at 85721
+#260729  6:14:55 server id 1  end_log_pos 85809 CRC32 0x8e02647a 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.455451/*!*/;
+BEGIN
+/*!*/;
+# at 85809
+#260729  6:14:55 server id 1  end_log_pos 85866 CRC32 0xbd20e684 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 85866
+#260729  6:14:55 server id 1  end_log_pos 85921 CRC32 0x223722f6 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGpPAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCE5iC9
+X5ppah4BAAAANwAAAKFPAQAAAHcBAAAAAAEAAgAD/wDPBAAAAAAAANAHAACZunpjtxHG9iI3Ig==
+'/*!*/;
+# at 85921
+#260729  6:14:55 server id 1  end_log_pos 85952 CRC32 0x499a4b91 	Xid = 3305
+COMMIT/*!*/;
+# at 85952
+#260729  6:14:55 server id 1  end_log_pos 86031 CRC32 0xf29b853f 	GTID	last_committed=4	sequence_number=214	rbr_only=yes	original_committed_timestamp=1785305695456392	immediate_commit_timestamp=1785305695456392	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695456392 (2026-07-29 06:14:55.456392 UTC)
+# immediate_commit_timestamp=1785305695456392 (2026-07-29 06:14:55.456392 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695456392*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:214'/*!*/;
+# at 86031
+#260729  6:14:55 server id 1  end_log_pos 86119 CRC32 0x33871ca2 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.456173/*!*/;
+BEGIN
+/*!*/;
+# at 86119
+#260729  6:14:55 server id 1  end_log_pos 86176 CRC32 0xf58a8cb9 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 86176
+#260729  6:14:55 server id 1  end_log_pos 86231 CRC32 0x29b87630 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKBQAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC5jIr1
+X5ppah4BAAAANwAAANdQAQAAAHcBAAAAAAEAAgAD/wDQBAAAAAAAANAHAACZunpjtxHQMHa4KQ==
+'/*!*/;
+# at 86231
+#260729  6:14:55 server id 1  end_log_pos 86262 CRC32 0x0776309f 	Xid = 3306
+COMMIT/*!*/;
+# at 86262
+#260729  6:14:55 server id 1  end_log_pos 86341 CRC32 0x025e4a55 	GTID	last_committed=4	sequence_number=215	rbr_only=yes	original_committed_timestamp=1785305695458596	immediate_commit_timestamp=1785305695458596	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695458596 (2026-07-29 06:14:55.458596 UTC)
+# immediate_commit_timestamp=1785305695458596 (2026-07-29 06:14:55.458596 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695458596*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:215'/*!*/;
+# at 86341
+#260729  6:14:55 server id 1  end_log_pos 86429 CRC32 0x69e9e190 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.458373/*!*/;
+BEGIN
+/*!*/;
+# at 86429
+#260729  6:14:55 server id 1  end_log_pos 86486 CRC32 0x4d5ce739 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 86486
+#260729  6:14:55 server id 1  end_log_pos 86541 CRC32 0xd1549104 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANZRAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA551xN
+X5ppah4BAAAANwAAAA1SAQAAAHcBAAAAAAEAAgAD/wDRBAAAAAAAANAHAACZunpjtxHkBJFU0Q==
+'/*!*/;
+# at 86541
+#260729  6:14:55 server id 1  end_log_pos 86572 CRC32 0xddcf7bae 	Xid = 3307
+COMMIT/*!*/;
+# at 86572
+#260729  6:14:55 server id 1  end_log_pos 86651 CRC32 0xdc728da7 	GTID	last_committed=4	sequence_number=216	rbr_only=yes	original_committed_timestamp=1785305695459375	immediate_commit_timestamp=1785305695459375	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695459375 (2026-07-29 06:14:55.459375 UTC)
+# immediate_commit_timestamp=1785305695459375 (2026-07-29 06:14:55.459375 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695459375*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:216'/*!*/;
+# at 86651
+#260729  6:14:55 server id 1  end_log_pos 86739 CRC32 0x5fa4fc57 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.459151/*!*/;
+BEGIN
+/*!*/;
+# at 86739
+#260729  6:14:55 server id 1  end_log_pos 86796 CRC32 0x74a0552b 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 86796
+#260729  6:14:55 server id 1  end_log_pos 86851 CRC32 0x85ced483 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAxTAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQArVaB0
+X5ppah4BAAAANwAAAENTAQAAAHcBAAAAAAEAAgAD/wDSBAAAAAAAANAHAACZunpjtxHug9TOhQ==
+'/*!*/;
+# at 86851
+#260729  6:14:55 server id 1  end_log_pos 86882 CRC32 0x80be0943 	Xid = 3308
+COMMIT/*!*/;
+# at 86882
+#260729  6:14:55 server id 1  end_log_pos 86961 CRC32 0x3a268b40 	GTID	last_committed=4	sequence_number=217	rbr_only=yes	original_committed_timestamp=1785305695460122	immediate_commit_timestamp=1785305695460122	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695460122 (2026-07-29 06:14:55.460122 UTC)
+# immediate_commit_timestamp=1785305695460122 (2026-07-29 06:14:55.460122 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695460122*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:217'/*!*/;
+# at 86961
+#260729  6:14:55 server id 1  end_log_pos 87049 CRC32 0x53fbd13a 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.459871/*!*/;
+BEGIN
+/*!*/;
+# at 87049
+#260729  6:14:55 server id 1  end_log_pos 87106 CRC32 0x0c1a82a0 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 87106
+#260729  6:14:55 server id 1  end_log_pos 87161 CRC32 0x14b929e1 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEJUAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCgghoM
+X5ppah4BAAAANwAAAHlUAQAAAHcBAAAAAAEAAgAD/wDTBAAAAAAAANAHAACZunpjtxHu4Sm5FA==
+'/*!*/;
+# at 87161
+#260729  6:14:55 server id 1  end_log_pos 87192 CRC32 0x8a4c89b9 	Xid = 3309
+COMMIT/*!*/;
+# at 87192
+#260729  6:14:55 server id 1  end_log_pos 87271 CRC32 0x274a74f7 	GTID	last_committed=4	sequence_number=218	rbr_only=yes	original_committed_timestamp=1785305695460813	immediate_commit_timestamp=1785305695460813	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695460813 (2026-07-29 06:14:55.460813 UTC)
+# immediate_commit_timestamp=1785305695460813 (2026-07-29 06:14:55.460813 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695460813*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:218'/*!*/;
+# at 87271
+#260729  6:14:55 server id 1  end_log_pos 87359 CRC32 0xaab3b9fb 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.460589/*!*/;
+BEGIN
+/*!*/;
+# at 87359
+#260729  6:14:55 server id 1  end_log_pos 87416 CRC32 0x7b40287a 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 87416
+#260729  6:14:55 server id 1  end_log_pos 87471 CRC32 0x1259bc9f 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHhVAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB6KEB7
+X5ppah4BAAAANwAAAK9VAQAAAHcBAAAAAAEAAgAD/wDUBAAAAAAAANAHAACZunpjtxH4n7xZEg==
+'/*!*/;
+# at 87471
+#260729  6:14:55 server id 1  end_log_pos 87502 CRC32 0x069cd7f4 	Xid = 3310
+COMMIT/*!*/;
+# at 87502
+#260729  6:14:55 server id 1  end_log_pos 87581 CRC32 0x23d9a6f7 	GTID	last_committed=4	sequence_number=219	rbr_only=yes	original_committed_timestamp=1785305695461528	immediate_commit_timestamp=1785305695461528	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695461528 (2026-07-29 06:14:55.461528 UTC)
+# immediate_commit_timestamp=1785305695461528 (2026-07-29 06:14:55.461528 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695461528*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:219'/*!*/;
+# at 87581
+#260729  6:14:55 server id 1  end_log_pos 87669 CRC32 0xe0eac33e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.461304/*!*/;
+BEGIN
+/*!*/;
+# at 87669
+#260729  6:14:55 server id 1  end_log_pos 87726 CRC32 0xa6c753e1 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 87726
+#260729  6:14:55 server id 1  end_log_pos 87781 CRC32 0x25c68b02 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAK5WAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDhU8em
+X5ppah4BAAAANwAAAOVWAQAAAHcBAAAAAAEAAgAD/wDVBAAAAAAAANAHAACZunpjtxICAovGJQ==
+'/*!*/;
+# at 87781
+#260729  6:14:55 server id 1  end_log_pos 87812 CRC32 0xba97a0a9 	Xid = 3311
+COMMIT/*!*/;
+# at 87812
+#260729  6:14:55 server id 1  end_log_pos 87891 CRC32 0x4a08826e 	GTID	last_committed=4	sequence_number=220	rbr_only=yes	original_committed_timestamp=1785305695462273	immediate_commit_timestamp=1785305695462273	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695462273 (2026-07-29 06:14:55.462273 UTC)
+# immediate_commit_timestamp=1785305695462273 (2026-07-29 06:14:55.462273 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695462273*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:220'/*!*/;
+# at 87891
+#260729  6:14:55 server id 1  end_log_pos 87979 CRC32 0x6df7a37d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.462042/*!*/;
+BEGIN
+/*!*/;
+# at 87979
+#260729  6:14:55 server id 1  end_log_pos 88036 CRC32 0x72bbf802 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 88036
+#260729  6:14:55 server id 1  end_log_pos 88091 CRC32 0x36c35564 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAORXAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAC+Lty
+X5ppah4BAAAANwAAABtYAQAAAHcBAAAAAAEAAgAD/wDWBAAAAAAAANAHAACZunpjtxIMZFXDNg==
+'/*!*/;
+# at 88091
+#260729  6:14:55 server id 1  end_log_pos 88122 CRC32 0x5831472f 	Xid = 3312
+COMMIT/*!*/;
+# at 88122
+#260729  6:14:55 server id 1  end_log_pos 88201 CRC32 0x6a95dcf5 	GTID	last_committed=4	sequence_number=221	rbr_only=yes	original_committed_timestamp=1785305695463272	immediate_commit_timestamp=1785305695463272	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695463272 (2026-07-29 06:14:55.463272 UTC)
+# immediate_commit_timestamp=1785305695463272 (2026-07-29 06:14:55.463272 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695463272*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:221'/*!*/;
+# at 88201
+#260729  6:14:55 server id 1  end_log_pos 88289 CRC32 0xdc2b1d1f 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.462867/*!*/;
+BEGIN
+/*!*/;
+# at 88289
+#260729  6:14:55 server id 1  end_log_pos 88346 CRC32 0x51f7771c 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 88346
+#260729  6:14:55 server id 1  end_log_pos 88401 CRC32 0xad880247 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABpZAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAcd/dR
+X5ppah4BAAAANwAAAFFZAQAAAHcBAAAAAAEAAgAD/wDXBAAAAAAAANAHAACZunpjtxIMRwKIrQ==
+'/*!*/;
+# at 88401
+#260729  6:14:55 server id 1  end_log_pos 88432 CRC32 0xda83b35e 	Xid = 3313
+COMMIT/*!*/;
+# at 88432
+#260729  6:14:55 server id 1  end_log_pos 88511 CRC32 0x2101a76a 	GTID	last_committed=4	sequence_number=222	rbr_only=yes	original_committed_timestamp=1785305695465076	immediate_commit_timestamp=1785305695465076	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695465076 (2026-07-29 06:14:55.465076 UTC)
+# immediate_commit_timestamp=1785305695465076 (2026-07-29 06:14:55.465076 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695465076*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:222'/*!*/;
+# at 88511
+#260729  6:14:55 server id 1  end_log_pos 88599 CRC32 0x60d7a6ef 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.464830/*!*/;
+BEGIN
+/*!*/;
+# at 88599
+#260729  6:14:55 server id 1  end_log_pos 88656 CRC32 0x1899cbad 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 88656
+#260729  6:14:55 server id 1  end_log_pos 88711 CRC32 0xbe547b71 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFBaAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCty5kY
+X5ppah4BAAAANwAAAIdaAQAAAHcBAAAAAAEAAgAD/wDYBAAAAAAAANAHAACZunpjtxIgcXtUvg==
+'/*!*/;
+# at 88711
+#260729  6:14:55 server id 1  end_log_pos 88742 CRC32 0xb57cb7ba 	Xid = 3314
+COMMIT/*!*/;
+# at 88742
+#260729  6:14:55 server id 1  end_log_pos 88821 CRC32 0x5adccd43 	GTID	last_committed=4	sequence_number=223	rbr_only=yes	original_committed_timestamp=1785305695465838	immediate_commit_timestamp=1785305695465838	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695465838 (2026-07-29 06:14:55.465838 UTC)
+# immediate_commit_timestamp=1785305695465838 (2026-07-29 06:14:55.465838 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695465838*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:223'/*!*/;
+# at 88821
+#260729  6:14:55 server id 1  end_log_pos 88909 CRC32 0x8fe6ff65 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.465595/*!*/;
+BEGIN
+/*!*/;
+# at 88909
+#260729  6:14:55 server id 1  end_log_pos 88966 CRC32 0x580ca764 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 88966
+#260729  6:14:55 server id 1  end_log_pos 89021 CRC32 0x7b3411cd 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIZbAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBkpwxY
+X5ppah4BAAAANwAAAL1bAQAAAHcBAAAAAAEAAgAD/wDZBAAAAAAAANAHAACZunpjtxIqzRE0ew==
+'/*!*/;
+# at 89021
+#260729  6:14:55 server id 1  end_log_pos 89052 CRC32 0x9c18077f 	Xid = 3315
+COMMIT/*!*/;
+# at 89052
+#260729  6:14:55 server id 1  end_log_pos 89131 CRC32 0x3ec40e84 	GTID	last_committed=4	sequence_number=224	rbr_only=yes	original_committed_timestamp=1785305695466637	immediate_commit_timestamp=1785305695466637	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695466637 (2026-07-29 06:14:55.466637 UTC)
+# immediate_commit_timestamp=1785305695466637 (2026-07-29 06:14:55.466637 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695466637*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:224'/*!*/;
+# at 89131
+#260729  6:14:55 server id 1  end_log_pos 89219 CRC32 0xbdfb2f88 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.466399/*!*/;
+BEGIN
+/*!*/;
+# at 89219
+#260729  6:14:55 server id 1  end_log_pos 89276 CRC32 0x53113209 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 89276
+#260729  6:14:55 server id 1  end_log_pos 89331 CRC32 0x81b6fef7 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALxcAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAJMhFT
+X5ppah4BAAAANwAAAPNcAQAAAHcBAAAAAAEAAgAD/wDaBAAAAAAAANAHAACZunpjtxI09/62gQ==
+'/*!*/;
+# at 89331
+#260729  6:14:55 server id 1  end_log_pos 89362 CRC32 0x3f699c28 	Xid = 3316
+COMMIT/*!*/;
+# at 89362
+#260729  6:14:55 server id 1  end_log_pos 89441 CRC32 0x642d5c23 	GTID	last_committed=4	sequence_number=225	rbr_only=yes	original_committed_timestamp=1785305695467366	immediate_commit_timestamp=1785305695467366	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695467366 (2026-07-29 06:14:55.467366 UTC)
+# immediate_commit_timestamp=1785305695467366 (2026-07-29 06:14:55.467366 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695467366*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:225'/*!*/;
+# at 89441
+#260729  6:14:55 server id 1  end_log_pos 89529 CRC32 0x689ca9df 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.467134/*!*/;
+BEGIN
+/*!*/;
+# at 89529
+#260729  6:14:55 server id 1  end_log_pos 89586 CRC32 0x57ecda35 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 89586
+#260729  6:14:55 server id 1  end_log_pos 89641 CRC32 0xb83b0468 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPJdAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA12uxX
+X5ppah4BAAAANwAAACleAQAAAHcBAAAAAAEAAgAD/wDbBAAAAAAAANAHAACZunpjtxI+aAQ7uA==
+'/*!*/;
+# at 89641
+#260729  6:14:55 server id 1  end_log_pos 89672 CRC32 0xbb35e17e 	Xid = 3317
+COMMIT/*!*/;
+# at 89672
+#260729  6:14:55 server id 1  end_log_pos 89751 CRC32 0xeb7ab10c 	GTID	last_committed=4	sequence_number=226	rbr_only=yes	original_committed_timestamp=1785305695468125	immediate_commit_timestamp=1785305695468125	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695468125 (2026-07-29 06:14:55.468125 UTC)
+# immediate_commit_timestamp=1785305695468125 (2026-07-29 06:14:55.468125 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695468125*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:226'/*!*/;
+# at 89751
+#260729  6:14:55 server id 1  end_log_pos 89839 CRC32 0xc8c457bd 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.467887/*!*/;
+BEGIN
+/*!*/;
+# at 89839
+#260729  6:14:55 server id 1  end_log_pos 89896 CRC32 0x6e106827 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 89896
+#260729  6:14:55 server id 1  end_log_pos 89951 CRC32 0x57db4c73 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAChfAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAnaBBu
+X5ppah4BAAAANwAAAF9fAQAAAHcBAAAAAAEAAgAD/wDcBAAAAAAAANAHAACZunpjtxI+c0zbVw==
+'/*!*/;
+# at 89951
+#260729  6:14:55 server id 1  end_log_pos 89982 CRC32 0xbb38301a 	Xid = 3318
+COMMIT/*!*/;
+# at 89982
+#260729  6:14:55 server id 1  end_log_pos 90061 CRC32 0x642c3bcf 	GTID	last_committed=4	sequence_number=227	rbr_only=yes	original_committed_timestamp=1785305695469248	immediate_commit_timestamp=1785305695469248	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695469248 (2026-07-29 06:14:55.469248 UTC)
+# immediate_commit_timestamp=1785305695469248 (2026-07-29 06:14:55.469248 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695469248*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:227'/*!*/;
+# at 90061
+#260729  6:14:55 server id 1  end_log_pos 90149 CRC32 0xa650cb18 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.468612/*!*/;
+BEGIN
+/*!*/;
+# at 90149
+#260729  6:14:55 server id 1  end_log_pos 90206 CRC32 0xe7819aa1 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 90206
+#260729  6:14:55 server id 1  end_log_pos 90261 CRC32 0x1616718f 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAF5gAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQChmoHn
+X5ppah4BAAAANwAAAJVgAQAAAHcBAAAAAAEAAgAD/wDdBAAAAAAAANAHAACZunpjtxJIj3EWFg==
+'/*!*/;
+# at 90261
+#260729  6:14:55 server id 1  end_log_pos 90292 CRC32 0x4766ca16 	Xid = 3319
+COMMIT/*!*/;
+# at 90292
+#260729  6:14:55 server id 1  end_log_pos 90371 CRC32 0x205cbcd6 	GTID	last_committed=4	sequence_number=228	rbr_only=yes	original_committed_timestamp=1785305695470154	immediate_commit_timestamp=1785305695470154	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695470154 (2026-07-29 06:14:55.470154 UTC)
+# immediate_commit_timestamp=1785305695470154 (2026-07-29 06:14:55.470154 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695470154*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:228'/*!*/;
+# at 90371
+#260729  6:14:55 server id 1  end_log_pos 90459 CRC32 0xbb92b3e6 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.469938/*!*/;
+BEGIN
+/*!*/;
+# at 90459
+#260729  6:14:55 server id 1  end_log_pos 90516 CRC32 0xf90137b6 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 90516
+#260729  6:14:55 server id 1  end_log_pos 90571 CRC32 0xea89d701 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJRhAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC2NwH5
+X5ppah4BAAAANwAAAMthAQAAAHcBAAAAAAEAAgAD/wDeBAAAAAAAANAHAACZunpjtxJSAdeJ6g==
+'/*!*/;
+# at 90571
+#260729  6:14:55 server id 1  end_log_pos 90602 CRC32 0xaf409f22 	Xid = 3320
+COMMIT/*!*/;
+# at 90602
+#260729  6:14:55 server id 1  end_log_pos 90681 CRC32 0x9e44754c 	GTID	last_committed=4	sequence_number=229	rbr_only=yes	original_committed_timestamp=1785305695470849	immediate_commit_timestamp=1785305695470849	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695470849 (2026-07-29 06:14:55.470849 UTC)
+# immediate_commit_timestamp=1785305695470849 (2026-07-29 06:14:55.470849 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695470849*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:229'/*!*/;
+# at 90681
+#260729  6:14:55 server id 1  end_log_pos 90769 CRC32 0x57dc0de1 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.470658/*!*/;
+BEGIN
+/*!*/;
+# at 90769
+#260729  6:14:55 server id 1  end_log_pos 90826 CRC32 0x9409cb26 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 90826
+#260729  6:14:55 server id 1  end_log_pos 90881 CRC32 0x61db1aea 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMpiAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAmywmU
+X5ppah4BAAAANwAAAAFjAQAAAHcBAAAAAAEAAgAD/wDfBAAAAAAAANAHAACZunpjtxJc6hrbYQ==
+'/*!*/;
+# at 90881
+#260729  6:14:55 server id 1  end_log_pos 90912 CRC32 0x134be87f 	Xid = 3321
+COMMIT/*!*/;
+# at 90912
+#260729  6:14:55 server id 1  end_log_pos 90991 CRC32 0xf556ebe5 	GTID	last_committed=4	sequence_number=230	rbr_only=yes	original_committed_timestamp=1785305695471635	immediate_commit_timestamp=1785305695471635	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695471635 (2026-07-29 06:14:55.471635 UTC)
+# immediate_commit_timestamp=1785305695471635 (2026-07-29 06:14:55.471635 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695471635*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:230'/*!*/;
+# at 90991
+#260729  6:14:55 server id 1  end_log_pos 91079 CRC32 0xed5bfe6f 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.471312/*!*/;
+BEGIN
+/*!*/;
+# at 91079
+#260729  6:14:55 server id 1  end_log_pos 91136 CRC32 0xb847522f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 91136
+#260729  6:14:55 server id 1  end_log_pos 91191 CRC32 0x7bca626f 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAABkAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAvUke4
+X5ppah4BAAAANwAAADdkAQAAAHcBAAAAAAEAAgAD/wDgBAAAAAAAANAHAACZunpjtxJmb2LKew==
+'/*!*/;
+# at 91191
+#260729  6:14:55 server id 1  end_log_pos 91222 CRC32 0xf21a1137 	Xid = 3322
+COMMIT/*!*/;
+# at 91222
+#260729  6:14:55 server id 1  end_log_pos 91301 CRC32 0x4da239e2 	GTID	last_committed=4	sequence_number=231	rbr_only=yes	original_committed_timestamp=1785305695473411	immediate_commit_timestamp=1785305695473411	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695473411 (2026-07-29 06:14:55.473411 UTC)
+# immediate_commit_timestamp=1785305695473411 (2026-07-29 06:14:55.473411 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695473411*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:231'/*!*/;
+# at 91301
+#260729  6:14:55 server id 1  end_log_pos 91389 CRC32 0x2d2d778f 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.473180/*!*/;
+BEGIN
+/*!*/;
+# at 91389
+#260729  6:14:55 server id 1  end_log_pos 91446 CRC32 0x65ef3ad5 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 91446
+#260729  6:14:55 server id 1  end_log_pos 91501 CRC32 0x41329a6e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADZlAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDVOu9l
+X5ppah4BAAAANwAAAG1lAQAAAHcBAAAAAAEAAgAD/wDhBAAAAAAAANAHAACZunpjtxJ6bpoyQQ==
+'/*!*/;
+# at 91501
+#260729  6:14:55 server id 1  end_log_pos 91532 CRC32 0x956936c8 	Xid = 3323
+COMMIT/*!*/;
+# at 91532
+#260729  6:14:55 server id 1  end_log_pos 91611 CRC32 0x35a9df65 	GTID	last_committed=4	sequence_number=232	rbr_only=yes	original_committed_timestamp=1785305695474110	immediate_commit_timestamp=1785305695474110	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695474110 (2026-07-29 06:14:55.474110 UTC)
+# immediate_commit_timestamp=1785305695474110 (2026-07-29 06:14:55.474110 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695474110*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:232'/*!*/;
+# at 91611
+#260729  6:14:55 server id 1  end_log_pos 91699 CRC32 0xb9965c32 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.473908/*!*/;
+BEGIN
+/*!*/;
+# at 91699
+#260729  6:14:55 server id 1  end_log_pos 91756 CRC32 0xd866859a 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 91756
+#260729  6:14:55 server id 1  end_log_pos 91811 CRC32 0x822c9627 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGxmAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCahWbY
+X5ppah4BAAAANwAAAKNmAQAAAHcBAAAAAAEAAgAD/wDiBAAAAAAAANAHAACZunpjtxJ6J5Ysgg==
+'/*!*/;
+# at 91811
+#260729  6:14:55 server id 1  end_log_pos 91842 CRC32 0xa844f16e 	Xid = 3324
+COMMIT/*!*/;
+# at 91842
+#260729  6:14:55 server id 1  end_log_pos 91921 CRC32 0x439a0d92 	GTID	last_committed=4	sequence_number=233	rbr_only=yes	original_committed_timestamp=1785305695474733	immediate_commit_timestamp=1785305695474733	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695474733 (2026-07-29 06:14:55.474733 UTC)
+# immediate_commit_timestamp=1785305695474733 (2026-07-29 06:14:55.474733 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695474733*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:233'/*!*/;
+# at 91921
+#260729  6:14:55 server id 1  end_log_pos 92009 CRC32 0xc5f8c222 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.474549/*!*/;
+BEGIN
+/*!*/;
+# at 92009
+#260729  6:14:55 server id 1  end_log_pos 92066 CRC32 0x16676b52 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 92066
+#260729  6:14:55 server id 1  end_log_pos 92121 CRC32 0x46c40de9 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKJnAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBSa2cW
+X5ppah4BAAAANwAAANlnAQAAAHcBAAAAAAEAAgAD/wDjBAAAAAAAANAHAACZunpjtxKE6Q3ERg==
+'/*!*/;
+# at 92121
+#260729  6:14:55 server id 1  end_log_pos 92152 CRC32 0xc099b65a 	Xid = 3325
+COMMIT/*!*/;
+# at 92152
+#260729  6:14:55 server id 1  end_log_pos 92231 CRC32 0x0e233ee5 	GTID	last_committed=4	sequence_number=234	rbr_only=yes	original_committed_timestamp=1785305695475427	immediate_commit_timestamp=1785305695475427	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695475427 (2026-07-29 06:14:55.475427 UTC)
+# immediate_commit_timestamp=1785305695475427 (2026-07-29 06:14:55.475427 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695475427*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:234'/*!*/;
+# at 92231
+#260729  6:14:55 server id 1  end_log_pos 92319 CRC32 0xbffbd5ed 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.475200/*!*/;
+BEGIN
+/*!*/;
+# at 92319
+#260729  6:14:55 server id 1  end_log_pos 92376 CRC32 0x61dfaace 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 92376
+#260729  6:14:55 server id 1  end_log_pos 92431 CRC32 0xbcb10079 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANhoAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDOqt9h
+X5ppah4BAAAANwAAAA9pAQAAAHcBAAAAAAEAAgAD/wDkBAAAAAAAANAHAACZunpjtxKOeQCxvA==
+'/*!*/;
+# at 92431
+#260729  6:14:55 server id 1  end_log_pos 92462 CRC32 0xe84ad2c0 	Xid = 3326
+COMMIT/*!*/;
+# at 92462
+#260729  6:14:55 server id 1  end_log_pos 92541 CRC32 0xe34e2ee5 	GTID	last_committed=4	sequence_number=235	rbr_only=yes	original_committed_timestamp=1785305695476087	immediate_commit_timestamp=1785305695476087	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695476087 (2026-07-29 06:14:55.476087 UTC)
+# immediate_commit_timestamp=1785305695476087 (2026-07-29 06:14:55.476087 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695476087*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:235'/*!*/;
+# at 92541
+#260729  6:14:55 server id 1  end_log_pos 92629 CRC32 0x93a95b38 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.475893/*!*/;
+BEGIN
+/*!*/;
+# at 92629
+#260729  6:14:55 server id 1  end_log_pos 92686 CRC32 0xf2d1dafc 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 92686
+#260729  6:14:55 server id 1  end_log_pos 92741 CRC32 0xfd6b7f25 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAA5qAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQD82tHy
+X5ppah4BAAAANwAAAEVqAQAAAHcBAAAAAAEAAgAD/wDlBAAAAAAAANAHAACZunpjtxKOJX9r/Q==
+'/*!*/;
+# at 92741
+#260729  6:14:55 server id 1  end_log_pos 92772 CRC32 0x0aa493fa 	Xid = 3327
+COMMIT/*!*/;
+# at 92772
+#260729  6:14:55 server id 1  end_log_pos 92851 CRC32 0xa7e9e2c8 	GTID	last_committed=4	sequence_number=236	rbr_only=yes	original_committed_timestamp=1785305695476757	immediate_commit_timestamp=1785305695476757	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695476757 (2026-07-29 06:14:55.476757 UTC)
+# immediate_commit_timestamp=1785305695476757 (2026-07-29 06:14:55.476757 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695476757*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:236'/*!*/;
+# at 92851
+#260729  6:14:55 server id 1  end_log_pos 92939 CRC32 0x95998878 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.476531/*!*/;
+BEGIN
+/*!*/;
+# at 92939
+#260729  6:14:55 server id 1  end_log_pos 92996 CRC32 0x26ad711f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 92996
+#260729  6:14:55 server id 1  end_log_pos 93051 CRC32 0x030eb26c 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAERrAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAfca0m
+X5ppah4BAAAANwAAAHtrAQAAAHcBAAAAAAEAAgAD/wDmBAAAAAAAANAHAACZunpjtxKYbLIOAw==
+'/*!*/;
+# at 93051
+#260729  6:14:55 server id 1  end_log_pos 93082 CRC32 0xf5894e0a 	Xid = 3328
+COMMIT/*!*/;
+# at 93082
+#260729  6:14:55 server id 1  end_log_pos 93161 CRC32 0x62350493 	GTID	last_committed=4	sequence_number=237	rbr_only=yes	original_committed_timestamp=1785305695477496	immediate_commit_timestamp=1785305695477496	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695477496 (2026-07-29 06:14:55.477496 UTC)
+# immediate_commit_timestamp=1785305695477496 (2026-07-29 06:14:55.477496 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695477496*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:237'/*!*/;
+# at 93161
+#260729  6:14:55 server id 1  end_log_pos 93249 CRC32 0x081fb8b6 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.477280/*!*/;
+BEGIN
+/*!*/;
+# at 93249
+#260729  6:14:55 server id 1  end_log_pos 93306 CRC32 0xfd31a7ad 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 93306
+#260729  6:14:55 server id 1  end_log_pos 93361 CRC32 0x474bca92 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHpsAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCtpzH9
+X5ppah4BAAAANwAAALFsAQAAAHcBAAAAAAEAAgAD/wDnBAAAAAAAANAHAACZunpjtxKikspLRw==
+'/*!*/;
+# at 93361
+#260729  6:14:55 server id 1  end_log_pos 93392 CRC32 0xd7de65a6 	Xid = 3329
+COMMIT/*!*/;
+# at 93392
+#260729  6:14:55 server id 1  end_log_pos 93471 CRC32 0xaeddeeec 	GTID	last_committed=4	sequence_number=238	rbr_only=yes	original_committed_timestamp=1785305695479154	immediate_commit_timestamp=1785305695479154	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695479154 (2026-07-29 06:14:55.479154 UTC)
+# immediate_commit_timestamp=1785305695479154 (2026-07-29 06:14:55.479154 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695479154*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:238'/*!*/;
+# at 93471
+#260729  6:14:55 server id 1  end_log_pos 93559 CRC32 0x7e7a006f 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.478943/*!*/;
+BEGIN
+/*!*/;
+# at 93559
+#260729  6:14:55 server id 1  end_log_pos 93616 CRC32 0xe3b10aba 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 93616
+#260729  6:14:55 server id 1  end_log_pos 93671 CRC32 0xf6a65290 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALBtAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC6CrHj
+X5ppah4BAAAANwAAAOdtAQAAAHcBAAAAAAEAAgAD/wDoBAAAAAAAANAHAACZunpjtxKskFKm9g==
+'/*!*/;
+# at 93671
+#260729  6:14:55 server id 1  end_log_pos 93702 CRC32 0x65b7b8c7 	Xid = 3330
+COMMIT/*!*/;
+# at 93702
+#260729  6:14:55 server id 1  end_log_pos 93781 CRC32 0x594eefbe 	GTID	last_committed=4	sequence_number=239	rbr_only=yes	original_committed_timestamp=1785305695479852	immediate_commit_timestamp=1785305695479852	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695479852 (2026-07-29 06:14:55.479852 UTC)
+# immediate_commit_timestamp=1785305695479852 (2026-07-29 06:14:55.479852 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695479852*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:239'/*!*/;
+# at 93781
+#260729  6:14:55 server id 1  end_log_pos 93869 CRC32 0x4b55a07e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.479638/*!*/;
+BEGIN
+/*!*/;
+# at 93869
+#260729  6:14:55 server id 1  end_log_pos 93926 CRC32 0xf4ca77d5 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 93926
+#260729  6:14:55 server id 1  end_log_pos 93981 CRC32 0x628858f0 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOZuAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDVd8r0
+X5ppah4BAAAANwAAAB1vAQAAAHcBAAAAAAEAAgAD/wDpBAAAAAAAANAHAACZunpjtxK28FiIYg==
+'/*!*/;
+# at 93981
+#260729  6:14:55 server id 1  end_log_pos 94012 CRC32 0x0d6afff3 	Xid = 3331
+COMMIT/*!*/;
+# at 94012
+#260729  6:14:55 server id 1  end_log_pos 94091 CRC32 0xbeef850e 	GTID	last_committed=4	sequence_number=240	rbr_only=yes	original_committed_timestamp=1785305695480373	immediate_commit_timestamp=1785305695480373	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695480373 (2026-07-29 06:14:55.480373 UTC)
+# immediate_commit_timestamp=1785305695480373 (2026-07-29 06:14:55.480373 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695480373*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:240'/*!*/;
+# at 94091
+#260729  6:14:55 server id 1  end_log_pos 94179 CRC32 0x47455098 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.480176/*!*/;
+BEGIN
+/*!*/;
+# at 94179
+#260729  6:14:55 server id 1  end_log_pos 94236 CRC32 0x34b11402 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 94236
+#260729  6:14:55 server id 1  end_log_pos 94291 CRC32 0x65f9af63 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABxwAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQACFLE0
+X5ppah4BAAAANwAAAFNwAQAAAHcBAAAAAAEAAgAD/wDqBAAAAAAAANAHAACZunpjtxLAY6/5ZQ==
+'/*!*/;
+# at 94291
+#260729  6:14:55 server id 1  end_log_pos 94322 CRC32 0x1efa2774 	Xid = 3332
+COMMIT/*!*/;
+# at 94322
+#260729  6:14:55 server id 1  end_log_pos 94401 CRC32 0x9bc4a841 	GTID	last_committed=4	sequence_number=241	rbr_only=yes	original_committed_timestamp=1785305695481398	immediate_commit_timestamp=1785305695481398	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695481398 (2026-07-29 06:14:55.481398 UTC)
+# immediate_commit_timestamp=1785305695481398 (2026-07-29 06:14:55.481398 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695481398*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:241'/*!*/;
+# at 94401
+#260729  6:14:55 server id 1  end_log_pos 94489 CRC32 0xa9d00e9f 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.480932/*!*/;
+BEGIN
+/*!*/;
+# at 94489
+#260729  6:14:55 server id 1  end_log_pos 94546 CRC32 0x304cfc3e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 94546
+#260729  6:14:55 server id 1  end_log_pos 94601 CRC32 0xe6c08382 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFJxAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA+/Eww
+X5ppah4BAAAANwAAAIlxAQAAAHcBAAAAAAEAAgAD/wDrBAAAAAAAANAHAACZunpjtxLAgoPA5g==
+'/*!*/;
+# at 94601
+#260729  6:14:55 server id 1  end_log_pos 94632 CRC32 0x7989008b 	Xid = 3333
+COMMIT/*!*/;
+# at 94632
+#260729  6:14:55 server id 1  end_log_pos 94711 CRC32 0x75b8940f 	GTID	last_committed=4	sequence_number=242	rbr_only=yes	original_committed_timestamp=1785305695482083	immediate_commit_timestamp=1785305695482083	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695482083 (2026-07-29 06:14:55.482083 UTC)
+# immediate_commit_timestamp=1785305695482083 (2026-07-29 06:14:55.482083 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695482083*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:242'/*!*/;
+# at 94711
+#260729  6:14:55 server id 1  end_log_pos 94799 CRC32 0x187e6aca 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.481867/*!*/;
+BEGIN
+/*!*/;
+# at 94799
+#260729  6:14:55 server id 1  end_log_pos 94856 CRC32 0x47394585 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 94856
+#260729  6:14:55 server id 1  end_log_pos 94911 CRC32 0x883ccd8f 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIhyAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCFRTlH
+X5ppah4BAAAANwAAAL9yAQAAAHcBAAAAAAEAAgAD/wDsBAAAAAAAANAHAACZunpjtxLKj808iA==
+'/*!*/;
+# at 94911
+#260729  6:14:55 server id 1  end_log_pos 94942 CRC32 0x58619355 	Xid = 3334
+COMMIT/*!*/;
+# at 94942
+#260729  6:14:55 server id 1  end_log_pos 95021 CRC32 0x190fbfea 	GTID	last_committed=4	sequence_number=243	rbr_only=yes	original_committed_timestamp=1785305695482736	immediate_commit_timestamp=1785305695482736	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695482736 (2026-07-29 06:14:55.482736 UTC)
+# immediate_commit_timestamp=1785305695482736 (2026-07-29 06:14:55.482736 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695482736*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:243'/*!*/;
+# at 95021
+#260729  6:14:55 server id 1  end_log_pos 95109 CRC32 0x6032cf1b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.482544/*!*/;
+BEGIN
+/*!*/;
+# at 95109
+#260729  6:14:55 server id 1  end_log_pos 95166 CRC32 0x9a912d7f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 95166
+#260729  6:14:55 server id 1  end_log_pos 95221 CRC32 0xe978a7cf 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAL5zAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB/LZGa
+X5ppah4BAAAANwAAAPVzAQAAAHcBAAAAAAEAAgAD/wDtBAAAAAAAANAHAACZunpjtxLUz6d46Q==
+'/*!*/;
+# at 95221
+#260729  6:14:55 server id 1  end_log_pos 95252 CRC32 0x24d38e9e 	Xid = 3335
+COMMIT/*!*/;
+# at 95252
+#260729  6:14:55 server id 1  end_log_pos 95331 CRC32 0xe80ae4dc 	GTID	last_committed=4	sequence_number=244	rbr_only=yes	original_committed_timestamp=1785305695483424	immediate_commit_timestamp=1785305695483424	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695483424 (2026-07-29 06:14:55.483424 UTC)
+# immediate_commit_timestamp=1785305695483424 (2026-07-29 06:14:55.483424 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695483424*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:244'/*!*/;
+# at 95331
+#260729  6:14:55 server id 1  end_log_pos 95419 CRC32 0xe09a7bf6 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.483215/*!*/;
+BEGIN
+/*!*/;
+# at 95419
+#260729  6:14:55 server id 1  end_log_pos 95476 CRC32 0x32aab92b 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 95476
+#260729  6:14:55 server id 1  end_log_pos 95531 CRC32 0x91a2f055 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPR0AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAruaoy
+X5ppah4BAAAANwAAACt1AQAAAHcBAAAAAAEAAgAD/wDuBAAAAAAAANAHAACZunpjtxLeVfCikQ==
+'/*!*/;
+# at 95531
+#260729  6:14:55 server id 1  end_log_pos 95562 CRC32 0xccf5dbaa 	Xid = 3336
+COMMIT/*!*/;
+# at 95562
+#260729  6:14:55 server id 1  end_log_pos 95641 CRC32 0xec8a1e81 	GTID	last_committed=4	sequence_number=245	rbr_only=yes	original_committed_timestamp=1785305695484061	immediate_commit_timestamp=1785305695484061	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695484061 (2026-07-29 06:14:55.484061 UTC)
+# immediate_commit_timestamp=1785305695484061 (2026-07-29 06:14:55.484061 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695484061*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:245'/*!*/;
+# at 95641
+#260729  6:14:55 server id 1  end_log_pos 95729 CRC32 0x49a575c7 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.483864/*!*/;
+BEGIN
+/*!*/;
+# at 95729
+#260729  6:14:55 server id 1  end_log_pos 95786 CRC32 0xdbd748e6 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 95786
+#260729  6:14:55 server id 1  end_log_pos 95841 CRC32 0xd0788f09 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACp2AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDmSNfb
+X5ppah4BAAAANwAAAGF2AQAAAHcBAAAAAAEAAgAD/wDvBAAAAAAAANAHAACZunpjtxLeCY940A==
+'/*!*/;
+# at 95841
+#260729  6:14:55 server id 1  end_log_pos 95872 CRC32 0xad687572 	Xid = 3337
+COMMIT/*!*/;
+# at 95872
+#260729  6:14:55 server id 1  end_log_pos 95951 CRC32 0xc43761c9 	GTID	last_committed=4	sequence_number=246	rbr_only=yes	original_committed_timestamp=1785305695486183	immediate_commit_timestamp=1785305695486183	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695486183 (2026-07-29 06:14:55.486183 UTC)
+# immediate_commit_timestamp=1785305695486183 (2026-07-29 06:14:55.486183 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695486183*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:246'/*!*/;
+# at 95951
+#260729  6:14:55 server id 1  end_log_pos 96039 CRC32 0x00070ff3 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.485940/*!*/;
+BEGIN
+/*!*/;
+# at 96039
+#260729  6:14:55 server id 1  end_log_pos 96096 CRC32 0x0fabe305 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 96096
+#260729  6:14:55 server id 1  end_log_pos 96151 CRC32 0xba6305d1 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGB3AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAF46sP
+X5ppah4BAAAANwAAAJd3AQAAAHcBAAAAAAEAAgAD/wDwBAAAAAAAANAHAACZunpjtxLy0QVjug==
+'/*!*/;
+# at 96151
+#260729  6:14:55 server id 1  end_log_pos 96182 CRC32 0xad65a416 	Xid = 3338
+COMMIT/*!*/;
+# at 96182
+#260729  6:14:55 server id 1  end_log_pos 96261 CRC32 0xd5785c5c 	GTID	last_committed=4	sequence_number=247	rbr_only=yes	original_committed_timestamp=1785305695486955	immediate_commit_timestamp=1785305695486955	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695486955 (2026-07-29 06:14:55.486955 UTC)
+# immediate_commit_timestamp=1785305695486955 (2026-07-29 06:14:55.486955 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695486955*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:247'/*!*/;
+# at 96261
+#260729  6:14:55 server id 1  end_log_pos 96349 CRC32 0x4f7ffdce 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.486633/*!*/;
+BEGIN
+/*!*/;
+# at 96349
+#260729  6:14:55 server id 1  end_log_pos 96406 CRC32 0x181de64d 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 96406
+#260729  6:14:55 server id 1  end_log_pos 96461 CRC32 0x1b465f26 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJZ4AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBN5h0Y
+X5ppah4BAAAANwAAAM14AQAAAHcBAAAAAAEAAgAD/wDxBAAAAAAAANAHAACZunpjtxL8Jl9GGw==
+'/*!*/;
+# at 96461
+#260729  6:14:55 server id 1  end_log_pos 96492 CRC32 0xb38360bb 	Xid = 3339
+COMMIT/*!*/;
+# at 96492
+#260729  6:14:55 server id 1  end_log_pos 96571 CRC32 0xb7ce4a85 	GTID	last_committed=4	sequence_number=248	rbr_only=yes	original_committed_timestamp=1785305695487606	immediate_commit_timestamp=1785305695487606	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695487606 (2026-07-29 06:14:55.487606 UTC)
+# immediate_commit_timestamp=1785305695487606 (2026-07-29 06:14:55.487606 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695487606*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:248'/*!*/;
+# at 96571
+#260729  6:14:55 server id 1  end_log_pos 96659 CRC32 0x68c7c155 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.487388/*!*/;
+BEGIN
+/*!*/;
+# at 96659
+#260729  6:14:55 server id 1  end_log_pos 96716 CRC32 0x38864e50 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 96716
+#260729  6:14:55 server id 1  end_log_pos 96771 CRC32 0x1cdb6e33 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMx5AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBQToY4
+X5ppah4BAAAANwAAAAN6AQAAAHcBAAAAAAEAAgAD/wDyBAAAAAAAANAHAACZunpjtxMGM27bHA==
+'/*!*/;
+# at 96771
+#260729  6:14:55 server id 1  end_log_pos 96802 CRC32 0xd04b917a 	Xid = 3340
+COMMIT/*!*/;
+# at 96802
+#260729  6:14:55 server id 1  end_log_pos 96881 CRC32 0xee1a10e8 	GTID	last_committed=4	sequence_number=249	rbr_only=yes	original_committed_timestamp=1785305695488287	immediate_commit_timestamp=1785305695488287	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695488287 (2026-07-29 06:14:55.488287 UTC)
+# immediate_commit_timestamp=1785305695488287 (2026-07-29 06:14:55.488287 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695488287*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:249'/*!*/;
+# at 96881
+#260729  6:14:55 server id 1  end_log_pos 96969 CRC32 0x5a6723a4 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.488091/*!*/;
+BEGIN
+/*!*/;
+# at 96969
+#260729  6:14:55 server id 1  end_log_pos 97026 CRC32 0x251cbc63 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 97026
+#260729  6:14:55 server id 1  end_log_pos 97081 CRC32 0xcdba58c0 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAJ7AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBjvBwl
+X5ppah4BAAAANwAAADl7AQAAAHcBAAAAAAEAAgAD/wDzBAAAAAAAANAHAACZunpjtxMQwFi6zQ==
+'/*!*/;
+# at 97081
+#260729  6:14:55 server id 1  end_log_pos 97112 CRC32 0xf92f21bf 	Xid = 3341
+COMMIT/*!*/;
+# at 97112
+#260729  6:14:55 server id 1  end_log_pos 97191 CRC32 0xd0dee140 	GTID	last_committed=4	sequence_number=250	rbr_only=yes	original_committed_timestamp=1785305695488996	immediate_commit_timestamp=1785305695488996	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695488996 (2026-07-29 06:14:55.488996 UTC)
+# immediate_commit_timestamp=1785305695488996 (2026-07-29 06:14:55.488996 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695488996*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:250'/*!*/;
+# at 97191
+#260729  6:14:55 server id 1  end_log_pos 97279 CRC32 0xda2e25b6 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.488733/*!*/;
+BEGIN
+/*!*/;
+# at 97279
+#260729  6:14:55 server id 1  end_log_pos 97336 CRC32 0x2e01290e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 97336
+#260729  6:14:55 server id 1  end_log_pos 97391 CRC32 0x268c8e80 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADh8AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAOKQEu
+X5ppah4BAAAANwAAAG98AQAAAHcBAAAAAAEAAgAD/wD0BAAAAAAAANAHAACZunpjtxMQgI6MJg==
+'/*!*/;
+# at 97391
+#260729  6:14:55 server id 1  end_log_pos 97422 CRC32 0x56694fcd 	Xid = 3342
+COMMIT/*!*/;
+# at 97422
+#260729  6:14:55 server id 1  end_log_pos 97501 CRC32 0x7ed03f77 	GTID	last_committed=4	sequence_number=251	rbr_only=yes	original_committed_timestamp=1785305695489660	immediate_commit_timestamp=1785305695489660	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695489660 (2026-07-29 06:14:55.489660 UTC)
+# immediate_commit_timestamp=1785305695489660 (2026-07-29 06:14:55.489660 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695489660*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:251'/*!*/;
+# at 97501
+#260729  6:14:55 server id 1  end_log_pos 97589 CRC32 0x8f17d0a7 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.489470/*!*/;
+BEGIN
+/*!*/;
+# at 97589
+#260729  6:14:55 server id 1  end_log_pos 97646 CRC32 0xa4684333 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 97646
+#260729  6:14:55 server id 1  end_log_pos 97701 CRC32 0xf0d2b812 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAG59AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAzQ2ik
+X5ppah4BAAAANwAAAKV9AQAAAHcBAAAAAAEAAgAD/wD1BAAAAAAAANAHAACZunpjtxMaErjS8A==
+'/*!*/;
+# at 97701
+#260729  6:14:55 server id 1  end_log_pos 97732 CRC32 0xd4dbbbbc 	Xid = 3343
+COMMIT/*!*/;
+# at 97732
+#260729  6:14:55 server id 1  end_log_pos 97811 CRC32 0xf74a59ca 	GTID	last_committed=4	sequence_number=252	rbr_only=yes	original_committed_timestamp=1785305695490208	immediate_commit_timestamp=1785305695490208	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695490208 (2026-07-29 06:14:55.490208 UTC)
+# immediate_commit_timestamp=1785305695490208 (2026-07-29 06:14:55.490208 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695490208*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:252'/*!*/;
+# at 97811
+#260729  6:14:55 server id 1  end_log_pos 97899 CRC32 0x34c7c4dc 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.489987/*!*/;
+BEGIN
+/*!*/;
+# at 97899
+#260729  6:14:55 server id 1  end_log_pos 97956 CRC32 0x27faf976 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 97956
+#260729  6:14:55 server id 1  end_log_pos 98011 CRC32 0x9baa2f02 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKR+AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB2+fon
+X5ppah4BAAAANwAAANt+AQAAAHcBAAAAAAEAAgAD/wD2BAAAAAAAANAHAACZunpjtxMaAi+qmw==
+'/*!*/;
+# at 98011
+#260729  6:14:55 server id 1  end_log_pos 98042 CRC32 0xacc7e5c1 	Xid = 3344
+COMMIT/*!*/;
+# at 98042
+#260729  6:14:55 server id 1  end_log_pos 98121 CRC32 0xe52ebd2b 	GTID	last_committed=4	sequence_number=253	rbr_only=yes	original_committed_timestamp=1785305695490964	immediate_commit_timestamp=1785305695490964	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695490964 (2026-07-29 06:14:55.490964 UTC)
+# immediate_commit_timestamp=1785305695490964 (2026-07-29 06:14:55.490964 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695490964*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:253'/*!*/;
+# at 98121
+#260729  6:14:55 server id 1  end_log_pos 98209 CRC32 0xc51ce4ff 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.490654/*!*/;
+BEGIN
+/*!*/;
+# at 98209
+#260729  6:14:55 server id 1  end_log_pos 98266 CRC32 0xe55f1309 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 98266
+#260729  6:14:55 server id 1  end_log_pos 98321 CRC32 0xd610519c 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANp/AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAJE1/l
+X5ppah4BAAAANwAAABGAAQAAAHcBAAAAAAEAAgAD/wD3BAAAAAAAANAHAACZunpjtxMknFEQ1g==
+'/*!*/;
+# at 98321
+#260729  6:14:55 server id 1  end_log_pos 98352 CRC32 0x90e872f4 	Xid = 3345
+COMMIT/*!*/;
+# at 98352
+#260729  6:14:55 server id 1  end_log_pos 98431 CRC32 0x9b1e951a 	GTID	last_committed=4	sequence_number=254	rbr_only=yes	original_committed_timestamp=1785305695493482	immediate_commit_timestamp=1785305695493482	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695493482 (2026-07-29 06:14:55.493482 UTC)
+# immediate_commit_timestamp=1785305695493482 (2026-07-29 06:14:55.493482 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695493482*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:254'/*!*/;
+# at 98431
+#260729  6:14:55 server id 1  end_log_pos 98519 CRC32 0x3bf9cd4b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.491597/*!*/;
+BEGIN
+/*!*/;
+# at 98519
+#260729  6:14:55 server id 1  end_log_pos 98576 CRC32 0x0c0fee18 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 98576
+#260729  6:14:55 server id 1  end_log_pos 98631 CRC32 0x60900d87 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABCBAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAY7g8M
+X5ppah4BAAAANwAAAEeBAQAAAHcBAAAAAAEAAgAD/wD4BAAAAAAAANAHAACZunpjtxMuhw2QYA==
+'/*!*/;
+# at 98631
+#260729  6:14:55 server id 1  end_log_pos 98662 CRC32 0x1c382cb9 	Xid = 3346
+COMMIT/*!*/;
+# at 98662
+#260729  6:14:55 server id 1  end_log_pos 98741 CRC32 0xd8c00a88 	GTID	last_committed=4	sequence_number=255	rbr_only=yes	original_committed_timestamp=1785305695494171	immediate_commit_timestamp=1785305695494171	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695494171 (2026-07-29 06:14:55.494171 UTC)
+# immediate_commit_timestamp=1785305695494171 (2026-07-29 06:14:55.494171 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695494171*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:255'/*!*/;
+# at 98741
+#260729  6:14:55 server id 1  end_log_pos 98829 CRC32 0xbb75bc52 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.493969/*!*/;
+BEGIN
+/*!*/;
+# at 98829
+#260729  6:14:55 server id 1  end_log_pos 98886 CRC32 0x1b749377 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 98886
+#260729  6:14:55 server id 1  end_log_pos 98941 CRC32 0xdbb08b29 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEaCAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB3k3Qb
+X5ppah4BAAAANwAAAH2CAQAAAHcBAAAAAAEAAgAD/wD5BAAAAAAAANAHAACZunpjtxNCKYuw2w==
+'/*!*/;
+# at 98941
+#260729  6:14:55 server id 1  end_log_pos 98972 CRC32 0xd673c6d5 	Xid = 3347
+COMMIT/*!*/;
+# at 98972
+#260729  6:14:55 server id 1  end_log_pos 99051 CRC32 0x54edaab3 	GTID	last_committed=4	sequence_number=256	rbr_only=yes	original_committed_timestamp=1785305695494813	immediate_commit_timestamp=1785305695494813	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695494813 (2026-07-29 06:14:55.494813 UTC)
+# immediate_commit_timestamp=1785305695494813 (2026-07-29 06:14:55.494813 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695494813*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:256'/*!*/;
+# at 99051
+#260729  6:14:55 server id 1  end_log_pos 99139 CRC32 0xdb5c77bc 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.494602/*!*/;
+BEGIN
+/*!*/;
+# at 99139
+#260729  6:14:55 server id 1  end_log_pos 99196 CRC32 0x6c2e39ad 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 99196
+#260729  6:14:55 server id 1  end_log_pos 99251 CRC32 0x25878218 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHyDAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCtOS5s
+X5ppah4BAAAANwAAALODAQAAAHcBAAAAAAEAAgAD/wD6BAAAAAAAANAHAACZunpjtxNMGIKHJQ==
+'/*!*/;
+# at 99251
+#260729  6:14:55 server id 1  end_log_pos 99282 CRC32 0x8b02b438 	Xid = 3348
+COMMIT/*!*/;
+# at 99282
+#260729  6:14:55 server id 1  end_log_pos 99361 CRC32 0x38524b44 	GTID	last_committed=4	sequence_number=257	rbr_only=yes	original_committed_timestamp=1785305695495425	immediate_commit_timestamp=1785305695495425	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695495425 (2026-07-29 06:14:55.495425 UTC)
+# immediate_commit_timestamp=1785305695495425 (2026-07-29 06:14:55.495425 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695495425*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:257'/*!*/;
+# at 99361
+#260729  6:14:55 server id 1  end_log_pos 99449 CRC32 0xdad8f301 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.495213/*!*/;
+BEGIN
+/*!*/;
+# at 99449
+#260729  6:14:55 server id 1  end_log_pos 99506 CRC32 0xde68e8d2 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 99506
+#260729  6:14:55 server id 1  end_log_pos 99561 CRC32 0x42dea1ec 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALKEAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDS6Gje
+X5ppah4BAAAANwAAAOmEAQAAAHcBAAAAAAEAAgAD/wD7BAAAAAAAANAHAACZunpjtxNW7KHeQg==
+'/*!*/;
+# at 99561
+#260729  6:14:55 server id 1  end_log_pos 99592 CRC32 0x9102959f 	Xid = 3349
+COMMIT/*!*/;
+# at 99592
+#260729  6:14:55 server id 1  end_log_pos 99671 CRC32 0xa032ef53 	GTID	last_committed=4	sequence_number=258	rbr_only=yes	original_committed_timestamp=1785305695496085	immediate_commit_timestamp=1785305695496085	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695496085 (2026-07-29 06:14:55.496085 UTC)
+# immediate_commit_timestamp=1785305695496085 (2026-07-29 06:14:55.496085 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695496085*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:258'/*!*/;
+# at 99671
+#260729  6:14:55 server id 1  end_log_pos 99759 CRC32 0x3e486297 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.495873/*!*/;
+BEGIN
+/*!*/;
+# at 99759
+#260729  6:14:55 server id 1  end_log_pos 99816 CRC32 0xfef340cf 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 99816
+#260729  6:14:55 server id 1  end_log_pos 99871 CRC32 0x5a9f5e38 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOiFAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDPQPP+
+X5ppah4BAAAANwAAAB+GAQAAAHcBAAAAAAEAAgAD/wD8BAAAAAAAANAHAACZunpjtxNWOF6fWg==
+'/*!*/;
+# at 99871
+#260729  6:14:55 server id 1  end_log_pos 99902 CRC32 0xf153f1b0 	Xid = 3350
+COMMIT/*!*/;
+# at 99902
+#260729  6:14:55 server id 1  end_log_pos 99981 CRC32 0xcf132cfe 	GTID	last_committed=4	sequence_number=259	rbr_only=yes	original_committed_timestamp=1785305695496663	immediate_commit_timestamp=1785305695496663	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695496663 (2026-07-29 06:14:55.496663 UTC)
+# immediate_commit_timestamp=1785305695496663 (2026-07-29 06:14:55.496663 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695496663*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:259'/*!*/;
+# at 99981
+#260729  6:14:55 server id 1  end_log_pos 100069 CRC32 0x69bf0072 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.496468/*!*/;
+BEGIN
+/*!*/;
+# at 100069
+#260729  6:14:55 server id 1  end_log_pos 100126 CRC32 0x5f423140 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 100126
+#260729  6:14:55 server id 1  end_log_pos 100181 CRC32 0x0e6e9c82 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAB6HAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBAMUJf
+X5ppah4BAAAANwAAAFWHAQAAAHcBAAAAAAEAAgAD/wD9BAAAAAAAANAHAACZunpjtxNggpxuDg==
+'/*!*/;
+# at 100181
+#260729  6:14:55 server id 1  end_log_pos 100212 CRC32 0x73e105c1 	Xid = 3351
+COMMIT/*!*/;
+# at 100212
+#260729  6:14:55 server id 1  end_log_pos 100291 CRC32 0x6187c855 	GTID	last_committed=4	sequence_number=260	rbr_only=yes	original_committed_timestamp=1785305695497181	immediate_commit_timestamp=1785305695497181	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695497181 (2026-07-29 06:14:55.497181 UTC)
+# immediate_commit_timestamp=1785305695497181 (2026-07-29 06:14:55.497181 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695497181*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:260'/*!*/;
+# at 100291
+#260729  6:14:55 server id 1  end_log_pos 100379 CRC32 0xc6417499 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.496967/*!*/;
+BEGIN
+/*!*/;
+# at 100379
+#260729  6:14:55 server id 1  end_log_pos 100436 CRC32 0xeea2f29f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 100436
+#260729  6:14:55 server id 1  end_log_pos 100491 CRC32 0xca379867 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFSIAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCf8qLu
+X5ppah4BAAAANwAAAIuIAQAAAHcBAAAAAAEAAgAD/wD+BAAAAAAAANAHAACZunpjtxNgZ5g3yg==
+'/*!*/;
+# at 100491
+#260729  6:14:55 server id 1  end_log_pos 100522 CRC32 0xe252b3a7 	Xid = 3352
+COMMIT/*!*/;
+# at 100522
+#260729  6:14:55 server id 1  end_log_pos 100601 CRC32 0xbda8e75d 	GTID	last_committed=4	sequence_number=261	rbr_only=yes	original_committed_timestamp=1785305695499064	immediate_commit_timestamp=1785305695499064	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695499064 (2026-07-29 06:14:55.499064 UTC)
+# immediate_commit_timestamp=1785305695499064 (2026-07-29 06:14:55.499064 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695499064*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:261'/*!*/;
+# at 100601
+#260729  6:14:55 server id 1  end_log_pos 100689 CRC32 0x2f395c3d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.498792/*!*/;
+BEGIN
+/*!*/;
+# at 100689
+#260729  6:14:55 server id 1  end_log_pos 100746 CRC32 0xd4441fa9 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 100746
+#260729  6:14:55 server id 1  end_log_pos 100801 CRC32 0x4ba61b39 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIqJAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCpH0TU
+X5ppah4BAAAANwAAAMGJAQAAAHcBAAAAAAEAAgAD/wD/BAAAAAAAANAHAACZunpjtxN0ORumSw==
+'/*!*/;
+# at 100801
+#260729  6:14:55 server id 1  end_log_pos 100832 CRC32 0x60e047d6 	Xid = 3353
+COMMIT/*!*/;
+# at 100832
+#260729  6:14:55 server id 1  end_log_pos 100911 CRC32 0x0e19fea2 	GTID	last_committed=4	sequence_number=262	rbr_only=yes	original_committed_timestamp=1785305695499725	immediate_commit_timestamp=1785305695499725	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695499725 (2026-07-29 06:14:55.499725 UTC)
+# immediate_commit_timestamp=1785305695499725 (2026-07-29 06:14:55.499725 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695499725*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:262'/*!*/;
+# at 100911
+#260729  6:14:55 server id 1  end_log_pos 100999 CRC32 0x948a93fd 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.499512/*!*/;
+BEGIN
+/*!*/;
+# at 100999
+#260729  6:14:55 server id 1  end_log_pos 101056 CRC32 0x9d2aa318 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 101056
+#260729  6:14:55 server id 1  end_log_pos 101111 CRC32 0x21768736 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMCKAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAYoyqd
+X5ppah4BAAAANwAAAPeKAQAAAHcBAAAAAAEAAgAD/wAABQAAAAAAANAHAACZunpjtxN+Nod2IQ==
+'/*!*/;
+# at 101111
+#260729  6:14:55 server id 1  end_log_pos 101142 CRC32 0x1fede26f 	Xid = 3354
+COMMIT/*!*/;
+# at 101142
+#260729  6:14:55 server id 1  end_log_pos 101221 CRC32 0xc3a5eb31 	GTID	last_committed=4	sequence_number=263	rbr_only=yes	original_committed_timestamp=1785305695500356	immediate_commit_timestamp=1785305695500356	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695500356 (2026-07-29 06:14:55.500356 UTC)
+# immediate_commit_timestamp=1785305695500356 (2026-07-29 06:14:55.500356 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695500356*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:263'/*!*/;
+# at 101221
+#260729  6:14:55 server id 1  end_log_pos 101309 CRC32 0xb3f29eac 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.500148/*!*/;
+BEGIN
+/*!*/;
+# at 101309
+#260729  6:14:55 server id 1  end_log_pos 101366 CRC32 0x4082cbe2 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 101366
+#260729  6:14:55 server id 1  end_log_pos 101421 CRC32 0xc2a39521 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPaLAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDiy4JA
+X5ppah4BAAAANwAAAC2MAQAAAHcBAAAAAAEAAgAD/wABBQAAAAAAANAHAACZunpjtxOIIZWjwg==
+'/*!*/;
+# at 101421
+#260729  6:14:55 server id 1  end_log_pos 101452 CRC32 0x5b08f5af 	Xid = 3355
+COMMIT/*!*/;
+# at 101452
+#260729  6:14:55 server id 1  end_log_pos 101531 CRC32 0xbb660ec6 	GTID	last_committed=4	sequence_number=264	rbr_only=yes	original_committed_timestamp=1785305695501045	immediate_commit_timestamp=1785305695501045	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695501045 (2026-07-29 06:14:55.501045 UTC)
+# immediate_commit_timestamp=1785305695501045 (2026-07-29 06:14:55.501045 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695501045*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:264'/*!*/;
+# at 101531
+#260729  6:14:55 server id 1  end_log_pos 101619 CRC32 0x58b579fb 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.500810/*!*/;
+BEGIN
+/*!*/;
+# at 101619
+#260729  6:14:55 server id 1  end_log_pos 101676 CRC32 0x982b5115 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 101676
+#260729  6:14:55 server id 1  end_log_pos 101731 CRC32 0x76ec39b8 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACyNAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAVUSuY
+X5ppah4BAAAANwAAAGONAQAAAHcBAAAAAAEAAgAD/wACBQAAAAAAANAHAACZunpjtxOIuDnsdg==
+'/*!*/;
+# at 101731
+#260729  6:14:55 server id 1  end_log_pos 101762 CRC32 0x850a68a0 	Xid = 3356
+COMMIT/*!*/;
+# at 101762
+#260729  6:14:55 server id 1  end_log_pos 101841 CRC32 0x23660c8c 	GTID	last_committed=4	sequence_number=265	rbr_only=yes	original_committed_timestamp=1785305695501730	immediate_commit_timestamp=1785305695501730	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695501730 (2026-07-29 06:14:55.501730 UTC)
+# immediate_commit_timestamp=1785305695501730 (2026-07-29 06:14:55.501730 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695501730*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:265'/*!*/;
+# at 101841
+#260729  6:14:55 server id 1  end_log_pos 101929 CRC32 0xc59c22a2 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.501525/*!*/;
+BEGIN
+/*!*/;
+# at 101929
+#260729  6:14:55 server id 1  end_log_pos 101986 CRC32 0x01c4ae7b 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 101986
+#260729  6:14:55 server id 1  end_log_pos 102041 CRC32 0x623224c7 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGKOAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB7rsQB
+X5ppah4BAAAANwAAAJmOAQAAAHcBAAAAAAEAAgAD/wADBQAAAAAAANAHAACZunpjtxOSxyQyYg==
+'/*!*/;
+# at 102041
+#260729  6:14:55 server id 1  end_log_pos 102072 CRC32 0x8d8b9adf 	Xid = 3357
+COMMIT/*!*/;
+# at 102072
+#260729  6:14:55 server id 1  end_log_pos 102151 CRC32 0xf6cd2926 	GTID	last_committed=4	sequence_number=266	rbr_only=yes	original_committed_timestamp=1785305695502394	immediate_commit_timestamp=1785305695502394	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695502394 (2026-07-29 06:14:55.502394 UTC)
+# immediate_commit_timestamp=1785305695502394 (2026-07-29 06:14:55.502394 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695502394*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:266'/*!*/;
+# at 102151
+#260729  6:14:55 server id 1  end_log_pos 102239 CRC32 0x1ba22875 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.502196/*!*/;
+BEGIN
+/*!*/;
+# at 102239
+#260729  6:14:55 server id 1  end_log_pos 102296 CRC32 0xd91c012f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 102296
+#260729  6:14:55 server id 1  end_log_pos 102351 CRC32 0xda7ea140 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJiPAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAvARzZ
+X5ppah4BAAAANwAAAM+PAQAAAHcBAAAAAAEAAgAD/wAEBQAAAAAAANAHAACZunpjtxOcQKF+2g==
+'/*!*/;
+# at 102351
+#260729  6:14:55 server id 1  end_log_pos 102382 CRC32 0x015bc492 	Xid = 3358
+COMMIT/*!*/;
+# at 102382
+#260729  6:14:55 server id 1  end_log_pos 102461 CRC32 0xc79dd6bd 	GTID	last_committed=4	sequence_number=267	rbr_only=yes	original_committed_timestamp=1785305695503061	immediate_commit_timestamp=1785305695503061	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695503061 (2026-07-29 06:14:55.503061 UTC)
+# immediate_commit_timestamp=1785305695503061 (2026-07-29 06:14:55.503061 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695503061*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:267'/*!*/;
+# at 102461
+#260729  6:14:55 server id 1  end_log_pos 102549 CRC32 0x19ff482c 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.502853/*!*/;
+BEGIN
+/*!*/;
+# at 102549
+#260729  6:14:55 server id 1  end_log_pos 102606 CRC32 0x055fac38 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 102606
+#260729  6:14:55 server id 1  end_log_pos 102661 CRC32 0x665de6d0 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAM6QAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA4rF8F
+X5ppah4BAAAANwAAAAWRAQAAAHcBAAAAAAEAAgAD/wAFBQAAAAAAANAHAACZunpjtxOc0OZdZg==
+'/*!*/;
+# at 102661
+#260729  6:14:55 server id 1  end_log_pos 102692 CRC32 0x93edacee 	Xid = 3359
+COMMIT/*!*/;
+# at 102692
+#260729  6:14:55 server id 1  end_log_pos 102771 CRC32 0x743846af 	GTID	last_committed=4	sequence_number=268	rbr_only=yes	original_committed_timestamp=1785305695503883	immediate_commit_timestamp=1785305695503883	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695503883 (2026-07-29 06:14:55.503883 UTC)
+# immediate_commit_timestamp=1785305695503883 (2026-07-29 06:14:55.503883 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695503883*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:268'/*!*/;
+# at 102771
+#260729  6:14:55 server id 1  end_log_pos 102859 CRC32 0x8aed11c2 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.503608/*!*/;
+BEGIN
+/*!*/;
+# at 102859
+#260729  6:14:55 server id 1  end_log_pos 102916 CRC32 0xc8441dd4 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 102916
+#260729  6:14:55 server id 1  end_log_pos 102971 CRC32 0x70716f05 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAASSAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDUHUTI
+X5ppah4BAAAANwAAADuSAQAAAHcBAAAAAAEAAgAD/wAGBQAAAAAAANAHAACZunpjtxOmBW9xcA==
+'/*!*/;
+# at 102971
+#260729  6:14:55 server id 1  end_log_pos 103002 CRC32 0x533e6734 	Xid = 3360
+COMMIT/*!*/;
+# at 103002
+#260729  6:14:55 server id 1  end_log_pos 103081 CRC32 0x4fe084db 	GTID	last_committed=4	sequence_number=269	rbr_only=yes	original_committed_timestamp=1785305695506258	immediate_commit_timestamp=1785305695506258	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695506258 (2026-07-29 06:14:55.506258 UTC)
+# immediate_commit_timestamp=1785305695506258 (2026-07-29 06:14:55.506258 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695506258*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:269'/*!*/;
+# at 103081
+#260729  6:14:55 server id 1  end_log_pos 103169 CRC32 0xb67edbdc 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.504354/*!*/;
+BEGIN
+/*!*/;
+# at 103169
+#260729  6:14:55 server id 1  end_log_pos 103226 CRC32 0x6f9ff4d1 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 103226
+#260729  6:14:55 server id 1  end_log_pos 103281 CRC32 0x1fee8d77 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADqTAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDR9J9v
+X5ppah4BAAAANwAAAHGTAQAAAHcBAAAAAAEAAgAD/wAHBQAAAAAAANAHAACZunpjtxOwd43uHw==
+'/*!*/;
+# at 103281
+#260729  6:14:55 server id 1  end_log_pos 103312 CRC32 0x52ff7ca7 	Xid = 3361
+COMMIT/*!*/;
+# at 103312
+#260729  6:14:55 server id 1  end_log_pos 103391 CRC32 0x295adf0d 	GTID	last_committed=4	sequence_number=270	rbr_only=yes	original_committed_timestamp=1785305695506800	immediate_commit_timestamp=1785305695506800	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695506800 (2026-07-29 06:14:55.506800 UTC)
+# immediate_commit_timestamp=1785305695506800 (2026-07-29 06:14:55.506800 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695506800*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:270'/*!*/;
+# at 103391
+#260729  6:14:55 server id 1  end_log_pos 103479 CRC32 0xc2f240ae 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.506585/*!*/;
+BEGIN
+/*!*/;
+# at 103479
+#260729  6:14:55 server id 1  end_log_pos 103536 CRC32 0xc7a46085 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 103536
+#260729  6:14:55 server id 1  end_log_pos 103591 CRC32 0x07d17b38 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHCUAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCFYKTH
+X5ppah4BAAAANwAAAKeUAQAAAHcBAAAAAAEAAgAD/wAIBQAAAAAAANAHAACZunpjtxPEOHvRBw==
+'/*!*/;
+# at 103591
+#260729  6:14:55 server id 1  end_log_pos 103622 CRC32 0x7ecafd37 	Xid = 3362
+COMMIT/*!*/;
+# at 103622
+#260729  6:14:55 server id 1  end_log_pos 103701 CRC32 0x5b889411 	GTID	last_committed=4	sequence_number=271	rbr_only=yes	original_committed_timestamp=1785305695507539	immediate_commit_timestamp=1785305695507539	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695507539 (2026-07-29 06:14:55.507539 UTC)
+# immediate_commit_timestamp=1785305695507539 (2026-07-29 06:14:55.507539 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695507539*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:271'/*!*/;
+# at 103701
+#260729  6:14:55 server id 1  end_log_pos 103789 CRC32 0xcaf99159 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.507261/*!*/;
+BEGIN
+/*!*/;
+# at 103789
+#260729  6:14:55 server id 1  end_log_pos 103846 CRC32 0x87310c4c 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 103846
+#260729  6:14:55 server id 1  end_log_pos 103901 CRC32 0x79e9d6f3 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKaVAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBMDDGH
+X5ppah4BAAAANwAAAN2VAQAAAHcBAAAAAAEAAgAD/wAJBQAAAAAAANAHAACZunpjtxPO89bpeQ==
+'/*!*/;
+# at 103901
+#260729  6:14:55 server id 1  end_log_pos 103932 CRC32 0x1617ba03 	Xid = 3363
+COMMIT/*!*/;
+# at 103932
+#260729  6:14:55 server id 1  end_log_pos 104011 CRC32 0x21470b40 	GTID	last_committed=4	sequence_number=272	rbr_only=yes	original_committed_timestamp=1785305695508219	immediate_commit_timestamp=1785305695508219	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695508219 (2026-07-29 06:14:55.508219 UTC)
+# immediate_commit_timestamp=1785305695508219 (2026-07-29 06:14:55.508219 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695508219*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:272'/*!*/;
+# at 104011
+#260729  6:14:55 server id 1  end_log_pos 104099 CRC32 0xdd50f1d8 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.508011/*!*/;
+BEGIN
+/*!*/;
+# at 104099
+#260729  6:14:55 server id 1  end_log_pos 104156 CRC32 0x0807b2be 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 104156
+#260729  6:14:55 server id 1  end_log_pos 104211 CRC32 0xced378f4 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANyWAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC+sgcI
+X5ppah4BAAAANwAAABOXAQAAAHcBAAAAAAEAAgAD/wAKBQAAAAAAANAHAACZunpjtxPY9HjTzg==
+'/*!*/;
+# at 104211
+#260729  6:14:55 server id 1  end_log_pos 104242 CRC32 0x75df4bc2 	Xid = 3364
+COMMIT/*!*/;
+# at 104242
+#260729  6:14:55 server id 1  end_log_pos 104321 CRC32 0x971d4d0b 	GTID	last_committed=4	sequence_number=273	rbr_only=yes	original_committed_timestamp=1785305695508843	immediate_commit_timestamp=1785305695508843	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695508843 (2026-07-29 06:14:55.508843 UTC)
+# immediate_commit_timestamp=1785305695508843 (2026-07-29 06:14:55.508843 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695508843*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:273'/*!*/;
+# at 104321
+#260729  6:14:55 server id 1  end_log_pos 104409 CRC32 0x861b9100 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.508641/*!*/;
+BEGIN
+/*!*/;
+# at 104409
+#260729  6:14:55 server id 1  end_log_pos 104466 CRC32 0xed133fe3 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 104466
+#260729  6:14:55 server id 1  end_log_pos 104521 CRC32 0x884e0f04 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABKYAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDjPxPt
+X5ppah4BAAAANwAAAEmYAQAAAHcBAAAAAAEAAgAD/wALBQAAAAAAANAHAACZunpjtxPYBA9OiA==
+'/*!*/;
+# at 104521
+#260729  6:14:55 server id 1  end_log_pos 104552 CRC32 0x6b398f6f 	Xid = 3365
+COMMIT/*!*/;
+# at 104552
+#260729  6:14:55 server id 1  end_log_pos 104631 CRC32 0x02c39802 	GTID	last_committed=4	sequence_number=274	rbr_only=yes	original_committed_timestamp=1785305695509457	immediate_commit_timestamp=1785305695509457	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695509457 (2026-07-29 06:14:55.509457 UTC)
+# immediate_commit_timestamp=1785305695509457 (2026-07-29 06:14:55.509457 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695509457*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:274'/*!*/;
+# at 104631
+#260729  6:14:55 server id 1  end_log_pos 104719 CRC32 0x414fe4f7 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.509270/*!*/;
+BEGIN
+/*!*/;
+# at 104719
+#260729  6:14:55 server id 1  end_log_pos 104776 CRC32 0xcd8897fe 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 104776
+#260729  6:14:55 server id 1  end_log_pos 104831 CRC32 0x1afa59da 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEiZAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQD+l4jN
+X5ppah4BAAAANwAAAH+ZAQAAAHcBAAAAAAEAAgAD/wAMBQAAAAAAANAHAACZunpjtxPi2ln6Gg==
+'/*!*/;
+# at 104831
+#260729  6:14:55 server id 1  end_log_pos 104862 CRC32 0xa9fe4618 	Xid = 3366
+COMMIT/*!*/;
+# at 104862
+#260729  6:14:55 server id 1  end_log_pos 104941 CRC32 0x814b8773 	GTID	last_committed=4	sequence_number=275	rbr_only=yes	original_committed_timestamp=1785305695510097	immediate_commit_timestamp=1785305695510097	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695510097 (2026-07-29 06:14:55.510097 UTC)
+# immediate_commit_timestamp=1785305695510097 (2026-07-29 06:14:55.510097 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695510097*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:275'/*!*/;
+# at 104941
+#260729  6:14:55 server id 1  end_log_pos 105029 CRC32 0x76d4e34d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.509890/*!*/;
+BEGIN
+/*!*/;
+# at 105029
+#260729  6:14:55 server id 1  end_log_pos 105086 CRC32 0x8d32e856 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 105086
+#260729  6:14:55 server id 1  end_log_pos 105141 CRC32 0xf6e0ae29 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAH6aAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBW6DKN
+X5ppah4BAAAANwAAALWaAQAAAHcBAAAAAAEAAgAD/wANBQAAAAAAANAHAACZunpjtxPiKa7g9g==
+'/*!*/;
+# at 105141
+#260729  6:14:55 server id 1  end_log_pos 105172 CRC32 0x4b100722 	Xid = 3367
+COMMIT/*!*/;
+# at 105172
+#260729  6:14:55 server id 1  end_log_pos 105251 CRC32 0x74a90419 	GTID	last_committed=4	sequence_number=276	rbr_only=yes	original_committed_timestamp=1785305695512147	immediate_commit_timestamp=1785305695512147	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695512147 (2026-07-29 06:14:55.512147 UTC)
+# immediate_commit_timestamp=1785305695512147 (2026-07-29 06:14:55.512147 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695512147*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:276'/*!*/;
+# at 105251
+#260729  6:14:55 server id 1  end_log_pos 105339 CRC32 0xe44929df 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.511918/*!*/;
+BEGIN
+/*!*/;
+# at 105339
+#260729  6:14:55 server id 1  end_log_pos 105396 CRC32 0x93b24541 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 105396
+#260729  6:14:55 server id 1  end_log_pos 105451 CRC32 0xedc725a0 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALSbAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBBRbKT
+X5ppah4BAAAANwAAAOubAQAAAHcBAAAAAAEAAgAD/wAOBQAAAAAAANAHAACZunpjtxP2oCXH7Q==
+'/*!*/;
+# at 105451
+#260729  6:14:55 server id 1  end_log_pos 105482 CRC32 0x5d36bbac 	Xid = 3368
+COMMIT/*!*/;
+# at 105482
+#260729  6:14:55 server id 1  end_log_pos 105561 CRC32 0x223dc7ce 	GTID	last_committed=4	sequence_number=277	rbr_only=yes	original_committed_timestamp=1785305695512801	immediate_commit_timestamp=1785305695512801	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695512801 (2026-07-29 06:14:55.512801 UTC)
+# immediate_commit_timestamp=1785305695512801 (2026-07-29 06:14:55.512801 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695512801*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:277'/*!*/;
+# at 105561
+#260729  6:14:55 server id 1  end_log_pos 105649 CRC32 0x6324c8f0 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.512600/*!*/;
+BEGIN
+/*!*/;
+# at 105649
+#260729  6:14:55 server id 1  end_log_pos 105706 CRC32 0x1fef9134 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 105706
+#260729  6:14:55 server id 1  end_log_pos 105761 CRC32 0xf4e1521d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOqcAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA0ke8f
+X5ppah4BAAAANwAAACGdAQAAAHcBAAAAAAEAAgAD/wAPBQAAAAAAANAHAACZunpjtxQAHVLh9A==
+'/*!*/;
+# at 105761
+#260729  6:14:55 server id 1  end_log_pos 105792 CRC32 0xdf844fdd 	Xid = 3369
+COMMIT/*!*/;
+# at 105792
+#260729  6:14:55 server id 1  end_log_pos 105871 CRC32 0x421c0001 	GTID	last_committed=4	sequence_number=278	rbr_only=yes	original_committed_timestamp=1785305695513498	immediate_commit_timestamp=1785305695513498	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695513498 (2026-07-29 06:14:55.513498 UTC)
+# immediate_commit_timestamp=1785305695513498 (2026-07-29 06:14:55.513498 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695513498*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:278'/*!*/;
+# at 105871
+#260729  6:14:55 server id 1  end_log_pos 105959 CRC32 0x9c9ed185 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.513309/*!*/;
+BEGIN
+/*!*/;
+# at 105959
+#260729  6:14:55 server id 1  end_log_pos 106016 CRC32 0xd2f420d8 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 106016
+#260729  6:14:55 server id 1  end_log_pos 106071 CRC32 0x3ba6fde8 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACCeAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDYIPTS
+X5ppah4BAAAANwAAAFeeAQAAAHcBAAAAAAEAAgAD/wAQBQAAAAAAANAHAACZunpjtxQK6P2mOw==
+'/*!*/;
+# at 106071
+#260729  6:14:55 server id 1  end_log_pos 106102 CRC32 0xbfd52bf2 	Xid = 3370
+COMMIT/*!*/;
+# at 106102
+#260729  6:14:55 server id 1  end_log_pos 106181 CRC32 0x7afdd20c 	GTID	last_committed=4	sequence_number=279	rbr_only=yes	original_committed_timestamp=1785305695514272	immediate_commit_timestamp=1785305695514272	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695514272 (2026-07-29 06:14:55.514272 UTC)
+# immediate_commit_timestamp=1785305695514272 (2026-07-29 06:14:55.514272 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695514272*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:279'/*!*/;
+# at 106181
+#260729  6:14:55 server id 1  end_log_pos 106269 CRC32 0x765d4015 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.513980/*!*/;
+BEGIN
+/*!*/;
+# at 106269
+#260729  6:14:55 server id 1  end_log_pos 106326 CRC32 0x6a224b58 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 106326
+#260729  6:14:55 server id 1  end_log_pos 106381 CRC32 0xb89fd109 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFafAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBYSyJq
+X5ppah4BAAAANwAAAI2fAQAAAHcBAAAAAAEAAgAD/wARBQAAAAAAANAHAACZunpjtxQKCdGfuA==
+'/*!*/;
+# at 106381
+#260729  6:14:55 server id 1  end_log_pos 106412 CRC32 0xd8a60c0d 	Xid = 3371
+COMMIT/*!*/;
+# at 106412
+#260729  6:14:55 server id 1  end_log_pos 106491 CRC32 0xd4d56574 	GTID	last_committed=4	sequence_number=280	rbr_only=yes	original_committed_timestamp=1785305695514986	immediate_commit_timestamp=1785305695514986	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695514986 (2026-07-29 06:14:55.514986 UTC)
+# immediate_commit_timestamp=1785305695514986 (2026-07-29 06:14:55.514986 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695514986*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:280'/*!*/;
+# at 106491
+#260729  6:14:55 server id 1  end_log_pos 106579 CRC32 0x6994219b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.514784/*!*/;
+BEGIN
+/*!*/;
+# at 106579
+#260729  6:14:55 server id 1  end_log_pos 106636 CRC32 0xb1027cb7 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 106636
+#260729  6:14:55 server id 1  end_log_pos 106691 CRC32 0x38ff768a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIygAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC3fAKx
+X5ppah4BAAAANwAAAMOgAQAAAHcBAAAAAAEAAgAD/wASBQAAAAAAANAHAACZunpjtxQUinb/OA==
+'/*!*/;
+# at 106691
+#260729  6:14:55 server id 1  end_log_pos 106722 CRC32 0x78489f7f 	Xid = 3372
+COMMIT/*!*/;
+# at 106722
+#260729  6:14:55 server id 1  end_log_pos 106801 CRC32 0x6d3fde61 	GTID	last_committed=4	sequence_number=281	rbr_only=yes	original_committed_timestamp=1785305695515750	immediate_commit_timestamp=1785305695515750	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695515750 (2026-07-29 06:14:55.515750 UTC)
+# immediate_commit_timestamp=1785305695515750 (2026-07-29 06:14:55.515750 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695515750*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:281'/*!*/;
+# at 106801
+#260729  6:14:55 server id 1  end_log_pos 106889 CRC32 0x47b3b1a4 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.515552/*!*/;
+BEGIN
+/*!*/;
+# at 106889
+#260729  6:14:55 server id 1  end_log_pos 106946 CRC32 0xb5ff948b 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 106946
+#260729  6:14:55 server id 1  end_log_pos 107001 CRC32 0xfd9f1c36 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMKhAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCLlP+1
+X5ppah4BAAAANwAAAPmhAQAAAHcBAAAAAAEAAgAD/wATBQAAAAAAANAHAACZunpjtxQeNhyf/Q==
+'/*!*/;
+# at 107001
+#260729  6:14:55 server id 1  end_log_pos 107032 CRC32 0x6f95ac96 	Xid = 3373
+COMMIT/*!*/;
+# at 107032
+#260729  6:14:55 server id 1  end_log_pos 107111 CRC32 0x94dffb6c 	GTID	last_committed=4	sequence_number=282	rbr_only=yes	original_committed_timestamp=1785305695516478	immediate_commit_timestamp=1785305695516478	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695516478 (2026-07-29 06:14:55.516478 UTC)
+# immediate_commit_timestamp=1785305695516478 (2026-07-29 06:14:55.516478 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695516478*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:282'/*!*/;
+# at 107111
+#260729  6:14:55 server id 1  end_log_pos 107199 CRC32 0xcf13b9e9 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.516255/*!*/;
+BEGIN
+/*!*/;
+# at 107199
+#260729  6:14:55 server id 1  end_log_pos 107256 CRC32 0x5fb72903 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 107256
+#260729  6:14:55 server id 1  end_log_pos 107311 CRC32 0x9a7096e0 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPiiAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQADKbdf
+X5ppah4BAAAANwAAAC+jAQAAAHcBAAAAAAEAAgAD/wAUBQAAAAAAANAHAACZunpjtxQo4JZwmg==
+'/*!*/;
+# at 107311
+#260729  6:14:55 server id 1  end_log_pos 107342 CRC32 0xe345f2db 	Xid = 3374
+COMMIT/*!*/;
+# at 107342
+#260729  6:14:55 server id 1  end_log_pos 107421 CRC32 0xecbdbbf7 	GTID	last_committed=4	sequence_number=283	rbr_only=yes	original_committed_timestamp=1785305695518951	immediate_commit_timestamp=1785305695518951	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695518951 (2026-07-29 06:14:55.518951 UTC)
+# immediate_commit_timestamp=1785305695518951 (2026-07-29 06:14:55.518951 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695518951*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:283'/*!*/;
+# at 107421
+#260729  6:14:55 server id 1  end_log_pos 107509 CRC32 0x764409cd 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.518179/*!*/;
+BEGIN
+/*!*/;
+# at 107509
+#260729  6:14:55 server id 1  end_log_pos 107566 CRC32 0x2dec71d4 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 107566
+#260729  6:14:55 server id 1  end_log_pos 107621 CRC32 0xaf236b7e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAC6kAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDUcewt
+X5ppah4BAAAANwAAAGWkAQAAAHcBAAAAAAEAAgAD/wAVBQAAAAAAANAHAACZunpjtxQ8fmsjrw==
+'/*!*/;
+# at 107621
+#260729  6:14:55 server id 1  end_log_pos 107652 CRC32 0x42613695 	Xid = 3375
+COMMIT/*!*/;
+# at 107652
+#260729  6:14:55 server id 1  end_log_pos 107731 CRC32 0x38d1fda6 	GTID	last_committed=4	sequence_number=284	rbr_only=yes	original_committed_timestamp=1785305695519513	immediate_commit_timestamp=1785305695519513	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695519513 (2026-07-29 06:14:55.519513 UTC)
+# immediate_commit_timestamp=1785305695519513 (2026-07-29 06:14:55.519513 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695519513*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:284'/*!*/;
+# at 107731
+#260729  6:14:55 server id 1  end_log_pos 107819 CRC32 0x0f7488bd 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.519306/*!*/;
+BEGIN
+/*!*/;
+# at 107819
+#260729  6:14:55 server id 1  end_log_pos 107876 CRC32 0xf990da37 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 107876
+#260729  6:14:55 server id 1  end_log_pos 107931 CRC32 0x03dac49c 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGSlAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA32pD5
+X5ppah4BAAAANwAAAJulAQAAAHcBAAAAAAEAAgAD/wAWBQAAAAAAANAHAACZunpjtxRGnMTaAw==
+'/*!*/;
+# at 107931
+#260729  6:14:55 server id 1  end_log_pos 107962 CRC32 0x5a21dda3 	Xid = 3376
+COMMIT/*!*/;
+# at 107962
+#260729  6:14:55 server id 1  end_log_pos 108041 CRC32 0xd9a6193c 	GTID	last_committed=4	sequence_number=285	rbr_only=yes	original_committed_timestamp=1785305695520259	immediate_commit_timestamp=1785305695520259	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695520259 (2026-07-29 06:14:55.520259 UTC)
+# immediate_commit_timestamp=1785305695520259 (2026-07-29 06:14:55.520259 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695520259*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:285'/*!*/;
+# at 108041
+#260729  6:14:55 server id 1  end_log_pos 108129 CRC32 0xb8242c6c 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.519998/*!*/;
+BEGIN
+/*!*/;
+# at 108129
+#260729  6:14:55 server id 1  end_log_pos 108186 CRC32 0x6cdb21ee 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 108186
+#260729  6:14:55 server id 1  end_log_pos 108241 CRC32 0x4200bbc0 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJqmAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDuIdts
+X5ppah4BAAAANwAAANGmAQAAAHcBAAAAAAEAAgAD/wAXBQAAAAAAANAHAACZunpjtxRGwLsAQg==
+'/*!*/;
+# at 108241
+#260729  6:14:55 server id 1  end_log_pos 108272 CRC32 0xb8cf9c99 	Xid = 3377
+COMMIT/*!*/;
+# at 108272
+#260729  6:14:55 server id 1  end_log_pos 108351 CRC32 0x4eb698a5 	GTID	last_committed=4	sequence_number=286	rbr_only=yes	original_committed_timestamp=1785305695521052	immediate_commit_timestamp=1785305695521052	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695521052 (2026-07-29 06:14:55.521052 UTC)
+# immediate_commit_timestamp=1785305695521052 (2026-07-29 06:14:55.521052 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695521052*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:286'/*!*/;
+# at 108351
+#260729  6:14:55 server id 1  end_log_pos 108439 CRC32 0xdcaec65a 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.520796/*!*/;
+BEGIN
+/*!*/;
+# at 108439
+#260729  6:14:55 server id 1  end_log_pos 108496 CRC32 0xb8a78a0d 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 108496
+#260729  6:14:55 server id 1  end_log_pos 108551 CRC32 0xa5d5f79a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANCnAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQANiqe4
+X5ppah4BAAAANwAAAAeoAQAAAHcBAAAAAAEAAgAD/wAYBQAAAAAAANAHAACZunpjtxRQmvfVpQ==
+'/*!*/;
+# at 108551
+#260729  6:14:55 server id 1  end_log_pos 108582 CRC32 0x901cf803 	Xid = 3378
+COMMIT/*!*/;
+# at 108582
+#260729  6:14:55 server id 1  end_log_pos 108661 CRC32 0x518f126d 	GTID	last_committed=4	sequence_number=287	rbr_only=yes	original_committed_timestamp=1785305695521808	immediate_commit_timestamp=1785305695521808	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695521808 (2026-07-29 06:14:55.521808 UTC)
+# immediate_commit_timestamp=1785305695521808 (2026-07-29 06:14:55.521808 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695521808*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:287'/*!*/;
+# at 108661
+#260729  6:14:55 server id 1  end_log_pos 108749 CRC32 0x46e773c9 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.521572/*!*/;
+BEGIN
+/*!*/;
+# at 108749
+#260729  6:14:55 server id 1  end_log_pos 108806 CRC32 0xd3278551 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 108806
+#260729  6:14:55 server id 1  end_log_pos 108861 CRC32 0x60b59d26 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAapAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBRhSfT
+X5ppah4BAAAANwAAAD2pAQAAAHcBAAAAAAEAAgAD/wAZBQAAAAAAANAHAACZunpjtxRaJp21YA==
+'/*!*/;
+# at 108861
+#260729  6:14:55 server id 1  end_log_pos 108892 CRC32 0xb97848c6 	Xid = 3379
+COMMIT/*!*/;
+# at 108892
+#260729  6:14:55 server id 1  end_log_pos 108971 CRC32 0x81c5b596 	GTID	last_committed=4	sequence_number=288	rbr_only=yes	original_committed_timestamp=1785305695522522	immediate_commit_timestamp=1785305695522522	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695522522 (2026-07-29 06:14:55.522522 UTC)
+# immediate_commit_timestamp=1785305695522522 (2026-07-29 06:14:55.522522 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695522522*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:288'/*!*/;
+# at 108971
+#260729  6:14:55 server id 1  end_log_pos 109059 CRC32 0xce2e4ff6 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.522309/*!*/;
+BEGIN
+/*!*/;
+# at 109059
+#260729  6:14:55 server id 1  end_log_pos 109116 CRC32 0x396f38d9 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 109116
+#260729  6:14:55 server id 1  end_log_pos 109171 CRC32 0xcf0a046b 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADyqAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDZOG85
+X5ppah4BAAAANwAAAHOqAQAAAHcBAAAAAAEAAgAD/wAaBQAAAAAAANAHAACZunpjtxRkawQKzw==
+'/*!*/;
+# at 109171
+#260729  6:14:55 server id 1  end_log_pos 109202 CRC32 0x07266082 	Xid = 3380
+COMMIT/*!*/;
+# at 109202
+#260729  6:14:55 server id 1  end_log_pos 109281 CRC32 0xe0d501a2 	GTID	last_committed=4	sequence_number=289	rbr_only=yes	original_committed_timestamp=1785305695523335	immediate_commit_timestamp=1785305695523335	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695523335 (2026-07-29 06:14:55.523335 UTC)
+# immediate_commit_timestamp=1785305695523335 (2026-07-29 06:14:55.523335 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695523335*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:289'/*!*/;
+# at 109281
+#260729  6:14:55 server id 1  end_log_pos 109369 CRC32 0xa5b9c044 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.523118/*!*/;
+BEGIN
+/*!*/;
+# at 109369
+#260729  6:14:55 server id 1  end_log_pos 109426 CRC32 0x3d92d0e5 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 109426
+#260729  6:14:55 server id 1  end_log_pos 109481 CRC32 0xace6c194 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHKrAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDl0JI9
+X5ppah4BAAAANwAAAKmrAQAAAHcBAAAAAAEAAgAD/wAbBQAAAAAAANAHAACZunpjtxRulMHmrA==
+'/*!*/;
+# at 109481
+#260729  6:14:55 server id 1  end_log_pos 109512 CRC32 0xe326a89f 	Xid = 3381
+COMMIT/*!*/;
+# at 109512
+#260729  6:14:55 server id 1  end_log_pos 109591 CRC32 0x0ad53935 	GTID	last_committed=4	sequence_number=290	rbr_only=yes	original_committed_timestamp=1785305695524215	immediate_commit_timestamp=1785305695524215	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695524215 (2026-07-29 06:14:55.524215 UTC)
+# immediate_commit_timestamp=1785305695524215 (2026-07-29 06:14:55.524215 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695524215*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:290'/*!*/;
+# at 109591
+#260729  6:14:55 server id 1  end_log_pos 109679 CRC32 0x0fbe6ef2 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.523995/*!*/;
+BEGIN
+/*!*/;
+# at 109679
+#260729  6:14:55 server id 1  end_log_pos 109736 CRC32 0xabb241bb 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 109736
+#260729  6:14:55 server id 1  end_log_pos 109791 CRC32 0xf7c4f74f 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKisAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC7QbKr
+X5ppah4BAAAANwAAAN+sAQAAAHcBAAAAAAEAAgAD/wAcBQAAAAAAANAHAACZunpjtxRuT/fE9w==
+'/*!*/;
+# at 109791
+#260729  6:14:55 server id 1  end_log_pos 109822 CRC32 0x43cea626 	Xid = 3382
+COMMIT/*!*/;
+# at 109822
+#260729  6:14:55 server id 1  end_log_pos 109901 CRC32 0x1a959ad2 	GTID	last_committed=4	sequence_number=291	rbr_only=yes	original_committed_timestamp=1785305695524933	immediate_commit_timestamp=1785305695524933	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695524933 (2026-07-29 06:14:55.524933 UTC)
+# immediate_commit_timestamp=1785305695524933 (2026-07-29 06:14:55.524933 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695524933*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:291'/*!*/;
+# at 109901
+#260729  6:14:55 server id 1  end_log_pos 109989 CRC32 0x88ee5583 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.524717/*!*/;
+BEGIN
+/*!*/;
+# at 109989
+#260729  6:14:55 server id 1  end_log_pos 110046 CRC32 0x13642a3b 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 110046
+#260729  6:14:55 server id 1  end_log_pos 110101 CRC32 0x6ffaa2f2 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAN6tAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA7KmQT
+X5ppah4BAAAANwAAABWuAQAAAHcBAAAAAAEAAgAD/wAdBQAAAAAAANAHAACZunpjtxR48qL6bw==
+'/*!*/;
+# at 110101
+#260729  6:14:55 server id 1  end_log_pos 110132 CRC32 0xffc5d17b 	Xid = 3383
+COMMIT/*!*/;
+# at 110132
+#260729  6:14:55 server id 1  end_log_pos 110211 CRC32 0x4a526fd5 	GTID	last_committed=4	sequence_number=292	rbr_only=yes	original_committed_timestamp=1785305695525693	immediate_commit_timestamp=1785305695525693	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695525693 (2026-07-29 06:14:55.525693 UTC)
+# immediate_commit_timestamp=1785305695525693 (2026-07-29 06:14:55.525693 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695525693*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:292'/*!*/;
+# at 110211
+#260729  6:14:55 server id 1  end_log_pos 110299 CRC32 0x35454639 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.525458/*!*/;
+BEGIN
+/*!*/;
+# at 110299
+#260729  6:14:55 server id 1  end_log_pos 110356 CRC32 0xde7f9bd7 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 110356
+#260729  6:14:55 server id 1  end_log_pos 110411 CRC32 0x336fe604 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABSvAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDXm3/e
+X5ppah4BAAAANwAAAEuvAQAAAHcBAAAAAAEAAgAD/wAeBQAAAAAAANAHAACZunpjtxSCBOZvMw==
+'/*!*/;
+# at 110411
+#260729  6:14:55 server id 1  end_log_pos 110442 CRC32 0x17e3844f 	Xid = 3384
+COMMIT/*!*/;
+# at 110442
+#260729  6:14:55 server id 1  end_log_pos 110521 CRC32 0x7942d308 	GTID	last_committed=4	sequence_number=293	rbr_only=yes	original_committed_timestamp=1785305695527571	immediate_commit_timestamp=1785305695527571	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695527571 (2026-07-29 06:14:55.527571 UTC)
+# immediate_commit_timestamp=1785305695527571 (2026-07-29 06:14:55.527571 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695527571*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:293'/*!*/;
+# at 110521
+#260729  6:14:55 server id 1  end_log_pos 110609 CRC32 0xb0b63df1 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.527346/*!*/;
+BEGIN
+/*!*/;
+# at 110609
+#260729  6:14:55 server id 1  end_log_pos 110666 CRC32 0x784fb73f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 110666
+#260729  6:14:55 server id 1  end_log_pos 110721 CRC32 0x156662f6 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEqwAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA/t094
+X5ppah4BAAAANwAAAIGwAQAAAHcBAAAAAAEAAgAD/wAfBQAAAAAAANAHAACZunpjtxSW9mJmFQ==
+'/*!*/;
+# at 110721
+#260729  6:14:55 server id 1  end_log_pos 110752 CRC32 0x58c335b6 	Xid = 3385
+COMMIT/*!*/;
+# at 110752
+#260729  6:14:55 server id 1  end_log_pos 110831 CRC32 0x503e9d1e 	GTID	last_committed=4	sequence_number=294	rbr_only=yes	original_committed_timestamp=1785305695528592	immediate_commit_timestamp=1785305695528592	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695528592 (2026-07-29 06:14:55.528592 UTC)
+# immediate_commit_timestamp=1785305695528592 (2026-07-29 06:14:55.528592 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695528592*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:294'/*!*/;
+# at 110831
+#260729  6:14:55 server id 1  end_log_pos 110919 CRC32 0xefbe6545 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.528373/*!*/;
+BEGIN
+/*!*/;
+# at 110919
+#260729  6:14:55 server id 1  end_log_pos 110976 CRC32 0x66cf1a28 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 110976
+#260729  6:14:55 server id 1  end_log_pos 111031 CRC32 0xb2032898 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAICxAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAoGs9m
+X5ppah4BAAAANwAAALexAQAAAHcBAAAAAAEAAgAD/wAgBQAAAAAAANAHAACZunpjtxSgmCgDsg==
+'/*!*/;
+# at 111031
+#260729  6:14:55 server id 1  end_log_pos 111062 CRC32 0x19771323 	Xid = 3386
+COMMIT/*!*/;
+# at 111062
+#260729  6:14:55 server id 1  end_log_pos 111141 CRC32 0x167cf2f0 	GTID	last_committed=4	sequence_number=295	rbr_only=yes	original_committed_timestamp=1785305695529434	immediate_commit_timestamp=1785305695529434	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695529434 (2026-07-29 06:14:55.529434 UTC)
+# immediate_commit_timestamp=1785305695529434 (2026-07-29 06:14:55.529434 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695529434*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:295'/*!*/;
+# at 111141
+#260729  6:14:55 server id 1  end_log_pos 111229 CRC32 0xc1d94e49 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.529220/*!*/;
+BEGIN
+/*!*/;
+# at 111229
+#260729  6:14:55 server id 1  end_log_pos 111286 CRC32 0x26756580 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 111286
+#260729  6:14:55 server id 1  end_log_pos 111341 CRC32 0xa6be4db7 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALayAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCAZXUm
+X5ppah4BAAAANwAAAO2yAQAAAHcBAAAAAAEAAgAD/wAhBQAAAAAAANAHAACZunpjtxSqt02+pg==
+'/*!*/;
+# at 111341
+#260729  6:14:55 server id 1  end_log_pos 111372 CRC32 0xc3ce5812 	Xid = 3387
+COMMIT/*!*/;
+# at 111372
+#260729  6:14:55 server id 1  end_log_pos 111451 CRC32 0x10937e79 	GTID	last_committed=4	sequence_number=296	rbr_only=yes	original_committed_timestamp=1785305695530244	immediate_commit_timestamp=1785305695530244	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695530244 (2026-07-29 06:14:55.530244 UTC)
+# immediate_commit_timestamp=1785305695530244 (2026-07-29 06:14:55.530244 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695530244*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:296'/*!*/;
+# at 111451
+#260729  6:14:55 server id 1  end_log_pos 111539 CRC32 0x3988a4ab 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.529994/*!*/;
+BEGIN
+/*!*/;
+# at 111539
+#260729  6:14:55 server id 1  end_log_pos 111596 CRC32 0x06eecd9d 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 111596
+#260729  6:14:55 server id 1  end_log_pos 111651 CRC32 0x8b03005e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOyzAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCdze4G
+X5ppah4BAAAANwAAACO0AQAAAHcBAAAAAAEAAgAD/wAiBQAAAAAAANAHAACZunpjtxSqXgADiw==
+'/*!*/;
+# at 111651
+#260729  6:14:55 server id 1  end_log_pos 111682 CRC32 0x3e5af522 	Xid = 3388
+COMMIT/*!*/;
+# at 111682
+#260729  6:14:55 server id 1  end_log_pos 111761 CRC32 0x3b223310 	GTID	last_committed=4	sequence_number=297	rbr_only=yes	original_committed_timestamp=1785305695531862	immediate_commit_timestamp=1785305695531862	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695531862 (2026-07-29 06:14:55.531862 UTC)
+# immediate_commit_timestamp=1785305695531862 (2026-07-29 06:14:55.531862 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695531862*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:297'/*!*/;
+# at 111761
+#260729  6:14:55 server id 1  end_log_pos 111849 CRC32 0x9a649d2e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.530824/*!*/;
+BEGIN
+/*!*/;
+# at 111849
+#260729  6:14:55 server id 1  end_log_pos 111906 CRC32 0xfa21174b 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 111906
+#260729  6:14:55 server id 1  end_log_pos 111961 CRC32 0xefe179e8 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACK1AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBLFyH6
+X5ppah4BAAAANwAAAFm1AQAAAHcBAAAAAAEAAgAD/wAjBQAAAAAAANAHAACZunpjtxS06Hnh7w==
+'/*!*/;
+# at 111961
+#260729  6:14:55 server id 1  end_log_pos 111992 CRC32 0x5687b216 	Xid = 3389
+COMMIT/*!*/;
+# at 111992
+#260729  6:14:55 server id 1  end_log_pos 112071 CRC32 0xf1906464 	GTID	last_committed=4	sequence_number=298	rbr_only=yes	original_committed_timestamp=1785305695532417	immediate_commit_timestamp=1785305695532417	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695532417 (2026-07-29 06:14:55.532417 UTC)
+# immediate_commit_timestamp=1785305695532417 (2026-07-29 06:14:55.532417 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695532417*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:298'/*!*/;
+# at 112071
+#260729  6:14:55 server id 1  end_log_pos 112159 CRC32 0x74d89cd8 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.532206/*!*/;
+BEGIN
+/*!*/;
+# at 112159
+#260729  6:14:55 server id 1  end_log_pos 112216 CRC32 0x7517a9b9 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 112216
+#260729  6:14:55 server id 1  end_log_pos 112271 CRC32 0x9ef74caf 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFi2AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC5qRd1
+X5ppah4BAAAANwAAAI+2AQAAAHcBAAAAAAEAAgAD/wAkBQAAAAAAANAHAACZunpjtxTIr0z3ng==
+'/*!*/;
+# at 112271
+#260729  6:14:55 server id 1  end_log_pos 112302 CRC32 0x3978b6f2 	Xid = 3390
+COMMIT/*!*/;
+# at 112302
+#260729  6:14:55 server id 1  end_log_pos 112381 CRC32 0x3f4360ea 	GTID	last_committed=4	sequence_number=299	rbr_only=yes	original_committed_timestamp=1785305695534446	immediate_commit_timestamp=1785305695534446	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695534446 (2026-07-29 06:14:55.534446 UTC)
+# immediate_commit_timestamp=1785305695534446 (2026-07-29 06:14:55.534446 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695534446*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:299'/*!*/;
+# at 112381
+#260729  6:14:55 server id 1  end_log_pos 112469 CRC32 0x8d28a6e8 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.534156/*!*/;
+BEGIN
+/*!*/;
+# at 112469
+#260729  6:14:55 server id 1  end_log_pos 112526 CRC32 0x3582c570 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 112526
+#260729  6:14:55 server id 1  end_log_pos 112581 CRC32 0x1f66cff1 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAI63AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBwxYI1
+X5ppah4BAAAANwAAAMW3AQAAAHcBAAAAAAEAAgAD/wAlBQAAAAAAANAHAACZunpjtxTc8c9mHw==
+'/*!*/;
+# at 112581
+#260729  6:14:55 server id 1  end_log_pos 112612 CRC32 0xbbca4283 	Xid = 3391
+COMMIT/*!*/;
+# at 112612
+#260729  6:14:55 server id 1  end_log_pos 112691 CRC32 0x1b4f2d0b 	GTID	last_committed=4	sequence_number=300	rbr_only=yes	original_committed_timestamp=1785305695535189	immediate_commit_timestamp=1785305695535189	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695535189 (2026-07-29 06:14:55.535189 UTC)
+# immediate_commit_timestamp=1785305695535189 (2026-07-29 06:14:55.535189 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695535189*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:300'/*!*/;
+# at 112691
+#260729  6:14:55 server id 1  end_log_pos 112779 CRC32 0x8ad0c221 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.534984/*!*/;
+BEGIN
+/*!*/;
+# at 112779
+#260729  6:14:55 server id 1  end_log_pos 112836 CRC32 0x846206af 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 112836
+#260729  6:14:55 server id 1  end_log_pos 112891 CRC32 0x7db36457 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMS4AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCvBmKE
+X5ppah4BAAAANwAAAPu4AQAAAHcBAAAAAAEAAgAD/wAmBQAAAAAAANAHAACZunpjtxTcV2SzfQ==
+'/*!*/;
+# at 112891
+#260729  6:14:55 server id 1  end_log_pos 112922 CRC32 0x96dbc428 	Xid = 3392
+COMMIT/*!*/;
+# at 112922
+#260729  6:14:55 server id 1  end_log_pos 113001 CRC32 0x48923e1b 	GTID	last_committed=4	sequence_number=301	rbr_only=yes	original_committed_timestamp=1785305695535905	immediate_commit_timestamp=1785305695535905	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695535905 (2026-07-29 06:14:55.535905 UTC)
+# immediate_commit_timestamp=1785305695535905 (2026-07-29 06:14:55.535905 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695535905*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:301'/*!*/;
+# at 113001
+#260729  6:14:55 server id 1  end_log_pos 113089 CRC32 0x8543b11a 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.535693/*!*/;
+BEGIN
+/*!*/;
+# at 113089
+#260729  6:14:55 server id 1  end_log_pos 113146 CRC32 0x23b9efaa 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 113146
+#260729  6:14:55 server id 1  end_log_pos 113201 CRC32 0xd7555d09 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPq5AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCq77kj
+X5ppah4BAAAANwAAADG6AQAAAHcBAAAAAAEAAgAD/wAnBQAAAAAAANAHAACZunpjtxTmCV1V1w==
+'/*!*/;
+# at 113201
+#260729  6:14:55 server id 1  end_log_pos 113232 CRC32 0x74358512 	Xid = 3393
+COMMIT/*!*/;
+# at 113232
+#260729  6:14:55 server id 1  end_log_pos 113311 CRC32 0xceccc8f1 	GTID	last_committed=4	sequence_number=302	rbr_only=yes	original_committed_timestamp=1785305695536632	immediate_commit_timestamp=1785305695536632	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695536632 (2026-07-29 06:14:55.536632 UTC)
+# immediate_commit_timestamp=1785305695536632 (2026-07-29 06:14:55.536632 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695536632*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:302'/*!*/;
+# at 113311
+#260729  6:14:55 server id 1  end_log_pos 113399 CRC32 0x97b41714 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.536426/*!*/;
+BEGIN
+/*!*/;
+# at 113399
+#260729  6:14:55 server id 1  end_log_pos 113456 CRC32 0xeea25e46 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 113456
+#260729  6:14:55 server id 1  end_log_pos 113511 CRC32 0x75d45d5d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADC7AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBGXqLu
+X5ppah4BAAAANwAAAGe7AQAAAHcBAAAAAAEAAgAD/wAoBQAAAAAAANAHAACZunpjtxTwXV3UdQ==
+'/*!*/;
+# at 113511
+#260729  6:14:55 server id 1  end_log_pos 113542 CRC32 0x7b9634bd 	Xid = 3394
+COMMIT/*!*/;
+# at 113542
+#260729  6:14:55 server id 1  end_log_pos 113621 CRC32 0x0a2190f1 	GTID	last_committed=4	sequence_number=303	rbr_only=yes	original_committed_timestamp=1785305695537343	immediate_commit_timestamp=1785305695537343	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695537343 (2026-07-29 06:14:55.537343 UTC)
+# immediate_commit_timestamp=1785305695537343 (2026-07-29 06:14:55.537343 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695537343*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:303'/*!*/;
+# at 113621
+#260729  6:14:55 server id 1  end_log_pos 113709 CRC32 0x656d8a29 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.537153/*!*/;
+BEGIN
+/*!*/;
+# at 113709
+#260729  6:14:55 server id 1  end_log_pos 113766 CRC32 0x188c0bcc 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 113766
+#260729  6:14:55 server id 1  end_log_pos 113821 CRC32 0x12ee06f9 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGa8AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDMC4wY
+X5ppah4BAAAANwAAAJ28AQAAAHcBAAAAAAEAAgAD/wApBQAAAAAAANAHAACZunpjtxT6+QbuEg==
+'/*!*/;
+# at 113821
+#260729  6:14:55 server id 1  end_log_pos 113852 CRC32 0xb3aeac54 	Xid = 3395
+COMMIT/*!*/;
+# at 113852
+#260729  6:14:55 server id 1  end_log_pos 113931 CRC32 0xcc9172ce 	GTID	last_committed=4	sequence_number=304	rbr_only=yes	original_committed_timestamp=1785305695538089	immediate_commit_timestamp=1785305695538089	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695538089 (2026-07-29 06:14:55.538089 UTC)
+# immediate_commit_timestamp=1785305695538089 (2026-07-29 06:14:55.538089 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695538089*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:304'/*!*/;
+# at 113931
+#260729  6:14:55 server id 1  end_log_pos 114019 CRC32 0x13c9d718 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.537859/*!*/;
+BEGIN
+/*!*/;
+# at 114019
+#260729  6:14:55 server id 1  end_log_pos 114076 CRC32 0xc054a498 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 114076
+#260729  6:14:55 server id 1  end_log_pos 114131 CRC32 0xa6a1aa60 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJy9AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCYpFTA
+X5ppah4BAAAANwAAANO9AQAAAHcBAAAAAAEAAgAD/wAqBQAAAAAAANAHAACZunpjtxT6YKqhpg==
+'/*!*/;
+# at 114131
+#260729  6:14:55 server id 1  end_log_pos 114162 CRC32 0xeedfdeb9 	Xid = 3396
+COMMIT/*!*/;
+# at 114162
+#260729  6:14:55 server id 1  end_log_pos 114241 CRC32 0x460a6b6c 	GTID	last_committed=4	sequence_number=305	rbr_only=yes	original_committed_timestamp=1785305695538855	immediate_commit_timestamp=1785305695538855	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695538855 (2026-07-29 06:14:55.538855 UTC)
+# immediate_commit_timestamp=1785305695538855 (2026-07-29 06:14:55.538855 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695538855*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:305'/*!*/;
+# at 114241
+#260729  6:14:55 server id 1  end_log_pos 114329 CRC32 0xf8c52178 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.538623/*!*/;
+BEGIN
+/*!*/;
+# at 114329
+#260729  6:14:55 server id 1  end_log_pos 114386 CRC32 0x59bb5bf6 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 114386
+#260729  6:14:55 server id 1  end_log_pos 114441 CRC32 0x3ce757bb 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANK+AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQD2W7tZ
+X5ppah4BAAAANwAAAAm/AQAAAHcBAAAAAAEAAgAD/wArBQAAAAAAANAHAACZunpjtxUEu1fnPA==
+'/*!*/;
+# at 114441
+#260729  6:14:55 server id 1  end_log_pos 114472 CRC32 0x34669588 	Xid = 3397
+COMMIT/*!*/;
+# at 114472
+#260729  6:14:55 server id 1  end_log_pos 114551 CRC32 0xfd9216ad 	GTID	last_committed=4	sequence_number=306	rbr_only=yes	original_committed_timestamp=1785305695539584	immediate_commit_timestamp=1785305695539584	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695539584 (2026-07-29 06:14:55.539584 UTC)
+# immediate_commit_timestamp=1785305695539584 (2026-07-29 06:14:55.539584 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695539584*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:306'/*!*/;
+# at 114551
+#260729  6:14:55 server id 1  end_log_pos 114639 CRC32 0xab65ddba 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.539367/*!*/;
+BEGIN
+/*!*/;
+# at 114639
+#260729  6:14:55 server id 1  end_log_pos 114696 CRC32 0x02c8dbe8 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 114696
+#260729  6:14:55 server id 1  end_log_pos 114751 CRC32 0x152a7305 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAjAAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDo28gC
+X5ppah4BAAAANwAAAD/AAQAAAHcBAAAAAAEAAgAD/wAsBQAAAAAAANAHAACZunpjtxUOBXMqFQ==
+'/*!*/;
+# at 114751
+#260729  6:14:55 server id 1  end_log_pos 114782 CRC32 0x35c0c329 	Xid = 3398
+COMMIT/*!*/;
+# at 114782
+#260729  6:14:55 server id 1  end_log_pos 114861 CRC32 0xc69b1a93 	GTID	last_committed=4	sequence_number=307	rbr_only=yes	original_committed_timestamp=1785305695540536	immediate_commit_timestamp=1785305695540536	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695540536 (2026-07-29 06:14:55.540536 UTC)
+# immediate_commit_timestamp=1785305695540536 (2026-07-29 06:14:55.540536 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695540536*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:307'/*!*/;
+# at 114861
+#260729  6:14:55 server id 1  end_log_pos 114949 CRC32 0xc0f3e3df 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.540318/*!*/;
+BEGIN
+/*!*/;
+# at 114949
+#260729  6:14:55 server id 1  end_log_pos 115006 CRC32 0xdf60b312 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 115006
+#260729  6:14:55 server id 1  end_log_pos 115061 CRC32 0x7ab59177 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAD7BAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQASs2Df
+X5ppah4BAAAANwAAAHXBAQAAAHcBAAAAAAEAAgAD/wAtBQAAAAAAANAHAACZunpjtxUYd5G1eg==
+'/*!*/;
+# at 115061
+#260729  6:14:55 server id 1  end_log_pos 115092 CRC32 0x3401d8ba 	Xid = 3399
+COMMIT/*!*/;
+# at 115092
+#260729  6:14:55 server id 1  end_log_pos 115171 CRC32 0x999cf81d 	GTID	last_committed=4	sequence_number=308	rbr_only=yes	original_committed_timestamp=1785305695541242	immediate_commit_timestamp=1785305695541242	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695541242 (2026-07-29 06:14:55.541242 UTC)
+# immediate_commit_timestamp=1785305695541242 (2026-07-29 06:14:55.541242 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695541242*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:308'/*!*/;
+# at 115171
+#260729  6:14:55 server id 1  end_log_pos 115259 CRC32 0xf5138700 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.541057/*!*/;
+BEGIN
+/*!*/;
+# at 115259
+#260729  6:14:55 server id 1  end_log_pos 115316 CRC32 0x960e0fa3 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 115316
+#260729  6:14:55 server id 1  end_log_pos 115371 CRC32 0xca15b7e1 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHTCAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCjDw6W
+X5ppah4BAAAANwAAAKvCAQAAAHcBAAAAAAEAAgAD/wAuBQAAAAAAANAHAACZunpjtxUi4bcVyg==
+'/*!*/;
+# at 115371
+#260729  6:14:55 server id 1  end_log_pos 115402 CRC32 0xbc7b38c5 	Xid = 3400
+COMMIT/*!*/;
+# at 115402
+#260729  6:14:55 server id 1  end_log_pos 115481 CRC32 0xb2ff474f 	GTID	last_committed=4	sequence_number=309	rbr_only=yes	original_committed_timestamp=1785305695543177	immediate_commit_timestamp=1785305695543177	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695543177 (2026-07-29 06:14:55.543177 UTC)
+# immediate_commit_timestamp=1785305695543177 (2026-07-29 06:14:55.543177 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695543177*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:309'/*!*/;
+# at 115481
+#260729  6:14:55 server id 1  end_log_pos 115569 CRC32 0x53936942 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.542947/*!*/;
+BEGIN
+/*!*/;
+# at 115569
+#260729  6:14:55 server id 1  end_log_pos 115626 CRC32 0xace8e295 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 115626
+#260729  6:14:55 server id 1  end_log_pos 115681 CRC32 0xb6e6cdc5 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKrDAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCV4uis
+X5ppah4BAAAANwAAAOHDAQAAAHcBAAAAAAEAAgAD/wAvBQAAAAAAANAHAACZunpjtxUsxc3mtg==
+'/*!*/;
+# at 115681
+#260729  6:14:55 server id 1  end_log_pos 115712 CRC32 0xc0c9250e 	Xid = 3401
+COMMIT/*!*/;
+# at 115712
+#260729  6:14:55 server id 1  end_log_pos 115791 CRC32 0xc081f3f1 	GTID	last_committed=4	sequence_number=310	rbr_only=yes	original_committed_timestamp=1785305695543849	immediate_commit_timestamp=1785305695543849	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695543849 (2026-07-29 06:14:55.543849 UTC)
+# immediate_commit_timestamp=1785305695543849 (2026-07-29 06:14:55.543849 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695543849*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:310'/*!*/;
+# at 115791
+#260729  6:14:55 server id 1  end_log_pos 115879 CRC32 0xd16f8a2c 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.543666/*!*/;
+BEGIN
+/*!*/;
+# at 115879
+#260729  6:14:55 server id 1  end_log_pos 115936 CRC32 0x04d376c1 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 115936
+#260729  6:14:55 server id 1  end_log_pos 115991 CRC32 0x2775bb5b 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAODEAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDBdtME
+X5ppah4BAAAANwAAABfFAQAAAHcBAAAAAAEAAgAD/wAwBQAAAAAAANAHAACZunpjtxU2W7t1Jw==
+'/*!*/;
+# at 115991
+#260729  6:14:55 server id 1  end_log_pos 116022 CRC32 0xc0c4f46a 	Xid = 3402
+COMMIT/*!*/;
+# at 116022
+#260729  6:14:55 server id 1  end_log_pos 116101 CRC32 0x1ea1b7e3 	GTID	last_committed=4	sequence_number=311	rbr_only=yes	original_committed_timestamp=1785305695544560	immediate_commit_timestamp=1785305695544560	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695544560 (2026-07-29 06:14:55.544560 UTC)
+# immediate_commit_timestamp=1785305695544560 (2026-07-29 06:14:55.544560 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695544560*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:311'/*!*/;
+# at 116101
+#260729  6:14:55 server id 1  end_log_pos 116189 CRC32 0x91202dde 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.544340/*!*/;
+BEGIN
+/*!*/;
+# at 116189
+#260729  6:14:55 server id 1  end_log_pos 116246 CRC32 0xa562074e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 116246
+#260729  6:14:55 server id 1  end_log_pos 116301 CRC32 0x6a7be363 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABbGAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBOB2Kl
+X5ppah4BAAAANwAAAE3GAQAAAHcBAAAAAAEAAgAD/wAxBQAAAAAAANAHAACZunpjtxVAY+N7ag==
+'/*!*/;
+# at 116301
+#260729  6:14:55 server id 1  end_log_pos 116332 CRC32 0x4498893c 	Xid = 3403
+COMMIT/*!*/;
+# at 116332
+#260729  6:14:55 server id 1  end_log_pos 116411 CRC32 0x5c8e754e 	GTID	last_committed=4	sequence_number=312	rbr_only=yes	original_committed_timestamp=1785305695546669	immediate_commit_timestamp=1785305695546669	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695546669 (2026-07-29 06:14:55.546669 UTC)
+# immediate_commit_timestamp=1785305695546669 (2026-07-29 06:14:55.546669 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695546669*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:312'/*!*/;
+# at 116411
+#260729  6:14:55 server id 1  end_log_pos 116499 CRC32 0xbbee7367 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.545027/*!*/;
+BEGIN
+/*!*/;
+# at 116499
+#260729  6:14:55 server id 1  end_log_pos 116556 CRC32 0x85f9af53 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 116556
+#260729  6:14:55 server id 1  end_log_pos 116611 CRC32 0x93212e4b 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEzHAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBTr/mF
+X5ppah4BAAAANwAAAIPHAQAAAHcBAAAAAAEAAgAD/wAyBQAAAAAAANAHAACZunpjtxVKSy4hkw==
+'/*!*/;
+# at 116611
+#260729  6:14:55 server id 1  end_log_pos 116642 CRC32 0x9a9a1433 	Xid = 3404
+COMMIT/*!*/;
+# at 116642
+#260729  6:14:55 server id 1  end_log_pos 116721 CRC32 0xa16ff6ef 	GTID	last_committed=4	sequence_number=313	rbr_only=yes	original_committed_timestamp=1785305695547371	immediate_commit_timestamp=1785305695547371	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695547371 (2026-07-29 06:14:55.547371 UTC)
+# immediate_commit_timestamp=1785305695547371 (2026-07-29 06:14:55.547371 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695547371*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:313'/*!*/;
+# at 116721
+#260729  6:14:55 server id 1  end_log_pos 116809 CRC32 0x1c9d4cbf 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.547005/*!*/;
+BEGIN
+/*!*/;
+# at 116809
+#260729  6:14:55 server id 1  end_log_pos 116866 CRC32 0x2e6429a7 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 116866
+#260729  6:14:55 server id 1  end_log_pos 116921 CRC32 0xc42aaa2a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAILIAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCnKWQu
+X5ppah4BAAAANwAAALnIAQAAAHcBAAAAAAEAAgAD/wAzBQAAAAAAANAHAACZunpjtxVeKqoqxA==
+'/*!*/;
+# at 116921
+#260729  6:14:55 server id 1  end_log_pos 116952 CRC32 0x4918a846 	Xid = 3405
+COMMIT/*!*/;
+# at 116952
+#260729  6:14:55 server id 1  end_log_pos 117031 CRC32 0xcc3146cf 	GTID	last_committed=4	sequence_number=314	rbr_only=yes	original_committed_timestamp=1785305695548083	immediate_commit_timestamp=1785305695548083	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695548083 (2026-07-29 06:14:55.548083 UTC)
+# immediate_commit_timestamp=1785305695548083 (2026-07-29 06:14:55.548083 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695548083*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:314'/*!*/;
+# at 117031
+#260729  6:14:55 server id 1  end_log_pos 117119 CRC32 0x445d28bc 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.547875/*!*/;
+BEGIN
+/*!*/;
+# at 117119
+#260729  6:14:55 server id 1  end_log_pos 117176 CRC32 0x593e837d 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 117176
+#260729  6:14:55 server id 1  end_log_pos 117231 CRC32 0x9bde02aa 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALjJAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB9gz5Z
+X5ppah4BAAAANwAAAO/JAQAAAHcBAAAAAAEAAgAD/wA0BQAAAAAAANAHAACZunpjtxVeqgLemw==
+'/*!*/;
+# at 117231
+#260729  6:14:55 server id 1  end_log_pos 117262 CRC32 0xfb717527 	Xid = 3406
+COMMIT/*!*/;
+# at 117262
+#260729  6:14:55 server id 1  end_log_pos 117341 CRC32 0xfe2526ec 	GTID	last_committed=4	sequence_number=315	rbr_only=yes	original_committed_timestamp=1785305695549721	immediate_commit_timestamp=1785305695549721	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695549721 (2026-07-29 06:14:55.549721 UTC)
+# immediate_commit_timestamp=1785305695549721 (2026-07-29 06:14:55.549721 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695549721*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:315'/*!*/;
+# at 117341
+#260729  6:14:55 server id 1  end_log_pos 117429 CRC32 0x481de5ee 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.549515/*!*/;
+BEGIN
+/*!*/;
+# at 117429
+#260729  6:14:55 server id 1  end_log_pos 117486 CRC32 0x4e45fe12 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 117486
+#260729  6:14:55 server id 1  end_log_pos 117541 CRC32 0xc5ec8ea5 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAO7KAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAS/kVO
+X5ppah4BAAAANwAAACXLAQAAAHcBAAAAAAEAAgAD/wA1BQAAAAAAANAHAACZunpjtxVypY7sxQ==
+'/*!*/;
+# at 117541
+#260729  6:14:55 server id 1  end_log_pos 117572 CRC32 0x79c38156 	Xid = 3407
+COMMIT/*!*/;
+# at 117572
+#260729  6:14:55 server id 1  end_log_pos 117651 CRC32 0xc6f9072a 	GTID	last_committed=4	sequence_number=316	rbr_only=yes	original_committed_timestamp=1785305695550401	immediate_commit_timestamp=1785305695550401	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695550401 (2026-07-29 06:14:55.550401 UTC)
+# immediate_commit_timestamp=1785305695550401 (2026-07-29 06:14:55.550401 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695550401*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:316'/*!*/;
+# at 117651
+#260729  6:14:55 server id 1  end_log_pos 117739 CRC32 0x9bfc7954 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.550194/*!*/;
+BEGIN
+/*!*/;
+# at 117739
+#260729  6:14:55 server id 1  end_log_pos 117796 CRC32 0x620b671b 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 117796
+#260729  6:14:55 server id 1  end_log_pos 117851 CRC32 0x277f620d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACTMAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAbZwti
+X5ppah4BAAAANwAAAFvMAQAAAHcBAAAAAAEAAgAD/wA2BQAAAAAAANAHAACZunpjtxV8DWJ/Jw==
+'/*!*/;
+# at 117851
+#260729  6:14:55 server id 1  end_log_pos 117882 CRC32 0xc166b5bd 	Xid = 3408
+COMMIT/*!*/;
+# at 117882
+#260729  6:14:55 server id 1  end_log_pos 117961 CRC32 0x7f108252 	GTID	last_committed=4	sequence_number=317	rbr_only=yes	original_committed_timestamp=1785305695551156	immediate_commit_timestamp=1785305695551156	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695551156 (2026-07-29 06:14:55.551156 UTC)
+# immediate_commit_timestamp=1785305695551156 (2026-07-29 06:14:55.551156 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695551156*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:317'/*!*/;
+# at 117961
+#260729  6:14:55 server id 1  end_log_pos 118049 CRC32 0x6c1e0122 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.550858/*!*/;
+BEGIN
+/*!*/;
+# at 118049
+#260729  6:14:55 server id 1  end_log_pos 118106 CRC32 0xa0ae8d64 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 118106
+#260729  6:14:55 server id 1  end_log_pos 118161 CRC32 0x11f4bd81 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFrNAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBkja6g
+X5ppah4BAAAANwAAAJHNAQAAAHcBAAAAAAEAAgAD/wA3BQAAAAAAANAHAACZunpjtxV8gb30EQ==
+'/*!*/;
+# at 118161
+#260729  6:14:55 server id 1  end_log_pos 118192 CRC32 0xc0a7ae2e 	Xid = 3409
+COMMIT/*!*/;
+# at 118192
+#260729  6:14:55 server id 1  end_log_pos 118271 CRC32 0xa0a5f98d 	GTID	last_committed=4	sequence_number=318	rbr_only=yes	original_committed_timestamp=1785305695551798	immediate_commit_timestamp=1785305695551798	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695551798 (2026-07-29 06:14:55.551798 UTC)
+# immediate_commit_timestamp=1785305695551798 (2026-07-29 06:14:55.551798 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695551798*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:318'/*!*/;
+# at 118271
+#260729  6:14:55 server id 1  end_log_pos 118359 CRC32 0x8a25a334 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.551608/*!*/;
+BEGIN
+/*!*/;
+# at 118359
+#260729  6:14:55 server id 1  end_log_pos 118416 CRC32 0x233c3721 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 118416
+#260729  6:14:55 server id 1  end_log_pos 118471 CRC32 0xc0583bf9 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJDOAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAhNzwj
+X5ppah4BAAAANwAAAMfOAQAAAHcBAAAAAAEAAgAD/wA4BQAAAAAAANAHAACZunpjtxWG+TtYwA==
+'/*!*/;
+# at 118471
+#260729  6:14:55 server id 1  end_log_pos 118502 CRC32 0x2c2b4528 	Xid = 3410
+COMMIT/*!*/;
+# at 118502
+#260729  6:14:55 server id 1  end_log_pos 118581 CRC32 0x3015e10c 	GTID	last_committed=4	sequence_number=319	rbr_only=yes	original_committed_timestamp=1785305695552394	immediate_commit_timestamp=1785305695552394	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695552394 (2026-07-29 06:14:55.552394 UTC)
+# immediate_commit_timestamp=1785305695552394 (2026-07-29 06:14:55.552394 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695552394*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:319'/*!*/;
+# at 118581
+#260729  6:14:55 server id 1  end_log_pos 118669 CRC32 0x35c2f076 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.552197/*!*/;
+BEGIN
+/*!*/;
+# at 118669
+#260729  6:14:55 server id 1  end_log_pos 118726 CRC32 0xa9555d1c 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 118726
+#260729  6:14:55 server id 1  end_log_pos 118781 CRC32 0x11390d0a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMbPAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAcXVWp
+X5ppah4BAAAANwAAAP3PAQAAAHcBAAAAAAEAAgAD/wA5BQAAAAAAANAHAACZunpjtxWQCg05EQ==
+'/*!*/;
+# at 118781
+#260729  6:14:55 server id 1  end_log_pos 118812 CRC32 0x154b69e0 	Xid = 3411
+COMMIT/*!*/;
+# at 118812
+#260729  6:14:55 server id 1  end_log_pos 118891 CRC32 0x52849a88 	GTID	last_committed=4	sequence_number=320	rbr_only=yes	original_committed_timestamp=1785305695553211	immediate_commit_timestamp=1785305695553211	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695553211 (2026-07-29 06:14:55.553211 UTC)
+# immediate_commit_timestamp=1785305695553211 (2026-07-29 06:14:55.553211 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695553211*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:320'/*!*/;
+# at 118891
+#260729  6:14:55 server id 1  end_log_pos 118979 CRC32 0xe1d42d7e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.552984/*!*/;
+BEGIN
+/*!*/;
+# at 118979
+#260729  6:14:55 server id 1  end_log_pos 119036 CRC32 0x882530ec 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 119036
+#260729  6:14:55 server id 1  end_log_pos 119091 CRC32 0x821eb120 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPzQAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDsMCWI
+X5ppah4BAAAANwAAADPRAQAAAHcBAAAAAAEAAgAD/wA6BQAAAAAAANAHAACZunpjtxWQILEegg==
+'/*!*/;
+# at 119091
+#260729  6:14:55 server id 1  end_log_pos 119122 CRC32 0x483a1b0d 	Xid = 3412
+COMMIT/*!*/;
+# at 119122
+#260729  6:14:55 server id 1  end_log_pos 119201 CRC32 0xb26920cb 	GTID	last_committed=4	sequence_number=321	rbr_only=yes	original_committed_timestamp=1785305695554904	immediate_commit_timestamp=1785305695554904	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695554904 (2026-07-29 06:14:55.554904 UTC)
+# immediate_commit_timestamp=1785305695554904 (2026-07-29 06:14:55.554904 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695554904*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:321'/*!*/;
+# at 119201
+#260729  6:14:55 server id 1  end_log_pos 119289 CRC32 0xed4f73fb 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.554705/*!*/;
+BEGIN
+/*!*/;
+# at 119289
+#260729  6:14:55 server id 1  end_log_pos 119346 CRC32 0x95bfc2df 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 119346
+#260729  6:14:55 server id 1  end_log_pos 119401 CRC32 0x57c2c9a4 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADLSAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDfwr+V
+X5ppah4BAAAANwAAAGnSAQAAAHcBAAAAAAEAAgAD/wA7BQAAAAAAANAHAACZunpjtxWkpMnCVw==
+'/*!*/;
+# at 119401
+#260729  6:14:55 server id 1  end_log_pos 119432 CRC32 0x4f1589b9 	Xid = 3413
+COMMIT/*!*/;
+# at 119432
+#260729  6:14:55 server id 1  end_log_pos 119511 CRC32 0xcdbf2a4d 	GTID	last_committed=4	sequence_number=322	rbr_only=yes	original_committed_timestamp=1785305695555569	immediate_commit_timestamp=1785305695555569	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695555569 (2026-07-29 06:14:55.555569 UTC)
+# immediate_commit_timestamp=1785305695555569 (2026-07-29 06:14:55.555569 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695555569*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:322'/*!*/;
+# at 119511
+#260729  6:14:55 server id 1  end_log_pos 119599 CRC32 0x00674fa3 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.555368/*!*/;
+BEGIN
+/*!*/;
+# at 119599
+#260729  6:14:55 server id 1  end_log_pos 119656 CRC32 0xb5246ac2 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 119656
+#260729  6:14:55 server id 1  end_log_pos 119711 CRC32 0xf537e00e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGjTAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDCaiS1
+X5ppah4BAAAANwAAAJ/TAQAAAHcBAAAAAAEAAgAD/wA8BQAAAAAAANAHAACZunpjtxWuDuA39Q==
+'/*!*/;
+# at 119711
+#260729  6:14:55 server id 1  end_log_pos 119742 CRC32 0x4f1858dd 	Xid = 3414
+COMMIT/*!*/;
+# at 119742
+#260729  6:14:55 server id 1  end_log_pos 119821 CRC32 0xf0f48749 	GTID	last_committed=4	sequence_number=323	rbr_only=yes	original_committed_timestamp=1785305695556202	immediate_commit_timestamp=1785305695556202	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695556202 (2026-07-29 06:14:55.556202 UTC)
+# immediate_commit_timestamp=1785305695556202 (2026-07-29 06:14:55.556202 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695556202*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:323'/*!*/;
+# at 119821
+#260729  6:14:55 server id 1  end_log_pos 119909 CRC32 0x4f979c21 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.556019/*!*/;
+BEGIN
+/*!*/;
+# at 119909
+#260729  6:14:55 server id 1  end_log_pos 119966 CRC32 0xbb493801 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 119966
+#260729  6:14:55 server id 1  end_log_pos 120021 CRC32 0x2e6a7cbc 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJ7UAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQABOEm7
+X5ppah4BAAAANwAAANXUAQAAAHcBAAAAAAEAAgAD/wA9BQAAAAAAANAHAACZunpjtxW4vHxqLg==
+'/*!*/;
+# at 120021
+#260729  6:14:55 server id 1  end_log_pos 120052 CRC32 0x6d4f7371 	Xid = 3415
+COMMIT/*!*/;
+# at 120052
+#260729  6:14:55 server id 1  end_log_pos 120131 CRC32 0xc9621155 	GTID	last_committed=4	sequence_number=324	rbr_only=yes	original_committed_timestamp=1785305695556804	immediate_commit_timestamp=1785305695556804	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695556804 (2026-07-29 06:14:55.556804 UTC)
+# immediate_commit_timestamp=1785305695556804 (2026-07-29 06:14:55.556804 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695556804*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:324'/*!*/;
+# at 120131
+#260729  6:14:55 server id 1  end_log_pos 120219 CRC32 0xfdf59865 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.556611/*!*/;
+BEGIN
+/*!*/;
+# at 120219
+#260729  6:14:55 server id 1  end_log_pos 120276 CRC32 0x6f3593e2 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 120276
+#260729  6:14:55 server id 1  end_log_pos 120331 CRC32 0xd8369487 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANTVAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDikzVv
+X5ppah4BAAAANwAAAAvWAQAAAHcBAAAAAAEAAgAD/wA+BQAAAAAAANAHAACZunpjtxW4h5Q22A==
+'/*!*/;
+# at 120331
+#260729  6:14:55 server id 1  end_log_pos 120362 CRC32 0xbbd0a569 	Xid = 3416
+COMMIT/*!*/;
+# at 120362
+#260729  6:14:55 server id 1  end_log_pos 120441 CRC32 0x0ce83465 	GTID	last_committed=4	sequence_number=325	rbr_only=yes	original_committed_timestamp=1785305695557493	immediate_commit_timestamp=1785305695557493	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695557493 (2026-07-29 06:14:55.557493 UTC)
+# immediate_commit_timestamp=1785305695557493 (2026-07-29 06:14:55.557493 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695557493*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:325'/*!*/;
+# at 120441
+#260729  6:14:55 server id 1  end_log_pos 120529 CRC32 0xd725b97d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.557287/*!*/;
+BEGIN
+/*!*/;
+# at 120529
+#260729  6:14:55 server id 1  end_log_pos 120586 CRC32 0x8648622f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 120586
+#260729  6:14:55 server id 1  end_log_pos 120641 CRC32 0xf3ad5b86 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAArXAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAvYkiG
+X5ppah4BAAAANwAAAEHXAQAAAHcBAAAAAAEAAgAD/wA/BQAAAAAAANAHAACZunpjtxXChlut8w==
+'/*!*/;
+# at 120641
+#260729  6:14:55 server id 1  end_log_pos 120672 CRC32 0x39625118 	Xid = 3417
+COMMIT/*!*/;
+# at 120672
+#260729  6:14:55 server id 1  end_log_pos 120751 CRC32 0x3456af1e 	GTID	last_committed=4	sequence_number=326	rbr_only=yes	original_committed_timestamp=1785305695559859	immediate_commit_timestamp=1785305695559859	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695559859 (2026-07-29 06:14:55.559859 UTC)
+# immediate_commit_timestamp=1785305695559859 (2026-07-29 06:14:55.559859 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695559859*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:326'/*!*/;
+# at 120751
+#260729  6:14:55 server id 1  end_log_pos 120839 CRC32 0x34dbb76c 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.557952/*!*/;
+BEGIN
+/*!*/;
+# at 120839
+#260729  6:14:55 server id 1  end_log_pos 120896 CRC32 0x37a8a1f0 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 120896
+#260729  6:14:55 server id 1  end_log_pos 120951 CRC32 0xbe1ebbe7 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEDYAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDwoag3
+X5ppah4BAAAANwAAAHfYAQAAAHcBAAAAAAEAAgAD/wBABQAAAAAAANAHAACZunpjtxXC57sevg==
+'/*!*/;
+# at 120951
+#260729  6:14:55 server id 1  end_log_pos 120982 CRC32 0x014394df 	Xid = 3418
+COMMIT/*!*/;
+# at 120982
+#260729  6:14:55 server id 1  end_log_pos 121061 CRC32 0xe885f2c7 	GTID	last_committed=4	sequence_number=327	rbr_only=yes	original_committed_timestamp=1785305695560766	immediate_commit_timestamp=1785305695560766	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695560766 (2026-07-29 06:14:55.560766 UTC)
+# immediate_commit_timestamp=1785305695560766 (2026-07-29 06:14:55.560766 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695560766*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:327'/*!*/;
+# at 121061
+#260729  6:14:55 server id 1  end_log_pos 121149 CRC32 0xf132cd8f 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.560557/*!*/;
+BEGIN
+/*!*/;
+# at 121149
+#260729  6:14:55 server id 1  end_log_pos 121206 CRC32 0xea00c90a 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 121206
+#260729  6:14:55 server id 1  end_log_pos 121261 CRC32 0xe847d6e2 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHbZAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAKyQDq
+X5ppah4BAAAANwAAAK3ZAQAAAHcBAAAAAAEAAgAD/wBBBQAAAAAAANAHAACZunpjtxXg4tZH6A==
+'/*!*/;
+# at 121261
+#260729  6:14:55 server id 1  end_log_pos 121292 CRC32 0xe5435cc2 	Xid = 3419
+COMMIT/*!*/;
+# at 121292
+#260729  6:14:55 server id 1  end_log_pos 121371 CRC32 0xae2c194d 	GTID	last_committed=4	sequence_number=328	rbr_only=yes	original_committed_timestamp=1785305695561297	immediate_commit_timestamp=1785305695561297	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695561297 (2026-07-29 06:14:55.561297 UTC)
+# immediate_commit_timestamp=1785305695561297 (2026-07-29 06:14:55.561297 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695561297*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:328'/*!*/;
+# at 121371
+#260729  6:14:55 server id 1  end_log_pos 121459 CRC32 0x82b20ab4 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.561086/*!*/;
+BEGIN
+/*!*/;
+# at 121459
+#260729  6:14:55 server id 1  end_log_pos 121516 CRC32 0x9d7570b1 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 121516
+#260729  6:14:55 server id 1  end_log_pos 121571 CRC32 0x664cbb1a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKzaAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCxcHWd
+X5ppah4BAAAANwAAAOPaAQAAAHcBAAAAAAEAAgAD/wBCBQAAAAAAANAHAACZunpjtxXqGrtMZg==
+'/*!*/;
+# at 121571
+#260729  6:14:55 server id 1  end_log_pos 121602 CRC32 0x868bad03 	Xid = 3420
+COMMIT/*!*/;
+# at 121602
+#260729  6:14:55 server id 1  end_log_pos 121681 CRC32 0xf250dc65 	GTID	last_committed=4	sequence_number=329	rbr_only=yes	original_committed_timestamp=1785305695561978	immediate_commit_timestamp=1785305695561978	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695561978 (2026-07-29 06:14:55.561978 UTC)
+# immediate_commit_timestamp=1785305695561978 (2026-07-29 06:14:55.561978 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695561978*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:329'/*!*/;
+# at 121681
+#260729  6:14:55 server id 1  end_log_pos 121769 CRC32 0x7cb6f601 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.561764/*!*/;
+BEGIN
+/*!*/;
+# at 121769
+#260729  6:14:55 server id 1  end_log_pos 121826 CRC32 0x9988988d 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 121826
+#260729  6:14:55 server id 1  end_log_pos 121881 CRC32 0x61531ebf 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOLbAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCNmIiZ
+X5ppah4BAAAANwAAABncAQAAAHcBAAAAAAEAAgAD/wBDBQAAAAAAANAHAACZunpjtxXqvx5TYQ==
+'/*!*/;
+# at 121881
+#260729  6:14:55 server id 1  end_log_pos 121912 CRC32 0x4eb335ea 	Xid = 3421
+COMMIT/*!*/;
+# at 121912
+#260729  6:14:55 server id 1  end_log_pos 121991 CRC32 0x133b079f 	GTID	last_committed=4	sequence_number=330	rbr_only=yes	original_committed_timestamp=1785305695562638	immediate_commit_timestamp=1785305695562638	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695562638 (2026-07-29 06:14:55.562638 UTC)
+# immediate_commit_timestamp=1785305695562638 (2026-07-29 06:14:55.562638 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695562638*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:330'/*!*/;
+# at 121991
+#260729  6:14:55 server id 1  end_log_pos 122079 CRC32 0x77e3bede 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.562448/*!*/;
+BEGIN
+/*!*/;
+# at 122079
+#260729  6:14:55 server id 1  end_log_pos 122136 CRC32 0x739e03c7 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 122136
+#260729  6:14:55 server id 1  end_log_pos 122191 CRC32 0xc4a88b5c 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABjdAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDHA55z
+X5ppah4BAAAANwAAAE/dAQAAAHcBAAAAAAEAAgAD/wBEBQAAAAAAANAHAACZunpjtxX0XIuoxA==
+'/*!*/;
+# at 122191
+#260729  6:14:55 server id 1  end_log_pos 122222 CRC32 0xc2636ba7 	Xid = 3422
+COMMIT/*!*/;
+# at 122222
+#260729  6:14:55 server id 1  end_log_pos 122301 CRC32 0xa444608d 	GTID	last_committed=4	sequence_number=331	rbr_only=yes	original_committed_timestamp=1785305695563300	immediate_commit_timestamp=1785305695563300	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695563300 (2026-07-29 06:14:55.563300 UTC)
+# immediate_commit_timestamp=1785305695563300 (2026-07-29 06:14:55.563300 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695563300*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:331'/*!*/;
+# at 122301
+#260729  6:14:55 server id 1  end_log_pos 122389 CRC32 0x6d9f0a00 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.563087/*!*/;
+BEGIN
+/*!*/;
+# at 122389
+#260729  6:14:55 server id 1  end_log_pos 122446 CRC32 0x64e57ea8 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 122446
+#260729  6:14:55 server id 1  end_log_pos 122501 CRC32 0xc86795b1 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAE7eAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCofuVk
+X5ppah4BAAAANwAAAIXeAQAAAHcBAAAAAAEAAgAD/wBFBQAAAAAAANAHAACZunpjtxX+sZVnyA==
+'/*!*/;
+# at 122501
+#260729  6:14:55 server id 1  end_log_pos 122532 CRC32 0xa3fec57f 	Xid = 3423
+COMMIT/*!*/;
+# at 122532
+#260729  6:14:55 server id 1  end_log_pos 122611 CRC32 0xb4aac3da 	GTID	last_committed=4	sequence_number=332	rbr_only=yes	original_committed_timestamp=1785305695564380	immediate_commit_timestamp=1785305695564380	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695564380 (2026-07-29 06:14:55.564380 UTC)
+# immediate_commit_timestamp=1785305695564380 (2026-07-29 06:14:55.564380 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695564380*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:332'/*!*/;
+# at 122611
+#260729  6:14:55 server id 1  end_log_pos 122699 CRC32 0xbb8cfa75 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.563758/*!*/;
+BEGIN
+/*!*/;
+# at 122699
+#260729  6:14:55 server id 1  end_log_pos 122756 CRC32 0x7a65d3bf 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 122756
+#260729  6:14:55 server id 1  end_log_pos 122811 CRC32 0xc2d6eda9 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAITfAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC/02V6
+X5ppah4BAAAANwAAALvfAQAAAHcBAAAAAAEAAgAD/wBGBQAAAAAAANAHAACZunpjtxX+qe3Wwg==
+'/*!*/;
+# at 122811
+#260729  6:14:55 server id 1  end_log_pos 122842 CRC32 0x0371bbee 	Xid = 3424
+COMMIT/*!*/;
+# at 122842
+#260729  6:14:55 server id 1  end_log_pos 122921 CRC32 0xfb7834eb 	GTID	last_committed=4	sequence_number=333	rbr_only=yes	original_committed_timestamp=1785305695564952	immediate_commit_timestamp=1785305695564952	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695564952 (2026-07-29 06:14:55.564952 UTC)
+# immediate_commit_timestamp=1785305695564952 (2026-07-29 06:14:55.564952 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695564952*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:333'/*!*/;
+# at 122921
+#260729  6:14:55 server id 1  end_log_pos 123009 CRC32 0x606c6a59 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.564734/*!*/;
+BEGIN
+/*!*/;
+# at 123009
+#260729  6:14:55 server id 1  end_log_pos 123066 CRC32 0xecf9a3bc 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 123066
+#260729  6:14:55 server id 1  end_log_pos 123121 CRC32 0xe84e8819 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALrgAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC8o/ns
+X5ppah4BAAAANwAAAPHgAQAAAHcBAAAAAAEAAgAD/wBHBQAAAAAAANAHAACZunpjtxYIGYhO6A==
+'/*!*/;
+# at 123121
+#260729  6:14:55 server id 1  end_log_pos 123152 CRC32 0x22b99867 	Xid = 3425
+COMMIT/*!*/;
+# at 123152
+#260729  6:14:55 server id 1  end_log_pos 123231 CRC32 0x681684c1 	GTID	last_committed=4	sequence_number=334	rbr_only=yes	original_committed_timestamp=1785305695565716	immediate_commit_timestamp=1785305695565716	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695565716 (2026-07-29 06:14:55.565716 UTC)
+# immediate_commit_timestamp=1785305695565716 (2026-07-29 06:14:55.565716 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695565716*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:334'/*!*/;
+# at 123231
+#260729  6:14:55 server id 1  end_log_pos 123319 CRC32 0x2abdf609 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.565525/*!*/;
+BEGIN
+/*!*/;
+# at 123319
+#260729  6:14:55 server id 1  end_log_pos 123376 CRC32 0x3885085f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 123376
+#260729  6:14:55 server id 1  end_log_pos 123431 CRC32 0xb4d873a9 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPDhAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBfCIU4
+X5ppah4BAAAANwAAACfiAQAAAHcBAAAAAAEAAgAD/wBIBQAAAAAAANAHAACZunpjtxYSqXPYtA==
+'/*!*/;
+# at 123431
+#260729  6:14:55 server id 1  end_log_pos 123462 CRC32 0xce357361 	Xid = 3426
+COMMIT/*!*/;
+# at 123462
+#260729  6:14:55 server id 1  end_log_pos 123541 CRC32 0xbb94c3af 	GTID	last_committed=4	sequence_number=335	rbr_only=yes	original_committed_timestamp=1785305695567440	immediate_commit_timestamp=1785305695567440	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695567440 (2026-07-29 06:14:55.567440 UTC)
+# immediate_commit_timestamp=1785305695567440 (2026-07-29 06:14:55.567440 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695567440*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:335'/*!*/;
+# at 123541
+#260729  6:14:55 server id 1  end_log_pos 123629 CRC32 0xdd00c389 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.567232/*!*/;
+BEGIN
+/*!*/;
+# at 123629
+#260729  6:14:55 server id 1  end_log_pos 123686 CRC32 0xab8b786d 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 123686
+#260729  6:14:55 server id 1  end_log_pos 123741 CRC32 0x0b81c3c9 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACbjAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBteIur
+X5ppah4BAAAANwAAAF3jAQAAAHcBAAAAAAEAAgAD/wBJBQAAAAAAANAHAACZunpjtxYmycOBCw==
+'/*!*/;
+# at 123741
+#260729  6:14:55 server id 1  end_log_pos 123772 CRC32 0xa6e83455 	Xid = 3427
+COMMIT/*!*/;
+# at 123772
+#260729  6:14:55 server id 1  end_log_pos 123851 CRC32 0x22d809f4 	GTID	last_committed=4	sequence_number=336	rbr_only=yes	original_committed_timestamp=1785305695568232	immediate_commit_timestamp=1785305695568232	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695568232 (2026-07-29 06:14:55.568232 UTC)
+# immediate_commit_timestamp=1785305695568232 (2026-07-29 06:14:55.568232 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695568232*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:336'/*!*/;
+# at 123851
+#260729  6:14:55 server id 1  end_log_pos 123939 CRC32 0xeb20185b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.568033/*!*/;
+BEGIN
+/*!*/;
+# at 123939
+#260729  6:14:55 server id 1  end_log_pos 123996 CRC32 0xc5e8ee7a 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 123996
+#260729  6:14:55 server id 1  end_log_pos 124051 CRC32 0x52182c6e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFzkAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB67ujF
+X5ppah4BAAAANwAAAJPkAQAAAHcBAAAAAAEAAgAD/wBKBQAAAAAAANAHAACZunpjtxYwbiwYUg==
+'/*!*/;
+# at 124051
+#260729  6:14:55 server id 1  end_log_pos 124082 CRC32 0xd80f7687 	Xid = 3428
+COMMIT/*!*/;
+# at 124082
+#260729  6:14:55 server id 1  end_log_pos 124161 CRC32 0x636ed38a 	GTID	last_committed=4	sequence_number=337	rbr_only=yes	original_committed_timestamp=1785305695568875	immediate_commit_timestamp=1785305695568875	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695568875 (2026-07-29 06:14:55.568875 UTC)
+# immediate_commit_timestamp=1785305695568875 (2026-07-29 06:14:55.568875 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695568875*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:337'/*!*/;
+# at 124161
+#260729  6:14:55 server id 1  end_log_pos 124249 CRC32 0xbcd5b835 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.568690/*!*/;
+BEGIN
+/*!*/;
+# at 124249
+#260729  6:14:55 server id 1  end_log_pos 124306 CRC32 0x0be900b2 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 124306
+#260729  6:14:55 server id 1  end_log_pos 124361 CRC32 0x7ce18820 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJLlAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCyAOkL
+X5ppah4BAAAANwAAAMnlAQAAAHcBAAAAAAEAAgAD/wBLBQAAAAAAANAHAACZunpjtxYwIIjhfA==
+'/*!*/;
+# at 124361
+#260729  6:14:55 server id 1  end_log_pos 124392 CRC32 0x3c0fbe9a 	Xid = 3429
+COMMIT/*!*/;
+# at 124392
+#260729  6:14:55 server id 1  end_log_pos 124471 CRC32 0x26273dc5 	GTID	last_committed=4	sequence_number=338	rbr_only=yes	original_committed_timestamp=1785305695569405	immediate_commit_timestamp=1785305695569405	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695569405 (2026-07-29 06:14:55.569405 UTC)
+# immediate_commit_timestamp=1785305695569405 (2026-07-29 06:14:55.569405 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695569405*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:338'/*!*/;
+# at 124471
+#260729  6:14:55 server id 1  end_log_pos 124559 CRC32 0x537c3498 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.569188/*!*/;
+BEGIN
+/*!*/;
+# at 124559
+#260729  6:14:55 server id 1  end_log_pos 124616 CRC32 0xb660bffd 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 124616
+#260729  6:14:55 server id 1  end_log_pos 124671 CRC32 0x121dc62d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMjmAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQD9v2C2
+X5ppah4BAAAANwAAAP/mAQAAAHcBAAAAAAEAAgAD/wBMBQAAAAAAANAHAACZunpjtxY6LcYdEg==
+'/*!*/;
+# at 124671
+#260729  6:14:55 server id 1  end_log_pos 124702 CRC32 0x43021b23 	Xid = 3430
+COMMIT/*!*/;
+# at 124702
+#260729  6:14:55 server id 1  end_log_pos 124781 CRC32 0xfdfccba2 	GTID	last_committed=4	sequence_number=339	rbr_only=yes	original_committed_timestamp=1785305695570113	immediate_commit_timestamp=1785305695570113	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695570113 (2026-07-29 06:14:55.570113 UTC)
+# immediate_commit_timestamp=1785305695570113 (2026-07-29 06:14:55.570113 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695570113*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:339'/*!*/;
+# at 124781
+#260729  6:14:55 server id 1  end_log_pos 124869 CRC32 0x79bec807 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.569911/*!*/;
+BEGIN
+/*!*/;
+# at 124869
+#260729  6:14:55 server id 1  end_log_pos 124926 CRC32 0x6bc8d707 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 124926
+#260729  6:14:55 server id 1  end_log_pos 124981 CRC32 0xcc02dd00 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAP7nAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAH18hr
+X5ppah4BAAAANwAAADXoAQAAAHcBAAAAAAEAAgAD/wBNBQAAAAAAANAHAACZunpjtxY6AN0CzA==
+'/*!*/;
+# at 124981
+#260729  6:14:55 server id 1  end_log_pos 125012 CRC32 0x3b56e3e2 	Xid = 3431
+COMMIT/*!*/;
+# at 125012
+#260729  6:14:55 server id 1  end_log_pos 125091 CRC32 0x046ed332 	GTID	last_committed=4	sequence_number=340	rbr_only=yes	original_committed_timestamp=1785305695570771	immediate_commit_timestamp=1785305695570771	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695570771 (2026-07-29 06:14:55.570771 UTC)
+# immediate_commit_timestamp=1785305695570771 (2026-07-29 06:14:55.570771 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695570771*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:340'/*!*/;
+# at 125091
+#260729  6:14:55 server id 1  end_log_pos 125179 CRC32 0x18c768cc 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.570569/*!*/;
+BEGIN
+/*!*/;
+# at 125179
+#260729  6:14:55 server id 1  end_log_pos 125236 CRC32 0x5e5d1985 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 125236
+#260729  6:14:55 server id 1  end_log_pos 125291 CRC32 0x7a42decf 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADTpAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCFGV1e
+X5ppah4BAAAANwAAAGvpAQAAAHcBAAAAAAEAAgAD/wBOBQAAAAAAANAHAACZunpjtxZEz95Ceg==
+'/*!*/;
+# at 125291
+#260729  6:14:55 server id 1  end_log_pos 125322 CRC32 0x50035934 	Xid = 3432
+COMMIT/*!*/;
+# at 125322
+#260729  6:14:55 server id 1  end_log_pos 125401 CRC32 0xdc58fde7 	GTID	last_committed=4	sequence_number=341	rbr_only=yes	original_committed_timestamp=1785305695571446	immediate_commit_timestamp=1785305695571446	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695571446 (2026-07-29 06:14:55.571446 UTC)
+# immediate_commit_timestamp=1785305695571446 (2026-07-29 06:14:55.571446 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695571446*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:341'/*!*/;
+# at 125401
+#260729  6:14:55 server id 1  end_log_pos 125489 CRC32 0x82707f79 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.571254/*!*/;
+BEGIN
+/*!*/;
+# at 125489
+#260729  6:14:55 server id 1  end_log_pos 125546 CRC32 0x3355e515 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 125546
+#260729  6:14:55 server id 1  end_log_pos 125601 CRC32 0x768dc022 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGrqAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAV5VUz
+X5ppah4BAAAANwAAAKHqAQAAAHcBAAAAAAEAAgAD/wBPBQAAAAAAANAHAACZunpjtxZOIsCNdg==
+'/*!*/;
+# at 125601
+#260729  6:14:55 server id 1  end_log_pos 125632 CRC32 0xb2ed180e 	Xid = 3433
+COMMIT/*!*/;
+# at 125632
+#260729  6:14:55 server id 1  end_log_pos 125711 CRC32 0x985fd91e 	GTID	last_committed=4	sequence_number=342	rbr_only=yes	original_committed_timestamp=1785305695572179	immediate_commit_timestamp=1785305695572179	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695572179 (2026-07-29 06:14:55.572179 UTC)
+# immediate_commit_timestamp=1785305695572179 (2026-07-29 06:14:55.572179 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695572179*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:342'/*!*/;
+# at 125711
+#260729  6:14:55 server id 1  end_log_pos 125799 CRC32 0x81f9f51b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.571900/*!*/;
+BEGIN
+/*!*/;
+# at 125799
+#260729  6:14:55 server id 1  end_log_pos 125856 CRC32 0x2dd54802 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 125856
+#260729  6:14:55 server id 1  end_log_pos 125911 CRC32 0x838eaeb6 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKDrAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQACSNUt
+X5ppah4BAAAANwAAANfrAQAAAHcBAAAAAAEAAgAD/wBQBQAAAAAAANAHAACZunpjtxZOtq6Ogw==
+'/*!*/;
+# at 125911
+#260729  6:14:55 server id 1  end_log_pos 125942 CRC32 0xb2e0c96a 	Xid = 3434
+COMMIT/*!*/;
+# at 125942
+#260729  6:14:55 server id 1  end_log_pos 126021 CRC32 0x189679ca 	GTID	last_committed=4	sequence_number=343	rbr_only=yes	original_committed_timestamp=1785305695572836	immediate_commit_timestamp=1785305695572836	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695572836 (2026-07-29 06:14:55.572836 UTC)
+# immediate_commit_timestamp=1785305695572836 (2026-07-29 06:14:55.572836 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695572836*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:343'/*!*/;
+# at 126021
+#260729  6:14:55 server id 1  end_log_pos 126109 CRC32 0xb8c8af5f 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.572633/*!*/;
+BEGIN
+/*!*/;
+# at 126109
+#260729  6:14:55 server id 1  end_log_pos 126166 CRC32 0xe9441c35 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 126166
+#260729  6:14:55 server id 1  end_log_pos 126221 CRC32 0xc0515ed9 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANbsAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA1HETp
+X5ppah4BAAAANwAAAA3tAQAAAHcBAAAAAAEAAgAD/wBRBQAAAAAAANAHAACZunpjtxZY2V5RwA==
+'/*!*/;
+# at 126221
+#260729  6:14:55 server id 1  end_log_pos 126252 CRC32 0xa8e0e8cd 	Xid = 3435
+COMMIT/*!*/;
+# at 126252
+#260729  6:14:55 server id 1  end_log_pos 126331 CRC32 0x24b12409 	GTID	last_committed=4	sequence_number=344	rbr_only=yes	original_committed_timestamp=1785305695574467	immediate_commit_timestamp=1785305695574467	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695574467 (2026-07-29 06:14:55.574467 UTC)
+# immediate_commit_timestamp=1785305695574467 (2026-07-29 06:14:55.574467 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695574467*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:344'/*!*/;
+# at 126331
+#260729  6:14:55 server id 1  end_log_pos 126419 CRC32 0x9780a3f7 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.574258/*!*/;
+BEGIN
+/*!*/;
+# at 126419
+#260729  6:14:55 server id 1  end_log_pos 126476 CRC32 0xd0b8ae27 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 126476
+#260729  6:14:55 server id 1  end_log_pos 126531 CRC32 0x8f3b2e8a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAzuAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAnrrjQ
+X5ppah4BAAAANwAAAEPuAQAAAHcBAAAAAAEAAgAD/wBSBQAAAAAAANAHAACZunpjtxZsii47jw==
+'/*!*/;
+# at 126531
+#260729  6:14:55 server id 1  end_log_pos 126562 CRC32 0x95cd2f6b 	Xid = 3436
+COMMIT/*!*/;
+# at 126562
+#260729  6:14:55 server id 1  end_log_pos 126641 CRC32 0x9bca5d36 	GTID	last_committed=4	sequence_number=345	rbr_only=yes	original_committed_timestamp=1785305695575114	immediate_commit_timestamp=1785305695575114	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695575114 (2026-07-29 06:14:55.575114 UTC)
+# immediate_commit_timestamp=1785305695575114 (2026-07-29 06:14:55.575114 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695575114*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:345'/*!*/;
+# at 126641
+#260729  6:14:55 server id 1  end_log_pos 126729 CRC32 0x806b12d9 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.574909/*!*/;
+BEGIN
+/*!*/;
+# at 126729
+#260729  6:14:55 server id 1  end_log_pos 126786 CRC32 0xd445461b 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 126786
+#260729  6:14:55 server id 1  end_log_pos 126841 CRC32 0xaa8ead28 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAELvAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAbRkXU
+X5ppah4BAAAANwAAAHnvAQAAAHcBAAAAAAEAAgAD/wBTBQAAAAAAANAHAACZunpjtxZsKK2Oqg==
+'/*!*/;
+# at 126841
+#260729  6:14:55 server id 1  end_log_pos 126872 CRC32 0x3fda704c 	Xid = 3437
+COMMIT/*!*/;
+# at 126872
+#260729  6:14:55 server id 1  end_log_pos 126951 CRC32 0x20164fdf 	GTID	last_committed=4	sequence_number=346	rbr_only=yes	original_committed_timestamp=1785305695576427	immediate_commit_timestamp=1785305695576427	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695576427 (2026-07-29 06:14:55.576427 UTC)
+# immediate_commit_timestamp=1785305695576427 (2026-07-29 06:14:55.576427 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695576427*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:346'/*!*/;
+# at 126951
+#260729  6:14:55 server id 1  end_log_pos 127039 CRC32 0xe3831d64 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.575586/*!*/;
+BEGIN
+/*!*/;
+# at 127039
+#260729  6:14:55 server id 1  end_log_pos 127096 CRC32 0xf5352beb 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 127096
+#260729  6:14:55 server id 1  end_log_pos 127151 CRC32 0xaf80fb7e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHjwAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDrKzX1
+X5ppah4BAAAANwAAAK/wAQAAAHcBAAAAAAEAAgAD/wBUBQAAAAAAANAHAACZunpjtxZ2fvuArw==
+'/*!*/;
+# at 127151
+#260729  6:14:55 server id 1  end_log_pos 127182 CRC32 0xfdeb846b 	Xid = 3438
+COMMIT/*!*/;
+# at 127182
+#260729  6:14:55 server id 1  end_log_pos 127261 CRC32 0xe1b6fdb0 	GTID	last_committed=4	sequence_number=347	rbr_only=yes	original_committed_timestamp=1785305695577155	immediate_commit_timestamp=1785305695577155	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695577155 (2026-07-29 06:14:55.577155 UTC)
+# immediate_commit_timestamp=1785305695577155 (2026-07-29 06:14:55.577155 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695577155*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:347'/*!*/;
+# at 127261
+#260729  6:14:55 server id 1  end_log_pos 127349 CRC32 0xd4d5549b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.576955/*!*/;
+BEGIN
+/*!*/;
+# at 127349
+#260729  6:14:55 server id 1  end_log_pos 127406 CRC32 0xb5a04722 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 127406
+#260729  6:14:55 server id 1  end_log_pos 127461 CRC32 0x6015fb74 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAK7xAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAiR6C1
+X5ppah4BAAAANwAAAOXxAQAAAHcBAAAAAAEAAgAD/wBVBQAAAAAAANAHAACZunpjtxaAdPsVYA==
+'/*!*/;
+# at 127461
+#260729  6:14:55 server id 1  end_log_pos 127492 CRC32 0x41e0f336 	Xid = 3439
+COMMIT/*!*/;
+# at 127492
+#260729  6:14:55 server id 1  end_log_pos 127571 CRC32 0x6a5eaf99 	GTID	last_committed=4	sequence_number=348	rbr_only=yes	original_committed_timestamp=1785305695577780	immediate_commit_timestamp=1785305695577780	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695577780 (2026-07-29 06:14:55.577780 UTC)
+# immediate_commit_timestamp=1785305695577780 (2026-07-29 06:14:55.577780 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695577780*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:348'/*!*/;
+# at 127571
+#260729  6:14:55 server id 1  end_log_pos 127659 CRC32 0xca8d6086 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.577598/*!*/;
+BEGIN
+/*!*/;
+# at 127659
+#260729  6:14:55 server id 1  end_log_pos 127716 CRC32 0xfccefb93 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 127716
+#260729  6:14:55 server id 1  end_log_pos 127771 CRC32 0xc6881aca 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOTyAQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCT+878
+X5ppah4BAAAANwAAABvzAQAAAHcBAAAAAAEAAgAD/wBWBQAAAAAAANAHAACZunpjtxaKyhqIxg==
+'/*!*/;
+# at 127771
+#260729  6:14:55 server id 1  end_log_pos 127802 CRC32 0x59a01800 	Xid = 3440
+COMMIT/*!*/;
+# at 127802
+#260729  6:14:55 server id 1  end_log_pos 127881 CRC32 0x258c0297 	GTID	last_committed=4	sequence_number=349	rbr_only=yes	original_committed_timestamp=1785305695578584	immediate_commit_timestamp=1785305695578584	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695578584 (2026-07-29 06:14:55.578584 UTC)
+# immediate_commit_timestamp=1785305695578584 (2026-07-29 06:14:55.578584 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695578584*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:349'/*!*/;
+# at 127881
+#260729  6:14:55 server id 1  end_log_pos 127969 CRC32 0xbb74fb66 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.578223/*!*/;
+BEGIN
+/*!*/;
+# at 127969
+#260729  6:14:55 server id 1  end_log_pos 128026 CRC32 0xc6592306 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 128026
+#260729  6:14:55 server id 1  end_log_pos 128081 CRC32 0x130e0e4a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABr0AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAGI1nG
+X5ppah4BAAAANwAAAFH0AQAAAHcBAAAAAAEAAgAD/wBXBQAAAAAAANAHAACZunpjtxaUSg4OEw==
+'/*!*/;
+# at 128081
+#260729  6:14:55 server id 1  end_log_pos 128112 CRC32 0x7bf733ac 	Xid = 3441
+COMMIT/*!*/;
+# at 128112
+#260729  6:14:55 server id 1  end_log_pos 128191 CRC32 0xe099dcf4 	GTID	last_committed=4	sequence_number=350	rbr_only=yes	original_committed_timestamp=1785305695579311	immediate_commit_timestamp=1785305695579311	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695579311 (2026-07-29 06:14:55.579311 UTC)
+# immediate_commit_timestamp=1785305695579311 (2026-07-29 06:14:55.579311 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695579311*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:350'/*!*/;
+# at 128191
+#260729  6:14:55 server id 1  end_log_pos 128279 CRC32 0x61e8c56a 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.579098/*!*/;
+BEGIN
+/*!*/;
+# at 128279
+#260729  6:14:55 server id 1  end_log_pos 128336 CRC32 0x122588e5 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 128336
+#260729  6:14:55 server id 1  end_log_pos 128391 CRC32 0x084edafe 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFD1AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDliCUS
+X5ppah4BAAAANwAAAIf1AQAAAHcBAAAAAAEAAgAD/wBYBQAAAAAAANAHAACZunpjtxae/tpOCA==
+'/*!*/;
+# at 128391
+#260729  6:14:55 server id 1  end_log_pos 128422 CRC32 0x74548203 	Xid = 3442
+COMMIT/*!*/;
+# at 128422
+#260729  6:14:55 server id 1  end_log_pos 128501 CRC32 0x24d58c27 	GTID	last_committed=4	sequence_number=351	rbr_only=yes	original_committed_timestamp=1785305695581582	immediate_commit_timestamp=1785305695581582	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695581582 (2026-07-29 06:14:55.581582 UTC)
+# immediate_commit_timestamp=1785305695581582 (2026-07-29 06:14:55.581582 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695581582*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:351'/*!*/;
+# at 128501
+#260729  6:14:55 server id 1  end_log_pos 128589 CRC32 0x23221ed1 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.581287/*!*/;
+BEGIN
+/*!*/;
+# at 128589
+#260729  6:14:55 server id 1  end_log_pos 128646 CRC32 0xcfa2f37e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 128646
+#260729  6:14:55 server id 1  end_log_pos 128701 CRC32 0xc5b21dc0 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIb2AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB+86LP
+X5ppah4BAAAANwAAAL32AQAAAHcBAAAAAAEAAgAD/wBZBQAAAAAAANAHAACZunpjtxaywB2yxQ==
+'/*!*/;
+# at 128701
+#260729  6:14:55 server id 1  end_log_pos 128732 CRC32 0x3d6c878d 	Xid = 3443
+COMMIT/*!*/;
+# at 128732
+#260729  6:14:55 server id 1  end_log_pos 128811 CRC32 0x0b527c1a 	GTID	last_committed=4	sequence_number=352	rbr_only=yes	original_committed_timestamp=1785305695582254	immediate_commit_timestamp=1785305695582254	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695582254 (2026-07-29 06:14:55.582254 UTC)
+# immediate_commit_timestamp=1785305695582254 (2026-07-29 06:14:55.582254 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695582254*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:352'/*!*/;
+# at 128811
+#260729  6:14:55 server id 1  end_log_pos 128899 CRC32 0xe72aa07b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.582041/*!*/;
+BEGIN
+/*!*/;
+# at 128899
+#260729  6:14:55 server id 1  end_log_pos 128956 CRC32 0xb8f859a4 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 128956
+#260729  6:14:55 server id 1  end_log_pos 129011 CRC32 0x96459c5e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALz3AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCkWfi4
+X5ppah4BAAAANwAAAPP3AQAAAHcBAAAAAAEAAgAD/wBaBQAAAAAAANAHAACZunpjtxa8XpxFlg==
+'/*!*/;
+# at 129011
+#260729  6:14:55 server id 1  end_log_pos 129042 CRC32 0xc41ecfb7 	Xid = 3444
+COMMIT/*!*/;
+# at 129042
+#260729  6:14:55 server id 1  end_log_pos 129121 CRC32 0x9e74dbf7 	GTID	last_committed=4	sequence_number=353	rbr_only=yes	original_committed_timestamp=1785305695582916	immediate_commit_timestamp=1785305695582916	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695582916 (2026-07-29 06:14:55.582916 UTC)
+# immediate_commit_timestamp=1785305695582916 (2026-07-29 06:14:55.582916 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695582916*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:353'/*!*/;
+# at 129121
+#260729  6:14:55 server id 1  end_log_pos 129209 CRC32 0xcf27d365 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.582706/*!*/;
+BEGIN
+/*!*/;
+# at 129209
+#260729  6:14:55 server id 1  end_log_pos 129266 CRC32 0xd999d9a4 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 129266
+#260729  6:14:55 server id 1  end_log_pos 129321 CRC32 0xfde8741e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPL4AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCk2ZnZ
+X5ppah4BAAAANwAAACn5AQAAAHcBAAAAAAEAAgAD/wBbBQAAAAAAANAHAACZunpjtxa8HnTo/Q==
+'/*!*/;
+# at 129321
+#260729  6:14:55 server id 1  end_log_pos 129352 CRC32 0x201e07aa 	Xid = 3445
+COMMIT/*!*/;
+# at 129352
+#260729  6:14:55 server id 1  end_log_pos 129431 CRC32 0x30a7a2fa 	GTID	last_committed=4	sequence_number=354	rbr_only=yes	original_committed_timestamp=1785305695583574	immediate_commit_timestamp=1785305695583574	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695583574 (2026-07-29 06:14:55.583574 UTC)
+# immediate_commit_timestamp=1785305695583574 (2026-07-29 06:14:55.583574 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695583574*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:354'/*!*/;
+# at 129431
+#260729  6:14:55 server id 1  end_log_pos 129519 CRC32 0xe9280b22 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.583360/*!*/;
+BEGIN
+/*!*/;
+# at 129519
+#260729  6:14:55 server id 1  end_log_pos 129576 CRC32 0xe0656bb6 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 129576
+#260729  6:14:55 server id 1  end_log_pos 129631 CRC32 0x78498c58 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACj6AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC2a2Xg
+X5ppah4BAAAANwAAAF/6AQAAAHcBAAAAAAEAAgAD/wBcBQAAAAAAANAHAACZunpjtxbGWIxJeA==
+'/*!*/;
+# at 129631
+#260729  6:14:55 server id 1  end_log_pos 129662 CRC32 0x404f6385 	Xid = 3446
+COMMIT/*!*/;
+# at 129662
+#260729  6:14:55 server id 1  end_log_pos 129741 CRC32 0x7f7ea1b4 	GTID	last_committed=4	sequence_number=355	rbr_only=yes	original_committed_timestamp=1785305695584228	immediate_commit_timestamp=1785305695584228	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695584228 (2026-07-29 06:14:55.584228 UTC)
+# immediate_commit_timestamp=1785305695584228 (2026-07-29 06:14:55.584228 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695584228*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:355'/*!*/;
+# at 129741
+#260729  6:14:55 server id 1  end_log_pos 129829 CRC32 0xc83222fc 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.584021/*!*/;
+BEGIN
+/*!*/;
+# at 129829
+#260729  6:14:55 server id 1  end_log_pos 129886 CRC32 0x58b30036 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 129886
+#260729  6:14:55 server id 1  end_log_pos 129941 CRC32 0xba16e685 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAF77AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA2ALNY
+X5ppah4BAAAANwAAAJX7AQAAAHcBAAAAAAEAAgAD/wBdBQAAAAAAANAHAACZunpjtxbQheYWug==
+'/*!*/;
+# at 129941
+#260729  6:14:55 server id 1  end_log_pos 129972 CRC32 0x418e7816 	Xid = 3447
+COMMIT/*!*/;
+# at 129972
+#260729  6:14:55 server id 1  end_log_pos 130051 CRC32 0xbb7b80e1 	GTID	last_committed=4	sequence_number=356	rbr_only=yes	original_committed_timestamp=1785305695585783	immediate_commit_timestamp=1785305695585783	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695585783 (2026-07-29 06:14:55.585783 UTC)
+# immediate_commit_timestamp=1785305695585783 (2026-07-29 06:14:55.585783 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695585783*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:356'/*!*/;
+# at 130051
+#260729  6:14:55 server id 1  end_log_pos 130139 CRC32 0x3684f29e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.585576/*!*/;
+BEGIN
+/*!*/;
+# at 130139
+#260729  6:14:55 server id 1  end_log_pos 130196 CRC32 0x3a749296 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 130196
+#260729  6:14:55 server id 1  end_log_pos 130251 CRC32 0xeffc2eaf 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJT8AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCWknQ6
+X5ppah4BAAAANwAAAMv8AQAAAHcBAAAAAAEAAgAD/wBeBQAAAAAAANAHAACZunpjtxbary787w==
+'/*!*/;
+# at 130251
+#260729  6:14:55 server id 1  end_log_pos 130282 CRC32 0x094df2ff 	Xid = 3448
+COMMIT/*!*/;
+# at 130282
+#260729  6:14:55 server id 1  end_log_pos 130361 CRC32 0x4eb6fbd3 	GTID	last_committed=4	sequence_number=357	rbr_only=yes	original_committed_timestamp=1785305695588016	immediate_commit_timestamp=1785305695588016	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695588016 (2026-07-29 06:14:55.588016 UTC)
+# immediate_commit_timestamp=1785305695588016 (2026-07-29 06:14:55.588016 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695588016*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:357'/*!*/;
+# at 130361
+#260729  6:14:55 server id 1  end_log_pos 130449 CRC32 0xf82d8190 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.587812/*!*/;
+BEGIN
+/*!*/;
+# at 130449
+#260729  6:14:55 server id 1  end_log_pos 130506 CRC32 0xca6e7954 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 130506
+#260729  6:14:55 server id 1  end_log_pos 130561 CRC32 0xa2a23af6 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMr9AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBUeW7K
+X5ppah4BAAAANwAAAAH+AQAAAHcBAAAAAAEAAgAD/wBfBQAAAAAAANAHAACZunpjtxbu9jqiog==
+'/*!*/;
+# at 130561
+#260729  6:14:55 server id 1  end_log_pos 130592 CRC32 0xb54685a2 	Xid = 3449
+COMMIT/*!*/;
+# at 130592
+#260729  6:14:55 server id 1  end_log_pos 130671 CRC32 0xf57726ac 	GTID	last_committed=4	sequence_number=358	rbr_only=yes	original_committed_timestamp=1785305695588641	immediate_commit_timestamp=1785305695588641	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695588641 (2026-07-29 06:14:55.588641 UTC)
+# immediate_commit_timestamp=1785305695588641 (2026-07-29 06:14:55.588641 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695588641*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:358'/*!*/;
+# at 130671
+#260729  6:14:55 server id 1  end_log_pos 130759 CRC32 0x8ffc2c31 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.588455/*!*/;
+BEGIN
+/*!*/;
+# at 130759
+#260729  6:14:55 server id 1  end_log_pos 130816 CRC32 0x0775c8b8 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 130816
+#260729  6:14:55 server id 1  end_log_pos 130871 CRC32 0x3ea95050 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAD/AQAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC4yHUH
+X5ppah4BAAAANwAAADf/AQAAAHcBAAAAAAEAAgAD/wBgBQAAAAAAANAHAACZunpjtxb4UFCpPg==
+'/*!*/;
+# at 130871
+#260729  6:14:55 server id 1  end_log_pos 130902 CRC32 0xf4f2a337 	Xid = 3450
+COMMIT/*!*/;
+# at 130902
+#260729  6:14:55 server id 1  end_log_pos 130981 CRC32 0x25f5e65c 	GTID	last_committed=4	sequence_number=359	rbr_only=yes	original_committed_timestamp=1785305695589327	immediate_commit_timestamp=1785305695589327	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695589327 (2026-07-29 06:14:55.589327 UTC)
+# immediate_commit_timestamp=1785305695589327 (2026-07-29 06:14:55.589327 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695589327*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:359'/*!*/;
+# at 130981
+#260729  6:14:55 server id 1  end_log_pos 131069 CRC32 0xc52ee20a 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.589121/*!*/;
+BEGIN
+/*!*/;
+# at 131069
+#260729  6:14:55 server id 1  end_log_pos 131126 CRC32 0x2e6cfb8a 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 131126
+#260729  6:14:55 server id 1  end_log_pos 131181 CRC32 0x0a630e05 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADYAAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCK+2wu
+X5ppah4BAAAANwAAAG0AAgAAAHcBAAAAAAEAAgAD/wBhBQAAAAAAANAHAACZunpjtxcCBQ5jCg==
+'/*!*/;
+# at 131181
+#260729  6:14:55 server id 1  end_log_pos 131212 CRC32 0x0467031b 	Xid = 3451
+COMMIT/*!*/;
+# at 131212
+#260729  6:14:55 server id 1  end_log_pos 131291 CRC32 0x5ea74d27 	GTID	last_committed=4	sequence_number=360	rbr_only=yes	original_committed_timestamp=1785305695591102	immediate_commit_timestamp=1785305695591102	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695591102 (2026-07-29 06:14:55.591102 UTC)
+# immediate_commit_timestamp=1785305695591102 (2026-07-29 06:14:55.591102 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695591102*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:360'/*!*/;
+# at 131291
+#260729  6:14:55 server id 1  end_log_pos 131379 CRC32 0xa09d0d95 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.590318/*!*/;
+BEGIN
+/*!*/;
+# at 131379
+#260729  6:14:55 server id 1  end_log_pos 131436 CRC32 0x0ef75397 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 131436
+#260729  6:14:55 server id 1  end_log_pos 131491 CRC32 0xf4540734 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGwBAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCXU/cO
+X5ppah4BAAAANwAAAKMBAgAAAHcBAAAAAAEAAgAD/wBiBQAAAAAAANAHAACZunpjtxcMNAdU9A==
+'/*!*/;
+# at 131491
+#260729  6:14:55 server id 1  end_log_pos 131522 CRC32 0x591671f6 	Xid = 3452
+COMMIT/*!*/;
+# at 131522
+#260729  6:14:55 server id 1  end_log_pos 131601 CRC32 0x43d8f90c 	GTID	last_committed=4	sequence_number=361	rbr_only=yes	original_committed_timestamp=1785305695592289	immediate_commit_timestamp=1785305695592289	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695592289 (2026-07-29 06:14:55.592289 UTC)
+# immediate_commit_timestamp=1785305695592289 (2026-07-29 06:14:55.592289 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695592289*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:361'/*!*/;
+# at 131601
+#260729  6:14:55 server id 1  end_log_pos 131689 CRC32 0x3b02bb9d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.592002/*!*/;
+BEGIN
+/*!*/;
+# at 131689
+#260729  6:14:55 server id 1  end_log_pos 131746 CRC32 0x5de4aa0d 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 131746
+#260729  6:14:55 server id 1  end_log_pos 131801 CRC32 0x82f0077d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKICAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQANquRd
+X5ppah4BAAAANwAAANkCAgAAAHcBAAAAAAEAAgAD/wBjBQAAAAAAANAHAACZunpjtxcgfQfwgg==
+'/*!*/;
+# at 131801
+#260729  6:14:55 server id 1  end_log_pos 131832 CRC32 0x51978389 	Xid = 3453
+COMMIT/*!*/;
+# at 131832
+#260729  6:14:55 server id 1  end_log_pos 131911 CRC32 0xd08d6b98 	GTID	last_committed=4	sequence_number=362	rbr_only=yes	original_committed_timestamp=1785305695594342	immediate_commit_timestamp=1785305695594342	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695594342 (2026-07-29 06:14:55.594342 UTC)
+# immediate_commit_timestamp=1785305695594342 (2026-07-29 06:14:55.594342 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695594342*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:362'/*!*/;
+# at 131911
+#260729  6:14:55 server id 1  end_log_pos 131999 CRC32 0xa29a373f 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.594053/*!*/;
+BEGIN
+/*!*/;
+# at 131999
+#260729  6:14:55 server id 1  end_log_pos 132056 CRC32 0x4fc003ad 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 132056
+#260729  6:14:55 server id 1  end_log_pos 132111 CRC32 0x5e2c9af0 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANgDAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCtA8BP
+X5ppah4BAAAANwAAAA8EAgAAAHcBAAAAAAEAAgAD/wBkBQAAAAAAANAHAACZunpjtxc08JosXg==
+'/*!*/;
+# at 132111
+#260729  6:14:55 server id 1  end_log_pos 132142 CRC32 0x2347347e 	Xid = 3454
+COMMIT/*!*/;
+# at 132142
+#260729  6:14:55 server id 1  end_log_pos 132221 CRC32 0x3818adbf 	GTID	last_committed=4	sequence_number=363	rbr_only=yes	original_committed_timestamp=1785305695595206	immediate_commit_timestamp=1785305695595206	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695595206 (2026-07-29 06:14:55.595206 UTC)
+# immediate_commit_timestamp=1785305695595206 (2026-07-29 06:14:55.595206 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695595206*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:363'/*!*/;
+# at 132221
+#260729  6:14:55 server id 1  end_log_pos 132309 CRC32 0x84b7d7ba 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.594877/*!*/;
+BEGIN
+/*!*/;
+# at 132309
+#260729  6:14:55 server id 1  end_log_pos 132366 CRC32 0x3d9b5b7a 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 132366
+#260729  6:14:55 server id 1  end_log_pos 132421 CRC32 0xc567cdd3 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAA4FAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB6W5s9
+X5ppah4BAAAANwAAAEUFAgAAAHcBAAAAAAEAAgAD/wBlBQAAAAAAANAHAACZunpjtxc0081nxQ==
+'/*!*/;
+# at 132421
+#260729  6:14:55 server id 1  end_log_pos 132452 CRC32 0xa1f5c00f 	Xid = 3455
+COMMIT/*!*/;
+# at 132452
+#260729  6:14:55 server id 1  end_log_pos 132531 CRC32 0xb46d41a5 	GTID	last_committed=4	sequence_number=364	rbr_only=yes	original_committed_timestamp=1785305695595922	immediate_commit_timestamp=1785305695595922	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695595922 (2026-07-29 06:14:55.595922 UTC)
+# immediate_commit_timestamp=1785305695595922 (2026-07-29 06:14:55.595922 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695595922*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:364'/*!*/;
+# at 132531
+#260729  6:14:55 server id 1  end_log_pos 132619 CRC32 0x5956d52e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.595671/*!*/;
+BEGIN
+/*!*/;
+# at 132619
+#260729  6:14:55 server id 1  end_log_pos 132676 CRC32 0x74f5e7cb 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 132676
+#260729  6:14:55 server id 1  end_log_pos 132731 CRC32 0xf59274aa 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEQGAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDL5/V0
+X5ppah4BAAAANwAAAHsGAgAAAHcBAAAAAAEAAgAD/wBmBQAAAAAAANAHAACZunpjtxc+qnSS9Q==
+'/*!*/;
+# at 132731
+#260729  6:14:55 server id 1  end_log_pos 132762 CRC32 0x98f3a300 	Xid = 3456
+COMMIT/*!*/;
+# at 132762
+#260729  6:14:55 server id 1  end_log_pos 132841 CRC32 0x6f13b08b 	GTID	last_committed=4	sequence_number=365	rbr_only=yes	original_committed_timestamp=1785305695596709	immediate_commit_timestamp=1785305695596709	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695596709 (2026-07-29 06:14:55.596709 UTC)
+# immediate_commit_timestamp=1785305695596709 (2026-07-29 06:14:55.596709 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695596709*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:365'/*!*/;
+# at 132841
+#260729  6:14:55 server id 1  end_log_pos 132929 CRC32 0xf101377c 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.596469/*!*/;
+BEGIN
+/*!*/;
+# at 132929
+#260729  6:14:55 server id 1  end_log_pos 132986 CRC32 0xd32e0ece 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 132986
+#260729  6:14:55 server id 1  end_log_pos 133041 CRC32 0x7a7f7f2f 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHoHAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDODi7T
+X5ppah4BAAAANwAAALEHAgAAAHcBAAAAAAEAAgAD/wBnBQAAAAAAANAHAACZunpjtxdIL39/eg==
+'/*!*/;
+# at 133041
+#260729  6:14:55 server id 1  end_log_pos 133072 CRC32 0x1a415771 	Xid = 3457
+COMMIT/*!*/;
+# at 133072
+#260729  6:14:55 server id 1  end_log_pos 133151 CRC32 0xac27daf3 	GTID	last_committed=4	sequence_number=366	rbr_only=yes	original_committed_timestamp=1785305695597558	immediate_commit_timestamp=1785305695597558	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695597558 (2026-07-29 06:14:55.597558 UTC)
+# immediate_commit_timestamp=1785305695597558 (2026-07-29 06:14:55.597558 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695597558*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:366'/*!*/;
+# at 133151
+#260729  6:14:55 server id 1  end_log_pos 133239 CRC32 0xd94bd3a9 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.597326/*!*/;
+BEGIN
+/*!*/;
+# at 133239
+#260729  6:14:55 server id 1  end_log_pos 133296 CRC32 0xa832cbe5 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 133296
+#260729  6:14:55 server id 1  end_log_pos 133351 CRC32 0xb92ce0ee 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALAIAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDlyzKo
+X5ppah4BAAAANwAAAOcIAgAAAHcBAAAAAAEAAgAD/wBoBQAAAAAAANAHAACZunpjtxdS7uAsuQ==
+'/*!*/;
+# at 133351
+#260729  6:14:55 server id 1  end_log_pos 133382 CRC32 0x329233eb 	Xid = 3458
+COMMIT/*!*/;
+# at 133382
+#260729  6:14:55 server id 1  end_log_pos 133461 CRC32 0x5af5c23b 	GTID	last_committed=4	sequence_number=367	rbr_only=yes	original_committed_timestamp=1785305695598336	immediate_commit_timestamp=1785305695598336	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695598336 (2026-07-29 06:14:55.598336 UTC)
+# immediate_commit_timestamp=1785305695598336 (2026-07-29 06:14:55.598336 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695598336*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:367'/*!*/;
+# at 133461
+#260729  6:14:55 server id 1  end_log_pos 133549 CRC32 0xd38f2190 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.598145/*!*/;
+BEGIN
+/*!*/;
+# at 133549
+#260729  6:14:55 server id 1  end_log_pos 133606 CRC32 0x225ba1d8 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 133606
+#260729  6:14:55 server id 1  end_log_pos 133661 CRC32 0x37d83ef3 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOYJAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDYoVsi
+X5ppah4BAAAANwAAAB0KAgAAAHcBAAAAAAEAAgAD/wBpBQAAAAAAANAHAACZunpjtxdc8z7YNw==
+'/*!*/;
+# at 133661
+#260729  6:14:55 server id 1  end_log_pos 133692 CRC32 0x3a13c194 	Xid = 3459
+COMMIT/*!*/;
+# at 133692
+#260729  6:14:55 server id 1  end_log_pos 133771 CRC32 0xcff6df2a 	GTID	last_committed=4	sequence_number=368	rbr_only=yes	original_committed_timestamp=1785305695599044	immediate_commit_timestamp=1785305695599044	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695599044 (2026-07-29 06:14:55.599044 UTC)
+# immediate_commit_timestamp=1785305695599044 (2026-07-29 06:14:55.599044 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695599044*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:368'/*!*/;
+# at 133771
+#260729  6:14:55 server id 1  end_log_pos 133859 CRC32 0x86c7638b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.598808/*!*/;
+BEGIN
+/*!*/;
+# at 133859
+#260729  6:14:55 server id 1  end_log_pos 133916 CRC32 0x29181277 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 133916
+#260729  6:14:55 server id 1  end_log_pos 133971 CRC32 0x8397926a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABwLAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB3Ehgp
+X5ppah4BAAAANwAAAFMLAgAAAHcBAAAAAAEAAgAD/wBqBQAAAAAAANAHAACZunpjtxdcapKXgw==
+'/*!*/;
+# at 133971
+#260729  6:14:55 server id 1  end_log_pos 134002 CRC32 0x6762b379 	Xid = 3460
+COMMIT/*!*/;
+# at 134002
+#260729  6:14:55 server id 1  end_log_pos 134081 CRC32 0xbd0ce148 	GTID	last_committed=4	sequence_number=369	rbr_only=yes	original_committed_timestamp=1785305695601206	immediate_commit_timestamp=1785305695601206	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695601206 (2026-07-29 06:14:55.601206 UTC)
+# immediate_commit_timestamp=1785305695601206 (2026-07-29 06:14:55.601206 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695601206*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:369'/*!*/;
+# at 134081
+#260729  6:14:55 server id 1  end_log_pos 134169 CRC32 0x848522bd 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.600994/*!*/;
+BEGIN
+/*!*/;
+# at 134169
+#260729  6:14:55 server id 1  end_log_pos 134226 CRC32 0x51a2c5fc 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 134226
+#260729  6:14:55 server id 1  end_log_pos 134281 CRC32 0x86b4aca8 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFIMAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQD8xaJR
+X5ppah4BAAAANwAAAIkMAgAAAHcBAAAAAAEAAgAD/wBrBQAAAAAAANAHAACZunpjtxdwqKy0hg==
+'/*!*/;
+# at 134281
+#260729  6:14:55 server id 1  end_log_pos 134312 CRC32 0xa0f44b5b 	Xid = 3461
+COMMIT/*!*/;
+# at 134312
+#260729  6:14:55 server id 1  end_log_pos 134391 CRC32 0x099887ea 	GTID	last_committed=4	sequence_number=370	rbr_only=yes	original_committed_timestamp=1785305695601866	immediate_commit_timestamp=1785305695601866	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695601866 (2026-07-29 06:14:55.601866 UTC)
+# immediate_commit_timestamp=1785305695601866 (2026-07-29 06:14:55.601866 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695601866*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:370'/*!*/;
+# at 134391
+#260729  6:14:55 server id 1  end_log_pos 134479 CRC32 0x3e28f693 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.601661/*!*/;
+BEGIN
+/*!*/;
+# at 134479
+#260729  6:14:55 server id 1  end_log_pos 134536 CRC32 0xbbc56b15 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 134536
+#260729  6:14:55 server id 1  end_log_pos 134591 CRC32 0x32d9cada 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIgNAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAVa8W7
+X5ppah4BAAAANwAAAL8NAgAAAHcBAAAAAAEAAgAD/wBsBQAAAAAAANAHAACZunpjtxd62srZMg==
+'/*!*/;
+# at 134591
+#260729  6:14:55 server id 1  end_log_pos 134622 CRC32 0xe1406dce 	Xid = 3462
+COMMIT/*!*/;
+# at 134622
+#260729  6:14:55 server id 1  end_log_pos 134701 CRC32 0x2a1797e2 	GTID	last_committed=4	sequence_number=371	rbr_only=yes	original_committed_timestamp=1785305695602514	immediate_commit_timestamp=1785305695602514	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695602514 (2026-07-29 06:14:55.602514 UTC)
+# immediate_commit_timestamp=1785305695602514 (2026-07-29 06:14:55.602514 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695602514*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:371'/*!*/;
+# at 134701
+#260729  6:14:55 server id 1  end_log_pos 134789 CRC32 0xede43dd8 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.602301/*!*/;
+BEGIN
+/*!*/;
+# at 134789
+#260729  6:14:55 server id 1  end_log_pos 134846 CRC32 0xfb7f14bd 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 134846
+#260729  6:14:55 server id 1  end_log_pos 134901 CRC32 0x29066a9d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAL4OAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC9FH/7
+X5ppah4BAAAANwAAAPUOAgAAAHcBAAAAAAEAAgAD/wBtBQAAAAAAANAHAACZunpjtxeEnWoGKQ==
+'/*!*/;
+# at 134901
+#260729  6:14:55 server id 1  end_log_pos 134932 CRC32 0x5d4b1a93 	Xid = 3463
+COMMIT/*!*/;
+# at 134932
+#260729  6:14:55 server id 1  end_log_pos 135011 CRC32 0x55b021d6 	GTID	last_committed=4	sequence_number=372	rbr_only=yes	original_committed_timestamp=1785305695603221	immediate_commit_timestamp=1785305695603221	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695603221 (2026-07-29 06:14:55.603221 UTC)
+# immediate_commit_timestamp=1785305695603221 (2026-07-29 06:14:55.603221 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695603221*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:372'/*!*/;
+# at 135011
+#260729  6:14:55 server id 1  end_log_pos 135099 CRC32 0x579d6a7b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.603001/*!*/;
+BEGIN
+/*!*/;
+# at 135099
+#260729  6:14:55 server id 1  end_log_pos 135156 CRC32 0x2f03bf5e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 135156
+#260729  6:14:55 server id 1  end_log_pos 135211 CRC32 0xef46ccc4 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPQPAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBevwMv
+X5ppah4BAAAANwAAACsQAgAAAHcBAAAAAAEAAgAD/wBuBQAAAAAAANAHAACZunpjtxeOxMxG7w==
+'/*!*/;
+# at 135211
+#260729  6:14:55 server id 1  end_log_pos 135242 CRC32 0xfb8ce5cd 	Xid = 3464
+COMMIT/*!*/;
+# at 135242
+#260729  6:14:55 server id 1  end_log_pos 135321 CRC32 0xa37b9935 	GTID	last_committed=4	sequence_number=373	rbr_only=yes	original_committed_timestamp=1785305695603931	immediate_commit_timestamp=1785305695603931	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695603931 (2026-07-29 06:14:55.603931 UTC)
+# immediate_commit_timestamp=1785305695603931 (2026-07-29 06:14:55.603931 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695603931*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:373'/*!*/;
+# at 135321
+#260729  6:14:55 server id 1  end_log_pos 135409 CRC32 0x87afd7a7 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.603725/*!*/;
+BEGIN
+/*!*/;
+# at 135409
+#260729  6:14:55 server id 1  end_log_pos 135466 CRC32 0x0d469eeb 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 135466
+#260729  6:14:55 server id 1  end_log_pos 135521 CRC32 0x740d9be7 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACoRAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDrnkYN
+X5ppah4BAAAANwAAAGERAgAAAHcBAAAAAAEAAgAD/wBvBQAAAAAAANAHAACZunpjtxeO55sNdA==
+'/*!*/;
+# at 135521
+#260729  6:14:55 server id 1  end_log_pos 135552 CRC32 0xfa4dfe5e 	Xid = 3465
+COMMIT/*!*/;
+# at 135552
+#260729  6:14:55 server id 1  end_log_pos 135631 CRC32 0xd2ce6356 	GTID	last_committed=4	sequence_number=374	rbr_only=yes	original_committed_timestamp=1785305695604576	immediate_commit_timestamp=1785305695604576	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695604576 (2026-07-29 06:14:55.604576 UTC)
+# immediate_commit_timestamp=1785305695604576 (2026-07-29 06:14:55.604576 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695604576*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:374'/*!*/;
+# at 135631
+#260729  6:14:55 server id 1  end_log_pos 135719 CRC32 0x748a541b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.604386/*!*/;
+BEGIN
+/*!*/;
+# at 135719
+#260729  6:14:55 server id 1  end_log_pos 135776 CRC32 0x4428225a 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 135776
+#260729  6:14:55 server id 1  end_log_pos 135831 CRC32 0x028be0f2 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGASAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBaIihE
+X5ppah4BAAAANwAAAJcSAgAAAHcBAAAAAAEAAgAD/wBwBQAAAAAAANAHAACZunpjtxeY8uCLAg==
+'/*!*/;
+# at 135831
+#260729  6:14:55 server id 1  end_log_pos 135862 CRC32 0x9a1c9a71 	Xid = 3466
+COMMIT/*!*/;
+# at 135862
+#260729  6:14:55 server id 1  end_log_pos 135941 CRC32 0x1a9d3e6d 	GTID	last_committed=4	sequence_number=375	rbr_only=yes	original_committed_timestamp=1785305695605560	immediate_commit_timestamp=1785305695605560	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695605560 (2026-07-29 06:14:55.605560 UTC)
+# immediate_commit_timestamp=1785305695605560 (2026-07-29 06:14:55.605560 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695605560*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:375'/*!*/;
+# at 135941
+#260729  6:14:55 server id 1  end_log_pos 136029 CRC32 0x8144d593 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.604940/*!*/;
+BEGIN
+/*!*/;
+# at 136029
+#260729  6:14:55 server id 1  end_log_pos 136086 CRC32 0x36024f2e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 136086
+#260729  6:14:55 server id 1  end_log_pos 136141 CRC32 0x2c7244bc 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJYTAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAuTwI2
+X5ppah4BAAAANwAAAM0TAgAAAHcBAAAAAAEAAgAD/wBxBQAAAAAAANAHAACZunpjtxeYvERyLA==
+'/*!*/;
+# at 136141
+#260729  6:14:55 server id 1  end_log_pos 136172 CRC32 0x7e1c526c 	Xid = 3467
+COMMIT/*!*/;
+# at 136172
+#260729  6:14:55 server id 1  end_log_pos 136251 CRC32 0xf8505ffc 	GTID	last_committed=4	sequence_number=376	rbr_only=yes	original_committed_timestamp=1785305695606229	immediate_commit_timestamp=1785305695606229	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695606229 (2026-07-29 06:14:55.606229 UTC)
+# immediate_commit_timestamp=1785305695606229 (2026-07-29 06:14:55.606229 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695606229*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:376'/*!*/;
+# at 136251
+#260729  6:14:55 server id 1  end_log_pos 136339 CRC32 0x24c5d148 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.606041/*!*/;
+BEGIN
+/*!*/;
+# at 136339
+#260729  6:14:55 server id 1  end_log_pos 136396 CRC32 0x6aded884 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 136396
+#260729  6:14:55 server id 1  end_log_pos 136451 CRC32 0x207bfde0 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMwUAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCE2N5q
+X5ppah4BAAAANwAAAAMVAgAAAHcBAAAAAAEAAgAD/wByBQAAAAAAANAHAACZunpjtxes4P17IA==
+'/*!*/;
+# at 136451
+#260729  6:14:55 server id 1  end_log_pos 136482 CRC32 0xdd6dc93b 	Xid = 3468
+COMMIT/*!*/;
+# at 136482
+#260729  6:14:55 server id 1  end_log_pos 136561 CRC32 0xf47a8c2e 	GTID	last_committed=4	sequence_number=377	rbr_only=yes	original_committed_timestamp=1785305695608055	immediate_commit_timestamp=1785305695608055	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695608055 (2026-07-29 06:14:55.608055 UTC)
+# immediate_commit_timestamp=1785305695608055 (2026-07-29 06:14:55.608055 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695608055*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:377'/*!*/;
+# at 136561
+#260729  6:14:55 server id 1  end_log_pos 136649 CRC32 0x8a59fb14 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.607848/*!*/;
+BEGIN
+/*!*/;
+# at 136649
+#260729  6:14:55 server id 1  end_log_pos 136706 CRC32 0x77442ab7 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 136706
+#260729  6:14:55 server id 1  end_log_pos 136761 CRC32 0x223daf47 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAIWAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC3KkR3
+X5ppah4BAAAANwAAADkWAgAAAHcBAAAAAAEAAgAD/wBzBQAAAAAAANAHAACZunpjtxe2R689Ig==
+'/*!*/;
+# at 136761
+#260729  6:14:55 server id 1  end_log_pos 136792 CRC32 0x9455ccb5 	Xid = 3469
+COMMIT/*!*/;
+# at 136792
+#260729  6:14:55 server id 1  end_log_pos 136871 CRC32 0xd5c5fb74 	GTID	last_committed=4	sequence_number=378	rbr_only=yes	original_committed_timestamp=1785305695608797	immediate_commit_timestamp=1785305695608797	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695608797 (2026-07-29 06:14:55.608797 UTC)
+# immediate_commit_timestamp=1785305695608797 (2026-07-29 06:14:55.608797 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695608797*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:378'/*!*/;
+# at 136871
+#260729  6:14:55 server id 1  end_log_pos 136959 CRC32 0x744193d9 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.608535/*!*/;
+BEGIN
+/*!*/;
+# at 136959
+#260729  6:14:55 server id 1  end_log_pos 137016 CRC32 0x001e806d 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 137016
+#260729  6:14:55 server id 1  end_log_pos 137071 CRC32 0xc4afd3ce 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADgXAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBtgB4A
+X5ppah4BAAAANwAAAG8XAgAAAHcBAAAAAAEAAgAD/wB0BQAAAAAAANAHAACZunpjtxfAztOvxA==
+'/*!*/;
+# at 137071
+#260729  6:14:55 server id 1  end_log_pos 137102 CRC32 0x9bf67d1a 	Xid = 3470
+COMMIT/*!*/;
+# at 137102
+#260729  6:14:55 server id 1  end_log_pos 137181 CRC32 0x1faf17a4 	GTID	last_committed=4	sequence_number=379	rbr_only=yes	original_committed_timestamp=1785305695609511	immediate_commit_timestamp=1785305695609511	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695609511 (2026-07-29 06:14:55.609511 UTC)
+# immediate_commit_timestamp=1785305695609511 (2026-07-29 06:14:55.609511 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695609511*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:379'/*!*/;
+# at 137181
+#260729  6:14:55 server id 1  end_log_pos 137269 CRC32 0x694715b6 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.609329/*!*/;
+BEGIN
+/*!*/;
+# at 137269
+#260729  6:14:55 server id 1  end_log_pos 137326 CRC32 0xefeb826c 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 137326
+#260729  6:14:55 server id 1  end_log_pos 137381 CRC32 0x7a9536e2 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAG4YAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBsguvv
+X5ppah4BAAAANwAAAKUYAgAAAHcBAAAAAAEAAgAD/wB1BQAAAAAAANAHAACZunpjtxfK4jaVeg==
+'/*!*/;
+# at 137381
+#260729  6:14:55 server id 1  end_log_pos 137412 CRC32 0xe3a285db 	Xid = 3471
+COMMIT/*!*/;
+# at 137412
+#260729  6:14:55 server id 1  end_log_pos 137491 CRC32 0x6eef1bf3 	GTID	last_committed=4	sequence_number=380	rbr_only=yes	original_committed_timestamp=1785305695610131	immediate_commit_timestamp=1785305695610131	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695610131 (2026-07-29 06:14:55.610131 UTC)
+# immediate_commit_timestamp=1785305695610131 (2026-07-29 06:14:55.610131 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695610131*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:380'/*!*/;
+# at 137491
+#260729  6:14:55 server id 1  end_log_pos 137579 CRC32 0x67cbe312 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.609934/*!*/;
+BEGIN
+/*!*/;
+# at 137579
+#260729  6:14:55 server id 1  end_log_pos 137636 CRC32 0xf16b2f7b 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 137636
+#260729  6:14:55 server id 1  end_log_pos 137691 CRC32 0xcb7c898d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKQZAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB7L2vx
+X5ppah4BAAAANwAAANsZAgAAAHcBAAAAAAEAAgAD/wB2BQAAAAAAANAHAACZunpjtxfKjYl8yw==
+'/*!*/;
+# at 137691
+#260729  6:14:55 server id 1  end_log_pos 137722 CRC32 0xfbe26eed 	Xid = 3472
+COMMIT/*!*/;
+# at 137722
+#260729  6:14:55 server id 1  end_log_pos 137801 CRC32 0x608fef4c 	GTID	last_committed=4	sequence_number=381	rbr_only=yes	original_committed_timestamp=1785305695610849	immediate_commit_timestamp=1785305695610849	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695610849 (2026-07-29 06:14:55.610849 UTC)
+# immediate_commit_timestamp=1785305695610849 (2026-07-29 06:14:55.610849 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695610849*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:381'/*!*/;
+# at 137801
+#260729  6:14:55 server id 1  end_log_pos 137889 CRC32 0x4cf7a8e2 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.610676/*!*/;
+BEGIN
+/*!*/;
+# at 137889
+#260729  6:14:55 server id 1  end_log_pos 137946 CRC32 0xaedcd256 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 137946
+#260729  6:14:55 server id 1  end_log_pos 138001 CRC32 0x5d995402 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANoaAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBW0tyu
+X5ppah4BAAAANwAAABEbAgAAAHcBAAAAAAEAAgAD/wB3BQAAAAAAANAHAACZunpjtxfUAlSZXQ==
+'/*!*/;
+# at 138001
+#260729  6:14:55 server id 1  end_log_pos 138032 CRC32 0x47e919b0 	Xid = 3473
+COMMIT/*!*/;
+# at 138032
+#260729  6:14:55 server id 1  end_log_pos 138111 CRC32 0x9593e1e5 	GTID	last_committed=4	sequence_number=382	rbr_only=yes	original_committed_timestamp=1785305695611458	immediate_commit_timestamp=1785305695611458	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695611458 (2026-07-29 06:14:55.611458 UTC)
+# immediate_commit_timestamp=1785305695611458 (2026-07-29 06:14:55.611458 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695611458*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:382'/*!*/;
+# at 138111
+#260729  6:14:55 server id 1  end_log_pos 138199 CRC32 0x9232b634 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.611255/*!*/;
+BEGIN
+/*!*/;
+# at 138199
+#260729  6:14:55 server id 1  end_log_pos 138256 CRC32 0x82924b5f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 138256
+#260729  6:14:55 server id 1  end_log_pos 138311 CRC32 0x5fdb76d9 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABAcAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBfS5KC
+X5ppah4BAAAANwAAAEccAgAAAHcBAAAAAAEAAgAD/wB4BQAAAAAAANAHAACZunpjtxfe2XbbXw==
+'/*!*/;
+# at 138311
+#260729  6:14:55 server id 1  end_log_pos 138342 CRC32 0x6bdc9820 	Xid = 3474
+COMMIT/*!*/;
+# at 138342
+#260729  6:14:55 server id 1  end_log_pos 138421 CRC32 0xddd4fac5 	GTID	last_committed=4	sequence_number=383	rbr_only=yes	original_committed_timestamp=1785305695612123	immediate_commit_timestamp=1785305695612123	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695612123 (2026-07-29 06:14:55.612123 UTC)
+# immediate_commit_timestamp=1785305695612123 (2026-07-29 06:14:55.612123 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695612123*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:383'/*!*/;
+# at 138421
+#260729  6:14:55 server id 1  end_log_pos 138509 CRC32 0xb52193cc 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.611930/*!*/;
+BEGIN
+/*!*/;
+# at 138509
+#260729  6:14:55 server id 1  end_log_pos 138566 CRC32 0x08fb2162 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 138566
+#260729  6:14:55 server id 1  end_log_pos 138621 CRC32 0x7a6ef57b 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEYdAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBiIfsI
+X5ppah4BAAAANwAAAH0dAgAAAHcBAAAAAAEAAgAD/wB5BQAAAAAAANAHAACZunpjtxfee/Vueg==
+'/*!*/;
+# at 138621
+#260729  6:14:55 server id 1  end_log_pos 138652 CRC32 0xc1cbc707 	Xid = 3475
+COMMIT/*!*/;
+# at 138652
+#260729  6:14:55 server id 1  end_log_pos 138731 CRC32 0x63825c5a 	GTID	last_committed=4	sequence_number=384	rbr_only=yes	original_committed_timestamp=1785305695614021	immediate_commit_timestamp=1785305695614021	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695614021 (2026-07-29 06:14:55.614021 UTC)
+# immediate_commit_timestamp=1785305695614021 (2026-07-29 06:14:55.614021 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695614021*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:384'/*!*/;
+# at 138731
+#260729  6:14:55 server id 1  end_log_pos 138819 CRC32 0x2dc35e9d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.613782/*!*/;
+BEGIN
+/*!*/;
+# at 138819
+#260729  6:14:55 server id 1  end_log_pos 138876 CRC32 0xe2b39cea 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 138876
+#260729  6:14:55 server id 1  end_log_pos 138931 CRC32 0x8ba895d1 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHweAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDqnLPi
+X5ppah4BAAAANwAAALMeAgAAAHcBAAAAAAEAAgAD/wB6BQAAAAAAANAHAACZunpjtxfy0ZWoiw==
+'/*!*/;
+# at 138931
+#260729  6:14:55 server id 1  end_log_pos 138962 CRC32 0xfce600a1 	Xid = 3476
+COMMIT/*!*/;
+# at 138962
+#260729  6:14:55 server id 1  end_log_pos 139041 CRC32 0x125c8076 	GTID	last_committed=4	sequence_number=385	rbr_only=yes	original_committed_timestamp=1785305695614715	immediate_commit_timestamp=1785305695614715	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695614715 (2026-07-29 06:14:55.614715 UTC)
+# immediate_commit_timestamp=1785305695614715 (2026-07-29 06:14:55.614715 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695614715*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:385'/*!*/;
+# at 139041
+#260729  6:14:55 server id 1  end_log_pos 139129 CRC32 0x09087ee8 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.614539/*!*/;
+BEGIN
+/*!*/;
+# at 139129
+#260729  6:14:55 server id 1  end_log_pos 139186 CRC32 0x2cb27222 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 139186
+#260729  6:14:55 server id 1  end_log_pos 139241 CRC32 0x42e91c98 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALIfAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAicrIs
+X5ppah4BAAAANwAAAOkfAgAAAHcBAAAAAAEAAgAD/wB7BQAAAAAAANAHAACZunpjtxf8mBzpQg==
+'/*!*/;
+# at 139241
+#260729  6:14:55 server id 1  end_log_pos 139272 CRC32 0xbb9c1f44 	Xid = 3477
+COMMIT/*!*/;
+# at 139272
+#260729  6:14:55 server id 1  end_log_pos 139351 CRC32 0x1ec25e76 	GTID	last_committed=4	sequence_number=386	rbr_only=yes	original_committed_timestamp=1785305695615452	immediate_commit_timestamp=1785305695615452	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695615452 (2026-07-29 06:14:55.615452 UTC)
+# immediate_commit_timestamp=1785305695615452 (2026-07-29 06:14:55.615452 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695615452*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:386'/*!*/;
+# at 139351
+#260729  6:14:55 server id 1  end_log_pos 139439 CRC32 0xe1a7bf50 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.615242/*!*/;
+BEGIN
+/*!*/;
+# at 139439
+#260729  6:14:55 server id 1  end_log_pos 139496 CRC32 0x3d6e4339 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 139496
+#260729  6:14:55 server id 1  end_log_pos 139551 CRC32 0x94e9fa87 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOggAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA5Q249
+X5ppah4BAAAANwAAAB8hAgAAAHcBAAAAAAEAAgAD/wB8BQAAAAAAANAHAACZunpjtxgGh/rplA==
+'/*!*/;
+# at 139551
+#260729  6:14:55 server id 1  end_log_pos 139582 CRC32 0xbb91ce20 	Xid = 3478
+COMMIT/*!*/;
+# at 139582
+#260729  6:14:55 server id 1  end_log_pos 139661 CRC32 0xe16254fa 	GTID	last_committed=4	sequence_number=387	rbr_only=yes	original_committed_timestamp=1785305695616276	immediate_commit_timestamp=1785305695616276	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695616276 (2026-07-29 06:14:55.616276 UTC)
+# immediate_commit_timestamp=1785305695616276 (2026-07-29 06:14:55.616276 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695616276*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:387'/*!*/;
+# at 139661
+#260729  6:14:55 server id 1  end_log_pos 139749 CRC32 0x31d62872 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.615991/*!*/;
+BEGIN
+/*!*/;
+# at 139749
+#260729  6:14:55 server id 1  end_log_pos 139806 CRC32 0x9cdf32b6 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 139806
+#260729  6:14:55 server id 1  end_log_pos 139861 CRC32 0xd53385db 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAB4iAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC2Mt+c
+X5ppah4BAAAANwAAAFUiAgAAAHcBAAAAAAEAAgAD/wB9BQAAAAAAANAHAACZunpjtxgG24Uz1Q==
+'/*!*/;
+# at 139861
+#260729  6:14:55 server id 1  end_log_pos 139892 CRC32 0x597f8f1a 	Xid = 3479
+COMMIT/*!*/;
+# at 139892
+#260729  6:14:55 server id 1  end_log_pos 139971 CRC32 0x3bf86d26 	GTID	last_committed=4	sequence_number=388	rbr_only=yes	original_committed_timestamp=1785305695617066	immediate_commit_timestamp=1785305695617066	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695617066 (2026-07-29 06:14:55.617066 UTC)
+# immediate_commit_timestamp=1785305695617066 (2026-07-29 06:14:55.617066 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695617066*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:388'/*!*/;
+# at 139971
+#260729  6:14:55 server id 1  end_log_pos 140059 CRC32 0xceed64a1 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.616780/*!*/;
+BEGIN
+/*!*/;
+# at 140059
+#260729  6:14:55 server id 1  end_log_pos 140116 CRC32 0x48a39955 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 140116
+#260729  6:14:55 server id 1  end_log_pos 140171 CRC32 0x8ddae7d1 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFQjAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBVmaNI
+X5ppah4BAAAANwAAAIsjAgAAAHcBAAAAAAEAAgAD/wB+BQAAAAAAANAHAACZunpjtxgQ0efajQ==
+'/*!*/;
+# at 140171
+#260729  6:14:55 server id 1  end_log_pos 140202 CRC32 0x322a35cc 	Xid = 3480
+COMMIT/*!*/;
+# at 140202
+#260729  6:14:55 server id 1  end_log_pos 140281 CRC32 0xf42ce1ce 	GTID	last_committed=4	sequence_number=389	rbr_only=yes	original_committed_timestamp=1785305695619477	immediate_commit_timestamp=1785305695619477	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695619477 (2026-07-29 06:14:55.619477 UTC)
+# immediate_commit_timestamp=1785305695619477 (2026-07-29 06:14:55.619477 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695619477*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:389'/*!*/;
+# at 140281
+#260729  6:14:55 server id 1  end_log_pos 140369 CRC32 0x5e38045b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.618886/*!*/;
+BEGIN
+/*!*/;
+# at 140369
+#260729  6:14:55 server id 1  end_log_pos 140426 CRC32 0x0e024bd4 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 140426
+#260729  6:14:55 server id 1  end_log_pos 140481 CRC32 0x83e73a87 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIokAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDUSwIO
+X5ppah4BAAAANwAAAMEkAgAAAHcBAAAAAAEAAgAD/wB/BQAAAAAAANAHAACZunpjtxgkhzrngw==
+'/*!*/;
+# at 140481
+#260729  6:14:55 server id 1  end_log_pos 140512 CRC32 0x107d1e60 	Xid = 3481
+COMMIT/*!*/;
+# at 140512
+#260729  6:14:55 server id 1  end_log_pos 140591 CRC32 0x991612fb 	GTID	last_committed=4	sequence_number=390	rbr_only=yes	original_committed_timestamp=1785305695620035	immediate_commit_timestamp=1785305695620035	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695620035 (2026-07-29 06:14:55.620035 UTC)
+# immediate_commit_timestamp=1785305695620035 (2026-07-29 06:14:55.620035 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695620035*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:390'/*!*/;
+# at 140591
+#260729  6:14:55 server id 1  end_log_pos 140679 CRC32 0x746b3662 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.619842/*!*/;
+BEGIN
+/*!*/;
+# at 140679
+#260729  6:14:55 server id 1  end_log_pos 140736 CRC32 0xda7ee037 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 140736
+#260729  6:14:55 server id 1  end_log_pos 140791 CRC32 0xdcf43816 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMAlAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA34H7a
+X5ppah4BAAAANwAAAPclAgAAAHcBAAAAAAEAAgAD/wCABQAAAAAAANAHAACZunpjtxguFjj03A==
+'/*!*/;
+# at 140791
+#260729  6:14:55 server id 1  end_log_pos 140822 CRC32 0x6f70bbd9 	Xid = 3482
+COMMIT/*!*/;
+# at 140822
+#260729  6:14:55 server id 1  end_log_pos 140901 CRC32 0xefe057cc 	GTID	last_committed=4	sequence_number=391	rbr_only=yes	original_committed_timestamp=1785305695620697	immediate_commit_timestamp=1785305695620697	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695620697 (2026-07-29 06:14:55.620697 UTC)
+# immediate_commit_timestamp=1785305695620697 (2026-07-29 06:14:55.620697 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695620697*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:391'/*!*/;
+# at 140901
+#260729  6:14:55 server id 1  end_log_pos 140989 CRC32 0x802638f8 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.620505/*!*/;
+BEGIN
+/*!*/;
+# at 140989
+#260729  6:14:55 server id 1  end_log_pos 141046 CRC32 0x9ac49f9f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 141046
+#260729  6:14:55 server id 1  end_log_pos 141101 CRC32 0xf1789ec6 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPYmAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCfn8Sa
+X5ppah4BAAAANwAAAC0nAgAAAHcBAAAAAAEAAgAD/wCBBQAAAAAAANAHAACZunpjtxg4xp548Q==
+'/*!*/;
+# at 141101
+#260729  6:14:55 server id 1  end_log_pos 141132 CRC32 0x8b7073c4 	Xid = 3483
+COMMIT/*!*/;
+# at 141132
+#260729  6:14:55 server id 1  end_log_pos 141211 CRC32 0xf0307203 	GTID	last_committed=4	sequence_number=392	rbr_only=yes	original_committed_timestamp=1785305695621374	immediate_commit_timestamp=1785305695621374	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695621374 (2026-07-29 06:14:55.621374 UTC)
+# immediate_commit_timestamp=1785305695621374 (2026-07-29 06:14:55.621374 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695621374*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:392'/*!*/;
+# at 141211
+#260729  6:14:55 server id 1  end_log_pos 141299 CRC32 0x6c6cf40b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.621181/*!*/;
+BEGIN
+/*!*/;
+# at 141299
+#260729  6:14:55 server id 1  end_log_pos 141356 CRC32 0x5bb652e3 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 141356
+#260729  6:14:55 server id 1  end_log_pos 141411 CRC32 0x9d8379c3 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACwoAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDjUrZb
+X5ppah4BAAAANwAAAGMoAgAAAHcBAAAAAAEAAgAD/wCCBQAAAAAAANAHAACZunpjtxhCw3mDnQ==
+'/*!*/;
+# at 141411
+#260729  6:14:55 server id 1  end_log_pos 141442 CRC32 0xaf94e27b 	Xid = 3484
+COMMIT/*!*/;
+# at 141442
+#260729  6:14:55 server id 1  end_log_pos 141521 CRC32 0xfb69c1e1 	GTID	last_committed=4	sequence_number=393	rbr_only=yes	original_committed_timestamp=1785305695622120	immediate_commit_timestamp=1785305695622120	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695622120 (2026-07-29 06:14:55.622120 UTC)
+# immediate_commit_timestamp=1785305695622120 (2026-07-29 06:14:55.622120 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695622120*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:393'/*!*/;
+# at 141521
+#260729  6:14:55 server id 1  end_log_pos 141609 CRC32 0xadc89f9d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.621875/*!*/;
+BEGIN
+/*!*/;
+# at 141609
+#260729  6:14:55 server id 1  end_log_pos 141666 CRC32 0x5f4bbadf 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 141666
+#260729  6:14:55 server id 1  end_log_pos 141721 CRC32 0xaeaeb5b9 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGIpAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDfuktf
+X5ppah4BAAAANwAAAJkpAgAAAHcBAAAAAAEAAgAD/wCDBQAAAAAAANAHAACZunpjtxhCubWurg==
+'/*!*/;
+# at 141721
+#260729  6:14:55 server id 1  end_log_pos 141752 CRC32 0xc749a54f 	Xid = 3485
+COMMIT/*!*/;
+# at 141752
+#260729  6:14:55 server id 1  end_log_pos 141831 CRC32 0x76615b32 	GTID	last_committed=4	sequence_number=394	rbr_only=yes	original_committed_timestamp=1785305695622813	immediate_commit_timestamp=1785305695622813	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695622813 (2026-07-29 06:14:55.622813 UTC)
+# immediate_commit_timestamp=1785305695622813 (2026-07-29 06:14:55.622813 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695622813*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:394'/*!*/;
+# at 141831
+#260729  6:14:55 server id 1  end_log_pos 141919 CRC32 0x6fb1a4af 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.622627/*!*/;
+BEGIN
+/*!*/;
+# at 141919
+#260729  6:14:55 server id 1  end_log_pos 141976 CRC32 0x1a8102d9 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 141976
+#260729  6:14:55 server id 1  end_log_pos 142031 CRC32 0xcc731841 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJgqAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDZAoEa
+X5ppah4BAAAANwAAAM8qAgAAAHcBAAAAAAEAAgAD/wCEBQAAAAAAANAHAACZunpjtxhMQRhzzA==
+'/*!*/;
+# at 142031
+#260729  6:14:55 server id 1  end_log_pos 142062 CRC32 0x2bc54e49 	Xid = 3486
+COMMIT/*!*/;
+# at 142062
+#260729  6:14:55 server id 1  end_log_pos 142141 CRC32 0x73012e8d 	GTID	last_committed=4	sequence_number=395	rbr_only=yes	original_committed_timestamp=1785305695625095	immediate_commit_timestamp=1785305695625095	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695625095 (2026-07-29 06:14:55.625095 UTC)
+# immediate_commit_timestamp=1785305695625095 (2026-07-29 06:14:55.625095 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695625095*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:395'/*!*/;
+# at 142141
+#260729  6:14:55 server id 1  end_log_pos 142229 CRC32 0x603d077d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.624682/*!*/;
+BEGIN
+/*!*/;
+# at 142229
+#260729  6:14:55 server id 1  end_log_pos 142286 CRC32 0x90e868e4 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 142286
+#260729  6:14:55 server id 1  end_log_pos 142341 CRC32 0xfc12c2f1 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAM4rAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDkaOiQ
+X5ppah4BAAAANwAAAAUsAgAAAHcBAAAAAAEAAgAD/wCFBQAAAAAAANAHAACZunpjtxhg8cIS/A==
+'/*!*/;
+# at 142341
+#260729  6:14:55 server id 1  end_log_pos 142372 CRC32 0x57775382 	Xid = 3487
+COMMIT/*!*/;
+# at 142372
+#260729  6:14:55 server id 1  end_log_pos 142451 CRC32 0xa4cfefad 	GTID	last_committed=4	sequence_number=396	rbr_only=yes	original_committed_timestamp=1785305695625809	immediate_commit_timestamp=1785305695625809	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695625809 (2026-07-29 06:14:55.625809 UTC)
+# immediate_commit_timestamp=1785305695625809 (2026-07-29 06:14:55.625809 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695625809*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:396'/*!*/;
+# at 142451
+#260729  6:14:55 server id 1  end_log_pos 142539 CRC32 0x9455a8e8 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.625608/*!*/;
+BEGIN
+/*!*/;
+# at 142539
+#260729  6:14:55 server id 1  end_log_pos 142596 CRC32 0xbca6f1ed 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 142596
+#260729  6:14:55 server id 1  end_log_pos 142651 CRC32 0x167653f7 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAQtAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDt8aa8
+X5ppah4BAAAANwAAADstAgAAAHcBAAAAAAEAAgAD/wCGBQAAAAAAANAHAACZunpjtxhq91N2Fg==
+'/*!*/;
+# at 142651
+#260729  6:14:55 server id 1  end_log_pos 142682 CRC32 0xf7f82d13 	Xid = 3488
+COMMIT/*!*/;
+# at 142682
+#260729  6:14:55 server id 1  end_log_pos 142761 CRC32 0x2c1170b8 	GTID	last_committed=4	sequence_number=397	rbr_only=yes	original_committed_timestamp=1785305695626556	immediate_commit_timestamp=1785305695626556	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695626556 (2026-07-29 06:14:55.626556 UTC)
+# immediate_commit_timestamp=1785305695626556 (2026-07-29 06:14:55.626556 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695626556*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:397'/*!*/;
+# at 142761
+#260729  6:14:55 server id 1  end_log_pos 142849 CRC32 0x91f57030 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.626314/*!*/;
+BEGIN
+/*!*/;
+# at 142849
+#260729  6:14:55 server id 1  end_log_pos 142906 CRC32 0x866f0fba 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 142906
+#260729  6:14:55 server id 1  end_log_pos 142961 CRC32 0xada311c8 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADouAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC6D2+G
+X5ppah4BAAAANwAAAHEuAgAAAHcBAAAAAAEAAgAD/wCHBQAAAAAAANAHAACZunpjtxh0yBGjrQ==
+'/*!*/;
+# at 142961
+#260729  6:14:55 server id 1  end_log_pos 142992 CRC32 0x966583cb 	Xid = 3489
+COMMIT/*!*/;
+# at 142992
+#260729  6:14:55 server id 1  end_log_pos 143071 CRC32 0x689b9be4 	GTID	last_committed=4	sequence_number=398	rbr_only=yes	original_committed_timestamp=1785305695627432	immediate_commit_timestamp=1785305695627432	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695627432 (2026-07-29 06:14:55.627432 UTC)
+# immediate_commit_timestamp=1785305695627432 (2026-07-29 06:14:55.627432 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695627432*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:398'/*!*/;
+# at 143071
+#260729  6:14:55 server id 1  end_log_pos 143159 CRC32 0x9701e5a2 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.627117/*!*/;
+BEGIN
+/*!*/;
+# at 143159
+#260729  6:14:55 server id 1  end_log_pos 143216 CRC32 0x5213a459 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 143216
+#260729  6:14:55 server id 1  end_log_pos 143271 CRC32 0xb6e3c57c 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHAvAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBZpBNS
+X5ppah4BAAAANwAAAKcvAgAAAHcBAAAAAAEAAgAD/wCIBQAAAAAAANAHAACZunpjtxh+fMXjtg==
+'/*!*/;
+# at 143271
+#260729  6:14:55 server id 1  end_log_pos 143302 CRC32 0x1ab5dd86 	Xid = 3490
+COMMIT/*!*/;
+# at 143302
+#260729  6:14:55 server id 1  end_log_pos 143381 CRC32 0x7bac84a9 	GTID	last_committed=4	sequence_number=399	rbr_only=yes	original_committed_timestamp=1785305695628435	immediate_commit_timestamp=1785305695628435	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695628435 (2026-07-29 06:14:55.628435 UTC)
+# immediate_commit_timestamp=1785305695628435 (2026-07-29 06:14:55.628435 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695628435*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:399'/*!*/;
+# at 143381
+#260729  6:14:55 server id 1  end_log_pos 143469 CRC32 0x54494eeb 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.628217/*!*/;
+BEGIN
+/*!*/;
+# at 143469
+#260729  6:14:55 server id 1  end_log_pos 143526 CRC32 0x44ac0fba 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 143526
+#260729  6:14:55 server id 1  end_log_pos 143581 CRC32 0x76885983 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKYwAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC6D6xE
+X5ppah4BAAAANwAAAN0wAgAAAHcBAAAAAAEAAgAD/wCJBQAAAAAAANAHAACZunpjtxiIg1mIdg==
+'/*!*/;
+# at 143581
+#260729  6:14:55 server id 1  end_log_pos 143612 CRC32 0x3c8930d8 	Xid = 3491
+COMMIT/*!*/;
+# at 143612
+#260729  6:14:55 server id 1  end_log_pos 143691 CRC32 0xf02167e9 	GTID	last_committed=4	sequence_number=400	rbr_only=yes	original_committed_timestamp=1785305695629378	immediate_commit_timestamp=1785305695629378	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695629378 (2026-07-29 06:14:55.629378 UTC)
+# immediate_commit_timestamp=1785305695629378 (2026-07-29 06:14:55.629378 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695629378*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:400'/*!*/;
+# at 143691
+#260729  6:14:55 server id 1  end_log_pos 143779 CRC32 0xc0dc6520 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.629033/*!*/;
+BEGIN
+/*!*/;
+# at 143779
+#260729  6:14:55 server id 1  end_log_pos 143836 CRC32 0x5688a61a 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 143836
+#260729  6:14:55 server id 1  end_log_pos 143891 CRC32 0xc804bbaf 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANwxAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAapohW
+X5ppah4BAAAANwAAABMyAgAAAHcBAAAAAAEAAgAD/wCKBQAAAAAAANAHAACZunpjtxiSr7sEyA==
+'/*!*/;
+# at 143891
+#260729  6:14:55 server id 1  end_log_pos 143922 CRC32 0x5f41c119 	Xid = 3492
+COMMIT/*!*/;
+# at 143922
+#260729  6:14:55 server id 1  end_log_pos 144001 CRC32 0xe86f4084 	GTID	last_committed=4	sequence_number=401	rbr_only=yes	original_committed_timestamp=1785305695630158	immediate_commit_timestamp=1785305695630158	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695630158 (2026-07-29 06:14:55.630158 UTC)
+# immediate_commit_timestamp=1785305695630158 (2026-07-29 06:14:55.630158 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695630158*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:401'/*!*/;
+# at 144001
+#260729  6:14:55 server id 1  end_log_pos 144089 CRC32 0x53044618 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.629922/*!*/;
+BEGIN
+/*!*/;
+# at 144089
+#260729  6:14:55 server id 1  end_log_pos 144146 CRC32 0x4b125429 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 144146
+#260729  6:14:55 server id 1  end_log_pos 144201 CRC32 0xe6fd1fe1 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABIzAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQApVBJL
+X5ppah4BAAAANwAAAEkzAgAAAHcBAAAAAAEAAgAD/wCLBQAAAAAAANAHAACZunpjtxiS4R/95g==
+'/*!*/;
+# at 144201
+#260729  6:14:55 server id 1  end_log_pos 144232 CRC32 0xbb410904 	Xid = 3493
+COMMIT/*!*/;
+# at 144232
+#260729  6:14:55 server id 1  end_log_pos 144311 CRC32 0xb0027197 	GTID	last_committed=4	sequence_number=402	rbr_only=yes	original_committed_timestamp=1785305695630815	immediate_commit_timestamp=1785305695630815	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695630815 (2026-07-29 06:14:55.630815 UTC)
+# immediate_commit_timestamp=1785305695630815 (2026-07-29 06:14:55.630815 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695630815*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:402'/*!*/;
+# at 144311
+#260729  6:14:55 server id 1  end_log_pos 144399 CRC32 0x9ef89523 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.630607/*!*/;
+BEGIN
+/*!*/;
+# at 144399
+#260729  6:14:55 server id 1  end_log_pos 144456 CRC32 0x17cec383 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 144456
+#260729  6:14:55 server id 1  end_log_pos 144511 CRC32 0xe13fc34a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEg0AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCDw84X
+X5ppah4BAAAANwAAAH80AgAAAHcBAAAAAAEAAgAD/wCMBQAAAAAAANAHAACZunpjtxicSsM/4Q==
+'/*!*/;
+# at 144511
+#260729  6:14:55 server id 1  end_log_pos 144542 CRC32 0xd9631fae 	Xid = 3494
+COMMIT/*!*/;
+# at 144542
+#260729  6:14:55 server id 1  end_log_pos 144621 CRC32 0x5393392a 	GTID	last_committed=4	sequence_number=403	rbr_only=yes	original_committed_timestamp=1785305695631354	immediate_commit_timestamp=1785305695631354	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695631354 (2026-07-29 06:14:55.631354 UTC)
+# immediate_commit_timestamp=1785305695631354 (2026-07-29 06:14:55.631354 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695631354*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:403'/*!*/;
+# at 144621
+#260729  6:14:55 server id 1  end_log_pos 144709 CRC32 0xfcc7cb52 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.631137/*!*/;
+BEGIN
+/*!*/;
+# at 144709
+#260729  6:14:55 server id 1  end_log_pos 144766 CRC32 0xca66ab79 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 144766
+#260729  6:14:55 server id 1  end_log_pos 144821 CRC32 0x11b8c574 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAH41AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB5q2bK
+X5ppah4BAAAANwAAALU1AgAAAHcBAAAAAAEAAgAD/wCNBQAAAAAAANAHAACZunpjtximdMW4EQ==
+'/*!*/;
+# at 144821
+#260729  6:14:55 server id 1  end_log_pos 144852 CRC32 0x5bd1ebdf 	Xid = 3495
+COMMIT/*!*/;
+# at 144852
+#260729  6:14:55 server id 1  end_log_pos 144931 CRC32 0xfe46e6cd 	GTID	last_committed=4	sequence_number=404	rbr_only=yes	original_committed_timestamp=1785305695633464	immediate_commit_timestamp=1785305695633464	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695633464 (2026-07-29 06:14:55.633464 UTC)
+# immediate_commit_timestamp=1785305695633464 (2026-07-29 06:14:55.633464 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695633464*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:404'/*!*/;
+# at 144931
+#260729  6:14:55 server id 1  end_log_pos 145019 CRC32 0x623febf3 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.632671/*!*/;
+BEGIN
+/*!*/;
+# at 145019
+#260729  6:14:55 server id 1  end_log_pos 145076 CRC32 0x49f4113c 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 145076
+#260729  6:14:55 server id 1  end_log_pos 145131 CRC32 0x3e0007ae 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALQ2AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA8EfRJ
+X5ppah4BAAAANwAAAOs2AgAAAHcBAAAAAAEAAgAD/wCOBQAAAAAAANAHAACZunpjtxiwrgcAPg==
+'/*!*/;
+# at 145131
+#260729  6:14:55 server id 1  end_log_pos 145162 CRC32 0x8d4e3dc7 	Xid = 3496
+COMMIT/*!*/;
+# at 145162
+#260729  6:14:55 server id 1  end_log_pos 145241 CRC32 0x40eedf5f 	GTID	last_committed=4	sequence_number=405	rbr_only=yes	original_committed_timestamp=1785305695634203	immediate_commit_timestamp=1785305695634203	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695634203 (2026-07-29 06:14:55.634203 UTC)
+# immediate_commit_timestamp=1785305695634203 (2026-07-29 06:14:55.634203 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695634203*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:405'/*!*/;
+# at 145241
+#260729  6:14:55 server id 1  end_log_pos 145329 CRC32 0x394295ad 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.633973/*!*/;
+BEGIN
+/*!*/;
+# at 145329
+#260729  6:14:55 server id 1  end_log_pos 145386 CRC32 0xb9eefafe 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 145386
+#260729  6:14:55 server id 1  end_log_pos 145441 CRC32 0x00caf59d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOo3AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQD++u65
+X5ppah4BAAAANwAAACE4AgAAAHcBAAAAAAEAAgAD/wCPBQAAAAAAANAHAACZunpjtxi6nfXKAA==
+'/*!*/;
+# at 145441
+#260729  6:14:55 server id 1  end_log_pos 145472 CRC32 0xf51ac506 	Xid = 3497
+COMMIT/*!*/;
+# at 145472
+#260729  6:14:55 server id 1  end_log_pos 145551 CRC32 0x61ae1076 	GTID	last_committed=4	sequence_number=406	rbr_only=yes	original_committed_timestamp=1785305695634881	immediate_commit_timestamp=1785305695634881	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695634881 (2026-07-29 06:14:55.634881 UTC)
+# immediate_commit_timestamp=1785305695634881 (2026-07-29 06:14:55.634881 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695634881*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:406'/*!*/;
+# at 145551
+#260729  6:14:55 server id 1  end_log_pos 145639 CRC32 0x5e5ed161 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.634680/*!*/;
+BEGIN
+/*!*/;
+# at 145639
+#260729  6:14:55 server id 1  end_log_pos 145696 CRC32 0x8c7b347c 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 145696
+#260729  6:14:55 server id 1  end_log_pos 145751 CRC32 0x4274c732 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACA5AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB8NHuM
+X5ppah4BAAAANwAAAFc5AgAAAHcBAAAAAAEAAgAD/wCQBQAAAAAAANAHAACZunpjtxjEMsd0Qg==
+'/*!*/;
+# at 145751
+#260729  6:14:55 server id 1  end_log_pos 145782 CRC32 0xf5171462 	Xid = 3498
+COMMIT/*!*/;
+# at 145782
+#260729  6:14:55 server id 1  end_log_pos 145861 CRC32 0xc3f1741a 	GTID	last_committed=4	sequence_number=407	rbr_only=yes	original_committed_timestamp=1785305695635606	immediate_commit_timestamp=1785305695635606	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695635606 (2026-07-29 06:14:55.635606 UTC)
+# immediate_commit_timestamp=1785305695635606 (2026-07-29 06:14:55.635606 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695635606*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:407'/*!*/;
+# at 145861
+#260729  6:14:55 server id 1  end_log_pos 145949 CRC32 0x22171044 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.635402/*!*/;
+BEGIN
+/*!*/;
+# at 145949
+#260729  6:14:55 server id 1  end_log_pos 146006 CRC32 0xa9bf48ae 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 146006
+#260729  6:14:55 server id 1  end_log_pos 146061 CRC32 0xfb092ab2 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFY6AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCuSL+p
+X5ppah4BAAAANwAAAI06AgAAAHcBAAAAAAEAAgAD/wCRBQAAAAAAANAHAACZunpjtxjOsioJ+w==
+'/*!*/;
+# at 146061
+#260729  6:14:55 server id 1  end_log_pos 146092 CRC32 0xf23886d6 	Xid = 3499
+COMMIT/*!*/;
+# at 146092
+#260729  6:14:55 server id 1  end_log_pos 146171 CRC32 0x9a753654 	GTID	last_committed=4	sequence_number=408	rbr_only=yes	original_committed_timestamp=1785305695636277	immediate_commit_timestamp=1785305695636277	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695636277 (2026-07-29 06:14:55.636277 UTC)
+# immediate_commit_timestamp=1785305695636277 (2026-07-29 06:14:55.636277 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695636277*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:408'/*!*/;
+# at 146171
+#260729  6:14:55 server id 1  end_log_pos 146259 CRC32 0xb4148b41 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.636073/*!*/;
+BEGIN
+/*!*/;
+# at 146259
+#260729  6:14:55 server id 1  end_log_pos 146316 CRC32 0x43d8e647 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 146316
+#260729  6:14:55 server id 1  end_log_pos 146371 CRC32 0xbb92337a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIw7AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBH5thD
+X5ppah4BAAAANwAAAMM7AgAAAHcBAAAAAAEAAgAD/wCSBQAAAAAAANAHAACZunpjtxjYejOSuw==
+'/*!*/;
+# at 146371
+#260729  6:14:55 server id 1  end_log_pos 146402 CRC32 0xaf49f43b 	Xid = 3500
+COMMIT/*!*/;
+# at 146402
+#260729  6:14:55 server id 1  end_log_pos 146481 CRC32 0x5573d62c 	GTID	last_committed=4	sequence_number=409	rbr_only=yes	original_committed_timestamp=1785305695637186	immediate_commit_timestamp=1785305695637186	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695637186 (2026-07-29 06:14:55.637186 UTC)
+# immediate_commit_timestamp=1785305695637186 (2026-07-29 06:14:55.637186 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695637186*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:409'/*!*/;
+# at 146481
+#260729  6:14:55 server id 1  end_log_pos 146569 CRC32 0x5f9fbc22 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.636719/*!*/;
+BEGIN
+/*!*/;
+# at 146569
+#260729  6:14:55 server id 1  end_log_pos 146626 CRC32 0x3b6231cc 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 146626
+#260729  6:14:55 server id 1  end_log_pos 146681 CRC32 0x2ae5ce18 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMI8AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDMMWI7
+X5ppah4BAAAANwAAAPk8AgAAAHcBAAAAAAEAAgAD/wCTBQAAAAAAANAHAACZunpjtxjYGM7lKg==
+'/*!*/;
+# at 146681
+#260729  6:14:55 server id 1  end_log_pos 146712 CRC32 0x782dad44 	Xid = 3501
+COMMIT/*!*/;
+# at 146712
+#260729  6:14:55 server id 1  end_log_pos 146791 CRC32 0x965b7ecf 	GTID	last_committed=4	sequence_number=410	rbr_only=yes	original_committed_timestamp=1785305695637971	immediate_commit_timestamp=1785305695637971	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695637971 (2026-07-29 06:14:55.637971 UTC)
+# immediate_commit_timestamp=1785305695637971 (2026-07-29 06:14:55.637971 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695637971*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:410'/*!*/;
+# at 146791
+#260729  6:14:55 server id 1  end_log_pos 146879 CRC32 0x1122689f 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.637705/*!*/;
+BEGIN
+/*!*/;
+# at 146879
+#260729  6:14:55 server id 1  end_log_pos 146936 CRC32 0x4c389b16 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 146936
+#260729  6:14:55 server id 1  end_log_pos 146991 CRC32 0x44bc08e5 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPg9AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAWmzhM
+X5ppah4BAAAANwAAAC8+AgAAAHcBAAAAAAEAAgAD/wCUBQAAAAAAANAHAACZunpjtxji5Qi8RA==
+'/*!*/;
+# at 146991
+#260729  6:14:55 server id 1  end_log_pos 147022 CRC32 0x94a14642 	Xid = 3502
+COMMIT/*!*/;
+# at 147022
+#260729  6:14:55 server id 1  end_log_pos 147101 CRC32 0xbdd1bf79 	GTID	last_committed=4	sequence_number=411	rbr_only=yes	original_committed_timestamp=1785305695638630	immediate_commit_timestamp=1785305695638630	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695638630 (2026-07-29 06:14:55.638630 UTC)
+# immediate_commit_timestamp=1785305695638630 (2026-07-29 06:14:55.638630 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695638630*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:411'/*!*/;
+# at 147101
+#260729  6:14:55 server id 1  end_log_pos 147189 CRC32 0x3ad62e07 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.638417/*!*/;
+BEGIN
+/*!*/;
+# at 147189
+#260729  6:14:55 server id 1  end_log_pos 147246 CRC32 0xdf36eb24 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 147246
+#260729  6:14:55 server id 1  end_log_pos 147301 CRC32 0x384f72c1 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAC4/AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAk6zbf
+X5ppah4BAAAANwAAAGU/AgAAAHcBAAAAAAEAAgAD/wCVBQAAAAAAANAHAACZunpjtxjswXJPOA==
+'/*!*/;
+# at 147301
+#260729  6:14:55 server id 1  end_log_pos 147332 CRC32 0x95605dd1 	Xid = 3503
+COMMIT/*!*/;
+# at 147332
+#260729  6:14:55 server id 1  end_log_pos 147411 CRC32 0xb2bdc459 	GTID	last_committed=4	sequence_number=412	rbr_only=yes	original_committed_timestamp=1785305695639173	immediate_commit_timestamp=1785305695639173	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695639173 (2026-07-29 06:14:55.639173 UTC)
+# immediate_commit_timestamp=1785305695639173 (2026-07-29 06:14:55.639173 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695639173*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:412'/*!*/;
+# at 147411
+#260729  6:14:55 server id 1  end_log_pos 147499 CRC32 0x3982a6fa 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.638961/*!*/;
+BEGIN
+/*!*/;
+# at 147499
+#260729  6:14:55 server id 1  end_log_pos 147556 CRC32 0xf4d76599 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 147556
+#260729  6:14:55 server id 1  end_log_pos 147611 CRC32 0xb9c607cd 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGRAAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCZZdf0
+X5ppah4BAAAANwAAAJtAAgAAAHcBAAAAAAEAAgAD/wCWBQAAAAAAANAHAACZunpjtxjszQfGuQ==
+'/*!*/;
+# at 147611
+#260729  6:14:55 server id 1  end_log_pos 147642 CRC32 0xcd32c6d3 	Xid = 3504
+COMMIT/*!*/;
+# at 147642
+#260729  6:14:55 server id 1  end_log_pos 147721 CRC32 0xe9c2d5bf 	GTID	last_committed=4	sequence_number=413	rbr_only=yes	original_committed_timestamp=1785305695641616	immediate_commit_timestamp=1785305695641616	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695641616 (2026-07-29 06:14:55.641616 UTC)
+# immediate_commit_timestamp=1785305695641616 (2026-07-29 06:14:55.641616 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695641616*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:413'/*!*/;
+# at 147721
+#260729  6:14:55 server id 1  end_log_pos 147809 CRC32 0xb437ed0c 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.641269/*!*/;
+BEGIN
+/*!*/;
+# at 147809
+#260729  6:14:55 server id 1  end_log_pos 147866 CRC32 0xfc8e8912 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 147866
+#260729  6:14:55 server id 1  end_log_pos 147921 CRC32 0x72ff26e2 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJpBAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQASiY78
+X5ppah4BAAAANwAAANFBAgAAAHcBAAAAAAEAAgAD/wCXBQAAAAAAANAHAACZunpjtxkK4ib/cg==
+'/*!*/;
+# at 147921
+#260729  6:14:55 server id 1  end_log_pos 147952 CRC32 0x4f8032a2 	Xid = 3505
+COMMIT/*!*/;
+# at 147952
+#260729  6:14:55 server id 1  end_log_pos 148031 CRC32 0x05216e14 	GTID	last_committed=4	sequence_number=414	rbr_only=yes	original_committed_timestamp=1785305695642396	immediate_commit_timestamp=1785305695642396	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695642396 (2026-07-29 06:14:55.642396 UTC)
+# immediate_commit_timestamp=1785305695642396 (2026-07-29 06:14:55.642396 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695642396*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:414'/*!*/;
+# at 148031
+#260729  6:14:55 server id 1  end_log_pos 148119 CRC32 0x419771e2 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.642152/*!*/;
+BEGIN
+/*!*/;
+# at 148119
+#260729  6:14:55 server id 1  end_log_pos 148176 CRC32 0xb5e035a3 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 148176
+#260729  6:14:55 server id 1  end_log_pos 148231 CRC32 0x2904194b 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANBCAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCjNeC1
+X5ppah4BAAAANwAAAAdDAgAAAHcBAAAAAAEAAgAD/wCYBQAAAAAAANAHAACZunpjtxkUSxkEKQ==
+'/*!*/;
+# at 148231
+#260729  6:14:55 server id 1  end_log_pos 148262 CRC32 0xfde9efc3 	Xid = 3506
+COMMIT/*!*/;
+# at 148262
+#260729  6:14:55 server id 1  end_log_pos 148341 CRC32 0x64dd2f40 	GTID	last_committed=4	sequence_number=415	rbr_only=yes	original_committed_timestamp=1785305695643352	immediate_commit_timestamp=1785305695643352	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695643352 (2026-07-29 06:14:55.643352 UTC)
+# immediate_commit_timestamp=1785305695643352 (2026-07-29 06:14:55.643352 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695643352*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:415'/*!*/;
+# at 148341
+#260729  6:14:55 server id 1  end_log_pos 148429 CRC32 0x34a8152b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.643053/*!*/;
+BEGIN
+/*!*/;
+# at 148429
+#260729  6:14:55 server id 1  end_log_pos 148486 CRC32 0xc7bb6d74 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 148486
+#260729  6:14:55 server id 1  end_log_pos 148541 CRC32 0x58a60d37 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAZEAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB0bbvH
+X5ppah4BAAAANwAAAD1EAgAAAHcBAAAAAAEAAgAD/wCZBQAAAAAAANAHAACZunpjtxkeNw2mWA==
+'/*!*/;
+# at 148541
+#260729  6:14:55 server id 1  end_log_pos 148572 CRC32 0x746880db 	Xid = 3507
+COMMIT/*!*/;
+# at 148572
+#260729  6:14:55 server id 1  end_log_pos 148651 CRC32 0x3fb5de4d 	GTID	last_committed=4	sequence_number=416	rbr_only=yes	original_committed_timestamp=1785305695644732	immediate_commit_timestamp=1785305695644732	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695644732 (2026-07-29 06:14:55.644732 UTC)
+# immediate_commit_timestamp=1785305695644732 (2026-07-29 06:14:55.644732 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695644732*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:416'/*!*/;
+# at 148651
+#260729  6:14:55 server id 1  end_log_pos 148739 CRC32 0x04030433 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.644398/*!*/;
+BEGIN
+/*!*/;
+# at 148739
+#260729  6:14:55 server id 1  end_log_pos 148796 CRC32 0xb0e1c7ae 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 148796
+#260729  6:14:55 server id 1  end_log_pos 148851 CRC32 0x23533437 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADxFAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCux+Gw
+X5ppah4BAAAANwAAAHNFAgAAAHcBAAAAAAEAAgAD/wCaBQAAAAAAANAHAACZunpjtxkoNzRTIw==
+'/*!*/;
+# at 148851
+#260729  6:14:55 server id 1  end_log_pos 148882 CRC32 0xaa6a1dd4 	Xid = 3508
+COMMIT/*!*/;
+# at 148882
+#260729  6:14:55 server id 1  end_log_pos 148961 CRC32 0xfafa0962 	GTID	last_committed=4	sequence_number=417	rbr_only=yes	original_committed_timestamp=1785305695645728	immediate_commit_timestamp=1785305695645728	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695645728 (2026-07-29 06:14:55.645728 UTC)
+# immediate_commit_timestamp=1785305695645728 (2026-07-29 06:14:55.645728 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695645728*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:417'/*!*/;
+# at 148961
+#260729  6:14:55 server id 1  end_log_pos 149049 CRC32 0xfb80f497 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.645512/*!*/;
+BEGIN
+/*!*/;
+# at 149049
+#260729  6:14:55 server id 1  end_log_pos 149106 CRC32 0x290e38c0 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 149106
+#260729  6:14:55 server id 1  end_log_pos 149161 CRC32 0x8799c9d3 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHJGAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDAOA4p
+X5ppah4BAAAANwAAAKlGAgAAAHcBAAAAAAEAAgAD/wCbBQAAAAAAANAHAACZunpjtxky08mZhw==
+'/*!*/;
+# at 149161
+#260729  6:14:55 server id 1  end_log_pos 149192 CRC32 0x2e366082 	Xid = 3509
+COMMIT/*!*/;
+# at 149192
+#260729  6:14:55 server id 1  end_log_pos 149271 CRC32 0xff457026 	GTID	last_committed=4	sequence_number=418	rbr_only=yes	original_committed_timestamp=1785305695646959	immediate_commit_timestamp=1785305695646959	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695646959 (2026-07-29 06:14:55.646959 UTC)
+# immediate_commit_timestamp=1785305695646959 (2026-07-29 06:14:55.646959 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695646959*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:418'/*!*/;
+# at 149271
+#260729  6:14:55 server id 1  end_log_pos 149359 CRC32 0x2a9f3138 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.646380/*!*/;
+BEGIN
+/*!*/;
+# at 149359
+#260729  6:14:55 server id 1  end_log_pos 149416 CRC32 0xc3699629 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 149416
+#260729  6:14:55 server id 1  end_log_pos 149471 CRC32 0x8fc1accf 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKhHAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAplmnD
+X5ppah4BAAAANwAAAN9HAgAAAHcBAAAAAAEAAgAD/wCcBQAAAAAAANAHAACZunpjtxk8z6zBjw==
+'/*!*/;
+# at 149471
+#260729  6:14:55 server id 1  end_log_pos 149502 CRC32 0x2e3bb1e6 	Xid = 3510
+COMMIT/*!*/;
+# at 149502
+#260729  6:14:55 server id 1  end_log_pos 149581 CRC32 0xd9390640 	GTID	last_committed=4	sequence_number=419	rbr_only=yes	original_committed_timestamp=1785305695648677	immediate_commit_timestamp=1785305695648677	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695648677 (2026-07-29 06:14:55.648677 UTC)
+# immediate_commit_timestamp=1785305695648677 (2026-07-29 06:14:55.648677 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695648677*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:419'/*!*/;
+# at 149581
+#260729  6:14:55 server id 1  end_log_pos 149669 CRC32 0x2ba15b87 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.648463/*!*/;
+BEGIN
+/*!*/;
+# at 149669
+#260729  6:14:55 server id 1  end_log_pos 149726 CRC32 0x1e239595 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 149726
+#260729  6:14:55 server id 1  end_log_pos 149781 CRC32 0x15da9a91 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAN5IAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCVlSMe
+X5ppah4BAAAANwAAABVJAgAAAHcBAAAAAAEAAgAD/wCdBQAAAAAAANAHAACZunpjtxlQkZraFQ==
+'/*!*/;
+# at 149781
+#260729  6:14:55 server id 1  end_log_pos 149812 CRC32 0x088a7f40 	Xid = 3511
+COMMIT/*!*/;
+# at 149812
+#260729  6:14:55 server id 1  end_log_pos 149891 CRC32 0x78785e87 	GTID	last_committed=4	sequence_number=420	rbr_only=yes	original_committed_timestamp=1785305695649350	immediate_commit_timestamp=1785305695649350	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695649350 (2026-07-29 06:14:55.649350 UTC)
+# immediate_commit_timestamp=1785305695649350 (2026-07-29 06:14:55.649350 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695649350*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:420'/*!*/;
+# at 149891
+#260729  6:14:55 server id 1  end_log_pos 149979 CRC32 0x5470ee40 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.649127/*!*/;
+BEGIN
+/*!*/;
+# at 149979
+#260729  6:14:55 server id 1  end_log_pos 150036 CRC32 0xd3382479 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 150036
+#260729  6:14:55 server id 1  end_log_pos 150091 CRC32 0x2e630404 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABRKAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB5JDjT
+X5ppah4BAAAANwAAAEtKAgAAAHcBAAAAAAEAAgAD/wCeBQAAAAAAANAHAACZunpjtxlaBARjLg==
+'/*!*/;
+# at 150091
+#260729  6:14:55 server id 1  end_log_pos 150122 CRC32 0x80f09f3f 	Xid = 3512
+COMMIT/*!*/;
+# at 150122
+#260729  6:14:55 server id 1  end_log_pos 150201 CRC32 0x26dbcda9 	GTID	last_committed=4	sequence_number=421	rbr_only=yes	original_committed_timestamp=1785305695650004	immediate_commit_timestamp=1785305695650004	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695650004 (2026-07-29 06:14:55.650004 UTC)
+# immediate_commit_timestamp=1785305695650004 (2026-07-29 06:14:55.650004 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695650004*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:421'/*!*/;
+# at 150201
+#260729  6:14:55 server id 1  end_log_pos 150289 CRC32 0x23f43894 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.649801/*!*/;
+BEGIN
+/*!*/;
+# at 150289
+#260729  6:14:55 server id 1  end_log_pos 150346 CRC32 0x2322cfbb 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 150346
+#260729  6:14:55 server id 1  end_log_pos 150401 CRC32 0x18e8db88 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEpLAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC7zyIj
+X5ppah4BAAAANwAAAIFLAgAAAHcBAAAAAAEAAgAD/wCfBQAAAAAAANAHAACZunpjtxlaiNvoGA==
+'/*!*/;
+# at 150401
+#260729  6:14:55 server id 1  end_log_pos 150432 CRC32 0x813184ac 	Xid = 3513
+COMMIT/*!*/;
+# at 150432
+#260729  6:14:55 server id 1  end_log_pos 150511 CRC32 0xc6b020db 	GTID	last_committed=4	sequence_number=422	rbr_only=yes	original_committed_timestamp=1785305695650713	immediate_commit_timestamp=1785305695650713	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695650713 (2026-07-29 06:14:55.650713 UTC)
+# immediate_commit_timestamp=1785305695650713 (2026-07-29 06:14:55.650713 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695650713*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:422'/*!*/;
+# at 150511
+#260729  6:14:55 server id 1  end_log_pos 150599 CRC32 0x5495ce5c 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.650489/*!*/;
+BEGIN
+/*!*/;
+# at 150599
+#260729  6:14:55 server id 1  end_log_pos 150656 CRC32 0x41e55d1b 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 150656
+#260729  6:14:55 server id 1  end_log_pos 150711 CRC32 0x05946714 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIBMAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAbXeVB
+X5ppah4BAAAANwAAALdMAgAAAHcBAAAAAAEAAgAD/wCgBQAAAAAAANAHAACZunpjtxlkFGeUBQ==
+'/*!*/;
+# at 150711
+#260729  6:14:55 server id 1  end_log_pos 150742 CRC32 0x60607de4 	Xid = 3514
+COMMIT/*!*/;
+# at 150742
+#260729  6:14:55 server id 1  end_log_pos 150821 CRC32 0x542303bd 	GTID	last_committed=4	sequence_number=423	rbr_only=yes	original_committed_timestamp=1785305695651347	immediate_commit_timestamp=1785305695651347	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695651347 (2026-07-29 06:14:55.651347 UTC)
+# immediate_commit_timestamp=1785305695651347 (2026-07-29 06:14:55.651347 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695651347*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:423'/*!*/;
+# at 150821
+#260729  6:14:55 server id 1  end_log_pos 150909 CRC32 0x74cf5ce5 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.651082/*!*/;
+BEGIN
+/*!*/;
+# at 150909
+#260729  6:14:55 server id 1  end_log_pos 150966 CRC32 0x9c4d35e1 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 150966
+#260729  6:14:55 server id 1  end_log_pos 151021 CRC32 0xcbb82a44 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALZNAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDhNU2c
+X5ppah4BAAAANwAAAO1NAgAAAHcBAAAAAAEAAgAD/wChBQAAAAAAANAHAACZunpjtxluRCq4yw==
+'/*!*/;
+# at 151021
+#260729  6:14:55 server id 1  end_log_pos 151052 CRC32 0xbad936d5 	Xid = 3515
+COMMIT/*!*/;
+# at 151052
+#260729  6:14:55 server id 1  end_log_pos 151131 CRC32 0x6d341582 	GTID	last_committed=4	sequence_number=424	rbr_only=yes	original_committed_timestamp=1785305695652069	immediate_commit_timestamp=1785305695652069	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695652069 (2026-07-29 06:14:55.652069 UTC)
+# immediate_commit_timestamp=1785305695652069 (2026-07-29 06:14:55.652069 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695652069*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:424'/*!*/;
+# at 151131
+#260729  6:14:55 server id 1  end_log_pos 151219 CRC32 0x09509aa6 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.651835/*!*/;
+BEGIN
+/*!*/;
+# at 151219
+#260729  6:14:55 server id 1  end_log_pos 151276 CRC32 0x21c48aae 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 151276
+#260729  6:14:55 server id 1  end_log_pos 151331 CRC32 0x88563112 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOxOAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCuisQh
+X5ppah4BAAAANwAAACNPAgAAAHcBAAAAAAEAAgAD/wCiBQAAAAAAANAHAACZunpjtxluEjFWiA==
+'/*!*/;
+# at 151331
+#260729  6:14:55 server id 1  end_log_pos 151362 CRC32 0xe7a84438 	Xid = 3516
+COMMIT/*!*/;
+# at 151362
+#260729  6:14:55 server id 1  end_log_pos 151441 CRC32 0x4e7a8af9 	GTID	last_committed=4	sequence_number=425	rbr_only=yes	original_committed_timestamp=1785305695652757	immediate_commit_timestamp=1785305695652757	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695652757 (2026-07-29 06:14:55.652757 UTC)
+# immediate_commit_timestamp=1785305695652757 (2026-07-29 06:14:55.652757 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695652757*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:425'/*!*/;
+# at 151441
+#260729  6:14:55 server id 1  end_log_pos 151529 CRC32 0xbd600913 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.652534/*!*/;
+BEGIN
+/*!*/;
+# at 151529
+#260729  6:14:55 server id 1  end_log_pos 151586 CRC32 0xf766a8e5 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 151586
+#260729  6:14:55 server id 1  end_log_pos 151641 CRC32 0xe8374f95 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACJQAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDlqGb3
+X5ppah4BAAAANwAAAFlQAgAAAHcBAAAAAAEAAgAD/wCjBQAAAAAAANAHAACZunpjtxl4lU836A==
+'/*!*/;
+# at 151641
+#260729  6:14:55 server id 1  end_log_pos 151672 CRC32 0xc194a966 	Xid = 3517
+COMMIT/*!*/;
+# at 151672
+#260729  6:14:55 server id 1  end_log_pos 151751 CRC32 0xc6244d1f 	GTID	last_committed=4	sequence_number=426	rbr_only=yes	original_committed_timestamp=1785305695654985	immediate_commit_timestamp=1785305695654985	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695654985 (2026-07-29 06:14:55.654985 UTC)
+# immediate_commit_timestamp=1785305695654985 (2026-07-29 06:14:55.654985 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695654985*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:426'/*!*/;
+# at 151751
+#260729  6:14:55 server id 1  end_log_pos 151839 CRC32 0x6c0cf6f3 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.654665/*!*/;
+BEGIN
+/*!*/;
+# at 151839
+#260729  6:14:55 server id 1  end_log_pos 151896 CRC32 0xe5420145 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 151896
+#260729  6:14:55 server id 1  end_log_pos 151951 CRC32 0xa0d359bf 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFhRAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBFAULl
+X5ppah4BAAAANwAAAI9RAgAAAHcBAAAAAAEAAgAD/wCkBQAAAAAAANAHAACZunpjtxmMv1nToA==
+'/*!*/;
+# at 151951
+#260729  6:14:55 server id 1  end_log_pos 151982 CRC32 0xce3718c9 	Xid = 3518
+COMMIT/*!*/;
+# at 151982
+#260729  6:14:55 server id 1  end_log_pos 152061 CRC32 0x647e0527 	GTID	last_committed=4	sequence_number=427	rbr_only=yes	original_committed_timestamp=1785305695656508	immediate_commit_timestamp=1785305695656508	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695656508 (2026-07-29 06:14:55.656508 UTC)
+# immediate_commit_timestamp=1785305695656508 (2026-07-29 06:14:55.656508 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695656508*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:427'/*!*/;
+# at 152061
+#260729  6:14:55 server id 1  end_log_pos 152149 CRC32 0x5a23de07 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.655451/*!*/;
+BEGIN
+/*!*/;
+# at 152149
+#260729  6:14:55 server id 1  end_log_pos 152206 CRC32 0x38c57ade 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 152206
+#260729  6:14:55 server id 1  end_log_pos 152261 CRC32 0x1c6bdf99 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAI5SAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDeesU4
+X5ppah4BAAAANwAAAMVSAgAAAHcBAAAAAAEAAgAD/wClBQAAAAAAANAHAACZunpjtxmWmd9rHA==
+'/*!*/;
+# at 152261
+#260729  6:14:55 server id 1  end_log_pos 152292 CRC32 0x2cd959f3 	Xid = 3519
+COMMIT/*!*/;
+# at 152292
+#260729  6:14:55 server id 1  end_log_pos 152371 CRC32 0x87437840 	GTID	last_committed=4	sequence_number=428	rbr_only=yes	original_committed_timestamp=1785305695657189	immediate_commit_timestamp=1785305695657189	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695657189 (2026-07-29 06:14:55.657189 UTC)
+# immediate_commit_timestamp=1785305695657189 (2026-07-29 06:14:55.657189 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695657189*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:428'/*!*/;
+# at 152371
+#260729  6:14:55 server id 1  end_log_pos 152459 CRC32 0x83cf63c8 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.656986/*!*/;
+BEGIN
+/*!*/;
+# at 152459
+#260729  6:14:55 server id 1  end_log_pos 152516 CRC32 0xecb9d13d 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 152516
+#260729  6:14:55 server id 1  end_log_pos 152571 CRC32 0xd9603218 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMRTAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA90bns
+X5ppah4BAAAANwAAAPtTAgAAAHcBAAAAAAEAAgAD/wCmBQAAAAAAANAHAACZunpjtxmgGDJg2Q==
+'/*!*/;
+# at 152571
+#260729  6:14:55 server id 1  end_log_pos 152602 CRC32 0x5bcb0c35 	Xid = 3520
+COMMIT/*!*/;
+# at 152602
+#260729  6:14:55 server id 1  end_log_pos 152681 CRC32 0xb7c52564 	GTID	last_committed=4	sequence_number=429	rbr_only=yes	original_committed_timestamp=1785305695657867	immediate_commit_timestamp=1785305695657867	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695657867 (2026-07-29 06:14:55.657867 UTC)
+# immediate_commit_timestamp=1785305695657867 (2026-07-29 06:14:55.657867 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695657867*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:429'/*!*/;
+# at 152681
+#260729  6:14:55 server id 1  end_log_pos 152769 CRC32 0x13cb3093 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.657663/*!*/;
+BEGIN
+/*!*/;
+# at 152769
+#260729  6:14:55 server id 1  end_log_pos 152826 CRC32 0x3725078f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 152826
+#260729  6:14:55 server id 1  end_log_pos 152881 CRC32 0x3b0c6d55 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPpUAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCPByU3
+X5ppah4BAAAANwAAADFVAgAAAHcBAAAAAAEAAgAD/wCnBQAAAAAAANAHAACZunpjtxmqVW0MOw==
+'/*!*/;
+# at 152881
+#260729  6:14:55 server id 1  end_log_pos 152912 CRC32 0xd979f844 	Xid = 3521
+COMMIT/*!*/;
+# at 152912
+#260729  6:14:55 server id 1  end_log_pos 152991 CRC32 0x7f5a3926 	GTID	last_committed=4	sequence_number=430	rbr_only=yes	original_committed_timestamp=1785305695658570	immediate_commit_timestamp=1785305695658570	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695658570 (2026-07-29 06:14:55.658570 UTC)
+# immediate_commit_timestamp=1785305695658570 (2026-07-29 06:14:55.658570 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695658570*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:430'/*!*/;
+# at 152991
+#260729  6:14:55 server id 1  end_log_pos 153079 CRC32 0x4386a1eb 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.658348/*!*/;
+BEGIN
+/*!*/;
+# at 153079
+#260729  6:14:55 server id 1  end_log_pos 153136 CRC32 0xfa3eb663 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 153136
+#260729  6:14:55 server id 1  end_log_pos 153191 CRC32 0x4dc7cd4c 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADBWAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBjtj76
+X5ppah4BAAAANwAAAGdWAgAAAHcBAAAAAAEAAgAD/wCoBQAAAAAAANAHAACZunpjtxm0TM3HTQ==
+'/*!*/;
+# at 153191
+#260729  6:14:55 server id 1  end_log_pos 153222 CRC32 0xb686fca0 	Xid = 3522
+COMMIT/*!*/;
+# at 153222
+#260729  6:14:55 server id 1  end_log_pos 153301 CRC32 0xfede90c6 	GTID	last_committed=4	sequence_number=431	rbr_only=yes	original_committed_timestamp=1785305695659234	immediate_commit_timestamp=1785305695659234	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695659234 (2026-07-29 06:14:55.659234 UTC)
+# immediate_commit_timestamp=1785305695659234 (2026-07-29 06:14:55.659234 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695659234*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:431'/*!*/;
+# at 153301
+#260729  6:14:55 server id 1  end_log_pos 153389 CRC32 0x3c6c2c60 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.659017/*!*/;
+BEGIN
+/*!*/;
+# at 153389
+#260729  6:14:55 server id 1  end_log_pos 153446 CRC32 0x7057dc5e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 153446
+#260729  6:14:55 server id 1  end_log_pos 153501 CRC32 0x9e3fe828 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGZXAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBe3Fdw
+X5ppah4BAAAANwAAAJ1XAgAAAHcBAAAAAAEAAgAD/wCpBQAAAAAAANAHAACZunpjtxm+KOg/ng==
+'/*!*/;
+# at 153501
+#260729  6:14:55 server id 1  end_log_pos 153532 CRC32 0xde5bbb94 	Xid = 3523
+COMMIT/*!*/;
+# at 153532
+#260729  6:14:55 server id 1  end_log_pos 153611 CRC32 0x731f5d0f 	GTID	last_committed=4	sequence_number=432	rbr_only=yes	original_committed_timestamp=1785305695660153	immediate_commit_timestamp=1785305695660153	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695660153 (2026-07-29 06:14:55.660153 UTC)
+# immediate_commit_timestamp=1785305695660153 (2026-07-29 06:14:55.660153 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695660153*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:432'/*!*/;
+# at 153611
+#260729  6:14:55 server id 1  end_log_pos 153699 CRC32 0x1c4bcde6 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.659660/*!*/;
+BEGIN
+/*!*/;
+# at 153699
+#260729  6:14:55 server id 1  end_log_pos 153756 CRC32 0xcd131b36 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 153756
+#260729  6:14:55 server id 1  end_log_pos 153811 CRC32 0x4214970f 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJxYAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA2GxPN
+X5ppah4BAAAANwAAANNYAgAAAHcBAAAAAAEAAgAD/wCqBQAAAAAAANAHAACZunpjtxm+D5cUQg==
+'/*!*/;
+# at 153811
+#260729  6:14:55 server id 1  end_log_pos 153842 CRC32 0x79ccc5c9 	Xid = 3524
+COMMIT/*!*/;
+# at 153842
+#260729  6:14:55 server id 1  end_log_pos 153921 CRC32 0xf61cc77d 	GTID	last_committed=4	sequence_number=433	rbr_only=yes	original_committed_timestamp=1785305695662008	immediate_commit_timestamp=1785305695662008	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695662008 (2026-07-29 06:14:55.662008 UTC)
+# immediate_commit_timestamp=1785305695662008 (2026-07-29 06:14:55.662008 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695662008*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:433'/*!*/;
+# at 153921
+#260729  6:14:55 server id 1  end_log_pos 154009 CRC32 0xff1ad618 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.661685/*!*/;
+BEGIN
+/*!*/;
+# at 154009
+#260729  6:14:55 server id 1  end_log_pos 154066 CRC32 0xc9eef30a 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 154066
+#260729  6:14:55 server id 1  end_log_pos 154121 CRC32 0xdf48a9fd 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANJZAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAK8+7J
+X5ppah4BAAAANwAAAAlaAgAAAHcBAAAAAAEAAgAD/wCrBQAAAAAAANAHAACZunpjtxnS/alI3w==
+'/*!*/;
+# at 154121
+#260729  6:14:55 server id 1  end_log_pos 154152 CRC32 0xa3758ef8 	Xid = 3525
+COMMIT/*!*/;
+# at 154152
+#260729  6:14:55 server id 1  end_log_pos 154231 CRC32 0xc6bf5701 	GTID	last_committed=4	sequence_number=434	rbr_only=yes	original_committed_timestamp=1785305695662677	immediate_commit_timestamp=1785305695662677	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695662677 (2026-07-29 06:14:55.662677 UTC)
+# immediate_commit_timestamp=1785305695662677 (2026-07-29 06:14:55.662677 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695662677*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:434'/*!*/;
+# at 154231
+#260729  6:14:55 server id 1  end_log_pos 154319 CRC32 0x1e8ba02d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.662478/*!*/;
+BEGIN
+/*!*/;
+# at 154319
+#260729  6:14:55 server id 1  end_log_pos 154376 CRC32 0xf0124118 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 154376
+#260729  6:14:55 server id 1  end_log_pos 154431 CRC32 0x6c480b96 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAhbAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAYQRLw
+X5ppah4BAAAANwAAAD9bAgAAAHcBAAAAAAEAAgAD/wCsBQAAAAAAANAHAACZunpjtxnclgtIbA==
+'/*!*/;
+# at 154431
+#260729  6:14:55 server id 1  end_log_pos 154462 CRC32 0xe2c1a86d 	Xid = 3526
+COMMIT/*!*/;
+# at 154462
+#260729  6:14:55 server id 1  end_log_pos 154541 CRC32 0x9c59715a 	GTID	last_committed=4	sequence_number=435	rbr_only=yes	original_committed_timestamp=1785305695663320	immediate_commit_timestamp=1785305695663320	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695663320 (2026-07-29 06:14:55.663320 UTC)
+# immediate_commit_timestamp=1785305695663320 (2026-07-29 06:14:55.663320 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695663320*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:435'/*!*/;
+# at 154541
+#260729  6:14:55 server id 1  end_log_pos 154629 CRC32 0x11926a80 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.663119/*!*/;
+BEGIN
+/*!*/;
+# at 154629
+#260729  6:14:55 server id 1  end_log_pos 154686 CRC32 0x51fd1655 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 154686
+#260729  6:14:55 server id 1  end_log_pos 154741 CRC32 0x85cdfbc7 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAD5cAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBVFv1R
+X5ppah4BAAAANwAAAHVcAgAAAHcBAAAAAAEAAgAD/wCtBQAAAAAAANAHAACZunpjtxnmx/vNhQ==
+'/*!*/;
+# at 154741
+#260729  6:14:55 server id 1  end_log_pos 154772 CRC32 0x43e56c23 	Xid = 3527
+COMMIT/*!*/;
+# at 154772
+#260729  6:14:55 server id 1  end_log_pos 154851 CRC32 0xa7da3fba 	GTID	last_committed=4	sequence_number=436	rbr_only=yes	original_committed_timestamp=1785305695663983	immediate_commit_timestamp=1785305695663983	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695663983 (2026-07-29 06:14:55.663983 UTC)
+# immediate_commit_timestamp=1785305695663983 (2026-07-29 06:14:55.663983 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695663983*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:436'/*!*/;
+# at 154851
+#260729  6:14:55 server id 1  end_log_pos 154939 CRC32 0xc64c2209 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.663779/*!*/;
+BEGIN
+/*!*/;
+# at 154939
+#260729  6:14:55 server id 1  end_log_pos 154996 CRC32 0x8581bdb6 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 154996
+#260729  6:14:55 server id 1  end_log_pos 155051 CRC32 0x29f02c9c 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHRdAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC2vYGF
+X5ppah4BAAAANwAAAKtdAgAAAHcBAAAAAAEAAgAD/wCuBQAAAAAAANAHAACZunpjtxnmnCzwKQ==
+'/*!*/;
+# at 155051
+#260729  6:14:55 server id 1  end_log_pos 155082 CRC32 0xabc33917 	Xid = 3528
+COMMIT/*!*/;
+# at 155082
+#260729  6:14:55 server id 1  end_log_pos 155161 CRC32 0xee88808c 	GTID	last_committed=4	sequence_number=437	rbr_only=yes	original_committed_timestamp=1785305695664648	immediate_commit_timestamp=1785305695664648	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695664648 (2026-07-29 06:14:55.664648 UTC)
+# immediate_commit_timestamp=1785305695664648 (2026-07-29 06:14:55.664648 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695664648*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:437'/*!*/;
+# at 155161
+#260729  6:14:55 server id 1  end_log_pos 155249 CRC32 0x55bb217e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.664453/*!*/;
+BEGIN
+/*!*/;
+# at 155249
+#260729  6:14:55 server id 1  end_log_pos 155306 CRC32 0x227547d2 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 155306
+#260729  6:14:55 server id 1  end_log_pos 155361 CRC32 0x9cfee691 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKpeAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDSR3Ui
+X5ppah4BAAAANwAAAOFeAgAAAHcBAAAAAAEAAgAD/wCvBQAAAAAAANAHAACZunpjtxnwkeb+nA==
+'/*!*/;
+# at 155361
+#260729  6:14:55 server id 1  end_log_pos 155392 CRC32 0x17c84e4a 	Xid = 3529
+COMMIT/*!*/;
+# at 155392
+#260729  6:14:55 server id 1  end_log_pos 155471 CRC32 0xd4867d0a 	GTID	last_committed=4	sequence_number=438	rbr_only=yes	original_committed_timestamp=1785305695665340	immediate_commit_timestamp=1785305695665340	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695665340 (2026-07-29 06:14:55.665340 UTC)
+# immediate_commit_timestamp=1785305695665340 (2026-07-29 06:14:55.665340 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695665340*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:438'/*!*/;
+# at 155471
+#260729  6:14:55 server id 1  end_log_pos 155559 CRC32 0x7d8731c1 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.665113/*!*/;
+BEGIN
+/*!*/;
+# at 155559
+#260729  6:14:55 server id 1  end_log_pos 155616 CRC32 0xf609ec31 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 155616
+#260729  6:14:55 server id 1  end_log_pos 155671 CRC32 0x6a38c8d2 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOBfAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAx7An2
+X5ppah4BAAAANwAAABdgAgAAAHcBAAAAAAEAAgAD/wCwBQAAAAAAANAHAACZunpjtxn60sg4ag==
+'/*!*/;
+# at 155671
+#260729  6:14:55 server id 1  end_log_pos 155702 CRC32 0xea5a7eb1 	Xid = 3530
+COMMIT/*!*/;
+# at 155702
+#260729  6:14:55 server id 1  end_log_pos 155781 CRC32 0x2d4bb58b 	GTID	last_committed=4	sequence_number=439	rbr_only=yes	original_committed_timestamp=1785305695666097	immediate_commit_timestamp=1785305695666097	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695666097 (2026-07-29 06:14:55.666097 UTC)
+# immediate_commit_timestamp=1785305695666097 (2026-07-29 06:14:55.666097 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695666097*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:439'/*!*/;
+# at 155781
+#260729  6:14:55 server id 1  end_log_pos 155869 CRC32 0x0b8cedfe 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.665849/*!*/;
+BEGIN
+/*!*/;
+# at 155869
+#260729  6:14:55 server id 1  end_log_pos 155926 CRC32 0xfbed13ea 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 155926
+#260729  6:14:55 server id 1  end_log_pos 155981 CRC32 0x44c16c9c 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABZhAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDqE+37
+X5ppah4BAAAANwAAAE1hAgAAAHcBAAAAAAEAAgAD/wCxBQAAAAAAANAHAACZunpjtxn6nGzBRA==
+'/*!*/;
+# at 155981
+#260729  6:14:55 server id 1  end_log_pos 156012 CRC32 0x0e5ab6ac 	Xid = 3531
+COMMIT/*!*/;
+# at 156012
+#260729  6:14:55 server id 1  end_log_pos 156091 CRC32 0x75433764 	GTID	last_committed=4	sequence_number=440	rbr_only=yes	original_committed_timestamp=1785305695666755	immediate_commit_timestamp=1785305695666755	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695666755 (2026-07-29 06:14:55.666755 UTC)
+# immediate_commit_timestamp=1785305695666755 (2026-07-29 06:14:55.666755 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695666755*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:440'/*!*/;
+# at 156091
+#260729  6:14:55 server id 1  end_log_pos 156179 CRC32 0x65a8647e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.666547/*!*/;
+BEGIN
+/*!*/;
+# at 156179
+#260729  6:14:55 server id 1  end_log_pos 156236 CRC32 0x4664aca5 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 156236
+#260729  6:14:55 server id 1  end_log_pos 156291 CRC32 0xf6f7ec0d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAExiAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQClrGRG
+X5ppah4BAAAANwAAAINiAgAAAHcBAAAAAAEAAgAD/wCyBQAAAAAAANAHAACZunpjtxoEDez39g==
+'/*!*/;
+# at 156291
+#260729  6:14:55 server id 1  end_log_pos 156322 CRC32 0xb0049ee8 	Xid = 3532
+COMMIT/*!*/;
+# at 156322
+#260729  6:14:55 server id 1  end_log_pos 156401 CRC32 0xa37c86a5 	GTID	last_committed=4	sequence_number=441	rbr_only=yes	original_committed_timestamp=1785305695667279	immediate_commit_timestamp=1785305695667279	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695667279 (2026-07-29 06:14:55.667279 UTC)
+# immediate_commit_timestamp=1785305695667279 (2026-07-29 06:14:55.667279 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695667279*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:441'/*!*/;
+# at 156401
+#260729  6:14:55 server id 1  end_log_pos 156489 CRC32 0xe26ec910 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.667068/*!*/;
+BEGIN
+/*!*/;
+# at 156489
+#260729  6:14:55 server id 1  end_log_pos 156546 CRC32 0x8865426d 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 156546
+#260729  6:14:55 server id 1  end_log_pos 156601 CRC32 0x339786b1 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIJjAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBtQmWI
+X5ppah4BAAAANwAAALljAgAAAHcBAAAAAAEAAgAD/wCzBQAAAAAAANAHAACZunpjtxoOsYaXMw==
+'/*!*/;
+# at 156601
+#260729  6:14:55 server id 1  end_log_pos 156632 CRC32 0x99602e2d 	Xid = 3533
+COMMIT/*!*/;
+# at 156632
+#260729  6:14:55 server id 1  end_log_pos 156711 CRC32 0xc182af8c 	GTID	last_committed=4	sequence_number=442	rbr_only=yes	original_committed_timestamp=1785305695669143	immediate_commit_timestamp=1785305695669143	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695669143 (2026-07-29 06:14:55.669143 UTC)
+# immediate_commit_timestamp=1785305695669143 (2026-07-29 06:14:55.669143 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695669143*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:442'/*!*/;
+# at 156711
+#260729  6:14:55 server id 1  end_log_pos 156799 CRC32 0x1cf76594 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.668921/*!*/;
+BEGIN
+/*!*/;
+# at 156799
+#260729  6:14:55 server id 1  end_log_pos 156856 CRC32 0x8378d700 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 156856
+#260729  6:14:55 server id 1  end_log_pos 156911 CRC32 0x2c75e5a0 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALhkAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAA13iD
+X5ppah4BAAAANwAAAO9kAgAAAHcBAAAAAAEAAgAD/wC0BQAAAAAAANAHAACZunpjtxoYoOV1LA==
+'/*!*/;
+# at 156911
+#260729  6:14:55 server id 1  end_log_pos 156942 CRC32 0xebb099da 	Xid = 3534
+COMMIT/*!*/;
+# at 156942
+#260729  6:14:55 server id 1  end_log_pos 157021 CRC32 0x4e115ed2 	GTID	last_committed=4	sequence_number=443	rbr_only=yes	original_committed_timestamp=1785305695669826	immediate_commit_timestamp=1785305695669826	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695669826 (2026-07-29 06:14:55.669826 UTC)
+# immediate_commit_timestamp=1785305695669826 (2026-07-29 06:14:55.669826 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695669826*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:443'/*!*/;
+# at 157021
+#260729  6:14:55 server id 1  end_log_pos 157109 CRC32 0x9340434c 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.669617/*!*/;
+BEGIN
+/*!*/;
+# at 157109
+#260729  6:14:55 server id 1  end_log_pos 157166 CRC32 0x0911bd3d 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 157166
+#260729  6:14:55 server id 1  end_log_pos 157221 CRC32 0x8693dcfe 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAO5lAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA9vREJ
+X5ppah4BAAAANwAAACVmAgAAAHcBAAAAAAEAAgAD/wC1BQAAAAAAANAHAACZunpjtxoi/tyThg==
+'/*!*/;
+# at 157221
+#260729  6:14:55 server id 1  end_log_pos 157252 CRC32 0x095ed8e0 	Xid = 3535
+COMMIT/*!*/;
+# at 157252
+#260729  6:14:55 server id 1  end_log_pos 157331 CRC32 0x1a91460c 	GTID	last_committed=4	sequence_number=444	rbr_only=yes	original_committed_timestamp=1785305695670492	immediate_commit_timestamp=1785305695670492	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695670492 (2026-07-29 06:14:55.670492 UTC)
+# immediate_commit_timestamp=1785305695670492 (2026-07-29 06:14:55.670492 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695670492*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:444'/*!*/;
+# at 157331
+#260729  6:14:55 server id 1  end_log_pos 157419 CRC32 0x2d7f6d58 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.670289/*!*/;
+BEGIN
+/*!*/;
+# at 157419
+#260729  6:14:55 server id 1  end_log_pos 157476 CRC32 0xc40a0cd1 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 157476
+#260729  6:14:55 server id 1  end_log_pos 157531 CRC32 0xd0c24e96 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACRnAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDRDArE
+X5ppah4BAAAANwAAAFtnAgAAAHcBAAAAAAEAAgAD/wC2BQAAAAAAANAHAACZunpjtxoslk7C0A==
+'/*!*/;
+# at 157531
+#260729  6:14:55 server id 1  end_log_pos 157562 CRC32 0x111e33d6 	Xid = 3536
+COMMIT/*!*/;
+# at 157562
+#260729  6:14:55 server id 1  end_log_pos 157641 CRC32 0xcb101629 	GTID	last_committed=4	sequence_number=445	rbr_only=yes	original_committed_timestamp=1785305695671171	immediate_commit_timestamp=1785305695671171	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695671171 (2026-07-29 06:14:55.671171 UTC)
+# immediate_commit_timestamp=1785305695671171 (2026-07-29 06:14:55.671171 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695671171*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:445'/*!*/;
+# at 157641
+#260729  6:14:55 server id 1  end_log_pos 157729 CRC32 0x452ddbb3 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.670975/*!*/;
+BEGIN
+/*!*/;
+# at 157729
+#260729  6:14:55 server id 1  end_log_pos 157786 CRC32 0x63338e92 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 157786
+#260729  6:14:55 server id 1  end_log_pos 157841 CRC32 0x8e2d42a4 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFpoAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCSjjNj
+X5ppah4BAAAANwAAAJFoAgAAAHcBAAAAAAEAAgAD/wC3BQAAAAAAANAHAACZunpjtxospEItjg==
+'/*!*/;
+# at 157841
+#260729  6:14:55 server id 1  end_log_pos 157872 CRC32 0xea3924f5 	Xid = 3537
+COMMIT/*!*/;
+# at 157872
+#260729  6:14:55 server id 1  end_log_pos 157951 CRC32 0x57d67c9a 	GTID	last_committed=4	sequence_number=446	rbr_only=yes	original_committed_timestamp=1785305695672549	immediate_commit_timestamp=1785305695672549	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695672549 (2026-07-29 06:14:55.672549 UTC)
+# immediate_commit_timestamp=1785305695672549 (2026-07-29 06:14:55.672549 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695672549*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:446'/*!*/;
+# at 157951
+#260729  6:14:55 server id 1  end_log_pos 158039 CRC32 0xef60fa43 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.671613/*!*/;
+BEGIN
+/*!*/;
+# at 158039
+#260729  6:14:55 server id 1  end_log_pos 158096 CRC32 0x7db32385 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 158096
+#260729  6:14:55 server id 1  end_log_pos 158151 CRC32 0x251a0edb 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJBpAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCFI7N9
+X5ppah4BAAAANwAAAMdpAgAAAHcBAAAAAAEAAgAD/wC4BQAAAAAAANAHAACZunpjtxo22w4aJQ==
+'/*!*/;
+# at 158151
+#260729  6:14:55 server id 1  end_log_pos 158182 CRC32 0x66e97ab8 	Xid = 3538
+COMMIT/*!*/;
+# at 158182
+#260729  6:14:55 server id 1  end_log_pos 158261 CRC32 0xc5393db5 	GTID	last_committed=4	sequence_number=447	rbr_only=yes	original_committed_timestamp=1785305695673103	immediate_commit_timestamp=1785305695673103	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695673103 (2026-07-29 06:14:55.673103 UTC)
+# immediate_commit_timestamp=1785305695673103 (2026-07-29 06:14:55.673103 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695673103*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:447'/*!*/;
+# at 158261
+#260729  6:14:55 server id 1  end_log_pos 158349 CRC32 0x9b382845 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.672876/*!*/;
+BEGIN
+/*!*/;
+# at 158349
+#260729  6:14:55 server id 1  end_log_pos 158406 CRC32 0x6ac85eea 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 158406
+#260729  6:14:55 server id 1  end_log_pos 158461 CRC32 0x6358710f 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMZqAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDqXshq
+X5ppah4BAAAANwAAAP1qAgAAAHcBAAAAAAEAAgAD/wC5BQAAAAAAANAHAACZunpjtxpAD3FYYw==
+'/*!*/;
+# at 158461
+#260729  6:14:55 server id 1  end_log_pos 158492 CRC32 0x71344951 	Xid = 3539
+COMMIT/*!*/;
+# at 158492
+#260729  6:14:55 server id 1  end_log_pos 158571 CRC32 0x44aaeaf1 	GTID	last_committed=4	sequence_number=448	rbr_only=yes	original_committed_timestamp=1785305695674603	immediate_commit_timestamp=1785305695674603	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695674603 (2026-07-29 06:14:55.674603 UTC)
+# immediate_commit_timestamp=1785305695674603 (2026-07-29 06:14:55.674603 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695674603*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:448'/*!*/;
+# at 158571
+#260729  6:14:55 server id 1  end_log_pos 158659 CRC32 0xa0fd5955 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.674395/*!*/;
+BEGIN
+/*!*/;
+# at 158659
+#260729  6:14:55 server id 1  end_log_pos 158716 CRC32 0x1d92f430 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 158716
+#260729  6:14:55 server id 1  end_log_pos 158771 CRC32 0x543fe89b 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPxrAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAw9JId
+X5ppah4BAAAANwAAADNsAgAAAHcBAAAAAAEAAgAD/wC6BQAAAAAAANAHAACZunpjtxpUm+g/VA==
+'/*!*/;
+# at 158771
+#260729  6:14:55 server id 1  end_log_pos 158802 CRC32 0x8ca0e461 	Xid = 3540
+COMMIT/*!*/;
+# at 158802
+#260729  6:14:55 server id 1  end_log_pos 158881 CRC32 0xbceb2b2e 	GTID	last_committed=4	sequence_number=449	rbr_only=yes	original_committed_timestamp=1785305695675244	immediate_commit_timestamp=1785305695675244	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695675244 (2026-07-29 06:14:55.675244 UTC)
+# immediate_commit_timestamp=1785305695675244 (2026-07-29 06:14:55.675244 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695675244*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:449'/*!*/;
+# at 158881
+#260729  6:14:55 server id 1  end_log_pos 158969 CRC32 0x2cd65fb7 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.675021/*!*/;
+BEGIN
+/*!*/;
+# at 158969
+#260729  6:14:55 server id 1  end_log_pos 159026 CRC32 0xe15d2ee6 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 159026
+#260729  6:14:55 server id 1  end_log_pos 159081 CRC32 0x9a13a5cb 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADJtAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDmLl3h
+X5ppah4BAAAANwAAAGltAgAAAHcBAAAAAAEAAgAD/wC7BQAAAAAAANAHAACZunpjtxpey6UTmg==
+'/*!*/;
+# at 159081
+#260729  6:14:55 server id 1  end_log_pos 159112 CRC32 0xebd3c39e 	Xid = 3541
+COMMIT/*!*/;
+# at 159112
+#260729  6:14:55 server id 1  end_log_pos 159191 CRC32 0xfb7f8046 	GTID	last_committed=4	sequence_number=450	rbr_only=yes	original_committed_timestamp=1785305695675910	immediate_commit_timestamp=1785305695675910	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695675910 (2026-07-29 06:14:55.675910 UTC)
+# immediate_commit_timestamp=1785305695675910 (2026-07-29 06:14:55.675910 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695675910*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:450'/*!*/;
+# at 159191
+#260729  6:14:55 server id 1  end_log_pos 159279 CRC32 0xf3c4d876 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.675704/*!*/;
+BEGIN
+/*!*/;
+# at 159279
+#260729  6:14:55 server id 1  end_log_pos 159336 CRC32 0x5cd491a9 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 159336
+#260729  6:14:55 server id 1  end_log_pos 159391 CRC32 0x02a24d00 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGhuAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCpkdRc
+X5ppah4BAAAANwAAAJ9uAgAAAHcBAAAAAAEAAgAD/wC8BQAAAAAAANAHAACZunpjtxpeAE2iAg==
+'/*!*/;
+# at 159391
+#260729  6:14:55 server id 1  end_log_pos 159422 CRC32 0x8b82a7b1 	Xid = 3542
+COMMIT/*!*/;
+# at 159422
+#260729  6:14:55 server id 1  end_log_pos 159501 CRC32 0x39f4ee34 	GTID	last_committed=4	sequence_number=451	rbr_only=yes	original_committed_timestamp=1785305695676658	immediate_commit_timestamp=1785305695676658	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695676658 (2026-07-29 06:14:55.676658 UTC)
+# immediate_commit_timestamp=1785305695676658 (2026-07-29 06:14:55.676658 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695676658*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:451'/*!*/;
+# at 159501
+#260729  6:14:55 server id 1  end_log_pos 159589 CRC32 0x47c03866 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.676381/*!*/;
+BEGIN
+/*!*/;
+# at 159589
+#260729  6:14:55 server id 1  end_log_pos 159646 CRC32 0x2efefcdd 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 159646
+#260729  6:14:55 server id 1  end_log_pos 159701 CRC32 0x56538fba 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJ5vAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDd/P4u
+X5ppah4BAAAANwAAANVvAgAAAHcBAAAAAAEAAgAD/wC9BQAAAAAAANAHAACZunpjtxpouo9TVg==
+'/*!*/;
+# at 159701
+#260729  6:14:55 server id 1  end_log_pos 159732 CRC32 0x093053c0 	Xid = 3543
+COMMIT/*!*/;
+# at 159732
+#260729  6:14:55 server id 1  end_log_pos 159811 CRC32 0x7a31184b 	GTID	last_committed=4	sequence_number=452	rbr_only=yes	original_committed_timestamp=1785305695677363	immediate_commit_timestamp=1785305695677363	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695677363 (2026-07-29 06:14:55.677363 UTC)
+# immediate_commit_timestamp=1785305695677363 (2026-07-29 06:14:55.677363 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695677363*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:452'/*!*/;
+# at 159811
+#260729  6:14:55 server id 1  end_log_pos 159899 CRC32 0x4a6979ba 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.677148/*!*/;
+BEGIN
+/*!*/;
+# at 159899
+#260729  6:14:55 server id 1  end_log_pos 159956 CRC32 0xaca89014 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 159956
+#260729  6:14:55 server id 1  end_log_pos 160011 CRC32 0x8da43987 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANRwAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAUkKis
+X5ppah4BAAAANwAAAAtxAgAAAHcBAAAAAAEAAgAD/wC+BQAAAAAAANAHAACZunpjtxpyhzmkjQ==
+'/*!*/;
+# at 160011
+#260729  6:14:55 server id 1  end_log_pos 160042 CRC32 0xf1129af9 	Xid = 3544
+COMMIT/*!*/;
+# at 160042
+#260729  6:14:55 server id 1  end_log_pos 160121 CRC32 0x9a2012d6 	GTID	last_committed=4	sequence_number=453	rbr_only=yes	original_committed_timestamp=1785305695679585	immediate_commit_timestamp=1785305695679585	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695679585 (2026-07-29 06:14:55.679585 UTC)
+# immediate_commit_timestamp=1785305695679585 (2026-07-29 06:14:55.679585 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695679585*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:453'/*!*/;
+# at 160121
+#260729  6:14:55 server id 1  end_log_pos 160209 CRC32 0x35bcfa4b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.679343/*!*/;
+BEGIN
+/*!*/;
+# at 160209
+#260729  6:14:55 server id 1  end_log_pos 160266 CRC32 0x45d561d9 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 160266
+#260729  6:14:55 server id 1  end_log_pos 160321 CRC32 0x76ae70de 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAApyAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDZYdVF
+X5ppah4BAAAANwAAAEFyAgAAAHcBAAAAAAEAAgAD/wC/BQAAAAAAANAHAACZunpjtxqG3nCudg==
+'/*!*/;
+# at 160321
+#260729  6:14:55 server id 1  end_log_pos 160352 CRC32 0x13fcdbc3 	Xid = 3545
+COMMIT/*!*/;
+# at 160352
+#260729  6:14:55 server id 1  end_log_pos 160431 CRC32 0xc7fe4057 	GTID	last_committed=4	sequence_number=454	rbr_only=yes	original_committed_timestamp=1785305695680328	immediate_commit_timestamp=1785305695680328	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695680328 (2026-07-29 06:14:55.680328 UTC)
+# immediate_commit_timestamp=1785305695680328 (2026-07-29 06:14:55.680328 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695680328*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:454'/*!*/;
+# at 160431
+#260729  6:14:55 server id 1  end_log_pos 160519 CRC32 0x98d8d2e6 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.680109/*!*/;
+BEGIN
+/*!*/;
+# at 160519
+#260729  6:14:55 server id 1  end_log_pos 160576 CRC32 0x91a9ca3a 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 160576
+#260729  6:14:55 server id 1  end_log_pos 160631 CRC32 0xa7adf650 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEBzAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA6yqmR
+X5ppah4BAAAANwAAAHdzAgAAAHcBAAAAAAEAAgAD/wDABQAAAAAAANAHAACZunpjtxqQUPatpw==
+'/*!*/;
+# at 160631
+#260729  6:14:55 server id 1  end_log_pos 160662 CRC32 0xd13b12b4 	Xid = 3546
+COMMIT/*!*/;
+# at 160662
+#260729  6:14:55 server id 1  end_log_pos 160741 CRC32 0xb20882fe 	GTID	last_committed=4	sequence_number=455	rbr_only=yes	original_committed_timestamp=1785305695681016	immediate_commit_timestamp=1785305695681016	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695681016 (2026-07-29 06:14:55.681016 UTC)
+# immediate_commit_timestamp=1785305695681016 (2026-07-29 06:14:55.681016 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695681016*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:455'/*!*/;
+# at 160741
+#260729  6:14:55 server id 1  end_log_pos 160829 CRC32 0x8857364d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.680791/*!*/;
+BEGIN
+/*!*/;
+# at 160829
+#260729  6:14:55 server id 1  end_log_pos 160886 CRC32 0x30469d77 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 160886
+#260729  6:14:55 server id 1  end_log_pos 160941 CRC32 0x9056a471 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHZ0AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB3nUYw
+X5ppah4BAAAANwAAAK10AgAAAHcBAAAAAAEAAgAD/wDBBQAAAAAAANAHAACZunpjtxqQcaRWkA==
+'/*!*/;
+# at 160941
+#260729  6:14:55 server id 1  end_log_pos 160972 CRC32 0x95de0574 	Xid = 3547
+COMMIT/*!*/;
+# at 160972
+#260729  6:14:55 server id 1  end_log_pos 161051 CRC32 0x3737dc2c 	GTID	last_committed=4	sequence_number=456	rbr_only=yes	original_committed_timestamp=1785305695681654	immediate_commit_timestamp=1785305695681654	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695681654 (2026-07-29 06:14:55.681654 UTC)
+# immediate_commit_timestamp=1785305695681654 (2026-07-29 06:14:55.681654 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695681654*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:456'/*!*/;
+# at 161051
+#260729  6:14:55 server id 1  end_log_pos 161139 CRC32 0x2c787211 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.681470/*!*/;
+BEGIN
+/*!*/;
+# at 161139
+#260729  6:14:55 server id 1  end_log_pos 161196 CRC32 0xda21339e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 161196
+#260729  6:14:55 server id 1  end_log_pos 161251 CRC32 0xc4cce1f6 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKx1AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCeMyHa
+X5ppah4BAAAANwAAAON1AgAAAHcBAAAAAAEAAgAD/wDCBQAAAAAAANAHAACZunpjtxqa9uHMxA==
+'/*!*/;
+# at 161251
+#260729  6:14:55 server id 1  end_log_pos 161282 CRC32 0xf616f4b5 	Xid = 3548
+COMMIT/*!*/;
+# at 161282
+#260729  6:14:55 server id 1  end_log_pos 161361 CRC32 0xe00bea11 	GTID	last_committed=4	sequence_number=457	rbr_only=yes	original_committed_timestamp=1785305695682375	immediate_commit_timestamp=1785305695682375	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695682375 (2026-07-29 06:14:55.682375 UTC)
+# immediate_commit_timestamp=1785305695682375 (2026-07-29 06:14:55.682375 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695682375*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:457'/*!*/;
+# at 161361
+#260729  6:14:55 server id 1  end_log_pos 161449 CRC32 0xfb43d953 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.682083/*!*/;
+BEGIN
+/*!*/;
+# at 161449
+#260729  6:14:55 server id 1  end_log_pos 161506 CRC32 0x43ceccf0 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 161506
+#260729  6:14:55 server id 1  end_log_pos 161561 CRC32 0x6ce10f47 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOJ2AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDwzM5D
+X5ppah4BAAAANwAAABl3AgAAAHcBAAAAAAEAAgAD/wDDBQAAAAAAANAHAACZunpjtxqkRw/hbA==
+'/*!*/;
+# at 161561
+#260729  6:14:55 server id 1  end_log_pos 161592 CRC32 0x9ecbb381 	Xid = 3549
+COMMIT/*!*/;
+# at 161592
+#260729  6:14:55 server id 1  end_log_pos 161671 CRC32 0x66ad55a5 	GTID	last_committed=4	sequence_number=458	rbr_only=yes	original_committed_timestamp=1785305695683090	immediate_commit_timestamp=1785305695683090	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695683090 (2026-07-29 06:14:55.683090 UTC)
+# immediate_commit_timestamp=1785305695683090 (2026-07-29 06:14:55.683090 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695683090*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:458'/*!*/;
+# at 161671
+#260729  6:14:55 server id 1  end_log_pos 161759 CRC32 0x064c080b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.682835/*!*/;
+BEGIN
+/*!*/;
+# at 161759
+#260729  6:14:55 server id 1  end_log_pos 161816 CRC32 0xb0030031 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 161816
+#260729  6:14:55 server id 1  end_log_pos 161871 CRC32 0x5b717479 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABh4AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAxAAOw
+X5ppah4BAAAANwAAAE94AgAAAHcBAAAAAAEAAgAD/wDEBQAAAAAAANAHAACZunpjtxqkeXRxWw==
+'/*!*/;
+# at 161871
+#260729  6:14:55 server id 1  end_log_pos 161902 CRC32 0xe8fde17c 	Xid = 3550
+COMMIT/*!*/;
+# at 161902
+#260729  6:14:55 server id 1  end_log_pos 161981 CRC32 0x2d557db4 	GTID	last_committed=4	sequence_number=459	rbr_only=yes	original_committed_timestamp=1785305695683727	immediate_commit_timestamp=1785305695683727	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695683727 (2026-07-29 06:14:55.683727 UTC)
+# immediate_commit_timestamp=1785305695683727 (2026-07-29 06:14:55.683727 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695683727*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:459'/*!*/;
+# at 161981
+#260729  6:14:55 server id 1  end_log_pos 162069 CRC32 0x7ffe4017 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.683525/*!*/;
+BEGIN
+/*!*/;
+# at 162069
+#260729  6:14:55 server id 1  end_log_pos 162126 CRC32 0x3a6a6a0c 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 162126
+#260729  6:14:55 server id 1  end_log_pos 162181 CRC32 0x8d2f42eb 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAE55AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAMamo6
+X5ppah4BAAAANwAAAIV5AgAAAHcBAAAAAAEAAgAD/wDFBQAAAAAAANAHAACZunpjtxqu60IvjQ==
+'/*!*/;
+# at 162181
+#260729  6:14:55 server id 1  end_log_pos 162212 CRC32 0xe93cfaef 	Xid = 3551
+COMMIT/*!*/;
+# at 162212
+#260729  6:14:55 server id 1  end_log_pos 162291 CRC32 0x5e233de7 	GTID	last_committed=4	sequence_number=460	rbr_only=yes	original_committed_timestamp=1785305695684927	immediate_commit_timestamp=1785305695684927	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695684927 (2026-07-29 06:14:55.684927 UTC)
+# immediate_commit_timestamp=1785305695684927 (2026-07-29 06:14:55.684927 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695684927*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:460'/*!*/;
+# at 162291
+#260729  6:14:55 server id 1  end_log_pos 162379 CRC32 0xdb25e5eb 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.684107/*!*/;
+BEGIN
+/*!*/;
+# at 162379
+#260729  6:14:55 server id 1  end_log_pos 162436 CRC32 0xb9f8d049 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 162436
+#260729  6:14:55 server id 1  end_log_pos 162491 CRC32 0xa9dba7dd 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIR6AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBJ0Pi5
+X5ppah4BAAAANwAAALt6AgAAAHcBAAAAAAEAAgAD/wDGBQAAAAAAANAHAACZunpjtxq43afbqQ==
+'/*!*/;
+# at 162491
+#260729  6:14:55 server id 1  end_log_pos 162522 CRC32 0x29ef3135 	Xid = 3552
+COMMIT/*!*/;
+# at 162522
+#260729  6:14:55 server id 1  end_log_pos 162601 CRC32 0x4c97e523 	GTID	last_committed=4	sequence_number=461	rbr_only=yes	original_committed_timestamp=1785305695685713	immediate_commit_timestamp=1785305695685713	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695685713 (2026-07-29 06:14:55.685713 UTC)
+# immediate_commit_timestamp=1785305695685713 (2026-07-29 06:14:55.685713 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695685713*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:461'/*!*/;
+# at 162601
+#260729  6:14:55 server id 1  end_log_pos 162689 CRC32 0x23497db0 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.685493/*!*/;
+BEGIN
+/*!*/;
+# at 162689
+#260729  6:14:55 server id 1  end_log_pos 162746 CRC32 0x1e23394c 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 162746
+#260729  6:14:55 server id 1  end_log_pos 162801 CRC32 0x824068dc 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALp7AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBMOSMe
+X5ppah4BAAAANwAAAPF7AgAAAHcBAAAAAAEAAgAD/wDHBQAAAAAAANAHAACZunpjtxrC3GhAgg==
+'/*!*/;
+# at 162801
+#260729  6:14:55 server id 1  end_log_pos 162832 CRC32 0x555d2cfe 	Xid = 3553
+COMMIT/*!*/;
+# at 162832
+#260729  6:14:55 server id 1  end_log_pos 162911 CRC32 0x48595c16 	GTID	last_committed=4	sequence_number=462	rbr_only=yes	original_committed_timestamp=1785305695687362	immediate_commit_timestamp=1785305695687362	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695687362 (2026-07-29 06:14:55.687362 UTC)
+# immediate_commit_timestamp=1785305695687362 (2026-07-29 06:14:55.687362 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695687362*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:462'/*!*/;
+# at 162911
+#260729  6:14:55 server id 1  end_log_pos 162999 CRC32 0x58257b91 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.687010/*!*/;
+BEGIN
+/*!*/;
+# at 162999
+#260729  6:14:55 server id 1  end_log_pos 163056 CRC32 0xb618ad18 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 163056
+#260729  6:14:55 server id 1  end_log_pos 163111 CRC32 0x573de8d4 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPB8AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAYrRi2
+X5ppah4BAAAANwAAACd9AgAAAHcBAAAAAAEAAgAD/wDIBQAAAAAAANAHAACZunpjtxrW1Og9Vw==
+'/*!*/;
+# at 163111
+#260729  6:14:55 server id 1  end_log_pos 163142 CRC32 0xd98d72b3 	Xid = 3554
+COMMIT/*!*/;
+# at 163142
+#260729  6:14:55 server id 1  end_log_pos 163221 CRC32 0x240cb07e 	GTID	last_committed=4	sequence_number=463	rbr_only=yes	original_committed_timestamp=1785305695688133	immediate_commit_timestamp=1785305695688133	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695688133 (2026-07-29 06:14:55.688133 UTC)
+# immediate_commit_timestamp=1785305695688133 (2026-07-29 06:14:55.688133 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695688133*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:463'/*!*/;
+# at 163221
+#260729  6:14:55 server id 1  end_log_pos 163309 CRC32 0x7f51973e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.687855/*!*/;
+BEGIN
+/*!*/;
+# at 163309
+#260729  6:14:55 server id 1  end_log_pos 163366 CRC32 0x2516dd2a 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 163366
+#260729  6:14:55 server id 1  end_log_pos 163421 CRC32 0x1341847e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACZ+AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAq3RYl
+X5ppah4BAAAANwAAAF1+AgAAAHcBAAAAAAEAAgAD/wDJBQAAAAAAANAHAACZunpjtxrWfoRBEw==
+'/*!*/;
+# at 163421
+#260729  6:14:55 server id 1  end_log_pos 163452 CRC32 0xd10c80cc 	Xid = 3555
+COMMIT/*!*/;
+# at 163452
+#260729  6:14:55 server id 1  end_log_pos 163531 CRC32 0xd7e5055a 	GTID	last_committed=4	sequence_number=464	rbr_only=yes	original_committed_timestamp=1785305695688804	immediate_commit_timestamp=1785305695688804	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695688804 (2026-07-29 06:14:55.688804 UTC)
+# immediate_commit_timestamp=1785305695688804 (2026-07-29 06:14:55.688804 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695688804*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:464'/*!*/;
+# at 163531
+#260729  6:14:55 server id 1  end_log_pos 163619 CRC32 0xe11d739d 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.688579/*!*/;
+BEGIN
+/*!*/;
+# at 163619
+#260729  6:14:55 server id 1  end_log_pos 163676 CRC32 0x3732748a 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 163676
+#260729  6:14:55 server id 1  end_log_pos 163731 CRC32 0xc57435d1 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFx/AgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCKdDI3
+X5ppah4BAAAANwAAAJN/AgAAAHcBAAAAAAEAAgAD/wDKBQAAAAAAANAHAACZunpjtxrg0TV0xQ==
+'/*!*/;
+# at 163731
+#260729  6:14:55 server id 1  end_log_pos 163762 CRC32 0x0f0e1dc3 	Xid = 3556
+COMMIT/*!*/;
+# at 163762
+#260729  6:14:55 server id 1  end_log_pos 163841 CRC32 0x9e747b8d 	GTID	last_committed=4	sequence_number=465	rbr_only=yes	original_committed_timestamp=1785305695689527	immediate_commit_timestamp=1785305695689527	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695689527 (2026-07-29 06:14:55.689527 UTC)
+# immediate_commit_timestamp=1785305695689527 (2026-07-29 06:14:55.689527 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695689527*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:465'/*!*/;
+# at 163841
+#260729  6:14:55 server id 1  end_log_pos 163929 CRC32 0xa4fa114b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.689304/*!*/;
+BEGIN
+/*!*/;
+# at 163929
+#260729  6:14:55 server id 1  end_log_pos 163986 CRC32 0x406ac1ed 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 163986
+#260729  6:14:55 server id 1  end_log_pos 164041 CRC32 0x31f8d327 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJKAAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDtwWpA
+X5ppah4BAAAANwAAAMmAAgAAAHcBAAAAAAEAAgAD/wDLBQAAAAAAANAHAACZunpjtxrqJ9P4MQ==
+'/*!*/;
+# at 164041
+#260729  6:14:55 server id 1  end_log_pos 164072 CRC32 0x0b7680fd 	Xid = 3557
+COMMIT/*!*/;
+# at 164072
+#260729  6:14:55 server id 1  end_log_pos 164151 CRC32 0x07b2038b 	GTID	last_committed=4	sequence_number=466	rbr_only=yes	original_committed_timestamp=1785305695690405	immediate_commit_timestamp=1785305695690405	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695690405 (2026-07-29 06:14:55.690405 UTC)
+# immediate_commit_timestamp=1785305695690405 (2026-07-29 06:14:55.690405 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695690405*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:466'/*!*/;
+# at 164151
+#260729  6:14:55 server id 1  end_log_pos 164239 CRC32 0x7788702b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.690157/*!*/;
+BEGIN
+/*!*/;
+# at 164239
+#260729  6:14:55 server id 1  end_log_pos 164296 CRC32 0x60f169f0 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 164296
+#260729  6:14:55 server id 1  end_log_pos 164351 CRC32 0x9f4f6128 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMiBAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDwafFg
+X5ppah4BAAAANwAAAP+BAgAAAHcBAAAAAAEAAgAD/wDMBQAAAAAAANAHAACZunpjtxr0KGFPnw==
+'/*!*/;
+# at 164351
+#260729  6:14:55 server id 1  end_log_pos 164382 CRC32 0x747b2544 	Xid = 3558
+COMMIT/*!*/;
+# at 164382
+#260729  6:14:55 server id 1  end_log_pos 164461 CRC32 0xb23aa77f 	GTID	last_committed=4	sequence_number=467	rbr_only=yes	original_committed_timestamp=1785305695691078	immediate_commit_timestamp=1785305695691078	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695691078 (2026-07-29 06:14:55.691078 UTC)
+# immediate_commit_timestamp=1785305695691078 (2026-07-29 06:14:55.691078 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695691078*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:467'/*!*/;
+# at 164461
+#260729  6:14:55 server id 1  end_log_pos 164549 CRC32 0x8be833d0 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.690850/*!*/;
+BEGIN
+/*!*/;
+# at 164549
+#260729  6:14:55 server id 1  end_log_pos 164606 CRC32 0x204b1658 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 164606
+#260729  6:14:55 server id 1  end_log_pos 164661 CRC32 0xf3a581c4 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAP6CAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBYFksg
+X5ppah4BAAAANwAAADWDAgAAAHcBAAAAAAEAAgAD/wDNBQAAAAAAANAHAACZunpjtxr0xIGl8w==
+'/*!*/;
+# at 164661
+#260729  6:14:55 server id 1  end_log_pos 164692 CRC32 0xf6c9d135 	Xid = 3559
+COMMIT/*!*/;
+# at 164692
+#260729  6:14:55 server id 1  end_log_pos 164771 CRC32 0x984b7e4a 	GTID	last_committed=4	sequence_number=468	rbr_only=yes	original_committed_timestamp=1785305695691752	immediate_commit_timestamp=1785305695691752	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695691752 (2026-07-29 06:14:55.691752 UTC)
+# immediate_commit_timestamp=1785305695691752 (2026-07-29 06:14:55.691752 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695691752*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:468'/*!*/;
+# at 164771
+#260729  6:14:55 server id 1  end_log_pos 164859 CRC32 0xd9bdb91c 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.691531/*!*/;
+BEGIN
+/*!*/;
+# at 164859
+#260729  6:14:55 server id 1  end_log_pos 164916 CRC32 0x0c058f51 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 164916
+#260729  6:14:55 server id 1  end_log_pos 164971 CRC32 0xa64f49ee 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADSEAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBRjwUM
+X5ppah4BAAAANwAAAGuEAgAAAHcBAAAAAAEAAgAD/wDOBQAAAAAAANAHAACZunpjtxr+7klPpg==
+'/*!*/;
+# at 164971
+#260729  6:14:55 server id 1  end_log_pos 165002 CRC32 0x3d79b43e 	Xid = 3560
+COMMIT/*!*/;
+# at 165002
+#260729  6:14:55 server id 1  end_log_pos 165081 CRC32 0xe0dd6dc5 	GTID	last_committed=4	sequence_number=469	rbr_only=yes	original_committed_timestamp=1785305695692520	immediate_commit_timestamp=1785305695692520	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695692520 (2026-07-29 06:14:55.692520 UTC)
+# immediate_commit_timestamp=1785305695692520 (2026-07-29 06:14:55.692520 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695692520*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:469'/*!*/;
+# at 165081
+#260729  6:14:55 server id 1  end_log_pos 165169 CRC32 0x0681f11b 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.692241/*!*/;
+BEGIN
+/*!*/;
+# at 165169
+#260729  6:14:55 server id 1  end_log_pos 165226 CRC32 0xfc1f6493 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 165226
+#260729  6:14:55 server id 1  end_log_pos 165281 CRC32 0xdd01f00a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGqFAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCTZB/8
+X5ppah4BAAAANwAAAKGFAgAAAHcBAAAAAAEAAgAD/wDPBQAAAAAAANAHAACZunpjtxsICvAB3Q==
+'/*!*/;
+# at 165281
+#260729  6:14:55 server id 1  end_log_pos 165312 CRC32 0xbfcb404f 	Xid = 3561
+COMMIT/*!*/;
+# at 165312
+#260729  6:14:55 server id 1  end_log_pos 165391 CRC32 0x58161d7a 	GTID	last_committed=4	sequence_number=470	rbr_only=yes	original_committed_timestamp=1785305695694655	immediate_commit_timestamp=1785305695694655	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695694655 (2026-07-29 06:14:55.694655 UTC)
+# immediate_commit_timestamp=1785305695694655 (2026-07-29 06:14:55.694655 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695694655*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:470'/*!*/;
+# at 165391
+#260729  6:14:55 server id 1  end_log_pos 165479 CRC32 0x1b25fa19 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.694436/*!*/;
+BEGIN
+/*!*/;
+# at 165479
+#260729  6:14:55 server id 1  end_log_pos 165536 CRC32 0x7f8dded6 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 165536
+#260729  6:14:55 server id 1  end_log_pos 165591 CRC32 0xe849629c 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKCGAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDW3o1/
+X5ppah4BAAAANwAAANeGAgAAAHcBAAAAAAEAAgAD/wDQBQAAAAAAANAHAACZunpjtxscnGJJ6A==
+'/*!*/;
+# at 165591
+#260729  6:14:55 server id 1  end_log_pos 165622 CRC32 0xdf9a2460 	Xid = 3562
+COMMIT/*!*/;
+# at 165622
+#260729  6:14:55 server id 1  end_log_pos 165701 CRC32 0x3a511b53 	GTID	last_committed=4	sequence_number=471	rbr_only=yes	original_committed_timestamp=1785305695695374	immediate_commit_timestamp=1785305695695374	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695695374 (2026-07-29 06:14:55.695374 UTC)
+# immediate_commit_timestamp=1785305695695374 (2026-07-29 06:14:55.695374 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695695374*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:471'/*!*/;
+# at 165701
+#260729  6:14:55 server id 1  end_log_pos 165789 CRC32 0x52d98dfa 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.695145/*!*/;
+BEGIN
+/*!*/;
+# at 165789
+#260729  6:14:55 server id 1  end_log_pos 165846 CRC32 0xc75bb556 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 165846
+#260729  6:14:55 server id 1  end_log_pos 165901 CRC32 0x45e8536e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANaHAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBWtVvH
+X5ppah4BAAAANwAAAA2IAgAAAHcBAAAAAAEAAgAD/wDRBQAAAAAAANAHAACZunpjtxsmblPoRQ==
+'/*!*/;
+# at 165901
+#260729  6:14:55 server id 1  end_log_pos 165932 CRC32 0x9f99d6aa 	Xid = 3563
+COMMIT/*!*/;
+# at 165932
+#260729  6:14:55 server id 1  end_log_pos 166011 CRC32 0xce0ceb57 	GTID	last_committed=4	sequence_number=472	rbr_only=yes	original_committed_timestamp=1785305695696297	immediate_commit_timestamp=1785305695696297	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695696297 (2026-07-29 06:14:55.696297 UTC)
+# immediate_commit_timestamp=1785305695696297 (2026-07-29 06:14:55.696297 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695696297*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:472'/*!*/;
+# at 166011
+#260729  6:14:55 server id 1  end_log_pos 166099 CRC32 0xf71da219 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.695992/*!*/;
+BEGIN
+/*!*/;
+# at 166099
+#260729  6:14:55 server id 1  end_log_pos 166156 CRC32 0x0629782a 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 166156
+#260729  6:14:55 server id 1  end_log_pos 166211 CRC32 0xf1a7fff7 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAyJAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAqeCkG
+X5ppah4BAAAANwAAAEOJAgAAAHcBAAAAAAEAAgAD/wDSBQAAAAAAANAHAACZunpjtxsm9/+n8Q==
+'/*!*/;
+# at 166211
+#260729  6:14:55 server id 1  end_log_pos 166242 CRC32 0xc2e8a447 	Xid = 3564
+COMMIT/*!*/;
+# at 166242
+#260729  6:14:55 server id 1  end_log_pos 166321 CRC32 0x1a5541f9 	GTID	last_committed=4	sequence_number=473	rbr_only=yes	original_committed_timestamp=1785305695697263	immediate_commit_timestamp=1785305695697263	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695697263 (2026-07-29 06:14:55.697263 UTC)
+# immediate_commit_timestamp=1785305695697263 (2026-07-29 06:14:55.697263 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695697263*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:473'/*!*/;
+# at 166321
+#260729  6:14:55 server id 1  end_log_pos 166409 CRC32 0x7aac6134 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.697005/*!*/;
+BEGIN
+/*!*/;
+# at 166409
+#260729  6:14:55 server id 1  end_log_pos 166466 CRC32 0x9fc68744 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 166466
+#260729  6:14:55 server id 1  end_log_pos 166521 CRC32 0x1a820865 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEKKAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBEh8af
+X5ppah4BAAAANwAAAHmKAgAAAHcBAAAAAAEAAgAD/wDTBQAAAAAAANAHAACZunpjtxs6ZQiCGg==
+'/*!*/;
+# at 166521
+#260729  6:14:55 server id 1  end_log_pos 166552 CRC32 0x08a34e2b 	Xid = 3565
+COMMIT/*!*/;
+# at 166552
+#260729  6:14:55 server id 1  end_log_pos 166631 CRC32 0x6e75ab8b 	GTID	last_committed=4	sequence_number=474	rbr_only=yes	original_committed_timestamp=1785305695698110	immediate_commit_timestamp=1785305695698110	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695698110 (2026-07-29 06:14:55.698110 UTC)
+# immediate_commit_timestamp=1785305695698110 (2026-07-29 06:14:55.698110 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695698110*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:474'/*!*/;
+# at 166631
+#260729  6:14:55 server id 1  end_log_pos 166719 CRC32 0x368eb16e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.697778/*!*/;
+BEGIN
+/*!*/;
+# at 166719
+#260729  6:14:55 server id 1  end_log_pos 166776 CRC32 0xe89c2d9e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 166776
+#260729  6:14:55 server id 1  end_log_pos 166831 CRC32 0xe8b6284a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHiLAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCeLZzo
+X5ppah4BAAAANwAAAK+LAgAAAHcBAAAAAAEAAgAD/wDUBQAAAAAAANAHAACZunpjtxs6Sii26A==
+'/*!*/;
+# at 166831
+#260729  6:14:55 server id 1  end_log_pos 166862 CRC32 0x84731066 	Xid = 3566
+COMMIT/*!*/;
+# at 166862
+#260729  6:14:55 server id 1  end_log_pos 166941 CRC32 0x68a1f7f7 	GTID	last_committed=4	sequence_number=475	rbr_only=yes	original_committed_timestamp=1785305695699361	immediate_commit_timestamp=1785305695699361	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695699361 (2026-07-29 06:14:55.699361 UTC)
+# immediate_commit_timestamp=1785305695699361 (2026-07-29 06:14:55.699361 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695699361*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:475'/*!*/;
+# at 166941
+#260729  6:14:55 server id 1  end_log_pos 167029 CRC32 0x9f93d753 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.698690/*!*/;
+BEGIN
+/*!*/;
+# at 167029
+#260729  6:14:55 server id 1  end_log_pos 167086 CRC32 0xd44e7ee0 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 167086
+#260729  6:14:55 server id 1  end_log_pos 167141 CRC32 0x70825d92 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAK6MAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDgfk7U
+X5ppah4BAAAANwAAAOWMAgAAAHcBAAAAAAEAAgAD/wDVBQAAAAAAANAHAACZunpjtxtEkl2CcA==
+'/*!*/;
+# at 167141
+#260729  6:14:55 server id 1  end_log_pos 167172 CRC32 0xf8c10dad 	Xid = 3567
+COMMIT/*!*/;
+# at 167172
+#260729  6:14:55 server id 1  end_log_pos 167251 CRC32 0xc66d450a 	GTID	last_committed=4	sequence_number=476	rbr_only=yes	original_committed_timestamp=1785305695701127	immediate_commit_timestamp=1785305695701127	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695701127 (2026-07-29 06:14:55.701127 UTC)
+# immediate_commit_timestamp=1785305695701127 (2026-07-29 06:14:55.701127 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695701127*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:476'/*!*/;
+# at 167251
+#260729  6:14:55 server id 1  end_log_pos 167339 CRC32 0x348a5731 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.700800/*!*/;
+BEGIN
+/*!*/;
+# at 167339
+#260729  6:14:55 server id 1  end_log_pos 167396 CRC32 0x0032d503 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 167396
+#260729  6:14:55 server id 1  end_log_pos 167451 CRC32 0x22cb097d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOSNAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAD1TIA
+X5ppah4BAAAANwAAABuOAgAAAHcBAAAAAAEAAgAD/wDWBQAAAAAAANAHAACZunpjtxtYfQnLIg==
+'/*!*/;
+# at 167451
+#260729  6:14:55 server id 1  end_log_pos 167482 CRC32 0x80dd53d0 	Xid = 3568
+COMMIT/*!*/;
+# at 167482
+#260729  6:14:55 server id 1  end_log_pos 167561 CRC32 0x02f078c4 	GTID	last_committed=4	sequence_number=477	rbr_only=yes	original_committed_timestamp=1785305695701915	immediate_commit_timestamp=1785305695701915	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695701915 (2026-07-29 06:14:55.701915 UTC)
+# immediate_commit_timestamp=1785305695701915 (2026-07-29 06:14:55.701915 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695701915*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:477'/*!*/;
+# at 167561
+#260729  6:14:55 server id 1  end_log_pos 167649 CRC32 0x4fba17c8 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.701614/*!*/;
+BEGIN
+/*!*/;
+# at 167649
+#260729  6:14:55 server id 1  end_log_pos 167706 CRC32 0xdbf02573 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 167706
+#260729  6:14:55 server id 1  end_log_pos 167761 CRC32 0x7f8c87ec 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABqPAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBzJfDb
+X5ppah4BAAAANwAAAFGPAgAAAHcBAAAAAAEAAgAD/wDXBQAAAAAAANAHAACZunpjtxti7IeMfw==
+'/*!*/;
+# at 167761
+#260729  6:14:55 server id 1  end_log_pos 167792 CRC32 0x026fa7a1 	Xid = 3569
+COMMIT/*!*/;
+# at 167792
+#260729  6:14:55 server id 1  end_log_pos 167871 CRC32 0xef3703f7 	GTID	last_committed=4	sequence_number=478	rbr_only=yes	original_committed_timestamp=1785305695702459	immediate_commit_timestamp=1785305695702459	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695702459 (2026-07-29 06:14:55.702459 UTC)
+# immediate_commit_timestamp=1785305695702459 (2026-07-29 06:14:55.702459 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695702459*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:478'/*!*/;
+# at 167871
+#260729  6:14:55 server id 1  end_log_pos 167959 CRC32 0xd43132c0 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.702240/*!*/;
+BEGIN
+/*!*/;
+# at 167959
+#260729  6:14:55 server id 1  end_log_pos 168016 CRC32 0x59a649ba 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 168016
+#260729  6:14:55 server id 1  end_log_pos 168071 CRC32 0x69f91842 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFCQAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC6SaZZ
+X5ppah4BAAAANwAAAIeQAgAAAHcBAAAAAAEAAgAD/wDYBQAAAAAAANAHAACZunpjtxtsQhj5aQ==
+'/*!*/;
+# at 168071
+#260729  6:14:55 server id 1  end_log_pos 168102 CRC32 0x432dbc64 	Xid = 3570
+COMMIT/*!*/;
+# at 168102
+#260729  6:14:55 server id 1  end_log_pos 168181 CRC32 0x648163fc 	GTID	last_committed=4	sequence_number=479	rbr_only=yes	original_committed_timestamp=1785305695703225	immediate_commit_timestamp=1785305695703225	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695703225 (2026-07-29 06:14:55.703225 UTC)
+# immediate_commit_timestamp=1785305695703225 (2026-07-29 06:14:55.703225 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695703225*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:479'/*!*/;
+# at 168181
+#260729  6:14:55 server id 1  end_log_pos 168269 CRC32 0xa0294daa 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.702990/*!*/;
+BEGIN
+/*!*/;
+# at 168269
+#260729  6:14:55 server id 1  end_log_pos 168326 CRC32 0x19332573 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 168326
+#260729  6:14:55 server id 1  end_log_pos 168381 CRC32 0x4c4c9be0 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIaRAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBzJTMZ
+X5ppah4BAAAANwAAAL2RAgAAAHcBAAAAAAEAAgAD/wDZBQAAAAAAANAHAACZunpjtxts4JtMTA==
+'/*!*/;
+# at 168381
+#260729  6:14:55 server id 1  end_log_pos 168412 CRC32 0x6a490ca1 	Xid = 3571
+COMMIT/*!*/;
+# at 168412
+#260729  6:14:55 server id 1  end_log_pos 168491 CRC32 0xee256614 	GTID	last_committed=4	sequence_number=480	rbr_only=yes	original_committed_timestamp=1785305695704024	immediate_commit_timestamp=1785305695704024	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695704024 (2026-07-29 06:14:55.704024 UTC)
+# immediate_commit_timestamp=1785305695704024 (2026-07-29 06:14:55.704024 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695704024*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:480'/*!*/;
+# at 168491
+#260729  6:14:55 server id 1  end_log_pos 168579 CRC32 0xca2045f5 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.703750/*!*/;
+BEGIN
+/*!*/;
+# at 168579
+#260729  6:14:55 server id 1  end_log_pos 168636 CRC32 0xf37b98fb 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 168636
+#260729  6:14:55 server id 1  end_log_pos 168691 CRC32 0xdff0e67c 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALySAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQD7mHvz
+X5ppah4BAAAANwAAAPOSAgAAAHcBAAAAAAEAAgAD/wDaBQAAAAAAANAHAACZunpjtxt2fObw3w==
+'/*!*/;
+# at 168691
+#260729  6:14:55 server id 1  end_log_pos 168722 CRC32 0x0981fd60 	Xid = 3572
+COMMIT/*!*/;
+# at 168722
+#260729  6:14:55 server id 1  end_log_pos 168801 CRC32 0x1b878ba5 	GTID	last_committed=4	sequence_number=481	rbr_only=yes	original_committed_timestamp=1785305695704787	immediate_commit_timestamp=1785305695704787	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695704787 (2026-07-29 06:14:55.704787 UTC)
+# immediate_commit_timestamp=1785305695704787 (2026-07-29 06:14:55.704787 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695704787*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:481'/*!*/;
+# at 168801
+#260729  6:14:55 server id 1  end_log_pos 168889 CRC32 0x28b49255 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.704564/*!*/;
+BEGIN
+/*!*/;
+# at 168889
+#260729  6:14:55 server id 1  end_log_pos 168946 CRC32 0xf78670c7 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 168946
+#260729  6:14:55 server id 1  end_log_pos 169001 CRC32 0x3c25f46b 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPKTAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDHcIb3
+X5ppah4BAAAANwAAACmUAgAAAHcBAAAAAAEAAgAD/wDbBQAAAAAAANAHAACZunpjtxuAa/QlPA==
+'/*!*/;
+# at 169001
+#260729  6:14:55 server id 1  end_log_pos 169032 CRC32 0x4d64eaa0 	Xid = 3573
+COMMIT/*!*/;
+# at 169032
+#260729  6:14:55 server id 1  end_log_pos 169111 CRC32 0xdaa55453 	GTID	last_committed=4	sequence_number=482	rbr_only=yes	original_committed_timestamp=1785305695706876	immediate_commit_timestamp=1785305695706876	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695706876 (2026-07-29 06:14:55.706876 UTC)
+# immediate_commit_timestamp=1785305695706876 (2026-07-29 06:14:55.706876 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695706876*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:482'/*!*/;
+# at 169111
+#260729  6:14:55 server id 1  end_log_pos 169199 CRC32 0x8412d189 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.706670/*!*/;
+BEGIN
+/*!*/;
+# at 169199
+#260729  6:14:55 server id 1  end_log_pos 169256 CRC32 0x2f2fea30 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 169256
+#260729  6:14:55 server id 1  end_log_pos 169311 CRC32 0xc91f680d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACiVAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAw6i8v
+X5ppah4BAAAANwAAAF+VAgAAAHcBAAAAAAEAAgAD/wDcBQAAAAAAANAHAACZunpjtxuUDWgfyQ==
+'/*!*/;
+# at 169311
+#260729  6:14:55 server id 1  end_log_pos 169342 CRC32 0x4d693bc4 	Xid = 3574
+COMMIT/*!*/;
+# at 169342
+#260729  6:14:55 server id 1  end_log_pos 169421 CRC32 0x6ba5a0e0 	GTID	last_committed=4	sequence_number=483	rbr_only=yes	original_committed_timestamp=1785305695707548	immediate_commit_timestamp=1785305695707548	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695707548 (2026-07-29 06:14:55.707548 UTC)
+# immediate_commit_timestamp=1785305695707548 (2026-07-29 06:14:55.707548 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695707548*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:483'/*!*/;
+# at 169421
+#260729  6:14:55 server id 1  end_log_pos 169509 CRC32 0xcb43b779 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.707355/*!*/;
+BEGIN
+/*!*/;
+# at 169509
+#260729  6:14:55 server id 1  end_log_pos 169566 CRC32 0x0aeb96e2 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 169566
+#260729  6:14:55 server id 1  end_log_pos 169621 CRC32 0xc5d076e0 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAF6WAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDilusK
+X5ppah4BAAAANwAAAJWWAgAAAHcBAAAAAAEAAgAD/wDdBQAAAAAAANAHAACZunpjtxue4HbQxQ==
+'/*!*/;
+# at 169621
+#260729  6:14:55 server id 1  end_log_pos 169652 CRC32 0x2cf4951c 	Xid = 3575
+COMMIT/*!*/;
+# at 169652
+#260729  6:14:55 server id 1  end_log_pos 169731 CRC32 0xd43c75e4 	GTID	last_committed=4	sequence_number=484	rbr_only=yes	original_committed_timestamp=1785305695708231	immediate_commit_timestamp=1785305695708231	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695708231 (2026-07-29 06:14:55.708231 UTC)
+# immediate_commit_timestamp=1785305695708231 (2026-07-29 06:14:55.708231 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695708231*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:484'/*!*/;
+# at 169731
+#260729  6:14:55 server id 1  end_log_pos 169819 CRC32 0xc797f931 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.708021/*!*/;
+BEGIN
+/*!*/;
+# at 169819
+#260729  6:14:55 server id 1  end_log_pos 169876 CRC32 0x146b3bf5 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 169876
+#260729  6:14:55 server id 1  end_log_pos 169931 CRC32 0x0b97bc8d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJSXAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQD1O2sU
+X5ppah4BAAAANwAAAMuXAgAAAHcBAAAAAAEAAgAD/wDeBQAAAAAAANAHAACZunpjtxuojbyXCw==
+'/*!*/;
+# at 169931
+#260729  6:14:55 server id 1  end_log_pos 169962 CRC32 0xc4d2c028 	Xid = 3576
+COMMIT/*!*/;
+# at 169962
+#260729  6:14:55 server id 1  end_log_pos 170041 CRC32 0xd8a1cfa2 	GTID	last_committed=4	sequence_number=485	rbr_only=yes	original_committed_timestamp=1785305695708872	immediate_commit_timestamp=1785305695708872	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695708872 (2026-07-29 06:14:55.708872 UTC)
+# immediate_commit_timestamp=1785305695708872 (2026-07-29 06:14:55.708872 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695708872*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:485'/*!*/;
+# at 170041
+#260729  6:14:55 server id 1  end_log_pos 170129 CRC32 0x12f63d09 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.708678/*!*/;
+BEGIN
+/*!*/;
+# at 170129
+#260729  6:14:55 server id 1  end_log_pos 170186 CRC32 0x81edb80b 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 170186
+#260729  6:14:55 server id 1  end_log_pos 170241 CRC32 0xd588a7a0 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMqYAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQALuO2B
+X5ppah4BAAAANwAAAAGZAgAAAHcBAAAAAAEAAgAD/wDfBQAAAAAAANAHAACZunpjtxuooKeI1Q==
+'/*!*/;
+# at 170241
+#260729  6:14:55 server id 1  end_log_pos 170272 CRC32 0xe2630e8e 	Xid = 3577
+COMMIT/*!*/;
+# at 170272
+#260729  6:14:55 server id 1  end_log_pos 170351 CRC32 0xa2709b2b 	GTID	last_committed=4	sequence_number=486	rbr_only=yes	original_committed_timestamp=1785305695709573	immediate_commit_timestamp=1785305695709573	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695709573 (2026-07-29 06:14:55.709573 UTC)
+# immediate_commit_timestamp=1785305695709573 (2026-07-29 06:14:55.709573 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695709573*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:486'/*!*/;
+# at 170351
+#260729  6:14:55 server id 1  end_log_pos 170439 CRC32 0x1f589d1a 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.709357/*!*/;
+BEGIN
+/*!*/;
+# at 170439
+#260729  6:14:55 server id 1  end_log_pos 170496 CRC32 0x4cf609e7 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 170496
+#260729  6:14:55 server id 1  end_log_pos 170551 CRC32 0x9aa4a952 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAACaAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDnCfZM
+X5ppah4BAAAANwAAADeaAgAAAHcBAAAAAAEAAgAD/wDgBQAAAAAAANAHAACZunpjtxuyUqmkmg==
+'/*!*/;
+# at 170551
+#260729  6:14:55 server id 1  end_log_pos 170582 CRC32 0xc38b9d50 	Xid = 3578
+COMMIT/*!*/;
+# at 170582
+#260729  6:14:55 server id 1  end_log_pos 170661 CRC32 0x28add17a 	GTID	last_committed=4	sequence_number=487	rbr_only=yes	original_committed_timestamp=1785305695710250	immediate_commit_timestamp=1785305695710250	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695710250 (2026-07-29 06:14:55.710250 UTC)
+# immediate_commit_timestamp=1785305695710250 (2026-07-29 06:14:55.710250 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695710250*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:487'/*!*/;
+# at 170661
+#260729  6:14:55 server id 1  end_log_pos 170749 CRC32 0x19012ae6 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.710040/*!*/;
+BEGIN
+/*!*/;
+# at 170749
+#260729  6:14:55 server id 1  end_log_pos 170806 CRC32 0x915e611d 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 170806
+#260729  6:14:55 server id 1  end_log_pos 170861 CRC32 0x53e5201b 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAADabAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAdYV6R
+X5ppah4BAAAANwAAAG2bAgAAAHcBAAAAAAEAAgAD/wDhBQAAAAAAANAHAACZunpjtxu8GyDlUw==
+'/*!*/;
+# at 170861
+#260729  6:14:55 server id 1  end_log_pos 170892 CRC32 0xa4f8baaf 	Xid = 3579
+COMMIT/*!*/;
+# at 170892
+#260729  6:14:55 server id 1  end_log_pos 170971 CRC32 0x10d89621 	GTID	last_committed=4	sequence_number=488	rbr_only=yes	original_committed_timestamp=1785305695710984	immediate_commit_timestamp=1785305695710984	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695710984 (2026-07-29 06:14:55.710984 UTC)
+# immediate_commit_timestamp=1785305695710984 (2026-07-29 06:14:55.710984 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695710984*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:488'/*!*/;
+# at 170971
+#260729  6:14:55 server id 1  end_log_pos 171059 CRC32 0xa781e585 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.710707/*!*/;
+BEGIN
+/*!*/;
+# at 171059
+#260729  6:14:55 server id 1  end_log_pos 171116 CRC32 0xcd82f6b7 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 171116
+#260729  6:14:55 server id 1  end_log_pos 171171 CRC32 0xfea87aed 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGycAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQC39oLN
+X5ppah4BAAAANwAAAKOcAgAAAHcBAAAAAAEAAgAD/wDiBQAAAAAAANAHAACZunpjtxu87Xqo/g==
+'/*!*/;
+# at 171171
+#260729  6:14:55 server id 1  end_log_pos 171202 CRC32 0x596c179f 	Xid = 3580
+COMMIT/*!*/;
+# at 171202
+#260729  6:14:55 server id 1  end_log_pos 171281 CRC32 0x9f839f7b 	GTID	last_committed=4	sequence_number=489	rbr_only=yes	original_committed_timestamp=1785305695712028	immediate_commit_timestamp=1785305695712028	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695712028 (2026-07-29 06:14:55.712028 UTC)
+# immediate_commit_timestamp=1785305695712028 (2026-07-29 06:14:55.712028 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695712028*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:489'/*!*/;
+# at 171281
+#260729  6:14:55 server id 1  end_log_pos 171369 CRC32 0x4691785e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.711446/*!*/;
+BEGIN
+/*!*/;
+# at 171369
+#260729  6:14:55 server id 1  end_log_pos 171426 CRC32 0x0383187f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 171426
+#260729  6:14:55 server id 1  end_log_pos 171481 CRC32 0xd095a61a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAKKdAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB/GIMD
+X5ppah4BAAAANwAAANmdAgAAAHcBAAAAAAEAAgAD/wDjBQAAAAAAANAHAACZunpjtxvGGqaV0A==
+'/*!*/;
+# at 171481
+#260729  6:14:55 server id 1  end_log_pos 171512 CRC32 0x31b150ab 	Xid = 3581
+COMMIT/*!*/;
+# at 171512
+#260729  6:14:55 server id 1  end_log_pos 171591 CRC32 0x80f1d47f 	GTID	last_committed=4	sequence_number=490	rbr_only=yes	original_committed_timestamp=1785305695712597	immediate_commit_timestamp=1785305695712597	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695712597 (2026-07-29 06:14:55.712597 UTC)
+# immediate_commit_timestamp=1785305695712597 (2026-07-29 06:14:55.712597 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695712597*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:490'/*!*/;
+# at 171591
+#260729  6:14:55 server id 1  end_log_pos 171679 CRC32 0xf59504cf 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.712384/*!*/;
+BEGIN
+/*!*/;
+# at 171679
+#260729  6:14:55 server id 1  end_log_pos 171736 CRC32 0x8cb5a68d 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 171736
+#260729  6:14:55 server id 1  end_log_pos 171791 CRC32 0x8c140c04 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAANieAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCNprWM
+X5ppah4BAAAANwAAAA+fAgAAAHcBAAAAAAEAAgAD/wDkBQAAAAAAANAHAACZunpjtxvQBAwUjA==
+'/*!*/;
+# at 171791
+#260729  6:14:55 server id 1  end_log_pos 171822 CRC32 0x83d88dca 	Xid = 3582
+COMMIT/*!*/;
+# at 171822
+#260729  6:14:55 server id 1  end_log_pos 171901 CRC32 0xf3e3d070 	GTID	last_committed=4	sequence_number=491	rbr_only=yes	original_committed_timestamp=1785305695714109	immediate_commit_timestamp=1785305695714109	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695714109 (2026-07-29 06:14:55.714109 UTC)
+# immediate_commit_timestamp=1785305695714109 (2026-07-29 06:14:55.714109 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695714109*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:491'/*!*/;
+# at 171901
+#260729  6:14:55 server id 1  end_log_pos 171989 CRC32 0x997bb88e 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.713903/*!*/;
+BEGIN
+/*!*/;
+# at 171989
+#260729  6:14:55 server id 1  end_log_pos 172046 CRC32 0xb3ee58eb 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 172046
+#260729  6:14:55 server id 1  end_log_pos 172101 CRC32 0x39aa8440 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAA6gAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDrWO6z
+X5ppah4BAAAANwAAAEWgAgAAAHcBAAAAAAEAAgAD/wDlBQAAAAAAANAHAACZunpjtxvaQISqOQ==
+'/*!*/;
+# at 172101
+#260729  6:14:55 server id 1  end_log_pos 172132 CRC32 0xfcf59824 	Xid = 3583
+COMMIT/*!*/;
+# at 172132
+#260729  6:14:55 server id 1  end_log_pos 172211 CRC32 0xc549dedb 	GTID	last_committed=4	sequence_number=492	rbr_only=yes	original_committed_timestamp=1785305695714836	immediate_commit_timestamp=1785305695714836	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695714836 (2026-07-29 06:14:55.714836 UTC)
+# immediate_commit_timestamp=1785305695714836 (2026-07-29 06:14:55.714836 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695714836*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:492'/*!*/;
+# at 172211
+#260729  6:14:55 server id 1  end_log_pos 172299 CRC32 0x0106fefd 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.714639/*!*/;
+BEGIN
+/*!*/;
+# at 172299
+#260729  6:14:55 server id 1  end_log_pos 172356 CRC32 0x6792f308 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 172356
+#260729  6:14:55 server id 1  end_log_pos 172411 CRC32 0xf27ae1f3 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAEShAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAI85Jn
+X5ppah4BAAAANwAAAHuhAgAAAHcBAAAAAAEAAgAD/wDmBQAAAAAAANAHAACZunpjtxvk8+F68g==
+'/*!*/;
+# at 172411
+#260729  6:14:55 server id 1  end_log_pos 172442 CRC32 0x944754fd 	Xid = 3584
+COMMIT/*!*/;
+# at 172442
+#260729  6:14:55 server id 1  end_log_pos 172521 CRC32 0x69f47d40 	GTID	last_committed=4	sequence_number=493	rbr_only=yes	original_committed_timestamp=1785305695715505	immediate_commit_timestamp=1785305695715505	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695715505 (2026-07-29 06:14:55.715505 UTC)
+# immediate_commit_timestamp=1785305695715505 (2026-07-29 06:14:55.715505 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695715505*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:493'/*!*/;
+# at 172521
+#260729  6:14:55 server id 1  end_log_pos 172609 CRC32 0xa4f873de 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.715313/*!*/;
+BEGIN
+/*!*/;
+# at 172609
+#260729  6:14:55 server id 1  end_log_pos 172666 CRC32 0x5d5b0d5f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 172666
+#260729  6:14:55 server id 1  end_log_pos 172721 CRC32 0xfeb5ff1e 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAHqiAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBfDVtd
+X5ppah4BAAAANwAAALGiAgAAAHcBAAAAAAEAAgAD/wDnBQAAAAAAANAHAACZunpjtxvuHv+1/g==
+'/*!*/;
+# at 172721
+#260729  6:14:55 server id 1  end_log_pos 172752 CRC32 0x76a915c7 	Xid = 3585
+COMMIT/*!*/;
+# at 172752
+#260729  6:14:55 server id 1  end_log_pos 172831 CRC32 0x80e6154d 	GTID	last_committed=4	sequence_number=494	rbr_only=yes	original_committed_timestamp=1785305695716232	immediate_commit_timestamp=1785305695716232	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695716232 (2026-07-29 06:14:55.716232 UTC)
+# immediate_commit_timestamp=1785305695716232 (2026-07-29 06:14:55.716232 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695716232*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:494'/*!*/;
+# at 172831
+#260729  6:14:55 server id 1  end_log_pos 172919 CRC32 0xa497a666 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.716019/*!*/;
+BEGIN
+/*!*/;
+# at 172919
+#260729  6:14:55 server id 1  end_log_pos 172976 CRC32 0x43dba048 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 172976
+#260729  6:14:55 server id 1  end_log_pos 173031 CRC32 0x5c34ff4a 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAALCjAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBIoNtD
+X5ppah4BAAAANwAAAOejAgAAAHcBAAAAAAEAAgAD/wDoBQAAAAAAANAHAACZunpjtxv4Sv80XA==
+'/*!*/;
+# at 173031
+#260729  6:14:55 server id 1  end_log_pos 173062 CRC32 0x0479a230 	Xid = 3586
+COMMIT/*!*/;
+# at 173062
+#260729  6:14:55 server id 1  end_log_pos 173141 CRC32 0x29975e99 	GTID	last_committed=4	sequence_number=495	rbr_only=yes	original_committed_timestamp=1785305695716966	immediate_commit_timestamp=1785305695716966	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695716966 (2026-07-29 06:14:55.716966 UTC)
+# immediate_commit_timestamp=1785305695716966 (2026-07-29 06:14:55.716966 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695716966*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:495'/*!*/;
+# at 173141
+#260729  6:14:55 server id 1  end_log_pos 173229 CRC32 0x2f70f45a 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.716724/*!*/;
+BEGIN
+/*!*/;
+# at 173229
+#260729  6:14:55 server id 1  end_log_pos 173286 CRC32 0xb5f5f5c2 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 173286
+#260729  6:14:55 server id 1  end_log_pos 173341 CRC32 0x5b2b5aef 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAOakAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDC9fW1
+X5ppah4BAAAANwAAAB2lAgAAAHcBAAAAAAEAAgAD/wDpBQAAAAAAANAHAACZunpjtxv471orWw==
+'/*!*/;
+# at 173341
+#260729  6:14:55 server id 1  end_log_pos 173372 CRC32 0x6ca4e504 	Xid = 3587
+COMMIT/*!*/;
+# at 173372
+#260729  6:14:55 server id 1  end_log_pos 173451 CRC32 0x687490fa 	GTID	last_committed=4	sequence_number=496	rbr_only=yes	original_committed_timestamp=1785305695717757	immediate_commit_timestamp=1785305695717757	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695717757 (2026-07-29 06:14:55.717757 UTC)
+# immediate_commit_timestamp=1785305695717757 (2026-07-29 06:14:55.717757 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695717757*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:496'/*!*/;
+# at 173451
+#260729  6:14:55 server id 1  end_log_pos 173539 CRC32 0xb132ff25 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.717488/*!*/;
+BEGIN
+/*!*/;
+# at 173539
+#260729  6:14:55 server id 1  end_log_pos 173596 CRC32 0xbeb6466d 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 173596
+#260729  6:14:55 server id 1  end_log_pos 173651 CRC32 0x27dc53cc 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAABymAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBtRra+
+X5ppah4BAAAANwAAAFOmAgAAAHcBAAAAAAEAAgAD/wDqBQAAAAAAANAHAACZunpjtxwCzFPcJw==
+'/*!*/;
+# at 173651
+#260729  6:14:55 server id 1  end_log_pos 173682 CRC32 0x518922a2 	Xid = 3588
+COMMIT/*!*/;
+# at 173682
+#260729  6:14:55 server id 1  end_log_pos 173761 CRC32 0x6825d1d3 	GTID	last_committed=4	sequence_number=497	rbr_only=yes	original_committed_timestamp=1785305695719753	immediate_commit_timestamp=1785305695719753	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695719753 (2026-07-29 06:14:55.719753 UTC)
+# immediate_commit_timestamp=1785305695719753 (2026-07-29 06:14:55.719753 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695719753*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:497'/*!*/;
+# at 173761
+#260729  6:14:55 server id 1  end_log_pos 173849 CRC32 0x80d67720 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.719517/*!*/;
+BEGIN
+/*!*/;
+# at 173849
+#260729  6:14:55 server id 1  end_log_pos 173906 CRC32 0xba4bae51 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 173906
+#260729  6:14:55 server id 1  end_log_pos 173961 CRC32 0xbe3fab50 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAFKnAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQBRrku6
+X5ppah4BAAAANwAAAImnAgAAAHcBAAAAAAEAAgAD/wDrBQAAAAAAANAHAACZunpjtxwWUKs/vg==
+'/*!*/;
+# at 173961
+#260729  6:14:55 server id 1  end_log_pos 173992 CRC32 0x36fa055d 	Xid = 3589
+COMMIT/*!*/;
+# at 173992
+#260729  6:14:55 server id 1  end_log_pos 174071 CRC32 0x0070aff0 	GTID	last_committed=4	sequence_number=498	rbr_only=yes	original_committed_timestamp=1785305695720467	immediate_commit_timestamp=1785305695720467	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695720467 (2026-07-29 06:14:55.720467 UTC)
+# immediate_commit_timestamp=1785305695720467 (2026-07-29 06:14:55.720467 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695720467*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:498'/*!*/;
+# at 174071
+#260729  6:14:55 server id 1  end_log_pos 174159 CRC32 0x20724d3a 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.720241/*!*/;
+BEGIN
+/*!*/;
+# at 174159
+#260729  6:14:55 server id 1  end_log_pos 174216 CRC32 0x35b06884 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 174216
+#260729  6:14:55 server id 1  end_log_pos 174271 CRC32 0x4d59621b 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAIioAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQCEaLA1
+X5ppah4BAAAANwAAAL+oAgAAAHcBAAAAAAEAAgAD/wDsBQAAAAAAANAHAACZunpjtxwgG2JZTQ==
+'/*!*/;
+# at 174271
+#260729  6:14:55 server id 1  end_log_pos 174302 CRC32 0x8da82f78 	Xid = 3590
+COMMIT/*!*/;
+# at 174302
+#260729  6:14:55 server id 1  end_log_pos 174381 CRC32 0xd9b13eb8 	GTID	last_committed=4	sequence_number=499	rbr_only=yes	original_committed_timestamp=1785305695721149	immediate_commit_timestamp=1785305695721149	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695721149 (2026-07-29 06:14:55.721149 UTC)
+# immediate_commit_timestamp=1785305695721149 (2026-07-29 06:14:55.721149 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695721149*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:499'/*!*/;
+# at 174381
+#260729  6:14:55 server id 1  end_log_pos 174469 CRC32 0x4466ceaf 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.720929/*!*/;
+BEGIN
+/*!*/;
+# at 174469
+#260729  6:14:55 server id 1  end_log_pos 174526 CRC32 0xe818007e 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 174526
+#260729  6:14:55 server id 1  end_log_pos 174581 CRC32 0xd6123538 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAL6pAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB+ABjo
+X5ppah4BAAAANwAAAPWpAgAAAHcBAAAAAAEAAgAD/wDtBQAAAAAAANAHAACZunpjtxwgODUS1g==
+'/*!*/;
+# at 174581
+#260729  6:14:55 server id 1  end_log_pos 174612 CRC32 0x31a35825 	Xid = 3591
+COMMIT/*!*/;
+# at 174612
+#260729  6:14:55 server id 1  end_log_pos 174691 CRC32 0x1d0bedab 	GTID	last_committed=4	sequence_number=500	rbr_only=yes	original_committed_timestamp=1785305695721775	immediate_commit_timestamp=1785305695721775	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695721775 (2026-07-29 06:14:55.721775 UTC)
+# immediate_commit_timestamp=1785305695721775 (2026-07-29 06:14:55.721775 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695721775*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:500'/*!*/;
+# at 174691
+#260729  6:14:55 server id 1  end_log_pos 174779 CRC32 0xad43bead 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.721576/*!*/;
+BEGIN
+/*!*/;
+# at 174779
+#260729  6:14:55 server id 1  end_log_pos 174836 CRC32 0xa176bccf 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 174836
+#260729  6:14:55 server id 1  end_log_pos 174891 CRC32 0xc09b341d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAPSqAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDPvHah
+X5ppah4BAAAANwAAACurAgAAAHcBAAAAAAEAAgAD/wDuBQAAAAAAANAHAACZunpjtxwqHTSbwA==
+'/*!*/;
+# at 174891
+#260729  6:14:55 server id 1  end_log_pos 174922 CRC32 0xd9850d11 	Xid = 3592
+COMMIT/*!*/;
+# at 174922
+#260729  6:14:55 server id 1  end_log_pos 175001 CRC32 0xa3eae41f 	GTID	last_committed=4	sequence_number=501	rbr_only=yes	original_committed_timestamp=1785305695722311	immediate_commit_timestamp=1785305695722311	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695722311 (2026-07-29 06:14:55.722311 UTC)
+# immediate_commit_timestamp=1785305695722311 (2026-07-29 06:14:55.722311 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695722311*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:501'/*!*/;
+# at 175001
+#260729  6:14:55 server id 1  end_log_pos 175089 CRC32 0x30a323cf 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.722113/*!*/;
+BEGIN
+/*!*/;
+# at 175089
+#260729  6:14:55 server id 1  end_log_pos 175146 CRC32 0xa95e65e7 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 175146
+#260729  6:14:55 server id 1  end_log_pos 175201 CRC32 0x151d209d 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAACqsAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQDnZV6p
+X5ppah4BAAAANwAAAGGsAgAAAHcBAAAAAAEAAgAD/wDvBQAAAAAAANAHAACZunpjtxw0nSAdFQ==
+'/*!*/;
+# at 175201
+#260729  6:14:55 server id 1  end_log_pos 175232 CRC32 0x78a1c95f 	Xid = 3593
+COMMIT/*!*/;
+# at 175232
+#260729  6:14:55 server id 1  end_log_pos 175311 CRC32 0x325b9481 	GTID	last_committed=4	sequence_number=502	rbr_only=yes	original_committed_timestamp=1785305695722992	immediate_commit_timestamp=1785305695722992	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695722992 (2026-07-29 06:14:55.722992 UTC)
+# immediate_commit_timestamp=1785305695722992 (2026-07-29 06:14:55.722992 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695722992*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:502'/*!*/;
+# at 175311
+#260729  6:14:55 server id 1  end_log_pos 175399 CRC32 0x8b559d95 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.722769/*!*/;
+BEGIN
+/*!*/;
+# at 175399
+#260729  6:14:55 server id 1  end_log_pos 175456 CRC32 0x7d22ce04 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 175456
+#260729  6:14:55 server id 1  end_log_pos 175511 CRC32 0x4ddec6a6 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAGCtAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAEziJ9
+X5ppah4BAAAANwAAAJetAgAAAHcBAAAAAAEAAgAD/wDwBQAAAAAAANAHAACZunpjtxw0psbeTQ==
+'/*!*/;
+# at 175511
+#260729  6:14:55 server id 1  end_log_pos 175542 CRC32 0x78ac183b 	Xid = 3594
+COMMIT/*!*/;
+# at 175542
+#260729  6:14:55 server id 1  end_log_pos 175621 CRC32 0x87620fee 	GTID	last_committed=4	sequence_number=503	rbr_only=yes	original_committed_timestamp=1785305695723637	immediate_commit_timestamp=1785305695723637	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695723637 (2026-07-29 06:14:55.723637 UTC)
+# immediate_commit_timestamp=1785305695723637 (2026-07-29 06:14:55.723637 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695723637*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:503'/*!*/;
+# at 175621
+#260729  6:14:55 server id 1  end_log_pos 175709 CRC32 0xaa77943f 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.723445/*!*/;
+BEGIN
+/*!*/;
+# at 175709
+#260729  6:14:55 server id 1  end_log_pos 175766 CRC32 0x921ab422 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 175766
+#260729  6:14:55 server id 1  end_log_pos 175821 CRC32 0x5963a389 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAJauAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQAitBqS
+X5ppah4BAAAANwAAAM2uAgAAAHcBAAAAAAEAAgAD/wDxBQAAAAAAANAHAACZunpjtxw+iaNjWQ==
+'/*!*/;
+# at 175821
+#260729  6:14:55 server id 1  end_log_pos 175852 CRC32 0xfcf0656d 	Xid = 3595
+COMMIT/*!*/;
+# at 175852
+#260729  6:14:55 server id 1  end_log_pos 175931 CRC32 0x5ca0c6a5 	GTID	last_committed=4	sequence_number=504	rbr_only=yes	original_committed_timestamp=1785305695724612	immediate_commit_timestamp=1785305695724612	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695724612 (2026-07-29 06:14:55.724612 UTC)
+# immediate_commit_timestamp=1785305695724612 (2026-07-29 06:14:55.724612 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695724612*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:504'/*!*/;
+# at 175931
+#260729  6:14:55 server id 1  end_log_pos 176019 CRC32 0xed458f5a 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.724070/*!*/;
+BEGIN
+/*!*/;
+# at 176019
+#260729  6:14:55 server id 1  end_log_pos 176076 CRC32 0xb2811c3f 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 176076
+#260729  6:14:55 server id 1  end_log_pos 176131 CRC32 0x7322cbaa 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAMyvAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQA/HIGy
+X5ppah4BAAAANwAAAAOwAgAAAHcBAAAAAAEAAgAD/wDyBQAAAAAAANAHAACZunpjtxxIqssicw==
+'/*!*/;
+# at 176131
+#260729  6:14:55 server id 1  end_log_pos 176162 CRC32 0xb1858b8d 	Xid = 3596
+COMMIT/*!*/;
+# at 176162
+#260729  6:14:55 server id 1  end_log_pos 176241 CRC32 0xc187ad2c 	GTID	last_committed=4	sequence_number=505	rbr_only=yes	original_committed_timestamp=1785305695726470	immediate_commit_timestamp=1785305695726470	transaction_length=310
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1785305695726470 (2026-07-29 06:14:55.726470 UTC)
+# immediate_commit_timestamp=1785305695726470 (2026-07-29 06:14:55.726470 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305695726470*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:505'/*!*/;
+# at 176241
+#260729  6:14:55 server id 1  end_log_pos 176329 CRC32 0x944d8afa 	Query	thread_id=327	exec_time=0	error_code=0
+SET TIMESTAMP=1785305695.726232/*!*/;
+BEGIN
+/*!*/;
+# at 176329
+#260729  6:14:55 server id 1  end_log_pos 176386 CRC32 0x64233e74 	Table_map: `spoon`.`sponsor` mapped to number 375
+# has_generated_invisible_primary_key=0
+# at 176386
+#260729  6:14:55 server id 1  end_log_pos 176441 CRC32 0x4c4d9c75 	Write_rows: table id 375 flags: STMT_END_F
+
+BINLOG '
+X5ppahMBAAAAOQAAAAKxAgAAAHcBAAAAAAEABXNwb29uAAdzcG9uc29yAAMIAxIBAwABAQB0PiNk
+X5ppah4BAAAANwAAADmxAgAAAHcBAAAAAAEAAgAD/wDzBQAAAAAAANAHAACZunpjtxxcdZxNTA==
+'/*!*/;
+# at 176441
+#260729  6:14:55 server id 1  end_log_pos 176472 CRC32 0x98e13b48 	Xid = 3597
+COMMIT/*!*/;
+# at 176472
+#260729  6:14:56 server id 1  end_log_pos 176549 CRC32 0x60cf79cf 	GTID	last_committed=505	sequence_number=506	rbr_only=no	original_committed_timestamp=1785305696891513	immediate_commit_timestamp=1785305696891513	transaction_length=211
+# original_commit_timestamp=1785305696891513 (2026-07-29 06:14:56.891513 UTC)
+# immediate_commit_timestamp=1785305696891513 (2026-07-29 06:14:56.891513 UTC)
+/*!80001 SET @@session.original_commit_timestamp=1785305696891513*//*!*/;
+/*!80014 SET @@session.original_server_version=80403*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80403*//*!*/;
+SET @@SESSION.GTID_NEXT= '2695cd5d-8b13-11f1-bd5c-0242ac190002:506'/*!*/;
+BEGIN /*added by mysqlbinlog */ /*!*/;
+ROLLBACK /* added by mysqlbinlog */ /*!*/;
+SET @@SESSION.GTID_NEXT= 'AUTOMATIC' /* added by mysqlbinlog */ /*!*/;
+DELIMITER ;
+# End of log file
+/*!50003 SET COMPLETION_TYPE=@OLD_COMPLETION_TYPE*/;
+/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=0*/;

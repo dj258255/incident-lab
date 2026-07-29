@@ -1,0 +1,56 @@
+# A23 재현 환경
+# binlog 기반 PITR과 백업 검증을 다룬다.
+#   - gtid-mode=ON: GTID 환경에서 재적용이 조용히 스킵되는 것을 재현하기 위한 전제
+#   - binlog-expire-logs-seconds: 실험 3에서 런타임으로 낮춰 PITR 창이 닫히는 순간을 만든다
+services:
+  mysql:
+    image: mysql:8.4.3
+    container_name: a23-mysql
+    command:
+      - --log-bin=binlog
+      - --gtid-mode=ON
+      - --enforce-gtid-consistency=ON
+      - --binlog-format=ROW
+      - --innodb-flush-log-at-trx-commit=1
+      - --sync-binlog=1
+    environment:
+      MYSQL_ROOT_PASSWORD: lab
+      MYSQL_DATABASE: spoon
+    ports: ["13316:3306"]
+    volumes:
+      - ./results/dump:/dump
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+  # 복구용 인스턴스.
+  # 사고 난 서버에 덤프를 되돌리면 GTID가 겹쳐 실패하므로, 운영에서도 새 인스턴스에 복원한다.
+  # 그리고 공식 mysql:8.4 이미지에는 mysqlbinlog가 없어서 PITR 도구를 따로 확보해야 한다.
+  restore:
+    image: mysql:8.4.3
+    container_name: a23-restore
+    command:
+      - --log-bin=binlog
+      - --gtid-mode=ON
+      - --enforce-gtid-consistency=ON
+    environment:
+      MYSQL_ROOT_PASSWORD: lab
+    ports: ["13317:3306"]
+    volumes:
+      - ./results/dump:/dump
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+  # mysqlbinlog를 제공하는 도구 컨테이너. percona 이미지에는 클라이언트 유틸이 전부 들어 있다.
+  tools:
+    image: percona/percona-server:8.4
+    container_name: a23-tools
+    entrypoint: ["sleep", "infinity"]
+    user: root
+    volumes:
+      - ./results/dump:/dump
