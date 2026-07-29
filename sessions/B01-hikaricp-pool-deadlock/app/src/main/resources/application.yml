@@ -1,0 +1,30 @@
+server:
+  port: 8080
+  tomcat:
+    threads:
+      max: ${TOMCAT_THREADS:50}   # 동시 처리 스레드. 이 값이 곧 동시 요청 상한이다
+
+spring:
+  datasource:
+    url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:13319}/spoon
+    username: root
+    password: lab
+    hikari:
+      maximum-pool-size: ${POOL:10}
+      minimum-idle: ${POOL:10}
+      # 기본 30초. 이 시간이 지나면 대기하던 요청이 예외로 끝난다.
+      # 데드락이 나면 이 값이 곧 장애 지속 시간의 단위가 된다.
+      connection-timeout: ${CONN_TIMEOUT:30000}
+
+  jpa:
+    hibernate.ddl-auto: none
+    open-in-view: false
+    # 우아한형제들 사례 재현을 위해 시퀀스 테이블 방식을 명시한다.
+    # Hibernate 6은 AUTO를 엔티티별 시퀀스로 매핑하는데, MySQL에서는 테이블로 흉내 낸다.
+    properties:
+      hibernate.id.new_generator_mappings: true
+
+lab:
+  hold-ms: ${HOLD_MS:50}
+
+logging.level.root: WARN

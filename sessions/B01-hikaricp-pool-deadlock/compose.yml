@@ -1,0 +1,26 @@
+# B01 재현 환경
+# 커넥션 풀 데드락은 DB 성능 문제가 아니라 자원 배분 문제라, DB는 넉넉하게 둔다.
+# 풀이 마르는 것이지 DB가 느린 것이 아님을 분리하기 위해서다.
+services:
+  mysql:
+    image: mysql:8.4.3
+    container_name: b01-mysql
+    command:
+      - --max-connections=500
+      - --innodb-buffer-pool-size=512M
+    environment:
+      MYSQL_ROOT_PASSWORD: lab
+      MYSQL_DATABASE: spoon
+    ports: ["13319:3306"]
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    networks: [lab]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+networks:
+  lab:
+    name: b01-lab
