@@ -220,7 +220,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 
 | # | 문제 | 근거·출처 | 재현 | 난이도 |
 |---|---|---|---|---|
-| R04 ★★★ | **비활성 복제 슬롯 WAL 폭증** | **[E2]** "CDC 파이프라인이 프로덕션 DB를 죽이는 가장 흔한 경로". 컨슈머가 멈춰도 슬롯이 열려 있으면 WAL 무한 누적 | `[L]` `pg_recvlogical` kill 후 쓰기 지속 → restart_lsn 정지·pg_wal 폭증 → `max_slot_wal_keep_size` 전후 | 중 |
+| R04 ★★★ **완료** | **[비활성 복제 슬롯 WAL 폭증](sessions/R04-replication-slot-wal/)** | **[E2]** "CDC 파이프라인이 프로덕션 DB를 죽이는 가장 흔한 경로". 컨슈머가 멈춰도 슬롯이 열려 있으면 WAL 무한 누적 | `[L]` `pg_recvlogical` kill 후 쓰기 지속 → restart_lsn 정지·pg_wal 폭증 → `max_slot_wal_keep_size` 전후 | 중 |
 | R05 ★★ | **스토리지 풀로 읽기 전용 전락** | **[E2]** 꽉 차면 쓰기 전면 실패. 복구도 함정(증설 최소 10%, **최대 6시간 재변경 불가**) | `[L]` 500MB loopback에 대량 INSERT → PG `PANIC: No space left` → 복구 절차(VACUUM FULL 공간 역설) | 하~중 |
 | R06 ★★ | **커넥션 스톰 + 풀러 도입** | **[E2]** 배포·페일오버 직후 전 인스턴스 동시 재연결로 max_connections 고갈, 헬스체크까지 실패해 재시작 루프 | `[L]` max_connections=50에 앱 20개 동시 기동 → too many clients → 풀러·백오프 전후 | 하~중 |
 | R07 ★★ | **RDS Proxy 커넥션 피닝** | **[E2]** prepared statement·임시 테이블·`SET`·**16KB 초과 SQL**이 피닝을 유발해 멀티플렉싱 무력화 | `[L-부분]` PgBouncer transaction 모드로 동일 개념 → "왜 트랜잭션 풀링에서 세션 상태를 쓰면 안 되는가" | 중상 |
@@ -489,7 +489,7 @@ B38(Log4Shell)·B40(SSRF)·B41(역직렬화)·B42(xz)는 **격리된 로컬 환�
 - [ ] I01 인증서 만료 · [ ] I02 CPU 스로틀링 · [ ] I03 conntrack · [ ] I04 포트/TIME_WAIT · [ ] I05 컨테이너 JVM · [ ] I06 헬스체크 · [ ] I07 롤링 유실 · [ ] I08 디스크 풀 · [ ] I09 DNS TTL · [ ] I10 IOPS 절벽 · [ ] I11 Toyota
 
 **R 트랙 (18)**
-- [x] R01 승격 유실 · [x] R02 DNS 캐시 · [ ] R03 리더 쏠림 · [ ] R04 복제슬롯 WAL · [ ] R05 스토리지 풀 · [ ] R06 커넥션 스톰 · [ ] R07 Proxy 피닝 · [ ] R08 pending-reboot · [ ] R09 gp2 절벽
+- [x] R01 승격 유실 · [x] R02 DNS 캐시 · [ ] R03 리더 쏠림 · [x] R04 복제슬롯 WAL · [ ] R05 스토리지 풀 · [ ] R06 커넥션 스톰 · [ ] R07 Proxy 피닝 · [ ] R08 pending-reboot · [ ] R09 gp2 절벽
 - [ ] R10 binlog · [ ] R11 콜드 캐시 · [x] R12 PI 클론 · [x] R13 슬롯 카운터 · [x] R14 문자셋·타임존 · [ ] R15 RPO 스위치오버 · [x] R16 배치 캐시오염 · [x] R17 시계열 파티션 · [ ] R18 채팅 RDB
 
 **S 트랙 (12)**

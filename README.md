@@ -59,9 +59,9 @@ sessions/<트랙><번호>-<슬러그>/
 
 | 상태 | 수 |
 |---|---|
-| 완료 | 26 |
+| 완료 | 27 |
 | 진행 중 | 0 |
-| 대기 | 143 |
+| 대기 | 142 |
 
 <!-- 세션이 완료되면 아래에 추가 -->
 - [F01 한맥 0으로 나눈 값이 주문 검증을 뚫다](sessions/F01-hanmac-divide-by-zero/) — NaN 비교가 상하한 검증을 무력화, 유한성 가드와 킬스위치로 해소. 최소 재현과 Spring 주문접수 API 재현
@@ -76,6 +76,7 @@ sessions/<트랙><번호>-<슬러그>/
 - [A06 갭 락 데드락](sessions/A06-gap-lock-deadlock/) — "없으면 넣는다" 한 패턴이 만드는 교착. 갭 락 둘이 공존하고 그 위의 insert intention이 서로를 막는 순간을 data_locks로 포착. 원래 방식 30회 데드락이 ON DUPLICATE KEY UPDATE로 0회
 - [A22 인덱스는 있는데 쿼리가 못 쓴다](sessions/A22-index-not-used/) — 형변환·문자셋·함수·선행 와일드카드·비트 연산 다섯 조건에서 인덱스를 그대로 두고 쿼리만 고쳐 최대 1,969배. 읽은 행을 EXPLAIN 추정이 아니라 Handler_read 카운터로 실측
 - [A18 Uber의 PostgreSQL 쓰기 증폭](sessions/A18-uber-write-amplification/) — 인덱스 수 x fillfactor x 갱신 컬럼 9조건의 WAL·HOT 실측. 꽉 찬 페이지의 WAL이 인덱스 0·3·6·10에서 267·364·462·595MB로, 인덱스 수에 비례하지 않고 고정비 위에 인덱스당 32~34MB가 더해지는 구조. HOT 45.2%는 페이지 정원 45행 대 적재 31행의 기하학으로 설명됨. 초고 헤드라인이던 정상 상태 1.4배는 두 조건의 갱신 이력이 달라 철회
+- [R04 CDC 컨슈머가 죽으면 프로덕션 디스크가 찬다](sessions/R04-replication-slot-wal/) — 슬롯이 붙잡은 WAL이 120초에 126MB로 단조 증가, 슬롯 삭제로 즉시 회수. max_slot_wal_keep_size는 디스크를 지키는 대신 CDC를 버린다(reserved→unreserved→lost 19초)
 - [R02 페일오버 후 DB는 살아 있는데 앱만 못 붙는다](sessions/R02-failover-dns-cache/) — DNS는 바뀌었는데 JVM이 옛 주소를 30초 더 붙잡아 복구가 49.5초. sun.net.inetaddr.ttl=0으로 5.9초. 커넥션 풀 설정은 이 구간에서 효과가 없다는 것까지 실측
 - [R01 복제 지연 중 승격의 커밋 유실](sessions/R01-replica-promotion-loss/) — 성공 응답을 받은 후원 927건 중 555건이 승격본에 없음을 GTID 차집합으로 특정. 반동기는 유실 0이지만 타임아웃 강등 창에서 유실이 되살아남. Seconds_Behind_Source가 분단 후 19초간 0을 표시하는 것까지
 - [R16 정산 배치의 버퍼 풀 오염](sessions/R16-batch-cache-pollution/) — 풀 스캔이 히트율을 7%까지 떨어뜨려도 NVMe에서는 p95가 안 무너짐을 실측. midpoint 방어의 실효는 워킹셋 회복 시간(15.2초 대 0.7초)에서 분리 계측
