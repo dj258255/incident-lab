@@ -1,0 +1,274 @@
+{
+  "images": [
+    {
+      "type": "term",
+      "out": "00-oom.png",
+      "title": "무제한 큐가 힙을 채우는 과정",
+      "lines": [
+        "$ 무제한 큐, 힙 128MB, 느린 구독자 1명 (unbounded-r1)",
+        "",
+        " 초   힙(MB)   느린큐(MB)   발행/초    GC(ms)",
+        [
+          [
+            "  0     36.5        0.07       240       119",
+            "fg"
+          ]
+        ],
+        [
+          [
+            " 10     44.5       12.58     2,976       189",
+            "fg"
+          ]
+        ],
+        [
+          [
+            " 20     54.8       25.71     2,886       214",
+            "fg"
+          ]
+        ],
+        [
+          [
+            " 30     65.9       38.85     2,928       241",
+            "fg"
+          ]
+        ],
+        [
+          [
+            " 40     77.7       52.02     2,940       270",
+            "fg"
+          ]
+        ],
+        [
+          [
+            " 50    117.5       64.99     2,940       406",
+            "yellow"
+          ]
+        ],
+        [
+          [
+            " 60    104.1       77.29     2,598     1,112",
+            "yellow"
+          ]
+        ],
+        [
+          [
+            " 70    116.8       88.84     2,196     2,314",
+            "yellow"
+          ]
+        ],
+        [
+          [
+            " 80    123.6       95.42       474     6,899",
+            "yellow"
+          ]
+        ],
+        [
+          [
+            " 86    123.7       95.59         0    13,664",
+            "red"
+          ],
+          [
+            "   <- OutOfMemoryError",
+            "red"
+          ]
+        ],
+        "",
+        [
+          [
+            "  서버 로그: [OOM] thread publisher java.lang.OutOfMemoryError: Java heap space",
+            "red"
+          ]
+        ]
+      ]
+    },
+    {
+      "type": "bar",
+      "out": "01-publish.png",
+      "title": "서버가 초당 발행한 틱 (대조군 2,909가 정상)",
+      "bars": [
+        {
+          "label": "대조군",
+          "value": 2909,
+          "color": "green"
+        },
+        {
+          "label": "직접전송",
+          "value": 142,
+          "color": "red"
+        },
+        {
+          "label": "직접전송 정지",
+          "value": 1630,
+          "color": "red"
+        },
+        {
+          "label": "무제한큐",
+          "value": 1937,
+          "color": "red"
+        },
+        {
+          "label": "바운디드",
+          "value": 2925,
+          "color": "green"
+        },
+        {
+          "label": "conflation",
+          "value": 2881,
+          "color": "green"
+        },
+        {
+          "label": "절단1M/3s",
+          "value": 2782,
+          "color": "green"
+        },
+        {
+          "label": "절단512K/1s",
+          "value": 2932,
+          "color": "green"
+        },
+        {
+          "label": "Spring데코",
+          "value": 2902,
+          "color": "green"
+        },
+        {
+          "label": "combo",
+          "value": 2936,
+          "color": "green"
+        },
+        {
+          "label": "combo 정지",
+          "value": 2931,
+          "color": "green"
+        }
+      ],
+      "note": "정상 구독자 5명 + 느린 구독자 1명, 초당 3,000틱 목표, 모드마다 3회 중앙값"
+    },
+    {
+      "type": "bar",
+      "out": "02-blocked.png",
+      "title": "브로드캐스트 스레드가 전송에 막혀 있던 누적 시간 (초)",
+      "bars": [
+        {
+          "label": "대조군",
+          "value": 1.0,
+          "color": "green"
+        },
+        {
+          "label": "직접전송",
+          "value": 44.0,
+          "color": "red"
+        },
+        {
+          "label": "직접전송 정지",
+          "value": 20.7,
+          "color": "red"
+        },
+        {
+          "label": "무제한큐",
+          "value": 0.5,
+          "color": "green"
+        },
+        {
+          "label": "바운디드",
+          "value": 0.2,
+          "color": "green"
+        },
+        {
+          "label": "conflation",
+          "value": 0.4,
+          "color": "green"
+        },
+        {
+          "label": "절단1M/3s",
+          "value": 0.1,
+          "color": "green"
+        },
+        {
+          "label": "절단512K/1s",
+          "value": 0.1,
+          "color": "green"
+        },
+        {
+          "label": "Spring데코",
+          "value": 0.1,
+          "color": "green"
+        },
+        {
+          "label": "combo",
+          "value": 0.2,
+          "color": "green"
+        },
+        {
+          "label": "combo 정지",
+          "value": 0.3,
+          "color": "green"
+        }
+      ],
+      "note": "측정 구간은 45초다. 직접 전송은 그중 44초를 막혀 있었다"
+    },
+    {
+      "type": "bar",
+      "out": "03-heap.png",
+      "title": "서버 힙 사용 최대치 (MB, 상한 128MB)",
+      "bars": [
+        {
+          "label": "대조군",
+          "value": 47.2,
+          "color": "green"
+        },
+        {
+          "label": "직접전송",
+          "value": 45.5,
+          "color": "green"
+        },
+        {
+          "label": "직접전송 정지",
+          "value": 46.2,
+          "color": "green"
+        },
+        {
+          "label": "무제한큐",
+          "value": 123.7,
+          "color": "red"
+        },
+        {
+          "label": "바운디드",
+          "value": 47.5,
+          "color": "green"
+        },
+        {
+          "label": "conflation",
+          "value": 47.5,
+          "color": "green"
+        },
+        {
+          "label": "절단1M/3s",
+          "value": 51.9,
+          "color": "green"
+        },
+        {
+          "label": "절단512K/1s",
+          "value": 48.1,
+          "color": "green"
+        },
+        {
+          "label": "Spring데코",
+          "value": 47.3,
+          "color": "green"
+        },
+        {
+          "label": "combo",
+          "value": 47.5,
+          "color": "green"
+        },
+        {
+          "label": "combo 정지",
+          "value": 46.7,
+          "color": "green"
+        }
+      ],
+      "note": "무제한 큐만 상한에 닿아 OutOfMemoryError로 끝났다"
+    }
+  ]
+}

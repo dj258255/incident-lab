@@ -1,0 +1,33 @@
+# F15 재현 환경. WebSocket 시세 스트리밍 서버 한 대만 띄운다.
+# 부하(정상 구독자 N + 느린 구독자 1)는 같은 네트워크에 별도 컨테이너로 붙인다(scripts/run-suite.sh).
+# 호스트 포트는 게시하지 않는다.
+name: f15
+
+services:
+  app:
+    build: ./app
+    image: lab-f15-app
+    container_name: lab-f15-app
+    # 결과 파일이 호스트 사용자 소유로 남게 컨테이너를 호스트 uid로 돌린다.
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
+    environment:
+      # 힙을 작게 잡아 짧은 시간에 포화가 오게 한다.
+      JAVA_TOOL_OPTIONS: "-Xmx${HEAP:-128}m -Xms${HEAP:-128}m"
+      STREAM_MODE: "${STREAM_MODE:-direct}"
+      STREAM_TICK_RATE: "${STREAM_TICK_RATE:-3000}"
+      STREAM_SYMBOLS: "${STREAM_SYMBOLS:-20}"
+      STREAM_PAYLOAD_BYTES: "${STREAM_PAYLOAD_BYTES:-480}"
+      STREAM_EXPECT_CLIENTS: "${STREAM_EXPECT_CLIENTS:-6}"
+      STREAM_QUEUE_CAPACITY: "${STREAM_QUEUE_CAPACITY:-1000}"
+      STREAM_BUFFER_LIMIT_BYTES: "${STREAM_BUFFER_LIMIT_BYTES:-524288}"
+      STREAM_SEND_TIME_LIMIT_MS: "${STREAM_SEND_TIME_LIMIT_MS:-5000}"
+      STREAM_OVER_LIMIT_SECONDS: "${STREAM_OVER_LIMIT_SECONDS:-3}"
+      STREAM_POOL_THREADS: "${STREAM_POOL_THREADS:-4}"
+      STREAM_BLOCKING_SEND_TIMEOUT_MS: "${STREAM_BLOCKING_SEND_TIMEOUT_MS:-0}"
+      STREAM_SAMPLE_FILE: "/results/${SAMPLE_NAME:-server}.csv"
+      STREAM_LABEL: "${STREAM_LABEL:-run}"
+    volumes:
+      - ./results/raw:/results
+    mem_limit: 640m
+    expose:
+      - "8080"
