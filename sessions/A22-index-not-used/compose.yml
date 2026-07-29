@@ -1,0 +1,27 @@
+# A22 재현 환경
+# 인덱스는 있는데 옵티마이저가 쓰지 못하는 다섯 가지 조건을 재현한다.
+# 성능 비교가 목적이라 자원을 고정하고, 버퍼 풀은 데이터가 다 들어갈 만큼 준다.
+# (캐시 미스가 섞이면 "인덱스를 못 탄 비용"과 "디스크 비용"이 뒤엉킨다)
+services:
+  mysql:
+    image: mysql:8.4.3
+    container_name: a22-mysql
+    cpus: 4
+    mem_limit: 4g
+    command:
+      - --innodb-buffer-pool-size=2G
+      - --performance-schema=ON
+      - --slow-query-log=ON
+      - --slow-query-log-file=/var/lib/mysql/slow.log
+      - --long-query-time=0.5
+    environment:
+      MYSQL_ROOT_PASSWORD: lab
+      MYSQL_DATABASE: spoon
+    ports: ["13313:3306"]
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      interval: 3s
+      timeout: 3s
+      retries: 30

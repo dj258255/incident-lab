@@ -1,0 +1,24 @@
+# B52 재현 환경
+# JPA 목록 API의 세 가지 함정을 Spring Boot 앱으로 재현한다.
+services:
+  mysql:
+    image: mysql:8.4.3
+    container_name: b52-mysql
+    cpus: 4
+    mem_limit: 2g
+    command:
+      - --innodb-buffer-pool-size=1G
+      - --slow-query-log=ON
+      - --slow-query-log-file=/var/lib/mysql/slow.log
+      - --long-query-time=0.2
+    environment:
+      MYSQL_ROOT_PASSWORD: lab
+      MYSQL_DATABASE: spoon
+    ports: ["13314:3306"]
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
