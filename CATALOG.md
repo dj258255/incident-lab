@@ -212,7 +212,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 |---|---|---|---|---|
 | R01 ★★★ | **비동기 복제본 승격 시 데이터 유실(RPO)** | **[E2]** 리드 리플리카는 비동기라 승격 시 ReplicaLag만큼 커밋이 사라진다고 AWS 문서가 직접 인정 | `[L]` 쓰기 중 primary kill → 승격 → **유실 트랜잭션 수 카운트** → 반동기로 유실 0 + TPS 손해 측정 | 중 |
 | R02 ★★★ **완료** | **[Multi-AZ 페일오버 DNS vs JVM 캐시](sessions/R02-failover-dns-cache/)** | **[E2]** 페일오버는 DNS 레코드 교체 방식. JVM이 호스트명을 사실상 영구 캐시해 **DB는 1분에 복구됐는데 앱만 몇 분 죽는** 전형 | `[L]` dnsmasq로 A레코드 전환, `networkaddress.cache.ttl` -1 vs 30 비교 | 중 |
-| R03 ★★★ **완료** | **[Aurora 리더 엔드포인트 쏠림](sessions/R03-reader-endpoint-skew/)** | **[E2]** 리더 엔드포인트는 **커넥션 단위 분산이지 쿼리 단위가 아님**(공식 문서 확인). HikariCP `maxLifetime`이 같으면 풀 전체 동시 재생성으로 한 대에 몰림(이슈 #1247) | `[L-부분]` 리플리카 3대 + DNS 라운드로빈, maxLifetime 지터 유무별 **커넥션 분포 그래프** | 중상 |
+| R03 ★★★ **완료** | **[Aurora 리더 엔드포인트 쏠림](sessions/R03-reader-endpoint-skew/)** | **[E2]** 리더 엔드포인트는 **커넥션 단위 분산이지 쿼리 단위가 아님**(공식 문서 확인). HikariCP 이슈 #1247은 `maxLifetime` 동시 만료를 지목하는데, 이 세션에서는 JVM DNS 캐시만 꺼도 최대 점유가 83.5%→47.9%로 내려감 | `[L-부분]` 리플리카 3대 + CoreDNS 라운드로빈, JVM DNS 캐시 기본값 vs `ttl=0`별 **커넥션 분포 그래프**. maxLifetime 지터는 분리 측정 못 함 | 중상 |
 | R11 ★★ | **페일오버 후 콜드 버퍼 캐시** | **[E2]** 승격 인스턴스는 캐시가 비어 성능 급락. Aurora PG의 Cluster Cache Management가 이걸 푸는 기능 | `[L]` 재시작 직후 vs pg_prewarm 적용 후 p99. **R01과 한 편으로 묶기 좋음** | 중 |
 | R15 ★★ | **계획 스위치오버 RPO 0 vs 강제 RPO>0** | **[E2]** Aurora Global DB는 계획 스위치오버만 RPO 0, **계획되지 않은 페일오버는 초 단위 유실**. "글로벌 DB면 무손실" 오해 깨기 | `[L-부분]` 네트워크 2개=리전 + netem 150ms → 계획 승격 vs 강제 kill 승격의 유실 건수 | 중상 |
 

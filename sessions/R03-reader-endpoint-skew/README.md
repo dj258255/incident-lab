@@ -1,7 +1,7 @@
 # R03 리더 엔드포인트가 돌려줘도 커넥션은 한 대로 몰린다
 
 > 근거 등급: `E2`
-> 출처: [AWS, Reader endpoints for Amazon Aurora](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Endpoints.Reader.html) · [AWS, Amazon Aurora endpoint connections](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Overview.Endpoints.html) · [AWS SDK for Java, DNS caching](https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/java-dg-jvm-ttl.html)
+> 출처: [AWS, Reader endpoints for Amazon Aurora](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Endpoints.Reader.html) · [AWS, Amazon Aurora endpoint connections](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Overview.Endpoints.html) · [AWS SDK for Java, DNS caching](https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/java-dg-jvm-ttl.html) · [HikariCP #1247, Mass extinction of connections impacting AWS Aurora reader endpoint load balancing](https://github.com/brettwooldridge/HikariCP/issues/1247)
 
 ## 1. 유명한 이유
 
@@ -132,9 +132,11 @@ ttl0
 
 ### 커넥션 풀 설정이 아니라 DNS 캐시가 원인이었습니다
 
-이 세션을 시작할 때는 `maxLifetime` 동기화가 주범일 것으로 봤습니다. 모든 커넥션의 수명이 같으면 만료가 뭉치고, 한꺼번에 재생성되면서 몰린다는 가설입니다.
+이 세션을 시작할 때는 `maxLifetime` 동기화가 주범일 것으로 봤습니다. 모든 커넥션의 수명이 같으면 만료가 뭉치고, 한꺼번에 재생성되면서 몰린다는 가설입니다. 이 가설은 제가 지어낸 것이 아니라 HikariCP 이슈 #1247이 보고한 그림입니다. 제목이 "Mass extinction of connections impacting AWS Aurora reader endpoint load balancing"이고, 실제 Aurora에서 풀 한 세대가 통째로 리플리카 한 대로 가는 일이 30분마다 반복되는 그래프가 붙어 있습니다.
 
 재 보니 `maxLifetime`은 그대로 두고 DNS 캐시만 꺼도 83.5%가 47.9%로 내려갔습니다. HikariCP는 실제로는 `maxLifetime`에 소량의 흔들림을 자체적으로 주므로 만료 자체는 완전히 뭉치지 않습니다. 그 흔들림의 크기는 이 세션에서 따로 재지 않았습니다. 그런데도 몰린 이유는 **재생성이 흩어져 일어나도 그 사이 DNS 응답이 같은 값으로 캐시돼 있으면 결과가 같기 때문**입니다.
+
+이 결과로 이슈 #1247이 틀렸다고 말할 수는 없습니다. `maxLifetime`만 따로 바꾸는 조건을 두지 않았기 때문입니다. 여기서 말할 수 있는 것은 **DNS 캐시 하나만으로도 같은 그림이 만들어진다**는 것입니다.
 
 R02에서 "커넥션 풀 설정을 만져도 안 나아진다"를 확인했는데, 여기서도 같은 결론입니다. 두 세션 모두 병목이 이름 해석 캐시였습니다.
 

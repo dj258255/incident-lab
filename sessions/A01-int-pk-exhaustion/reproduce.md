@@ -6,7 +6,7 @@
 |---|---|
 | 호스트 | 기록하지 않았습니다 |
 | MySQL | 8.4.3 (컨테이너 `cpus: 4`, `mem_limit: 2g`, 버퍼 풀 1GB, `innodb_flush_log_at_trx_commit=1`, `log-bin`) |
-| 데이터 | 300만 행 × 2벌, sponsor_a 167MB, INT AUTO_INCREMENT PK |
+| 데이터 | 실험 1은 행 2개, 실험 2는 300만 행 × 2벌 (sponsor_a 167MB). 둘 다 INT AUTO_INCREMENT PK |
 | 동시 부하 | Python 단일 커넥션, INSERT 사이 10ms 대기. 전환 직전 5초 실측 초당 62~67건 |
 | 측정 | 방법별 1회. 반복 측정하지 않았으므로 관측 범위가 없습니다 |
 | 일시 | 2026-07-29 |
@@ -29,8 +29,20 @@ CSV 기록에서 센 값입니다. 설정값이 아니라 이 실측값이 기�
 $ docker compose up -d
 $ ./scripts/exp1-exhaust.sh    # 상한 도달, 약 5초
 $ ./scripts/exp2-migrate.sh    # 무중단 전환 비교, 약 6분
-$ python3 scripts/report.py
+
+$ docker run --rm -u $(id -u):$(id -g) -v "$PWD/../..":/work \
+    -w /work/sessions/A01-int-pk-exhaustion \
+    incident-lab-plot python scripts/report.py        # chart-migration.png
+
+$ docker run --rm -u $(id -u):$(id -g) -v "$PWD/../..":/work \
+    incident-lab-render sessions/A01-int-pk-exhaustion/results   # fig-1062.png
 ```
+
+`exp1-exhaust.sh`는 `docker exec`로 mysql 클라이언트만 부르므로 호스트에 따로 깔 것이 없습니다.
+`exp2-migrate.sh`는 적재와 부하 생성에 `../../.venv/bin/python`을 쓰므로 그 가상환경에 `pymysql`이 있어야 합니다.
+그림 두 장은 호스트에 matplotlib과 한글 폰트를 깔지 않고 저장소 공용 이미지로 만듭니다.
+`incident-lab-plot`이 `scripts/report.py`를 돌려 차트를, `incident-lab-render`가
+`results/render.json`을 읽어 증거 카드를 냅니다.
 
 ## 실험 1: 상한 도달
 
