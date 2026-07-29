@@ -67,7 +67,7 @@ sessions/<트랙><번호>-<슬러그>/
 - [F01 한맥 0으로 나눈 값이 주문 검증을 뚫다](sessions/F01-hanmac-divide-by-zero/) — 주문 120건 중 NaN 10건이 상하한 비교를 뚫고 접수(Infinity 10건은 상한에 걸려 거부). 킬스위치를 끄고 재니 유한성 가드 단독으로 Infinity 10 + NaN 10을 전부 거부해 비정상 접수 0건, 킬스위치는 섞은 배치에서 19건째에 발동해 정상 84건을 함께 차단. 최소 재현과 Spring 주문접수 API 재현
 - [F02 삼성증권 유령주식, 원장 불변식 부재](sessions/F02-samsung-ghost-shares/) — 발행총수 30.66배 착오 입고가 제약 없이 커밋, 총량 검증 트리거와 maker-checker로 차단. 동시 입고 2세션이 트리거를 뚫는 것까지 실측
 - [F03 장 시작 9시 접속 폭주](sessions/F03-market-open-connection-storm/) — HikariCP 풀 고갈로 응답 지연 폭증, 부하 차단(load shedding)으로 중앙값 3.38초를 51ms로
-- [F13 매칭엔진 가격우선·시간우선 동시성](sessions/F13-matching-engine-priority/) — naive 병렬 매칭에서 체결의 63~96%가 시간우선 위반, 단일 시퀀서로 위반 0건. 처리량 손해 없음(2 vCPU 기준)
+- [F13 매칭엔진 가격우선·시간우선 동시성](sessions/F13-matching-engine-priority/) — 변수를 하나씩만 바꾼 조건 8개를 각 51회 측정(2 vCPU). 원자 구간이 없는 조건은 체결의 27~75%가 시간우선 위반, 원자 구간을 넣은 세 조건은 153회 전부 0건. 원자 구간의 순수 비용은 1.06~1.78배이고 함께 바꾼 큐 교체가 1.4~1.8배 이득이라 해소판 전체는 기준보다 빨랐음
 - [F17 부동소수점 금지, BigDecimal](sessions/F17-bigdecimal-money/) — 밴쿠버 1982 절삭 재현(60,000회에 -29.9포인트)과 double 100만 건 누적 오차, scale·RoundingMode 명시와 최소 화폐단위 long으로 해소
 - [R14 문자셋·타임존 지뢰밭](sessions/R14-charset-timezone/) — utf8mb3 이모지 처리(8.4는 절단이 아니라 ? 치환), 767바이트 인덱스, CONVERT_TZ가 일별 집계를 NULL 한 줄로 만드는 것, latin1 접속의 이중 인코딩 착시까지 6종 재현
 - [B52 JPA 목록 API의 세 함정](sessions/B52-jpa-list-api/) — N+1(쿼리 21개→1개), 커서 페이지네이션의 표준 문법이 MySQL에서 range 최적화를 못 받아 OFFSET보다 느린 것, saveAll이 IDENTITY와 merge 때문에 각각 다른 이유로 느린 것(INSERT 1만 회 대 SELECT 1만 회)

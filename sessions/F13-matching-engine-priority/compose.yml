@@ -1,10 +1,14 @@
 # F13 매칭엔진 재현 — 같은 가격 주문을 병렬로 매칭하면 시간우선이 깨진다.
-# 실행: docker compose up   (자바 한 파일을 컨테이너에서 컴파일·실행, 버그·해소 순서대로 출력)
+# 실행: docker compose up   (자바 한 파일을 컨테이너에서 컴파일·실행, 8개 조건을 각 51회 측정)
+#
+# CPU 제한은 걸지 않는다. 호스트 2 vCPU를 그대로 쓰는 것이 이 세션의 측정 조건이다.
+# 힙은 -Xms와 -Xmx를 같은 값으로 고정해 힙 확장이 회차 편차에 섞이지 않게 했다.
 services:
   matching:
     image: eclipse-temurin:21-jdk-alpine
     container_name: lab-f13-matching
     working_dir: /app
+    mem_limit: 1g
     volumes:
       - ./app:/app
-    command: sh -c "javac Matching.java && java -Dorders=200000 Matching"
+    command: sh -c "javac Matching.java && java -Xms512m -Xmx512m -Dorders=200000 -Dreps=51 Matching"
