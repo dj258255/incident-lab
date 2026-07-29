@@ -1,0 +1,136 @@
+{
+  "images": [
+    {
+      "type": "bar",
+      "out": "01-fill.png",
+      "title": "클러스터드 인덱스 페이지 충전율",
+      "bars": [
+        {
+          "label": "BIGINT",
+          "value": 91.9,
+          "color": "green"
+        },
+        {
+          "label": "v7+카운터",
+          "value": 91.4,
+          "color": "green"
+        },
+        {
+          "label": "v7 카운터없음",
+          "value": 54.7,
+          "color": "red"
+        },
+        {
+          "label": "v4 BINARY",
+          "value": 56.7,
+          "color": "red"
+        },
+        {
+          "label": "v4 CHAR(36)",
+          "value": 56.3,
+          "color": "red"
+        }
+      ],
+      "note": "(행 내용 바이트 / 실제 행당 바이트) x 100. 각 조건 1,200,000행 적재 후"
+    },
+    {
+      "type": "bar",
+      "out": "02-size.png",
+      "title": "같은 120만 행을 담은 테이블 크기 (MB)",
+      "bars": [
+        {
+          "label": "BIGINT",
+          "value": 192,
+          "color": "green"
+        },
+        {
+          "label": "v7+카운터",
+          "value": 203,
+          "color": "green"
+        },
+        {
+          "label": "v7 카운터없음",
+          "value": 339,
+          "color": "red"
+        },
+        {
+          "label": "v4 BINARY",
+          "value": 327,
+          "color": "red"
+        },
+        {
+          "label": "v4 CHAR(36)",
+          "value": 370,
+          "color": "red"
+        }
+      ],
+      "note": "페이로드는 네 조건 모두 128바이트로 같다. 차이는 PK 폭과 페이지 충전율에서 온다"
+    },
+    {
+      "type": "bar",
+      "out": "03-rate.png",
+      "title": "마지막 10만 행 구간의 초당 삽입",
+      "bars": [
+        {
+          "label": "BIGINT",
+          "value": 21026,
+          "color": "green"
+        },
+        {
+          "label": "v7+카운터",
+          "value": 23606,
+          "color": "green"
+        },
+        {
+          "label": "v7 카운터없음",
+          "value": 15676,
+          "color": "green"
+        },
+        {
+          "label": "v4 BINARY",
+          "value": 2446,
+          "color": "red"
+        },
+        {
+          "label": "v4 CHAR(36)",
+          "value": 1982,
+          "color": "red"
+        }
+      ],
+      "note": "적재가 진행될수록 인덱스가 커진다. 끝 구간 속도가 그 부담을 가장 잘 보여준다"
+    },
+    {
+      "type": "bar",
+      "out": "04-reads.png",
+      "title": "적재 중 버퍼 풀이 디스크에서 읽은 페이지",
+      "bars": [
+        {
+          "label": "BIGINT",
+          "value": 6,
+          "color": "green"
+        },
+        {
+          "label": "v7+카운터",
+          "value": 6,
+          "color": "green"
+        },
+        {
+          "label": "v7 카운터없음",
+          "value": 115,
+          "color": "green"
+        },
+        {
+          "label": "v4 BINARY",
+          "value": 12613,
+          "color": "red"
+        },
+        {
+          "label": "v4 CHAR(36)",
+          "value": 37923,
+          "color": "red"
+        }
+      ],
+      "note": "INSERT인데도 읽는다. 고칠 페이지가 버퍼 풀에 없으면 먼저 읽어 와야 하기 때문이다"
+    }
+  ]
+}

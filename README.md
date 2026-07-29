@@ -59,9 +59,9 @@ sessions/<트랙><번호>-<슬러그>/
 
 | 상태 | 수 |
 |---|---|
-| 완료 | 18 |
+| 완료 | 19 |
 | 진행 중 | 0 |
-| 대기 | 151 |
+| 대기 | 150 |
 
 <!-- 세션이 완료되면 아래에 추가 -->
 - [F01 한맥 0으로 나눈 값이 주문 검증을 뚫다](sessions/F01-hanmac-divide-by-zero/) — NaN 비교가 상하한 검증을 무력화, 유한성 가드와 킬스위치로 해소. 최소 재현과 Spring 주문접수 API 재현
@@ -76,7 +76,13 @@ sessions/<트랙><번호>-<슬러그>/
 - [R17 시계열 로그 보존 삭제](sessions/R17-timeseries-partition/) — 같은 350만 행을 DELETE(20.5초, 파일 회수 없음)와 DROP PARTITION(0.12초, 0.35GB 회수)으로 비교. LOCK=NONE DDL을 막아 세우는 MDL 행렬과 프루닝 깨지는 조건 실측
 - [R12 Performance Insights 클론](sessions/R12-perf-insights-clone/) — PI의 1초 샘플링·wait 분해 루프를 직접 구현하고 병목을 아는 3구간으로 검증. 행 락이 wait/io/table/sql/handler로 표면화되는 유명한 혼란과 data_lock_waits 판별법 실측
 - [R13 라이브 후원 카운터의 핫 로우](sessions/R13-slotted-counter/) — 카운터 갱신 아홉 변형의 처리량·정합성 동시 측정. 실패율 0%로 후원 30.9%가 사라지는 갱신 유실을 슬롯 카운터로 해소
+- [A09 300행짜리 표본이 1,200만 행을 100% NULL이라고 단정했다](sessions/A09-planner-stats-flip/) — 표본 300행이 null_frac을 1로 적어 추정 1행 대 실제 2,400행, 중첩 루프로 7,734ms. statistics target 1000으로 164ms(47배)에 버퍼는 27분의 1이고, 기본값 100에서도 10회 중 1회 오판
+- [B31 지우지 않은 ThreadLocal 하나가 클래스로더를 통째로 붙잡는다](sessions/B31-threadlocal-classloader-leak/) — 재배포 300회에 폐기됐어야 할 클래스로더 300개가 전부 생존, try/finally의 remove() 한 줄로 0개. Metaspace 24MB에서 3,773 사이클에 OOM, 워커 스레드를 갱신하자 이미 샌 300개도 전부 회수
+- [B43 빠른 DDL과 안전한 DDL은 다르다](sessions/B43-expand-contract/) — 300만 행에 상수 기본값 ADD COLUMN은 3ms에 재작성 없이 끝나지만, 12초 트랜잭션 뒤에 줄 서면 뒤따르는 SELECT 세 건을 7~9초 막는 락 큐잉. 3단계 expand-contract로 최대 락 보유 11,316ms를 3.436ms로
+- [F07 IPO 크로스가 확정되지 않는다, 데드락이 아니라 라이브락](sessions/F07-nasdaq-ipo-livelock/) — 취소가 라운드보다 촘촘히 들어오면 72회 시도 중 24회가 크로스 확정 실패, 재계산을 백 번 가까이 돌면서도 블로킹 스레드는 0개. 스냅샷 동결과 접수 컷오프로 실패 0/72, 대가는 취소가 반영되지 않은 주문 수십 건
+- [F09 IB 음수 유가 가격은 양수라는 가정이 계층마다 다르게 깨지다](sessions/F09-negative-price/) — 음수 틱이 CHECK 제약에 막혀 최종가가 0.01에 멈추자 계좌 평가액이 3,764만 달러 과대계상되고 자동 청산이 발동하지 않음. 요구증거금 붕괴는 8.00달러부터 시작해 0.10달러에서 1,000계약, 하우스 증거금 고정으로 12계약
 - [A08 버퍼 풀 사이징과 리사이즈의 값](sessions/A08-buffer-pool-sizing/) — 128M~2G 스윕에서 무릎 위치가 접근 분포로 갈리는 것(핫셋 512M, 균등 1536M), 히트율 77%가 실제로는 조회당 0.889페이지 디스크행이라는 것, flush_method만 바꿔 같은 히트율에 처리량 2.6배가 갈리는 것
+- [A17 UUIDv7로 바꿨는데 테이블이 안 줄었다](sessions/A17-uuid-page-split/) — PK 다섯 가지로 120만 행 적재. 밀리초 안 카운터가 없는 UUIDv7은 충전율 54.7%로 UUIDv4(56.7%)와 같고, 카운터를 넣으면 91.4%로 순차 BIGINT(91.9%)와 같아짐. 대가가 공간과 시간으로 갈라져 카운터 없는 UUIDv7은 적재 중 디스크 읽기 115쪽, UUIDv4는 12,613쪽
 
 ## 실행 환경
 

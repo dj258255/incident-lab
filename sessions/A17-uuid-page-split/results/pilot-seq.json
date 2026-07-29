@@ -1,0 +1,45 @@
+{
+  "arm": "seq",
+  "table": "t_seq",
+  "mysql_version": "8.4.3",
+  "buffer_pool_mb": 256,
+  "rows": 500000,
+  "pad_bytes": 120,
+  "total_s": 19.78,
+  "rows_per_s": 25276.6,
+  "data_length_bytes": 84525056,
+  "data_length_mb": 80.6,
+  "bytes_per_row": 169.1,
+  "disk_reads": 6,
+  "read_requests": 1987061,
+  "pages_written": 5859,
+  "data_written_mb": 203.5,
+  "data_read_mb": 0.1,
+  "chunks": [
+    {
+      "rows": 100000,
+      "elapsed_s": 4.07,
+      "rate_per_s": 24559.6
+    },
+    {
+      "rows": 200000,
+      "elapsed_s": 8.15,
+      "rate_per_s": 24509.6
+    },
+    {
+      "rows": 300000,
+      "elapsed_s": 12.1,
+      "rate_per_s": 25329.4
+    },
+    {
+      "rows": 400000,
+      "elapsed_s": 15.85,
+      "rate_per_s": 26678.6
+    },
+    {
+      "rows": 500000,
+      "elapsed_s": 19.78,
+      "rate_per_s": 25425.9
+    }
+  ]
+}

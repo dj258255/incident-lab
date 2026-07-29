@@ -72,7 +72,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 | A14 ★★ | **XID Wraparound** | **[E1]** Sentry 2015-07-20 업무시간 대부분 다운, 자사 블로그에 포스트모템 공개 (blog.sentry.io) | autovacuum_freeze_max_age 극단 축소 → age 증가·경고·aggressive vacuum 관측(방어선까지만) | 중간 |
 | A15 ★ | **fsyncgate** | **[E1·축소]** 리눅스 fsync 실패 후 조용한 유실, 2018 PANIC 전환 (danluu.com) | privileged + device-mapper flakey 위에 PG 데이터 디렉토리 → I/O 오류 주입 → `data_sync_retry` on/off. 대안: LD_PRELOAD로 EIO 주입 | 어려움 |
 | A16 ★★★ | **OOM Killer가 DB를 쏜다** | **[E2]** DB는 oom_score 1순위 타깃, Percona·Crunchy "The Linux Assassin" | docker --memory 제한 + 대량 정렬 → OOM kill → dmesg·크래시 리커버리 → oom_score_adj·overcommit | 쉬움 |
-| A17 ★★★ | **UUIDv4 PK 페이지 스플릿** | **[E2]** Percona·PlanetScale 반복 경고. 랜덤 PK가 페이지 충전율 붕괴·테이블 2배·insert 절벽 | AUTO_INCREMENT vs UUIDv4 vs UUIDv7 수백만 행 insert → 시간·크기·buffer_pool_reads 비교 | 쉬움 |
+| A17 ★★★ **완료** | **[UUIDv7로 바꿨는데 테이블이 안 줄었다](sessions/A17-uuid-page-split/)** | **[E2]** Percona·PlanetScale 반복 경고에 RFC 9562의 밀리초 안 카운터 권고를 더함 | PK 다섯 가지로 120만 행 적재 → 충전율·크기·구간별 속도·적재 중 디스크 읽기 비교. **랜덤 PK의 대가가 공간(충전율)과 시간(인덱스 지역성) 둘로 갈라지고, 카운터 없는 UUIDv7이 공간만 잃는다는 것이 백미** | 쉬움 |
 | A18 **[완료](sessions/A18-uber-write-amplification/)** ★★ | **Uber Postgres 쓰기 증폭** | **[E1]** DB 커뮤니티 사상 최다 논쟁 글(2016). 세컨더리 인덱스 전부 갱신·HOT 실패 | 인덱스 10개 테이블에서 무관 컬럼 UPDATE → PG vs MySQL WAL량·인덱스 갱신 계측. **논쟁 글을 직접 검증하는 구도** | 중간 |
 | A19 ★★★ | **GitLab 서브트랜잭션 SLRU 절벽** | **[E1]** 몇 주마다 랜덤 발생한 "네시" 장애. SAVEPOINT 64개 초과+롱 트랜잭션 → replica TPS 360k→50k (공개 재현 스크립트 존재) | primary+replica, pgbench에 SAVEPOINT 중첩 → TPS 절벽. **ORM이 SAVEPOINT를 몰래 만든다는 각도가 백미** | 중간 |
 | A20 ★★ | **데브시스터즈 CockroachDB 쿼럼 손실** | **[E1]** 쿠키런 킹덤 총 점검 36시간 29분, 국내 전설 회고 (tech.devsisters.com). 원문은 **24노드 중 16노드 영향·RF 7·ballast 스크립트가 Block Device 덮어씀** | CRDB 3노드 → 2노드 kill → Raft 쿼럼 손실로 SQL 전면 중단(**축소 재현임을 명시**, 비트 복구는 원문 소개로) | 중간 |
@@ -473,7 +473,7 @@ B38(Log4Shell)·B40(SSRF)·B41(역직렬화)·B42(xz)는 **격리된 로컬 환�
 
 **A 트랙 (21)**
 - [ ] A01 정수 PK 고갈 · [ ] A02 MDL 폭풍 · [ ] A03 utf8mb4 · [ ] A04 락 에스컬레이션 · [ ] A05 커넥션 폭풍 · [ ] A06 갭 락 · [ ] A07 롱 트랜잭션 · [x] A08 buffer pool · [x] A09 통계 오염 · [ ] A10 복제 지연 · [ ] A11 세미싱크 유실
-- [ ] A12 GitHub 스플릿브레인 · [ ] A13 GitLab 재구축 · [ ] A14 XID · [ ] A15 fsyncgate · [ ] A16 OOM Killer · [ ] A17 UUID 스플릿 · [x] A18 Uber 쓰기 증폭 · [ ] A19 SLRU 절벽 · [ ] A20 CRDB 쿼럼 · [ ] A21 Figma 논리복제
+- [ ] A12 GitHub 스플릿브레인 · [ ] A13 GitLab 재구축 · [ ] A14 XID · [ ] A15 fsyncgate · [ ] A16 OOM Killer · [x] A17 UUID 스플릿 · [x] A18 Uber 쓰기 증폭 · [ ] A19 SLRU 절벽 · [ ] A20 CRDB 쿼럼 · [ ] A21 Figma 논리복제
 
 **B 트랙 (50)**
 - [ ] B01 HikariCP · [ ] B02 스탬피드 · [ ] B03 read-your-writes · [ ] B04 페이지네이션 · [ ] B05 리트라이 폭풍 · [ ] B06 핫 로우 · [ ] B07 coalescing · [ ] B08 GC 스톨 · [ ] B09 Kafka 리밸런스 · [ ] B10 클럭 스큐 · [ ] B11 Redis 커넥션 · [ ] B12 memcache lease · [ ] B13 샤딩
