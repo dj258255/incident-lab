@@ -1,0 +1,13 @@
+mkdir -p failed for path /.config/matplotlib: [Errno 13] Permission denied: '/.config'
+Matplotlib created a temporary cache directory at /tmp/matplotlib-jix4v12s because there was an issue with the default path ({configdir}); it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+findfont: Failed to find font weight bold, now using 600.
+findfont: Failed to find font weight bold, now using 600.
+케이스                      못 탈 때         탈 때       배수       읽은 행(전)      읽은 행(후)             결과(전/후)
+------------------------------------------------------------------------------------------------
+암묵적 형변환               1763.3ms      0.45ms  3923.7배     3,000,001            1             0행 / 1행
+문자셋 불일치 조인            3120.6ms     41.38ms    75.4배       600,000        6,000           600 / 600
+인덱스 컬럼에 함수 적용          647.9ms    274.96ms     2.4배     3,000,000      864,000   864,000 / 864,000
+선행 와일드카드 LIKE          763.2ms    140.38ms     5.4배     3,000,000      300,309   300,309 / 300,309
+비트 연산 조건               910.5ms     40.65ms    22.4배       393,890       11,922     11,922 / 11,922
+저장: /work/sessions/A22-index-not-used/results/chart-index.png
+저장: /work/sessions/A22-index-not-used/results/fig-explain.png

@@ -11,24 +11,28 @@
       "est_rows": 2983050,
       "filtered": 10.0,
       "extra": "Using where",
-      "med_ms": 829.5754579958157,
-      "p95_ms": 862.5905420049094,
-      "min_ms": 821.8813340063207,
-      "rows_scanned": 3000001
+      "med_ms": 1763.2714975625277,
+      "p95_ms": 1812.26621940732,
+      "min_ms": 1560.5281703174114,
+      "rows_scanned": 3000001,
+      "rows_returned": 0,
+      "count": null
     },
     "good": {
-      "sql": "SELECT id, amount FROM orders WHERE order_no = 'ORD001500000'",
+      "sql": "SELECT id, amount FROM orders WHERE order_no = 'ORD000001500000'",
       "type": "ref",
       "key": "idx_order_no",
       "est_rows": 1,
       "filtered": 100.0,
       "extra": null,
-      "med_ms": 0.4212915009702556,
-      "p95_ms": 0.4827499942621216,
-      "min_ms": 0.3916669957106933,
-      "rows_scanned": 0
+      "med_ms": 0.44938456267118454,
+      "p95_ms": 0.5050860345363617,
+      "min_ms": 0.41592493653297424,
+      "rows_scanned": 1,
+      "rows_returned": 1,
+      "count": null
     },
-    "speedup": 1969.1245992033107
+    "speedup": 3923.747373700321
   },
   {
     "key": "collation",
@@ -39,13 +43,15 @@
       "sql": "SELECT COUNT(*) FROM orders o JOIN order_legacy l ON o.order_no = l.order_no WHERE o.created_at >= '2026-01-02 00:00:00' AND o.created_at < '2026-01-02 00:10:00'",
       "type": "index",
       "key": "PRIMARY",
-      "est_rows": 299595,
+      "est_rows": 299409,
       "filtered": 100.0,
       "extra": "Using index",
-      "med_ms": 1435.998416505754,
-      "p95_ms": 1467.6620840036776,
-      "min_ms": 1396.1974160047248,
-      "rows_scanned": 600000
+      "med_ms": 3120.565273799002,
+      "p95_ms": 3534.876234829426,
+      "min_ms": 2947.117941454053,
+      "rows_scanned": 600000,
+      "rows_returned": 1,
+      "count": 600
     },
     "good": {
       "sql": "SELECT COUNT(*) FROM orders o JOIN order_legacy_fixed l ON o.order_no = l.order_no WHERE o.created_at >= '2026-01-02 00:00:00' AND o.created_at < '2026-01-02 00:10:00'",
@@ -54,12 +60,14 @@
       "est_rows": 6000,
       "filtered": 100.0,
       "extra": "Using index condition",
-      "med_ms": 22.044707999157254,
-      "p95_ms": 22.72216699202545,
-      "min_ms": 21.679749988834374,
-      "rows_scanned": 6000
+      "med_ms": 41.37780983000994,
+      "p95_ms": 42.27039776742458,
+      "min_ms": 41.049668565392494,
+      "rows_scanned": 6000,
+      "rows_returned": 1,
+      "count": 600
     },
-    "speedup": 65.14027840879774
+    "speedup": 75.41639556610271
   },
   {
     "key": "function-wrap",
@@ -67,30 +75,34 @@
     "why": "컬럼을 함수로 감싸면 인덱스에 저장된 값과 비교 대상이 달라진다.",
     "note": "날짜 비교에서 가장 흔하다. 범위 조건으로 펴면 같은 의미로 인덱스를 탄다.",
     "bad": {
-      "sql": "SELECT COUNT(*) FROM orders WHERE DATE(created_at) = '2026-03-15'",
+      "sql": "SELECT COUNT(*) FROM orders WHERE DATE(created_at) = '2026-01-02'",
       "type": "index",
       "key": "idx_created",
       "est_rows": 2983050,
       "filtered": 100.0,
       "extra": "Using where; Using index",
-      "med_ms": 294.6237705036765,
-      "p95_ms": 317.0517079997808,
-      "min_ms": 292.69116700743325,
-      "rows_scanned": 3000000
+      "med_ms": 647.878878749907,
+      "p95_ms": 716.9707082211971,
+      "min_ms": 622.6976606994867,
+      "rows_scanned": 3000000,
+      "rows_returned": 1,
+      "count": 864000
     },
     "good": {
-      "sql": "SELECT COUNT(*) FROM orders WHERE created_at >= '2026-03-15' AND created_at < '2026-03-16'",
+      "sql": "SELECT COUNT(*) FROM orders WHERE created_at >= '2026-01-02' AND created_at < '2026-01-03'",
       "type": "range",
       "key": "idx_created",
-      "est_rows": 1,
+      "est_rows": 1491525,
       "filtered": 100.0,
       "extra": "Using where; Using index",
-      "med_ms": 0.5222295003477484,
-      "p95_ms": 0.8383749955100939,
-      "min_ms": 0.4317499988246709,
-      "rows_scanned": 0
+      "med_ms": 274.9570682644844,
+      "p95_ms": 338.8654310256243,
+      "min_ms": 261.6835832595825,
+      "rows_scanned": 864000,
+      "rows_returned": 1,
+      "count": 864000
     },
-    "speedup": 564.1653148806969
+    "speedup": 2.3562910487782216
   },
   {
     "key": "leading-wildcard",
@@ -104,24 +116,28 @@
       "est_rows": 2983050,
       "filtered": 11.11,
       "extra": "Using where; Using index",
-      "med_ms": 328.3159999991767,
-      "p95_ms": 341.4326250058366,
-      "min_ms": 325.99258299160283,
-      "rows_scanned": 3000000
+      "med_ms": 763.2196638733149,
+      "p95_ms": 824.2964390665293,
+      "min_ms": 742.7979912608862,
+      "rows_scanned": 3000000,
+      "rows_returned": 1,
+      "count": 300309
     },
     "good": {
       "sql": "SELECT COUNT(*) FROM orders WHERE buyer_name_rev LIKE CONCAT(REVERSE('민준'),'%')",
       "type": "range",
       "key": "idx_buyer_rev",
-      "est_rows": 555542,
+      "est_rows": 596548,
       "filtered": 100.0,
       "extra": "Using where; Using index",
-      "med_ms": 67.16195849730866,
-      "p95_ms": 76.19691699801479,
-      "min_ms": 65.53799999528565,
-      "rows_scanned": 300309
+      "med_ms": 140.3841618448496,
+      "p95_ms": 169.43387314677238,
+      "min_ms": 133.1938151270151,
+      "rows_scanned": 300309,
+      "rows_returned": 1,
+      "count": 300309
     },
-    "speedup": 4.888422067267933
+    "speedup": 5.436650786267567
   },
   {
     "key": "bit-op",
@@ -131,27 +147,31 @@
     "bad": {
       "sql": "SELECT COUNT(*) FROM orders WHERE user_id = 1 AND (status_flag & 0x0100)",
       "type": "ref",
-      "key": "idx_user_created",
-      "est_rows": 805844,
+      "key": "idx_gift",
+      "est_rows": 799226,
       "filtered": 100.0,
       "extra": "Using where",
-      "med_ms": 351.27481250674464,
-      "p95_ms": 372.0114169991575,
-      "min_ms": 348.10312499757856,
-      "rows_scanned": 393890
+      "med_ms": 910.4607906192541,
+      "p95_ms": 946.5430304408073,
+      "min_ms": 863.4431678801775,
+      "rows_scanned": 393890,
+      "rows_returned": 1,
+      "count": 11922
     },
     "good": {
       "sql": "SELECT COUNT(*) FROM orders WHERE user_id = 1 AND (status_flag & 0x0100) = 256",
       "type": "ref",
       "key": "idx_gift",
-      "est_rows": 22398,
+      "est_rows": 22348,
       "filtered": 100.0,
       "extra": null,
-      "med_ms": 20.054041997354943,
-      "p95_ms": 23.351916010142304,
-      "min_ms": 17.27512500656303,
-      "rows_scanned": 11922
+      "med_ms": 40.6503826379776,
+      "p95_ms": 49.28102344274521,
+      "min_ms": 38.72240521013737,
+      "rows_scanned": 11922,
+      "rows_returned": 1,
+      "count": 11922
     },
-    "speedup": 17.5164095374427
+    "speedup": 22.39734859884582
   }
 ]

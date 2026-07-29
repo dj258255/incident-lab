@@ -79,7 +79,11 @@ if sweep:
             "bars": [{"label": mb(r["buffer_pool_mb"]), "value": round(r["p95_ms"], 2),
                       "color": "red" if r["p95_ms"] == worst else
                                ("green" if r["p95_ms"] == best else "fg")} for r in rows],
-            "note": f"MySQL 8.4.3, 6스레드 PK 점조회, 워밍업 30초 뒤 60초 측정. 값은 밀리초"})
+            # 각주는 실행 조건을 결과 JSON에서 그대로 읽어 쓴다. 손으로 적으면 조건이
+            # 바뀌었을 때 그림 안의 문구만 옛것으로 남는다(실제로 "6스레드"가 그랬다).
+            "note": (f"MySQL {rows[0]['mysql_version']}, 부하 프로세스 {rows[0]['procs']}개로 "
+                     f"PK 점조회, 워밍업 {rows[0]['warmup_s']}초 뒤 "
+                     f"{rows[0]['duration_s']}초 측정. 값은 밀리초")})
         images.append({
             "type": "bar", "out": f"0{4 if tag=='uniform' else 5}-hitrate-{tag}.png",
             "title": f"버퍼 풀 크기별 히트율 · {ko}",

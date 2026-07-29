@@ -17,14 +17,32 @@ import pymysql
 REPEAT = 10
 WARMUP = 3
 
+# 벤치 전에 한 번 거는 스키마 변경. 선행 와일드카드 해소는 쿼리 재작성만으로 안 되고
+# 역순 생성 컬럼과 인덱스가 있어야 한다. 손으로 치던 것을 스크립트에 넣어
+# compose up 부터 bench 까지 한 번에 재현되게 한다.
+PRE_DDL = [
+    "ALTER TABLE orders ADD COLUMN buyer_name_rev VARCHAR(64) "
+    "AS (REVERSE(buyer_name)) STORED",
+    "ALTER TABLE orders ADD KEY idx_buyer_rev (buyer_name_rev)",
+]
+
+# 조회 대상은 반드시 seed.py가 실제로 넣은 값이어야 한다.
+#   order_no  = f"ORD{j+1:012d}"  → 150만 번째 주문은 'ORD000001500000' (ORD + 12자리)
+#   created_at = 2026-01-01 00:00:00 부터 초당 10건, 300만 행이면 2026-01-04 11:19:59 까지
+# 없는 값을 조회하면 양쪽 다 0건이 나와 배수가 무의미해진다. 실제로 한 번 그렇게 냈다.
+ORDER_NO = "ORD000001500000"
+DAY, NEXT_DAY = "2026-01-02", "2026-01-03"
+
 CASES = [
     {
         "key": "implicit-cast",
         "ko": "암묵적 형변환",
         "why": "문자열 컬럼을 숫자와 비교하면 인덱스를 쓸 수 없다. "
                "'1', ' 1', '1a'가 모두 1로 변환되므로 인덱스 순서로 찾아갈 수 없기 때문이다.",
+        # 양쪽 모두 '주문번호 1500000번 한 행'을 찾는 쿼리다. 못 타는 쪽은 300만 행을 훑고도
+        # 0건을 돌려준다. 느린 것이 아니라 틀린 답을 주는 것이 이 케이스의 핵심이다.
         "bad": "SELECT id, amount FROM orders WHERE order_no = 1500000",
-        "good": "SELECT id, amount FROM orders WHERE order_no = 'ORD001500000'",
+        "good": f"SELECT id, amount FROM orders WHERE order_no = '{ORDER_NO}'",
         "note": "레거시 주문번호가 VARCHAR인데 애플리케이션이 Long으로 바인딩하면 이 상황이 된다.",
     },
     {
@@ -41,9 +59,11 @@ CASES = [
         "key": "function-wrap",
         "ko": "인덱스 컬럼에 함수 적용",
         "why": "컬럼을 함수로 감싸면 인덱스에 저장된 값과 비교 대상이 달라진다.",
-        "bad": "SELECT COUNT(*) FROM orders WHERE DATE(created_at) = '2026-03-15'",
-        "good": "SELECT COUNT(*) FROM orders WHERE created_at >= '2026-03-15' "
-                "AND created_at < '2026-03-16'",
+        # 적재 구간(2026-01-01 ~ 01-04) 안에 온전히 들어가는 하루를 고른다.
+        # 양쪽이 같은 결과 집합을 돌려줘야 배수가 의미를 가진다.
+        "bad": f"SELECT COUNT(*) FROM orders WHERE DATE(created_at) = '{DAY}'",
+        "good": f"SELECT COUNT(*) FROM orders WHERE created_at >= '{DAY}' "
+                f"AND created_at < '{NEXT_DAY}'",
         "note": "날짜 비교에서 가장 흔하다. 범위 조건으로 펴면 같은 의미로 인덱스를 탄다.",
     },
     {
@@ -86,40 +106,52 @@ def handler_reads(cur):
 
 
 def timeit(cur, sql):
+    rows = ()
     for _ in range(WARMUP):
         cur.execute(sql)
-        cur.fetchall()
+        rows = cur.fetchall()
     before = handler_reads(cur)
     ts = []
     for _ in range(REPEAT):
         t0 = time.perf_counter()
         cur.execute(sql)
-        cur.fetchall()
+        rows = cur.fetchall()
         ts.append((time.perf_counter() - t0) * 1000)
     after = handler_reads(cur)
     scanned = sum(after[k] - before[k] for k in
                   ("Handler_read_next", "Handler_read_rnd_next")) // REPEAT
+    # 몇 건이 나왔는지도 같이 남긴다. 이게 없으면 "빈 결과끼리 비교한 배수"를 못 알아본다.
+    # COUNT(*) 쿼리는 반환 행이 1건이므로 그 값 자체를 따로 적는다.
+    count = rows[0][0] if len(rows) == 1 and len(rows[0]) == 1 else None
     return {
         "med_ms": st.median(ts),
         "p95_ms": st.quantiles(ts, n=20)[18] if len(ts) >= 20 else max(ts),
         "min_ms": min(ts),
         "rows_scanned": scanned,
+        "rows_returned": len(rows),
+        "count": count,
     }
+
+
+def ddl(cur, sql, label):
+    try:
+        cur.execute(sql)
+        print(f"  {label}: {sql[:70]}")
+    except pymysql.Error as e:
+        if e.args[0] not in (1060, 1061):   # 컬럼/인덱스가 이미 있으면 넘어간다
+            print(f"  {label} 실패: {e}")
 
 
 def main():
     conn = pymysql.connect(host="127.0.0.1", port=13313, user="root",
                            password="lab", database="spoon", autocommit=True)
     cur = conn.cursor()
+    for sql in PRE_DDL:
+        ddl(cur, sql, "사전 DDL")
     out = []
     for case in CASES:
         if case.get("needs_index"):
-            try:
-                cur.execute(case["needs_index"])
-                print(f"  인덱스 생성: {case['key']}")
-            except pymysql.Error as e:
-                if e.args[0] != 1061:      # 이미 있으면 넘어간다
-                    print(f"  인덱스 생성 실패: {e}")
+            ddl(cur, case["needs_index"], f"인덱스 생성({case['key']})")
         rec = {"key": case["key"], "ko": case["ko"], "why": case["why"], "note": case["note"]}
         for side in ("bad", "good"):
             sql = case[side]
@@ -135,8 +167,13 @@ def main():
         speedup = rec["bad"]["med_ms"] / rec["good"]["med_ms"] if rec["good"]["med_ms"] else 0
         rec["speedup"] = speedup
         out.append(rec)
+        # 결과 건수가 양쪽 같은지 바로 보이게 찍는다. 다르면 배수를 읽기 전에 쿼리를 의심해야 한다.
+        ans = (f"{rec['bad']['count']:,} / {rec['good']['count']:,}"
+               if rec["bad"]["count"] is not None
+               else f"{rec['bad']['rows_returned']}행 / {rec['good']['rows_returned']}행")
         print(f"{case['ko']:<18} {rec['bad']['med_ms']:>9.1f}ms → {rec['good']['med_ms']:>7.2f}ms "
-              f"({speedup:>6.0f}배)  스캔 {rec['bad']['rows_scanned']:>10,} → {rec['good']['rows_scanned']:,}")
+              f"({speedup:>6.1f}배)  스캔 {rec['bad']['rows_scanned']:>10,} → "
+              f"{rec['good']['rows_scanned']:>9,}  결과 {ans}")
 
     path = sys.argv[1] if len(sys.argv) > 1 else "results/bench.json"
     with open(path, "w") as f:

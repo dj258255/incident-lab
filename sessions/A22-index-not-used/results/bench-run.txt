@@ -1,0 +1,9 @@
+  사전 DDL: ALTER TABLE orders ADD COLUMN buyer_name_rev VARCHAR(64) AS (REVERSE(b
+  사전 DDL: ALTER TABLE orders ADD KEY idx_buyer_rev (buyer_name_rev)
+암묵적 형변환               1763.3ms →    0.45ms (3923.7배)  스캔  3,000,001 →         1  결과 0행 / 1행
+문자셋 불일치 조인            3120.6ms →   41.38ms (  75.4배)  스캔    600,000 →     6,000  결과 600 / 600
+인덱스 컬럼에 함수 적용          647.9ms →  274.96ms (   2.4배)  스캔  3,000,000 →   864,000  결과 864,000 / 864,000
+선행 와일드카드 LIKE          763.2ms →  140.38ms (   5.4배)  스캔  3,000,000 →   300,309  결과 300,309 / 300,309
+  인덱스 생성(bit-op): ALTER TABLE orders ADD KEY idx_gift (user_id, ((status_flag & 0x0100))
+비트 연산 조건               910.5ms →   40.65ms (  22.4배)  스캔    393,890 →    11,922  결과 11,922 / 11,922
+저장: results/bench.json

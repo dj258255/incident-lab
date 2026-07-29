@@ -1,0 +1,18 @@
+$ uname -srm
+Linux 5.14.0-570.33.2.el9_6.aarch64 aarch64
+
+$ nproc
+2
+
+$ free -g
+               total        used        free      shared  buff/cache   available
+Mem:              11           3           0           0           6           7
+Swap:              7           0           7
+
+$ cat /etc/os-release | head -2
+NAME="Rocky Linux"
+VERSION="9.6 (Blue Onyx)"
+
+$ lscpu | grep -E "Model name|^CPU\(s\)"
+CPU(s):                               2
+Model name:                           Neoverse-N1

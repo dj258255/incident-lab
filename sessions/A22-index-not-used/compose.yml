@@ -6,7 +6,10 @@ services:
   mysql:
     image: mysql:8.4.3
     container_name: a22-mysql
-    cpus: 4
+    # 재측정 호스트가 2코어라 4를 주면 도커가 거부한다.
+    #   Error response from daemon: range of CPUs is from 0.01 to 2.00, as there are only 2 CPUs available
+    # 처음 측정에 쓴 cpus: 4는 이 장비에서 애초에 뜰 수 없었다는 뜻이라, 그 실행은 다른 호스트였다.
+    cpus: 2
     mem_limit: 4g
     command:
       - --innodb-buffer-pool-size=2G

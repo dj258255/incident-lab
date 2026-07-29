@@ -14,7 +14,29 @@ import subprocess
 import sys
 import tempfile
 
-CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+CANDIDATES = [
+    os.environ.get("CHROME", ""),
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "/usr/bin/google-chrome",
+    "/usr/bin/chromium",
+    "/usr/bin/chromium-browser",
+]
+
+
+def find_chrome():
+    """크롬을 못 찾으면 여기서 멈춘다.
+
+    예전에는 macOS 경로 하나만 두고 subprocess.run(..., check=False)로 돌려서,
+    크롬이 없는 호스트에서는 예외도 경고도 없이 PNG만 안 생겼다. A22 세션에서
+    그림이 통째로 비는 것을 뒤늦게 알았다. 조용히 실패하지 않게 한다.
+    """
+    for p in CANDIDATES:
+        if p and os.path.exists(p):
+            return p
+    raise SystemExit(
+        "크롬을 찾지 못했습니다. CHROME 환경변수로 실행 파일 경로를 주거나, "
+        "크롬 없이 렌더하려면 tools/render/render.py의 render_term을 쓰세요."
+    )
 
 
 def render(png_path, title, body, highlights):
@@ -55,7 +77,7 @@ def render(png_path, title, body, highlights):
     lines = len(body.splitlines()) + 1
     height = int(lines * 20.2 + 100)
     subprocess.run([
-        CHROME, "--headless", "--disable-gpu", "--hide-scrollbars",
+        find_chrome(), "--headless", "--disable-gpu", "--hide-scrollbars",
         f"--window-size={int(width) + 44},{height}",
         f"--screenshot={png_path}", f"file://{tmp}",
     ], capture_output=True, check=False)
