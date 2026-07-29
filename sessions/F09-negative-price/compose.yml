@@ -1,0 +1,48 @@
+# F09 IB 2020 음수 유가 재현 환경.
+#
+# 저장 계층은 실제 Postgres CHECK 제약으로 잰다. 제약 위반 메시지를 원문으로 남겨야 설득력이 있다.
+# 파싱·표시 계층과 증거금 계층은 자바 최소 재현이다. 프레임워크가 원인이 아니라 가정이 원인이라
+# 웹 계층을 얹으면 곁가지만 늘어난다.
+#
+# 컨테이너 이름은 lab-f09-* 이고 호스트 포트는 게시하지 않는다.
+# 실행 순서는 reproduce.md 에 있다. db 를 띄운 뒤 sql, app 을 차례로 돌린다.
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: lab-f09-pg
+    environment:
+      POSTGRES_DB: lab
+      POSTGRES_USER: lab
+      POSTGRES_PASSWORD: lab
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lab -d lab"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  # 저장 계층: psql 로 CHECK 제약 위반을 실측한다. 호스트에 psql 이 없어 같은 이미지를 클라이언트로 쓴다.
+  sql:
+    image: postgres:16-alpine
+    container_name: lab-f09-sql
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGHOST: db
+      PGUSER: lab
+      PGPASSWORD: lab
+      PGDATABASE: lab
+    volumes:
+      - ./app/sql:/sql:ro
+    # psql 은 결과를 stdout 에, 제약 위반 메시지를 stderr 에 쓴다. 도커가 두 스트림을 따로 실어
+    # 나르면 기록에서 순서가 뒤집히므로 컨테이너 안에서 미리 하나로 합친다.
+    entrypoint: ["sh", "-c", "psql -f /sql/01-storage.sql 2>&1 && psql -f /sql/02-fixed.sql 2>&1"]
+
+  # 파싱·표시 계층과 증거금 계층: 자바 한 파일을 컨테이너에서 컴파일·실행한다.
+  app:
+    image: eclipse-temurin:21-jdk-alpine
+    container_name: lab-f09-app
+    working_dir: /app
+    volumes:
+      - ./app:/app
+    command: sh -c "javac NegativePrice.java && java NegativePrice"
