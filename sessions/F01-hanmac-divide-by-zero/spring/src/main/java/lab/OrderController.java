@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 
 /**
- * 같은 검증 로직을 실제 REST 엔드포인트 세 개로 노출한다.
+ * 같은 검증 로직을 실제 REST 엔드포인트 네 개로 노출한다.
  *   /orders/buggy      : 순수 double 비교. NaN이 통과한다(201).
  *   /orders/bigdecimal : 정밀도를 위해 BigDecimal로 검증하려는 순진한 강화 시도.
+ *   /orders/guard      : 유한성 가드만. 킬스위치 없음.
  *   /orders/fixed      : 유한성 가드 + 킬스위치.
  * 접수는 201 Created, 값 때문에 거부하면 422 Unprocessable Entity로 응답한다.
+ * 킬스위치가 발동한 뒤에는 503 Service Unavailable이다.
  */
 @RestController
 public class OrderController {
@@ -58,6 +60,20 @@ public class OrderController {
         double px = price(o);
         BigDecimal p = BigDecimal.valueOf(px); // NaN/Infinity에서 NumberFormatException
         if (p.compareTo(BigDecimal.valueOf(UPPER)) > 0 || p.compareTo(BigDecimal.valueOf(LOWER)) < 0) {
+            return ResponseEntity.unprocessableEntity().body("rejected px=" + px);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body("accepted px=" + px);
+    }
+
+    // (해소·가드 단독) 킬스위치 없이 유한성 화이트리스트만 둔다. /orders/fixed와 한 변수만 다르므로,
+    // 두 엔드포인트를 같은 배치로 쏘면 무엇을 가드가 막고 무엇을 킬스위치가 막았는지 갈린다.
+    @PostMapping("/orders/guard")
+    public ResponseEntity<String> guard(@Valid @RequestBody OrderRequest o) {
+        double px = price(o);
+        if (!Double.isFinite(px)) {
+            return ResponseEntity.unprocessableEntity().body("rejected non-finite px=" + px);
+        }
+        if (px > UPPER || px < LOWER) {
             return ResponseEntity.unprocessableEntity().body("rejected px=" + px);
         }
         return ResponseEntity.status(HttpStatus.CREATED).body("accepted px=" + px);

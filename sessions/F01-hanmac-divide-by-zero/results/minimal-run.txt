@@ -1,0 +1,44 @@
+# docker compose up --abort-on-container-exit   (sessions/F01-hanmac-divide-by-zero)
+# 2026-07-29 재측정. eclipse-temurin:21-jdk-alpine / JDK 21. 아래는 실행 출력 전문이다.
+
+Attaching to lab-f01-hanmac
+lab-f01-hanmac  | == 0으로 나눈 결과와 검증식 행동 ==
+lab-f01-hanmac  |   Infinity 주문가 = Infinity | (px>upper)=true (px<lower)=false -> 거부됨
+lab-f01-hanmac  |   NaN      주문가 = NaN | (px>upper)=false (px<lower)=false -> 둘 다 false라 안 걸림
+lab-f01-hanmac  | 
+lab-f01-hanmac  | == 버그 검증 결과 (총 120건) ==
+lab-f01-hanmac  |   접수: 정상 100건, 비정상(NaN/Inf) 10건  <- 비정상이 시장에 나간다
+lab-f01-hanmac  | 
+lab-f01-hanmac  | == 해소 검증 조건별 결과 (임계값 3건, 섞음 시드 20131212) ==
+lab-f01-hanmac  | 
+lab-f01-hanmac  | [조건 A] 유한성 가드 + 킬스위치 · 정렬 배치
+lab-f01-hanmac  |   처리 103/120건, 킬스위치 발동=true (103건째에서 중단)
+lab-f01-hanmac  |   접수: 정상 100건, 비정상 0건
+lab-f01-hanmac  |   유한성 가드가 거부: Infinity 3건, NaN 0건
+lab-f01-hanmac  |   평가되지 않고 남은 주문: 17건 (그중 정상 0건 = 킬스위치 부수 피해)
+lab-f01-hanmac  | 
+lab-f01-hanmac  | [조건 B] 유한성 가드 단독(킬스위치 끔) · 정렬 배치
+lab-f01-hanmac  |   처리 120/120건, 킬스위치 발동=false
+lab-f01-hanmac  |   접수: 정상 100건, 비정상 0건
+lab-f01-hanmac  |   유한성 가드가 거부: Infinity 10건, NaN 10건
+lab-f01-hanmac  |   평가되지 않고 남은 주문: 0건 (그중 정상 0건 = 킬스위치 부수 피해)
+lab-f01-hanmac  | 
+lab-f01-hanmac  | [조건 C] 유한성 가드 + 킬스위치 · 섞은 배치
+lab-f01-hanmac  |   처리 19/120건, 킬스위치 발동=true (19건째에서 중단)
+lab-f01-hanmac  |   접수: 정상 16건, 비정상 0건
+lab-f01-hanmac  |   유한성 가드가 거부: Infinity 2건, NaN 1건
+lab-f01-hanmac  |   평가되지 않고 남은 주문: 101건 (그중 정상 84건 = 킬스위치 부수 피해)
+lab-f01-hanmac  | 
+lab-f01-hanmac  | [조건 D] 유한성 가드 단독(킬스위치 끔) · 섞은 배치
+lab-f01-hanmac  |   처리 120/120건, 킬스위치 발동=false
+lab-f01-hanmac  |   접수: 정상 100건, 비정상 0건
+lab-f01-hanmac  |   유한성 가드가 거부: Infinity 10건, NaN 10건
+lab-f01-hanmac  |   평가되지 않고 남은 주문: 0건 (그중 정상 0건 = 킬스위치 부수 피해)
+lab-f01-hanmac  | 
+lab-f01-hanmac  | == 요약 (비정상 접수 / 가드가 거부한 Inf + NaN / 정상 접수 / 정상 부수 차단) ==
+lab-f01-hanmac  |   10 /   -  +  -  / 100 /   0   버그 검증 · 정렬 배치
+lab-f01-hanmac  |    0 /   3  +  0  / 100 /   0   조건 A 가드 + 킬스위치 · 정렬 배치
+lab-f01-hanmac  |    0 /  10  + 10  / 100 /   0   조건 B 가드 단독 · 정렬 배치
+lab-f01-hanmac  |    0 /   2  +  1  /  16 /  84   조건 C 가드 + 킬스위치 · 섞은 배치
+lab-f01-hanmac  |    0 /  10  + 10  / 100 /   0   조건 D 가드 단독 · 섞은 배치
+lab-f01-hanmac exited with code 0

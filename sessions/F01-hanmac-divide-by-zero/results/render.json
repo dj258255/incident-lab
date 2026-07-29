@@ -19,14 +19,28 @@
     {
       "type": "term",
       "out": "02-fixed-run.png",
-      "title": "docker compose up  ·  F01 해소 검증 (유한성 가드 + 킬스위치)",
-      "font": 26,
+      "title": "docker compose up  ·  F01 해소 검증 조건별 (가드 단독 / 킬스위치 · 정렬 / 섞은 배치)",
+      "font": 22,
       "lines": [
         "$ docker compose up --abort-on-container-exit",
         "",
-        [["lab-f01-hanmac |   ", "fg"], ["[킬스위치]", "yellow"], [" 비정상 주문 3건 감지 -> 103/120건 처리 지점에서 ", "fg"], ["접수 중단", "yellow"]],
-        "lab-f01-hanmac | == 해소 검증(유한성 가드 + 킬스위치) 결과 ==",
-        [["lab-f01-hanmac |   접수: 정상 100건, ", "fg"], ["비정상 0건", "green"], [" | 비정상 거부 3건, ", "fg"], ["킬스위치 발동=true", "green"]]
+        "lab-f01-hanmac | [조건 A] 유한성 가드 + 킬스위치 · 정렬 배치",
+        [["lab-f01-hanmac |   처리 103/120건, ", "fg"], ["킬스위치 발동=true", "yellow"], [" (103건째에서 중단)", "fg"]],
+        "lab-f01-hanmac |   접수: 정상 100건, 비정상 0건",
+        [["lab-f01-hanmac |   유한성 가드가 거부: Infinity 3건, ", "fg"], ["NaN 0건", "red"]],
+        "lab-f01-hanmac |   평가되지 않고 남은 주문: 17건 (그중 정상 0건 = 킬스위치 부수 피해)",
+        "",
+        "lab-f01-hanmac | [조건 B] 유한성 가드 단독(킬스위치 끔) · 정렬 배치",
+        "lab-f01-hanmac |   처리 120/120건, 킬스위치 발동=false",
+        [["lab-f01-hanmac |   접수: 정상 100건, ", "fg"], ["비정상 0건", "green"]],
+        [["lab-f01-hanmac |   유한성 가드가 거부: ", "fg"], ["Infinity 10건, NaN 10건", "green"]],
+        "lab-f01-hanmac |   평가되지 않고 남은 주문: 0건 (그중 정상 0건 = 킬스위치 부수 피해)",
+        "",
+        "lab-f01-hanmac | [조건 C] 유한성 가드 + 킬스위치 · 섞은 배치",
+        [["lab-f01-hanmac |   처리 19/120건, ", "fg"], ["킬스위치 발동=true", "yellow"], [" (19건째에서 중단)", "fg"]],
+        [["lab-f01-hanmac |   접수: ", "fg"], ["정상 16건", "red"], [", 비정상 0건", "fg"]],
+        "lab-f01-hanmac |   유한성 가드가 거부: Infinity 2건, NaN 1건",
+        [["lab-f01-hanmac |   평가되지 않고 남은 주문: 101건 (그중 ", "fg"], ["정상 84건 = 킬스위치 부수 피해", "red"], [")", "fg"]]
       ]
     },
     {
@@ -35,39 +49,64 @@
       "title": "검증별 비정상 주문 접수 건수 (총 120건 · 비정상 20건 주입)",
       "bars": [
         {"label": "버그 검증", "value": 10, "color": "red"},
-        {"label": "해소 (유한성 가드 + 킬스위치)", "value": 0, "color": "green"}
+        {"label": "조건 B 유한성 가드 단독", "value": 0, "color": "green"},
+        {"label": "조건 A 가드 + 킬스위치", "value": 0, "color": "green"}
       ],
-      "note": "정상 주문 100건은 양쪽 모두 접수. 측정 환경 eclipse-temurin:21-jdk-alpine, 2026-07-22"
+      "note": "조건 B는 킬스위치를 끄고 120건 전부를 가드에 통과시켰고 가드가 Infinity 10 + NaN 10을 거부했다. 2026-07-29, eclipse-temurin:21-jdk-alpine"
     },
     {
       "type": "term",
       "out": "04-spring-run.png",
       "title": "docker compose up  ·  spring/  (Spring Boot 3.3 · 내장 Tomcat)",
-      "font": 24,
+      "font": 21,
       "lines": [
         "$ docker compose up --build   # sessions/F01-.../spring",
         "",
         [["... o.s.b.w.embedded.tomcat.TomcatWebServer : ", "dim"], ["Tomcat started on port 8080 (http)", "fg"]],
-        [["... lab.OrderApp : ", "dim"], ["Started OrderApp in 7.516 seconds", "fg"]],
+        [["... lab.OrderApp : ", "dim"], ["Started OrderApp in 8.117 seconds (process running for 10.005)", "fg"]],
         "",
-        "== [Spring] 실제 주문접수 API 재현 (POST /orders, @Valid) ==",
-        [["  /orders/buggy      : 201 접수 110건 (정상 100 + ", "fg"], ["NaN 10 통과", "red"], ["), 422 거부 10 (Inf)", "fg"]],
-        [["  /orders/bigdecimal : 201 접수 100건, ", "fg"], ["500 서버오류 20건", "red"], [" (NumberFormatException)", "dim"]],
-        [["  /orders/fixed      : 201 접수 100건, 422 거부 3건, ", "fg"], ["503 킬스위치 17건", "green"]],
-        [["  입력 @Valid는 전부 통과  ->  문제는 서버가 계산한 ", "dim"], ["파생값", "yellow"], ["이다", "dim"]]
+        "== [Spring] 실제 주문접수 API 재현 (POST /orders, 내장 Tomcat + Jackson + @Valid) ==",
+        [["  /orders/buggy      : 201 접수 110건 (정상 100 + ", "fg"], ["NaN 10", "red"], ["), 422 거부 10건 (Infinity는 상한 초과)", "fg"]],
+        [["  /orders/bigdecimal : 201 접수 100건, ", "fg"], ["500 서버오류 20건", "red"], [" (BigDecimal.valueOf(NaN/Inf) 예외)", "fg"]],
+        "  /orders/fixed      : 201 접수 100건, 422 거부 3건, 503 킬스위치 17건 (비정상 3건에서 발동)",
+        "",
+        "== [Spring] 조건별 재측정 (가드 단독 / 킬스위치 · 정렬 / 섞은 배치, 섞음 시드 20131212) ==",
+        "",
+        "[조건 B] /orders/guard · 정렬 배치 · 유한성 가드 단독",
+        "  201 접수     100건 (정상 100 / Inf 0 / NaN 0)",
+        [["  422 거부      20건 (정상 0 / ", "fg"], ["Inf 10 / NaN 10", "green"], [")", "fg"]],
+        "",
+        "[조건 C] /orders/fixed · 섞은 배치 · 유한성 가드 + 킬스위치",
+        [["  201 접수      16건 (정상 ", "fg"], ["16", "red"], [" / Inf 0 / NaN 0)", "fg"]],
+        "  422 거부       3건 (정상 0 / Inf 2 / NaN 1)",
+        [["  503 킬스위치 101건 (정상 ", "fg"], ["84", "red"], [" / Inf 8 / NaN 9)  <- ", "fg"], ["정상 84건이 부수 피해", "red"]]
       ]
     },
     {
       "type": "bar",
       "out": "05-spring-endpoints.png",
-      "w": 1040,
-      "title": "엔드포인트별 비정상 주문이 초래한 잘못된 응답 (총 120건 · 비정상 20건)",
+      "w": 1180,
+      "title": "엔드포인트별 비정상 주문이 초래한 잘못된 응답 (정렬 배치 120건 · 비정상 20건)",
       "bars": [
         {"label": "버그 (NaN 접수)", "value": 10, "color": "red"},
-        {"label": "BigDecimal 시도", "value": 20, "color": "yellow"},
-        {"label": "해소", "value": 0, "color": "green"}
+        {"label": "BigDecimal 시도 (500)", "value": 20, "color": "yellow"},
+        {"label": "가드 단독", "value": 0, "color": "green"},
+        {"label": "가드 + 킬스위치", "value": 0, "color": "green"}
       ],
-      "note": "버그=NaN 10건 조용히 접수 · BigDecimal 강화 시도=500 서버오류 20건 · 해소=0. 측정 Spring Boot 3.3, 2026-07-28"
+      "note": "가드 단독은 비정상 20건을 전부 422로 거부했다(Inf 10 + NaN 10). 측정 Spring Boot 3.3.5 / Java 21, 2026-07-29"
+    },
+    {
+      "type": "bar",
+      "out": "06-killswitch-collateral.png",
+      "w": 1180,
+      "title": "정상 주문 100건 중 접수된 건수 (섞음 시드 20131212)",
+      "bars": [
+        {"label": "가드 단독 · 정렬", "value": 100, "color": "green"},
+        {"label": "가드 단독 · 섞음", "value": 100, "color": "green"},
+        {"label": "가드+킬스위치 · 정렬", "value": 100, "color": "green"},
+        {"label": "가드+킬스위치 · 섞음", "value": 16, "color": "red"}
+      ],
+      "note": "킬스위치는 섞은 배치의 19건째에서 발동해 뒤에 있던 정상 84건을 함께 막았다. 가드 단독은 배치 순서에 무관하다. 2026-07-29"
     }
   ]
 }

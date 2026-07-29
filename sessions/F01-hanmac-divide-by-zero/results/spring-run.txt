@@ -1,24 +1,46 @@
 # docker compose up --build   (sessions/F01-hanmac-divide-by-zero/spring)
-# Spring Boot 3.3.5 / Java 21 / 내장 Tomcat. 전체 1,154줄 중 핵심만 발췌했다.
-# 원문은 위 명령으로 언제든 재생성된다.
+# 2026-07-29 재측정. Spring Boot 3.3.5 / Java 21 / 내장 Tomcat. 전체 1,224줄 중 핵심만 발췌했다.
+# 원문은 위 명령으로 언제든 재생성된다. 집계 블록은 손대지 않은 그대로다.
 
 # --- 실제로 Spring Boot 애플리케이션이 뜬다 (내장 Tomcat) ---
 INFO 1 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer : Tomcat initialized with port 8080 (http)
 INFO 1 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer : Tomcat started on port 8080 (http) with context path '/'
-INFO 1 --- [main] lab.OrderApp                            : Started OrderApp in 7.516 seconds (process running for 9.146)
+INFO 1 --- [main] lab.OrderApp                            : Started OrderApp in 8.117 seconds (process running for 10.005)
 
 # --- /orders/bigdecimal 로 Infinity/NaN 주문이 오면 BigDecimal 변환에서 예외가 나 500이 된다 ---
 # (BigDecimal은 NaN/Infinity를 표현할 수 없다. valueOf는 Double.toString 후 파싱하므로 "Infinity"의 'I'에서 실패한다)
-ERROR 1 --- [nio-8080-exec-9] o.a.c.c.C.[dispatcherServlet] : Request processing failed:
+ERROR 1 --- [nio-8080-exec-8] o.a.c.c.C.[dispatcherServlet] : Request processing failed:
     java.lang.NumberFormatException: Character I is neither a decimal digit number, decimal point, nor "e" notation exponential mark.
         at java.base/java.math.BigDecimal.<init>(Unknown Source)
         at java.base/java.math.BigDecimal.valueOf(Unknown Source)
-        at lab.OrderController.bigdecimal(OrderController.java)
+        at lab.OrderController.bigdecimal(OrderController.java:61)
         ... (내장 Tomcat 필터 체인)
 
-# --- 내장 드라이버가 주문 120건을 세 엔드포인트에 각각 실제 HTTP로 쏜 뒤 집계 ---
+# --- 내장 드라이버가 주문 120건을 엔드포인트에 실제 HTTP로 쏜 뒤 집계 ---
 == [Spring] 실제 주문접수 API 재현 (POST /orders, 내장 Tomcat + Jackson + @Valid) ==
   /orders/buggy      : 201 접수 110건 (정상 100 + NaN 10), 422 거부 10건 (Infinity는 상한 초과)
   /orders/bigdecimal : 201 접수 100건, 500 서버오류 20건 (BigDecimal.valueOf(NaN/Inf) 예외)
   /orders/fixed      : 201 접수 100건, 422 거부 3건, 503 킬스위치 17건 (비정상 3건에서 발동)
   입력 @Valid 검증은 전부 통과했다. 문제는 입력이 아니라 서버가 계산한 파생값이다.
+
+== [Spring] 조건별 재측정 (가드 단독 / 킬스위치 · 정렬 / 섞은 배치, 섞음 시드 20131212) ==
+
+[조건 A] /orders/fixed · 정렬 배치 · 유한성 가드 + 킬스위치
+  201 접수     100건 (정상 100 / Inf 0 / NaN 0)
+  422 거부       3건 (정상 0 / Inf 3 / NaN 0)
+  503 킬스위치  17건 (정상 0 / Inf 7 / NaN 10)  <- 정상 0건이 부수 피해
+
+[조건 B] /orders/guard · 정렬 배치 · 유한성 가드 단독
+  201 접수     100건 (정상 100 / Inf 0 / NaN 0)
+  422 거부      20건 (정상 0 / Inf 10 / NaN 10)
+  503 킬스위치   0건 (정상 0 / Inf 0 / NaN 0)  <- 정상 0건이 부수 피해
+
+[조건 C] /orders/fixed · 섞은 배치 · 유한성 가드 + 킬스위치
+  201 접수      16건 (정상 16 / Inf 0 / NaN 0)
+  422 거부       3건 (정상 0 / Inf 2 / NaN 1)
+  503 킬스위치 101건 (정상 84 / Inf 8 / NaN 9)  <- 정상 84건이 부수 피해
+
+[조건 D] /orders/guard · 섞은 배치 · 유한성 가드 단독
+  201 접수     100건 (정상 100 / Inf 0 / NaN 0)
+  422 거부      20건 (정상 0 / Inf 10 / NaN 10)
+  503 킬스위치   0건 (정상 0 / Inf 0 / NaN 0)  <- 정상 0건이 부수 피해

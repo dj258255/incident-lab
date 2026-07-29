@@ -64,7 +64,7 @@ sessions/<트랙><번호>-<슬러그>/
 | 대기 | 141 |
 
 <!-- 세션이 완료되면 아래에 추가 -->
-- [F01 한맥 0으로 나눈 값이 주문 검증을 뚫다](sessions/F01-hanmac-divide-by-zero/) — NaN 비교가 상하한 검증을 무력화, 유한성 가드와 킬스위치로 해소. 최소 재현과 Spring 주문접수 API 재현
+- [F01 한맥 0으로 나눈 값이 주문 검증을 뚫다](sessions/F01-hanmac-divide-by-zero/) — 주문 120건 중 NaN 10건이 상하한 비교를 뚫고 접수(Infinity 10건은 상한에 걸려 거부). 킬스위치를 끄고 재니 유한성 가드 단독으로 Infinity 10 + NaN 10을 전부 거부해 비정상 접수 0건, 킬스위치는 섞은 배치에서 19건째에 발동해 정상 84건을 함께 차단. 최소 재현과 Spring 주문접수 API 재현
 - [F02 삼성증권 유령주식, 원장 불변식 부재](sessions/F02-samsung-ghost-shares/) — 발행총수 30.66배 착오 입고가 제약 없이 커밋, 총량 검증 트리거와 maker-checker로 차단. 동시 입고 2세션이 트리거를 뚫는 것까지 실측
 - [F03 장 시작 9시 접속 폭주](sessions/F03-market-open-connection-storm/) — HikariCP 풀 고갈로 응답 지연 폭증, 부하 차단(load shedding)으로 중앙값 3.38초를 51ms로
 - [F13 매칭엔진 가격우선·시간우선 동시성](sessions/F13-matching-engine-priority/) — naive 병렬 매칭에서 체결의 63~96%가 시간우선 위반, 단일 시퀀서로 위반 0건. 처리량 손해 없음(2 vCPU 기준)

@@ -26,4 +26,13 @@ public class Killswitch {
     public boolean tripped() {
         return tripped;
     }
+
+    /**
+     * 조건을 바꿔 다시 재기 위해 상태를 되돌린다. 드라이버가 배치 하나를 다 쏜 뒤 호출한다.
+     * 운영용 기능이 아니라 측정용이다.
+     */
+    public void reset() {
+        nonFinite.set(0);
+        tripped = false;
+    }
 }
