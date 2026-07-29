@@ -1,7 +1,7 @@
 # R16 정산 배치의 풀 스캔이 실시간 조회를 밀어내는 버퍼 풀 오염
 
 > 근거 등급: `E2`
-> 출처: [MySQL 8.4 Reference, Buffer Pool](https://dev.mysql.com/doc/refman/8.4/en/innodb-buffer-pool.html), [Percona, How side load may massively impact your MySQL performance](https://www.percona.com/blog/side-load-may-massively-impact-your-mysql-performance/)
+> 출처: [MySQL 8.4 Reference, Buffer Pool](https://dev.mysql.com/doc/refman/8.4/en/innodb-buffer-pool.html), [MySQL 8.4 Reference, Making the Buffer Pool Scan Resistant](https://dev.mysql.com/doc/refman/8.4/en/innodb-performance-midpoint_insertion.html), [Percona, How side load may massively impact your MySQL performance](https://www.percona.com/blog/side-load-may-massively-impact-your-mysql-performance/), [Amazon Aurora storage](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Overview.StorageReliability.html), [Amazon RDS DB instance storage](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html), [Amazon EBS I/O characteristics and monitoring](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-io-characteristics.html)
 
 ## 1. 유명한 이유
 
@@ -16,6 +16,8 @@ MySQL 공식 문서가 이 문제를 직접 서술합니다. 테이블 스캔은
 1. 방어를 끄면(2011년식 동작) 정말 Percona가 본 붕괴가 재현되는가
 2. 8.4 기본값의 방어는 같은 공격을 얼마나 막아 주는가
 
+답을 먼저 적겠습니다. 이 세션이 운영에 남긴 것은 배수가 아니라 지표를 읽는 법입니다. 전역 히트율만 보는 대시보드는 배치가 돌 때마다 잘못된 경보를 냅니다. 그 지표에는 스캔 자신의 미스가 섞여 있어서, 워킹셋이 멀쩡해도 숫자는 한 자릿수까지 떨어집니다. 워킹셋이 실제로 다쳤는지는 스캔이 끝난 뒤 히트율이 제자리로 돌아오는 데 걸린 시간으로 봐야 합니다. 아래 계측은 그 둘을 갈라 놓은 기록입니다.
+
 ## 2. 재현
 
 ### 환경
@@ -26,6 +28,14 @@ MySQL 공식 문서가 이 문제를 직접 서술합니다. 테이블 스캔은
 | DB | MySQL 8.4.3 (컨테이너 `--cpus=4 --memory=2g`, 버퍼 풀 1GB) |
 | 실시간 부하 | Python 스레드 8개, 핫 테이블 PK 점조회, 건별 지연 기록 |
 | 배치 | 콜드 테이블 풀 스캔 집계 (`SELECT COUNT(*), SUM(amount), SUM(fee)`) |
+
+컨테이너에는 버퍼 풀 크기와 커넥션 수, 로그 플러시 정도만 지정했고 나머지는 8.4 기본값입니다. 그중 셋이 이 세션의 해석에 걸립니다.
+
+- `innodb_flush_method`의 8.4 Unix 계열 기본값은 "지원되면 O_DIRECT, 아니면 fsync"입니다. O_DIRECT로 열렸다면 데이터 파일 읽기가 컨테이너 커널의 페이지 캐시에 한 번 더 얹히지 않으므로, 버퍼 풀 미스가 곧 블록 장치 읽기가 됩니다. 다만 Docker Desktop은 리눅스 VM 위에서 돌고 그 VM의 디스크 이미지는 macOS 쪽 파일이라, 미스가 어디까지 내려갔는지는 확인하지 않았습니다.
+- `innodb_adaptive_hash_index`는 8.4부터 기본 OFF입니다. 아래 점조회 p95에는 적응형 해시 인덱스의 도움이 들어 있지 않습니다. 기본 ON이던 8.0에서 같은 실험을 돌리면 숫자가 달라질 수 있습니다.
+- `innodb_change_buffering`은 8.4부터 기본 none입니다. 이 워크로드는 읽기만 하므로 결과에 영향이 없습니다.
+
+셋 다 8.4 문서에 적힌 기본값이고, 실행 시점에 값을 찍어 남긴 것은 `results/pre-state.txt`의 세 줄뿐입니다. 거기에는 `innodb_old_blocks_pct` 37과 `innodb_old_blocks_time` 1000, 그리고 버퍼 풀 1.125GB가 찍혀 있습니다. `--innodb-buffer-pool-size=1G`로 요청했는데 실제로는 그보다 크게 잡혔고, 왜 그랬는지는 확인하지 않았습니다. 콜드 테이블보다 작고 핫 테이블보다 크다는 크기 관계는 두 값 모두에서 그대로 성립합니다.
 
 ### 크기 관계가 전제다
 
@@ -48,7 +58,9 @@ settlement_history (콜드, 배치 대상)   약 2.2GB   > 버퍼 풀 1GB
 
 ## 3. 내부 원리
 
-InnoDB의 LRU는 단순한 한 줄이 아닙니다. 리스트가 young(자주 쓰는 쪽)과 old(신입 쪽)로 나뉘고, 새로 읽힌 페이지는 리스트 머리가 항상 old의 머리(기본적으로 전체의 3/8 지점)에 들어갑니다. 거기서 `innodb_old_blocks_time`(기본 1초) 안에 다시 접근돼도 young으로 승격되지 않습니다.
+InnoDB의 LRU는 단순한 한 줄이 아닙니다. 리스트가 young(자주 쓰는 쪽)과 old(신입 쪽)로 나뉘고, 새로 읽힌 페이지는 그 경계인 midpoint, 즉 old 서브리스트의 머리에 들어갑니다. 매뉴얼의 표현은 "꼬리에서 3/8"입니다. 원문은 "All newly read pages are inserted at a location that by default is 3/8 from the tail of the LRU list"입니다.
+
+방향을 짚고 갑니다. `innodb_old_blocks_pct` 기본값 37은 버퍼 풀의 37%를 old 서브리스트로 쓴다는 뜻이고, 그 37%는 리스트의 꼬리 쪽입니다. 그래서 midpoint를 머리에서 세면 약 62.5% 지점입니다. 한국어로 "전체의 3/8 지점"이라고만 쓰면 앞에서 37.5% 자리로 읽히는데, 그건 반대 방향입니다. 이 방향을 뒤집어 읽으면 새 페이지가 리스트 앞쪽에 꽂히는 그림이 되고, 그러면 midpoint insertion이 왜 방어인지가 설명되지 않습니다. 그리고 거기 들어간 페이지는 `innodb_old_blocks_time`(기본 1000ms) 안에 다시 접근돼도 young으로 승격되지 않습니다.
 
 풀 스캔은 페이지 하나를 짧은 시간 안에 몇 번 만지고 다시는 안 옵니다. 이 규칙 아래에서 스캔 페이지는 전부 old에 머물다 자기들끼리 밀려나고, young에 있는 워킹셋은 건드리지 못합니다. 방어를 끄면(`innodb_old_blocks_time=0`) 스캔 페이지가 두 번째 접근에 바로 young으로 올라와 워킹셋을 밀어냅니다.
 
@@ -78,14 +90,30 @@ Percona가 2011년에 본 150배 붕괴는 어느 조건에서도 오지 않았�
 
 즉 midpoint insertion이 지키는 것은 스캔 중의 전역 히트율(이건 스캔 자신의 미스 때문에 어차피 떨어집니다)이 아니라 **워킹셋의 생존**입니다.
 
+여기서 대시보드 이야기가 나옵니다. 60초 지속 스캔 두 조건의 히트율 최저점은 방어를 켠 쪽이 9.1%, 끈 쪽이 7.2%로 사실상 같습니다. 스캔 중 히트율만 보면 방어가 일을 안 한 것처럼 보입니다. 그런데 회복은 0.7초와 15.2초로 20배 넘게 갈렸습니다. **전역 히트율에 임계값 경보를 걸어 두면 배치가 돌 때마다 울리고, 그 경보의 대부분은 스캔 자신의 미스입니다.** 워킹셋이 다쳤는지를 보려면 스캔이 끝난 뒤 히트율이 평상시 수준으로 돌아오는 데 걸린 시간을 재야 합니다. 경보를 옮겨 걸 자리는 스캔 중의 최저점이 아니라 종료 후의 회복 곡선입니다.
+
 ### 관리형 DB에서는 이 미스가 돈이다
 
-로컬 NVMe에서는 미스가 지연으로 거의 안 보였지만, 이 세션이 속한 트랙의 전제는 클라우드 관리형 DB입니다. 거기서는 두 가지가 달라집니다.
+로컬 NVMe에서는 미스가 지연으로 거의 안 보였지만, 이 세션이 속한 트랙의 전제는 클라우드 관리형 DB입니다. 거기서는 같은 미스가 두 형태로 돌아옵니다. Aurora에서는 건당 청구서로, RDS gp3에서는 처리량 상한으로 돌아옵니다.
 
-- **Aurora Standard**: 공식 문서 기준, 버퍼 캐시에 없는 페이지를 스토리지에서 읽는 요청은 과금되는 read I/O로 집계됩니다. 오염으로 인한 재적재는 그대로 청구서가 됩니다.
-- **RDS gp3**: 기본 3,000 IOPS 상한이 있습니다. NVMe에서는 공짜 같던 미스가 IOPS 상한에 눌리면 대기 행렬이 됩니다.
+- **Aurora Standard**: 버퍼 캐시에 없어 스토리지에서 읽어 오는 페이지가 과금되는 read I/O로 집계됩니다. 페이지 한 장이 read I/O 한 건이고, 쿼리에 필요한 페이지가 이미 버퍼 풀에 있으면 그 쿼리의 I/O는 0입니다. 오염으로 인한 재적재는 그대로 청구서가 됩니다.
+- **RDS gp3**: 기본 성능이 3,000 IOPS와 125MiB/s입니다. 둘 다 상한이지만 순차 풀 스캔이 먼저 닿는 벽은 처리량 쪽입니다.
 
-그래서 처방은 같습니다. 정산·리포팅 배치는 리드 리플리카로 보내고(AWS 공식 권고), 프라이머리에서 돌려야 한다면 배치 시간대에 `innodb_old_blocks_time`을 올리는 것을 공식 문서가 제안합니다. 다만 이번 실측에서 기본값 1000ms로도 워킹셋 보호는 충분했습니다.
+청구서부터 세어 봅니다. 콜드 테이블은 적재 후 2,056MiB이고 InnoDB 페이지는 16KiB이므로, 나누면 131,584페이지입니다. 콜드 테이블이 버퍼 풀의 2배라 스캔이 진행되는 동안 앞부분은 이미 밀려나 있고, 그래서 풀 스캔 한 번은 대략 이 페이지 수만큼을 스토리지에서 읽습니다. Aurora Standard에서 read I/O 약 13만 건입니다. 이 배치가 하루 한 번이면 한 달에 약 395만 건이 됩니다. 60초 지속 스캔 조건은 같은 스캔을 60초 동안 반복했는데 반복 횟수를 파일로 남기지 않아 곱하지 않았습니다.
+
+단가는 리전과 요금제마다 다르고 이 세션에서 확인하지 않았습니다. 그래서 건수까지만 적습니다. 건수 자체도 계산값입니다. 이 세션은 Aurora에서 돌린 적이 없습니다.
+
+상한 쪽도 계산이 됩니다. 이 스캔은 로컬에서 2.71초 걸렸습니다(`results/default-batch-start.txt`와 `default-batch-done.txt`의 차이, 방어 꺼짐 조건은 2.73초). 2,056MiB를 2.71초에 읽었으니 약 758MiB/s입니다. gp3 기본 처리량 125MiB/s로 같은 스캔을 돌리면 16.5초, 약 6배입니다. IOPS 쪽은 오히려 여유가 있습니다. EBS는 SSD 볼륨에서 물리적으로 연속인 작은 I/O를 최대 256KiB까지 한 건으로 병합해 세므로, 125MiB/s를 다 쓰는 순차 읽기는 초당 500건입니다. 3,000건 상한의 6분의 1입니다. RDS 문서도 I/O 성능을 잴 때는 "the throughput of the instance, not simply the number of I/O operations"를 보라고 적습니다.
+
+그리고 이 상한은 볼륨이 작으면 올릴 수 없습니다. RDS gp3는 MySQL 기준 20~399GiB 구간에서 3,000 IOPS와 125MiB/s가 고정이고, 프로비저닝 가능한 IOPS와 처리량 범위가 문서 표에 N/A로 적혀 있습니다. 추가로 살 수 있는 구간은 400GiB부터이고, 거기서부터 볼륨 네 개로 스트라이핑돼 기본 성능이 12,000 IOPS와 500MiB/s로 올라갑니다. 200GiB짜리 인스턴스에서 배치가 느리다고 처리량만 사서 붙일 수는 없다는 뜻입니다. 볼륨을 400GiB까지 키우는 것이 먼저입니다.
+
+처방은 둘로 갈립니다. 하나는 아키텍처를 바꾸고 하나는 요금제를 바꿉니다. 둘이 고치는 지점이 다릅니다.
+
+- **배치를 리드 리플리카로 보냅니다.** AWS 공식 권고입니다. 프라이머리의 버퍼 풀은 지켜지지만 스캔이 읽는 페이지 수는 그대로라, Aurora Standard라면 read I/O 과금은 리플리카 쪽에서 그대로 발생합니다. 리플리카 인스턴스 비용도 늘어납니다. 오염을 격리하는 처방이지 I/O 건수를 줄이는 처방이 아닙니다.
+- **스토리지 요금제를 Aurora I/O-Optimized로 바꿉니다.** read와 write I/O 과금이 사라지고 대신 컴퓨트와 스토리지 단가가 올라갑니다. 얼마나 오르는지는 리전과 인스턴스 클래스마다 달라 배수를 적지 않습니다. AWS가 제시하는 판단 기준은 I/O 비용이 Aurora 총비용의 25% 이상이면 이쪽이라는 것입니다. 큰 테이블을 정기적으로 훑는 워크로드는 그 선을 넘기 쉽습니다. 다만 바뀌는 건 청구 방식뿐이고 오염 자체는 그대로라, 워킹셋 보호는 별도 문제로 남습니다.
+- **프라이머리에서 돌려야 한다면** 배치 시간대에 `innodb_old_blocks_time`을 올리는 것을 공식 문서가 제안합니다. 다만 이번 실측에서 기본값 1000ms로도 워킹셋 보호는 충분했습니다.
+
+스캔이 잦은 워크로드에서 이 셋은 서로를 대신하지 못합니다. 리플리카는 오염을 옮기고, I/O-Optimized는 청구서를 없애고, `innodb_old_blocks_time`은 프라이머리의 워킹셋을 지킵니다.
 
 ## 5. 예상과 달랐던 점
 
@@ -103,6 +131,8 @@ midpoint insertion이 있으니 히트율도 지켜질 것으로 예상했는데
 
 ## 못 한 것
 
-- **IOPS 상한 환경을 만들지 못했습니다.** macOS의 Docker Desktop은 블록 I/O 스로틀링을 지원하지 않아, gp3의 3,000 IOPS 같은 조건에서 미스 비용이 지연으로 돌아오는 것을 실측하지 못했습니다. 이 세션의 결론 중 "관리형 DB에서는 아프다" 부분은 공식 문서 근거이지 실측이 아닙니다.
+- **스토리지 상한 환경을 만들지 못했습니다.** macOS의 Docker Desktop은 블록 I/O 스로틀링을 지원하지 않아, gp3 기본값인 125MiB/s와 3,000 IOPS 같은 조건에서 미스 비용이 지연으로 돌아오는 것을 실측하지 못했습니다. 위의 16.5초는 데이터 크기를 상한으로 나눈 계산값이고 잰 값이 아닙니다. 이 세션의 결론 중 "관리형 DB에서는 아프다" 부분은 공식 문서 근거이지 실측이 아닙니다.
+- **read I/O 건수도 계산값입니다.** Aurora에서 돌려 CloudWatch의 `VolumeReadIOPs`로 대조한 적이 없습니다. 테이블 크기를 페이지 크기로 나눈 값이라, 프리페치나 스캔 도중의 버퍼 풀 적중이 실제 건수를 낮출 여지가 있습니다.
+- **지속 스캔의 반복 횟수를 남기지 않았습니다.** `exp-sustained.sh`가 60초 동안 스캔을 몇 번 돌렸는지 화면에만 출력하고 파일로 저장하지 않아, 지속 조건의 총 read I/O를 계산하지 못했습니다.
 - **회전 디스크 조건이 없습니다.** 2011년 실험의 재현에는 느린 디스크가 필요한데 이 호스트에서는 만들 수 없었습니다.
 - **mysqldump는 다루지 않았습니다.** 순수 풀 스캔 집계로 대신했습니다. mysqldump는 스캔에 더해 덤프 출력 I/O가 겹칩니다.

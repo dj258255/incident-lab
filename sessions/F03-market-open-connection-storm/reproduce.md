@@ -7,7 +7,8 @@ k6 요약 전문은 [results/buggy-k6.txt](results/buggy-k6.txt), [results/fixed
 
 ## 환경
 
-- 호스트: Rocky Linux 9 (aarch64), Docker
+- 호스트: `uname -srm`은 `Linux 5.14.0-570.33.2.el9_6.aarch64`, `nproc` 2, 메모리 11GiB. Rocky Linux 9.6 한 대에 Docker
+- 자원 배치: Postgres와 앱과 부하 생성기 k6가 모두 이 한 대에서 돌았고 compose에 컨테이너 CPU 제한을 걸지 않았습니다. 아래 지연 수치에는 부하 생성기가 만든 경합이 섞여 있습니다
 - 앱: Spring Boot 3.3.5 / Java 21, 내장 Tomcat. gradle:8.10-jdk21로 빌드, eclipse-temurin:21-jre-alpine로 실행
 - DB: postgres:16-alpine
 - HikariCP: 풀 10, connection-timeout 2000ms. Tomcat accept-count 1000
@@ -62,7 +63,13 @@ $ docker logs lab-f03-app | grep -c "Connection is not available"
 541건에 503이나 응답을 받지 못한 요청은 섞여 있지 않다. 즉 541은 버그 경로가 돌려준 HTTP 500의 개수이고,
 그 가운데 몇 건이 HikariCP 커넥션 획득 타임아웃이었는지는 세지 못했다.
 
-응답 중앙값 3.38초, p95 5.36초, 500 응답이 541건이다. 처리량은 풀 한계인 초당 약 200건에 정체됐다.
+응답 중앙값 3.38초, p95 5.36초, 500 응답이 541건이다. 처리량은 초당 약 200건에 정체됐다. 이 200건은
+실측한 DB 한계가 아니라 `pg_sleep(0.05)`와 풀 10이 정한 모형의 산술이다.
+
+중앙값 3.38초를 풀 대기만으로 설명할 수는 없다. `connection-timeout`이 2000ms라 풀 대기의 상한이 2초이고
+쿼리 50ms를 더해도 2.05초다. 남은 1초 남짓은 풀 앞단에서 쌓인 것이다. Tomcat `max-threads` 기본값 200에
+획득 대기 큐 189가 잡혀 있었으니 스레드가 거의 다 묶여 있었고, 그다음 요청은 accept 큐에서 기다린다.
+`accept-count`를 1000으로 넓혀 두어 거부되지 않고 대기 시간으로 바뀌었다. 각 계층의 몫은 따로 재지 않았다.
 
 ## 3. 해소 경로 부하 (/quote/fixed, 부하 차단 permits=10)
 

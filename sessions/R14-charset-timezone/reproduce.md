@@ -4,7 +4,10 @@
 
 | 항목 | 값 |
 |---|---|
+| 호스트 | **기록하지 않았습니다.** `uname -srm`·`nproc`·`free -g`를 남기지 않아 어느 장비였는지 확인되지 않습니다. 이 세션은 지연도 처리량도 재지 않아 결론이 흔들리지는 않지만, 아래 "약 1분"을 다른 세션의 시간과 비교하면 안 됩니다 |
 | MySQL | 8.4.3 공식 Docker 이미지, 기본 설정 |
+| 자원 상한 | 걸지 않았습니다 (성능 측정이 아니라 동작 재현) |
+| 클라이언트 | mysql CLI, 접속 문자셋 `--default-character-set=utf8mb4` 고정 |
 | 기본값 확인 | character_set_server=utf8mb4, collation=utf8mb4_0900_ai_ci, sql_mode에 STRICT_TRANS_TABLES 포함 (`results/00-defaults.txt`) |
 | 일시 | 2026-07-29 |
 

@@ -24,7 +24,11 @@ INSERT INTO settlement (...) VALUES (...);                                -- 없
 
 MySQL 8.4.3, REPEATABLE READ(기본값), `innodb_print_all_deadlocks=ON`. 데드락은 부하가 아니라 순서 문제라서 스레드 두 개면 재현됩니다. 자원 상한은 걸지 않았습니다.
 
-기본값인 `innodb_print_all_deadlocks=OFF` 상태에서는 `SHOW ENGINE INNODB STATUS`가 **마지막 한 건만** 보여줍니다. 운영에서 데드락을 추적하려면 이 값을 켜서 에러 로그에 전부 남겨야 합니다.
+재현 스크립트는 Python 스레드 2개를 `threading.Barrier`로 맞춰 두 세션의 진행을 동기화하고, `innodb_lock_wait_timeout=10`을 걸었습니다. 호스트 사양은 기록하지 않았습니다.
+
+`SHOW ENGINE INNODB STATUS`는 `innodb_print_all_deadlocks` 값과 상관없이 **마지막 데드락 한 건만** 보여줍니다. MySQL 문서도 "To view the last deadlock in an InnoDB user transaction, use SHOW ENGINE INNODB STATUS"라고 적습니다. 그래서 이 명령의 `LATEST DETECTED DEADLOCK` 블록은 새 데드락이 날 때까지 같은 내용을 계속 되풀이합니다. 운영에서 데드락을 전부 추적하려면 `innodb_print_all_deadlocks=ON`으로 켜서 에러 로그에 남겨야 하고, 이 세션도 그렇게 켜 두었습니다.
+
+아래 두 증거는 모두 **단일 스냅숏**입니다. `data_locks` 출력은 두 세션이 INSERT 직전인 한 순간을 한 번 찍은 것이고, 데드락 그래프도 그 시점에 남아 있던 마지막 한 건입니다. 30회 반복해 센 것은 3절의 데드락 발생 횟수뿐이고, 락 상태 자체를 여러 번 관측해 같은 모양이 나오는지 확인하지는 않았습니다.
 
 ### 락이 걸린 순간
 
@@ -52,7 +56,7 @@ MySQL 8.4.3, REPEATABLE READ(기본값), `innodb_print_all_deadlocks=ON`. 데드
 
 - `*** (1) TRANSACTION:` 아래 `HOLDS THE LOCK(S)`와 `WAITING FOR THIS LOCK`
 - `*** (2) TRANSACTION:` 아래 같은 두 항목
-- `*** WE ROLL BACK TRANSACTION (2)` — InnoDB가 희생자로 고른 쪽
+- `*** WE ROLL BACK TRANSACTION (2)` (InnoDB가 희생자로 고른 쪽)
 
 락 대상이 `supremum` 레코드로 찍히는 것도 갭 락의 표시입니다. 마지막 레코드 뒤의 열린 구간을 잠글 때 supremum 의사 레코드에 락을 겁니다.
 
@@ -68,13 +72,35 @@ MySQL 8.4.3, REPEATABLE READ(기본값), `innodb_print_all_deadlocks=ON`. 데드
 
 **확인과 삽입을 한 문장으로 합치는 쪽**이 답입니다. 갭 락을 먼저 잡는 단계 자체가 없어지고, 중복 처리는 엔진이 유니크 키로 합니다. 30회 전부 성공했고 중복키 에러도 없었습니다.
 
-**READ COMMITTED**도 데드락은 없앱니다. 갭 락이 아예 없기 때문입니다. 다만 결과가 다릅니다. 60시도 중 30건이 중복키 에러(1062)로 실패했습니다. 데드락이 중복키 에러로 바뀐 것이고, 애플리케이션이 그 에러를 잡아 재시도하거나 무시해야 합니다. 실패를 없앤 게 아니라 실패의 종류를 바꾼 것이라, 예외 처리를 함께 넣지 않으면 장애의 모양만 달라집니다.
+**READ COMMITTED**도 이 시나리오의 데드락은 없앱니다. 다만 "갭 락이 아예 없어서"는 아닙니다. MySQL 문서는 갭 락이 꺼지는 범위를 이렇게 한정합니다.
+
+> Gap locking can be disabled explicitly. This occurs if you change the transaction isolation level to READ COMMITTED. In this case, gap locking is disabled for searches and index scans and is used only for foreign-key constraint checking and duplicate-key checking.
+
+꺼지는 것은 **탐색과 인덱스 스캔의 갭 락**이고, **외래키 제약 검사와 중복키 검사에는 READ COMMITTED에서도 갭 락을 씁니다.** 이 시나리오에서 데드락이 사라진 이유는 `SELECT ... FOR UPDATE`가 더 이상 갭을 잠그지 않게 됐기 때문이지, 서버에서 갭 락이 사라졌기 때문이 아닙니다. 외래키가 걸린 테이블에 INSERT하는 경로라면 READ COMMITTED에서도 갭 락을 만나게 됩니다.
+
+결과도 다릅니다. 60시도 중 30건이 중복키 에러(1062)로 실패했습니다. 데드락이 중복키 에러로 바뀐 것이고, 애플리케이션이 그 에러를 잡아 재시도하거나 무시해야 합니다. 실패를 없앤 게 아니라 실패의 종류를 바꾼 것이라, 예외 처리를 함께 넣지 않으면 장애의 모양만 달라집니다.
+
+격리 수준을 내리기 전에 확인할 것이 둘 더 있습니다.
+
+**첫째, 바이너리 로그 형식입니다.** 문서는 "Only row-based binary logging is supported with the READ COMMITTED isolation level"이라고 못박습니다. `binlog_format=MIXED`면 서버가 알아서 행 기반으로 전환하지만, `STATEMENT`로 두면 "InnoDB can no longer perform inserts"라 곧 에러가 납니다. MySQL 8.4는 `binlog_format` 기본값이 `ROW`이고 이 변수 자체가 deprecated라 새로 세우는 환경에서는 걸릴 일이 적습니다. 문제는 8.0 이전부터 `STATEMENT`나 `MIXED`로 돌던 복제 구성입니다. 그런 곳에서는 격리 수준 한 줄을 내리는 것이 복제 형식 변경을 함께 요구합니다.
+
+**둘째, UPDATE와 DELETE의 락 동작이 같이 바뀝니다.** READ COMMITTED에서는 실제로 고친 행의 락만 유지하고, 조건에 맞지 않은 행의 레코드 락은 WHERE 평가가 끝나는 대로 풀립니다. 그리고 이미 잠긴 행을 만나면 semi-consistent read로 최신 커밋 버전을 읽어 조건에 맞는지 먼저 판정하고, 맞을 때만 다시 읽어 잠그거나 락을 기다립니다. 문서는 이 조합을 두고 "This greatly reduces the probability of deadlocks, but they can still happen"이라고 적습니다. 데드락 확률을 크게 낮추지만 없애지는 못한다는 뜻입니다. 4절의 인덱스 없는 UPDATE가 정확히 이 효과가 걸리는 자리인데, 이 세션은 4절을 REPEATABLE READ에서만 돌렸으므로 READ COMMITTED에서 락 건수가 얼마나 줄어드는지는 재지 않았습니다.
 
 ## 4. 인덱스가 없으면 락 범위가 넓어진다
 
-두 번째 시나리오로 인덱스 없는 컬럼의 UPDATE를 넣었습니다. `WHERE status='PENDING'`은 `status`에 인덱스가 없어서 InnoDB가 전 행을 훑고, 훑은 행마다 락을 잡습니다. 조건에 맞지 않는 행의 락은 곧 풀리지만 그 사이가 곧 충돌 창입니다.
+두 번째 시나리오로 인덱스 없는 컬럼의 UPDATE를 넣었습니다. `WHERE status='PENDING'`은 `status`에 인덱스가 없어서 InnoDB가 PRIMARY를 통째로 훑고, 훑은 행마다 락을 잡습니다.
 
-200행 테이블에서 조건에 맞는 건 100행인데 실제로는 그보다 많은 락이 잡혔습니다. 인덱스를 거는 것이 조회 성능만의 문제가 아니라 **락 범위를 좁혀 데드락 확률을 낮추는 일**이기도 합니다. 이 관점은 A22(인덱스가 있는데 못 쓰는 경우)와 짝이 됩니다.
+두 번째 UPDATE 직전에 찍은 `data_locks` 스냅숏에는 락이 **204건** 있었습니다(`results/deadlock.txt`의 "잡힌 락 204개"). 200행짜리 테이블에서 `status='PENDING'`인 행은 100행이고, 실행한 문장은 거기에 `live_id` 범위 조건까지 붙어 50행에 해당합니다. 204건의 내역은 이렇습니다.
+
+- 한 트랜잭션이 쥔 레코드 락 201건. 200행 전부와 supremum 의사 레코드입니다.
+- 다른 트랜잭션이 기다리는 레코드 락 1건. 대상이 `id=1` 행인데, 그 트랜잭션의 조건 범위(`live_id > 100`) 밖입니다. 자기가 고칠 행이 아닌데도 스캔이 그 행을 지나가느라 막힌 것입니다.
+- 테이블 IX 락 2건.
+
+REPEATABLE READ에서는 조건에 맞지 않은 행의 락도 트랜잭션이 끝날 때까지 남습니다. 3절에 적은 대로 READ COMMITTED로 내리면 이 락들은 WHERE 평가 직후에 풀리고 semi-consistent read가 함께 걸리지만, 이 시나리오를 READ COMMITTED에서 다시 재지는 않았습니다.
+
+이 시나리오는 **한 번만 실행했습니다.** 30회 반복은 3절의 해소 검증에만 적용했고 이쪽은 반복 측정하지 않았습니다. 그리고 그 한 번의 실행에서는 **데드락이 나지 않았습니다.** 결과 파일의 이 구간 결과가 `세션A = None, 세션B = None`인 것이 그것이고, 한 세션이 먼저 전 행을 잠그고 다른 세션이 그 앞에서 대기하는 것으로 끝났습니다. 바로 아래에 데드락 그래프가 다시 찍혀 있지만 그것은 2절에 적은 성질 때문입니다. `SHOW ENGINE INNODB STATUS`가 새 데드락이 날 때까지 마지막 한 건을 계속 보여주므로 시나리오 1의 트랜잭션(2658과 2659)이 그대로 다시 출력된 것입니다. 트랜잭션 번호와 타임스탬프가 위 블록과 같은 것이 그 증거입니다.
+
+그래서 이 절이 실제로 보인 것은 넓어진 락 범위와 그로 인한 대기까지입니다. 인덱스를 거는 것이 조회 성능만의 문제가 아니라 **락 범위를 좁혀 충돌 면적을 줄이는 일**이기도 하다는 것은 204건이라는 숫자가 그대로 보여줍니다. 다만 인덱스 유무에 따라 데드락 발생률이 실제로 얼마나 달라지는지는 재지 않았습니다. 이 관점은 A22(인덱스가 있는데 못 쓰는 경우)와 짝이 됩니다.
 
 ## 5. 예상과 달랐던 점
 
@@ -98,7 +124,8 @@ SELECT @@transaction_isolation;   →  READ-COMMITTED
 
 ## 못 한 것
 
-- **세 번째 시나리오(획득 순서 엇갈림)를 문서에 넣지 않았습니다.** 고전적 형태라 새로 배울 게 적어 갭 락 쪽에 집중했습니다.
+- **세 번째 시나리오(획득 순서 엇갈림)를 문서에 넣지 않았습니다.** 고전적 형태라 새로 배울 게 적어 갭 락 쪽에 집중했습니다. `scripts/deadlock.py`의 docstring에 셋째 시나리오가 적혀 있지만 구현하지 않았습니다.
+- **4절의 인덱스 없는 UPDATE는 1회 실행이 전부입니다.** 락 204건은 그 한 번의 스냅숏이고, 인덱스를 붙였을 때나 READ COMMITTED로 내렸을 때 이 수가 얼마나 줄어드는지는 재지 않았습니다.
 - **재시도 전략을 재지 않았습니다.** 데드락은 정상 동작의 일부이므로 잡아서 재시도하는 것이 정석인데, 재시도 횟수와 백오프에 따른 처리량 변화는 측정하지 않았습니다.
 - **`SELECT ... FOR UPDATE SKIP LOCKED`나 `NOWAIT`을 비교하지 않았습니다.** 큐 소비 패턴에서 유효한 선택지인데 이 시나리오의 해법은 아닙니다.
 - **분산 환경은 다루지 않았습니다.** 단일 인스턴스 두 세션입니다.

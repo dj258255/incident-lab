@@ -1,7 +1,7 @@
 # F15 느린 구독자 하나가 시세를 멈춘다
 
 > 근거 등급: `E2`
-> 출처: [Spring Framework Reference, WebSocket/STOMP Performance](https://docs.spring.io/spring-framework/reference/web/websocket/stomp/configuration-performance.html), [Spring Javadoc, ConcurrentWebSocketSessionDecorator](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/socket/handler/ConcurrentWebSocketSessionDecorator.html)
+> 출처: [Spring Framework Reference, WebSocket/STOMP Performance](https://docs.spring.io/spring-framework/reference/web/websocket/stomp/configuration-performance.html), [Spring Javadoc, ConcurrentWebSocketSessionDecorator](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/socket/handler/ConcurrentWebSocketSessionDecorator.html), [Apache Tomcat 10.1 WebSocket How-To](https://tomcat.apache.org/tomcat-10.1-doc/web-socket-howto.html), [Netty 소스 `WriteBufferWaterMark.java`](https://github.com/netty/netty/blob/4.1/transport/src/main/java/io/netty/channel/WriteBufferWaterMark.java)
 
 ## 1. 유명한 이유
 
@@ -13,11 +13,13 @@ Spring 문서가 이 상황을 직접 서술합니다.
 
 > at any given time, only a single thread can be used to send to a client. All additional messages, meanwhile, get buffered
 
-대응책도 문서에 있습니다. `ConcurrentWebSocketSessionDecorator`의 Javadoc은 버퍼 한도와 전송 시간 한도를 넘기면 "the session will be closed if the limits are exceeded"라고 적고, 오버플로 전략의 기본값을 "by default the session is terminated"로 적습니다. 느린 소비자를 끊는 것이 프레임워크의 기본 동작입니다.
+대응책도 문서에 있습니다. `ConcurrentWebSocketSessionDecorator`의 Javadoc은 버퍼 한도와 전송 시간 한도를 넘기면 "the session will be closed if the limits are exceeded"라고 적고, 오버플로 전략의 기본값을 "by default the session is terminated"로 적습니다.
+
+다만 그 닫는 일을 데코레이터가 직접 하지는 않습니다. 한도를 넘기면 데코레이터는 `SessionLimitExceededException`을 던지고, 그 예외를 받은 쪽이 `close()`를 부릅니다. STOMP 경로에서는 Spring의 핸들러가 그 자리를 맡고, 이 세션처럼 원시 WebSocket 핸들러를 직접 짠 경우에는 그 자리가 비어 있어 애플리케이션 코드가 맡아야 합니다. `Subscribers.Decorated`가 예외를 잡아 `closeNow()`를 부르는 대목이 그것입니다. 데코레이터만 씌우고 예외를 잡지 않으면 세션은 닫히지 않습니다.
 
 여기서 흔히 붙는 말이 "백프레셔가 없으면 WebSocket 서버가 OOM으로 죽는다"입니다. 그 문장을 뒷받침하는 벤더 문서는 찾지 못했습니다. 그래서 이 세션은 OOM을 인용하지 않고 직접 만들어 보기로 했습니다. 한도를 걸지 않으면 어디까지 가는지, 그리고 그 앞에 무엇이 먼저 무너지는지를 잽니다.
 
-정상 구독자 5명과 느린 구독자 1명을 같은 서버에 붙이고, 팬아웃 구현을 열한 가지로 바꿔 가며 각각 3회씩 쟀습니다.
+정상 구독자 5명과 느린 구독자 1명을 같은 서버에 붙이고, 팬아웃 구현 일곱 가지를 조건 열한 가지로 바꿔 가며 각각 3회씩 쟀습니다. 구현은 직접 전송, 무제한 큐, 바운디드 큐, conflation, 절단, conflation과 절단의 조합, Spring 데코레이터 일곱 가지이고, 여기에 대조군과 완전 정지 구독자와 절단 임계값 두 종류를 얹어 조건이 열한 가지가 됩니다.
 
 ## 2. 재현
 
@@ -27,11 +29,15 @@ Spring 문서가 이 상황을 직접 서술합니다.
 |---|---|
 | 호스트 | Rocky Linux, 커널 5.14.0-570.33.2.el9_6.aarch64, 2코어, 11GB |
 | 서버 | Spring Boot 3.3.5, 내장 Tomcat 10.1.31, Java 21, 힙 128MB 고정 |
-| 시세 | 종목 20개, 초당 3,000틱, 틱 하나 약 480바이트 |
-| 구독자 | 정상 5명 + 느린 1명 (초당 32KB만 읽음), 별도 컨테이너 |
+| 컨테이너 | 앱 컨테이너 `mem_limit 640m`, CPU 제한 없음 |
+| 시세 | 종목 20개, 초당 3,000틱, 틱 하나 479바이트(WebSocket 프레임까지 483바이트) |
+| 구독자 | 정상 5명 + 느린 1명 (초당 32KB만 읽고 `SO_RCVBUF` 8,192바이트), 별도 컨테이너 |
+| 송신 스레드 | 큐 방식은 구독자마다 전용 스레드 1개, Spring 데코레이터 조건만 공유 풀 4스레드(`STREAM_POOL_THREADS=4`) |
 | 측정 | 조건마다 45초(무제한 큐만 110초), 3회 반복, 회차마다 앱 재기동 |
 
 느린 구독자는 초당 32KB만 읽습니다. 서버가 만드는 양은 초당 약 1.4MB이므로 40배 넘게 뒤집니다. 완전히 멈춘 구독자를 쓰는 조건도 따로 두었습니다.
+
+느린 구독자의 `SO_RCVBUF`를 8KB로 낮춘 것은 재현 조건입니다. 리눅스는 수신 버퍼를 자동으로 키우기 때문에 그대로 두면 커널이 수백 KB를 대신 받아 주고, 서버가 블로킹되기까지 시간이 늘어져 조건이 흐려집니다. 8KB로 고정하면 클라이언트가 안 읽는 순간 TCP 창이 바로 닫혀 서버 쪽 증상이 일찍 드러납니다. 이 값을 바꾸면 아래 수치도 같이 움직입니다.
 
 회차마다 앱을 새로 띄웁니다. 힙이 초기화되어야 조건 간 비교가 됩니다.
 

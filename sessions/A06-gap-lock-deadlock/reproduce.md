@@ -6,6 +6,8 @@
 |---|---|
 | MySQL | 8.4.3, REPEATABLE READ(기본), `innodb_print_all_deadlocks=ON`, `innodb_lock_wait_timeout=10` |
 | 재현 | Python 스레드 2개 + `threading.Barrier`로 두 세션의 진행을 맞춤 |
+| 호스트 | 기록하지 않았습니다 (`uname -srm`, `nproc`, `free -g`를 찍어 두지 않음) |
+| 컨테이너 자원 한도 | 걸지 않음 |
 | 일시 | 2026-07-29 |
 
 ## 실행
@@ -19,7 +21,7 @@ $ python3 scripts/deadlock.py results/deadlock.txt   # 두 시나리오 + 해소
 
 ## 1. 락이 걸린 순간 (data_locks)
 
-두 세션이 `SELECT ... FOR UPDATE`를 마치고 `INSERT` 직전인 상태를 포착했습니다.
+두 세션이 `SELECT ... FOR UPDATE`를 마치고 `INSERT` 직전인 상태를 포착했습니다. 이 출력은 `time.sleep(0.15)` 뒤에 `data_locks`를 한 번 조회한 **단일 스냅숏**이고, 같은 상태를 여러 번 관측해 재현성을 확인하지는 않았습니다. 30회 반복은 아래 3절의 데드락 발생 횟수에만 해당합니다.
 
 ```console
 $ SELECT ENGINE_TRANSACTION_ID, INDEX_NAME, LOCK_TYPE, LOCK_MODE, LOCK_STATUS, LOCK_DATA

@@ -181,11 +181,18 @@ for fm in ("O_DIRECT", "fsync"):
             pc[fm] = json.load(f)
 
 def to_mb(s):
-    """docker stats의 '3.32GB / 34.9MB'에서 읽기 쪽을 MB로."""
+    """docker stats의 '3.32GB / 34.9MB'에서 읽기 쪽을 MiB로.
+
+    docker stats는 SI 접두어를 쓴다. GB는 10^9바이트이지 2^30이 아니다.
+    비교 대상인 workload.py의 data_read_mb는 바이트를 1024로 두 번 나눈
+    2진 MiB라, 같은 축에 놓으려면 SI 바이트를 2^20으로 나눠야 한다.
+    구판은 GB에 1024를 곱해 약 7% 부풀렸고 그래서 2,427이라는 값이 나왔다.
+    """
     v = s.split("/")[0].strip()
-    for suf, mul in (("GB", 1024), ("MB", 1), ("kB", 1 / 1024), ("B", 1 / 1024 / 1024)):
+    MIB = 1024 * 1024
+    for suf, si in (("GB", 10 ** 9), ("MB", 10 ** 6), ("kB", 10 ** 3), ("B", 1)):
         if v.endswith(suf):
-            return float(v[:-len(suf)]) * mul
+            return float(v[:-len(suf)]) * si / MIB
     return 0.0
 
 

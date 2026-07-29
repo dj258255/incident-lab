@@ -1,9 +1,13 @@
 # R14 글로벌 서비스의 문자셋·타임존 지뢰밭
 
 > 근거 등급: `E2` (문자셋 절단은 WordPress 4.1.2 보안 릴리스라는 실제 사고가 있으나 운영 장애 포스트모템이 아니라 E2로 유지)
-> 출처: [MySQL 8.4, utf8mb3](https://dev.mysql.com/doc/refman/8.4/en/charset-unicode-utf8mb3.html) · [Time Zone Support](https://dev.mysql.com/doc/refman/8.4/en/time-zone-support.html) · [WordPress 4.1.2 Security Release](https://wordpress.org/news/2015/04/wordpress-4-1-2/)
+> 출처: [MySQL 8.4, utf8mb3](https://dev.mysql.com/doc/refman/8.4/en/charset-unicode-utf8mb3.html) · [Time Zone Support](https://dev.mysql.com/doc/refman/8.4/en/time-zone-support.html) · [Online DDL Operations](https://dev.mysql.com/doc/refman/8.4/en/innodb-online-ddl-operations.html) · [WordPress 4.1.2 Security Release](https://wordpress.org/news/2015/04/wordpress-4-1-2/) · [RDS for MySQL 로컬 타임존](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MySQL.Concepts.LocalTimeZone.html) · [RDS for MySQL 역할 기반 권한 모델](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.MySQL.CommonDBATasks.privilege-model.html) · [RDS 스토리지 확장](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.ModifyingExisting.ScalingUp.html)
 
 ## 1. 유명한 이유
+
+먼저 이 세션의 성격부터 밝힙니다. **이것은 장애 하나를 재현한 기록이 아닙니다.** 사건 재현이라면 하나의 원인과 하나의 타임라인이 있어야 하는데, 여기 담은 것은 서로 독립된 함정 여섯 개입니다. 사건 재현이 아니라 **함정 카탈로그**라고 부르는 편이 정확합니다. 근거 등급을 E2로 둔 것도 그래서고, 뒤에 나오는 전후 수치가 지연이나 처리량이 아니라 각 함정의 실패 출력과 해소 출력의 대조인 것도 그래서입니다.
+
+그래도 하나씩 모아 둘 값어치가 있는 이유는 이렇습니다.
 
 글로벌로 서비스가 나가는 순간 두 종류의 지뢰가 있습니다.
 
@@ -15,7 +19,19 @@
 
 ## 2. 재현
 
-환경은 MySQL 8.4.3 공식 Docker 이미지 기본 설정입니다. 성능 측정이 아니라 동작 재현이므로 자원 상한은 걸지 않았습니다. 6개 실험 전체가 `scripts/run-experiments.sh` 하나로 재현되고, 출력 원문이 `results/`에 남습니다.
+### 환경
+
+| 항목 | 값 |
+|---|---|
+| DB | MySQL 8.4.3 공식 Docker 이미지, 기본 설정 (`character_set_server=utf8mb4`, `STRICT_TRANS_TABLES` 포함) |
+| 호스트 사양 | **기록하지 않았습니다.** `uname -srm`·`nproc`·`free -g`를 남기지 않아 어느 장비였는지 확인되지 않습니다 |
+| 자원 상한 | 걸지 않았습니다. 성능 측정이 아니라 동작 재현입니다 |
+| 클라이언트 | mysql CLI, 접속 문자셋을 `--default-character-set=utf8mb4`로 고정 (지뢰 6이 그 이유입니다) |
+| 일시 | 2026-07-29 |
+
+호스트를 기록하지 않은 것은 이 저장소에서 반복되는 결함이지만, **이 세션에 한해서는 결론에 영향을 주지 않습니다.** 아래 여섯 실험에 지연도 처리량도 없기 때문입니다. 시간 수치는 "실험 전체가 약 1분" 하나뿐이고 그것도 비교 대상이 없습니다. 이 세션의 관측은 전부 에러 번호와 출력 문자열이라 장비가 바뀌어도 같은 결과가 나옵니다. 반대로 말하면, 이 세션에서 소요 시간을 근거로 무언가를 주장하려 했다면 그 주장은 성립하지 않습니다.
+
+6개 실험 전체가 `scripts/run-experiments.sh` 하나로 재현되고, 출력 원문이 `results/`에 남습니다.
 
 ### 지뢰 1. utf8mb3에 이모지가 들어올 때
 
@@ -47,6 +63,8 @@ UTC로 저장된 후원 4건을 한국 시간 기준 일별로 집계합니다.
 ![CONVERT_TZ NULL](results/fig-convert-tz.png)
 
 타임존 테이블이 비어 있으면 에러가 나지 않습니다. 대신 **일별 집계가 통째로 `NULL` 한 줄**이 됩니다. 날짜별로 나뉘어야 할 54,000원이 NULL 그룹 하나에 뭉칩니다. 리포트 파이프라인이라면 "날짜 없음" 행 하나가 생기거나, NULL 행을 걸러내는 로직이 있다면 매출 전체가 증발합니다. `mysql_tzinfo_to_sql /usr/share/zoneinfo`로 적재하면 같은 쿼리가 정상 집계됩니다.
+
+한 가지 못 박아 둘 것이 있습니다. **비어 있는 상태는 이 이미지의 기본값이 아닙니다.** mysql:8.4.3 도커 이미지는 타임존 테이블이 채워진 채로 오고, 이 실험은 그것을 `TRUNCATE`로 비워 tarball 설치 직후 상태를 만든 것입니다. 자세한 경위는 6절에 있고, RDS에서는 이 지뢰가 아예 다른 모양이 된다는 것은 뒤의 RDS 절에 있습니다.
 
 ### 지뢰 4. TIMESTAMP와 DATETIME
 
@@ -94,6 +112,68 @@ latin1로 붙은 클라이언트가 이모지를 넣으면 **에러도 경고도
 | 타입 혼선 | 팀 규약으로 고정: 이벤트 시각은 UTC DATETIME(2038 문제 없음) + 애플리케이션 변환, 또는 TIMESTAMP + 세션 타임존 통일 |
 | 접속 착시 | 모든 클라이언트 설정에 문자셋 명시 (JDBC `connectionCollation`, mysql CLI `--default-character-set`) |
 
+첫 줄의 "전환 계획 수립"을 한 줄로 넘기면 안 되는 이유는 RDS 절에 따로 적었습니다. utf8mb4 전환은 스키마 변경이 아니라 스토리지 결정입니다.
+
+## 5. 재계측
+
+이 세션은 지연도 처리량도 재지 않았습니다. 그래서 여기서 말하는 전후는 시간이 아니라 **조건만 바꿔 같은 종류의 문장을 다시 돌렸을 때의 출력**입니다. 여섯 지뢰 중 해소까지 돌려 대조가 남은 것은 셋이고, 나머지 셋은 해소를 실행하지 않아 후 수치가 없습니다.
+
+### 전후가 남은 셋
+
+| 지뢰 | 바꾼 것 | 전 | 후 |
+|---|---|---|---|
+| CONVERT_TZ NULL | `mysql_tzinfo_to_sql /usr/share/zoneinfo` 적재 | `time_zone_name` 0행, 집계가 `NULL` 한 줄에 54,000원 | 1,792행, `2026-07-27` 10,000원과 `2026-07-28` 44,000원 두 줄 |
+| 인덱스 767바이트 | 키를 191자 프리픽스로, 또는 ROW_FORMAT을 DYNAMIC으로 | COMPACT + utf8mb4 `VARCHAR(255)` 전체 인덱스에서 ERROR 1071 | `KEY(name(191))` 성공, DYNAMIC + 255자 성공 |
+| 접속 문자셋 착시 | 클라이언트에 `--default-character-set=utf8mb4` 명시 | latin1 접속: 에러도 경고도 없이 저장 성공, 첫 4자의 바이트가 `C3ADE280BAE2809EC3AC` | utf8mb4 접속: 같은 종류의 INSERT가 strict에서 ERROR 1366, non-strict에서 Warning 1366 |
+
+첫 줄만 같은 쿼리를 두 번 돌린 진짜 전후입니다. 둘째 줄은 같은 조건에서 인덱스 정의만 바꿔 다시 만든 것이고, 셋째 줄은 접속만 다르고 문자열과 테이블은 다른 INSERT라 엄밀한 짝은 아닙니다. 그래도 셋째 줄이 이 세션에서 가장 값어치 있는 대조입니다. 접속 문자셋을 고정하는 것만으로 "조용한 성공"이 "시끄러운 실패"로 바뀝니다. 데이터가 덜 깨져서가 아니라 깨지는 것을 볼 수 있게 돼서입니다.
+
+### 후 수치가 없는 셋
+
+- **utf8mb3 치환(지뢰 1).** 해소는 `ALTER TABLE ... CONVERT TO CHARACTER SET utf8mb4`인데 **이 세션에서 실행하지 않았습니다.** 전환 뒤 같은 INSERT가 통과하는지 확인하지 않았습니다. 다만 이미 저장된 행은 전환해도 복구되지 않습니다. 출력이 `좋은 방송 ? 후원했어요`라 원본 바이트가 남아 있지 않기 때문입니다. 치환은 잃어버린 뒤에 고칠 수 없습니다.
+- **TIMESTAMP 2038(지뢰 4).** 해소가 타입 규약이라 DB에서 돌릴 실험이 아니라 코드 결정입니다. DATETIME 컬럼에 2038년 이후 값이 들어가는 것을 확인하는 한 줄조차 넣지 않았습니다.
+- **언어별 생존(지뢰 5).** 관찰 실험이라 전후가 성립하지 않습니다. utf8mb4 테이블에 같은 다섯 줄을 넣어 `?`가 사라지는 것을 보이는 대조군을 두지 않았습니다.
+
+그리고 **어느 항목도 소요 시간을 재지 않았습니다.** 재현이 SQL 몇 줄이라 시간을 재는 것이 의미가 없었고, 실제로 시간이 드는 작업(대형 테이블의 문자셋 전환)은 이 세션 범위 밖입니다.
+
+## RDS에서는 무엇이 달라지는가
+
+먼저 못 박아 둘 것이 있습니다. **이 세션은 RDS에서 아무것도 돌리지 않았습니다.** MySQL 8.4.3 도커 컨테이너 하나가 전부이고, 아래는 AWS 문서와 대조해 맞춘 것이지 실측이 아닙니다.
+
+그런데도 이 절이 필요합니다. 여섯 지뢰 중 셋(타임존 테이블, 문자셋 기본값, 전환 비용)은 **관리형이냐 아니냐에 따라 원인도 처방도 갈리고**, 나머지 셋(TIMESTAMP의 계약, 언어별 생존, 접속 문자셋)은 엔진과 클라이언트의 성질이라 어디서 돌리든 같습니다. 이 구분을 하지 않으면 이 세션이 R 트랙에 있을 이유가 없습니다.
+
+### 타임존: RDS의 위험은 "비어 있음"이 아니라 "낡음"이다
+
+지뢰 3이 만든 상태부터 정확히 적겠습니다. mysql:8.4.3 도커 이미지는 `time_zone_name`이 1,792행 채워진 채로 옵니다. 비어 있는 상태는 기본값이 아니라 `TRUNCATE`로 만든 것입니다. "도커라서 NULL이 난다"는 말은 틀립니다.
+
+RDS에서는 그 실험 자체가 성립하지 않습니다. AWS 문서가 "Starting with RDS for MySQL version 8.0.36, you can't modify the tables in the `mysql` database directly"라고 적고, 이어서 "You can still query the `mysql` tables"라고 합니다. 읽을 수는 있고 지울 수는 없습니다. 비우는 재현도, `mysql_tzinfo_to_sql`로 다시 채우는 복구도 그대로는 못 합니다. 같은 문서에서 타임존 테이블을 손으로 갱신하는 방법을 안내하는 문장은 대상이 MariaDB 인스턴스로 적혀 있습니다.
+
+대신 RDS는 타임존 데이터를 엔진에 실어 보냅니다. 문서의 표현은 "Every time RDS releases a new minor maintenance release of MySQL, it ships with the latest time zone data at the time of the release"입니다. 그리고 이름 있는 타임존을 파라미터 그룹에서 고를 수 있습니다. `time_zone` 파라미터의 지원 값 목록에 `Asia/Seoul`이 들어 있습니다. MySQL이 이름 있는 타임존을 받으려면 타임존 테이블이 적재돼 있어야 하므로, 이 두 문장은 RDS 인스턴스가 채워진 상태로 시작한다는 뜻으로 읽힙니다.
+
+**여기까지가 문서로 확인한 것이고, 확인하지 못한 것이 있습니다.** RDS 인스턴스를 띄워 `SELECT COUNT(*) FROM mysql.time_zone_name`을 직접 돌려 보지 않았습니다. 행 수도, 그 데이터가 어느 IANA 릴리스인지도 실측하지 않았습니다.
+
+그래서 지뢰의 모양이 바뀝니다. 같은 문서가 "RDS doesn't modify or reset the time zone data of running DB instances. New time zone data is installed only when you perform a database engine version upgrade"라고 적습니다. IANA는 타임존 규칙을 한 해에 여러 차례 고치는데, 엔진 버전을 올리기 전까지 인스턴스의 규칙은 멈춰 있습니다. 도커에서 본 실패는 NULL이라 최소한 눈에 띄지만, 낡은 규칙으로 변환한 결과는 NULL도 에러도 아니고 그냥 한 시간 어긋난 값입니다. **이쪽이 더 조용합니다.**
+
+다만 이건 문서에서 끌어낸 구조이지 이 세션이 재현한 것이 아닙니다. 규칙이 바뀐 나라의 날짜를 골라 낡은 데이터와 새 데이터로 같은 `CONVERT_TZ`를 돌려 비교하는 실험은 하지 않았습니다. 한국은 지금 DST가 없어 KST가 고정 오프셋이라, 그 실험을 하려면 대상 나라부터 바꿔야 합니다.
+
+### 문자셋: 기본값이 파라미터 그룹에 있다
+
+호스트의 `my.cnf`를 못 고치므로 `character_set_server`와 `collation_server`는 DB 파라미터 그룹에서 바꾸는 값이 됩니다. 8.4의 엔진 기본값이 utf8mb4라 새로 만드는 인스턴스는 이 지뢰에서 멀지만, **파라미터 그룹은 컬럼 문자셋을 고쳐 주지 않습니다.** utf8mb3 시절 스키마를 그대로 옮겨 온 인스턴스는 서버 기본값이 utf8mb4여도 컬럼 단위로 utf8mb3가 남아 있고, 지뢰 1은 컬럼 문자셋에서 나는 일입니다.
+
+`sql_mode`도 같은 자리입니다. 지뢰 1의 non-strict는 실험에서 `SET SESSION sql_mode=''`로 만들었지만, 운영에서 그 상태가 되는 경로는 대개 파라미터 그룹에 `STRICT_TRANS_TABLES`가 빠져 있는 것입니다. 세션 한 줄로 재현되는 조건이 인스턴스 전체에 걸려 있을 수 있다는 뜻입니다.
+
+### utf8mb4 전환은 되돌릴 수 없는 스토리지 증가다
+
+4절 표가 "전환 계획 수립"으로 넘긴 자리입니다. **금액은 계산하지 않았습니다.** 인스턴스 클래스도 스토리지 타입도 정하지 않았고, 이 세션에 전환 전후의 크기 측정이 없습니다. 구조만 적습니다.
+
+- **인덱스 키 계산이 문자당 3바이트에서 4바이트로 바뀝니다.** 지뢰 2가 그 결과입니다. `VARCHAR(255)` 인덱스의 선언 키 길이가 765바이트에서 1,020바이트가 되고, COMPACT 테이블에서는 767바이트 한계를 넘어 아예 만들어지지 않습니다.
+- **실제로 늘어나는 바이트는 데이터가 정합니다.** 한글은 utf8mb3에서도 utf8mb4에서도 3바이트라 그대로입니다. 늘어나는 것은 4바이트 문자가 실제로 들어 있는 행이고, 그 비율을 이 세션은 재지 않았습니다. 반면 인덱스 프리픽스처럼 상한으로 잡는 자리는 데이터와 무관하게 커집니다.
+- **전환은 테이블 재구축입니다.** MySQL 8.4의 온라인 DDL 표는 문자셋 변환을 `ALGORITHM=INPLACE`로 지원하고 동시 DML도 허용하지만, "Rebuilds the table if the new character encoding is different"라고 적습니다. 재구축이므로 진행 중에는 원본과 새 사본이 함께 자리를 차지합니다.
+- **RDS에서 그 자리는 돌아오지 않습니다.** AWS 문서가 "You can't reduce the amount of storage on a volume after you have allocated storage for it"이라고 적습니다. 재구축이 볼륨을 한 번 밀어 올리면(스토리지 자동 확장이 켜져 있으면 자동으로 밀립니다) 전환이 끝나고 여유가 생겨도 할당량은 그대로입니다. 줄이려면 더 작은 인스턴스를 새로 만들어 옮겨 심어야 합니다.
+- **Aurora는 반대쪽으로 움직입니다.** 스토리지가 실제 사용량을 따라가므로 늘어난 만큼만 과금되고 줄면 줄어듭니다. 대신 Aurora Standard는 스토리지 I/O를 건수로 과금하므로 재구축이 만드는 I/O가 그 자리에서 청구서에 잡힙니다.
+
+즉 utf8mb4 전환의 비용은 "ALTER가 몇 분 걸리나"가 아니라 **그 뒤로 매달 어느 크기의 볼륨을 쓰게 되나**입니다. 이 세션은 앞쪽도 뒤쪽도 재지 않았습니다.
+
 ## 6. 예상과 달랐던 점
 
 ### 절단이 아니라 치환이었습니다
@@ -110,6 +190,9 @@ WordPress 사고 시절(MySQL 5.5·5.6)의 non-strict 동작은 이모지 지점
 
 ## 못 한 것
 
+- **RDS에서 아무것도 돌리지 않았습니다.** 위 RDS 절은 전부 AWS 문서 대조입니다. 특히 `mysql.time_zone_name`의 실제 행 수와 그 데이터의 IANA 릴리스를 인스턴스에서 확인하지 않았습니다.
+- **낡은 타임존 데이터가 만드는 오변환을 재현하지 않았습니다.** RDS 절이 말한 "NULL보다 조용한 실패"는 구조로 끌어낸 것이지 실측이 아닙니다. 규칙이 바뀐 나라를 골라 두 버전의 데이터로 같은 `CONVERT_TZ`를 돌리는 실험이 필요합니다.
 - **DST 전환(중복·결손 시각)은 다루지 않았습니다.** 한국은 DST가 없지만 글로벌 서비스라면 3월 미국 DST 전환 시각의 중복 저장 문제가 남아 있습니다.
-- **utf8mb4 전환 비용(ALTER 소요 시간)을 재지 않았습니다.** 대형 테이블의 CONVERT TO CHARACTER SET은 테이블 재구축이라 별도 측정 가치가 있습니다.
+- **utf8mb4 전환을 실행하지 않았습니다.** ALTER 소요 시간도, 전환 전후의 테이블과 인덱스 크기도 재지 않았습니다. RDS 절에 구조만 적고 배수도 금액도 적지 않은 이유입니다.
+- **호스트 사양을 기록하지 않았습니다.** 이 세션은 시간 수치가 없어 결론이 흔들리지는 않지만, 기록 자체는 빠져 있습니다.
 - **타임존 사고의 E1 사례를 찾지 못했습니다.** 문자셋 쪽은 WordPress 사고가 있지만 타임존 쪽은 공식 문서 경고(E2)까지만 확보했습니다.

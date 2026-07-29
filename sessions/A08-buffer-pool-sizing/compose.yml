@@ -11,15 +11,21 @@ services:
     command:
       # 스윕 대상. sweep.sh가 BP_SIZE를 바꿔 가며 재기동한다.
       - --innodb-buffer-pool-size=${BP_SIZE:-1G}
-      # 인스턴스를 1로 고정한다. 버퍼 풀 크기는 chunk_size * instances의 배수로 자동 반올림되는데,
-      # 8.4 기본값(1GB 이상이면 instances=8)을 그대로 두면 1536M 같은 값이 조용히 2G로 올라간다.
+      # 인스턴스를 1로 고정한다. 버퍼 풀 크기는 chunk_size * instances의 배수로 자동 반올림되므로,
       # 1로 고정하면 반올림 단위가 chunk_size(128M)라서 스윕 값이 지정한 그대로 잡힌다.
+      # 고정 8은 8.0 기본값이고, 8.4는 이 값을 동적으로 계산한다(1GiB 이하면 1, 넘으면 버퍼 풀
+      # 힌트와 사용 가능한 논리 프로세서 수 중 작은 쪽을 1~64로 클램프). 논리 프로세서가 2개인
+      # 이 호스트에서는 기본값도 8이 아니므로, 이 줄이 막은 것은 반올림뿐이다.
       - --innodb-buffer-pool-instances=1
-      # O_DIRECT로 데이터 파일을 읽는다. 이걸 끄면 버퍼 풀에서 miss가 나도 호스트 페이지 캐시가
-      # 받아 주기 때문에 "풀이 작아서 느려지는" 그림이 흐려진다. 그 차이 자체도 exp-pagecache.sh에서 잰다.
+      # O_DIRECT로 데이터 파일을 읽는다. 이건 기본값을 끄는 조치가 아니라 8.4의 Unix 계열
+      # 기본값("O_DIRECT if supported, otherwise fsync")을 조건 없이 못 박는 조치다.
+      # fsync가 8.0의 옛 기본값이고, 그때는 miss가 나도 호스트 페이지 캐시가 받아 주기 때문에
+      # "풀이 작아서 느려지는" 그림이 흐려졌다. 두 값의 차이는 run-pagecache.sh에서 잰다.
       - --innodb-flush-method=${FLUSH_METHOD:-O_DIRECT}
       # 종료 시 덤프, 기동 시 로드를 끈다. 8.4 기본값은 둘 다 ON이라 그냥 두면 재기동한 다음 실행이
-      # 직전 실행의 워킹셋을 그대로 물려받는다. 스윕은 매 조건이 콜드에서 출발해야 한다.
+      # 직전 실행의 워킹셋을 그대로 물려받는다.
+      # 주의: 이걸 껐다고 콜드에서 출발하지는 않는다. workload.py가 임포트 시점에 COUNT(*)로
+      # 클러스터드 인덱스를 통째로 훑기 때문에, 워밍업은 풀 스캔 직후 상태에서 시작한다.
       - --innodb-buffer-pool-dump-at-shutdown=OFF
       - --innodb-buffer-pool-load-at-startup=OFF
       # 읽기 전용 부하라 바이너리 로그는 디스크만 먹는다.
