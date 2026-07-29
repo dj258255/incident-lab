@@ -1,19 +1,19 @@
 == F15 클라이언트 측정 ==
-mode=conflate run=3 측정시간=45.3s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
+mode=conflate run=3 측정시간=45.1s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
 백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
 
 -- 정상 구독자 --
 id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
-normal-1     116900     125346       1ms       4ms      13ms     167ms     2.1ms     168ms  -
-normal-2     118184     126006       1ms       4ms      13ms     162ms     2.1ms     163ms  -
-normal-3     116755     126007       1ms       5ms      13ms     164ms     2.1ms     236ms  -
-normal-4     117724     126009       1ms       4ms      12ms     161ms     2.1ms     162ms  -
-normal-5     116884     126006       1ms       4ms      14ms     161ms     2.1ms     162ms  -
+normal-1     129189     130020       1ms       1ms       5ms      94ms     2.0ms      96ms  -
+normal-2     129177     130134       0ms       1ms       5ms     117ms     2.0ms     116ms  -
+normal-3     129416     130079       0ms       1ms       5ms      92ms     2.0ms      94ms  -
+normal-4     129482     130062       0ms       1ms       5ms      94ms     2.0ms      96ms  -
+normal-5     129236     130152       0ms       1ms       5ms     103ms     2.0ms     105ms  -
 
-합계 수신 586447건, 정상 구독자 전체 지연 p50=1ms p95=4ms p99=13ms max=167ms
-최종 수신 틱 seq: 최소 125346, 최대 126009
+합계 수신 646500건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=5ms max=117ms
+최종 수신 틱 seq: 최소 130020, 최대 130152
 
 -- 느린 구독자 --
-slow-1  읽은 바이트 1,461,096 (평균 30.8 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
+slow-1  읽은 바이트 1,467,648 (평균 31.6 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
 
-SUMMARY mode=conflate run=3 recv_total=586447 lat_p50_ms=1 lat_p95_ms=4 lat_p99_ms=13 lat_max_ms=167 last_seq_min=125346 last_seq_max=126009 worst_client_p95_ms=5 worst_client_max_ms=167 slow_read_bytes=1461096 slow_closed_at_s=none
+SUMMARY mode=conflate run=3 recv_total=646500 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=5 lat_max_ms=117 last_seq_min=130020 last_seq_max=130152 worst_client_p95_ms=1 worst_client_max_ms=117 slow_read_bytes=1467648 slow_closed_at_s=none

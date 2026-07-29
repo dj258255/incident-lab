@@ -113,12 +113,12 @@
         },
         {
           "label": "conflation",
-          "value": 2881,
+          "value": 2907,
           "color": "green"
         },
         {
           "label": "절단1M/3s",
-          "value": 2782,
+          "value": 2949,
           "color": "green"
         },
         {
@@ -176,7 +176,7 @@
         },
         {
           "label": "conflation",
-          "value": 0.4,
+          "value": 0.3,
           "color": "green"
         },
         {
@@ -239,12 +239,12 @@
         },
         {
           "label": "conflation",
-          "value": 47.5,
+          "value": 46.7,
           "color": "green"
         },
         {
           "label": "절단1M/3s",
-          "value": 51.9,
+          "value": 50.7,
           "color": "green"
         },
         {

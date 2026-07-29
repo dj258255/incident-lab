@@ -107,7 +107,9 @@ combo-stalled    1    46       134844     2931           47.3          0.01     
 전체 33행은 `results/summary.csv`에 있습니다. 위 발췌는 열 일부를 줄인 것입니다.
 
 `terminate` 조건의 2회차가 `lat_p95_ms=1209`, `last_seq_min=18686`으로 다른 회차와 크게
-다릅니다. 한도 1MB에 3초 판정이라 끊기로 결정하기까지 피해가 쌓인 회차입니다. 이 편차 때문에
+다릅니다. 처음에는 한도 1MB에 3초 판정이라 끊기로 결정하기까지 피해가 쌓인 회차로 읽었습니다.
+실제로는 이 회차를 포함한 여섯 회차가 같은 호스트에서 다른 세션의 MySQL 부하가 도는 동안
+측정된 것이었습니다. 6절에서 다시 쟀고 아래 표와 그림은 재측정값입니다. 이 편차 때문에
 표에는 평균이 아니라 중앙값을 씁니다.
 
 ## 5. 리포트와 그림 생성
@@ -125,8 +127,8 @@ F15 슬로우 컨슈머   (정상 구독자 5 + 느린 구독자 1, 초당 3,000
            직접 전송 (완전 정지 구독자)    1,630    46.2M    0.00M       20.7초    0.2초        2ms    0      끊지 않음
                        무제한 큐    1,937   123.7M   95.58M        0.5초   17.0초        1ms    1      끊지 않음
                 바운디드 큐 1000건    2,925    47.5M    0.46M        0.2초    0.3초        1ms    0      끊지 않음
-        conflation (종목별 최신만)    2,881    47.5M    0.01M        0.4초    0.2초        1ms    0      끊지 않음
-                   절단 1MB/3초    2,782    51.9M    3.88M        0.1초    0.4초      175ms    0       7.3초
+        conflation (종목별 최신만)    2,907    46.7M    0.01M        0.3초    0.2초        1ms    0      끊지 않음
+                   절단 1MB/3초    2,949    50.7M    3.70M        0.1초    0.2초        1ms    0       6.9초
                  절단 512KB/1초    2,932    48.1M    1.11M        0.1초    0.2초        1ms    0       4.3초
           Spring 데코레이터 512KB    2,902    47.3M    0.51M        0.1초    0.2초        2ms    0       4.3초
              conflation + 절단    2,936    47.5M    0.01M        0.2초    0.2초        1ms    0      끊지 않음
@@ -150,7 +152,32 @@ $ docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/work incident-lab-render \
 생성: sessions/F15-websocket-slow-consumer/results/03-heap.png  940x560
 ```
 
-## 6. 정리
+## 6. 재측정
+
+4절의 `conflate` 2·3회차와 `terminate` 1·2·3회차는 같은 호스트에서 다른 세션의 MySQL 부하가
+도는 동안 측정됐습니다. 그 부하가 모두 끝나 실험 컨테이너가 하나도 없고 `uptime`의 1분
+로드가 2.17로 내려간 것을 확인한 뒤, 두 모드를 3회씩 다시 쟀습니다.
+
+```console
+$ MODES="conflate terminate" RUNS=3 bash scripts/run-suite.sh
+
+$ bash scripts/summarize.sh
+mode             run  seconds  published  publish_per_s  heap_peak_mb  slow_queue_peak_mb  gc_ms  broadcast_blocked_ms  oom  lat_p95_ms  recv_total  slow_closed_at_s
+conflate         1    46       132984     2891           47.1          0.01                222    282                   0    2           628107      none
+conflate         2    45       132648     2948           46.7          0.01                154    420                   0    1           649398      none
+conflate         3    46       133722     2907           46.6          0.01                195    111                   0    1           646500      none
+terminate        1    46       134718     2929           52.7          4.61                255    82                    0    1           655974      6.9
+terminate        2    45       133080     2957           50.7          3.57                208    49                    0    1           654626      6.9
+terminate        3    45       132720     2949           50.7          3.70                214    107                   0    1           650196      6.8
+```
+
+`terminate` 세 회차의 총 수신 건수가 655,974건과 654,626건과 650,196건으로 편차가 1% 안에
+들어왔고 정상 구독자 p95는 세 회차 모두 1ms입니다. 오염된 측정에서는 619,878건과 306,506건과
+634,597건이었고 p95는 10ms와 1,209ms와 175ms였습니다. 4절과 5절의 표, `results/`의 그림은
+모두 이 재측정값으로 갱신했습니다. 오염된 회차의 원본 로그는 `results/raw/suite-before-remeasure.txt`에
+남겨 두었습니다.
+
+## 7. 정리
 
 ```console
 $ docker compose down --remove-orphans
