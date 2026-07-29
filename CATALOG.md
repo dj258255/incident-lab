@@ -124,6 +124,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 | B31 ★★ **완료** | **[ThreadLocal이 붙잡은 클래스로더](sessions/B31-threadlocal-classloader-leak/)** | **[E2]** remove() 누락 시 워커 스레드가 클래스로더를 붙잡음. Tomcat이 전용 경고 메시지(`checkThreadLocalsForLeaks`)를 찍는 고전 | **[재현 검증 완료]** Tomcat·WAR 없이 URLClassLoader만으로 재현. **조건 3개 필수: 스레드풀 + 매 배포 새 클래스로더 + `ThreadLocal`이 웹앱 클래스로더 안 static 필드에 있을 것.** 3번이 빠지면 안 샌다(실측 생존 1/300). 계측은 OOM 대기 말고 약한참조 생존 수로 — 누수 300/300, remove() 0/300 | **쉬움** |
 | B32 ★★ | **파일 디스크립터 누수** | **[E2]** close 누락으로 `Too many open files`. 원인은 HTTP·JDBC 커넥션 미반환·스트림 미종료·JNI 누수. **대표 단일 사건은 없음(§13 참조)** | ulimit -n 256 + close 안 하는 클라이언트 반복 → `/proc/[PID]/fd`·lsof로 증가 관측 → try-with-resources 비교 | 쉬움 |
 | B51 ★★ | **ForkJoinPool commonPool 오염** | **[E2]** **Oracle javadoc 원문 근거**: commonPool은 "used by any ForkJoinTask that is not explicitly submitted to a specified pool", 블로킹에 대해 "no such adjustments are guaranteed in the face of blocked I/O", `shutdown()`으로 종료도 안 됨. **~~국내 실장애 회고(2019)~~ 재검색 3회 실패 — 삭제(§12 참조)** | commonPool에서 긴 블로킹 작업 점유 → 다른 parallel stream 대기 관측 → 전용 풀 지정 비교 | 쉬움 |
+| B52 ★★★ **완료** | **[JPA 목록 API의 세 함정](sessions/B52-jpa-list-api/)** | **[E2]** Hibernate 공식이 기본 페치를 "N+1에 극도로 취약"이라 명시. 실무 앵커는 우아한형제들 NoOffset(5초→0.08초), 컬리 saveAll(78초→1.7초), Shopify 커서(99.76%) | `[L]` Spring Boot로 N+1·페이지네이션·대량삽입 전후. 응답시간과 함께 서버가 받은 쿼리 수를 세는 것이 핵심 | 하 |
 
 ### 3-5. 타임아웃·네트워크 계층
 
@@ -477,7 +478,7 @@ B38(Log4Shell)·B40(SSRF)·B41(역직렬화)·B42(xz)는 **격리된 로컬 환�
 - [ ] A12 GitHub 스플릿브레인 · [ ] A13 GitLab 재구축 · [ ] A14 XID · [ ] A15 fsyncgate · [ ] A16 OOM Killer · [x] A17 UUID 스플릿 · [x] A18 Uber 쓰기 증폭 · [ ] A19 SLRU 절벽 · [ ] A20 CRDB 쿼럼 · [ ] A21 Figma 논리복제
 
 **B 트랙 (50)**
-- [ ] B01 HikariCP · [ ] B02 스탬피드 · [ ] B03 read-your-writes · [ ] B04 페이지네이션 · [ ] B05 리트라이 폭풍 · [ ] B06 핫 로우 · [ ] B07 coalescing · [ ] B08 GC 스톨 · [ ] B09 Kafka 리밸런스 · [ ] B10 클럭 스큐 · [ ] B11 Redis 커넥션 · [ ] B12 memcache lease · [ ] B13 샤딩
+- [ ] B01 HikariCP · [ ] B02 스탬피드 · [ ] B03 read-your-writes · [x] B04 페이지네이션 · [ ] B05 리트라이 폭풍 · [ ] B06 핫 로우 · [ ] B07 coalescing · [ ] B08 GC 스톨 · [ ] B09 Kafka 리밸런스 · [ ] B10 클럭 스큐 · [ ] B11 Redis 커넥션 · [ ] B12 memcache lease · [ ] B13 샤딩
 - [ ] B14 정규식 백트래킹 · [ ] B15 ORDER BY RAND · [ ] B16 Soft Delete · [ ] B17 FLOAT 돈 계산 · [ ] B18 DST · [ ] B19 Knight 플래그 · [ ] B20 500마일 · [ ] B21 S3 가드레일 · [ ] B22 자기 철회 · [ ] B23 테넌트 격리
 - [ ] B24 분산락 펜싱 · [ ] B25 self-invocation · [ ] B26 트랜잭션 내 외부호출 · [ ] B27 exactly-once · [ ] B28 poison DLQ · [ ] B29 스케줄러 중복 · [ ] B30 무한큐 OOM · [x] B31 ThreadLocal 누수 · [ ] B32 FD 누수 · [ ] B51 commonPool 오염
 - [ ] B33 keep-alive 502 · [ ] B34 타임아웃 계층 · [ ] B35 Actuator heapdump · [ ] B36 JWT alg=none · [ ] B37 압축폭탄 · [ ] B38 Log4Shell · [ ] B39 XXE · [ ] B40 SSRF IMDS · [ ] B41 역직렬화 · [ ] B42 xz

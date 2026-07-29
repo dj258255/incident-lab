@@ -1,0 +1,21 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:13314/spoon?rewriteBatchedStatements=${REWRITE:true}
+    username: root
+    password: lab
+    hikari:
+      maximum-pool-size: 20
+  jpa:
+    hibernate.ddl-auto: none
+    open-in-view: false
+    properties:
+      # 배치 크기를 0으로 두면 saveAll이 행마다 INSERT를 보낸다.
+      # 환경변수로 켜고 끄면서 같은 코드의 전후를 잰다.
+      hibernate.jdbc.batch_size: ${BATCH_SIZE:0}
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+
+logging.level.root: WARN

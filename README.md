@@ -59,9 +59,9 @@ sessions/<트랙><번호>-<슬러그>/
 
 | 상태 | 수 |
 |---|---|
-| 완료 | 21 |
+| 완료 | 22 |
 | 진행 중 | 0 |
-| 대기 | 148 |
+| 대기 | 147 |
 
 <!-- 세션이 완료되면 아래에 추가 -->
 - [F01 한맥 0으로 나눈 값이 주문 검증을 뚫다](sessions/F01-hanmac-divide-by-zero/) — NaN 비교가 상하한 검증을 무력화, 유한성 가드와 킬스위치로 해소. 최소 재현과 Spring 주문접수 API 재현
@@ -70,6 +70,7 @@ sessions/<트랙><번호>-<슬러그>/
 - [F13 매칭엔진 가격우선·시간우선 동시성](sessions/F13-matching-engine-priority/) — naive 병렬 매칭에서 체결의 63~96%가 시간우선 위반, 단일 시퀀서로 위반 0건. 처리량 손해 없음(2 vCPU 기준)
 - [F17 부동소수점 금지, BigDecimal](sessions/F17-bigdecimal-money/) — 밴쿠버 1982 절삭 재현(60,000회에 -29.9포인트)과 double 100만 건 누적 오차, scale·RoundingMode 명시와 최소 화폐단위 long으로 해소
 - [R14 문자셋·타임존 지뢰밭](sessions/R14-charset-timezone/) — utf8mb3 이모지 처리(8.4는 절단이 아니라 ? 치환), 767바이트 인덱스, CONVERT_TZ가 일별 집계를 NULL 한 줄로 만드는 것, latin1 접속의 이중 인코딩 착시까지 6종 재현
+- [B52 JPA 목록 API의 세 함정](sessions/B52-jpa-list-api/) — N+1(쿼리 21개→1개), 커서 페이지네이션의 표준 문법이 MySQL에서 range 최적화를 못 받아 OFFSET보다 느린 것, saveAll이 IDENTITY와 merge 때문에 각각 다른 이유로 느린 것(INSERT 1만 회 대 SELECT 1만 회)
 - [A22 인덱스는 있는데 쿼리가 못 쓴다](sessions/A22-index-not-used/) — 형변환·문자셋·함수·선행 와일드카드·비트 연산 다섯 조건에서 인덱스를 그대로 두고 쿼리만 고쳐 최대 1,969배. 읽은 행을 EXPLAIN 추정이 아니라 Handler_read 카운터로 실측
 - [A18 Uber의 PostgreSQL 쓰기 증폭](sessions/A18-uber-write-amplification/) — 인덱스 수 x fillfactor x 갱신 컬럼 9조건의 WAL·HOT 실측. 꽉 찬 페이지에서 인덱스 10개는 WAL 2.2배(Uber가 옳은 조건), 정상 상태 HOT 83.5%에서는 1.4배(반론이 옳은 조건)
 - [R01 복제 지연 중 승격의 커밋 유실](sessions/R01-replica-promotion-loss/) — 성공 응답을 받은 후원 927건 중 555건이 승격본에 없음을 GTID 차집합으로 특정. 반동기는 유실 0이지만 타임아웃 강등 창에서 유실이 되살아남. Seconds_Behind_Source가 분단 후 19초간 0을 표시하는 것까지

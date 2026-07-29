@@ -1,0 +1,22 @@
+label,elapsed_ms,select_count
+N+1 지연로딩,25,21
+fetch join(EntityGraph),7,1
+집계 프로젝션,4,1
+OFFSET 0,4,1
+OFFSET 10000,5,1
+OFFSET 100000,16,1
+OFFSET 199980,28,1
+커서(행값) 0,3,1
+커서(풀어씀) 0,3,1
+커서(행값) 10000,5,1
+커서(풀어씀) 10000,4,1
+커서(행값) 100000,17,1
+커서(풀어씀) 100000,4,1
+커서(행값) 199980,31,1
+커서(풀어씀) 199980,3,1
+saveAll IDENTITY (배치 0),4607,0
+JDBC batchUpdate,137,0
+saveAll IDENTITY (배치 500),4896,0
+saveAll 직접ID (배치 500),4804,0
+JDBC batchUpdate (배치 500),124,0
+saveAll 직접ID (배치 500 · rewrite 끔),8544,0
