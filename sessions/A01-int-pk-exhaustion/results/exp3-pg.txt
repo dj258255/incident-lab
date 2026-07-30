@@ -24,17 +24,28 @@
 
   테이블 크기 = 191 MB
     ALTER TABLE
-  [한 방 ALTER] 소요 1.9초, 그 안에 시작한 쓰기 4건 중 성공 4건 = 초당 2.1건
+  [한 방 ALTER] 소요 1.6초, 그 안에 시작한 쓰기 5건 중 성공 5건 = 초당 3.1건
   [한 방 ALTER] 전환 직전 5초 기준선 = 초당 32.4건
-  [한 방 ALTER] 지연 중앙값 20ms, 최대 1791ms (표본 4건이라 p95 없음)
+  [한 방 ALTER] 지연 중앙값 19ms, 최대 1515ms (표본 5건이라 p95 없음)
   [한 방 ALTER] 실패 0건
   ALTER 가 쥔 락(관측된 것 전부): AccessExclusiveLock,RowExclusiveLock,ShareLock
   서버 로그의 락 대기:
-    2026-07-30 10:29:37.942 UTC [33467] LOG:  process 33467 still waiting for RowExclusiveLock on relation 32903 of database 16384 after 202.679 ms at character 13
-    2026-07-30 10:29:39.513 UTC [33467] LOG:  process 33467 acquired RowExclusiveLock on relation 32903 of database 16384 after 1773.100 ms at character 13
+    2026-07-30 10:34:00.415 UTC [85685] LOG:  process 85685 still waiting for RowExclusiveLock on relation 32957 of database 16384 after 200.171 ms at character 13
+    2026-07-30 10:34:01.712 UTC [85685] LOG:  process 85685 acquired RowExclusiveLock on relation 32957 of database 16384 after 1497.206 ms at character 13
 
 ## 3) expand-contract
   1. expand   ADD COLUMN id_new bigint : 0.06초
-     워터마크 id <= 3000199 (이 범위가 벌크, 그 뒤 들어온 행은 3단계에서 처리)
-  2. backfill 2만 행씩 151회 청크 UPDATE : 88.2초 (갱신 합계 3000199행)
-scripts/exp3-pg.sh: line 203: TOTAL�: unbound variable
+     워터마크 id <= 3000203 (이 범위가 벌크, 그 뒤 들어온 행은 3단계에서 처리)
+  2. backfill 2만 행씩 151회 청크 UPDATE : 99.6초 (갱신 합계 3000203행)
+     검산: 테이블 3003393행, 청크 갱신 합계 3000203행 불일치
+  3. 잔여    백필 중 들어온 3193건 마저 채움 : 0.32초
+  [expand-contract] 소요 100.1초, 그 안에 시작한 쓰기 3205건 중 성공 3205건 = 초당 32.0건
+  [expand-contract] 전환 직전 5초 기준선 = 초당 33.2건
+  [expand-contract] 지연 중앙값 17ms, p95 19ms, 최대 66ms
+  [expand-contract] 실패 0건
+
+## 정리
+  한 방 ALTER TYPE       1.6초
+  expand-contract        100.1초
+  MySQL 의 사전 거부       있음 (ERROR 1846)
+  PostgreSQL 의 사전 거부   없음. ACCESS EXCLUSIVE 를 쥐고 그냥 다시 쓴다

@@ -199,8 +199,9 @@ done
 S1=$(date +%s.%N)
 SUM=$(awk '{s+=$1} END{print s}' "$OUT/pg-backfill-chunks.txt")
 printf "  2. backfill 2만 행씩 %d회 청크 UPDATE : %.1f초 (갱신 합계 %s행)\n" "$CH" "$(echo "$S1-$S0" | bc)" "$SUM"
-TOTAL=$(Q "SELECT count(*) FROM sponsor_b")
-echo "     검산: 테이블 ${TOTAL}행, 청크 갱신 합계 ${SUM}행 $([ "$SUM" = "$TOTAL" ] && echo 일치 || echo 불일치)"
+# 검산은 워터마크와 비교해야 한다. 테이블 총행 수는 백필 중 부하가 넣은 만큼 늘어나므로
+# 그 값과 비교하면 항상 불일치로 찍힌다. 그 차이는 3단계가 처리한다.
+echo "     검산: 워터마크 ${WM}, 청크 갱신 합계 ${SUM} $([ "$SUM" = "$WM" ] && echo 일치 || echo 불일치)"
 S0=$(date +%s.%N)
 LEFT=$(Q "SELECT count(*) FROM sponsor_b WHERE id_new IS NULL")
 Q "UPDATE sponsor_b SET id_new = id WHERE id_new IS NULL" >/dev/null
