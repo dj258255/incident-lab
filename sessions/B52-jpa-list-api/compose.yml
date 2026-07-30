@@ -22,3 +22,24 @@ services:
       interval: 3s
       timeout: 3s
       retries: 30
+
+  # PostgreSQL 대조. 행값 비교 (created_at, id) > (?, ?) 에 범위 최적화가
+  # 걸리는지가 이 대조의 질문이다. MySQL 8.4.3 은 걸지 않는다.
+  postgres:
+    image: postgres:17.5
+    container_name: b52-pg
+    cpus: 4
+    mem_limit: 2g
+    command:
+      - postgres
+      - -c
+      - shared_buffers=512MB
+      - -c
+      - max_wal_size=2GB
+      - -c
+      - track_io_timing=on
+    environment:
+      POSTGRES_PASSWORD: lab
+      POSTGRES_DB: spoon
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports: ["15440:5432"]

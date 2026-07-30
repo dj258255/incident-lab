@@ -28,3 +28,27 @@ services:
       interval: 3s
       timeout: 3s
       retries: 30
+
+  # PostgreSQL 대조. 다섯 조건 가운데 둘은 아예 에러가 되고,
+  # 나머지 셋에는 MySQL 에 없는 직접적인 해법(표현식 인덱스, pg_trgm)이 있다.
+  postgres:
+    image: postgres:17.5
+    container_name: a22-pg
+    cpus: 2
+    mem_limit: 4g
+    command:
+      - postgres
+      - -c
+      - shared_buffers=2GB
+      - -c
+      - max_wal_size=2GB
+      - -c
+      - track_io_timing=on
+      # 계획이 왜 그렇게 나왔는지 보려면 통계가 최신이어야 한다.
+      - -c
+      - default_statistics_target=100
+    environment:
+      POSTGRES_PASSWORD: lab
+      POSTGRES_DB: spoon
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports: ["15439:5432"]

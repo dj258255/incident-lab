@@ -1,0 +1,35 @@
+# PostgreSQL 대조. PostgreSQL 17.5 (Debian 17.5-1.pgdg130+1) on 
+# live 200000행. MySQL 쪽과 같은 규모, 같은 인덱스 (created_at, id)
+
+## 0) 시드
+  live = 200000행, 서로 다른 created_at = 200000개
+  커서 = created_at '2026-01-07 14:20:00', id 190001 (190000번째)
+
+## 1) 깊은 페이지네이션 세 방식
+  OFFSET 190000            Index Only Scan     21.707 ms  shared hit=732
+  커서: 행값 비교    Index Only Scan      0.088 ms  shared hit=4 read=1
+      Index Cond: (ROW(created_at, id) > ROW('2026-01-07 14:20:00'::timestam
+  커서: 풀어쓴 조건 Index Only Scan     10.269 ms  shared hit=732
+      Filter: ((created_at > '2026-01-07 14:20:00'::timestamp without time z
+      Rows Removed by Filter: 190001
+
+  MySQL 8.4.3 에서는 행값 비교가 type=index(전체 인덱스 스캔) 31ms 였고
+  풀어쓴 조건만 type=range 3ms 였습니다. 10.3배 차이입니다.
+
+## 2) 같은 시각이 몰리는 데이터 (타이브레이커 가지)
+  live_tie = 200000행, 서로 다른 created_at = 1000개
+  커서 = created_at '2026-01-01 00:15:50', id 950
+  이 커서에서 created_at 이 같은 행 = 200개
+  행값 비교            Index Only Scan      0.066 ms  shared hit=5
+      Index Cond: (ROW(created_at, id) > ROW('2026-01-01 00:15:50'::timestam
+  풀어쓴 조건         Index Only Scan     10.640 ms  shared hit=732
+      Filter: ((created_at > '2026-01-01 00:15:50'::timestamp without time z
+      Rows Removed by Filter: 190001
+
+  두 문법이 같은 결과를 주는지 검산합니다.
+  일치
+
+## 정리
+  판정 기준은 조건이 Index Cond 로 밀려 들어갔는지입니다.
+  Index Cond 면 인덱스 구간을 탄 것이고 Filter 면 훑고 버린 것입니다.
+  각 조건 1회 실행입니다.

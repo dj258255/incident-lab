@@ -1,0 +1,94 @@
+{
+ "images": [
+  {
+   "type": "term",
+   "out": "fig-pg-cursor.png",
+   "font": 22,
+   "title": "같은 커서 문법이 두 엔진에서 정반대로 동작한다",
+   "lines": [
+    [
+     [
+      "-- 커서 페이지네이션의 표준 문법. live 20만행, 인덱스 (created_at, id).",
+      "dim"
+     ]
+    ],
+    "   WHERE (created_at, id) > (?, ?) ORDER BY created_at, id LIMIT 20",
+    "",
+    [
+     [
+      "MySQL 8.4.3",
+      "yellow"
+     ]
+    ],
+    [
+     [
+      "  행값 비교    type=index  전체 인덱스 스캔   31 ms",
+      "red"
+     ]
+    ],
+    [
+     [
+      "  풀어쓴 조건  type=range  인덱스 구간         3 ms",
+      "green"
+     ]
+    ],
+    [
+     [
+      "  → 풀어쓰는 쪽이 10.3배 빠르다",
+      "fg"
+     ]
+    ],
+    "",
+    [
+     [
+      "PostgreSQL 17.5",
+      "yellow"
+     ]
+    ],
+    [
+     [
+      "  행값 비교    Index Only Scan   0.088 ms   버퍼 5",
+      "green"
+     ]
+    ],
+    [
+     [
+      "    Index Cond: (ROW(created_at, id) > ROW('2026-01-07 14:20:00', 190001))",
+      "green"
+     ]
+    ],
+    [
+     [
+      "  풀어쓴 조건  Index Only Scan  10.269 ms   버퍼 732",
+      "red"
+     ]
+    ],
+    [
+     [
+      "    Filter: ((created_at > ...) OR ((created_at = ...) AND (id > ...)))",
+      "red"
+     ]
+    ],
+    [
+     [
+      "    Rows Removed by Filter: 190001",
+      "red"
+     ]
+    ],
+    [
+     [
+      "  → 행값 비교가 117배 빠르다",
+      "fg"
+     ]
+    ],
+    "",
+    [
+     [
+      "-- MySQL 에서 옳은 처방이 PostgreSQL 에서는 정확히 반대다.",
+      "dim"
+     ]
+    ]
+   ]
+  }
+ ]
+}

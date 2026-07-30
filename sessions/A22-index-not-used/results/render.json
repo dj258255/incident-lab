@@ -1,0 +1,122 @@
+{
+ "images": [
+  {
+   "type": "term",
+   "out": "fig-pg-cast.png",
+   "font": 22,
+   "title": "같은 실수를 MySQL 은 조용히 삼키고 PostgreSQL 은 거부한다",
+   "lines": [
+    [
+     [
+      "-- VARCHAR 컬럼을 숫자와 비교한다. 애플리케이션이 Long 으로 바인딩한 상황.",
+      "dim"
+     ]
+    ],
+    "",
+    [
+     [
+      "MySQL 8.4.3",
+      "yellow"
+     ]
+    ],
+    "mysql> EXPLAIN SELECT id, amount FROM orders WHERE order_no = 1500000;",
+    [
+     [
+      "  type: ALL   key: NULL   rows: 2983050   Extra: Using where",
+      "red"
+     ]
+    ],
+    [
+     [
+      "  → 3,000,001행을 훑고 1763.3ms. 에러도 경고도 없다.",
+      "red"
+     ]
+    ],
+    "",
+    [
+     [
+      "PostgreSQL 17.5",
+      "yellow"
+     ]
+    ],
+    "spoon=# SELECT id, amount FROM orders WHERE order_no = 1500000;",
+    [
+     [
+      "ERROR:  operator does not exist: character varying = integer",
+      "green"
+     ]
+    ],
+    [
+     [
+      "HINT:  No operator matches the given name and argument types.",
+      "green"
+     ]
+    ],
+    [
+     [
+      "       You might need to add explicit type casts.",
+      "green"
+     ]
+    ],
+    [
+     [
+      "  → 배포 전에 터진다.",
+      "green"
+     ]
+    ],
+    "",
+    [
+     [
+      "-- 타입을 맞추면",
+      "dim"
+     ]
+    ],
+    "spoon=# SELECT id, amount FROM orders WHERE order_no = 'ORD0000001500000';",
+    [
+     [
+      "  Index Scan   0.108 ms   shared hit=1 read=3",
+      "fg"
+     ]
+    ]
+   ]
+  },
+  {
+   "type": "bar",
+   "out": "fig-pg-buffers.png",
+   "title": "PostgreSQL 에서 읽은 버퍼 수 (조건별)",
+   "bars": [
+    {
+     "label": "date() 인덱스없음",
+     "value": 707144,
+     "color": "red"
+    },
+    {
+     "label": "date() 표현식인덱스",
+     "value": 4271,
+     "color": "green"
+    },
+    {
+     "label": "LIKE 고선택도",
+     "value": 37038,
+     "color": "red"
+    },
+    {
+     "label": "LIKE + pg_trgm",
+     "value": 339,
+     "color": "green"
+    },
+    {
+     "label": "비트 인덱스없음",
+     "value": 3003,
+     "color": "yellow"
+    },
+    {
+     "label": "비트 표현식인덱스",
+     "value": 3003,
+     "color": "yellow"
+    }
+   ],
+   "note": "PostgreSQL 17.5, orders 300만행 579MB. 시간이 아니라 읽은 버퍼 수로 봅니다. 시간은 캐시 상태에 흔들리지만 버퍼 수는 계획이 실제로 무엇을 훑었는지 보여 줍니다. 비트 연산은 표현식 인덱스를 만들어도 버퍼가 그대로인데, user_id 조건이 이미 3,000행으로 좁혀 비트 조건이 필터로만 남기 때문입니다. 각 조건 1회 실행."
+  }
+ ]
+}

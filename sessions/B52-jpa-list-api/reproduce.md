@@ -100,6 +100,20 @@ $ # rewriteBatchedStatements=false 로 바꾸면
 saveAll 직접ID (배치 500 · rewrite 끔)   8544ms
 ```
 
+## PostgreSQL 대조 (results/exp-pg-cursor.txt)
+
+```console
+$ docker compose up -d postgres
+$ ./scripts/exp-pg-cursor.sh      # 약 2분
+```
+
+행값 비교에 범위 최적화가 걸리는지는 플래너 질문이라 애플리케이션 없이 SQL 로만 답할 수
+있습니다. `EXPLAIN (ANALYZE, BUFFERS)` 의 `Index Cond` 와 `Filter` 중 어디에 조건이
+들어갔는지로 판정합니다.
+
+두 문법이 같은 결과를 주는지도 스크립트가 검산합니다. 20건의 id 목록을 문자열로 이어
+비교하고 불일치면 양쪽을 출력합니다.
+
 ## 원문 파일 위치
 
 | 내용 | 경로 |

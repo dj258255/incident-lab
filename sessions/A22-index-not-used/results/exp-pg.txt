@@ -1,0 +1,59 @@
+# PostgreSQL 대조. PostgreSQL 17.5 (Debian 17.5-1.pgdg130+1) on 
+# orders 3000000행. MySQL 쪽과 같은 규모, 같은 인덱스 구성.
+
+## 0) 시드
+  행 수 = 3000000, 크기 = 579 MB
+
+## 1) 암묵적 형변환
+  MySQL: 조용히 풀스캔. type=ALL, 3,000,001행 훑고 1763.3ms (배수 3924)
+  PostgreSQL:
+    varchar = integer: ERROR:  operator does not exist: character varying = integer
+           HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+    varchar = varchar      Index Scan              0.108 ms   shared hit=1 read=3
+
+## 2) 콜레이션 불일치 조인
+  MySQL: utf8mb4 와 latin1 비교가 인덱스를 배제. 3120.6ms (배수 75)
+  기본 콜레이션 = en_US.utf8
+  PostgreSQL:
+    콜레이션 C vs 기본 Bitmap Heap Scan        3.400 ms   shared hit=7237 read=6
+    콜레이션 일치    Bitmap Heap Scan        7.165 ms   shared hit=7244
+
+## 3) 인덱스 컬럼에 함수 적용
+  MySQL: DATE(created_at) 이 인덱스를 못 씀. 배수 2 (결과 집합이 커서 배수가 작다)
+         MySQL 8.0.13 부터 함수 인덱스가 있으므로 이 항목은 엔진 차이가 아니다.
+         A22 가 질의 재작성 쪽을 고른 선택의 차이다.
+  PostgreSQL:
+    date() 적용, 인덱스 없음 Index Only Scan       239.115 ms   shared hit=707144 read=5171
+    범위로 고쳐 쓰기 Index Only Scan        35.082 ms   shared hit=173321
+  → 표현식 인덱스를 만든다: CREATE INDEX ... ON orders (date(created_at))
+    date() 적용, 인덱스 있음 Bitmap Heap Scan       25.092 ms   shared hit=4271 read=293
+
+## 4) 선행 와일드카드 LIKE
+  MySQL: LIKE '%민준' 이 인덱스를 못 씀. 해소는 역순 컬럼을 따로 두는 것. 배수 5
+  PostgreSQL:
+  먼저 이 조건의 선택도를 밝힌다. buyer_name 이 5종뿐이라 '%민준' 은 1,200,000행,
+  즉 40%를 고릅니다. 40%를 고르는 조건은 어떤 인덱스로도 빨라지지 않습니다.
+    이름 김민준 = 600000행
+    이름 박지호 = 600000행
+    이름 이서연 = 600000행
+    이름 정민준 = 600000행
+    이름 최수아 = 600000행
+    LIKE '%민준' (40% 선택) Index Only Scan       122.732 ms   shared hit=2597
+  → pg_trgm GIN 인덱스를 만들어도 이 선택도에서는 플래너가 쓰지 않는다
+    LIKE '%민준', GIN 있음 Index Only Scan       112.407 ms   shared hit=2597
+
+  선택도를 낮춰 다시 본다. order_no 는 300만 개가 전부 다르다.
+    LIKE '%9987', 인덱스 없음 Parallel Seq Scan     105.465 ms   shared hit=37038
+  → pg_trgm GIN 인덱스를 만든다
+    LIKE '%9987', GIN 있음 Bitmap Heap Scan        2.629 ms   shared hit=339
+
+## 5) 비트 연산 조건
+  MySQL: (status_flag & 0x0100) 이 인덱스를 못 씀. 해소는 = 256 을 명시. 배수 22
+  PostgreSQL:
+    비트 연산, 인덱스 없음 Bitmap Heap Scan       12.903 ms   shared hit=3003 read=9
+  → 표현식 인덱스를 만든다: CREATE INDEX ... ON orders (user_id, (status_flag & 256))
+    비트 연산, 인덱스 있음 Bitmap Heap Scan       13.506 ms   shared hit=3003 read=5
+
+## 정리
+  조용히 느려지는 조건이 몇 개인가가 이 대조의 요점입니다.
+  각 조건 1회 실행이고, 절대 시간은 이 호스트에서만 성립합니다.

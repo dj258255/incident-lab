@@ -200,6 +200,31 @@ orders  2983050  791
 
 `fig-explain.png`는 예전에 R13 세션의 `termshot.py`로 만들었습니다. 그 스크립트는 크롬 경로가 `/Applications/Google Chrome.app/...`으로 박혀 있어서, macOS 밖에서는 `subprocess.run(..., check=False)` 때문에 오류도 없이 조용히 실패합니다. 리눅스에서 재현되도록 저장소가 이미 가지고 있던 Pillow 렌더러(`tools/render/render.py`의 `render_term`)를 쓰도록 `scripts/report.py`를 고쳤습니다. `chart-index.png`의 제목도 철회한 전제("인덱스는 그대로 두고 쿼리만 고쳤을 때")를 빼고 실제로 한 일에 맞췄습니다.
 
+## PostgreSQL 대조 (results/exp-pg.txt)
+
+```console
+$ docker compose up -d postgres
+$ ./scripts/exp-pg.sh      # 약 6분. 300만 행을 새로 적재한다
+```
+
+### 밟은 함정 둘
+
+1. **병렬 계획의 버퍼 수를 잘못 뽑았습니다.** `shared hit=[0-9]+ read=[0-9]+` 로 찾았는데
+   최상위 `Buffers:` 줄에는 `read=` 가 없을 수 있어 깊은 노드(워커 하나)의 값이 잡혔습니다.
+   `LIKE '%민준'` 이 149버퍼로 찍혀 이상해서 전체 계획을 열어 보니 실제 집계는 2,597 이었습니다.
+   `read=` 를 선택적으로 두어 고쳤습니다.
+
+2. **케이스 4의 데이터가 그 케이스를 검증할 수 없었습니다.** `buyer_name` 이 5종뿐이라
+   `LIKE '%민준'` 의 선택도가 40%입니다. 그 조건에서는 GIN 을 만들어도 플래너가 쓰지 않으므로
+   "pg_trgm 이 해소한다"를 보일 수 없습니다. MySQL 쪽과 데이터를 맞추는 것이 우선이라
+   그 조건을 그대로 두고, 고선택도 조건(`order_no LIKE '%9987'`)을 따로 추가했습니다.
+
+### 서술을 고친 것
+
+`date()` 항목을 처음에 "PostgreSQL 은 표현식 인덱스로 해소된다"는 엔진 차이로 적었는데,
+MySQL 도 8.0.13 부터 함수 인덱스가 있습니다. 엔진 차이가 아니라 이 세션이 질의 재작성 쪽을
+고른 선택의 차이로 고쳤습니다.
+
 ## 원문 파일 위치
 
 | 내용 | 경로 |
