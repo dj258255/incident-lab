@@ -10,9 +10,9 @@
     "ddl_at": 25,
     "long_end": 45
   },
-  "queries": 955779,
+  "queries": 886421,
   "errors": 0,
-  "median_qps": 15909,
+  "median_qps": 14796,
   "stalled_seconds": [],
   "stall_len_s": 0,
   "zero_seconds": [],
@@ -33,483 +33,483 @@
   "timeline": [
     {
       "sec": 0,
-      "count": 15312,
+      "count": 14098,
       "errors": 0,
-      "p50_ms": 0.123,
-      "p99_ms": 0.168,
-      "max_ms": 0.472
+      "p50_ms": 0.132,
+      "p99_ms": 0.22,
+      "max_ms": 1.483
     },
     {
       "sec": 1,
-      "count": 15766,
+      "count": 15052,
       "errors": 0,
-      "p50_ms": 0.122,
-      "p99_ms": 0.167,
-      "max_ms": 0.444
+      "p50_ms": 0.128,
+      "p99_ms": 0.175,
+      "max_ms": 0.563
     },
     {
       "sec": 2,
-      "count": 15925,
+      "count": 14706,
       "errors": 0,
-      "p50_ms": 0.122,
-      "p99_ms": 0.163,
-      "max_ms": 0.356
+      "p50_ms": 0.131,
+      "p99_ms": 0.184,
+      "max_ms": 0.523
     },
     {
       "sec": 3,
-      "count": 16115,
+      "count": 14796,
       "errors": 0,
-      "p50_ms": 0.12,
-      "p99_ms": 0.162,
-      "max_ms": 0.213
+      "p50_ms": 0.13,
+      "p99_ms": 0.178,
+      "max_ms": 0.409
     },
     {
       "sec": 4,
-      "count": 16094,
+      "count": 14872,
       "errors": 0,
-      "p50_ms": 0.12,
-      "p99_ms": 0.163,
-      "max_ms": 0.469
+      "p50_ms": 0.129,
+      "p99_ms": 0.175,
+      "max_ms": 0.251
     },
     {
       "sec": 5,
-      "count": 15909,
+      "count": 15064,
       "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.166,
-      "max_ms": 0.656
-    },
-    {
-      "sec": 6,
-      "count": 15682,
-      "errors": 0,
-      "p50_ms": 0.122,
-      "p99_ms": 0.173,
-      "max_ms": 0.506
-    },
-    {
-      "sec": 7,
-      "count": 15841,
-      "errors": 0,
-      "p50_ms": 0.122,
-      "p99_ms": 0.166,
-      "max_ms": 0.678
-    },
-    {
-      "sec": 8,
-      "count": 15751,
-      "errors": 0,
-      "p50_ms": 0.122,
-      "p99_ms": 0.166,
-      "max_ms": 1.224
-    },
-    {
-      "sec": 9,
-      "count": 15939,
-      "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.163,
-      "max_ms": 4.502
-    },
-    {
-      "sec": 10,
-      "count": 15968,
-      "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.162,
-      "max_ms": 0.223
-    },
-    {
-      "sec": 11,
-      "count": 15834,
-      "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.165,
-      "max_ms": 0.353
-    },
-    {
-      "sec": 12,
-      "count": 15774,
-      "errors": 0,
-      "p50_ms": 0.122,
-      "p99_ms": 0.166,
-      "max_ms": 0.278
-    },
-    {
-      "sec": 13,
-      "count": 16101,
-      "errors": 0,
-      "p50_ms": 0.12,
-      "p99_ms": 0.161,
-      "max_ms": 0.237
-    },
-    {
-      "sec": 14,
-      "count": 15898,
-      "errors": 0,
-      "p50_ms": 0.122,
-      "p99_ms": 0.164,
-      "max_ms": 0.405
-    },
-    {
-      "sec": 15,
-      "count": 15917,
-      "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.167,
-      "max_ms": 1.405
-    },
-    {
-      "sec": 16,
-      "count": 16102,
-      "errors": 0,
-      "p50_ms": 0.12,
-      "p99_ms": 0.162,
-      "max_ms": 0.424
-    },
-    {
-      "sec": 17,
-      "count": 15692,
-      "errors": 0,
-      "p50_ms": 0.123,
-      "p99_ms": 0.169,
-      "max_ms": 0.519
-    },
-    {
-      "sec": 18,
-      "count": 15881,
-      "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.166,
-      "max_ms": 0.62
-    },
-    {
-      "sec": 19,
-      "count": 16033,
-      "errors": 0,
-      "p50_ms": 0.12,
-      "p99_ms": 0.169,
-      "max_ms": 0.426
-    },
-    {
-      "sec": 20,
-      "count": 15240,
-      "errors": 0,
-      "p50_ms": 0.126,
-      "p99_ms": 0.175,
-      "max_ms": 0.656
-    },
-    {
-      "sec": 21,
-      "count": 16002,
-      "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.165,
-      "max_ms": 0.43
-    },
-    {
-      "sec": 22,
-      "count": 15991,
-      "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.165,
-      "max_ms": 0.423
-    },
-    {
-      "sec": 23,
-      "count": 15817,
-      "errors": 0,
-      "p50_ms": 0.122,
-      "p99_ms": 0.168,
-      "max_ms": 0.458
-    },
-    {
-      "sec": 24,
-      "count": 15987,
-      "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.167,
-      "max_ms": 0.524
-    },
-    {
-      "sec": 25,
-      "count": 16031,
-      "errors": 0,
-      "p50_ms": 0.12,
-      "p99_ms": 0.171,
-      "max_ms": 0.744
-    },
-    {
-      "sec": 26,
-      "count": 15774,
-      "errors": 0,
-      "p50_ms": 0.122,
-      "p99_ms": 0.176,
-      "max_ms": 0.59
-    },
-    {
-      "sec": 27,
-      "count": 15834,
-      "errors": 0,
-      "p50_ms": 0.122,
-      "p99_ms": 0.171,
-      "max_ms": 0.471
-    },
-    {
-      "sec": 28,
-      "count": 15989,
-      "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.165,
-      "max_ms": 0.442
-    },
-    {
-      "sec": 29,
-      "count": 15936,
-      "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.175,
-      "max_ms": 0.456
-    },
-    {
-      "sec": 30,
-      "count": 16152,
-      "errors": 0,
-      "p50_ms": 0.119,
-      "p99_ms": 0.166,
-      "max_ms": 0.462
-    },
-    {
-      "sec": 31,
-      "count": 16216,
-      "errors": 0,
-      "p50_ms": 0.119,
-      "p99_ms": 0.165,
-      "max_ms": 0.374
-    },
-    {
-      "sec": 32,
-      "count": 15946,
-      "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.167,
-      "max_ms": 0.377
-    },
-    {
-      "sec": 33,
-      "count": 15973,
-      "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.166,
-      "max_ms": 0.35
-    },
-    {
-      "sec": 34,
-      "count": 15952,
-      "errors": 0,
-      "p50_ms": 0.12,
-      "p99_ms": 0.169,
-      "max_ms": 0.462
-    },
-    {
-      "sec": 35,
-      "count": 15990,
-      "errors": 0,
-      "p50_ms": 0.12,
-      "p99_ms": 0.17,
-      "max_ms": 0.958
-    },
-    {
-      "sec": 36,
-      "count": 15713,
-      "errors": 0,
-      "p50_ms": 0.122,
-      "p99_ms": 0.176,
-      "max_ms": 0.602
-    },
-    {
-      "sec": 37,
-      "count": 15884,
-      "errors": 0,
-      "p50_ms": 0.122,
-      "p99_ms": 0.167,
-      "max_ms": 0.572
-    },
-    {
-      "sec": 38,
-      "count": 15671,
-      "errors": 0,
-      "p50_ms": 0.123,
-      "p99_ms": 0.166,
-      "max_ms": 0.429
-    },
-    {
-      "sec": 39,
-      "count": 15990,
-      "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.166,
-      "max_ms": 0.556
-    },
-    {
-      "sec": 40,
-      "count": 15985,
-      "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.163,
-      "max_ms": 0.34
-    },
-    {
-      "sec": 41,
-      "count": 15889,
-      "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.17,
-      "max_ms": 0.453
-    },
-    {
-      "sec": 42,
-      "count": 15813,
-      "errors": 0,
-      "p50_ms": 0.122,
-      "p99_ms": 0.166,
-      "max_ms": 0.353
-    },
-    {
-      "sec": 43,
-      "count": 15959,
-      "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.166,
-      "max_ms": 0.432
-    },
-    {
-      "sec": 44,
-      "count": 15830,
-      "errors": 0,
-      "p50_ms": 0.122,
-      "p99_ms": 0.171,
-      "max_ms": 0.463
-    },
-    {
-      "sec": 45,
-      "count": 15761,
-      "errors": 0,
-      "p50_ms": 0.122,
-      "p99_ms": 0.169,
-      "max_ms": 1.136
-    },
-    {
-      "sec": 46,
-      "count": 16119,
-      "errors": 0,
-      "p50_ms": 0.12,
-      "p99_ms": 0.165,
-      "max_ms": 0.595
-    },
-    {
-      "sec": 47,
-      "count": 15901,
-      "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.176,
-      "max_ms": 0.418
-    },
-    {
-      "sec": 48,
-      "count": 16099,
-      "errors": 0,
-      "p50_ms": 0.12,
-      "p99_ms": 0.164,
-      "max_ms": 0.339
-    },
-    {
-      "sec": 49,
-      "count": 16158,
-      "errors": 0,
-      "p50_ms": 0.12,
-      "p99_ms": 0.165,
-      "max_ms": 0.484
-    },
-    {
-      "sec": 50,
-      "count": 16062,
-      "errors": 0,
-      "p50_ms": 0.12,
-      "p99_ms": 0.171,
-      "max_ms": 0.494
-    },
-    {
-      "sec": 51,
-      "count": 16066,
-      "errors": 0,
-      "p50_ms": 0.12,
-      "p99_ms": 0.164,
-      "max_ms": 0.386
-    },
-    {
-      "sec": 52,
-      "count": 16210,
-      "errors": 0,
-      "p50_ms": 0.12,
-      "p99_ms": 0.164,
-      "max_ms": 0.39
-    },
-    {
-      "sec": 53,
-      "count": 15891,
-      "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.168,
-      "max_ms": 0.384
-    },
-    {
-      "sec": 54,
-      "count": 16099,
-      "errors": 0,
-      "p50_ms": 0.12,
-      "p99_ms": 0.169,
-      "max_ms": 0.531
-    },
-    {
-      "sec": 55,
-      "count": 16121,
-      "errors": 0,
-      "p50_ms": 0.119,
-      "p99_ms": 0.17,
-      "max_ms": 0.732
-    },
-    {
-      "sec": 56,
-      "count": 16018,
-      "errors": 0,
-      "p50_ms": 0.12,
-      "p99_ms": 0.169,
-      "max_ms": 0.369
-    },
-    {
-      "sec": 57,
-      "count": 16169,
-      "errors": 0,
-      "p50_ms": 0.119,
-      "p99_ms": 0.165,
+      "p50_ms": 0.128,
+      "p99_ms": 0.174,
       "max_ms": 0.454
     },
     {
-      "sec": 58,
-      "count": 16075,
+      "sec": 6,
+      "count": 13837,
       "errors": 0,
-      "p50_ms": 0.12,
-      "p99_ms": 0.166,
-      "max_ms": 0.502
+      "p50_ms": 0.135,
+      "p99_ms": 0.305,
+      "max_ms": 1.52
+    },
+    {
+      "sec": 7,
+      "count": 14486,
+      "errors": 0,
+      "p50_ms": 0.133,
+      "p99_ms": 0.187,
+      "max_ms": 1.616
+    },
+    {
+      "sec": 8,
+      "count": 14355,
+      "errors": 0,
+      "p50_ms": 0.133,
+      "p99_ms": 0.206,
+      "max_ms": 1.178
+    },
+    {
+      "sec": 9,
+      "count": 14154,
+      "errors": 0,
+      "p50_ms": 0.134,
+      "p99_ms": 0.211,
+      "max_ms": 4.544
+    },
+    {
+      "sec": 10,
+      "count": 14905,
+      "errors": 0,
+      "p50_ms": 0.129,
+      "p99_ms": 0.176,
+      "max_ms": 0.304
+    },
+    {
+      "sec": 11,
+      "count": 15016,
+      "errors": 0,
+      "p50_ms": 0.128,
+      "p99_ms": 0.176,
+      "max_ms": 0.233
+    },
+    {
+      "sec": 12,
+      "count": 14824,
+      "errors": 0,
+      "p50_ms": 0.129,
+      "p99_ms": 0.179,
+      "max_ms": 0.615
+    },
+    {
+      "sec": 13,
+      "count": 14735,
+      "errors": 0,
+      "p50_ms": 0.131,
+      "p99_ms": 0.177,
+      "max_ms": 0.258
+    },
+    {
+      "sec": 14,
+      "count": 14882,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.177,
+      "max_ms": 0.265
+    },
+    {
+      "sec": 15,
+      "count": 14573,
+      "errors": 0,
+      "p50_ms": 0.132,
+      "p99_ms": 0.184,
+      "max_ms": 0.659
+    },
+    {
+      "sec": 16,
+      "count": 14653,
+      "errors": 0,
+      "p50_ms": 0.132,
+      "p99_ms": 0.179,
+      "max_ms": 0.291
+    },
+    {
+      "sec": 17,
+      "count": 14820,
+      "errors": 0,
+      "p50_ms": 0.129,
+      "p99_ms": 0.181,
+      "max_ms": 0.922
+    },
+    {
+      "sec": 18,
+      "count": 14745,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.18,
+      "max_ms": 0.589
+    },
+    {
+      "sec": 19,
+      "count": 14793,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.177,
+      "max_ms": 0.536
+    },
+    {
+      "sec": 20,
+      "count": 15005,
+      "errors": 0,
+      "p50_ms": 0.128,
+      "p99_ms": 0.174,
+      "max_ms": 0.446
+    },
+    {
+      "sec": 21,
+      "count": 14819,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.181,
+      "max_ms": 0.475
+    },
+    {
+      "sec": 22,
+      "count": 14799,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.179,
+      "max_ms": 0.503
+    },
+    {
+      "sec": 23,
+      "count": 14901,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.175,
+      "max_ms": 0.216
+    },
+    {
+      "sec": 24,
+      "count": 14721,
+      "errors": 0,
+      "p50_ms": 0.131,
+      "p99_ms": 0.181,
+      "max_ms": 0.475
+    },
+    {
+      "sec": 25,
+      "count": 14809,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.177,
+      "max_ms": 0.217
+    },
+    {
+      "sec": 26,
+      "count": 15040,
+      "errors": 0,
+      "p50_ms": 0.128,
+      "p99_ms": 0.173,
+      "max_ms": 0.227
+    },
+    {
+      "sec": 27,
+      "count": 14658,
+      "errors": 0,
+      "p50_ms": 0.131,
+      "p99_ms": 0.186,
+      "max_ms": 1.209
+    },
+    {
+      "sec": 28,
+      "count": 14693,
+      "errors": 0,
+      "p50_ms": 0.131,
+      "p99_ms": 0.177,
+      "max_ms": 1.072
+    },
+    {
+      "sec": 29,
+      "count": 14722,
+      "errors": 0,
+      "p50_ms": 0.131,
+      "p99_ms": 0.179,
+      "max_ms": 0.59
+    },
+    {
+      "sec": 30,
+      "count": 14761,
+      "errors": 0,
+      "p50_ms": 0.131,
+      "p99_ms": 0.178,
+      "max_ms": 0.58
+    },
+    {
+      "sec": 31,
+      "count": 15000,
+      "errors": 0,
+      "p50_ms": 0.128,
+      "p99_ms": 0.175,
+      "max_ms": 0.223
+    },
+    {
+      "sec": 32,
+      "count": 14924,
+      "errors": 0,
+      "p50_ms": 0.129,
+      "p99_ms": 0.176,
+      "max_ms": 0.512
+    },
+    {
+      "sec": 33,
+      "count": 15035,
+      "errors": 0,
+      "p50_ms": 0.128,
+      "p99_ms": 0.176,
+      "max_ms": 0.501
+    },
+    {
+      "sec": 34,
+      "count": 14797,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.176,
+      "max_ms": 0.433
+    },
+    {
+      "sec": 35,
+      "count": 14767,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.178,
+      "max_ms": 0.301
+    },
+    {
+      "sec": 36,
+      "count": 14782,
+      "errors": 0,
+      "p50_ms": 0.131,
+      "p99_ms": 0.179,
+      "max_ms": 0.335
+    },
+    {
+      "sec": 37,
+      "count": 14637,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.188,
+      "max_ms": 1.776
+    },
+    {
+      "sec": 38,
+      "count": 14819,
+      "errors": 0,
+      "p50_ms": 0.129,
+      "p99_ms": 0.181,
+      "max_ms": 0.73
+    },
+    {
+      "sec": 39,
+      "count": 14949,
+      "errors": 0,
+      "p50_ms": 0.129,
+      "p99_ms": 0.175,
+      "max_ms": 0.41
+    },
+    {
+      "sec": 40,
+      "count": 14810,
+      "errors": 0,
+      "p50_ms": 0.129,
+      "p99_ms": 0.178,
+      "max_ms": 0.631
+    },
+    {
+      "sec": 41,
+      "count": 14916,
+      "errors": 0,
+      "p50_ms": 0.129,
+      "p99_ms": 0.175,
+      "max_ms": 0.241
+    },
+    {
+      "sec": 42,
+      "count": 14888,
+      "errors": 0,
+      "p50_ms": 0.129,
+      "p99_ms": 0.179,
+      "max_ms": 0.467
+    },
+    {
+      "sec": 43,
+      "count": 14694,
+      "errors": 0,
+      "p50_ms": 0.131,
+      "p99_ms": 0.18,
+      "max_ms": 0.65
+    },
+    {
+      "sec": 44,
+      "count": 14865,
+      "errors": 0,
+      "p50_ms": 0.129,
+      "p99_ms": 0.176,
+      "max_ms": 0.431
+    },
+    {
+      "sec": 45,
+      "count": 14996,
+      "errors": 0,
+      "p50_ms": 0.128,
+      "p99_ms": 0.175,
+      "max_ms": 0.217
+    },
+    {
+      "sec": 46,
+      "count": 14716,
+      "errors": 0,
+      "p50_ms": 0.131,
+      "p99_ms": 0.178,
+      "max_ms": 0.422
+    },
+    {
+      "sec": 47,
+      "count": 14699,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.181,
+      "max_ms": 0.702
+    },
+    {
+      "sec": 48,
+      "count": 14872,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.176,
+      "max_ms": 0.346
+    },
+    {
+      "sec": 49,
+      "count": 14890,
+      "errors": 0,
+      "p50_ms": 0.129,
+      "p99_ms": 0.179,
+      "max_ms": 0.511
+    },
+    {
+      "sec": 50,
+      "count": 14618,
+      "errors": 0,
+      "p50_ms": 0.132,
+      "p99_ms": 0.183,
+      "max_ms": 0.586
+    },
+    {
+      "sec": 51,
+      "count": 15016,
+      "errors": 0,
+      "p50_ms": 0.128,
+      "p99_ms": 0.174,
+      "max_ms": 0.622
+    },
+    {
+      "sec": 52,
+      "count": 14842,
+      "errors": 0,
+      "p50_ms": 0.129,
+      "p99_ms": 0.18,
+      "max_ms": 0.584
+    },
+    {
+      "sec": 53,
+      "count": 14889,
+      "errors": 0,
+      "p50_ms": 0.129,
+      "p99_ms": 0.175,
+      "max_ms": 0.24
+    },
+    {
+      "sec": 54,
+      "count": 15033,
+      "errors": 0,
+      "p50_ms": 0.128,
+      "p99_ms": 0.175,
+      "max_ms": 0.471
+    },
+    {
+      "sec": 55,
+      "count": 14665,
+      "errors": 0,
+      "p50_ms": 0.131,
+      "p99_ms": 0.18,
+      "max_ms": 0.405
+    },
+    {
+      "sec": 56,
+      "count": 14766,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.179,
+      "max_ms": 0.489
+    },
+    {
+      "sec": 57,
+      "count": 14837,
+      "errors": 0,
+      "p50_ms": 0.129,
+      "p99_ms": 0.183,
+      "max_ms": 1.521
+    },
+    {
+      "sec": 58,
+      "count": 15008,
+      "errors": 0,
+      "p50_ms": 0.128,
+      "p99_ms": 0.176,
+      "max_ms": 0.362
     },
     {
       "sec": 59,
-      "count": 15922,
+      "count": 14388,
       "errors": 0,
-      "p50_ms": 0.121,
-      "p99_ms": 0.174,
-      "max_ms": 0.506
+      "p50_ms": 0.134,
+      "p99_ms": 0.19,
+      "max_ms": 0.703
     }
   ],
   "lock_snapshots": [
@@ -527,9 +527,11 @@
     },
     {
       "at_s": 2.0,
-      "granted": 0,
+      "granted": 1,
       "pending": 0,
-      "types": []
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
     },
     {
       "at_s": 3.0,
@@ -569,25 +571,23 @@
     },
     {
       "at_s": 9.0,
-      "granted": 1,
-      "pending": 0,
-      "types": [
-        "SHARED_READ:GRANTED"
-      ]
-    },
-    {
-      "at_s": 10.0,
-      "granted": 1,
-      "pending": 0,
-      "types": [
-        "SHARED_READ:GRANTED"
-      ]
-    },
-    {
-      "at_s": 11.0,
       "granted": 0,
       "pending": 0,
       "types": []
+    },
+    {
+      "at_s": 10.0,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 11.0,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
     },
     {
       "at_s": 12.0,
@@ -611,7 +611,7 @@
     },
     {
       "at_s": 15.0,
-      "granted": 3,
+      "granted": 1,
       "pending": 0,
       "types": [
         "SHARED_READ:GRANTED"
@@ -626,7 +626,7 @@
       ]
     },
     {
-      "at_s": 17.1,
+      "at_s": 17.0,
       "granted": 1,
       "pending": 0,
       "types": [
@@ -634,7 +634,7 @@
       ]
     },
     {
-      "at_s": 18.1,
+      "at_s": 18.0,
       "granted": 1,
       "pending": 0,
       "types": [
@@ -642,7 +642,7 @@
       ]
     },
     {
-      "at_s": 19.1,
+      "at_s": 19.0,
       "granted": 1,
       "pending": 0,
       "types": [
@@ -650,48 +650,48 @@
       ]
     },
     {
-      "at_s": 20.1,
-      "granted": 1,
-      "pending": 0,
-      "types": [
-        "SHARED_READ:GRANTED"
-      ]
-    },
-    {
-      "at_s": 21.1,
-      "granted": 1,
-      "pending": 0,
-      "types": [
-        "SHARED_READ:GRANTED"
-      ]
-    },
-    {
-      "at_s": 22.1,
-      "granted": 1,
-      "pending": 0,
-      "types": [
-        "SHARED_READ:GRANTED"
-      ]
-    },
-    {
-      "at_s": 23.1,
-      "granted": 1,
-      "pending": 0,
-      "types": [
-        "SHARED_READ:GRANTED"
-      ]
-    },
-    {
-      "at_s": 24.1,
-      "granted": 1,
-      "pending": 0,
-      "types": [
-        "SHARED_READ:GRANTED"
-      ]
-    },
-    {
-      "at_s": 25.1,
+      "at_s": 20.0,
       "granted": 2,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 21.0,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 22.0,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 23.0,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 24.0,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 25.0,
+      "granted": 1,
       "pending": 0,
       "types": [
         "SHARED_READ:GRANTED"
@@ -699,7 +699,7 @@
     },
     {
       "at_s": 26.1,
-      "granted": 2,
+      "granted": 1,
       "pending": 0,
       "types": [
         "SHARED_READ:GRANTED"
@@ -747,7 +747,7 @@
     },
     {
       "at_s": 32.1,
-      "granted": 2,
+      "granted": 1,
       "pending": 0,
       "types": [
         "SHARED_READ:GRANTED"
@@ -811,7 +811,7 @@
     },
     {
       "at_s": 40.1,
-      "granted": 1,
+      "granted": 3,
       "pending": 0,
       "types": [
         "SHARED_READ:GRANTED"
@@ -857,19 +857,15 @@
     },
     {
       "at_s": 46.1,
-      "granted": 1,
+      "granted": 0,
       "pending": 0,
-      "types": [
-        "SHARED_READ:GRANTED"
-      ]
+      "types": []
     },
     {
       "at_s": 47.1,
-      "granted": 1,
+      "granted": 0,
       "pending": 0,
-      "types": [
-        "SHARED_READ:GRANTED"
-      ]
+      "types": []
     },
     {
       "at_s": 48.1,
@@ -879,11 +875,9 @@
     },
     {
       "at_s": 49.1,
-      "granted": 2,
+      "granted": 0,
       "pending": 0,
-      "types": [
-        "SHARED_READ:GRANTED"
-      ]
+      "types": []
     },
     {
       "at_s": 50.1,
@@ -892,37 +886,49 @@
       "types": []
     },
     {
-      "at_s": 51.2,
+      "at_s": 51.1,
       "granted": 0,
       "pending": 0,
       "types": []
     },
     {
-      "at_s": 52.2,
+      "at_s": 52.1,
       "granted": 0,
       "pending": 0,
       "types": []
     },
     {
-      "at_s": 53.2,
+      "at_s": 53.1,
       "granted": 0,
       "pending": 0,
       "types": []
     },
     {
-      "at_s": 54.2,
+      "at_s": 54.1,
       "granted": 0,
       "pending": 0,
       "types": []
     },
     {
-      "at_s": 55.2,
+      "at_s": 55.1,
       "granted": 0,
       "pending": 0,
       "types": []
     },
     {
-      "at_s": 56.2,
+      "at_s": 56.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 57.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 58.1,
       "granted": 1,
       "pending": 0,
       "types": [
@@ -930,24 +936,10 @@
       ]
     },
     {
-      "at_s": 57.2,
+      "at_s": 59.1,
       "granted": 0,
       "pending": 0,
       "types": []
-    },
-    {
-      "at_s": 58.2,
-      "granted": 0,
-      "pending": 0,
-      "types": []
-    },
-    {
-      "at_s": 59.2,
-      "granted": 2,
-      "pending": 0,
-      "types": [
-        "SHARED_READ:GRANTED"
-      ]
     }
   ]
 }

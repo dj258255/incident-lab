@@ -1,0 +1,43 @@
+=============== 적재 (200만 행, 약 145초) ===============
+ Container a02-mysql  Running
+현재 0행, 목표 2,000,000행
+  400,000행 (14초)
+  800,000행 (15초)
+  1,300,000행 (17초)
+  1,800,000행 (18초)
+  2,000,000행 (19초)
+테이블 280MB, 총 19초
+적재 확인: 2000000행
+=============== control ===============
+ Container a02-mysql  Running
+[control] MySQL 8.4.3, 행 2,000,000, 기본 lock_wait_timeout 31536000초
+  [ 15.0초] 롱 트랜잭션: BEGIN 후 SELECT 실행, 커밋하지 않음
+  [ 45.0초] 롱 트랜잭션: 커밋
+  평시 초당 14796건, 정지된 초 0개 []
+  그중 완료 0건인 초 0개 []
+=============== ddl-default ===============
+ Container a02-mysql  Running
+[ddl-default] MySQL 8.4.3, 행 2,000,000, 기본 lock_wait_timeout 31536000초
+  [ 15.0초] 롱 트랜잭션: BEGIN 후 SELECT 실행, 커밋하지 않음
+  [ 25.0초] DDL: 실행 시작 (lock_wait_timeout=31536000) ALTER TABLE orders ADD COLUMN memo VARCHAR(64) NULL
+  [ 45.0초] 롱 트랜잭션: 커밋
+  [ 45.0초] DDL: 성공, 20.01초 걸림
+  평시 초당 14888건, 정지된 초 20개 [25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44]
+  그중 완료 0건인 초 19개 [26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44]
+=============== ddl-timeout ===============
+ Container a02-mysql  Running
+[ddl-timeout] MySQL 8.4.3, 행 2,000,000, 기본 lock_wait_timeout 31536000초
+  [ 15.0초] 롱 트랜잭션: BEGIN 후 SELECT 실행, 커밋하지 않음
+  [ 25.0초] DDL: lock_wait_timeout=2초로 설정
+  [ 25.0초] DDL: 실행 시작 (lock_wait_timeout=2) ALTER TABLE orders ADD COLUMN memo VARCHAR(64) NULL
+  [ 27.0초] DDL: 실패, 2.00초 뒤 (1205, 'Lock wait timeout exceeded; try restarting transaction')
+  [ 45.0초] 롱 트랜잭션: 커밋
+  평시 초당 14798건, 정지된 초 2개 [25, 26]
+  그중 완료 0건인 초 1개 [26]
+=============== ddl-alone ===============
+ Container a02-mysql  Running
+[ddl-alone] MySQL 8.4.3, 행 2,000,000, 기본 lock_wait_timeout 31536000초
+  [ 25.0초] DDL: 실행 시작 (lock_wait_timeout=31536000) ALTER TABLE orders ADD COLUMN memo VARCHAR(64) NULL
+  [ 25.0초] DDL: 성공, 0.01초 걸림
+  평시 초당 15702건, 정지된 초 0개 []
+  그중 완료 0건인 초 0개 []
