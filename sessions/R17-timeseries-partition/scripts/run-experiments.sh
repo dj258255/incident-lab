@@ -10,6 +10,10 @@
 # 퍼지 잔여 작업이 1의 측정 구간에 겹치기 때문이 아니라 그 반대가 성립하기 때문이다.
 # DELETE의 퍼지 꼬리가 길어서 1 → 대기 → 2 순서로 두고 사이에 안정화 구간을 넣는다.
 set -uo pipefail
+
+# 두 실험의 관측 창을 같게 둔다. 480 과 120 으로 다르게 두면 "삭제 후" 평균에
+# 섞이는 정상 구간의 길이가 달라 같은 조건의 값으로 비교할 수 없다.
+WINDOW="${WINDOW:-480}"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PY="$ROOT/../../.venv/bin/python"
 OUT="$ROOT/results"
@@ -28,9 +32,9 @@ SQLT "SELECT TABLE_NAME, TABLE_ROWS, ROUND((DATA_LENGTH+INDEX_LENGTH)/1024/1024)
 echo
 echo "== 실험 1: DELETE로 7일치 삭제 ($(stamp)) =="
 # 관측을 먼저 켠다. 삭제 전 안정 상태 10초가 기준선이 된다.
-"$PY" "$ROOT/scripts/poll.py" 480 "$OUT/delete-poll.csv" &
+"$PY" "$ROOT/scripts/poll.py" "$WINDOW" "$OUT/delete-poll.csv" &
 POLL=$!
-"$PY" "$ROOT/scripts/oltp.py" watch_log_plain 480 "$OUT/delete-oltp.csv" &
+"$PY" "$ROOT/scripts/oltp.py" watch_log_plain "$WINDOW" "$OUT/delete-oltp.csv" &
 OLTP=$!
 sleep 10
 
@@ -64,9 +68,9 @@ echo "히스토리 리스트 길이: $HLL"
 
 echo
 echo "== 실험 2: DROP PARTITION으로 7일치 삭제 ($(stamp)) =="
-"$PY" "$ROOT/scripts/poll.py" 120 "$OUT/drop-poll.csv" &
+"$PY" "$ROOT/scripts/poll.py" "$WINDOW" "$OUT/drop-poll.csv" &
 POLL=$!
-"$PY" "$ROOT/scripts/oltp.py" watch_log_part 120 "$OUT/drop-oltp.csv" &
+"$PY" "$ROOT/scripts/oltp.py" watch_log_part "$WINDOW" "$OUT/drop-oltp.csv" &
 OLTP=$!
 sleep 10
 

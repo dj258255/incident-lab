@@ -1,0 +1,69 @@
+{
+ "rows": 2000000,
+ "mysql": "8.4.3",
+ "open_files": 4000,
+ "open_files_limit": 1048576,
+ "table_open_cache": 4000,
+ "cases": [
+  {
+   "partitions": 1,
+   "load_s": 10.4,
+   "size_mb": 143,
+   "pruned_ms": 0.95,
+   "pruned_parts": 0,
+   "pruned_rows": 5479,
+   "scan_ms": 191.27,
+   "scan_parts": 0,
+   "point_ms": 0.11,
+   "point_parts": 0
+  },
+  {
+   "partitions": 7,
+   "load_s": 10.9,
+   "size_mb": 154,
+   "pruned_ms": 1.03,
+   "pruned_parts": 1,
+   "pruned_rows": 5479,
+   "scan_ms": 233.75,
+   "scan_parts": 7,
+   "point_ms": 0.2,
+   "point_parts": 7
+  },
+  {
+   "partitions": 30,
+   "load_s": 12.6,
+   "size_mb": 181,
+   "pruned_ms": 1.04,
+   "pruned_parts": 1,
+   "pruned_rows": 5479,
+   "scan_ms": 236.87,
+   "scan_parts": 30,
+   "point_ms": 0.23,
+   "point_parts": 30
+  },
+  {
+   "partitions": 90,
+   "load_s": 17.4,
+   "size_mb": 188,
+   "pruned_ms": 1.0,
+   "pruned_parts": 1,
+   "pruned_rows": 5479,
+   "scan_ms": 233.84,
+   "scan_parts": 90,
+   "point_ms": 0.3,
+   "point_parts": 90
+  },
+  {
+   "partitions": 365,
+   "load_s": 28.1,
+   "size_mb": 148,
+   "pruned_ms": 1.06,
+   "pruned_parts": 1,
+   "pruned_rows": 5479,
+   "scan_ms": 234.4,
+   "scan_parts": 365,
+   "point_ms": 1.23,
+   "point_parts": 365
+  }
+ ]
+}
