@@ -186,6 +186,46 @@ HINT:  To avoid XID assignment failures, execute a database-wide VACUUM in that 
 `autovacuum_naptime` 기본값이 60초라 원인을 제거한 시점이 주기의 어디였는지에 따라
 값이 흔들릴 수 있는데, 4회에서는 흔들리지 않았습니다.
 
+## failsafe 대조 실험 (results/exp-failsafe.txt)
+
+```console
+$ ./scripts/exp-failsafe.sh      # 약 5분. 500만 행 테이블을 두 번 만든다
+```
+
+스크립트가 필요하면 컨테이너를 `FREEZE_MAX_AGE=100000` 으로 재기동합니다.
+`autovacuum_freeze_max_age` 는 postmaster 컨텍스트라 세션에서 못 바꿉니다.
+재기동 뒤 값이 10만이 아니면 실험이 성립하지 않으므로 fail-closed 로 중단합니다.
+
+### 밟은 함정 셋
+
+1. **`vacuum_failsafe_age = 0` 이 0 이 아님.** 실효 하한이
+   `Max(vacuum_failsafe_age, autovacuum_freeze_max_age * 1.05)` 라 기본값에서는 2억 1천만입니다.
+   처음에 0 으로 두고 돌려 두 조건이 같은 값(2.43초 대 2.22초)을 냈습니다. GUC 값만 보고
+   발동을 기대하면 안 됩니다.
+
+2. **wraparound 방지 autovacuum 이 먼저 동결.** `autovacuum_freeze_max_age` 를 10만으로
+   내리면 XID 를 태우는 동안 그 autovacuum 이 `big` 을 동결해 age 가 리셋됩니다.
+   테이블 단위 `autovacuum_freeze_max_age = 2000000000` 과 `autovacuum_enabled = false` 로
+   대상에서 뺐습니다. 전역 GUC 는 failsafe 하한 계산에만 쓰이므로 낮게 남습니다.
+
+3. **compose 의 설정이 중복.** `autovacuum_freeze_max_age` 를 새로 추가했는데 아래에 이미
+   `${FREEZE_MAX_AGE:-200000000}` 항목이 있어 나중 값이 이겼습니다. 컨테이너를 재기동해도
+   값이 20만 그대로였고 `docker inspect` 로 명령줄을 열어 보고 알았습니다. 중복을 지우고
+   기존 환경변수를 쓰도록 고쳤습니다.
+
+### XID 태우기
+
+`txid_current()` 를 12만 번 왕복시키면 느립니다. 쓰기 서브트랜잭션마다 XID 하나를 쓰므로
+한 문장으로 끝냅니다.
+
+```sql
+DO $$ BEGIN
+  FOR i IN 1..120000 LOOP
+    BEGIN INSERT INTO xidburn VALUES (i); EXCEPTION WHEN OTHERS THEN NULL; END;
+  END LOOP;
+END $$;
+```
+
 ## 밟은 함정
 
 1. **`autovacuum=off`를 사고 조건으로 착각.** 1절. 설계를 한 번 엎었습니다.

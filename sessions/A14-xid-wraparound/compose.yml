@@ -22,6 +22,9 @@ services:
       - autovacuum=${AUTOVACUUM:-on}
       # 기본값 2억. 최소 10만까지 내릴 수 있어 이 값으로 조기 발동을 관측한다.
       - -c
+      # failsafe 실효 하한은 Max(vacuum_failsafe_age, autovacuum_freeze_max_age * 1.05) 다.
+      # 기본값 2억에서는 하한이 2억 1천만이라 작은 테이블로 발동 조건을 만들 수 없다.
+      # exp-failsafe.sh 는 FREEZE_MAX_AGE=100000 으로 띄워 하한을 105,000 으로 만든다.
       - autovacuum_freeze_max_age=${FREEZE_MAX_AGE:-200000000}
       # PG14에 추가된 안전장치. 기본 16억. 이 나이를 넘으면 인덱스 정리를 건너뛰고
       # 동결에만 집중한다. Sentry류 시나리오를 자동으로 완화하는 장치다.

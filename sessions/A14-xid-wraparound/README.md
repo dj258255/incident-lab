@@ -258,11 +258,83 @@ PostgreSQL 17 공식 문서(routine-vacuuming)는 아직 구 문구인 `that ass
 
 `SELECT txid_current()`로 현재 XID를 확인하는 습관이 정지 상태에서는 실패합니다. 그 호출이 XID를 할당하기 때문입니다. 이 세션의 스크립트도 처음에 이걸로 값을 읽어서 파싱이 깨졌고, `pg_current_snapshot()`으로 바꿔서 고쳤습니다.
 
+## 5. vacuum_failsafe_age 가 아끼는 것과 대신 내는 것
+
+`scripts/exp-failsafe.sh`, 원문은 `results/exp-failsafe.txt`. 재현 기록 10절에서 failsafe 가 발동한 것은
+관측했지만 그것이 없을 때 얼마나 더 걸리는지는 재지 않았습니다. 5만 행에서는 VACUUM 이
+즉시 끝나 차이가 시간으로 드러나지 않았기 때문입니다. 테이블을 키워 두 조건을 갈랐습니다.
+
+조건은 `big` 500만 행 946MB, 보조 인덱스 5개, 20% 삭제로 죽은 튜플 100만 개입니다.
+
+### 먼저 밟은 함정: vacuum_failsafe_age = 0 은 0 이 아니다
+
+처음에 `vacuum_failsafe_age` 를 0 으로 두고 돌렸더니 두 조건이 같은 값을 냈습니다.
+소스의 `vacuum_xid_failsafe_check` 가 쓰는 값은 GUC 그대로가 아닙니다.
+
+```
+Max(vacuum_failsafe_age, autovacuum_freeze_max_age * 1.05)
+```
+
+`autovacuum_freeze_max_age` 기본값 2억에서는 실효 하한이 **2억 1천만**이라, 갓 만든
+테이블(age 8)에서는 0 을 줘도 발동할 수 없습니다. 문서에 한 줄 있지만 GUC 값만 보면
+놓치는 자리입니다.
+
+그래서 `autovacuum_freeze_max_age` 를 최소값 10만으로 내려 실효 하한을 105,000 으로 만들고,
+XID 를 12만 개 태워 테이블 age 를 그 위로 올렸습니다. 동시에 테이블 단위
+`autovacuum_freeze_max_age` 는 20억으로 올려 두었습니다. 그러지 않으면 재현 기록 1절에서 본
+wraparound 방지 autovacuum 이 먼저 동결해 age 가 리셋됩니다. **전역 GUC 는 failsafe 하한
+계산에 쓰이고 테이블 파라미터는 autovacuum 대상 선정에 쓰이므로 둘을 다르게 둘 수 있습니다.**
+
+### 결과
+
+![failsafe 대조](results/fig-failsafe.png)
+
+| 조건 | 실효 하한 | 발동 | `index scans` | VACUUM 소요 | 그 뒤 조회 | 조회 버퍼 |
+|---|---|---|---|---|---|---|
+| A | 16억 | 안 함 | 1 | 2.45초 | 0.063ms | 4 |
+| B | 105,000 | **함** | **0** | **0.67초** | **15.567ms** | **5,007** |
+
+![VACUUM 소요](results/fig-failsafe-vacuum.png)
+
+VACUUM 에서 **1.78초를 아낍니다**(3.7배). 서버가 대가까지 그 자리에 적어 줍니다.
+
+```console
+WARNING:  bypassing nonessential maintenance of table "spoon.public.big"
+          as a failsafe after 0 index scans
+INFO:  finished vacuuming "spoon.public.big": index scans: 0
+index scan bypassed by failsafe: 61729 pages from table (100.00% of total)
+          have 1000000 dead item identifiers
+```
+
+61,729페이지, 곧 테이블 전체에 죽은 항목 100만 개가 남습니다. 그 뒤 그 인덱스로 도는 조회를
+같은 쿼리로 3회 재 중앙값을 보면 이렇습니다.
+
+![조회 버퍼](results/fig-failsafe-query.png)
+
+`SELECT count(*) FROM big WHERE b = 500` 이 0.063ms 에서 15.567ms 로 **247배**가 되고,
+읽은 버퍼는 4개에서 5,007개로 **1,252배**가 됩니다.
+
+### Sentry 병목의 정량화
+
+이것이 10절에서 못 낸 수치입니다. failsafe 는 인덱스 정리를 버리고 동결에만 집중해 VACUUM 을
+끝냅니다. 이 조건에서 아낀 것은 71%이고, 대신 그 인덱스로 도는 조회가 247배를 냅니다.
+
+**이 거래가 성립하는 이유는 한쪽이 정지이기 때문입니다.** wraparound 정지에 닿으면 쓰기가
+전부 거부됩니다. 조회가 247배 느려지는 것은 그것보다 낫습니다. failsafe 는 성능 장치가
+아니라 정지를 피하는 장치이고, 발동했다는 경고를 보면 조회 성능을 걱정하기 전에 **왜 age 가
+16억까지 올라갔는지**를 봐야 합니다.
+
+Sentry 가 거대 테이블 하나의 VACUUM 이 3시간 가까이 진척을 내지 못해 결국 그 테이블을
+버렸을 때, 14 의 failsafe 가 있었다면 그 VACUUM 이 인덱스 정리를 건너뛰고 동결을 마쳤을
+것입니다. 다만 원문이 인덱스 정리를 병목으로 지목한 적은 없습니다. 원문은 거대한 관계
+하나에서 autovacuum 이 끝나지 않았다고만 적었습니다. 여기서 잰 것은 **인덱스 정리를
+건너뛰면 실제로 시간이 줄어든다**는 것까지입니다.
+
 ## 못 한 것
 
-- **`vacuum_failsafe_age` 대조.** 기본값 16억과 무력화(21억) 조건을 나눠 재지 않았습니다. failsafe가 발동한 것은 관측했지만 그것이 없을 때 얼마나 더 걸리는지는 재지 않았습니다. Sentry 병목의 정량화가 여기 걸려 있습니다.
+- **failsafe 대조를 한 번씩만 쟀습니다.** 5절의 2.45초와 0.67초는 각각 1회 실행이고 반복 측정과 분산이 없습니다. 조회만 3회 중앙값입니다.
 - **13과 17 비교.** 임계값과 HINT 문구가 갈리는 것을 같은 시나리오로 나란히 보이지 못했습니다. 소스와 커밋 이력으로만 확인했습니다.
-- **거대 테이블.** Sentry의 병목은 인덱스가 많은 거대 테이블이었습니다. 이 랩의 `sponsor`는 5만 행이라 VACUUM이 즉시 끝납니다. 그래서 failsafe의 실효를 시간으로 못 보였습니다.
+- **5절의 946MB도 Sentry 규모는 아닙니다.** 인덱스 정리를 건너뛰면 시간이 줄어든다는 방향은 이 규모에서 확인됐지만, 3시간이 걸리는 규모에서 비율이 유지되는지는 재지 않았습니다.
 - **`database with OID 0`.** 경고와 에러가 데이터베이스 이름 대신 OID 0을 지목한 구간이 있습니다. `pg_resetwal`이 `oldestXidDB`를 무효값으로 두기 때문이며, 실제 사고에서는 이름이 나옵니다. 제 기법이 만든 인공물입니다.
 - **공식 테스트 모듈.** 17의 `xid_wraparound` 확장을 쓰면 clog 우회가 필요 없습니다. 이미지에 없어서 빌드하지 않았습니다.
 - **멀티XID wraparound.** `autovacuum_multixact_freeze_max_age` 쪽 경로는 다루지 않았습니다.
