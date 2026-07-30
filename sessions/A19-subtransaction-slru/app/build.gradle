@@ -1,0 +1,15 @@
+// 애플리케이션 계층에서 SAVEPOINT가 실제로 나가는지 확인하는 최소 앱.
+// CONVENTIONS 4절에 따라 애플리케이션 계층 재현은 Java와 Spring Boot로 만든다.
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.1'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+repositories { mavenCentral() }
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'org.postgresql:postgresql'
+}
+java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
+bootJar { archiveFileName = 'savepoint.jar' }

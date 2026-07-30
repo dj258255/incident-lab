@@ -31,18 +31,69 @@ GitLab의 애플리케이션은 중첩이 10을 넘은 적이 없었습니다. 6
 
 이게 이 사례가 무서운 두 번째 이유입니다. 다음은 모두 `SAVEPOINT`를 발행합니다.
 
-| 경로 | SAVEPOINT 발행 |
-|---|---|
-| PL/pgSQL의 `EXCEPTION` 블록 | 예 |
-| Rails `transaction(requires_new: true)`, `create_or_find_by` | 예 |
-| Spring `@Transactional(propagation = NESTED)` + `DataSourceTransactionManager` | 예 |
-| Spring `NESTED` + `JpaTransactionManager` | 아니요(예외로 막힘) |
-| Django 중첩 `atomic()` | 예 |
-| SQLAlchemy `begin_nested()` | 예 |
+| 경로 | SAVEPOINT 발행 | 확인 방법 |
+|---|---|---|
+| PL/pgSQL의 `EXCEPTION` 블록 | 예 | 이 랩에서 실행 |
+| Spring `@Transactional(propagation = NESTED)` + `DataSourceTransactionManager` | 예 | **이 랩에서 실행** |
+| Spring `NESTED` + `JpaTransactionManager` | 아니요(예외로 막힘) | **이 랩에서 실행** |
+| Spring `REQUIRED` 중첩 호출 | 아니요 | **이 랩에서 실행** |
+| Spring `REQUIRES_NEW` | 아니요(물리 트랜잭션이 따로) | **이 랩에서 실행** |
+| Rails `transaction(requires_new: true)`, `create_or_find_by` | 예 | 소스 확인 |
+| Django 중첩 `atomic()` | 예 | 공식 문서 |
+| SQLAlchemy `begin_nested()` | 예 | 공식 문서 |
 
 PL/pgSQL 쪽은 공식 문서가 유난히 불친절합니다. 제어 구조 문서에는 "`EXCEPTION` 절이 있는 블록은 없는 블록보다 진입과 탈출이 훨씬 비싸다"고만 적혀 있고 서브트랜잭션이라는 말이 없습니다. 서브트랜잭션을 명시한 곳은 별도 페이지입니다.
 
 > Also, a block containing an EXCEPTION clause effectively forms a subtransaction that can be rolled back without affecting the outer transaction.
+
+### Spring 경로를 실제로 돌려 확인했습니다
+
+위 표의 Spring 항목은 처음에 공식 문서와 javadoc만으로 적었습니다. 문서를 읽은 것과 돌려
+본 것은 다르므로 최소 앱을 만들어 확인했습니다(`app/`). PostgreSQL의 `log_statement='all'`을
+켜고 서버가 실제로 받은 문장을 세는 방식입니다.
+
+![전파 방식과 트랜잭션 매니저별 SAVEPOINT 발행](results/fig-app-tally.png)
+
+| 케이스 | BEGIN | SAVEPOINT | RELEASE | COMMIT | 판정 |
+|---|---|---|---|---|---|
+| `NESTED` + `DataSourceTransactionManager` | 1 | **3** | 3 | 1 | 발행 |
+| `REQUIRED` + JDBC | 1 | 0 | 0 | 1 | 안 함 |
+| `REQUIRES_NEW` + JDBC | **4** | 0 | 0 | 4 | 안 함 |
+| `NESTED` + `JpaTransactionManager` | 1 | 0 | 0 | 0 | 예외로 막힘 |
+| `REQUIRED` + JPA | 1 | 0 | 0 | 1 | 안 함 |
+| `REQUIRES_NEW` + JPA | 4 | 0 | 0 | 4 | 안 함 |
+
+`NESTED`를 세 번 부르면 `SAVEPOINT`가 정확히 세 번 나갑니다. 문장 원문이 그대로 찍힙니다.
+
+![NESTED가 발행한 SAVEPOINT 원문](results/fig-app-layer.png)
+
+```
+execute <unnamed>: BEGIN
+execute <unnamed>: UPDATE sponsor SET amount = amount + 1 WHERE id = 400000
+execute <unnamed>: SAVEPOINT "SAVEPOINT_1"
+execute <unnamed>: UPDATE sponsor SET amount = amount + 1 WHERE id = $1
+```
+
+`JpaTransactionManager`는 예외로 막습니다. 메시지가 이유를 그대로 말해 줍니다.
+
+```
+org.springframework.transaction.NestedTransactionNotSupportedException:
+  JpaDialect does not support savepoints - check your JPA provider's capabilities
+```
+
+`REQUIRES_NEW`는 `BEGIN`이 네 번(바깥 1회와 안쪽 3회) 나가고 `SAVEPOINT`는 0입니다.
+별도 물리 트랜잭션이므로 서브트랜잭션이 아니고, 곧 이 세션의 절벽과 무관합니다.
+
+그러니 Spring을 쓰면서 이 함정에 빠지는 조합은 `NESTED`와 `DataSourceTransactionManager`
+하나입니다. JPA를 쓰면 예외로 막히고 `REQUIRED`와 `REQUIRES_NEW`는 서브트랜잭션을
+만들지 않습니다. 다만 PL/pgSQL의 `EXCEPTION` 블록은 애플리케이션 설정과 무관하게
+서브트랜잭션을 만듭니다. 트리거나 함수 안에 그 블록이 있으면 Spring 쪽을 어떻게 잡아도
+소용이 없습니다.
+
+계측하면서 두 가지를 밟았습니다. pgjdbc는 확장 질의 프로토콜을 쓰므로 서버 로그가
+`statement:`가 아니라 `execute <unnamed>:`로 찍힙니다. 처음 집계가 전부 0으로 나온
+이유입니다. 그리고 `REQUIRES_NEW`가 바깥 트랜잭션이 잠근 행을 다시 갱신하게 만들어
+자기 자신의 락을 기다리며 멈췄습니다. 겹치지 않는 행을 쓰도록 고쳤습니다.
 
 ## 2. 재현
 
@@ -205,4 +256,4 @@ DETAIL:  max_connections = 100 is a lower setting than on the primary server, wh
 - **`RELEASE SAVEPOINT`의 효과.** postgres.ai는 활성 서브트랜잭션을 64 미만으로 유지하면 총 100개를 만들어도 열화가 없다고 했습니다. 활성 수와 누적 수를 나눠 재지 않았습니다.
 - **Multixact 경로.** 서브트랜잭션과 `SELECT ... FOR UPDATE`가 겹치면 multixact가 끼어들어 별도의 열화가 생깁니다. 이 세션에서 다루지 않았습니다.
 - **XID 소비 증가 자체의 위험.** 서브트랜잭션은 XID를 더 빨리 소비하므로 wraparound 위험을 키웁니다. 그쪽은 A14에서 다룹니다.
-- **애플리케이션 계층 검증.** 위 표의 Spring, Rails 항목은 문서와 소스로 확인했을 뿐 이 랩에서 실행해 확인하지 않았습니다.
+- **Rails, Django, SQLAlchemy 검증.** Spring 경로는 실행해 확인했지만(1절) 나머지 셋은 문서와 소스로만 확인했습니다.

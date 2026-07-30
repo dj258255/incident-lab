@@ -1,0 +1,19 @@
+# 애플리케이션 계층 검증 결과
+# PostgreSQL log_statement='all'. pgjdbc는 확장 질의 프로토콜을 쓰므로 로그가
+# 'statement:' 가 아니라 'execute <unnamed>:' 로 찍힌다. 처음 집계가 0으로 나온 이유다.
+
+케이스                     BEGIN  SAVEPOINT  RELEASE  ROLLBACK TO  COMMIT  판정
+  jdbc_nested               1          3        3            0       1  SAVEPOINT 발행
+  jdbc_required             1          0        0            0       1  발행 안 함
+  jdbc_requiresNew          4          0        0            0       4  발행 안 함
+  jpa_nested                1          0        0            0       0  발행 안 함
+  jpa_required              1          0        0            0       1  발행 안 함
+  jpa_requiresNew           4          0        0            0       4  발행 안 함
+
+# SAVEPOINT 문장 원문 (중복 제거)
+  SAVEPOINT "SAVEPOINT_1"
+  RELEASE SAVEPOINT "SAVEPOINT_1"
+  SAVEPOINT "SAVEPOINT_2"
+  RELEASE SAVEPOINT "SAVEPOINT_2"
+  SAVEPOINT "SAVEPOINT_3"
+  RELEASE SAVEPOINT "SAVEPOINT_3"

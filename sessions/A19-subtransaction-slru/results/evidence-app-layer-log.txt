@@ -1,0 +1,10 @@
+# NESTED + DataSourceTransactionManager 구간의 서버 로그 원문
+# pgjdbc는 확장 질의 프로토콜을 쓰므로 execute <unnamed>: 로 찍힌다.
+
+2026-07-30 06:15:55.577 UTC [2802] LOG:  statement: SELECT 'CASE_MARK_jdbc_nested'
+2026-07-30 06:15:55.610 UTC [2782] LOG:  execute <unnamed>: BEGIN
+2026-07-30 06:15:55.610 UTC [2782] LOG:  execute <unnamed>: UPDATE sponsor SET amount = amount + 1 WHERE id = 400000
+2026-07-30 06:15:55.611 UTC [2782] LOG:  execute <unnamed>: SAVEPOINT "SAVEPOINT_1"
+2026-07-30 06:15:55.616 UTC [2782] LOG:  execute <unnamed>: UPDATE sponsor SET amount = amount + 1 WHERE id = $1
+2026-07-30 06:15:55.616 UTC [2782] DETAIL:  Parameters: $1 = '1'
+2026-07-30 06:15:55.616 UTC [2782] LOG:  execute <unnamed>: RELEASE SAVEPOINT "SAVEPOINT_1"

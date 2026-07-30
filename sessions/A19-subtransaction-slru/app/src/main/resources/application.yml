@@ -1,0 +1,16 @@
+server.port: 8080
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:127.0.0.1}:${DB_PORT:15434}/spoon
+    username: postgres
+    password: lab
+    hikari.maximum-pool-size: 5
+  jpa:
+    hibernate.ddl-auto: none
+    open-in-view: false
+    # 트랜잭션 매니저를 바꿔 가며 확인한다. jpa면 JpaTransactionManager,
+    # jdbc면 DataSourceTransactionManager가 쓰인다. NESTED 지원 여부가 갈린다.
+    properties.hibernate.format_sql: false
+lab:
+  tx-manager: ${TX_MANAGER:jdbc}
+logging.level.root: WARN
