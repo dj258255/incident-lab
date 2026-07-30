@@ -59,9 +59,9 @@ sessions/<트랙><번호>-<슬러그>/
 
 | 상태 | 수 |
 |---|---|
-| 완료 | 30 |
+| 완료 | 31 |
 | 진행 중 | 0 |
-| 대기 | 139 |
+| 대기 | 138 |
 
 <!-- 세션이 완료되면 아래에 추가 -->
 - [F01 한맥 0으로 나눈 값이 주문 검증을 뚫다](sessions/F01-hanmac-divide-by-zero/) — 주문 120건 중 NaN 10건이 상하한 비교를 뚫고 접수(Infinity 10건은 상한에 걸려 거부). 킬스위치를 끄고 재니 유한성 가드 단독으로 Infinity 10 + NaN 10을 전부 거부해 비정상 접수 0건, 킬스위치는 섞은 배치에서 19건째에 발동해 정상 84건을 함께 차단. 최소 재현과 Spring 주문접수 API 재현
@@ -94,6 +94,7 @@ sessions/<트랙><번호>-<슬러그>/
 - [A02 0.09초짜리 DDL이 20초 동안 조회를 세웠다](sessions/A02-mdl-storm/) — 롱 트랜잭션 단독은 정지 0초, ADD COLUMN 단독은 0.09초에 완료. 둘이 겹치면 20초 동안 조회가 한 건도 완료되지 않고 최대 대기 20,021ms. lock_wait_timeout 2초로 정지가 2초로 줄고 DDL은 1205로 실패. metadata_locks에 EXCLUSIVE:PENDING 뒤로 SHARED_READ:PENDING이 줄 선 것까지
 - [F15 느린 구독자 하나가 시세를 멈춘다](sessions/F15-websocket-slow-consumer/) — 팬아웃 구현 11가지를 각 3회. 무제한 큐는 86초에 OOM(힙 128MB 중 95.6MB가 느린 구독자 몫)이지만, 큐 없는 직접 전송은 힙이 45.5MB로 멀쩡한 채 발행량만 2,909에서 142/s로 주저앉고 정상 구독자 5명의 수신도 40분의 1이 됨. conflation+절단으로 2,936/s에 느린 구독자도 유지
 - [A19 SAVEPOINT 하나가 만드는 성능 절벽](sessions/A19-subtransaction-slru/) — GitLab 2021의 Nessie 장애. 프라이머리에서 두 경계를 분리 계측했다. 서브트랜잭션 64개까지는 pg_subtrans 조회가 정확히 0건, 1만 개면 조회 761만 건이 전부 캐시 적중해 TPS는 6%만 떨어지고, XID 범위가 SLRU 32페이지(65,536개)를 넘긴 50만 개에서 미스율 22.4%에 TPS 31% 하락·대기의 47%가 SubtransSLRU. PG17의 subtransaction_buffers를 4MB로 올리면 조회 778만 건이 전부 적중해 기준선의 96%로 복귀. GitLab이 겪은 스탠바이 절벽은 재현 실패로 남기고, XLOG_XACT_ASSIGNMENT가 서브트랜잭션 64개마다만 기록된다는 것까지 pg_waldump로 확인
+- [A14 트랜잭션 ID가 바닥나 읽기 전용이 된다](sessions/A14-xid-wraparound/) — Sentry 2015 사고를 앵커로 PG17에서 실제 정지 지점까지 도달. 원인은 vacuum을 끈 것이 아니라(autovacuum=off여도 wraparound 방지 vacuum은 돈다) 버려진 prepared transaction이 동결을 막은 것. 경고는 4,000만 개 지점, 정지는 300만 개 지점으로 Sentry가 인용한 100만은 PG13 이하 값. 정지 상태에서 SELECT와 VACUUM은 되고 txid_current()는 거부되며, 원인 제거 후 40초 만에 긴급 autovacuum이 template0까지 자가 복구(PG14 vacuum_failsafe_age 발동 로그 확인). 단일 사용자 모드 권고가 PG17에서 삭제된 것과 문서·소스 문구 불일치까지
 - [B01 커넥션 풀 데드락, DB는 한가한데 앱만 멈춘다](sessions/B01-hikaricp-pool-deadlock/) — @GeneratedValue(AUTO)가 MySQL에서 시퀀스 테이블을 별도 커넥션으로 잠가 save() 한 줄이 커넥션 두 개를 요구한다. Hibernate 6의 allocationSize 50이 채번을 50건에 한 번으로 줄여 완전한 정지 대신 처리량이 4분의 1로 떨어지는 형태로 나타남(TPS 35.8 대 138.2). 실패율 0.5%인데 1초 초과 16건이 워커 시간의 89.1%를 먹어 p95 61ms로는 안 보인다. 널리 인용되는 위키 공식과 우아한형제들의 자체 확장을 구분
 
 ## 실행 환경
