@@ -1,45 +1,45 @@
-1785347492.531981000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":0,"fail":0,"db_threads_connected":10}
-1785347493.095319000 
-1785347496.641499000 
-1785347500.188993000 
-1785347503.739401000 
-1785347507.279881000 
-1785347510.824214000 
-1785347514.374097000 
-1785347517.918786000 
-1785347521.472257000 {"total":10,"active":10,"idle":0,"awaiting":15,"ok":0,"fail":0,"db_threads_connected":10}
-1785347523.144458000 {"total":10,"active":3,"idle":7,"awaiting":0,"ok":75,"fail":7,"db_threads_connected":10}
-1785347523.712872000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":174,"fail":7,"db_threads_connected":10}
-1785347524.276554000 {"total":10,"active":2,"idle":8,"awaiting":0,"ok":251,"fail":7,"db_threads_connected":10}
-1785347524.847444000 {"total":10,"active":1,"idle":9,"awaiting":0,"ok":325,"fail":7,"db_threads_connected":10}
-1785347525.419285000 {"total":10,"active":1,"idle":9,"awaiting":0,"ok":401,"fail":7,"db_threads_connected":10}
-1785347525.982695000 {"total":10,"active":1,"idle":9,"awaiting":0,"ok":479,"fail":7,"db_threads_connected":10}
-1785347526.540562000 {"total":10,"active":1,"idle":9,"awaiting":0,"ok":555,"fail":7,"db_threads_connected":10}
-1785347527.102437000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":637,"fail":7,"db_threads_connected":10}
-1785347527.656546000 {"total":10,"active":2,"idle":8,"awaiting":0,"ok":717,"fail":7,"db_threads_connected":10}
-1785347528.201381000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":823,"fail":7,"db_threads_connected":10}
-1785347528.755122000 {"total":10,"active":1,"idle":9,"awaiting":0,"ok":927,"fail":7,"db_threads_connected":10}
-1785347529.308580000 {"total":10,"active":2,"idle":8,"awaiting":0,"ok":1028,"fail":7,"db_threads_connected":10}
-1785347529.858149000 {"total":10,"active":3,"idle":7,"awaiting":0,"ok":1126,"fail":7,"db_threads_connected":10}
-1785347530.405872000 {"total":10,"active":1,"idle":9,"awaiting":0,"ok":1215,"fail":7,"db_threads_connected":10}
-1785347531.034659000 {"total":10,"active":1,"idle":9,"awaiting":0,"ok":1295,"fail":7,"db_threads_connected":10}
-1785347531.605295000 {"total":10,"active":1,"idle":9,"awaiting":0,"ok":1374,"fail":7,"db_threads_connected":10}
-1785347532.143842000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1433,"fail":7,"db_threads_connected":10}
-1785347532.674006000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1433,"fail":7,"db_threads_connected":10}
-1785347533.216234000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1433,"fail":7,"db_threads_connected":10}
-1785347533.749029000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1433,"fail":7,"db_threads_connected":10}
-1785347534.287759000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1433,"fail":7,"db_threads_connected":10}
-1785347534.825262000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1433,"fail":7,"db_threads_connected":10}
-1785347535.374227000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1433,"fail":7,"db_threads_connected":10}
-1785347535.917896000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1433,"fail":7,"db_threads_connected":10}
-1785347536.449693000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1433,"fail":7,"db_threads_connected":10}
-1785347536.984982000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1433,"fail":7,"db_threads_connected":10}
-1785347537.523162000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1433,"fail":7,"db_threads_connected":10}
-1785347538.075243000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1433,"fail":7,"db_threads_connected":10}
-1785347538.624120000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1433,"fail":7,"db_threads_connected":10}
-1785347539.164374000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1433,"fail":7,"db_threads_connected":10}
-1785347539.694135000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1433,"fail":7,"db_threads_connected":10}
-1785347540.239440000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1433,"fail":7,"db_threads_connected":10}
-1785347540.793526000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1433,"fail":7,"db_threads_connected":10}
-1785347541.338967000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1433,"fail":7,"db_threads_connected":10}
-1785347541.876856000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1433,"fail":7,"db_threads_connected":10}
+1785385787.312203000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":0,"fail":0,"db_threads_connected":10}
+1785385787.873684000 
+1785385791.424881000 
+1785385794.966818000 
+1785385798.522742000 
+1785385802.062251000 
+1785385805.601899000 
+1785385809.139143000 
+1785385812.682864000 
+1785385816.223355000 {"total":10,"active":10,"idle":0,"awaiting":15,"ok":0,"fail":0,"db_threads_connected":10}
+1785385817.948446000 {"total":10,"active":2,"idle":8,"awaiting":0,"ok":73,"fail":7,"db_threads_connected":10}
+1785385818.506577000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":159,"fail":7,"db_threads_connected":10}
+1785385819.053564000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":239,"fail":7,"db_threads_connected":10}
+1785385819.599164000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":330,"fail":7,"db_threads_connected":10}
+1785385820.138089000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":412,"fail":7,"db_threads_connected":10}
+1785385820.686657000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":501,"fail":7,"db_threads_connected":10}
+1785385821.248269000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":583,"fail":7,"db_threads_connected":10}
+1785385821.807108000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":675,"fail":7,"db_threads_connected":10}
+1785385822.354997000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":764,"fail":7,"db_threads_connected":10}
+1785385822.904155000 {"total":10,"active":4,"idle":6,"awaiting":0,"ok":851,"fail":7,"db_threads_connected":10}
+1785385823.463809000 {"total":10,"active":2,"idle":8,"awaiting":0,"ok":944,"fail":7,"db_threads_connected":10}
+1785385824.014235000 {"total":10,"active":1,"idle":9,"awaiting":0,"ok":1041,"fail":7,"db_threads_connected":10}
+1785385824.569832000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1132,"fail":7,"db_threads_connected":10}
+1785385825.115999000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1219,"fail":7,"db_threads_connected":10}
+1785385825.661845000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1310,"fail":7,"db_threads_connected":10}
+1785385826.225452000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1403,"fail":7,"db_threads_connected":10}
+1785385826.771530000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1495,"fail":7,"db_threads_connected":10}
+1785385827.320294000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1539,"fail":7,"db_threads_connected":10}
+1785385827.864360000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1539,"fail":7,"db_threads_connected":10}
+1785385828.408079000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1539,"fail":7,"db_threads_connected":10}
+1785385828.946223000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1539,"fail":7,"db_threads_connected":10}
+1785385829.489375000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1539,"fail":7,"db_threads_connected":10}
+1785385830.020345000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1539,"fail":7,"db_threads_connected":10}
+1785385830.560479000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1539,"fail":7,"db_threads_connected":10}
+1785385831.105585000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1539,"fail":7,"db_threads_connected":10}
+1785385831.651589000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1539,"fail":7,"db_threads_connected":10}
+1785385832.191319000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1539,"fail":7,"db_threads_connected":10}
+1785385832.729376000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1539,"fail":7,"db_threads_connected":10}
+1785385833.275995000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1539,"fail":7,"db_threads_connected":10}
+1785385833.818665000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1539,"fail":7,"db_threads_connected":10}
+1785385834.363405000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1539,"fail":7,"db_threads_connected":10}
+1785385834.901784000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1539,"fail":7,"db_threads_connected":10}
+1785385835.439433000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1539,"fail":7,"db_threads_connected":10}
+1785385835.985912000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1539,"fail":7,"db_threads_connected":10}
+1785385836.528144000 {"total":10,"active":0,"idle":10,"awaiting":0,"ok":1539,"fail":7,"db_threads_connected":10}

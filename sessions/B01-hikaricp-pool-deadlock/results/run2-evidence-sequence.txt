@@ -1,0 +1,10 @@
+$ SHOW TABLES LIKE '%seq%';
+sponsor_jpa_seq
+
+기동 직후  next_val=1
+INSERT #1 → next_val=51   max(id)=1   {"status":"ok","ms":40}
+INSERT #2 → next_val=101  max(id)=2   {"status":"ok","ms":7}
+INSERT #3 → next_val=101  max(id)=3   {"status":"ok","ms":4}
+INSERT #4 → next_val=101  max(id)=4   {"status":"ok","ms":4}
+INSERT #5 → next_val=101  max(id)=5   {"status":"ok","ms":4}
+INSERT #6 → next_val=101  max(id)=6   {"status":"ok","ms":3}

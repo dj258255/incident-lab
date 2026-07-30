@@ -1,0 +1,5 @@
+uname -srm : Darwin 25.3.0 arm64
+코어       : 12
+메모리     : 32GB
+docker     : Docker version 27.4.0, build bde2b89
+기록 시각  : 2026-07-30 13:21:32 KST

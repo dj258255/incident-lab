@@ -15,8 +15,14 @@ services:
     volumes:
       - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
     networks: [lab]
+    # 자원 한도를 두지 않았습니다. 이 세션의 병목은 커넥션 풀이지 CPU가 아니고,
+    # 1회차 측정을 한도 없이 했기 때문에 회차 비교를 위해 그대로 둡니다.
+    # 그래서 절대 처리량은 이 호스트(12코어) 값이고 다른 세션과 비교하면 안 됩니다.
+    # run.sh가 띄우는 앱 컨테이너에도 한도가 없습니다.
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      # mysqladmin ping은 초기화 중 임시 서버에도, 인증 실패에도 성공을 반환합니다.
+      # 대상 DB에 실제 쿼리가 통하는지로 판정해야 조용히 지나가지 않습니다.
+      test: ["CMD-SHELL", "mysql -uroot -plab spoon -N -e 'SELECT 1' | grep -q 1"]
       interval: 3s
       timeout: 3s
       retries: 30

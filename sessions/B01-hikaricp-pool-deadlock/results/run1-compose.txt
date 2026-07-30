@@ -1,0 +1,6 @@
+ Network b01-lab  Creating
+ Network b01-lab  Created
+ Container b01-mysql  Creating
+ Container b01-mysql  Created
+ Container b01-mysql  Starting
+ Container b01-mysql  Started

@@ -8,6 +8,16 @@
 # 동시 요청은 16으로 둔다. 원문의 컨슈머 스레드 수와 같다.
 set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+
+# MySQL이 실제로 쿼리를 받을 때까지 기다린다. 이걸 빼면 첫 조건의 앱이 못 떠서
+# run.sh가 "앱이 뜨지 않았다"로 끝나고, 그 실패가 회차 결과에서는 파일 부재로만 보인다.
+for _ in $(seq 1 120); do
+  docker exec b01-mysql mysql -uroot -plab spoon -N -e "SELECT 1" 2>/dev/null | grep -q 1 && break
+  sleep 2
+done
+docker exec b01-mysql mysql -uroot -plab spoon -N -e "SELECT 1" 2>/dev/null | grep -q 1 || {
+  echo "중단: MySQL이 쿼리를 받지 못합니다." >&2; exit 2; }
+
 for spec in "jpa-10:jpa:10" "jpa-24:jpa:24" "two-10:two:10" "one-10:one:10"; do
   IFS=: read -r label mode pool <<< "$spec"
   DURATION="${DURATION:-40}" CONCURRENCY="${CONCURRENCY:-16}" \

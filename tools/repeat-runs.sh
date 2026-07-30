@@ -29,7 +29,13 @@ OUT="results"; mkdir -p "$OUT"
 
 # 이 호스트가 감당할 수 있는 cpus인지 먼저 본다. 넘으면 compose가 컨테이너 생성을
 # 거부하는데, 그 실패가 스크립트 안에서는 빈 문자열로만 보여 0이 기록된다.
-HOST_CPUS=$(nproc)
+# nproc은 macOS에 없다. 이 저장소는 12코어 맥과 2코어 리눅스 양쪽에서 쓰이므로
+# 둘 다 되게 한다. 값을 못 구하면 가드를 건너뛰지 말고 그 자리에서 멈춘다.
+HOST_CPUS=$(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo "")
+if [ -z "$HOST_CPUS" ]; then
+  echo "중단: 호스트 코어 수를 구하지 못했습니다(nproc·sysctl 둘 다 실패)." >&2
+  exit 2
+fi
 NEED=$(grep -hoE "cpus: *[0-9.]+" compose.yml 2>/dev/null | grep -oE "[0-9.]+" | sort -rn | head -1)
 if [ -n "${NEED:-}" ] && awk -v a="$NEED" -v b="$HOST_CPUS" 'BEGIN{exit !(a+0>b+0)}'; then
   echo "중단: compose가 cpus=$NEED 를 요구하는데 이 호스트는 ${HOST_CPUS}코어입니다." >&2
@@ -62,7 +68,8 @@ for i in $(seq 1 "$N"); do
 
   # 측정 직전 호스트 상태. 부하가 결과를 흔들 수 있으므로 기록으로 남긴다.
   # F13에서 문서에 적힌 load average 값이 저장소 어디에도 근거가 없던 일이 있었다.
-  { echo "[회차 $i 측정 직전]"; uptime; nproc | sed 's/^/nproc: /'; } | tee "$OUT/host-run$i.txt"
+  { echo "[회차 $i 측정 직전]"; uptime
+    echo "코어: $HOST_CPUS"; } | tee "$OUT/host-run$i.txt"
 
   for s in "${SCRIPTS[@]}"; do
     base=$(basename "$s")

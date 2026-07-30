@@ -1,0 +1,8 @@
+{"total":10,"active":0,"idle":10,"awaiting":0,"ok":1367,"fail":7,"db_threads_connected":10}
+[13:22:43] 측정 종료 → /Users/beomsu/Desktop/incident-lab/sessions/B01-hikaricp-pool-deadlock/results/jpa-10-*
+{"total":24,"active":0,"idle":24,"awaiting":0,"ok":5462,"fail":0,"db_threads_connected":24}
+[13:23:37] 측정 종료 → /Users/beomsu/Desktop/incident-lab/sessions/B01-hikaricp-pool-deadlock/results/jpa-24-*
+{"total":10,"active":0,"idle":10,"awaiting":0,"ok":12,"fail":20,"db_threads_connected":10}
+[13:24:43] 측정 종료 → /Users/beomsu/Desktop/incident-lab/sessions/B01-hikaricp-pool-deadlock/results/two-10-*
+{"total":10,"active":0,"idle":10,"awaiting":0,"ok":6113,"fail":0,"db_threads_connected":10}
+[13:25:36] 측정 종료 → /Users/beomsu/Desktop/incident-lab/sessions/B01-hikaricp-pool-deadlock/results/one-10-*
