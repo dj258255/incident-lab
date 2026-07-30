@@ -2,16 +2,22 @@
 
 ## 1. 유명한 이유
 
-우아한형제들 기술블로그의 사례가 널리 읽힙니다. 배치성 소비자 애플리케이션에서 이런 로그가 쏟아졌습니다.
+우아한형제들 기술블로그의 사례가 널리 읽힙니다(이재훈, 2020-02-06,
+[이론편](https://techblog.woowahan.com/2664/)과 [실전편](https://techblog.woowahan.com/2663/)).
+배치성 소비자 애플리케이션에서 이런 로그가 쏟아졌습니다.
 
 ```
-HikariPool-1 - Connection is not available, request timed out after 30000ms.
+Connection is not available, request timed out after 30000ms.
 Timeout failure stats (total=10, active=10, idle=0, waiting=16)
 ```
 
 읽는 순간 "DB가 죽었나" 싶지만 아닙니다. `total=10, active=10, idle=0`은 풀이 가진 커넥션 10개를 전부 누군가 쥐고 있다는 뜻이고, `waiting=16`은 소비자 스레드 16개가 전원 대기 중이라는 뜻입니다. DB 쪽은 커넥션 10개만 받은 채 한가합니다. 죽은 것은 DB가 아니라 애플리케이션입니다.
 
-이 사례가 특히 인용되는 이유는 원인이 반직관적이기 때문입니다. 개발자가 커넥션을 두 개 잡는 코드를 쓴 적이 없습니다. 엔티티에 `@GeneratedValue(strategy = GenerationType.AUTO)`를 붙였을 뿐입니다. MySQL에는 시퀀스 객체가 없으므로 Hibernate는 시퀀스 테이블을 대신 씁니다. 그리고 채번은 본 트랜잭션과 분리된 별도 커넥션에서 `for update`로 수행합니다. 그래서 `save()` 한 줄이 커넥션 두 개를 동시에 요구합니다.
+이 사례가 특히 인용되는 이유는 원인이 반직관적이기 때문입니다. 개발자가 커넥션을 두 개 잡는 코드를 쓴 적이 없습니다. 엔티티에 `@GeneratedValue(strategy = GenerationType.AUTO)`를 붙였을 뿐입니다. 실전편의 서술은 이렇습니다.
+
+> MySQL은 Sequence를 지원하지 않기 때문에 hibernate_sequence라는 테이블에 단일 Row를 사용하여 ID값을 생성합니다
+
+그 채번을 별도 트랜잭션으로 처리하므로 `save()` 한 줄이 커넥션 두 개를 동시에 요구합니다. 전역 테이블의 단일 행을 쓴다는 점이 중요합니다. 이 랩의 Hibernate 6은 엔티티별 테이블을 만들어 동작이 달랐습니다(3절).
 
 원 사례의 조건은 CPU 4코어, 소비자 스레드 16개, `maximumPoolSize` 10(기본값), `connectionTimeout` 30000ms(기본값)였고, 풀을 24로 올려 해소했습니다.
 
