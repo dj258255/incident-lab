@@ -1,0 +1,45 @@
+{
+ "images": [
+  {
+   "type": "bar",
+   "out": "fig-repl-catchup.png",
+   "title": "복제본이 원본을 따라잡기까지 걸린 시간 (초)",
+   "bars": [
+    {
+     "label": "단일 행",
+     "value": 0.53,
+     "color": "green"
+    },
+    {
+     "label": "슬롯 64",
+     "value": 41.83,
+     "color": "red"
+    }
+   ],
+   "note": "MySQL 8.4.3 원본과 복제본, GTID 기반 SOURCE_AUTO_POSITION=1. 부하 VU 100, 30초, 방송 1000개 zipf. 원본 처리량은 초당 933.1건 대 2841.9건으로 3.0배인데 따라잡는 시간은 79배입니다. 각 조건 1회 실행."
+  },
+  {
+   "type": "bar",
+   "out": "fig-auto-rows.png",
+   "title": "슬롯 테이블의 행 수",
+   "bars": [
+    {
+     "label": "고정 16",
+     "value": 7381,
+     "color": "yellow"
+    },
+    {
+     "label": "고정 64",
+     "value": 13631,
+     "color": "red"
+    },
+    {
+     "label": "자동(상한 64)",
+     "value": 1193,
+     "color": "green"
+    }
+   ],
+   "note": "방송 1000개 zipf 부하 20초. 자동은 방송당 누적 쓰기가 200건을 넘을 때마다 슬롯을 두 배로 키웁니다. 처리량은 초당 2820.1건 대 2607.9건으로 92.5%를 유지하고 정합성은 세 조건 모두 일치입니다. 각 조건 1회 실행."
+  }
+ ]
+}

@@ -1,0 +1,3 @@
+label,rps,src_sum,rep_sum_at_end,behind,seconds_behind_source,catchup_s
+single,933.1,60921400,59346600,1574800,2,.530427000
+slot64,2841.9,194182100,35703700,158478400,23,41.827465000

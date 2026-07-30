@@ -1,0 +1,38 @@
+time="2026-07-30T20:46:15+09:00" level=info msg="[분포] 시나리오=zipf 방송=1000 s=1.2 | 1위 방송 23.1% · 상위10 56.9% · 상위1% 56.9%" source=console
+
+
+  █ THRESHOLDS 
+
+    http_req_failed
+    ✓ 'rate<1' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 85324   2841.854734/s
+    checks_succeeded...: 100.00% 85324 out of 85324
+    checks_failed......: 0.00%   0 out of 85324
+
+    ✓ status 200
+
+    CUSTOM
+    sponsor_latency................: avg=35.08ms min=10.05ms med=32.79ms p(95)=58.69ms p(99)=79.98ms max=233.41ms
+
+    HTTP
+    http_req_duration..............: avg=35.08ms min=10.05ms med=32.79ms p(95)=58.69ms p(99)=79.98ms max=233.41ms
+      { expected_response:true }...: avg=35.08ms min=10.05ms med=32.79ms p(95)=58.69ms p(99)=79.98ms max=233.41ms
+    http_req_failed................: 0.00%  0 out of 85324
+    http_reqs......................: 85324  2841.854734/s
+
+    EXECUTION
+    iteration_duration.............: avg=35.16ms min=10.14ms med=32.86ms p(95)=58.77ms p(99)=80.1ms  max=234.98ms
+    iterations.....................: 85324  2841.854734/s
+    vus............................: 100    min=100        max=100
+    vus_max........................: 100    min=100        max=100
+
+    NETWORK
+    data_received..................: 6.2 MB 208 kB/s
+    data_sent......................: 15 MB  488 kB/s
+
+
+

@@ -156,6 +156,45 @@ $ curl -s -X POST localhost:8080/rebuild
 
 타임라인 원문은 `results/failure/redis-kill.timeline.txt`에 있습니다.
 
+## 복제 대조 (results/replica.txt)
+
+```console
+$ docker compose --profile repl up -d          # 복제본까지 띄운다
+$ ./scripts/run-replica.sh                     # 약 3분
+```
+
+복제본은 `profiles: ["repl"]` 로 감춰 두었습니다. 기존 실행에는 영향이 없습니다.
+
+스크립트가 매 조건 시작에 `mysqldump --set-gtid-purged=ON` 으로 초기 상태를 맞추고
+`START REPLICA` 를 겁니다. `Replica_IO_Running` 과 `Replica_SQL_Running` 이 둘 다 `Yes` 가
+되지 않으면 그 조건을 건너뛰고 마지막 에러를 찍습니다.
+
+### 밟은 함정
+
+**집계 컬럼명을 틀렸습니다.** `live_counter.total` 로 썼는데 실제 컬럼은 `total_amount` 이고,
+슬롯 모드는 테이블도 `live_counter_slot` 입니다. `set -u` 때문에 그 줄에서 죽었습니다.
+모드별로 집계 SQL 을 고르는 함수를 두어 고쳤습니다.
+
+## 자동 슬롯 (mode=slot-auto)
+
+```console
+$ MODE=slot-auto COUNTER_SLOTS=64 java -Dlab.auto-step=200 -jar app/build/libs/sponsor-api.jar
+```
+
+`/verify` 가 `slot_histogram` 을 함께 돌려줍니다. 방송별로 실제 배정된 슬롯 수의 분포입니다.
+
+`slotHistogram()` 은 `CounterService` 에 있고 `/verify` 는 `SponsorService` 를 들고 있으므로
+위임 메서드가 필요합니다. 처음에 그것 없이 `svc.slotHistogram()` 을 불러 컴파일이 깨졌습니다.
+
+## 힙 고정 (scripts/run-multi.sh)
+
+```console
+$ TOTAL_HEAP_MB=1024 ./scripts/run-multi.sh jvm-lock 0 2 jvm-lock-x2-heapfix
+$ TOTAL_HEAP_MB=1024 ./scripts/run-multi.sh jvm-lock 0 1 jvm-lock-x1-heapfix
+```
+
+`TOTAL_HEAP_MB` 를 인스턴스 수로 나눠 `-Xmx` 에 넣습니다. 기본값 1,024 입니다.
+
 ## 원문 파일 위치
 
 | 내용 | 경로 |

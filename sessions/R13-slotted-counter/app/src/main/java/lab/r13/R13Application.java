@@ -119,6 +119,8 @@ class CounterService {
     @Value("${lab.mode}") String mode;
     @Value("${lab.slots}") int slots;
     @Value("${lab.optimistic-retry}") int optimisticRetry;
+    /** 자동 슬롯의 증가 문턱. 방송당 누적 쓰기가 이 값을 넘을 때마다 슬롯이 두 배가 된다. */
+    @Value("${lab.auto-step:200}") int autoStep;
 
     /**
      * 낙관적 락이 몇 번이나 되감았는지 센다. 처리량만 보면 재시도 비용이 보이지 않는다.
@@ -189,6 +191,55 @@ class CounterService {
             """, liveId, s, amount);
     }
 
+    /**
+     * 변형 5b. 슬롯 수를 방송별로 자동으로 정한다.
+     *
+     * 고정 슬롯의 문제는 인기 없는 방송에도 같은 수의 행을 만들고, 인기 방송에는
+     * 그 수가 모자랄 수 있다는 것이다. 방송당 누적 쓰기가 lab.auto-step 을 넘을 때마다
+     * 슬롯을 두 배로 키운다. 상한은 lab.slots 다.
+     *
+     * 줄이지는 않는다. 이미 값이 든 슬롯 행은 남겨야 하고, 읽기가 SUM 이라 남겨 두어도
+     * 정합성에 영향이 없다. 높은 슬롯에 더 쓰지 않기만 하면 된다.
+     */
+    private final ConcurrentHashMap<Long, AtomicLong> liveWrites = new ConcurrentHashMap<>();
+
+    int adaptiveSlots(long liveId) {
+        long n = liveWrites.computeIfAbsent(liveId, k -> new AtomicLong()).incrementAndGet();
+        int s = 1;
+        long threshold = autoStep;
+        while (s < slots && n > threshold) {
+            s <<= 1;
+            threshold <<= 1;
+        }
+        return s;
+    }
+
+    /** 방송별로 실제 배정된 슬롯 수의 분포. 자동 조절이 일한 결과를 보이려고 노출한다. */
+    Map<String, Long> slotHistogram() {
+        Map<String, Long> h = new TreeMap<>();
+        for (Map.Entry<Long, AtomicLong> e : liveWrites.entrySet()) {
+            long n = e.getValue().get();
+            int s = 1;
+            long th = autoStep;
+            while (s < slots && n > th) { s <<= 1; th <<= 1; }
+            h.merge(String.valueOf(s), 1L, Long::sum);
+        }
+        return h;
+    }
+
+    @Transactional
+    void slotAuto(long liveId, long userId, int amount) {
+        logRepo.save(new SponsorLog(liveId, userId, amount));
+        int cap = adaptiveSlots(liveId);
+        int s = ThreadLocalRandom.current().nextInt(cap);
+        jdbc.update("""
+            INSERT INTO live_counter_slot (live_id, slot, total_amount, sponsor_count)
+            VALUES (?,?,?,1)
+            ON DUPLICATE KEY UPDATE total_amount = total_amount + VALUES(total_amount),
+                                    sponsor_count = sponsor_count + 1
+            """, liveId, s, amount);
+    }
+
     /** 변형 6. 원장은 DB에 남기고 카운터만 Redis에서 올린다. 명령 두 개가 각각 왕복한다. */
     @Transactional
     void redis(long liveId, long userId, int amount) {
@@ -248,6 +299,8 @@ class SponsorService {
     private final CounterService counter;
     @Value("${lab.mode}") String mode;
     @Value("${lab.optimistic-retry}") int optimisticRetry;
+    /** 자동 슬롯의 증가 문턱. 방송당 누적 쓰기가 이 값을 넘을 때마다 슬롯이 두 배가 된다. */
+    @Value("${lab.auto-step:200}") int autoStep;
 
     SponsorService(CounterService counter) { this.counter = counter; }
 
@@ -266,6 +319,7 @@ class SponsorService {
             case "jpa-pessimistic" -> counter.pessimistic(liveId, userId, amount);
             case "atomic"          -> counter.atomic(liveId, userId, amount);
             case "slot"            -> counter.slot(liveId, userId, amount);
+            case "slot-auto"       -> counter.slotAuto(liveId, userId, amount);
             case "redis"           -> counter.redis(liveId, userId, amount);
             case "redis-pipe"      -> counter.redisPipelined(liveId, userId, amount);
             default -> throw new IllegalStateException("알 수 없는 mode: " + mode);
@@ -295,6 +349,7 @@ class SponsorService {
 
     long retries() { return counter.retries(); }
     long giveUps() { return counter.giveUps(); }
+    Map<String, Long> slotHistogram() { return counter.slotHistogram(); }
     void resetCounters() { counter.resetCounters(); }
     void flushNow() { counter.flushNow(); }
 }
@@ -349,7 +404,7 @@ class SponsorController {
                     "sponsor_count", cnt == null ? 0L : Long.parseLong(cnt.toString()));
         }
         String sql = switch (mode) {
-            case "slot" -> "SELECT COALESCE(SUM(total_amount),0) amt, COALESCE(SUM(sponsor_count),0) cnt "
+            case "slot", "slot-auto" -> "SELECT COALESCE(SUM(total_amount),0) amt, COALESCE(SUM(sponsor_count),0) cnt "
                          + "FROM live_counter_slot WHERE live_id = ?";
             case "jpa-optimistic" -> "SELECT total_amount amt, sponsor_count cnt FROM live_counter_v WHERE live_id = ?";
             default -> "SELECT total_amount amt, sponsor_count cnt FROM live_counter WHERE live_id = ?";
@@ -369,7 +424,7 @@ class SponsorController {
     Map<String, Object> rebuild() {
         long t0 = System.nanoTime();
         String target = switch (mode) {
-            case "slot" -> "live_counter_slot";
+            case "slot", "slot-auto" -> "live_counter_slot";
             case "jpa-optimistic" -> "live_counter_v";
             default -> "live_counter";
         };
@@ -428,7 +483,7 @@ class SponsorController {
         Long ledgerCnt = jdbc.queryForObject("SELECT COUNT(*) FROM sponsor_log", Long.class);
 
         String table = switch (mode) {
-            case "slot" -> "live_counter_slot";
+            case "slot", "slot-auto" -> "live_counter_slot";
             case "jpa-optimistic" -> "live_counter_v";
             default -> "live_counter";
         };
@@ -440,6 +495,10 @@ class SponsorController {
         Map<String, Object> out = new LinkedHashMap<>();
         out.put("mode", mode);
         out.put("slots", slots);
+        if ("slot-auto".equals(mode)) {
+            out.put("auto_step", svc.autoStep);
+            out.put("slot_histogram", svc.slotHistogram());
+        }
         out.put("ledger_amount", ledgerAmt);
         out.put("ledger_count", ledgerCnt);
         out.put("counter_amount", counterAmt);

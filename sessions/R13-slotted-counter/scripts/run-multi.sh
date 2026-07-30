@@ -20,9 +20,13 @@ VUS="${VUS:-100}"
 DURATION="${DURATION:-60s}"
 WARMUP="${WARMUP:-20s}"
 LIVES="${LIVES:-1000}"
+# 총 힙을 고정한다. 기본 1024MB 를 인스턴스 수로 나눈다.
+TOTAL_HEAP_MB="${TOTAL_HEAP_MB:-1024}"
+HEAP_MB=$(( TOTAL_HEAP_MB / INSTANCES ))
 
 echo "=============================================================="
 echo " 다중 인스턴스: $LABEL (mode=$MODE slots=$SLOTS 인스턴스=$INSTANCES)"
+echo " 총 힙 ${TOTAL_HEAP_MB}MB 를 나눠 인스턴스마다 -Xmx${HEAP_MB}m"
 echo "=============================================================="
 
 pkill -f 'sponsor-api.jar' 2>/dev/null || true
@@ -32,9 +36,10 @@ PIDS=()
 URLS=""
 for i in $(seq 0 $((INSTANCES - 1))); do
   PORT=$((8080 + i))
-  # 인스턴스마다 힙을 똑같이 준다. 한 대일 때보다 총 힙이 늘어나는 점은 한계로 기록한다.
+  # 총 힙을 인스턴스 수와 무관하게 고정한다. 인스턴스마다 1g 를 주면 2대일 때 총 2GB 가 되어
+  # 처리량 차이에 힙 차이가 섞인다. TOTAL_HEAP_MB 를 인스턴스 수로 나눠 준다.
   PORT=$PORT MODE="$MODE" COUNTER_SLOTS="$SLOTS" LIVES="$LIVES" \
-    "$JAVA_BIN" -Xms1g -Xmx1g -XX:+UseG1GC \
+    "$JAVA_BIN" -Xms${HEAP_MB}m -Xmx${HEAP_MB}m -XX:+UseG1GC \
     -jar "$ROOT/app/build/libs/sponsor-api.jar" > "$OUT/${LABEL}.app${i}.log" 2>&1 &
   PIDS+=($!)
   URLS="${URLS:+$URLS,}http://127.0.0.1:$PORT"

@@ -14,6 +14,14 @@ services:
       - --performance-schema=ON
       - --performance-schema-instrument=wait/lock/table/sql/handler=ON
       - --innodb-print-all-deadlocks=ON
+      # 복제 대조를 위한 설정. 복제본이 붙으려면 server-id 와 binlog 가 있어야 한다.
+      - --server-id=1
+      - --log-bin=binlog
+      - --binlog-format=ROW
+      # 복제 지연을 재려면 하트비트가 있어야 한다. 쓰기가 없는 구간에서
+      # Seconds_Behind_Source 가 0 으로 보이는 것을 구별하기 위해서다.
+      - --gtid-mode=ON
+      - --enforce-gtid-consistency=ON
     environment:
       MYSQL_ROOT_PASSWORD: lab
       MYSQL_DATABASE: spoon
@@ -21,7 +29,8 @@ services:
     volumes:
       - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      # mysqladmin ping 은 초기화 중 임시 서버에도, 인증이 실패해도 성공을 돌려준다.
+      test: ["CMD-SHELL", "mysql -uroot -plab spoon -N -e 'SELECT 1' | grep -q 1"]
       interval: 3s
       timeout: 3s
       retries: 30
@@ -38,3 +47,36 @@ services:
       interval: 3s
       timeout: 3s
       retries: 20
+
+  # 복제 대조용 복제본. 슬롯이 원본 쓰기 처리량을 올리면 복제본이 따라가야 할 양도
+  # 늘어난다는 가설을 재기 위한 것이다. profiles 로 감춰 두어 기존 실행에 영향이 없다.
+  replica:
+    image: mysql:8.4.3
+    container_name: r13-replica
+    profiles: ["repl"]
+    cpus: 2
+    mem_limit: 1g
+    command:
+      - --server-id=2
+      - --log-bin=binlog
+      - --binlog-format=ROW
+      - --gtid-mode=ON
+      - --enforce-gtid-consistency=ON
+      - --innodb-buffer-pool-size=512M
+      - --innodb-flush-log-at-trx-commit=1
+      # 복제본을 읽기 전용으로 둔다. 읽기를 복제본으로 돌리는 구성을 흉내 낸다.
+      - --read-only=ON
+      # 지연을 재려면 하트비트 간격을 짧게 두어야 한다.
+      - --replica-net-timeout=60
+    environment:
+      MYSQL_ROOT_PASSWORD: lab
+      MYSQL_DATABASE: spoon
+    ports: ["13307:3306"]
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "mysql -uroot -plab -N -e 'SELECT 1' | grep -q 1"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
