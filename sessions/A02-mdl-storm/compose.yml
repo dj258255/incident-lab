@@ -26,7 +26,9 @@ services:
       - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
       - a02-data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      # mysqladmin ping 은 초기화 중 임시 서버에도, 인증이 실패해도 성공을 돌려준다.
+      # 대상 DB 에 실제 쿼리가 통하는지로 판단한다.
+      test: ["CMD-SHELL", "mysql -uroot -plab lab -N -e 'SELECT 1' | grep -q 1"]
       interval: 3s
       timeout: 3s
       retries: 40

@@ -145,3 +145,20 @@ $ docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/work incident-lab-render \
 ```console
 $ docker compose down -v
 ```
+
+## 커넥션 풀 캐스케이드 실험 (results/cascade-*.json)
+
+```console
+$ docker compose run --rm load python seed.py            # 200만 행, 약 30초
+$ for c in control ddl ddl-write; do
+    docker compose run --rm load python cascade.py --case $c --out /results/cascade-$c.json
+  done                                                   # 조건마다 20초
+```
+
+풀 크기 10, 획득 타임아웃 2초, 엔드포인트마다 초당 20건입니다. `/other` 테이블은 스크립트가
+매 실행마다 `orders` 에서 10만 행을 복사해 만듭니다.
+
+`ALTER TABLE orders ADD COLUMN cascade_probe` 를 DDL 로 쓰고, 다음 실행 시작 때 그 컬럼이
+남아 있으면 지웁니다. 그러지 않으면 두 번째 실행에서 중복 컬럼 에러로 DDL 이 즉시 실패해
+대기가 만들어지지 않습니다.
+
