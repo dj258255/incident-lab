@@ -241,6 +241,53 @@ COPY 로만 됩니다. 소요도 4.5초와 4.7초로 이 규모에서는 구별�
 추정치이고 MB 단위로 반올림한 것이라 그 차이를 보기에는 해상도가 부족합니다. 크기 차이는
 이 측정으로 말할 수 없습니다.
 
+## 7. pt-online-schema-change 로 같은 전환
+
+`scripts/exp5-pt-osc.sh`, 원문은 `results/exp5-pt-osc.txt`. 300만 행, 같은 쓰기 부하
+(INSERT 하나 던지고 10ms 쉬는 단일 커넥션).
+
+| 방식 | 소요 | 그 구간 통과한 쓰기 | 초당 | 직전 기준선 | p95 | 최대 |
+|---|---|---|---|---|---|---|
+| 한 방 ALTER (COPY) | 4.6초 | 3건 | 0.6건 | 초당 47.0건 | **4,576ms** | 4,576ms |
+| `pt-online-schema-change` | 11.8초 | **500건** | **42.3건** | 초당 47.8건 | **16ms** | 74ms |
+
+**2.6배 오래 걸리는 대신 쓰기가 기준선의 88.5% 로 흐릅니다.** p95 가 4,576ms 에서 16ms 입니다.
+3절이 직접 구현한 expand-contract 와 같은 거래 조건입니다.
+
+도구가 무엇을 하는지도 그대로 찍힙니다.
+
+```console
+Creating new table...
+Altering new table...
+Creating triggers...
+Copying approximately 2993877 rows...
+Copied rows OK.
+Swapping tables...
+Dropping old table...
+Dropping triggers...
+Successfully altered `spoon`.`sponsor_pt`.
+```
+
+직접 구현한 것과 다른 점은 **트리거**입니다. 3절의 구현은 워터마크로 벌크를 묶고 그 뒤
+들어온 행을 3단계에서 따로 채웠습니다. 도구는 원본에 INSERT/UPDATE/DELETE 트리거를 걸어
+복사가 도는 동안 들어오는 변경을 실시간으로 새 테이블에 흘립니다. 그래서 잔여 단계가
+없고, 대신 복사가 도는 내내 모든 쓰기가 트리거를 한 번씩 더 지납니다.
+
+### 밟은 함정 둘
+
+이 도구를 처음 붙일 때 실제로 두 번 걸렸습니다.
+
+1. **`caching_sha2_password` 가 비암호화 인증을 거부합니다.**
+   `Authentication plugin 'caching_sha2_password' reported error: Authentication requires
+   secure connection.`
+
+2. **흔한 우회인 `mysql_native_password` 가 MySQL 8.4 에는 없습니다.**
+   전용 사용자를 그 플러그인으로 만들려 하면 `Plugin 'mysql_native_password' is not loaded`
+   입니다. 8.0 에서 deprecated 였고 **8.4 에서 제거됐습니다.**
+
+남는 길은 TLS 를 켜는 것이고 `--mysql_ssl 1` 이 그 옵션입니다. **MySQL 8.4 로 올린 환경에서
+예전 절차서를 그대로 쓰면 이 자리에서 막힙니다.**
+
 ## 못 한 것
 
 - **호스트 사양을 기록하지 않았습니다.** 컨테이너 할당량만 있고 어느 장비인지 확인되지 않아, 이 글의 절대 시간은 다른 세션의 절대 시간과 비교할 수 없습니다.
@@ -249,4 +296,5 @@ COPY 로만 됩니다. 소요도 4.5초와 4.7초로 이 규모에서는 구별�
 - **컬럼명 교체 단계를 실행하지 않았습니다.** 애플리케이션이 두 컬럼을 함께 쓰는 배포가 전제라, DB 쪽 작업만 쟀습니다.
 - **전환 후 테이블 크기 차이를 재지 못했습니다.** 6절의 104MB 는 `information_schema` 추정치를 MB 로 반올림한 값이라 `BIGINT` 의 4바이트 차이가 드러나지 않습니다. `SHOW TABLE STATUS` 나 파일 크기로 다시 재야 합니다.
 - **PostgreSQL 쪽도 1회씩만 쟀습니다.** 5절의 값도 반복 측정과 분산이 없습니다.
-- **`gh-ost` 와 `pt-online-schema-change` 를 돌리지 않았습니다.** 실무에서는 이 도구들이 expand-contract 를 자동화합니다. 직접 구현해 단계별 비용을 보이는 쪽을 택했습니다.
+- **`gh-ost` 는 돌리지 않았습니다.** 공개 컨테이너 이미지를 찾지 못했습니다(`ghcr.io/github/gh-ost` 는 접근이 거부됩니다). 소스를 받아 빌드하면 되는데 아직 안 했습니다. `pt-online-schema-change` 는 7절에서 돌렸습니다.
+- **7절도 조건마다 1회씩입니다.** 4.6초와 11.8초에 반복 측정이 없습니다.

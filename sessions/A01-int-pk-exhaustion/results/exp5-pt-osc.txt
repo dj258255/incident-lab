@@ -1,0 +1,32 @@
+# pt-online-schema-change 대조
+# MySQL 8.4.3, pt-online-schema-change 3.7.1-4
+# 행 수 3000000. INT AUTO_INCREMENT 를 BIGINT 로 옮긴다.
+
+## 1) 한 방 ALTER (COPY)
+  소요 4.6초
+  [alter] 4.6초 동안 시작한 쓰기 3건 중 성공 3건 = 초당 0.6건
+  [alter] 전환 직전 5초 기준선 = 초당 47.0건
+  [alter] 지연 중앙값 9ms, p95 4576ms, 최대 4576ms, 실패 0건
+
+## 2) pt-online-schema-change
+    Altering `spoon`.`sponsor_pt`...
+    Creating new table...
+    Altering new table...
+    2026-07-30T18:27:53 Creating triggers...
+    2026-07-30T18:27:53 Copying approximately 2993877 rows...
+    2026-07-30T18:28:03 Copied rows OK.
+    2026-07-30T18:28:03 Swapping tables...
+    2026-07-30T18:28:03 Dropping old table...
+    2026-07-30T18:28:03 Dropping triggers...
+    Successfully altered `spoon`.`sponsor_pt`.
+  소요 11.8초
+  [ptosc] 11.8초 동안 시작한 쓰기 500건 중 성공 500건 = 초당 42.3건
+  [ptosc] 전환 직전 5초 기준선 = 초당 47.8건
+  [ptosc] 지연 중앙값 9ms, p95 16ms, 최대 74ms, 실패 0건
+
+## 3) 결과 검산
+  sponsor_alter: 컬럼 bigint, 행 수 3000289
+  sponsor_pt: 컬럼 bigint, 행 수 3000789
+
+## 정리
+  각 조건 1회 실행입니다.
