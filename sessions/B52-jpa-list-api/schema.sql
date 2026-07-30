@@ -32,3 +32,13 @@ CREATE TABLE sponsor_assigned (
   created_at DATETIME(3) NOT NULL,
   KEY idx_live (live_id)
 ) ENGINE=InnoDB;
+
+-- Persistable.isNew() 로 merge 의 SELECT 를 없애는 변형용. 스키마는 sponsor_assigned 와 같다.
+CREATE TABLE sponsor_persistable (
+  id         BIGINT PRIMARY KEY,
+  live_id    BIGINT NOT NULL,
+  user_id    BIGINT NOT NULL,
+  amount     INT    NOT NULL,
+  created_at DATETIME(3) NOT NULL,
+  KEY idx_live (live_id)
+) ENGINE=InnoDB;

@@ -27,6 +27,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.persistence.PostLoad;
+import jakarta.persistence.PostPersist;
+import jakarta.persistence.Transient;
+import org.springframework.data.domain.Persistable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -140,9 +144,12 @@ class ListService {
     @Value("${lab.batch-size:0}") int batchSize;
 
     private final SponsorAssignedRepo assignedRepo;
+    private final SponsorPersistableRepo persistableRepo;
 
-    ListService(LiveRepo l, SponsorRepo s, SponsorAssignedRepo a, JdbcTemplate j) {
-        this.liveRepo = l; this.sponsorRepo = s; this.assignedRepo = a; this.jdbc = j;
+    ListService(LiveRepo l, SponsorRepo s, SponsorAssignedRepo a,
+                SponsorPersistableRepo pr, JdbcTemplate j) {
+        this.liveRepo = l; this.sponsorRepo = s; this.assignedRepo = a;
+        this.persistableRepo = pr; this.jdbc = j;
     }
 
     /** 목록 20건 + 방송별 후원 합계. 컬렉션을 실제로 순회해야 N+1이 발생한다. */
@@ -230,6 +237,37 @@ class ListService {
         assignedRepo.saveAll(rows);
     }
 
+    /** 변형 A-3. Persistable.isNew() 로 merge 의 SELECT 를 없앤다. */
+    @Transactional
+    void insertSaveAllPersistable(long liveId, int n) {
+        long base = System.nanoTime();
+        List<SponsorPersistable> rows = new ArrayList<>(n);
+        for (int i = 0; i < n; i++) {
+            rows.add(new SponsorPersistable(base + i, liveId,
+                    ThreadLocalRandom.current().nextLong(1, 500_000), 1000, LocalDateTime.now()));
+        }
+        persistableRepo.saveAll(rows);
+    }
+
+    /**
+     * 변형 B-2. JDBC batchUpdate 를 sponsor_assigned 에 넣는다.
+     *
+     * 원래 batchUpdate 는 200만 행이 든 sponsor 에, saveAll 직접 ID 는 빈
+     * sponsor_assigned 에 넣었다. 테이블이 다르면 소요 시간을 나란히 놓을 수 없다.
+     * 세 방식을 같은 빈 테이블에 넣는 조건을 위해 둔다.
+     */
+    @Transactional
+    void insertJdbcBatchAssigned(long liveId, int n) {
+        long base = System.nanoTime();
+        List<Object[]> rows = new ArrayList<>(n);
+        for (int i = 0; i < n; i++) {
+            rows.add(new Object[]{base + i, liveId,
+                    ThreadLocalRandom.current().nextLong(1, 500_000), 1000, LocalDateTime.now()});
+        }
+        jdbc.batchUpdate("INSERT INTO sponsor_assigned (id, live_id, user_id, amount, created_at) "
+                + "VALUES (?,?,?,?,?)", rows);
+    }
+
     /** 변형 B. JDBC batchUpdate. 한 왕복에 여러 행을 보낸다. */
     @Transactional
     void insertJdbcBatch(long liveId, int n) {
@@ -242,6 +280,42 @@ class ListService {
                 rows);
     }
 }
+
+/**
+ * ID 를 직접 부여하면서 merge 를 피하는 변형.
+ *
+ * @Id 만 있고 @GeneratedValue 가 없으면 Spring Data 의 save() 는 엔티티가 새것인지
+ * 알 수 없어 persist 대신 merge 로 간다. merge 는 먼저 SELECT 를 던져 그 ID 의 행이
+ * 있는지 본다. 행마다 SELECT 한 번이 붙는 것이 이 세션이 3절에서 잡은 원인이다.
+ *
+ * Persistable 을 구현해 isNew() 로 "새것이다"를 직접 알려 주면 그 SELECT 가 사라진다.
+ * @Transient 로 둔 플래그는 영속화되지 않고, @PostPersist/@PostLoad 에서 내려 준다.
+ */
+@Entity
+@Table(name = "sponsor_persistable")
+class SponsorPersistable implements Persistable<Long> {
+    @Id Long id;
+    @Column(name = "live_id") Long liveId;
+    @Column(name = "user_id") Long userId;
+    Integer amount;
+    @Column(name = "created_at") LocalDateTime createdAt;
+
+    @Transient private boolean isNew = true;
+
+    protected SponsorPersistable() {}
+
+    SponsorPersistable(Long id, Long liveId, Long userId, Integer amount, LocalDateTime createdAt) {
+        this.id = id; this.liveId = liveId; this.userId = userId;
+        this.amount = amount; this.createdAt = createdAt;
+    }
+
+    @Override public Long getId() { return id; }
+    @Override public boolean isNew() { return isNew; }
+
+    @PostPersist @PostLoad void markNotNew() { this.isNew = false; }
+}
+
+interface SponsorPersistableRepo extends JpaRepository<SponsorPersistable, Long> {}
 
 /* ── 컨트롤러 ───────────────────────────────────────────── */
 
@@ -310,6 +384,8 @@ class ListController {
         switch (mode) {
             case "saveAll" -> svc.insertSaveAll(liveId, n);
             case "saveAllAssigned" -> svc.insertSaveAllAssigned(liveId, n);
+            case "saveAllPersistable" -> svc.insertSaveAllPersistable(liveId, n);
+            case "jdbcBatchAssigned" -> svc.insertJdbcBatchAssigned(liveId, n);
             default -> svc.insertJdbcBatch(liveId, n);
         }
         Map<String, Object> out = new LinkedHashMap<>();

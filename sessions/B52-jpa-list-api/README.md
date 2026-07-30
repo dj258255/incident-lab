@@ -177,14 +177,84 @@ MySQL 에서 옳은 처방을 PostgreSQL 에 그대로 옮기면 117배 손해�
 같은 시각이 몰려도 `Index Cond` 가 유지됩니다. 두 문법이 돌려주는 20건이 같은지도 검산해
 일치를 확인했습니다.
 
+## 7. 대량 삽입: 같은 조건에서 네 방식
+
+`scripts/exp-insert.sh`, 원문은 `results/exp-insert.txt`. **네 방식 모두 20,000행을 빈
+테이블에 넣습니다.** 3절의 원래 측정은 `batchUpdate` 가 200만 행이 든 `sponsor` 에,
+`saveAll` 직접 ID 가 빈 `sponsor_assigned` 에 넣어 출발선이 달랐습니다.
+
+쿼리 수는 `SHOW GLOBAL STATUS` 의 `Questions` 차분입니다. 시간만 보면 왕복이 줄었는지
+알 수 없습니다.
+
+### `rewriteBatchedStatements=true`, `batch_size=500`
+
+| 방식 | 소요 | 쿼리 수 |
+|---|---|---|
+| `saveAll` 자동 ID(IDENTITY) | 12.74초 | 20,011 |
+| `saveAll` 직접 ID | 12.63초 | 20,092 |
+| **`saveAll` 직접 ID + `Persistable`** | **0.53초** | **87** |
+| JDBC `batchUpdate` | **0.36초** | **9** |
+
+### `rewriteBatchedStatements=false`, `batch_size=500`
+
+| 방식 | 소요 | 쿼리 수 |
+|---|---|---|
+| `saveAll` 직접 ID | 19.01초 | **40,053** |
+| `saveAll` 직접 ID + `Persistable` | 7.68초 | 20,050 |
+| JDBC `batchUpdate` | 7.39초 | **20,010** |
+
+### 7.1 Persistable.isNew() 가 24배를 만든다
+
+12.63초에서 0.53초입니다. 쿼리가 20,092개에서 **87개**로 줄었습니다.
+
+`@Id` 만 있고 `@GeneratedValue` 가 없으면 Spring Data 의 `save()` 는 엔티티가 새것인지
+알 수 없어 `persist` 대신 `merge` 로 갑니다. `merge` 는 먼저 `SELECT` 를 던져 그 ID 의 행이
+있는지 봅니다. 40,053 이라는 쿼리 수가 그 증거입니다. 20,000 `SELECT` 에 20,000 `INSERT`
+입니다.
+
+`Persistable` 을 구현해 `isNew()` 로 새것임을 알려 주면 그 `SELECT` 가 사라지고, 그제야
+Hibernate 의 배치가 묶입니다. 87개는 20,000행을 500씩 40번에 나눠 보낸 것에 커밋과
+메타데이터가 붙은 수입니다.
+
+```java
+@Entity @Table(name = "sponsor_persistable")
+class SponsorPersistable implements Persistable<Long> {
+    @Id Long id;
+    @Transient private boolean isNew = true;
+
+    @Override public boolean isNew() { return isNew; }
+    @PostPersist @PostLoad void markNotNew() { this.isNew = false; }
+}
+```
+
+### 7.2 드라이버 옵션을 끄면 배치 API 도 소용없다
+
+`rewriteBatchedStatements=false` 에서 JDBC `batchUpdate` 가 **20,010 쿼리**입니다.
+배치 API 를 썼는데 왕복이 행마다 하나씩 그대로 나갔습니다. 0.36초가 7.39초가 되어 **20.5배**
+입니다.
+
+`addBatch`/`executeBatch` 는 **클라이언트 쪽에서 모아 두는 것까지**이고, 그것을 하나의
+`INSERT ... VALUES (...),(...)` 로 합치는 일은 드라이버가 합니다. 그 옵션이 꺼져 있으면
+드라이버가 모아 둔 것을 한 줄씩 풀어 보냅니다. **애플리케이션 코드만 보고 "배치를 쓰고
+있으니 괜찮다"고 판단하면 안 되는 이유입니다.**
+
+`Persistable` 쪽도 같은 조건에서 20,050 쿼리로 돌아갑니다. Hibernate 의 `batch_size` 와
+드라이버의 `rewriteBatchedStatements` 는 **둘 다 있어야** 왕복이 줍니다.
+
+### 7.3 IDENTITY 는 배치가 아예 안 묶인다
+
+자동 ID 조건이 20,011 쿼리입니다. `batch_size=500` 을 줬는데도 행마다 나갔습니다.
+`GenerationType.IDENTITY` 는 INSERT 를 보내고 생성된 키를 받아야 다음을 진행할 수 있으므로
+Hibernate 가 배치를 비활성화합니다. **ID 전략이 배치 가능 여부를 정합니다.**
+
 ## 못 한 것
 
 - **호스트 사양을 찍어 남기지 않았습니다.** 컨테이너 할당량만 있고 어느 장비에서 돌렸는지 확인되지 않아, 이 세션의 절대 시간은 다른 세션의 절대 시간과 비교할 수 없습니다.
 - **대량 삽입을 한 번씩만 쟀습니다.** N+1과 페이지네이션은 워밍업 3회 뒤 5회의 중앙값인데, 삽입을 재는 `scripts/bench.sh`의 `insert()`는 POST를 한 번만 던집니다. 함정 3의 소요 시간에는 관측 범위가 없습니다.
-- **삽입 세 방식을 같은 테이블에서 재지 않았습니다.** 두 방식은 200만 행이 든 `sponsor`에, 나머지 하나는 빈 `sponsor_assigned`에 넣습니다. 쿼리 수는 그대로 비교되지만 소요 시간은 다시 설계해야 비교됩니다.
-- **`rewriteBatchedStatements`를 끈 조건에서 JDBC `batchUpdate`를 재지 않았습니다.** 옵션을 끄고 잰 것은 `saveAll` 직접 ID 하나뿐입니다.
+- **7절은 빈 테이블에서만 쟀습니다.** 200만 행이 든 테이블에 넣을 때 같은 비율이 나오는지는 재지 않았습니다. 3절 표의 소요 시간은 여전히 출발선이 다른 값입니다.
+- **`batch_size` 를 바꿔 가며 재지 않았습니다.** 7절은 500 하나만 썼습니다. 100 이나 1000 에서 곡선이 어떻게 되는지는 모릅니다.
 - **타이브레이커 분기는 PostgreSQL 에서만 밟았습니다.** 6절에서 확인했지만 MySQL 쪽 `seed.py` 는 여전히 `created_at` 이 전부 다른 데이터를 만듭니다.
-- **`Persistable.isNew()` 구현으로 merge를 피하는 변형을 만들지 않았습니다.** 원인은 특정했지만 그 해법까지는 재지 않았습니다.
+- **`Persistable` 변형의 부작용을 재지 않았습니다.** `isNew` 를 `@Transient` 로 두면 조회해 온 엔티티는 `@PostLoad` 로 `false` 가 되지만, 직렬화해 오갔다 돌아온 엔티티는 다시 `true` 가 되어 `INSERT` 를 시도합니다. 그 경로는 만들지 않았습니다.
 - **`@BatchSize` 지연 로딩 최적화를 다루지 않았습니다.** fetch join과 집계 두 갈래만 비교했습니다.
 - **동시 요청 부하가 없습니다.** 단일 요청의 응답 시간과 쿼리 수만 쟀습니다. N+1의 진짜 위험은 동시 사용자가 늘 때 커넥션 풀을 소진하는 것인데, 그 구간은 F03 세션이 다룹니다.
 - **PostgreSQL 쪽은 페이지네이션만 대조했습니다.** 6절은 커서 문법 하나이고, N+1 과 대량 삽입은 PostgreSQL 에서 재지 않았습니다. `reWriteBatchedInserts` 도 재지 않았습니다.
