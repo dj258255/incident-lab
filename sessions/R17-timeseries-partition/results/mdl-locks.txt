@@ -1,17 +1,11 @@
-+----------------+---------------------+-------------+--------------------------------------------------------------+
-| OBJECT_NAME    | LOCK_TYPE           | LOCK_STATUS | query                                                        |
-+----------------+---------------------+-------------+--------------------------------------------------------------+
-| NULL           | INTENTION_EXCLUSIVE | GRANTED     | ALTER TABLE watch_log_part DROP PARTITION p20260721          |
-| watch_log_part | SHARED_UPGRADABLE   | GRANTED     | ALTER TABLE watch_log_part DROP PARTITION p20260721          |
-| watch_log_part | SHARED_READ         | GRANTED     | DO SLEEP(25)                                                 |
-| watch_log_part | EXCLUSIVE           | PENDING     | ALTER TABLE watch_log_part DROP PARTITION p20260721          |
-| watch_log_part | SHARED_READ         | PENDING     | SELECT COUNT(*) FROM watch_log_part WHERE created_at >= '202 |
-+----------------+---------------------+-------------+--------------------------------------------------------------+
-+-----+---------------------------------+------------------------------------------------------------------------+
-| ID  | STATE                           | query                                                                  |
-+-----+---------------------------------+------------------------------------------------------------------------+
-| 666 | executing                       | SELECT ID, STATE, LEFT(INFO,70) AS query FROM information_schema.PROCE |
-| 659 | User sleep                      | DO SLEEP(25)                                                           |
-| 661 | Waiting for table metadata lock | ALTER TABLE watch_log_part DROP PARTITION p20260721                    |
-| 663 | Waiting for table metadata lock | SELECT COUNT(*) FROM watch_log_part WHERE created_at >= '2026-07-27'   |
-+-----+---------------------------------+------------------------------------------------------------------------+
++----------------+-------------+-------------+--------------+
+| OBJECT_NAME    | LOCK_TYPE   | LOCK_STATUS | query        |
++----------------+-------------+-------------+--------------+
+| watch_log_part | SHARED_READ | GRANTED     | DO SLEEP(25) |
++----------------+-------------+-------------+--------------+
++------+------------+------------------------------------------------------------------------+
+| ID   | STATE      | query                                                                  |
++------+------------+------------------------------------------------------------------------+
+| 1097 | executing  | SELECT ID, STATE, LEFT(INFO,70) AS query FROM information_schema.PROCE |
+| 1090 | User sleep | DO SLEEP(25)                                                           |
++------+------------+------------------------------------------------------------------------+
