@@ -166,3 +166,27 @@ tps = 0.678460 (without initial connection time)
 4. **스탠바이 `max_connections`.** 프라이머리보다 작으면 `recovery aborted because of insufficient parameter settings`로 아예 뜨지 않습니다.
 5. **`pg_waldump` stderr 무시.** 처음에 `2>/dev/null`로 에러를 버려 놓고 결과 0을 사실로 착각했습니다. 범위를 LSN으로 명시하고 stderr를 살려서 다시 셌습니다.
 6. **한 번 나온 6,660 TPS.** 초기 시도에서 스탠바이 TPS가 6,660으로 찍혀 절벽을 잡았다고 생각했는데, 통제된 조건으로 반복하니 6만대로 돌아왔고 `subtransaction` 카운터는 그때도 0이었습니다. 복제 지연 회복 중이었을 가능성이 큽니다. 재현되지 않은 단발 관측이라 결론에서 제외했습니다.
+
+## RELEASE SAVEPOINT 실험 (results/exp-release-savepoint.txt)
+
+```console
+$ ./scripts/exp-release-savepoint.sh     # 약 1분
+```
+
+세 방식으로 서브트랜잭션 70개씩 만들고 트랜잭션을 열어 둔 채 다른 세션에서 관측합니다.
+관측은 PG17 의 `pg_stat_get_backend_subxact` 로, PGPROC 의 `subxids` 캐시 개수와 넘침
+여부를 그대로 돌려줍니다.
+
+| 방식 | 캐시 개수 | 넘침 |
+|---|---|---|
+| `RELEASE` | 64 | t |
+| `ROLLBACK TO` | 0 | f |
+| 겹쳐 쌓기 | 64 | t |
+
+### 밟은 함정
+
+**`"$N개"` 가 변수명 `N개` 로 읽혔습니다.** UTF-8 로케일에서 bash 가 한글 바이트를 이름
+문자로 받아 `N개: unbound variable` 로 스크립트가 죽었습니다. `"${N}개"` 로 고쳤습니다.
+이 저장소에서 반복되는 함정이라 전체를 훑어 A09 와 B01 에서 같은 자리 세 곳을 더 찾아
+고치고 `CONVENTIONS.md` 에 점검 명령을 적었습니다.
+

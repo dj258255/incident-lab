@@ -136,6 +136,28 @@ org.springframework.transaction.NestedTransactionNotSupportedException:
 
 그래서 조건을 이 두 경계 아래위로 뒀습니다. 갱신 대상(50만 행)과 리더 부하(동시 64, 20초)를 전부 고정하고, 그 50만 건을 몇 개의 서브트랜잭션으로 나눌지만 바꿉니다.
 
+### RELEASE SAVEPOINT 로는 캐시를 비울 수 없다
+
+`scripts/exp-release-savepoint.sh`, 원문은 `results/exp-release-savepoint.txt`.
+
+postgres.ai 는 활성 서브트랜잭션을 64 미만으로 유지하면 총 100개를 만들어도 열화가 없다고
+적었습니다. 그러면 만들고 곧바로 `RELEASE` 해서 활성 수를 낮게 두면 되지 않느냐는 생각이
+따라옵니다. PG17 의 `pg_stat_get_backend_subxact` 로 직접 재봤습니다. 세 방식 모두 70개.
+
+| 방식 | 캐시에 남은 서브트랜잭션 | 넘침 |
+|---|---|---|
+| `SAVEPOINT` → `UPDATE` → `RELEASE` | 64 | **t** |
+| `SAVEPOINT` → `UPDATE` → `ROLLBACK TO` | **0** | f |
+| `SAVEPOINT` 를 겹쳐 쌓고 풀지 않음 | 64 | **t** |
+
+`RELEASE` 는 배열을 비우지 않습니다. 커밋된 서브트랜잭션의 XID 는 최상위 트랜잭션이 끝날
+때까지 다른 세션의 가시성 판정에 필요하므로 뺄 수 없고, 롤백된 것은 그 변경이 전부 무효라
+뺄 수 있습니다. 그래서 롤백 쪽만 0 입니다.
+
+`EXCEPTION` 블록을 정상으로 빠져나가는 것이 `RELEASE` 와 같으므로, 예외가 한 번도 안 나도
+배열은 채워집니다. 개수가 70 이 아니라 64 인 것은 배열이 64 에서 멈추고 넘침 표시를 켜기
+때문입니다.
+
 ## 3. 재계측
 
 ### 프라이머리
@@ -253,7 +275,7 @@ DETAIL:  max_connections = 100 is a lower setting than on the primary server, wh
   run1~3의 waits 파일이 앞 회차를 포함합니다. 위 표의 44~57%는 차분해서 얻은 값이고
   스크립트는 고쳤지만, 이미 저장된 파일은 누적 상태로 남아 있습니다.
 - **16과 17 비교.** 같은 워크로드를 16에서 돌려 17의 뱅크 단위 SLRU 락 개선이 얼마나 기여하는지 분리하지 못했습니다. 지금 표의 절벽은 17에서 버퍼만 32로 되돌린 것이라, 16의 실제 동작과 같다고 단정할 수 없습니다.
-- **`RELEASE SAVEPOINT`의 효과.** postgres.ai는 활성 서브트랜잭션을 64 미만으로 유지하면 총 100개를 만들어도 열화가 없다고 했습니다. 활성 수와 누적 수를 나눠 재지 않았습니다.
+- **활성 수를 64 미만으로 유지한 조건의 처리량을 재지 않았습니다.** `ROLLBACK TO` 가 캐시를 비운다는 것은 확인했지만(2절), 그 조건에서 처리량과 SLRU 미스율이 회복되는지는 조건 표에 넣지 않았습니다. 롤백을 섞는 워크로드가 현실적인 해법이 아니라 우선순위를 낮췄습니다.
 - **Multixact 경로.** 서브트랜잭션과 `SELECT ... FOR UPDATE`가 겹치면 multixact가 끼어들어 별도의 열화가 생깁니다. 이 세션에서 다루지 않았습니다.
 - **XID 소비 증가 자체의 위험.** 서브트랜잭션은 XID를 더 빨리 소비하므로 wraparound 위험을 키웁니다. 그쪽은 A14에서 다룹니다.
 - **Rails, Django, SQLAlchemy 검증.** Spring 경로는 실행해 확인했지만(1절) 나머지 셋은 문서와 소스로만 확인했습니다.
