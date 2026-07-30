@@ -1,0 +1,28 @@
+# leakDetectionThreshold=2000ms. 커넥션을 2초 넘게 쥔 지점을 HikariCP가 직접 찍는다.
+# 이 로그가 없으면 어느 코드가 커넥션을 오래 잡는지 추적할 방법이 스택 덤프뿐이다.
+
+java.lang.Exception: Apparent connection leak detected
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:127) ~[HikariCP-5.1.0.jar!/:na]
+	at lab.b01.SponsorService.sponsorTwoConnections(B01Application.java:185) ~[!/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-6.2.1.jar!/:6.2.1]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:723) ~[spring-aop-6.2.1.jar!/:6.2.1]
+	at lab.b01.SponsorService$$SpringCGLIB$$0.sponsorTwoConnections(<generated>) ~[!/:na]
+	at lab.b01.SponsorController.sponsor(B01Application.java:244) ~[!/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:257) ~[spring-web-6.2.1.jar!/:6.2.1]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190) ~[spring-web-6.2.1.jar!/:6.2.1]
+--
+java.lang.Exception: Apparent connection leak detected
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:127) ~[HikariCP-5.1.0.jar!/:na]
+	at lab.b01.SponsorService.sponsorTwoConnections(B01Application.java:185) ~[!/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-6.2.1.jar!/:6.2.1]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:723) ~[spring-aop-6.2.1.jar!/:6.2.1]
+	at lab.b01.SponsorService$$SpringCGLIB$$0.sponsorTwoConnections(<generated>) ~[!/:na]
+
+# 유출 경고 건수
+30

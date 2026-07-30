@@ -1,0 +1,21 @@
+# 배치 INSERT 손익. 같은 건수를 saveAll로 넣고 시간만 비교한다.
+# hibernate.jdbc.batch_size=100, rewriteBatchedStatements=true
+
+{"mode":"auto","rows":1000,"ms":69,"rows_per_sec":14493}
+{"mode":"auto","rows":1000,"ms":62,"rows_per_sec":16129}
+{"mode":"auto","rows":1000,"ms":53,"rows_per_sec":18868}
+{"mode":"identity","rows":1000,"ms":120,"rows_per_sec":8333}
+{"mode":"identity","rows":1000,"ms":108,"rows_per_sec":9259}
+{"mode":"identity","rows":1000,"ms":110,"rows_per_sec":9091}
+{"mode":"auto","rows":5000,"ms":230,"rows_per_sec":21739}
+{"mode":"auto","rows":5000,"ms":180,"rows_per_sec":27778}
+{"mode":"auto","rows":5000,"ms":172,"rows_per_sec":29070}
+{"mode":"identity","rows":5000,"ms":377,"rows_per_sec":13263}
+{"mode":"identity","rows":5000,"ms":370,"rows_per_sec":13514}
+{"mode":"identity","rows":5000,"ms":367,"rows_per_sec":13624}
+{"mode":"auto","rows":10000,"ms":295,"rows_per_sec":33898}
+{"mode":"auto","rows":10000,"ms":296,"rows_per_sec":33784}
+{"mode":"auto","rows":10000,"ms":293,"rows_per_sec":34130}
+{"mode":"identity","rows":10000,"ms":754,"rows_per_sec":13263}
+{"mode":"identity","rows":10000,"ms":752,"rows_per_sec":13298}
+{"mode":"identity","rows":10000,"ms":748,"rows_per_sec":13369}

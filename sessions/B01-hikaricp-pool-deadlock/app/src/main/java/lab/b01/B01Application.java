@@ -15,6 +15,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,6 +70,42 @@ class SponsorJpa {
 
 interface SponsorJpaRepo extends JpaRepository<SponsorJpa, Long> {}
 
+/**
+ * 해소책 세 번째. AUTO 대신 IDENTITY를 쓰면 MySQL의 AUTO_INCREMENT를 그대로 쓰므로
+ * 채번용 별도 커넥션이 사라진다. 대가는 JDBC 배치 INSERT를 잃는 것이다.
+ * Hibernate는 INSERT를 보내기 전에는 생성된 키를 모르므로 배치로 묶지 못한다.
+ */
+@Entity @Table(name = "sponsor_idn")
+class SponsorIdentity {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
+    @Column(name = "live_id") Long liveId;
+    Integer amount;
+
+    protected SponsorIdentity() {}
+    SponsorIdentity(Long liveId, Integer amount) { this.liveId = liveId; this.amount = amount; }
+}
+
+interface SponsorIdentityRepo extends JpaRepository<SponsorIdentity, Long> {}
+
+/**
+ * 원 사례에 더 가까운 강도를 만드는 조건. allocationSize를 1로 두면 pooled 옵티마이저가
+ * ID를 미리 확보하지 못해 INSERT 한 건마다 채번한다. 곧 save() 한 번마다 커넥션 두 개다.
+ */
+@Entity @Table(name = "sponsor_seq1")
+class SponsorSeq1 {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq1")
+    @SequenceGenerator(name = "seq1", sequenceName = "sponsor_seq1_seq", allocationSize = 1)
+    Long id;
+    @Column(name = "live_id") Long liveId;
+    Integer amount;
+
+    protected SponsorSeq1() {}
+    SponsorSeq1(Long liveId, Integer amount) { this.liveId = liveId; this.amount = amount; }
+}
+
+interface SponsorSeq1Repo extends JpaRepository<SponsorSeq1, Long> {}
+
 @Service
 class SponsorService {
     private final DataSource ds;
@@ -86,9 +123,49 @@ class SponsorService {
     void addFail()   { fail.incrementAndGet(); }
 
     private final SponsorJpaRepo jpaRepo;
+    private final SponsorIdentityRepo idnRepo;
+    private final SponsorSeq1Repo seq1Repo;
 
-    SponsorService(DataSource ds, JdbcTemplate jdbc, SponsorJpaRepo jpaRepo) {
+    SponsorService(DataSource ds, JdbcTemplate jdbc, SponsorJpaRepo jpaRepo,
+                   SponsorIdentityRepo idnRepo, SponsorSeq1Repo seq1Repo) {
         this.ds = ds; this.jdbc = jdbc; this.jpaRepo = jpaRepo;
+        this.idnRepo = idnRepo; this.seq1Repo = seq1Repo;
+    }
+
+    /** IDENTITY 채번. 별도 커넥션이 없다. */
+    @Transactional
+    void sponsorIdentity(long liveId, int amount) {
+        idnRepo.save(new SponsorIdentity(liveId, amount));
+    }
+
+    /** allocationSize=1. save() 한 번마다 채번하므로 커넥션 두 개를 상시로 요구한다. */
+    @Transactional
+    void sponsorSeq1(long liveId, int amount) {
+        seq1Repo.save(new SponsorSeq1(liveId, amount));
+    }
+
+    /**
+     * 배치 INSERT 손익. AUTO는 ID를 미리 확보하므로 JDBC 배치로 묶이고,
+     * IDENTITY는 INSERT 전에 키를 모르므로 묶이지 않는다. 그 차이를 잰다.
+     */
+    @Transactional
+    long batchAuto(int n) {
+        long t0 = System.nanoTime();
+        var rows = new java.util.ArrayList<SponsorJpa>(n);
+        for (int i = 0; i < n; i++) rows.add(new SponsorJpa(1L, 1000));
+        jpaRepo.saveAll(rows);
+        jpaRepo.flush();
+        return (System.nanoTime() - t0) / 1_000_000;
+    }
+
+    @Transactional
+    long batchIdentity(int n) {
+        long t0 = System.nanoTime();
+        var rows = new java.util.ArrayList<SponsorIdentity>(n);
+        for (int i = 0; i < n; i++) rows.add(new SponsorIdentity(1L, 1000));
+        idnRepo.saveAll(rows);
+        idnRepo.flush();
+        return (System.nanoTime() - t0) / 1_000_000;
     }
 
     /**
@@ -166,6 +243,8 @@ class SponsorController {
             switch (mode) {
                 case "two" -> svc.sponsorTwoConnections(liveId, 1000);
                 case "jpa" -> svc.sponsorJpaSave(liveId, 1000);
+                case "idn" -> svc.sponsorIdentity(liveId, 1000);
+                case "seq1" -> svc.sponsorSeq1(liveId, 1000);
                 default -> svc.sponsorOneAtATime(liveId, 1000);
             }
             svc.addOk();
@@ -178,6 +257,22 @@ class SponsorController {
             out.put("msg", m.length() > 90 ? m.substring(0, 90) : m);
         }
         out.put("ms", (System.nanoTime() - t0) / 1_000_000);
+        return out;
+    }
+
+    /**
+     * 배치 INSERT 손익. /batch?n=1000&mode=auto|identity
+     * 채번 방식이 배치로 묶이는지를 가르므로, 같은 건수를 같은 방식으로 넣어 시간만 비교한다.
+     */
+    @GetMapping("/batch")
+    Map<String, Object> batch(@RequestParam(defaultValue = "1000") int n,
+                              @RequestParam(defaultValue = "auto") String mode) {
+        Map<String, Object> out = new LinkedHashMap<>();
+        long ms = mode.equals("identity") ? svc.batchIdentity(n) : svc.batchAuto(n);
+        out.put("mode", mode);
+        out.put("rows", n);
+        out.put("ms", ms);
+        out.put("rows_per_sec", ms > 0 ? Math.round(n * 1000.0 / ms) : -1);
         return out;
     }
 

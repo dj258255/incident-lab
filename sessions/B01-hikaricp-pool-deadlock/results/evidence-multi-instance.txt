@@ -1,0 +1,39 @@
+## 1) max_connections 500(기본), 풀 24, 인스턴스 3대
+앱 없을 때 기준 접속 = 1
+  인스턴스 1대 → 접속 25 (기준 제외 24)  풀 24 x 1 = 24 기대
+  인스턴스 2대 → 접속 49 (기준 제외 48)  풀 24 x 2 = 48 기대
+  인스턴스 3대 → 접속 73 (기준 제외 72)  풀 24 x 3 = 72 기대
+
+max_connections=500  실제 접속=73  기동 성공=3/3
+누적 최대 접속=73
+거부된 접속(Aborted_connects)=0
+
+## 2) max_connections 60, 풀 24, 인스턴스 3대 (24x3=72 > 60)
+max_connections=60 로 낮춤. 풀 24 x 3 = 72 이므로 상한에 닿는다
+앱 없을 때 기준 접속 = 1
+  인스턴스 1대 → 접속 25 (기준 제외 24)  풀 24 x 1 = 24 기대
+  인스턴스 2대 → 접속 49 (기준 제외 48)  풀 24 x 2 = 48 기대
+  인스턴스 3대 → 접속 ? (기준 제외 -1)  풀 24 x 3 = 72 기대
+
+max_connections=  실제 접속=  기동 성공=3/3
+누적 최대 접속=
+거부된 접속(Aborted_connects)=
+## 2) max_connections 60, 풀 24, 인스턴스 3대 (24x3=72 > 60)
+앱 없을 때 기준 접속 = 1
+  인스턴스 1대 → 기동 성공  접속 조회 결과: mysql: [Warning] Using a password on the command line interface can be insecure.
+  인스턴스 2대 → 기동 성공  접속 조회 결과: mysql: [Warning] Using a password on the command line interface can be insecure.
+  인스턴스 3대 → 기동 성공  접속 조회 결과: mysql: [Warning] Using a password on the command line interface can be insecure.
+
+### 상한을 넘긴 뒤 관리자 접속도 거부된다
+    mysql: [Warning] Using a password on the command line interface can be insecure.
+    ERROR 1040 (HY000): Too many connections
+
+### 앱 로그의 접속 거부
+    인스턴스 1: "Too many connections" 0건
+    인스턴스 2: "Too many connections" 0건
+    인스턴스 3: "Too many connections" 0건
+
+### 각 앱이 실제로 확보한 풀 크기
+    인스턴스 1: {"total":24,"active":0,"idle":24,"awaiting":0,"ok":0,"fail":0,"db_threads_connected":61}
+    인스턴스 2: {"total":24,"active":0,"idle":24,"awaiting":0,"ok":0,"fail":0,"db_threads_connected":61}
+    인스턴스 3: {"total":13,"active":0,"idle":13,"awaiting":0,"ok":0,"fail":0,"db_threads_connected":61}

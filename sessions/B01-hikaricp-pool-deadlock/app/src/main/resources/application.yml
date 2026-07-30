@@ -6,7 +6,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:13319}/spoon
+    url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:13319}/spoon?rewriteBatchedStatements=true
     username: root
     password: lab
     hikari:
@@ -15,6 +15,8 @@ spring:
       # 기본 30초. 이 시간이 지나면 대기하던 요청이 예외로 끝난다.
       # 데드락이 나면 이 값이 곧 장애 지속 시간의 단위가 된다.
       connection-timeout: ${CONN_TIMEOUT:30000}
+      # 커넥션을 오래 쥔 지점을 HikariCP가 스택트레이스로 찍어 준다. 0이면 끈다.
+      leak-detection-threshold: ${LEAK_MS:0}
 
   jpa:
     hibernate.ddl-auto: none
@@ -23,6 +25,10 @@ spring:
     # Hibernate 6은 AUTO를 엔티티별 시퀀스로 매핑하는데, MySQL에서는 테이블로 흉내 낸다.
     properties:
       hibernate.id.new_generator_mappings: true
+      # 배치 INSERT를 켠다. AUTO는 ID를 미리 확보하므로 묶이고, IDENTITY는 INSERT 전에
+      # 키를 모르므로 묶이지 않는다. 이 설정이 없으면 양쪽 다 안 묶여서 손익이 드러나지 않는다.
+      hibernate.jdbc.batch_size: 100
+      hibernate.order_inserts: true
 
 lab:
   hold-ms: ${HOLD_MS:50}

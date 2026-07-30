@@ -26,7 +26,12 @@
 $ docker compose up -d
 $ docker exec -i b01-mysql mysql -uroot -plab spoon < schema.sql
 $ cd app && gradle bootJar && cd ..
-$ ./scripts/run-all.sh        # 4개 조건, 약 4분
+$ ./scripts/run-all.sh        # 기본 4개 조건, 약 4분
+$ DURATION=40 CONCURRENCY=16 ./scripts/run.sh seq1-10 seq1 10   # allocationSize=1
+$ DURATION=40 CONCURRENCY=16 ./scripts/run.sh idn-10  idn  10   # IDENTITY
+$ ./scripts/capture.sh                        # 시퀀스 관측과 HikariCP 로그 발췌
+$ ./scripts/multi-instance.sh 3 24             # 인스턴스 3대, 풀 24
+$ python3 scripts/report-remedies.py           # 해소책 비교 차트
 ```
 
 조건별 원문은 `results/<라벨>-{req.csv,pool.jsonl,app.log,final.json}`에 남습니다.
@@ -104,6 +109,64 @@ jpa-10:  1433 ok   6 err:CannotCreateTransactionException   1 err:DataAccessReso
 two-10:    11 ok  21 err:SQLTransientConnectionException
 ```
 
+## 7. 채번 방식과 해소책 (2026-07-30 추가)
+
+`scripts/report-remedies.py` 출력입니다.
+
+```console
+  two-10    tps=    0.3 실패   21/   32 ( 65.6%) p50= 30098ms
+  seq1-10   tps=    0.5 실패   19/   38 ( 50.0%) p50= 30062ms
+  jpa-10    tps=   38.5 실패    7/ 1546 (  0.5%) p50=    39ms
+  jpa-24    tps=  164.3 실패    0/ 6572 (  0.0%) p50=    37ms
+  one-10    tps=  151.2 실패    0/ 6047 (  0.0%) p50=    78ms
+  idn-10    tps=  180.9 실패    0/ 7237 (  0.0%) p50=    44ms
+  배치: 1000-auto=62 1000-identity=110 5000-auto=180 5000-identity=370
+        10000-auto=295 10000-identity=752
+```
+
+`allocationSize=1`(`seq1-10`)이 커넥션을 직접 두 개 잡는 `two-10`과 사실상 같습니다.
+시퀀스 테이블 확인은 이렇습니다.
+
+```console
+t	next_val
+seq1	20        ← 19행에 20. 1씩 오른다
+jpa	1
+seq1_rows  19
+idn_rows   7237
+```
+
+## 8. 인스턴스 여러 대 (2026-07-30 추가)
+
+`results/evidence-multi-instance.txt` 원문입니다.
+
+```console
+앱 없을 때 기준 접속 = 1
+  인스턴스 1대 → 접속 25 (기준 제외 24)  풀 24 x 1 = 24 기대
+  인스턴스 2대 → 접속 49 (기준 제외 48)  풀 24 x 2 = 48 기대
+  인스턴스 3대 → 접속 73 (기준 제외 72)  풀 24 x 3 = 72 기대
+
+max_connections=60 로 낮춘 뒤
+    ERROR 1040 (HY000): Too many connections
+    인스턴스 1: {"total":24,...}
+    인스턴스 2: {"total":24,...}
+    인스턴스 3: {"total":13,...}   ← 정상 기동인데 풀이 절반
+```
+
+인스턴스 3은 `/pool`이 200을 돌려주고 앱 로그에 `Too many connections`도 없습니다.
+확보한 만큼만 들고 돕니다.
+
+## 9. leakDetectionThreshold (2026-07-30 추가)
+
+`results/evidence-leak-detection.txt` 원문입니다.
+
+```
+java.lang.Exception: Apparent connection leak detected
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:127)
+	at lab.b01.SponsorService.sponsorTwoConnections(B01Application.java:185)
+```
+
+30건 잡혔습니다. 185번 줄이 첫 커넥션을 쥔 채 두 번째를 요청하는 자리입니다.
+
 ## 반복 측정에서 드러난 것
 
 질적 결론은 네 회차에서 전부 유지됐습니다. `jpa-10`의 실패가 정확히 7건, 1초 초과가
@@ -117,6 +180,11 @@ two-10:    11 ok  21 err:SQLTransientConnectionException
 회차 사이에 대기를 두지 않은 것이 이 측정의 결함입니다.
 
 ## 밟은 함정
+
+0. **8080번대 포트 충돌.** 인스턴스 여러 대를 띄울 때 8082가 이미 다른 컨테이너에
+   잡혀 있어 두 번째 인스턴스가 안 떴습니다. 스크립트가 기동을 확인하지 않았다면
+   커넥션 수가 48이 아니라 35인 것을 편차로 착각했을 것입니다. 8090번대로 옮기고
+   기동 확인을 넣었습니다.
 
 1. **Spring 프록시 필드 접근.** `SponsorService`에 `@Transactional`을 붙이자 컨트롤러의 `svc.ok` 필드 읽기가 NPE를 냈습니다. 프록시의 필드는 초기화되지 않습니다. 접근자 메서드로 고쳤습니다. R13에서 겪고 적어 둔 함정을 그대로 다시 밟았습니다.
 2. **시퀀스 테이블 행 삭제.** 위 1절에 적었습니다. 에러 없이 INSERT만 조용히 실패합니다.

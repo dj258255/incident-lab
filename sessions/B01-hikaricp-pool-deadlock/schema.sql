@@ -30,3 +30,20 @@ CREATE TABLE sponsor_jpa_seq (
   next_val BIGINT
 ) ENGINE=InnoDB;
 INSERT INTO sponsor_jpa_seq (next_val) VALUES (1);
+
+-- 해소책 세 번째(IDENTITY)와 강도 조건(allocationSize=1)이 쓰는 테이블.
+CREATE TABLE sponsor_idn (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  live_id BIGINT NOT NULL,
+  amount INT NOT NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE sponsor_seq1 (
+  id BIGINT PRIMARY KEY,
+  live_id BIGINT NOT NULL,
+  amount INT NOT NULL
+) ENGINE=InnoDB;
+
+-- MySQL에는 시퀀스 객체가 없으므로 allocationSize=1도 테이블로 간다.
+CREATE TABLE sponsor_seq1_seq (next_val BIGINT) ENGINE=InnoDB;
+INSERT INTO sponsor_seq1_seq (next_val) VALUES (1);
