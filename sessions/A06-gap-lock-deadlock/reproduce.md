@@ -72,6 +72,17 @@ READ-COMMITTED          <- 변수는 바뀌었지만 실행 중인 트랜잭션�
 
 `BEGIN` 앞으로 옮기기 전에는 해소 검증에서 데드락이 30회 그대로 나왔습니다.
 
+## 다른 선택지 실험 (results/alternatives.txt)
+
+```console
+$ ../../.venv/bin/python3 scripts/alternatives.py results/alternatives.txt   # 약 35초
+```
+
+원 스크립트 `deadlock.py` 는 건드리지 않았습니다. 발행된 3절 표의 값이 그 파일의 실행분입니다.
+
+`live_id = 3` 과 `settle_date = '2026-07-30'` 을 써서 기존 시나리오의 데이터와 겹치지 않게
+했습니다.
+
 ## 원문 파일 위치
 
 | 내용 | 경로 |
