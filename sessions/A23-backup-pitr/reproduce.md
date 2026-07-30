@@ -88,6 +88,48 @@ $ SET GLOBAL binlog_expire_logs_seconds = 1;  FLUSH BINARY LOGS;
   가장 오래된 파일 binlog.000001 → binlog.000004
 ```
 
+## 실험 3: PostgreSQL PITR (results/exp3-pg-pitr.txt)
+
+원 사건과 같은 엔진으로 다시 밟았습니다. PostgreSQL 17.5, `archive_mode=on`,
+`archive_command=test ! -f /archive/%f && cp %p /archive/%f`, `archive_timeout=10s`,
+`track_commit_timestamp=on`.
+
+```console
+$ docker compose up -d postgres
+$ ./scripts/exp3-pg-pitr.sh      # 약 4분. 복구 서버를 네 번 새로 띄운다
+```
+
+### 결과
+
+| 복구 | 목표 시각 | `inclusive` | 행 수 |
+|---|---|---|---|
+| (기준) 사고 전 | | | 1500 |
+| (기준) 사고 후 | | | 1000 |
+| A | 사고 직전 | 기본(`on`) | 1500 |
+| B | 사고 커밋 정각 | 기본(`on`) | 1000 |
+| C | 사고 커밋 정각 | `off` | 1500 |
+| D | 사고 커밋 +1초 | `off` | 1000 |
+
+### 밟은 함정
+
+1. **`now()`를 사고 시각으로 착각.** 사고 직후 `SELECT now()`를 목표로 줬더니 `inclusive=off`로도
+   500행이 사라졌습니다. `now()`는 `DELETE`가 커밋된 뒤 실행한 별도 쿼리의 시각이라 커밋보다
+   늦습니다. `inclusive`는 목표 시각과 커밋 시각이 정확히 같은 트랜잭션 하나만 가릅니다.
+   `track_commit_timestamp=on`으로 켜고 `pg_xact_commit_timestamp()`로 정확한 값을 얻어야
+   B와 C가 갈립니다. 이 실수를 지우지 않고 복구 D로 남겼습니다. 운영에서 더 흔한 쪽이기 때문입니다.
+
+2. **`docker exec`가 기본 root라 `archive_command`가 계속 실패.** `/archive`와 `/basebackup`이
+   root 소유로 만들어져 postgres 서버 프로세스가 쓰지 못했습니다. 아카이브가 0개인 채로
+   복구가 성립하지 않았습니다. `chown -R postgres:postgres`와 `docker exec -u postgres`로
+   고쳤습니다.
+
+3. **베이스 백업 파일 소유권.** `pg_basebackup` 산출물이 root 소유 0600이라 복구 컨테이너의
+   postgres가 읽지 못했습니다. root로 복사한 뒤 소유를 넘기는 순서로 바꿨습니다.
+
+4. **승격 완료를 안 기다리고 조회.** `recovery_target_action='promote'`를 줘도 `pg_ctl start -w`가
+   돌아온 시점은 아직 복구 중입니다. `sleep 3` 뒤에 조회해 복구 B와 C가 소켓 오류를 냈습니다.
+   `pg_is_in_recovery()`가 `f`가 될 때까지 폴링하도록 고쳤습니다.
+
 ## 원문 파일 위치
 
 | 내용 | 경로 |

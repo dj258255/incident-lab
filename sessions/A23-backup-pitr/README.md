@@ -160,7 +160,65 @@ $ SHOW BINARY LOGS
 
 `docker exec`에 `-i`를 빠뜨리면 표준입력이 전달되지 않습니다. 그런데 **에러가 나지 않습니다.** 500건을 넣는 스크립트가 조용히 0건을 넣었고, 그 뒤 측정이 전부 어긋났습니다. 복구 스크립트를 자동화할 때 "실행됐다"와 "적용됐다"를 구분해 검증해야 하는 이유입니다.
 
-## 5. 해소: 백업을 믿지 않는 절차
+## 5. 원 엔진으로 다시: PostgreSQL
+
+여기까지는 MySQL입니다. 원 사건은 PostgreSQL이었으니 같은 엔진에서 한 번 더 밟았습니다.
+`scripts/exp3-pg-pitr.sh`, 원문은 `results/exp3-pg-pitr.txt`입니다.
+
+환경은 PostgreSQL 17.5, `archive_mode=on`, `archive_command`는 공식 문서 권고대로 이미 있는
+파일이면 실패하게 두었습니다. `pg_basebackup`으로 1,000행 시점의 베이스 백업을 뜬 뒤 500행을
+더 넣고, 그 500행을 `DELETE`로 지우는 것이 사고입니다.
+
+### 5.1 recovery_target_action 기본값은 pause다
+
+`recovery_target_time`만 주고 `recovery_target_action`을 지정하지 않은 결과입니다.
+
+```console
+LOG:  recovery stopping before commit of transaction 776, time 2026-07-30 09:47:43.285109+00
+LOG:  pausing at the end of recovery
+HINT:  Execute pg_wal_replay_resume() to promote.
+
+spoon=# SELECT count(*) FROM sponsor;   -- 1500  (사고 직전 값이 그대로 있다)
+spoon=# SELECT pg_is_in_recovery();     -- t     (그런데 읽기 전용이다)
+spoon=# SELECT pg_wal_replay_resume();
+spoon=# SELECT pg_is_in_recovery();     -- f
+```
+
+복구는 끝났고 데이터도 맞는데 승격을 사람이 불러야 합니다. MySQL PITR에는 이 단계가 없습니다.
+
+### 5.2 recovery_target_inclusive는 커밋 정각 한 건만 가른다
+
+처음에는 사고 직후 `now()`를 목표로 줬는데 `off`로 둬도 500행이 사라졌습니다. `now()`는 `DELETE`가
+커밋된 뒤 실행한 별도 쿼리의 시각이라 커밋보다 늦습니다. `track_commit_timestamp=on`으로 켜고
+사고 트랜잭션의 XID로 `pg_xact_commit_timestamp()`를 얻어 네 조건으로 다시 쟀습니다.
+
+| 복구 | 목표 시각 | `inclusive` | 결과 |
+|---|---|---|---|
+| A | 사고 직전 | 기본(`on`) | 1,500행. `pause`라 승격 전까지 읽기 전용 |
+| B | 사고 커밋 정각 | 기본(`on`) | **1,000행. 사고가 다시 적용됨** |
+| C | 사고 커밋 정각 | `off` | 1,500행 |
+| D | 사고 커밋 +1초 | `off` | **1,000행. `off`가 아무것도 막지 못함** |
+
+C와 D는 설정이 같고 목표 시각만 1초 다릅니다. `off`는 경계 한 칸을 옮기는 스위치이고 그 경계는
+커밋 타임스탬프 정각에만 있습니다. 사고 시각을 눈대중으로 읽어 넣는 방식에서는 아무 일도 하지
+않습니다. 안전한 쪽은 A입니다.
+
+`track_commit_timestamp` 기본값은 `off`이고, 사고가 난 다음에 켜면 이미 지나간 트랜잭션의 커밋
+시각은 나오지 않습니다. C는 미리 켜 뒀을 때만 성립합니다.
+
+### 5.3 두 엔진 대조
+
+| | MySQL 8.4 | PostgreSQL 17.5 |
+|---|---|---|
+| 복구 재료 | 풀 덤프 + binlog | 베이스 백업 + 아카이브 WAL |
+| 경계 지정 | `--stop-position`, `--stop-datetime` | `recovery_target_lsn`, `_time`, `_xid`, `_name` |
+| 경계 포함 | `--stop-position`은 그 위치 직전까지 | `recovery_target_inclusive` 기본 `on`, 정각 한 건만 가름 |
+| 복구 직후 상태 | 바로 쓰기 가능 | 기본 `pause`. 승격을 사람이 부름 |
+| 조용한 실패 | GTID 겹침 시 재적용 스킵(함정 3) | `restore_command`가 성공을 가장하면 잘못된 지점에서 멈춤 |
+
+마지막 줄에서 두 엔진이 같은 방식으로 위험합니다.
+
+## 6. 해소: 백업을 믿지 않는 절차
 
 실험에서 나온 것을 운영 체크리스트로 정리하면 이렇습니다.
 
@@ -174,7 +232,7 @@ $ SHOW BINARY LOGS
 | 복구 도구가 그 환경에 있는가 | 사고 당일에 확인하면 늦다 |
 | 복구 시간이 RTO 안인가 | 리허설에서 실측. 추정하지 않는다 |
 
-## 6. 예상과 달랐던 점
+## 7. 예상과 달랐던 점
 
 ### 함정 셋을 제가 직접 밟았습니다
 
@@ -190,7 +248,7 @@ MySQL의 PITR 문서(9.5절)에는 GTID 관련 경고가 한 줄도 없습니다
 
 ## 못 한 것
 
-- **PostgreSQL PITR을 다루지 않았습니다.** 조사에서 `recovery_target_action` 기본값이 `pause`라 목표 시점에 도달해도 서버가 열리지 않는 것, `recovery_target_inclusive` 기본값이 `on`이라 사고 트랜잭션이 다시 적용될 수 있는 것을 확인했지만 실험은 MySQL로 한정했습니다.
+- **Oracle과 SQL Server를 대조하지 않았습니다.** 두 엔진 모두 시점 복구를 제공하고 경계 포함 규칙도 다릅니다(Oracle `UNTIL TIME`, SQL Server `STOPAT`). 다만 공식 이미지가 없거나 라이선스가 걸려 이 랩에서 같은 방식으로 실행할 수 없었습니다.
 - **논리·물리 백업의 복원 시간을 비교하지 않았습니다.** 벤더 문서가 백업 속도만 명시하고 복원 속도 비교는 없어서, 직접 재면 독자적 기여가 되는 자리입니다.
 - **데이터 규모가 작습니다.** 1,500행이라 RTO 절대값은 의미가 없고 구조만 유효합니다.
 - **백업 검증 파이프라인을 구현하지 않았습니다.** 체크리스트로 적었을 뿐, 자동 복원 리허설을 실제로 돌리는 것은 다음 과제입니다.

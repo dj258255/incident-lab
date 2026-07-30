@@ -54,3 +54,50 @@ services:
     user: root
     volumes:
       - ./results/dump:/dump
+
+  # PostgreSQL PITR. 원 사례(GitLab 2017)가 PostgreSQL인데 1차 재현은 MySQL만 했다.
+  # 조사에서 확인한 두 기본값을 실제로 밟아 본다.
+  #   recovery_target_action 기본 pause  → 목표에 닿아도 서버가 안 열린다
+  #   recovery_target_inclusive 기본 on  → 목표 시각의 트랜잭션이 포함된다
+  postgres:
+    image: postgres:17.5
+    container_name: a23-pg
+    cpus: 4
+    mem_limit: 2g
+    command:
+      - postgres
+      - -c
+      - wal_level=replica
+      - -c
+      - archive_mode=on
+      # 아카이브 명령은 없는 파일 요청 시 반드시 nonzero를 반환해야 한다(공식 문서).
+      # 성공을 가장하면 복구가 조용히 잘못된 지점에서 멈춘다.
+      - -c
+      - archive_command=test ! -f /archive/%f && cp %p /archive/%f
+      - -c
+      - archive_timeout=10s
+      - -c
+      - log_min_messages=warning
+      # 사고 트랜잭션의 커밋 시각을 정확히 알아야 recovery_target_inclusive 를 가른다.
+      # now() 로 잡으면 커밋보다 늦어 inclusive=off 가 무력해진다.
+      - -c
+      - track_commit_timestamp=on
+    environment:
+      POSTGRES_PASSWORD: lab
+      POSTGRES_DB: spoon
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - a23pgdata:/var/lib/postgresql/data
+      - a23archive:/archive
+      - a23base:/basebackup
+    ports: ["15437:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "psql -U postgres -d spoon -qAt -c 'SELECT 1' | grep -q 1"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+
+volumes:
+  a23pgdata:
+  a23archive:
+  a23base:
