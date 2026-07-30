@@ -1,0 +1,350 @@
+==============================================================================
+시나리오 1. 없으면 넣고 있으면 더한다 (유니크 키 + INSERT)
+==============================================================================
+
+두 세션이 같은 (live_id, settle_date)를 동시에 정산한다.
+각자 먼저 SELECT로 확인하고, 없으면 INSERT한다. 애플리케이션에서 가장 흔한 형태다.
+
+  세션 A: SELECT ... FOR UPDATE (없음 → 갭 락 획득)
+  세션 B: SELECT ... FOR UPDATE (없음 → 같은 갭에 갭 락 획득. 갭 락끼리는 공존한다)
+  세션 A: INSERT  → insert intention 락 요청. B의 갭 락과 충돌해서 대기
+  세션 B: INSERT  → 같은 이유로 대기. 서로를 기다리므로 데드락
+
+[INSERT 직전: 두 세션이 같은 갭에 갭 락] performance_schema.data_locks
+          트랜잭션 테이블          인덱스            종류       모드                     상태       데이터
+          2658 settlement   None           TABLE    IX                     GRANTED  None
+          2658 settlement   uk_live_date   RECORD   X,GAP                  GRANTED  2, 1037565, 301
+          2658 settlement   uk_live_date   RECORD   X,GAP,INSERT_INTENTION WAITING  2, 1037565, 301
+          2659 settlement   None           TABLE    IX                     GRANTED  None
+          2659 settlement   uk_live_date   RECORD   X,GAP                  GRANTED  2, 1037565, 301
+
+결과: 세션A = 성공
+      세션B = 1213 Deadlock found when trying to get lock; try restarting trans
+
+LATEST DETECTED DEADLOCK
+------------------------
+2026-07-29 05:54:04 281472380497664
+*** (1) TRANSACTION:
+TRANSACTION 2658, ACTIVE 0 sec inserting
+mysql tables in use 1, locked 1
+LOCK WAIT 3 lock struct(s), heap size 1128, 2 row lock(s), undo log entries 1
+MySQL thread id 685, OS thread handle 281473043132160, query id 3395 172.25.0.1 root update
+INSERT INTO settlement (live_id, settle_date, amount) VALUES (1, '2026-07-29', 1000)
+
+*** (1) HOLDS THE LOCK(S):
+RECORD LOCKS space id 2 page no 5 n bits 72 index uk_live_date of table `spoon`.`settlement` trx id 2658 lock_mode X locks gap before rec
+Record lock, heap no 4 PHYSICAL RECORD: n_fields 3; compact format; info bits 0
+ 0: len 8; hex 8000000000000002; asc         ;;
+ 1: len 3; hex 8fd4fd; asc    ;;
+ 2: len 8; hex 800000000000012d; asc        -;;
+
+
+*** (1) WAITING FOR THIS LOCK TO BE GRANTED:
+RECORD LOCKS space id 2 page no 5 n bits 72 index uk_live_date of table `spoon`.`settlement` trx id 2658 lock_mode X locks gap before rec insert intention waiting
+Record lock, heap no 4 PHYSICAL RECORD: n_fields 3; compact format; info bits 0
+ 0: len 8; hex 8000000000000002; asc         ;;
+ 1: len 3; hex 8fd4fd; asc    ;;
+ 2: len 8; hex 800000000000012d; asc        -;;
+
+
+*** (2) TRANSACTION:
+TRANSACTION 2659, ACTIVE 0 sec inserting
+mysql tables in use 1, locked 1
+LOCK WAIT 3 lock struct(s), heap size 1128, 2 row lock(s), undo log entries 1
+MySQL thread id 684, OS thread handle 281473062006528, query id 3399 172.25.0.1 root update
+INSERT INTO settlement (live_id, settle_date, amount) VALUES (1, '2026-07-29', 1000)
+
+*** (2) HOLDS THE LOCK(S):
+RECORD LOCKS space id 2 page no 5 n bits 72 index uk_live_date of table `spoon`.`settlement` trx id 2659 lock_mode X locks gap before rec
+Record lock, heap no 4 PHYSICAL RECORD: n_fields 3; compact format; info bits 0
+ 0: len 8; hex 8000000000000002; asc         ;;
+ 1: len 3; hex 8fd4fd; asc    ;;
+ 2: len 8; hex 800000000000012d; asc        -;;
+
+
+*** (2) WAITING FOR THIS LOCK TO BE GRANTED:
+RECORD LOCKS space id 2 page no 5 n bits 72 index uk_live_date of table `spoon`.`settlement` trx id 2659 lock_mode X locks gap before rec insert intention waiting
+Record lock, heap no 4 PHYSICAL RECORD: n_fields 3; compact format; info bits 0
+ 0: len 8; hex 8000000000000002; asc         ;;
+ 1: len 3; hex 8fd4fd; asc    ;;
+ 2: len 8; hex 800000000000012d; asc        -;;
+
+*** WE ROLL BACK TRANSACTION (2)
+
+
+==============================================================================
+시나리오 2. 인덱스 없는 컬럼으로 UPDATE (락 범위가 테이블 전체로)
+==============================================================================
+
+status 컬럼에는 인덱스가 없다. WHERE status='PENDING'으로 UPDATE하면
+InnoDB는 전 행을 훑으면서 훑은 행마다 락을 잡는다. 조건에 맞지 않는 행의 락은
+곧 풀리지만, 그 사이에 다른 세션과 겹치면 데드락이 된다.
+
+[두 번째 UPDATE 직전] performance_schema.data_locks
+          트랜잭션 테이블          인덱스            종류       모드                     상태       데이터
+          2682 payout       None           TABLE    IX                     GRANTED  None
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  125
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  149
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  126
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  127
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  128
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  129
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  130
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  131
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  132
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  133
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  134
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  135
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  136
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  137
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  138
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  139
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  140
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  141
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  142
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  143
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  144
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  145
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  146
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  147
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  148
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  100
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  112
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  200
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  101
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  102
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  103
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  104
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  105
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  106
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  107
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  108
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  109
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  110
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  111
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  124
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  113
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  114
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  115
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  116
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  117
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  118
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  119
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  120
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  121
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  122
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  123
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  188
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  176
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  177
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  178
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  179
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  180
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  181
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  182
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  183
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  184
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  185
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  186
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  187
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  175
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  189
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  190
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  191
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  192
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  193
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  194
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  195
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  196
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  197
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  198
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  199
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  163
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  151
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  152
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  153
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  154
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  155
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  156
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  157
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  158
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  159
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  160
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  161
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  162
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  150
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  164
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  165
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  166
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  167
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  168
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  169
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  170
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  171
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  172
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  173
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  174
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  37
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  25
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  26
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  27
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  28
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  29
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  30
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  31
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  32
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  33
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  34
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  35
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  36
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  24
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  38
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  39
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  40
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  41
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  42
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  43
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  44
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  45
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  46
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  47
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  48
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  12
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  supremum pseudo-record
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  1
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  2
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  3
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  4
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  5
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  6
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  7
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  8
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  9
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  10
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  11
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  98
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  13
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  14
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  15
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  16
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  17
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  18
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  19
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  20
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  21
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  22
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  23
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  87
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  75
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  76
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  77
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  78
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  79
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  80
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  81
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  82
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  83
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  84
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  85
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  86
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  50
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  88
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  89
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  90
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  91
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  92
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  93
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  94
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  95
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  96
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  97
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  99
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  73
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  49
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  51
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  52
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  53
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  54
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  55
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  56
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  57
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  58
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  59
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  60
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  61
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  62
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  63
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  64
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  65
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  66
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  67
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  68
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  69
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  70
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  71
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  72
+          2682 payout       PRIMARY        RECORD   X                      GRANTED  74
+          2683 payout       None           TABLE    IX                     GRANTED  None
+          2683 payout       PRIMARY        RECORD   X                      WAITING  1
+→ 잡힌 락 204개. 200행짜리 테이블에서 조건에 맞는 건 100행이다.
+
+결과: 세션A = None
+      세션B = None
+
+LATEST DETECTED DEADLOCK
+------------------------
+2026-07-29 05:54:04 281472380497664
+*** (1) TRANSACTION:
+TRANSACTION 2658, ACTIVE 0 sec inserting
+mysql tables in use 1, locked 1
+LOCK WAIT 3 lock struct(s), heap size 1128, 2 row lock(s), undo log entries 1
+MySQL thread id 685, OS thread handle 281473043132160, query id 3395 172.25.0.1 root update
+INSERT INTO settlement (live_id, settle_date, amount) VALUES (1, '2026-07-29', 1000)
+
+*** (1) HOLDS THE LOCK(S):
+RECORD LOCKS space id 2 page no 5 n bits 72 index uk_live_date of table `spoon`.`settlement` trx id 2658 lock_mode X locks gap before rec
+Record lock, heap no 4 PHYSICAL RECORD: n_fields 3; compact format; info bits 0
+ 0: len 8; hex 8000000000000002; asc         ;;
+ 1: len 3; hex 8fd4fd; asc    ;;
+ 2: len 8; hex 800000000000012d; asc        -;;
+
+
+*** (1) WAITING FOR THIS LOCK TO BE GRANTED:
+RECORD LOCKS space id 2 page no 5 n bits 72 index uk_live_date of table `spoon`.`settlement` trx id 2658 lock_mode X locks gap before rec insert intention waiting
+Record lock, heap no 4 PHYSICAL RECORD: n_fields 3; compact format; info bits 0
+ 0: len 8; hex 8000000000000002; asc         ;;
+ 1: len 3; hex 8fd4fd; asc    ;;
+ 2: len 8; hex 800000000000012d; asc        -;;
+
+
+*** (2) TRANSACTION:
+TRANSACTION 2659, ACTIVE 0 sec inserting
+mysql tables in use 1, locked 1
+LOCK WAIT 3 lock struct(s), heap size 1128, 2 row lock(s), undo log entries 1
+MySQL thread id 684, OS thread handle 281473062006528, query id 3399 172.25.0.1 root update
+INSERT INTO settlement (live_id, settle_date, amount) VALUES (1, '2026-07-29', 1000)
+
+*** (2) HOLDS THE LOCK(S):
+RECORD LOCKS space id 2 page no 5 n bits 72 index uk_live_date of table `spoon`.`settlement` trx id 2659 lock_mode X locks gap before rec
+Record lock, heap no 4 PHYSICAL RECORD: n_fields 3; compact format; info bits 0
+ 0: len 8; hex 8000000000000002; asc         ;;
+ 1: len 3; hex 8fd4fd; asc    ;;
+ 2: len 8; hex 800000000000012d; asc        -;;
+
+
+*** (2) WAITING FOR THIS LOCK TO BE GRANTED:
+RECORD LOCKS space id 2 page no 5 n bits 72 index uk_live_date of table `spoon`.`settlement` trx id 2659 lock_mode X locks gap before rec insert intention waiting
+Record lock, heap no 4 PHYSICAL RECORD: n_fields 3; compact format; info bits 0
+ 0: len 8; hex 8000000000000002; asc         ;;
+ 1: len 3; hex 8fd4fd; asc    ;;
+ 2: len 8; hex 800000000000012d; asc        -;;
+
+*** WE ROLL BACK TRANSACTION (2)
+
+
+==============================================================================
+해소 검증 (시나리오 1을 각 방법으로 30회 반복)
+==============================================================================
+INSERT ... ON DUPLICATE KEY UPDATE       데드락 0회, 중복키 에러 0회 (60시도)
+READ COMMITTED로 낮추기                      데드락 0회, 중복키 에러 30회 (60시도)
+원래 방식 (SELECT FOR UPDATE 후 INSERT)       데드락 30회 (60시도)
