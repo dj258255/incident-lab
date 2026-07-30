@@ -1,0 +1,20 @@
+# INT UNSIGNED 로 미루는 선택지의 손익
+# 8.4.3, 행 수 3000000
+
+## INT SIGNED(상한 21억) 에서 두 목표로 각각 전환한다
+
+  [UNSIGNED] 전환 전 크기 104MB, 행 수 3000000
+  [UNSIGNED] INPLACE 요청:
+      ERROR 1846 (0A000) at line 1: ALGORITHM=INPLACE is not supported. Reason: Cannot change column type INPLACE. Try ALGORITHM=COPY.
+  [UNSIGNED] COPY 소요 4.5초, 전환 후 크기 104MB, 컬럼 int unsigned, 상한 4294967295
+
+  [BIGINT] 전환 전 크기 104MB, 행 수 3000000
+  [BIGINT] INPLACE 요청:
+      ERROR 1846 (0A000) at line 1: ALGORITHM=INPLACE is not supported. Reason: Cannot change column type INPLACE. Try ALGORITHM=COPY.
+  [BIGINT] COPY 소요 4.7초, 전환 후 크기 104MB, 컬럼 bigint, 상한 9223372036854775807
+
+## 정리
+  둘 다 ALGORITHM=INPLACE 를 거부당하고 COPY 로만 됩니다.
+  즉 전환 비용의 성격이 같고, 얻는 상한만 다릅니다.
+  UNSIGNED 는 21억에서 42억으로 2배를 벌고, BIGINT 는 약 42억 배를 법니다.
+  각 조건 1회 실행입니다.
