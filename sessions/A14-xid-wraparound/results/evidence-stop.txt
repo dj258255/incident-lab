@@ -1,0 +1,17 @@
+[4] 정지 임계 직전으로 점프한 뒤 태워서 정지를 넘는다
+  Write-ahead log reset
+-rw-r--r-- 1 postgres postgres 262144 Jul 30 03:11 07FC
+  점프 직후 nextXid=2144084392  (정지까지 400000개)
+  쓰기 거부: nextXid=2144484392  (정지임계 2144484392 를 0개 넘음)
+  클라이언트가 받은 문구:
+    ERROR:  database is not accepting commands that assign new transaction IDs to avoid wraparound data loss in database with OID 0
+    HINT:  Execute a database-wide VACUUM in that database.
+    You might also need to commit or roll back old prepared transactions, or drop stale replication slots.
+
+[5] 정지 상태에서 되는 것과 안 되는 것
+  SELECT      : 50005 행
+  INSERT      : ERROR:  database is not accepting commands that assign new transaction IDs to avoid wraparound data loss in database with OID 0
+  DELETE      : ERROR:  database is not accepting commands that assign new transaction IDs to avoid wraparound data loss in database with OID 0
+  읽기전용 TX : 50005 행
+  VACUUM      : WARNING:  cutoff for removing and freezing tuples is far in the past
+  (문서: 진행 중 트랜잭션은 계속되고 읽기 전용만 시작할 수 있다. VACUUM은 정상 동작한다)

@@ -1,0 +1,22 @@
+[7] 원인을 제거하고 다시
+  spoon만 동결한 뒤 age=0
+  그런데 쓰기는: ERROR:  database is not accepting commands that assign new transaction IDs to avoid wraparound data loss in database "postgres"
+  임계를 붙잡고 있는 것은 다른 데이터베이스다:
+    postgres age=2144483648
+    template1 age=2144483648
+    template0 age=2144483648
+    spoon age=0
+
+[8] 손대지 않고 기다린다
+  wraparound 방지 autovacuum이 스스로 처리하는지 본다. 수동 VACUUM도,
+  단일 사용자 모드도 쓰지 않는다. PG17 문서가 그러지 말라고 명시한다.
+  +20초: template0=2144483648 postgres=0 spoon=0 template1=0
+  +40초: postgres=0 spoon=0 template1=0 template0=0
+  쓰기 재개됨
+
+  autovacuum이 남긴 failsafe 기록 (PG14에 추가된 vacuum_failsafe_age):
+    2026-07-30 03:11:37.459 UTC [337] WARNING:  bypassing nonessential maintenance of table "spoon.public.sponsor" as a failsafe after 0 index scans
+    2026-07-30 03:11:37.545 UTC [343] WARNING:  bypassing nonessential maintenance of table "spoon.public.sponsor" as a failsafe after 0 index scans
+    2026-07-30 03:11:37.545 UTC [343] WARNING:  bypassing nonessential maintenance of table "spoon.pg_catalog.pg_statistic" as a failsafe after 0 index scans
+  최종: postgres=1 spoon=1 template1=1 template0=1
+  쓰기: ok

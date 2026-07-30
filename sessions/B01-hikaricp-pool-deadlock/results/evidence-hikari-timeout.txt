@@ -1,0 +1,7 @@
+HikariPool-1 - Connection is not available, request timed out after 30000ms (total=10, active=10, idle=0, waiting=10)
+HikariPool-1 - Connection is not available, request timed out after 30000ms (total=10, active=10, idle=0, waiting=9)
+HikariPool-1 - Connection is not available, request timed out after 30001ms (total=10, active=10, idle=0, waiting=12)
+HikariPool-1 - Connection is not available, request timed out after 30001ms (total=10, active=10, idle=0, waiting=13)
+HikariPool-1 - Connection is not available, request timed out after 30001ms (total=10, active=10, idle=0, waiting=14)
+HikariPool-1 - Connection is not available, request timed out after 30005ms (total=10, active=10, idle=0, waiting=11)
+HikariPool-1 - Connection is not available, request timed out after 30005ms (total=10, active=10, idle=0, waiting=15)
