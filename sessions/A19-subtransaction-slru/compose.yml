@@ -1,0 +1,86 @@
+# A19 재현 환경
+# GitLab 2021의 서브트랜잭션 장애를 프라이머리 + 핫 스탠바이로 재현한다.
+#
+# 이 장애는 단일 노드로 재현되지 않는다. 스탠바이는 프라이머리의 서브트랜잭션
+# 정보를 KnownAssignedXids로만 받는데, 프라이머리에서 subxid 캐시가 넘치면
+# 스탠바이는 튜플의 가시성을 판단할 때마다 pg_subtrans를 뒤져야 한다.
+# 그 조회가 SLRU 캐시에서 빗나가면 SubtransSLRU 락에 전원이 줄을 선다.
+#
+# PostgreSQL 16 이하에서 subtrans SLRU는 NUM_SUBTRANS_BUFFERS = 32로
+# 컴파일 타임 고정이었다. 8KB 페이지에 XID 2,048개가 들어가므로 32페이지면
+# 65,536개다. GitLab 원문의 "65K entries"가 이 값이다.
+#
+# 17에서 subtransaction_buffers GUC가 생겼다. 기본값 0은 자동 산정이라
+# shared_buffers/512(최대 1024블록)이고, 여기서는 1GB/512 = 256블록이 된다.
+# 16 시절의 32블록을 재현하려면 명시해야 한다.
+services:
+  primary:
+    image: postgres:17.5
+    container_name: a19-primary
+    cpus: 4
+    mem_limit: 4g
+    command:
+      - postgres
+      - -c
+      - shared_buffers=1GB
+      - -c
+      - wal_level=replica
+      - -c
+      - max_wal_senders=10
+      - -c
+      - hot_standby=on
+      - -c
+      - autovacuum=off        # 백그라운드가 XID를 소비해 조건이 섞이지 않게
+      - -c
+      - max_connections=300
+      - -c
+      - subtransaction_buffers=${SUBTRANS_BUFFERS:-32}
+    environment:
+      POSTGRES_PASSWORD: lab
+      POSTGRES_DB: spoon
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d:ro
+      - ./scripts:/scripts:ro
+    ports: ["15434:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+  standby:
+    image: postgres:17.5
+    container_name: a19-standby
+    cpus: 4
+    mem_limit: 4g
+    depends_on:
+      primary:
+        condition: service_healthy
+    user: postgres
+    environment:
+      PGDATA: /var/lib/postgresql/data
+      PGUSER: postgres
+    entrypoint: ["/standby-entrypoint.sh"]
+    command:
+      - -c
+      - shared_buffers=1GB
+      - -c
+      - hot_standby=on
+      # 스탠바이의 max_connections는 프라이머리 이상이어야 한다. 이 값이
+      # 스탠바이의 KnownAssignedXids 배열 크기를 정하기 때문이다. 낮으면
+      # "recovery aborted because of insufficient parameter settings"로 뜨지 않는다.
+      - -c
+      - max_connections=300
+      # 스탠바이의 SLRU 크기가 이 세션의 해소 변수다.
+      - -c
+      - subtransaction_buffers=${SUBTRANS_BUFFERS:-32}
+    volumes:
+      - ./standby-entrypoint.sh:/standby-entrypoint.sh:ro
+      - ./scripts:/scripts:ro
+    ports: ["15435:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
