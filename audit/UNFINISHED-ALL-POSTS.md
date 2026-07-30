@@ -260,3 +260,49 @@ replica-promotion-loss의 쿼럼입니다. 지우지 않고 남기는 이유는 
 
 C1 없음. C2 는 위 문구 교정 대상 대부분이 실행 대기입니다. C4(반복 측정 12건)와
 C6(gh-ost, pt-osc, Debezium)은 손대지 않았습니다. Oracle 도 남았습니다.
+
+## 2026-07-31 3차: C2·C3·C6 실행분
+
+| 세션 | 항목 | 결과 |
+|---|---|---|
+| A22 index-not-used | `COLLATE` 임시 처방 | **에러 1253.** `COLLATE` 는 같은 문자셋 안에서만 콜레이션을 바꾸므로 문자셋이 다르면 문법이 성립하지 않습니다. `CONVERT` 는 통과하지만 함수 적용이라 이득 0. 스키마를 맞추는 것만이 답이고 61배 |
+| A22 index-not-used | 결과 집합 크기별 배수 곡선 | LIMIT 1 에서 1,034.5배, 50만에서 1.2배. 스캔 타입은 내내 `index`/`range` 로 같습니다. **이 세션의 배수를 인용할 때 결과 집합 크기를 함께 적어야 합니다** |
+| A17 uuid-page-split | 조회 비용 | 전체 스캔 2.9~4.9배. 순차 PK 는 범위 스캔에서 디스크 미스 0, uuid7 은 1,233 |
+| A17 uuid-page-split | 페이지 충전율 직접 측정 | `INNODB_BUFFER_PAGE` 로 순차 92.1%, uuid4 66.1%, uuid7 63.0%. uuid4 가 50~60% 구간에 4,588 페이지를 쌓아 둔 것이 분할의 흔적. 버퍼 풀이 테이블보다 작아 표본(커버리지 74.9~99.9%) |
+| R17 timeseries-partition | 파티션 수가 조회에 물리는 비용 | 프루닝 질의는 파티션 수와 무관(0.95~1.06ms). 단건 조회가 11.2배, 적재가 2.7배. **파티션의 이득은 삭제 하나** |
+| R17 timeseries-partition | 관측 창 맞추기 | 480초로 맞추니 삭제 후 p95 가 5.0ms 와 5.1ms 로 같습니다. 차이는 삭제 중에 있고 관측 건수 29,971 대 203 |
+| B52 jpa-list-api | 삽입 세 방식 같은 테이블 | 네 방식을 20,000행씩 빈 테이블에 |
+| B52 jpa-list-api | `rewriteBatchedStatements` 끈 `batchUpdate` | 20,010 쿼리. **배치 API 를 써도 드라이버가 안 합치면 왕복이 그대로** 20.5배 손해 |
+| B52 jpa-list-api | `Persistable.isNew()` 변형 | 구현해 12.63초 → 0.53초(24배), 쿼리 20,092 → 87. merge 의 SELECT 가 사라지자 배치가 묶임 |
+| A01 int-pk-exhaustion | `pt-online-schema-change` | 2.6배 오래 걸리는 대신 p95 4,576ms → 16ms. 도구를 붙일 때 `caching_sha2_password` 와 **8.4 에서 제거된** `mysql_native_password` 로 두 번 걸림 |
+| A06 gap-lock-deadlock | 반복 측정 4회 | 최종금액이 네 회차 모두 같음. `INSERT IGNORE` 의 성공 건수만 흔들리는데(59~60) 금액은 어차피 1000 |
+
+### 이 회차에 밟은 결함
+
+- **Docker VM 이 7.7GB 뿐입니다.** SQL Server 6g 를 띄운 채 A22 MySQL(4g)을 올리자 OOMKilled
+  됐고 시드가 "Lost connection" 으로 죽었습니다. `cpus: 4`/`mem_limit: 4g` 세션을 동시에
+  여러 개 못 띄웁니다. 세션을 하나씩 돌려야 합니다.
+- **R17 파티션 실험의 날짜 폭이 파티션 수를 따라갔습니다.** 하루치 행 수가 365배 차이 나
+  프루닝 이득처럼 보인 286ms → 0.87ms 가 사실은 결과 집합이 줄어든 것이었습니다.
+  날짜 폭을 365일로 고정해 고쳤습니다.
+- **A17 의 `INNODB_BUFFER_PAGE` 집계가 `Decimal` 이라 JSON 직렬화가 죽었습니다.**
+- **A22 의 EXPLAIN 컬럼 인덱스를 잘못 읽어** `type` 과 `key` 가 전부 `None` 으로 나왔습니다.
+  `partitions` 를 `type` 으로, `possible_keys` 를 `key` 로 읽고 있었습니다.
+- **B52 의 `/insert` 는 POST 인데 GET 으로 준비 확인**을 해 앱이 뜬 뒤에도 405 만 받고
+  90초를 기다렸습니다.
+- **R17 재실행 첫 회가 빈 테이블에서 돌았습니다.** DELETE 가 0.11초로 끝나 무효였는데,
+  시드를 먼저 돌려야 한다는 것을 소요 시간이 알려 줬습니다.
+
+### 남은 것
+
+- **`gh-ost`**: 공개 컨테이너 이미지를 못 찾았습니다(`ghcr.io/github/gh-ost` 접근 거부).
+  소스를 받아 빌드하면 됩니다.
+- **Debezium**: Kafka 스택이 필요해 7.7GB VM 에서 부담이 큽니다. Debezium Server 단독
+  구성으로 줄이면 가능합니다.
+- **Oracle** `RMAN UNTIL TIME`.
+- **반복 측정 나머지**: A06 만 4회로 올렸습니다. backup-pitr, buffer-pool-sizing,
+  int-pk-exhaustion, jpa-list-api, mdl-storm, reader-endpoint-skew, replication-slot-wal,
+  uuid-page-split 이 남았습니다.
+- **C7 나머지**: charset-timezone 의 `utf8mb4` 전환과 DST, replica-promotion-loss 의
+  `AFTER_COMMIT` 비교와 복구 실행, websocket 의 재접속 폭풍, perf-insights-clone 의
+  top SQL 분해.
