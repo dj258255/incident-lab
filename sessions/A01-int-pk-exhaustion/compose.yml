@@ -16,7 +16,32 @@ services:
       MYSQL_DATABASE: spoon
     ports: ["13318:3306"]
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plab"]
+      # mysqladmin ping 은 초기화 중 임시 서버에도, 인증이 실패해도 성공을 돌려준다.
+      # 대상 DB에 실제 쿼리가 통하는지로 판단한다.
+      test: ["CMD-SHELL", "mysql -uroot -plab spoon -N -e 'SELECT 1' | grep -q 1"]
       interval: 3s
       timeout: 3s
       retries: 30
+
+  # PostgreSQL 대조. integer 고갈 지점과 ALTER TYPE 의 동작이 MySQL 과 다르다.
+  postgres:
+    image: postgres:17.5
+    container_name: a01-pg
+    cpus: 4
+    mem_limit: 2g
+    command:
+      - postgres
+      - -c
+      - shared_buffers=512MB
+      - -c
+      - max_wal_size=2GB
+      # 락 대기를 서버 로그에 남겨 ALTER TYPE 이 무엇을 세우는지 본다.
+      - -c
+      - log_lock_waits=on
+      - -c
+      - deadlock_timeout=200ms
+    environment:
+      POSTGRES_PASSWORD: lab
+      POSTGRES_DB: spoon
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports: ["15438:5432"]
