@@ -42,5 +42,5 @@ echo "누적 최대 접속=$(MQ "SELECT VARIABLE_VALUE FROM performance_schema.g
 echo "거부된 접속(Aborted_connects)=$(MQ "SELECT VARIABLE_VALUE FROM performance_schema.global_status WHERE VARIABLE_NAME='Aborted_connects'")"
 for i in $(seq 1 "$N"); do
   L=$(docker logs "b01-app$i" 2>&1 | grep -cE "Too many connections|Data source rejected" || true)
-  [ "$L" != "0" ] && echo "  인스턴스 $i 로그에 접속 거부 $L건"
+  [ "$L" != "0" ] && echo "  인스턴스 $i 로그에 접속 거부 ${L}건"
 done

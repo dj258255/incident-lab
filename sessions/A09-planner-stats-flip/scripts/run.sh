@@ -71,7 +71,7 @@ measure() {
     local t
     t=$(grep -oE 'Execution Time: [0-9.]+' "$OUT/$prefix-run$i.txt" | grep -oE '[0-9.]+')
     printf '%s %s\n' "$i" "$t" >> "$OUT/$prefix-times.txt"
-    echo "  [$prefix] $i회차 ${t} ms"
+    echo "  [$prefix] ${i}회차 ${t} ms"
   done
   local med_i
   med_i=$(sort -k2 -n "$OUT/$prefix-times.txt" | awk -v n="$REPS" 'NR==int((n+1)/2){print $1}')
@@ -198,7 +198,7 @@ for T in 1 10 100 1000; do
     echo "$T,$((300 * T)),$i,$NF,$EST" >> "$OUT/40-sampling.csv"
     [ "$NF" = "1" ] && ZERO=$((ZERO + 1))
   done
-  echo "target=$T sample=$((300 * T))행 null_frac=1 이 $N회 중 $ZERO회" | tee -a "$OUT/41-sampling-summary.txt"
+  echo "target=$T sample=$((300 * T))행 null_frac=1 이 ${N}회 중 ${ZERO}회" | tee -a "$OUT/41-sampling-summary.txt"
 done
 
 echo

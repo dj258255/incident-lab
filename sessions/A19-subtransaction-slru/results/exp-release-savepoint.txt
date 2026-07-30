@@ -1,0 +1,18 @@
+# RELEASE SAVEPOINT 가 활성 서브트랜잭션 수를 줄이는가
+# PostgreSQL 17.5 (Debian 17.5-1.pgdg130+1) on 
+# 세 방식 모두 서브트랜잭션 70개. PGPROC 캐시 상한은 PGPROC_MAX_CACHED_SUBXIDS=64
+
+## A. SAVEPOINT → UPDATE → RELEASE (각각 커밋)
+  sp-A                       캐시에 남은 서브트랜잭션 64개, 넘침 t
+  PL/pgSQL 의 EXCEPTION 블록이 곧 서브트랜잭션이고, 블록을 정상으로 빠져나가면
+  RELEASE 와 같습니다. 이 세션의 기존 워크로드가 쓰던 방식입니다.
+
+## B. SAVEPOINT → UPDATE → ROLLBACK TO (각각 롤백)
+  sp-B                       캐시에 남은 서브트랜잭션 0개, 넘침 f
+
+## C. SAVEPOINT 를 겹쳐 쌓고 풀지 않음 (전부 활성)
+  sp-C                       캐시에 남은 서브트랜잭션 64개, 넘침 t
+
+## 정리
+  캐시에 남은 개수가 64를 넘으면 넘침이 참이 되고, 그 시점부터 읽는 쪽은
+  스냅숏만으로 판정하지 못하고 pg_subtrans SLRU 를 봐야 합니다.
