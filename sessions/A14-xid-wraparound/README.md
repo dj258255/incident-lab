@@ -2,7 +2,7 @@
 
 ## 1. 유명한 이유
 
-Sentry가 2015년 7월에 쓴 글이 이 장애의 교과서입니다.
+이 장애의 표준 사례는 Sentry가 2015년 7월에 쓴 글입니다.
 
 > On Monday, July 20th, Sentry was down for most of the US working day.
 
@@ -22,7 +22,7 @@ Sentry가 2015년 7월에 쓴 글이 이 장애의 교과서입니다.
 
 > With our best estimations, we made the call to truncate the table. Five minutes later, the system was fully restored.
 
-이 글에서 가장 무서운 문장은 사후 실험 대목입니다.
+사후 실험 대목이 가장 오래 남습니다.
 
 > we're still watching one of our test machines run a vacuum in single-user mode going on 24 hours
 
@@ -74,7 +74,7 @@ Sentry 글은 2015년이고 PostgreSQL 9.x 시절입니다. 그 사이 세 가�
 
 > We have edge-case bugs when assigning values in the last few dozen pages before the wrap limit. ... At default BLCKSZ, this makes such bugs unreachable outside of single-user mode.
 
-즉 정지 여유를 100만에서 300만으로 늘린 것은 성능이나 편의가 아니라 **마지막 몇십 페이지에 남은 버그를 도달 불가로 만들기 위한** 조치입니다.
+정지 여유를 100만에서 300만으로 늘린 것은 **마지막 몇십 페이지에 남은 버그를 도달 불가로 만들기 위한** 조치입니다.
 
 ### 21억 개를 어떻게 태우는가
 
@@ -136,7 +136,7 @@ Sentry가 2015년에 따랐던 그 조언이 이제 "terrible advice"로 분류�
 
 | 작업 | 결과 |
 |---|---|
-| `SELECT` | 50,005행 정상 |
+| `SELECT` | 정상 (5만 행 + 앞 단계 삽입분) |
 | `BEGIN READ ONLY` 트랜잭션 | 정상 |
 | `INSERT` | 거부 |
 | `DELETE` | 거부 |
@@ -202,9 +202,31 @@ WARNING:  bypassing nonessential maintenance of table "spoon.public.sponsor" as 
 
 > This is VACUUM's strategy of last resort.
 
-**Sentry의 병목이 정확히 이것이었습니다.** 거대 테이블의 VACUUM이 인덱스 정리 때문에 끝나지 않아 24시간이 걸렸고, 결국 테이블을 버렸습니다. 14의 failsafe는 그 인덱스 정리를 건너뜁니다.
+**Sentry의 병목이 이것이었습니다.** 거대 테이블 하나의 VACUUM이 3시간 가까이 진척을 내지 못해 결국 그 테이블을 버렸습니다. 사후에 테스트 머신으로 같은 VACUUM을 돌렸을 때는 24시간이 지나도 끝나지 않았습니다. 14의 failsafe가 건너뛰는 것이 바로 인덱스 정리입니다. 인덱스 정리가 Sentry의 병목이었다고 원문이 말한 적은 없습니다. 원문은 거대한 관계 하나에서 autovacuum이 끝나지 않았다고만 적었습니다.
 
 다만 "Sentry 사고가 14에서라면 안 났을 것"이라고 단정하지는 않겠습니다. 원문에 그런 서술이 없고, 제가 확인한 것은 완화 장치가 존재하고 이 랩에서 실제로 발동했다는 사실까지입니다.
+
+### 반복 측정
+
+이 세션의 수치는 대부분 상수에서 계산되어 편차가 없습니다. 경고 임계, 정지 임계, 랩 임계는
+`oldestXid`와 고정 상수의 합이고, 경고 문구의 4,000만도 상수입니다. 편차가 생길 수 있는 것은
+자가 복구 시각 하나입니다. `autovacuum_naptime` 기본값이 60초이고 이 세션의 샘플링 간격이
+20초라, 원인을 제거한 시점이 naptime 주기의 어디였는지에 따라 흔들릴 수 있습니다.
+
+4회 돌린 결과입니다.
+
+| 회차 | 정지 임계 | 쓰기가 거부된 XID | 복구 시각 | 쓰기 재개 |
+|---|---|---|---|---|
+| run0 | 2,144,484,392 | 2,144,484,392 | +40초 | 예 |
+| run1 | 2,144,484,392 | 2,144,484,392 | +40초 | 예 |
+| run2 | 2,144,484,392 | 2,144,484,392 | +40초 | 예 |
+| run3 | 2,144,484,392 | 2,144,484,395 | +40초 | 예 |
+
+네 번 모두 같습니다. run3만 거부 XID가 임계를 3개 넘었는데, XID를 태우는 루프가 2초 단위로
+돌아 마지막 구간에서 조금 넘긴 것입니다. 임계 판정에는 영향이 없습니다.
+
+`+40초`는 20초 간격 샘플링의 결과라 실제 복구 완료는 20초와 40초 사이에 있습니다.
+이 숫자를 초 단위로 읽으면 안 됩니다.
 
 ## 4. 예상과 달랐던 점
 

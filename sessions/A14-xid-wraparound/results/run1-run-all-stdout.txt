@@ -9,20 +9,16 @@ oldestXid=744  경고임계=2107484392  정지임계=2144484392  랩임계=21474
   gid=orphan-2020  xid=746
 
 [3] 경고 임계 직전으로 점프한 뒤 태워서 경고를 넘는다
-  Write-ahead log reset
--rw-r--r-- 1 postgres postgres 262144 Jul 30 04:57 07D9
   점프 직후 nextXid=2107184392  (경고까지 300000개)
-  경고 구간 진입: nextXid=2107553815
+  경고 구간 진입: nextXid=2107552328
   서버가 남긴 문구:
-    2026-07-30 04:57:32.814 UTC [227] WARNING:  database with OID 0 must be vacuumed within 40000000 transactions
-    2026-07-30 04:57:32.814 UTC [227] HINT:  To avoid XID assignment failures, execute a database-wide VACUUM in that database.
+    2026-07-30 04:54:31.129 UTC [243] WARNING:  database with OID 0 must be vacuumed within 40000000 transactions
+    2026-07-30 04:54:31.129 UTC [243] HINT:  To avoid XID assignment failures, execute a database-wide VACUUM in that database.
     	You might also need to commit or roll back old prepared transactions, or drop stale replication slots.
 
 [4] 정지 임계 직전으로 점프한 뒤 태워서 정지를 넘는다
-  Write-ahead log reset
--rw-r--r-- 1 postgres postgres 262144 Jul 30 04:57 07FC
   점프 직후 nextXid=2144084392  (정지까지 400000개)
-  쓰기 거부: nextXid=2144484395  (정지임계 2144484392 를 3개 넘음)
+  쓰기 거부: nextXid=2144484392  (정지임계 2144484392 를 0개 넘음)
   클라이언트가 받은 문구:
     ERROR:  database is not accepting commands that assign new transaction IDs to avoid wraparound data loss in database with OID 0
     HINT:  Execute a database-wide VACUUM in that database.
@@ -37,9 +33,9 @@ oldestXid=744  경고임계=2107484392  정지임계=2144484392  랩임계=21474
   (문서: 진행 중 트랜잭션은 계속되고 읽기 전용만 시작할 수 있다. VACUUM은 정상 동작한다)
 
 [6] 원인을 그대로 두고 전체 VACUUM FREEZE
-  age=2144483649   내려가지 않는다
+  age=2144483646   내려가지 않는다
   공식 문서가 지목하는 세 용의자:
-    prepared xacts: 1 건  xid=746 age=2144483649
+    prepared xacts: 1 건  xid=746 age=2144483646
     장기 트랜잭션 : 1 건
     복제 슬롯     : 0 건
 
@@ -47,22 +43,22 @@ oldestXid=744  경고임계=2107484392  정지임계=2144484392  랩임계=21474
   spoon만 동결한 뒤 age=0
   그런데 쓰기는: ERROR:  database is not accepting commands that assign new transaction IDs to avoid wraparound data loss in database "postgres"
   임계를 붙잡고 있는 것은 다른 데이터베이스다:
-    postgres age=2144483651
-    template1 age=2144483651
-    template0 age=2144483651
+    postgres age=2144483648
+    template1 age=2144483648
+    template0 age=2144483648
     spoon age=0
 
 [8] 손대지 않고 기다린다
   wraparound 방지 autovacuum이 스스로 처리하는지 본다. 수동 VACUUM도,
   단일 사용자 모드도 쓰지 않는다. PG17 문서가 그러지 말라고 명시한다.
-  +20초: template0=2144483651 postgres=0 spoon=0 template1=0
+  +20초: template0=2144483648 postgres=0 spoon=0 template1=0
   +40초: postgres=0 spoon=0 template1=0 template0=0
   쓰기 재개됨
 
   autovacuum이 남긴 failsafe 기록 (PG14에 추가된 vacuum_failsafe_age):
-    2026-07-30 04:57:56.208 UTC [370] WARNING:  bypassing nonessential maintenance of table "spoon.public.sponsor" as a failsafe after 0 index scans
-    2026-07-30 04:57:56.297 UTC [377] WARNING:  bypassing nonessential maintenance of table "spoon.public.sponsor" as a failsafe after 0 index scans
-    2026-07-30 04:57:56.297 UTC [377] WARNING:  bypassing nonessential maintenance of table "spoon.pg_catalog.pg_statistic" as a failsafe after 0 index scans
+    2026-07-30 04:54:54.743 UTC [373] WARNING:  bypassing nonessential maintenance of table "spoon.public.sponsor" as a failsafe after 0 index scans
+    2026-07-30 04:54:54.832 UTC [380] WARNING:  bypassing nonessential maintenance of table "spoon.public.sponsor" as a failsafe after 0 index scans
+    2026-07-30 04:54:54.833 UTC [380] WARNING:  bypassing nonessential maintenance of table "spoon.pg_catalog.pg_statistic" as a failsafe after 0 index scans
   최종: postgres=1 spoon=1 template1=1 template0=1
   쓰기: ok
 

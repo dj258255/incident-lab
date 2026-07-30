@@ -11,6 +11,9 @@
 | 데이터 | `sponsor` 5만 행 |
 | 데이터 위치 | 이름 있는 볼륨 `a14data`. `pg_resetwal`을 별도 컨테이너에서 돌려야 하므로 필요하다 |
 | 일시 | 2026-07-30 |
+| 반복 | 4회. `tools/repeat-runs.sh`로 3회 추가. 회차별 원문은 `results/run0-timeline.txt`~`run3-timeline.txt` |
+| 호스트 기록 | `results/host.txt`, 회차별 `results/host-run*.txt` |
+| `autovacuum_naptime` | 기본값 60초. 자가 복구 시각이 여기에 좌우됩니다 |
 
 이 세션은 지연이나 처리량을 재지 않습니다. 문구와 임계값과 상태 전이만 봅니다. 그래서 호스트 사양이 결론에 영향을 주지 않습니다.
 
@@ -172,6 +175,16 @@ HINT:  To avoid XID assignment failures, execute a database-wide VACUUM in that 
 ```
 
 접속이 막힌 `template0`까지 긴급 autovacuum이 처리했습니다. `vacuum_failsafe_age`(PG14, 기본 16억) 발동 기록이 함께 남았습니다.
+
+## 반복 측정
+
+임계값은 상수에서 계산되어 편차가 없습니다. 4회 모두 정지 임계 2,144,484,392,
+복구 시각 +40초, 쓰기 재개 성공이었습니다. run3만 거부 XID가 임계를 3개 넘었고
+(2,144,484,395) 이는 XID 태우는 루프가 2초 단위라 마지막 구간에서 조금 넘긴 것입니다.
+
+`+40초`는 20초 간격 샘플링의 결과이므로 실제 복구 완료는 20초와 40초 사이입니다.
+`autovacuum_naptime` 기본값이 60초라 원인을 제거한 시점이 주기의 어디였는지에 따라
+값이 흔들릴 수 있는데, 4회에서는 흔들리지 않았습니다.
 
 ## 밟은 함정
 

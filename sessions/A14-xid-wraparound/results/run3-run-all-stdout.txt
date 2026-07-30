@@ -9,8 +9,6 @@ oldestXid=744  경고임계=2107484392  정지임계=2144484392  랩임계=21474
   gid=orphan-2020  xid=746
 
 [3] 경고 임계 직전으로 점프한 뒤 태워서 경고를 넘는다
-  Write-ahead log reset
--rw-r--r-- 1 postgres postgres 262144 Jul 30 04:57 07D9
   점프 직후 nextXid=2107184392  (경고까지 300000개)
   경고 구간 진입: nextXid=2107553815
   서버가 남긴 문구:
@@ -19,8 +17,6 @@ oldestXid=744  경고임계=2107484392  정지임계=2144484392  랩임계=21474
     	You might also need to commit or roll back old prepared transactions, or drop stale replication slots.
 
 [4] 정지 임계 직전으로 점프한 뒤 태워서 정지를 넘는다
-  Write-ahead log reset
--rw-r--r-- 1 postgres postgres 262144 Jul 30 04:57 07FC
   점프 직후 nextXid=2144084392  (정지까지 400000개)
   쓰기 거부: nextXid=2144484395  (정지임계 2144484392 를 3개 넘음)
   클라이언트가 받은 문구:
