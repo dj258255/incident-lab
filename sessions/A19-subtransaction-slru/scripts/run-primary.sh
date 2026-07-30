@@ -35,6 +35,9 @@ else
   LTX=""
 fi
 
+# 대기 샘플 파일을 비우고 시작한다. 이걸 빼면 반복 측정에서 회차마다 누적돼
+# 회차별 비중을 갈라낼 수 없다(A19 4회 측정에서 235 → 464 → 686 → 920으로 늘었다).
+: > "$OUT/$LABEL-waits.txt"
 ( END=$(( $(date +%s) + DUR ))
   while [ "$(date +%s)" -lt "$END" ]; do
     P "SELECT coalesce(wait_event_type,'CPU')||'/'||coalesce(wait_event,'-') FROM pg_stat_activity WHERE state='active' AND query LIKE 'SELECT amount%'" >> "$OUT/$LABEL-waits.txt"

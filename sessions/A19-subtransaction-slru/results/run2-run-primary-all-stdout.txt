@@ -1,0 +1,13 @@
+[13:43:31] 기동: subtransaction_buffers=256kB
+none          서브TX=0       버퍼=256kB  tps=94976.581329 지연=0.623  ms SLRU(hit read)=0 0                SubtransSLRU대기=0
+0/     686
+sub64         서브TX=64      버퍼=256kB  tps=91917.125713 지연=0.640  ms SLRU(hit read)=0 0                SubtransSLRU대기=0
+0/     752
+sub10k        서브TX=10000   버퍼=256kB  tps=88641.427910 지연=0.667  ms SLRU(hit read)=7081784 6          SubtransSLRU대기=0
+0/     749
+sub500k       서브TX=500000  버퍼=256kB  tps=65621.956834 지연=0.932  ms SLRU(hit read)=4079749 1176399    SubtransSLRU대기=1053/    2320
+[13:45:19] 기동: subtransaction_buffers=4MB
+none-buf      서브TX=0       버퍼=4MB    tps=94190.459203 지연=0.629  ms SLRU(hit read)=0 0                SubtransSLRU대기=0
+0/     645
+sub500k-buf   서브TX=500000  버퍼=4MB    tps=89459.939601 지연=0.659  ms SLRU(hit read)=7148640 0          SubtransSLRU대기=0
+0/     739

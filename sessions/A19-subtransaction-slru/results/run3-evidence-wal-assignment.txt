@@ -1,0 +1,11 @@
+-- SAVEPOINT 3개짜리 트랜잭션이 도는 구간의 WAL Transaction 레코드
+$ pg_waldump -s 0/722F448 -e 0/A481408 -r Transaction | 종류별 집계
+74416 COMMIT
+
+-- 한 트랜잭션에 쓰기 서브트랜잭션 10만 개를 만든 구간
+$ pg_waldump -s 0/A59BBD0 -e 0/BB8C628 -r Transaction | 종류별 집계
+1562 ASSIGNMENT
+ 600 COMMIT
+   8 ABORT
+
+-- 100000 / 64 = 1562.5. 트랜잭션 하나 안에서 서브트랜잭션 64개마다 한 번 기록된다.

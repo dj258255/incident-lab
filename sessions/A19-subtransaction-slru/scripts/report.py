@@ -6,8 +6,10 @@
 
   사용법: python3 scripts/report.py
 """
+import glob
 import os
 import re
+import statistics
 
 import numpy as np
 
@@ -38,12 +40,23 @@ def font():
     return plt
 
 
-def load(label):
-    txt = open(f"{OUT}/{label}-reader.txt").read()
+def rounds(label):
+    """회차별 파일을 찾는다. run0은 발행에 쓴 첫 측정이다.
+
+    회차마다 한 번씩만 재고 결론을 내면 방향까지 틀릴 수 있다는 것이 이 저장소의
+    반복된 교훈이라(CONVENTIONS 11절), 중앙값과 min~max를 함께 낸다.
+    """
+    pres = sorted({os.path.basename(p).split(label)[0]
+                   for p in glob.glob(f"{OUT}/run*-{label}-reader.txt")})
+    return pres or [""]
+
+
+def load(label, pre=""):
+    txt = open(f"{OUT}/{pre}{label}-reader.txt").read()
     tps = float(re.search(r"^tps = ([\d.]+)", txt, re.M).group(1))
     lat = float(re.search(r"^latency average = ([\d.]+)", txt, re.M).group(1))
-    hit, read = (int(x) for x in open(f"{OUT}/{label}-slru.txt").read().split())
-    waits = open(f"{OUT}/{label}-waits.txt").read().splitlines()
+    hit, read = (int(x) for x in open(f"{OUT}/{pre}{label}-slru.txt").read().split())
+    waits = open(f"{OUT}/{pre}{label}-waits.txt").read().splitlines()
     slru = sum(1 for w in waits if "SubtransSLRU" in w)
     return {"tps": tps, "lat": lat, "hit": hit, "read": read,
             "lookups": hit + read,
@@ -54,7 +67,24 @@ def load(label):
 
 def main():
     plt = font()
-    d = {k: load(k) for k, _, _, _ in CONDS}
+    allr = {k: [load(k, p) for p in rounds(k)] for k, _, _, _ in CONDS}
+    # run1~3의 waits 파일은 회차마다 누적됐다(스크립트가 초기화하지 않았다. 지금은 고쳤다).
+    # 회차별 비중을 보려면 차분해야 한다. 그러지 않으면 뒤 회차가 앞 회차에 희석된다.
+    for k, _, _, _ in CONDS:
+        pt = ps = 0
+        for r in allr[k]:
+            dt, ds = r["waits"] - pt, r["slru_wait"] - ps
+            pt, ps = r["waits"], r["slru_wait"]
+            if dt > 0:
+                r["waits"], r["slru_wait"] = dt, ds
+                r["wait_pct"] = ds / dt * 100
+    def rng(k, f):
+        v = [r[f] for r in allr[k]]; return min(v), max(v)
+    d = {k: {f: statistics.median([r[f] for r in allr[k]])
+             for f in ("tps","lat","hit","read","lookups","miss_pct","slru_wait","waits","wait_pct")}
+         for k, _, _, _ in CONDS}
+    for k, _, _, _ in CONDS:
+        d[k]["n"] = len(allr[k])
     keys = [k for k, _, _, _ in CONDS]
     labels = [lab for _, _, _, lab in CONDS]
     base = d["none"]["tps"]
@@ -69,8 +99,11 @@ def main():
     cols = [BAD if v < base * 0.8 else GOOD for v in vals]
     ax.barh(y, vals, height=0.55, color=cols)
     for i, v in enumerate(vals):
-        ax.text(v + base * 0.02, i, f"{v:,.0f}  ({v / base * 100:.0f}%)",
-                va="center", fontsize=9, color=T)
+        # 기준선 대비는 회차마다 따로 계산해야 한다. 중앙값끼리 나누면 회차가 섞인다.
+        ratios = [a["tps"] / b["tps"] * 100 for a, b in zip(allr[keys[i]], allr["none"])]
+        r0, r1 = min(ratios), max(ratios)
+        pct = f"{r0:.0f}%" if round(r0) == round(r1) else f"{r0:.0f}~{r1:.0f}%"
+        ax.text(v + base * 0.02, i, f"{v:,.0f}  ({pct})", va="center", fontsize=8.5, color=T)
     ax.set_xlim(0, base * 1.42)
     ax.set_yticks(y); ax.set_yticklabels(labels, fontsize=8.5)
     ax.set_xlabel("리더 초당 처리량 (괄호는 기준선 대비)", color=M, fontsize=9)
@@ -83,7 +116,9 @@ def main():
     ax.barh(y, vals, height=0.55, color=[BAD if v > 1 else GOOD for v in vals])
     for i, k in enumerate(keys):
         lk, ms = d[k]["lookups"], d[k]["read"]
-        txt = "조회 0건" if lk == 0 else f"{lk / 1e6:.2f}M 조회 중 {ms:,}건"
+        m0, m1 = rng(k, "read")
+        cnt = f"{m0:,.0f}건" if m0 == m1 else f"{m0:,.0f}~{m1:,.0f}건"
+        txt = "조회 0건" if lk == 0 else f"{lk / 1e6:.2f}M 조회 중 {cnt}"
         ax.text(vals[i] + 0.8, i, txt, va="center", fontsize=8.5, color=T)
     ax.set_xlim(0, 30)
     ax.set_xticks([0, 10, 20, 30])
@@ -99,8 +134,9 @@ def main():
     ax.barh(y, vals, height=0.55, color=[BAD if v > 10 else GOOD for v in vals])
     for i, v in enumerate(vals):
         k = keys[i]
-        ax.text(v + 1.5, i, f"{v:.0f}%  ({d[k]['slru_wait']}/{d[k]['waits']})",
-                va="center", fontsize=9, color=T)
+        w0, w1 = rng(k, "wait_pct")
+        lab = f"{v:.0f}%" if round(w0) == round(w1) else f"{w0:.0f}~{w1:.0f}%"
+        ax.text(v + 1.5, i, lab, va="center", fontsize=9, color=T)
     ax.set_xlim(0, 72)
     ax.set_xticks([0, 20, 40, 60])
     ax.set_xticklabels(["0", "20%", "40%", "60%"])
@@ -117,18 +153,19 @@ def main():
         ax.spines["bottom"].set_color(G)
         ax.tick_params(colors=M, labelsize=8.5, length=0)
 
-    fig.suptitle("같은 50만 행을 몇 개의 서브트랜잭션으로 나눌지만 바꿈 · "
-                 "동시 리더 64, 각 20초 · PostgreSQL 17.5",
+    fig.suptitle(f"같은 50만 행을 몇 개의 서브트랜잭션으로 나눌지만 바꿈 · "
+                 f"동시 리더 64, 각 20초, {d['none']['n']}회 반복의 중앙값 · PostgreSQL 17.5",
                  color=M, fontsize=9.5, x=0.135, ha="left", y=0.93)
     p = f"{OUT}/chart-slru.png"
     fig.savefig(p, dpi=160, facecolor=S)
     print("wrote", p)
 
     for k, n, b, _ in CONDS:
-        v = d[k]
-        print(f"  {k:12} 서브TX={n:>7} 버퍼={b:6} tps={v['tps']:9,.0f} "
-              f"지연={v['lat']:.3f}ms 조회={v['lookups']:>9,} 빗나감={v['read']:>9,} "
-              f"({v['miss_pct']:5.1f}%) SubtransSLRU={v['slru_wait']:3}/{v['waits']:3}")
+        v = d[k]; t0, t1 = rng(k, "tps"); m0, m1 = rng(k, "miss_pct"); w0, w1 = rng(k, "wait_pct")
+        ratios = [a["tps"] / c["tps"] * 100 for a, c in zip(allr[k], allr["none"])]
+        print(f"  {k:12} n={v['n']} 서브TX={n:>7} 버퍼={b:6} tps중앙={v['tps']:8,.0f} "
+              f"({t0:,.0f}~{t1:,.0f})  기준선대비 {min(ratios):3.0f}~{max(ratios):3.0f}%  "
+              f"미스율 {m0:4.1f}~{m1:4.1f}%  SubtransSLRU {w0:3.0f}~{w1:3.0f}%")
 
 
 if __name__ == "__main__":

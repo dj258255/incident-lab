@@ -1,0 +1,7 @@
+-- 스탠바이. 프라이머리에 롱트랜잭션 + SAVEPOINT 쓰기가 도는 동안 10초 조회 후
+      name      | blks_zeroed | blks_hit | blks_read 
+----------------+-------------+----------+-----------
+ subtransaction |           0 |        0 |         0
+ transaction    |           0 |   294363 |         0
+(2 rows)
+

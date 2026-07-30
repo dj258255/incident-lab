@@ -1,0 +1,18 @@
+pgbench (17.5 (Debian 17.5-1.pgdg130+1))
+progress: 5.0 s, 91227.6 tps, lat 0.646 ms stddev 5.060, 0 failed
+progress: 10.0 s, 95925.0 tps, lat 0.616 ms stddev 4.870, 0 failed
+progress: 15.0 s, 96053.8 tps, lat 0.612 ms stddev 4.856, 0 failed
+progress: 20.0 s, 96018.6 tps, lat 0.611 ms stddev 4.899, 0 failed
+transaction type: /scripts/p-reader.sql
+scaling factor: 1
+query mode: prepared
+number of clients: 64
+number of threads: 4
+maximum number of tries: 1
+duration: 20 s
+number of transactions actually processed: 1898808
+number of failed transactions: 0 (0.000%)
+latency average = 0.623 ms
+latency stddev = 4.934 ms
+initial connection time = 51.856 ms
+tps = 94976.581329 (without initial connection time)
