@@ -218,7 +218,74 @@ C와 D는 설정이 같고 목표 시각만 1초 다릅니다. `off`는 경계 �
 
 마지막 줄에서 두 엔진이 같은 방식으로 위험합니다.
 
-## 6. 해소: 백업을 믿지 않는 절차
+## 6. SQL Server 대조
+
+`scripts/exp4-mssql-pitr.sh`, 원문은 `results/exp4-mssql-pitr.txt`.
+
+**앞서 "라이선스가 걸려 실행할 수 없다"고 적은 것이 틀렸습니다.** Developer 에디션이
+`mcr.microsoft.com/mssql/server` 로 무료 공개돼 있고 `STOPAT` 이 그 에디션에 있습니다.
+SQL Server 2022 (16.0.4265.3). ARM 이미지가 없어 에뮬레이션으로 돌고 `mem_limit: 6g` 가
+필요했습니다.
+
+### 6.1 복구 모델이 SIMPLE 이면 시점 복구가 성립하지 않는다
+
+```console
+Msg 4208: The statement BACKUP LOG is not allowed while the recovery model is SIMPLE.
+```
+
+MySQL 과 PostgreSQL 에 없는 관문입니다. 새 DB 는 `model` 데이터베이스의 값을 물려받으므로
+그 값이 `SIMPLE` 인 인스턴스에서는 만든 DB 가 전부 시점 복구를 못 합니다.
+
+### 6.2 NORECOVERY 를 빠뜨리면 로그를 이어 붙일 수 없다
+
+```console
+-- NORECOVERY 없이 전체 백업만 복원 → 상태 ONLINE, 1000행
+Msg 3117: The log or differential backup cannot be restored because
+          no files are ready to rollforward.
+```
+
+MySQL 은 이 함정이 없고 PostgreSQL 은 `recovery.signal` 로 복구 모드가 됩니다.
+SQL Server 만 복원 명령에 상태를 명시해야 합니다.
+
+### 6.3 STOPAT 을 넉넉하게 잡으면 열리지 않는다
+
+| 복구 | `STOPAT` | 결과 |
+|---|---|---|
+| A | 없음, `NORECOVERY` 도 없음 | ONLINE, 1,000행. 로그 이어 붙이기 불가 |
+| B | 사고 직전 `12:13:22.922` | ONLINE, **1,500행** |
+| C | 사고 직후 `12:13:25.390` | **RESTORING. 열리지 않음** |
+| D | 로그 백업 완료 시각 `12:13:25.000` | ONLINE, **1,500행** |
+
+C 는 `RECOVERY` 를 줬는데도 `RESTORING` 에 남았습니다. `STOPAT` 이 이 로그 백업의 끝보다
+뒤라서 아직 적용할 로그가 더 있을 수 있다고 보고 기다립니다. **5절의 PostgreSQL `pause` 와
+증상이 같고 원인이 다릅니다.** 전자는 목표에 도달했는데 승격을 안 한 것이고, 후자는 목표에
+도달하지 못했다고 판단한 것입니다.
+
+### 6.4 세 엔진 대조
+
+| | MySQL 8.4 | PostgreSQL 17.5 | SQL Server 2022 |
+|---|---|---|---|
+| 로그 보관 전제 | `log-bin` | `archive_mode=on` | **DB별 복구 모델 `FULL`** |
+| 경계 포함 | 그 위치 직전까지 | `recovery_target_inclusive` 로 선택 | 고정(그 시각까지 포함) |
+| 복구 직후 상태 | 바로 쓰기 가능 | 기본 `pause`. 승격 필요 | `NORECOVERY` 명시 필요 |
+| 안 열리는 함정 | 없음 | 목표 도달 후 `pause` | `STOPAT` 이 로그 끝보다 뒤면 `RESTORING` |
+
+### 밟은 함정
+
+1. **백업 디렉터리가 root 소유.** 볼륨 마운트라 root 로 만들어지고 mssql(uid 10001)이 못
+   씁니다. `BACKUP DATABASE` 가 `Operating system error 5(Access is denied.)` 로 실패했는데
+   출력을 `/dev/null` 로 버려서 복원 단계에 가서야 알았습니다. `chown` 을 넣고 백업 파일이
+   실제로 생겼는지 fail-closed 로 확인하게 고쳤습니다. **PostgreSQL 실험의 `/archive` 와
+   같은 함정입니다.**
+
+2. **메모리 3g 로는 안 떴습니다.** `insufficient system memory in resource pool 'internal'`
+   로 죽습니다. 에뮬레이션이라 더 씁니다. 6g 로 올렸습니다.
+
+3. **`USE db;` 가 값 파싱을 깨뜨립니다.** `Changed database context to 'spoon'.` 이 첫 줄로
+   나와 행 수 대신 그 문장이 잡혔고 `$((SAFE_N - ACC_N))` 이 산술 오류로 죽었습니다.
+   `sqlcmd -d` 로 접속해 그 줄이 아예 없게 했습니다.
+
+## 7. 해소: 백업을 믿지 않는 절차
 
 실험에서 나온 것을 운영 체크리스트로 정리하면 이렇습니다.
 
@@ -232,7 +299,7 @@ C와 D는 설정이 같고 목표 시각만 1초 다릅니다. `off`는 경계 �
 | 복구 도구가 그 환경에 있는가 | 사고 당일에 확인하면 늦다 |
 | 복구 시간이 RTO 안인가 | 리허설에서 실측. 추정하지 않는다 |
 
-## 7. 예상과 달랐던 점
+## 8. 예상과 달랐던 점
 
 ### 함정 셋을 제가 직접 밟았습니다
 
@@ -248,7 +315,8 @@ MySQL의 PITR 문서(9.5절)에는 GTID 관련 경고가 한 줄도 없습니다
 
 ## 못 한 것
 
-- **Oracle과 SQL Server를 대조하지 않았습니다.** 두 엔진 모두 시점 복구를 제공하고 경계 포함 규칙도 다릅니다(Oracle `UNTIL TIME`, SQL Server `STOPAT`). 다만 공식 이미지가 없거나 라이선스가 걸려 이 랩에서 같은 방식으로 실행할 수 없었습니다.
+- **Oracle 을 아직 다루지 않았습니다.** Oracle Database Free 23ai 컨테이너가 공개돼 있어 실행은 가능해 보이는데 `RMAN` 의 `UNTIL TIME` 실습에 아카이브 로그 모드 전환이 필요해 넣지 않았습니다. 라이선스 문제가 아니라 아직 안 한 것입니다.
+- **SQL Server 쪽도 조건마다 1회씩입니다.** ARM 에뮬레이션이라 시간 수치는 적지 않았습니다.
 - **논리·물리 백업의 복원 시간을 비교하지 않았습니다.** 벤더 문서가 백업 속도만 명시하고 복원 속도 비교는 없어서, 직접 재면 독자적 기여가 되는 자리입니다.
 - **데이터 규모가 작습니다.** 1,500행이라 RTO 절대값은 의미가 없고 구조만 유효합니다.
 - **백업 검증 파이프라인을 구현하지 않았습니다.** 체크리스트로 적었을 뿐, 자동 복원 리허설을 실제로 돌리는 것은 다음 과제입니다.

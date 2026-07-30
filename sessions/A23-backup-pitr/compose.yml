@@ -97,7 +97,25 @@ services:
       timeout: 3s
       retries: 40
 
+
+  # SQL Server 대조. Developer 에디션은 무료로 공개돼 있고 STOPAT 시점 복구가 들어 있다.
+  # 앞서 "라이선스가 걸려 실행할 수 없다"고 적었던 것이 틀렸다.
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: a23-mssql
+    profiles: ["mssql"]
+    cpus: 4
+    mem_limit: 6g
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Lab_Passw0rd!"
+      MSSQL_PID: "Developer"
+    ports: ["11433:1433"]
+    volumes:
+      - a23mssqlbackup:/var/opt/mssql/backup
+
 volumes:
+  a23mssqlbackup:
   a23pgdata:
   a23archive:
   a23base:
