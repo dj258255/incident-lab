@@ -1,0 +1,17 @@
+# [buggy-t10] 측정 직전 호스트 상태
+2026-07-29T15:59:01+00:00
+ 15:59:01 up 103 days,  3:13,  0 users,  load average: 9.05, 6.66, 4.76
+Linux 5.14.0-570.33.2.el9_6.aarch64 aarch64
+nproc=2
+               total        used        free      shared  buff/cache   available
+Mem:              11           4           1           0           5           6
+-- CPU 상위 5 --
+1655318 root      20   0 2642588 114508  50456 S  94.1   1.0  15018:10 dockerd
+3206626 rocky     20   0   64.5g   1.5g  69376 R  82.4  13.2   0:51.72 node
+     16 root      20   0       0      0      0 S   5.9   0.0  11:57.42 ksoftir+
+1502708 nobody    20   0 2176100 164452  59336 S   5.9   1.4 317:16.83 prometh+
+      1 root      20   0  177716  17376   9944 S   0.0   0.1  91:17.00 systemd
+route=buggy TOMCAT_MAX_THREADS=10 RATE=400 VUS=5000 PREVUS=5000 RAMP=5s HOLD=20s DOWN=5s
+# [buggy-t10] 측정 직후 호스트 상태
+2026-07-29T16:00:05+00:00
+ 16:00:05 up 103 days,  3:14,  0 users,  load average: 9.83, 7.31, 5.11

@@ -39,22 +39,26 @@ curl -fsS --max-time 5 http://127.0.0.1:18083/health >/dev/null
 
 NET="$(docker inspect -f '{{range $k, $v := .NetworkSettings.Networks}}{{$k}}{{end}}' lab-f03-app)"
 
-# 측정 직전 로드. 이 값을 결과와 함께 남긴다.
+# 측정 직전 로드. 이 호스트는 2코어인데 상주 프로세스와 다른 작업이 코어를 나눠 쓰므로
+# 이 값 없이는 지연 수치를 읽을 수 없다. 부하 테스트 세션에서는 필수 기록이다.
 {
   echo "# [$LABEL] 측정 직전 호스트 상태"
   date -Is
   uptime
-  echo "route=$ROUTE TOMCAT_MAX_THREADS=$TOMCAT_MAX_THREADS RATE=$RATE VUS=$VUS RAMP=$RAMP HOLD=$HOLD DOWN=$DOWN"
+  uname -srm; echo "nproc=$(nproc)"; free -g | sed -n '1,2p'
+  echo "-- CPU 상위 5 --"
+  top -bn1 | sed -n '8,12p'
+  echo "route=$ROUTE TOMCAT_MAX_THREADS=$TOMCAT_MAX_THREADS RATE=$RATE VUS=$VUS PREVUS=${PREVUS:-$VUS} RAMP=$RAMP HOLD=$HOLD DOWN=$DOWN"
 } | tee "$OUT/$LABEL-load.txt"
 
 docker run --rm --network "$NET" \
   -e TARGET="http://app:8080/quote/$ROUTE" \
-  -e RATE="$RATE" -e VUS="$VUS" -e RAMP="$RAMP" -e HOLD="$HOLD" -e DOWN="$DOWN" \
+  -e RATE="$RATE" -e VUS="$VUS" -e PREVUS="${PREVUS:-$VUS}" -e RAMP="$RAMP" -e HOLD="$HOLD" -e DOWN="$DOWN" \
   -v "$PWD/scripts":/scripts \
   grafana/k6 run /scripts/spike.js > "$OUT/$LABEL-k6.txt" 2>&1 || true
 
 {
-  echo "# [$LABEL] route=$ROUTE TOMCAT_MAX_THREADS=$TOMCAT_MAX_THREADS RATE=$RATE VUS=$VUS RAMP=$RAMP HOLD=$HOLD DOWN=$DOWN"
+  echo "# [$LABEL] route=$ROUTE TOMCAT_MAX_THREADS=$TOMCAT_MAX_THREADS RATE=$RATE VUS=$VUS PREVUS=${PREVUS:-$VUS} RAMP=$RAMP HOLD=$HOLD DOWN=$DOWN"
   curl -fsS --max-time 30 http://127.0.0.1:18083/stats
 } > "$OUT/$LABEL-stats.txt" 2>&1 || true
 

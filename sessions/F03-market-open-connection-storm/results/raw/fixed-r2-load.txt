@@ -1,0 +1,17 @@
+# [fixed-r2] 측정 직전 호스트 상태
+2026-07-29T16:04:11+00:00
+ 16:04:11 up 103 days,  3:18,  0 users,  load average: 11.50, 10.97, 7.12
+Linux 5.14.0-570.33.2.el9_6.aarch64 aarch64
+nproc=2
+               total        used        free      shared  buff/cache   available
+Mem:              11           4           2           0           4           6
+-- CPU 상위 5 --
+3213593 rocky     20   0   64.3g   1.3g  69504 R  88.2  11.6   0:54.23 node
+1655318 root      20   0 2642588 114492  50456 S  70.6   1.0  15021:22 dockerd
+ 628516 10001     20   0 1458492 198732  55612 S   5.9   1.7 175:29.87 loki
+3160235 rocky     20   0   71.7g 643836 121032 S   5.9   5.4   2:27.20 claude
+3214677 rocky     20   0   17392   6144   4736 R   5.9   0.1   0:00.02 top
+route=fixed TOMCAT_MAX_THREADS=200 RATE=400 VUS=5000 PREVUS=5000 RAMP=5s HOLD=20s DOWN=5s
+# [fixed-r2] 측정 직후 호스트 상태
+2026-07-29T16:04:50+00:00
+ 16:04:50 up 103 days,  3:19,  0 users,  load average: 9.37, 10.52, 7.12

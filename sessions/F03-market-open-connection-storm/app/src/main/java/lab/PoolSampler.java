@@ -1,7 +1,6 @@
 package lab;
 
 import java.lang.reflect.Method;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.sql.DataSource;
@@ -11,7 +10,9 @@ import com.zaxxer.hikari.HikariPoolMXBean;
 
 import jakarta.annotation.PostConstruct;
 
+import org.apache.catalina.connector.Connector;
 import org.apache.coyote.AbstractProtocol;
+import org.apache.tomcat.util.threads.ThreadPoolExecutor;
 import org.springframework.boot.web.embedded.tomcat.TomcatWebServer;
 import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 import org.springframework.context.ApplicationContext;
@@ -98,9 +99,22 @@ public class PoolSampler {
         }
         if (ctx instanceof ServletWebServerApplicationContext swc
                 && swc.getWebServer() instanceof TomcatWebServer tws) {
-            Object ph = tws.getTomcat().getConnector().getProtocolHandler();
+            // findConnectors()로 "읽기만" 한다. Tomcat.getConnector()를 부르면 안 된다.
+            // 그 메서드는 서비스에 커넥터가 하나도 없을 때 8080짜리 커넥터를 새로 만들어 붙인다.
+            // Spring Boot는 기동 중 커넥터를 잠시 떼어 두었다가 start()에서 되돌리므로,
+            // 이 샘플러 스레드가 하필 그 창에서 getConnector()를 부르면 커넥터가 둘이 되어
+            // 진짜 커넥터가 바인드에 실패하고 "Port 8080 was already in use"로 앱이 죽는다.
+            // 실제로 그렇게 죽었고, 그때 새로 생긴 쪽이 /health에 응답해 기동에 성공한 것처럼 보였다.
+            Connector[] connectors = tws.getTomcat().getService().findConnectors();
+            if (connectors.length == 0) {
+                return null;
+            }
+            Object ph = connectors[0].getProtocolHandler();
             if (ph instanceof AbstractProtocol<?> ap) {
                 protocol = ap;
+                // 내장 Tomcat의 작업 스레드 풀은 java.util.concurrent 쪽이 아니라
+                // org.apache.tomcat.util.threads.ThreadPoolExecutor다. 앞서 java.util.concurrent
+                // 타입으로 검사해 계속 -1이 찍혔다.
                 if (ap.getExecutor() instanceof ThreadPoolExecutor tpe) {
                     executor = tpe;
                 }

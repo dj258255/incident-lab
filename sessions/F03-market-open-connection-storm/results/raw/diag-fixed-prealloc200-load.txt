@@ -1,0 +1,17 @@
+# [diag-fixed-prealloc200] 측정 직전 호스트 상태
+2026-07-29T15:56:43+00:00
+ 15:56:43 up 103 days,  3:11,  0 users,  load average: 4.77, 4.74, 3.92
+Linux 5.14.0-570.33.2.el9_6.aarch64 aarch64
+nproc=2
+               total        used        free      shared  buff/cache   available
+Mem:              11           4           1           0           5           7
+-- CPU 상위 5 --
+1655318 root      20   0 2642588 116524  50456 S  52.6   1.0  15016:39 dockerd
+3204459 rocky     20   0   63.0g 996760  65408 R  52.6   8.4   1:14.16 node
+3204500 rocky     20   0 1236808  15676   8320 S  26.3   0.1   0:00.28 esbuild
+3205074 root      20   0       0      0      0 R  21.1   0.0   0:00.15 kworker+
+3205166 root      20   0 4685052 177248  19384 S  15.8   1.5   0:09.90 java
+route=fixed TOMCAT_MAX_THREADS=200 RATE=400 VUS=900 PREVUS=200 RAMP=5s HOLD=20s DOWN=5s
+# [diag-fixed-prealloc200] 측정 직후 호스트 상태
+2026-07-29T15:57:16+00:00
+ 15:57:16 up 103 days,  3:11,  0 users,  load average: 7.46, 5.46, 4.19

@@ -1,13 +1,3 @@
-# k6 run  ·  해소 경로 /quote/fixed (부하 차단 load shedding, permits=10)   [2026-07-29 재측정]
-# 부하: 버그 경로와 완전히 같은 설정이다. 초당 400건 스파이크, 5s 램프 + 20s 유지 + 5s 감소,
-#       preAllocatedVUs = maxVUs = 5,000. 두 경로 모두 dropped_iterations 0, http_reqs 9,999로
-#       앱에 도달한 요청 수가 같다.
-# 환경: 버그 경로와 동일. 호스트도 동일하며 측정 직전 load average 3.87 (raw/fixed-load.txt).
-#
-# 1차 측정에 있던 connection refused 1,324건은 이번에 0건이다. 원인은 램프업이 아니라
-# 앱이 아직 듣기 전에 부하를 시작한 것이었다. raw/diag-nowait-k6.txt.gz가 그 조건을 재현한 기록이다.
-# 반복 실행은 raw/fixed-r2-k6.txt, 앱이 잰 계층별 시간은 raw/fixed-stats.txt에 있다.
-
 
          /\      Grafana   /‾‾/  
     /\  /  \     |\  __   /  /   

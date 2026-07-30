@@ -1,0 +1,17 @@
+# [fixed] 측정 직전 호스트 상태
+2026-07-29T15:54:40+00:00
+ 15:54:40 up 103 days,  3:09,  0 users,  load average: 3.87, 4.68, 3.78
+Linux 5.14.0-570.33.2.el9_6.aarch64 aarch64
+nproc=2
+               total        used        free      shared  buff/cache   available
+Mem:              11           3           2           0           5           8
+-- CPU 상위 5 --
+1655318 root      20   0 2642588 114324  50456 S 100.0   1.0  15015:11 dockerd
+     16 root      20   0       0      0      0 S   6.2   0.0  11:57.18 ksoftir+
+1502708 nobody    20   0 2176100 164452  59336 S   6.2   1.4 317:11.64 prometh+
+      1 root      20   0  177716  17376   9944 S   0.0   0.1  91:16.45 systemd
+      2 root      20   0       0      0      0 S   0.0   0.0   0:15.25 kthreadd
+route=fixed TOMCAT_MAX_THREADS=200 RATE=400 VUS=5000 RAMP=5s HOLD=20s DOWN=5s
+# [fixed] 측정 직후 호스트 상태
+2026-07-29T15:55:15+00:00
+ 15:55:15 up 103 days,  3:09,  0 users,  load average: 5.18, 4.93, 3.90

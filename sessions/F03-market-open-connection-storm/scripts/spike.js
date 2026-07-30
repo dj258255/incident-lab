@@ -7,14 +7,24 @@ import { Trend, Counter } from 'k6/metrics';
 // 풀 용량(모형상 약 200건/초)의 2배라, 버그 경로는 커넥션 획득이 밀려 무너진다.
 // 닫힌 모델(고정 VU)을 쓰면 빠른 503이 즉시 재시도를 유발해 accept 큐 고갈이라는 다른 병목을 재현하게 된다.
 //
-// VU 수 산정(리틀의 법칙). 필요한 VU = 도착률 x 요청 하나가 시스템에 머무는 시간이다.
-// 앱이 동시에 붙들 수 있는 요청은 Tomcat 스레드(max-threads)와 accept 큐(accept-count)의 합인
-// 200 + 1000 = 1,200건이고, 모형상 처리율이 초당 약 200건이므로 머무는 시간의 상한은 1200/200 = 6초다.
-// 따라서 400 x 6 = 2,400 VU면 열린 모델이 유지된다. 여유를 두어 기본값을 2,600으로 잡았다.
+// VU 수 산정. VU 하나는 응답을 받을 때까지 묶여 있으므로, 어느 순간에도 처리 중인 요청 수만큼
+// VU가 있어야 목표 도착률을 그대로 발사할 수 있다(모자라면 dropped_iterations로 빠진다).
+//
+// 처음에는 "앱이 동시에 붙들 수 있는 요청 = max-threads 200 + accept-count 1000 = 1,200"으로 보고
+// 2,600을 잡았는데, 실측에서 2,075회가 발사되지 못했다. accept-count는 커널 listen 백로그일 뿐이고
+// 실제로 소켓을 붙들고 있는 것은 Tomcat의 max-connections(기본 8192)라, 앱은 그보다 훨씬 많이 받는다.
+// 계측에서 열린 소켓이 4,995개, 스레드를 기다리는 요청이 4,335건까지 올라갔다.
+//
+// 그래서 산정 근거를 바꿨다. 이 실험은 도착 400건/초에 처리 약 200건/초이므로 과부하 25초 동안
+// 밀린 요청이 초당 약 200건씩 쌓여 최대 약 4,000건이 된다. 총 발사량은 400 x 25 + 램프 구간 = 10,000회다.
+// 실측 최대 동시 VU는 4,531~4,573이었고, 5,000으로 잡으니 두 경로 모두 dropped_iterations 0이 됐다.
 // 1차 측정은 preAllocatedVUs 200 / maxVUs 900이어서 버그 경로에서 3,401회가 발사되지 못했다.
 const TARGET = __ENV.TARGET || 'http://app:8080/quote/buggy';
 const RATE = Number(__ENV.RATE || 400);
-const VUS = Number(__ENV.VUS || 2600);
+const VUS = Number(__ENV.VUS || 5000);
+// 미리 잡아 두는 VU 수. 기본은 maxVUs와 같게 두어 부하 중 VU를 새로 만들지 않는다.
+// 1차 측정처럼 이 값을 작게 두면 부하 중에 VU가 새로 초기화된다.
+const PREVUS = Number(__ENV.PREVUS || VUS);
 const RAMP = __ENV.RAMP || '5s';
 const HOLD = __ENV.HOLD || '20s';
 const DOWN = __ENV.DOWN || '5s';
@@ -25,7 +35,7 @@ export const options = {
       executor: 'ramping-arrival-rate',
       startRate: 0,
       timeUnit: '1s',
-      preAllocatedVUs: VUS,
+      preAllocatedVUs: PREVUS,
       maxVUs: VUS,
       stages: [
         { duration: RAMP, target: RATE },
