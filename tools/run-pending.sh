@@ -45,6 +45,8 @@ steps=(
   "R16|R16-batch-cache-pollution|compose|R16SEED"
   "A09|A09-planner-stats-flip|compose|bash scripts/exp-probability-autoanalyze.sh"
   "R17mdl|R17-timeseries-partition|compose|bash scripts/exp-mdl-repeat-and-optimize.sh"
+  "A17cs|A17-uuid-page-split|compose-mysql|PYRUN scripts/exp-charset-and-secondary.py --out results/charset-and-secondary.json"
+  "A01size|A01-int-pk-exhaustion|compose-mysql|bash scripts/exp6-size-bytes.sh"
 )
 
 if [ "${1:-}" = "--list" ]; then
@@ -77,6 +79,7 @@ bring_up(){ # $1=세션경로 $2=방식
   case "$2" in
     compose)                (cd "$1" && docker compose up -d >/dev/null 2>&1) ;;
     compose-db)             (cd "$1" && docker compose up -d db >/dev/null 2>&1) ;;
+    compose-mysql)          (cd "$1" && docker compose up -d mysql >/dev/null 2>&1) ;;
     compose-mysql-restore)  (cd "$1" && docker compose up -d mysql restore >/dev/null 2>&1) ;;
     compose-oracle)         (cd "$1" && docker compose --profile oracle up -d oracle >/dev/null 2>&1) ;;
     # 복제본이 repl 프로파일 뒤에 있어 기본 up 으로는 안 뜬다. 그러면 복제 대조가

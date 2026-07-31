@@ -1,1 +1,3 @@
 scenario,threshold,rows,live_rows,tps,p95_ms
+zipf,50,4445,1000,4053.553985,36.18
+zipf,200,2070,1000,4059.442268,36.04
