@@ -35,3 +35,85 @@
   남깁니다. 그 로그가 나오는지가 이 절의 답입니다.
 
   WAR 를 10회 올렸다 내립니다. 매번 /leak 을 몇 번 찔러 ThreadLocal 을 채웁니다.
+    1회차 배포·해제 완료
+    2회차 배포·해제 완료
+    3회차 배포·해제 완료
+    4회차 배포·해제 완료
+    5회차 배포·해제 완료
+    6회차 배포·해제 완료
+    7회차 배포·해제 완료
+    8회차 배포·해제 완료
+    9회차 배포·해제 완료
+    10회차 배포·해제 완료
+
+  Tomcat 이 남긴 누수 관련 로그:
+    31-Jul-2026 12:36:00.428 SEVERE [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
+    31-Jul-2026 12:36:00.429 SEVERE [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
+    31-Jul-2026 12:36:00.429 SEVERE [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
+    31-Jul-2026 12:36:00.429 SEVERE [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
+    31-Jul-2026 12:36:00.430 SEVERE [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
+    31-Jul-2026 12:36:20.468 SEVERE [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
+    31-Jul-2026 12:36:20.468 SEVERE [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
+    31-Jul-2026 12:36:20.468 SEVERE [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
+    31-Jul-2026 12:36:20.468 SEVERE [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
+    31-Jul-2026 12:36:20.469 SEVERE [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
+    31-Jul-2026 12:36:40.520 SEVERE [Catalina-utility-2] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
+    31-Jul-2026 12:36:40.521 SEVERE [Catalina-utility-2] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
+
+  누수 경고 줄 수 = 15
+  Tomcat 은 재배포마다 이전 웹앱의 클래스로더가 회수됐는지 확인하고,
+  ThreadLocal 이 붙잡고 있으면 위와 같은 경고를 남깁니다. 경고가 있다는 것은
+  이 세션이 URLClassLoader 로 흉내 낸 조건이 실제 재배포 경로에서도 같다는 뜻입니다.
+
+  Tomcat 탐지 코드가 몇 버전부터 들어갔는지는 여전히 확인하지 못했습니다.
+  위 로그는 이 이미지(tomcat:10.1-jdk21)에서 나온 것입니다.
+==================================================================
+## 4) 터지기 전에 얼마나 느려지는가
+==================================================================
+  OutOfMemoryError 는 마지막 증상입니다. 그 앞의 완만한 열화가 길고,
+  그 구간에서는 재기동만 반복하게 됩니다. 같은 양의 일을 사이클마다 시켜
+  그 시간이 어떻게 가는지 봅니다.
+
+### mode=leak
+  # GC 압박 곡선 (mode=leak, 사이클 8,000, 표본 간격 500)
+  # [-Xmx256m, -XX:MaxMetaspaceSize=48m]
+  
+    사이클 7,871 에서 중단: java.lang.OutOfMemoryError: Metaspace
+  
+           사이클      Metaspace        누적 GC       누적 GC 시간         일 한 단위        기준 대비
+             0 Exception in thread "main" 
+  Exception: java.lang.OutOfMemoryError thrown from the UncaughtExceptionHandler in thread "main"
+
+### mode=safe
+  # GC 압박 곡선 (mode=safe, 사이클 8,000, 표본 간격 500)
+  # [-Xmx256m, -XX:MaxMetaspaceSize=48m]
+  
+           사이클      Metaspace        누적 GC       누적 GC 시간         일 한 단위        기준 대비
+             0         0.9MB            0           0 ms         2.2 ms        1.00배
+           500         4.0MB            0           0 ms         2.1 ms        0.94배
+          1000         6.6MB            1           5 ms         2.1 ms        0.93배
+          1500         9.0MB            1           5 ms         2.1 ms        0.94배
+          2000        11.5MB            1           5 ms         2.2 ms        1.01배
+          2500        13.9MB            2          13 ms         2.1 ms        0.95배
+          3000        16.3MB            2          13 ms         2.1 ms        0.93배
+          3500        14.8MB            5          23 ms         2.1 ms        0.94배
+          4000        17.2MB            5          23 ms         2.1 ms        0.93배
+          4500        19.6MB            5          23 ms         2.1 ms        0.94배
+          5000        22.1MB            6          30 ms         2.1 ms        0.93배
+          5500         6.5MB           10          51 ms         2.1 ms        0.94배
+          6000         9.0MB           10          51 ms         2.1 ms        0.93배
+          6500        11.4MB           11          55 ms         2.2 ms        0.98배
+          7000        13.8MB           12          60 ms         2.3 ms        1.05배
+          7500        16.3MB           12          60 ms         2.2 ms        0.97배
+          8000        18.7MB           13          64 ms         2.1 ms        0.95배
+  
+    살아 있는 클래스로더 = 3,484 / 8,000
+    OutOfMemoryError 도달 = 아니오
+  
+    '일 한 단위' 는 사이클과 무관하게 항상 같은 양의 계산입니다.
+    그것이 느려지면 늘어난 시간은 GC 가 가져간 몫입니다.
+    터지기 전에 이 값이 먼저 오르면, 재기동 말고 볼 것이 있다는 신호입니다.
+
+  두 조건의 차이가 누수의 대가입니다. safe 는 클래스로더가 회수되므로
+  Metaspace 가 평평하고 일 한 단위도 평평해야 합니다.
+

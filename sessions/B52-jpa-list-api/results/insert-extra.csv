@@ -1,10 +1,6 @@
 label,seconds,queries,rows,batch_size,rewrite,truncated
-saveAll 직접 ID batch=1,15.26,40012,20000,1,true,yes
-saveAll 직접 ID batch=10,9.90,24010,20000,10,true,yes
-saveAll 직접 ID batch=50,9.15,20810,20000,50,true,yes
-saveAll 직접 ID batch=100,8.81,20410,20000,100,true,yes
-saveAll 직접 ID batch=500,8.80,20090,20000,500,true,yes
-saveAll 직접 ID batch=1000,8.74,20050,20000,1000,true,yes
-saveAll 직접 ID batch=5000,8.79,20018,20000,5000,true,yes
-빈 테이블,8.92,20090,20000,500,true,yes
-2000000행이 든 테이블,8.19,20090,20000,500,true,no
+saveAll 직접 ID batch=1,14.83,40012,20000,1,true,yes
+saveAll 직접 ID batch=10,9.71,24010,20000,10,true,yes
+saveAll 직접 ID batch=50,8.62,20810,20000,50,true,yes
+saveAll 직접 ID batch=100,8.69,20409,20000,100,true,yes
+saveAll 직접 ID batch=500,8.83,20090,20000,500,true,yes

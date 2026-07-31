@@ -68,6 +68,14 @@ public class GcPressure {
         return (System.nanoTime() - t0) / 1e6;
     }
 
+    // 표본 한 줄. 미리 만든 포맷만 쓰고 새 객체를 거의 안 만든다.
+    static void emit(Sample s, double base) {
+        System.out.printf(Locale.US, "  %10d %11.1fMB %12d %11d ms %11.1f ms %11.2f배%n",
+                s.cycle(), s.metaUsed() / 1048576.0, s.gcCount(), s.gcMillis(),
+                s.unitMs(), base > 0 ? s.unitMs() / base : 0);
+        System.out.flush();
+    }
+
     public static void main(String[] args) throws Exception {
         String webapp = args.length > 0 ? args[0] : "/tmp/webapp";
         String mode = args.length > 1 ? args[1] : "leak";
@@ -85,10 +93,19 @@ public class GcPressure {
         List<WeakReference<ClassLoader>> refs = new ArrayList<>();
         List<Sample> samples = new ArrayList<>();
 
+        // 표본을 모아 두었다가 끝에 찍으면, OOM 직후 그 출력이 다시 할당을 요구해
+        // UncaughtExceptionHandler 에서 또 OOM 이 난다. 실제로 leak 조건이 그렇게 나서
+        // 표가 통째로 안 남았다. 헤더를 먼저 찍고 표본마다 바로 출력한다.
+        System.out.printf(Locale.US, "  %10s %14s %12s %14s %14s %12s%n",
+                "사이클", "Metaspace", "누적 GC", "누적 GC 시간", "일 한 단위", "기준 대비");
+
         // 기준선. 사이클 0 에서의 일 한 단위 시간을 먼저 잡는다.
         for (int i = 0; i < 3; i++) unitWorkMs(pool);   // JIT 워밍업
         long[] g0 = gcStats();
-        samples.add(new Sample(0, metaUsed(), 0, 0, unitWorkMs(pool)));
+        Sample first = new Sample(0, metaUsed(), 0, 0, unitWorkMs(pool));
+        samples.add(first);
+        final double base = first.unitMs();
+        emit(first, base);
 
         boolean oom = false;
         int done = 0;
@@ -113,26 +130,24 @@ public class GcPressure {
 
                 if (i % step == 0) {
                     long[] g = gcStats();
-                    samples.add(new Sample(i, metaUsed(), g[0] - g0[0], g[1] - g0[1],
-                            unitWorkMs(pool)));
+                    Sample sm = new Sample(i, metaUsed(), g[0] - g0[0], g[1] - g0[1],
+                            unitWorkMs(pool));
+                    samples.add(sm);
+                    emit(sm, base);
                 }
             }
         } catch (Throwable t) {
             Throwable c = t;
             while (c.getCause() != null) c = c.getCause();
             oom = c instanceof OutOfMemoryError;
-            System.out.printf(Locale.US, "  사이클 %,d 에서 중단: %s%n", done, c);
             System.out.println();
+            System.out.print("  중단 사이클 ");
+            System.out.print(done);
+            System.out.print(" : ");
+            System.out.println(c.getClass().getName() + " " + c.getMessage());
+            System.out.flush();
         }
 
-        System.out.printf(Locale.US, "  %10s %14s %12s %14s %14s %12s%n",
-                "사이클", "Metaspace", "누적 GC", "누적 GC 시간", "일 한 단위", "기준 대비");
-        double base = samples.isEmpty() ? 1 : samples.get(0).unitMs();
-        for (Sample s : samples) {
-            System.out.printf(Locale.US, "  %10d %11.1fMB %12d %11d ms %11.1f ms %11.2f배%n",
-                    s.cycle(), s.metaUsed() / 1048576.0, s.gcCount(), s.gcMillis(),
-                    s.unitMs(), base > 0 ? s.unitMs() / base : 0);
-        }
         System.out.println();
         int alive = 0;
         for (WeakReference<ClassLoader> r : refs) if (r.get() != null) alive++;
