@@ -1,0 +1,145 @@
+{
+ "convert_side": [
+  {
+   "label": "붙이지 않음(원래 조건)",
+   "sql": "SELECT COUNT(*) FROM orders o JOIN order_legacy l ON o.order_no = l.order_no WHERE o.created_at >= '2026-01-02 00:00:00' AND o.created_at < '2026-01-02 00:10:00'",
+   "median_ms": 1478.247,
+   "min_ms": 1464.52,
+   "max_ms": 1491.881,
+   "rows_product": 299595,
+   "plan": "l:index(PRIMARY) / o:ref(idx_order_no)"
+  },
+  {
+   "label": "작은 쪽(order_legacy)에 붙임",
+   "sql": "SELECT COUNT(*) FROM orders o JOIN order_legacy l ON o.order_no = CONVERT(l.order_no USING utf8mb4) WHERE o.created_at >= '2026-01-02 00:00:00' AND o.created_at < '2026-01-02 00:10:00'",
+   "median_ms": 1514.388,
+   "min_ms": 1471.751,
+   "max_ms": 1523.546,
+   "rows_product": 292939,
+   "plan": "l:index(PRIMARY) / o:ref(idx_order_no)"
+  },
+  {
+   "label": "큰 쪽(orders)에 붙임",
+   "sql": "SELECT COUNT(*) FROM orders o JOIN order_legacy l ON CONVERT(o.order_no USING latin1) = l.order_no WHERE o.created_at >= '2026-01-02 00:00:00' AND o.created_at < '2026-01-02 00:10:00'",
+   "median_ms": 13.492,
+   "min_ms": 13.178,
+   "max_ms": 13.841,
+   "rows_product": 6000,
+   "plan": "o:range(idx_created) / l:eq_ref(PRIMARY)"
+  },
+  {
+   "label": "스키마를 고침(대조군)",
+   "sql": "SELECT COUNT(*) FROM orders o JOIN order_legacy_fixed l ON o.order_no = l.order_no WHERE o.created_at >= '2026-01-02 00:00:00' AND o.created_at < '2026-01-02 00:10:00'",
+   "median_ms": 22.808,
+   "min_ms": 22.06,
+   "max_ms": 24.807,
+   "rows_product": 6000,
+   "plan": "o:range(idx_created) / l:eq_ref(PRIMARY)"
+  }
+ ],
+ "curves": {
+  "함수 적용": [
+   {
+    "limit": 1,
+    "bad_ms": 120.644,
+    "good_ms": 0.638,
+    "multiplier": 189.1
+   },
+   {
+    "limit": 100,
+    "bad_ms": 118.793,
+    "good_ms": 1.145,
+    "multiplier": 103.7
+   },
+   {
+    "limit": 10000,
+    "bad_ms": 147.29,
+    "good_ms": 21.45,
+    "multiplier": 6.9
+   },
+   {
+    "limit": 500000,
+    "bad_ms": 1175.259,
+    "good_ms": 1057.254,
+    "multiplier": 1.1
+   }
+  ],
+  "암묵적 형변환": [
+   {
+    "limit": 1,
+    "bad_ms": 767.868,
+    "good_ms": 0.65,
+    "multiplier": 1181.3
+   },
+   {
+    "limit": 100,
+    "bad_ms": 772.552,
+    "good_ms": 1.145,
+    "multiplier": 674.7
+   },
+   {
+    "limit": 10000,
+    "bad_ms": 765.46,
+    "good_ms": 21.975,
+    "multiplier": 34.8
+   },
+   {
+    "limit": 500000,
+    "bad_ms": 779.457,
+    "good_ms": 1053.314,
+    "multiplier": 0.7
+   }
+  ],
+  "콜레이션": [
+   {
+    "limit": 1,
+    "bad_ms": 1.171,
+    "good_ms": 0.78,
+    "multiplier": 1.5
+   },
+   {
+    "limit": 100,
+    "bad_ms": 1.409,
+    "good_ms": 1.237,
+    "multiplier": 1.1
+   },
+   {
+    "limit": 10000,
+    "bad_ms": 40.835,
+    "good_ms": 39.116,
+    "multiplier": 1.0
+   },
+   {
+    "limit": 500000,
+    "bad_ms": 1197.958,
+    "good_ms": 1138.75,
+    "multiplier": 1.1
+   }
+  ]
+ },
+ "wildcard_redesign": {
+  "distinct_old": 100,
+  "distinct_new": 3000000,
+  "total_rows": 3000000,
+  "cases": [
+   {
+    "label": "선행 와일드카드",
+    "sql": "SELECT COUNT(*) FROM orders WHERE buyer_email LIKE '%0@example.com'",
+    "median_ms": 936.337,
+    "type": "index",
+    "key": "idx_email",
+    "rows": 2891644,
+    "result_count": 186519
+   },
+   {
+    "label": "뒤집은 컬럼",
+    "sql": "SELECT COUNT(*) FROM orders WHERE buyer_email_rev LIKE CONCAT(REVERSE('0@example.com'),'%')",
+    "median_ms": 54.295,
+    "type": "range",
+    "key": "idx_email_rev",
+    "rows": 380418,
+    "result_count": 186519
+   }
+  ]
+ }
+}

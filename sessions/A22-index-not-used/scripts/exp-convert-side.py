@@ -15,6 +15,7 @@
      어떤 인덱스로도 도울 수 없는 조건이라 배수가 인덱스 이야기가 아니었다.
      서로 다른 값이 많은 컬럼으로 다시 짠다.
 """
+import argparse
 import json
 import os
 import statistics
@@ -24,7 +25,11 @@ import time
 
 import pymysql
 
-OUT = sys.argv[1] if len(sys.argv) > 1 else "/results/convert-side.json"
+# sys.argv[1] 로 받으면 --out results/x.json 형태에서 "--out" 이 경로가 된다.
+# 실제로 저장소 루트에 "--out" 이라는 이름의 파일이 생겼고 results 는 비어 있었다.
+ap = argparse.ArgumentParser()
+ap.add_argument("--out", default="results/convert-side.json")
+OUT = ap.parse_args().out
 REPEAT = 5
 
 conn = pymysql.connect(host="127.0.0.1", port=13313, user="root", password="lab",
