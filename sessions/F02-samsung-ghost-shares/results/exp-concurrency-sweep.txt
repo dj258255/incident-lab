@@ -367,3 +367,44 @@ NOTICE:  trigger "trg_total_cap_trans" for relation "holdings" does not exist, s
 NOTICE:  trigger "trg_sync_total" for relation "holdings" does not exist, skipping
 NOTICE:  constraint "chk_total_within_issued" of relation "company" does not exist, skipping
 NOTICE:  column "total_shares" of relation "company" does not exist, skipping
+NOTICE:  trigger "trg_total_cap" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_row" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_trans" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_sync_total" for relation "holdings" does not exist, skipping
+NOTICE:  constraint "chk_total_within_issued" of relation "company" does not exist, skipping
+NOTICE:  column "total_shares" of relation "company" does not exist, skipping
+NOTICE:  trigger "trg_total_cap" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_row" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_trans" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_sync_total" for relation "holdings" does not exist, skipping
+NOTICE:  constraint "chk_total_within_issued" of relation "company" does not exist, skipping
+NOTICE:  column "total_shares" of relation "company" does not exist, skipping
+           8            [1124,107,1143]     1124ms   11.59배
+NOTICE:  trigger "trg_total_cap" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_row" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_trans" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_sync_total" for relation "holdings" does not exist, skipping
+NOTICE:  constraint "chk_total_within_issued" of relation "company" does not exist, skipping
+NOTICE:  column "total_shares" of relation "company" does not exist, skipping
+NOTICE:  trigger "trg_total_cap" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_row" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_trans" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_sync_total" for relation "holdings" does not exist, skipping
+NOTICE:  constraint "chk_total_within_issued" of relation "company" does not exist, skipping
+NOTICE:  column "total_shares" of relation "company" does not exist, skipping
+NOTICE:  trigger "trg_total_cap" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_row" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_trans" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_sync_total" for relation "holdings" does not exist, skipping
+NOTICE:  constraint "chk_total_within_issued" of relation "company" does not exist, skipping
+NOTICE:  column "total_shares" of relation "company" does not exist, skipping
+          16            [2188,158,2189]     2188ms   22.56배
+
+==================================================================
+## 정리
+==================================================================
+Traceback (most recent call last):
+  File "<stdin>", line 4, in <module>
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+
+  각 조건 3회 실행이고 총 매도 횟수는 200회로 고정했습니다.
