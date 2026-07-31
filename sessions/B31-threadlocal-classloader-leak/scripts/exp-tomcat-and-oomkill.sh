@@ -26,7 +26,7 @@ REPEAT=${REPEAT:-3}
 
 {
 echo "# 실제 Tomcat 재배포, 커널 OOM-Kill, 사이클 수 반복"
-echo "# 각 조건 1회 실행이고 3절만 ${REPEAT}회입니다."
+echo "# 각 조건 1회 실행이고 3절만 ${REPEAT}회입니다. 4절은 두 조건 1회씩입니다."
 echo
 
 # ── 3) 사이클 수 반복 ───────────────────────────────────────────────────
@@ -194,4 +194,26 @@ fi
 echo
 echo "  Tomcat 탐지 코드가 몇 버전부터 들어갔는지는 여전히 확인하지 못했습니다."
 echo "  위 로그는 이 이미지(tomcat:10.1-jdk21)에서 나온 것입니다."
+
+# ── 4) 터지기 전의 GC 압박 ──────────────────────────────────────────────
+echo "=================================================================="
+echo "## 4) 터지기 전에 얼마나 느려지는가"
+echo "=================================================================="
+echo "  OutOfMemoryError 는 마지막 증상입니다. 그 앞의 완만한 열화가 길고,"
+echo "  그 구간에서는 재기동만 반복하게 됩니다. 같은 양의 일을 사이클마다 시켜"
+echo "  그 시간이 어떻게 가는지 봅니다."
+echo
+for m in leak safe; do
+  echo "### mode=$m"
+  docker run --rm -v "$ROOT/app":/app -w /app "$IMG" sh -c \
+    "javac -d /tmp/webapp webapp/RequestContextHolder.java &&
+     javac -d /tmp/lab GcPressure.java &&
+     java -cp /tmp/lab -Xmx256m -XX:MaxMetaspaceSize=48m GcPressure /tmp/webapp $m 8000 500" \
+    2>&1 | sed 's/^/  /'
+  echo
+done
+echo "  두 조건의 차이가 누수의 대가입니다. safe 는 클래스로더가 회수되므로"
+echo "  Metaspace 가 평평하고 일 한 단위도 평평해야 합니다."
+echo
+
 } 2>&1 | tee "$OUT/exp-tomcat-and-oomkill.txt"

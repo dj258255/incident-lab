@@ -1,13 +1,6 @@
 label,run,db1_select,db2_select,db3_select
-short,1,353,45,201
-short,2,171,1,423
-short,3,1,202,392
-long,1,503,1,1
+short,1,449,1,151
+short,2,338,262,1
+short,3,1,376,222
+long,1,1,501,1
 long,2,503,1,1
-long,3,503,1,1
-short-nocache,1,234,144,219
-short-nocache,2,242,107,252
-short-nocache,3,177,151,269
-long-nocache,1,253,125,125
-long-nocache,2,209,83,207
-long-nocache,3,251,83,167
