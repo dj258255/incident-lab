@@ -47,6 +47,7 @@ steps=(
   "R17mdl|R17-timeseries-partition|compose|bash scripts/exp-mdl-repeat-and-optimize.sh"
   "A17cs|A17-uuid-page-split|compose-mysql|PYRUN scripts/exp-charset-and-secondary.py --out results/charset-and-secondary.json"
   "A01size|A01-int-pk-exhaustion|compose-mysql|bash scripts/exp6-size-bytes.sh"
+  "F15slow|F15-websocket-slow-consumer|none|bash scripts/exp-slow-count-sweep.sh"
 )
 
 if [ "${1:-}" = "--list" ]; then

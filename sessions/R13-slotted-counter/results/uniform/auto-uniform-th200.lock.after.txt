@@ -1,4 +1,4 @@
 Innodb_row_lock_current_waits	0
-Innodb_row_lock_time	908170
-Innodb_row_lock_time_max	283
-Innodb_row_lock_waits	84770
+Innodb_row_lock_time	1094157
+Innodb_row_lock_time_max	294
+Innodb_row_lock_waits	99044

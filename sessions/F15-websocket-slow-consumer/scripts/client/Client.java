@@ -55,16 +55,20 @@ public class Client {
         int reconnectDelayMs = Integer.parseInt(System.getProperty("reconnectDelayMs", "0"));
 
         // 느린 구독자를 먼저 붙인다. 발행은 구독자가 다 붙어야 시작한다.
-        SlowReader slow = null;
-        if (slowCount > 0) {
-            slow = new SlowReader(host, port, path + "?id=slow-1", slowBytesPerSec, slowRcvBuf);
-            slow.reconnectDelayMs = reconnectDelayMs;
-            slow.connect();
-            if (reconnectDelayMs > 0) {
-                System.out.println("재접속 폭풍 조건: 절단 후 " + reconnectDelayMs + "ms 뒤 재접속");
-            }
-        } else {
+        // slow 가 2 이상이면 그만큼 붙인다. 원래는 0 또는 1 만 다뤘고 README 에
+        // "구독자 수를 늘려 보지 않았습니다"가 남아 있었다.
+        List<SlowReader> slows = new ArrayList<>();
+        for (int i = 1; i <= slowCount; i++) {
+            SlowReader s = new SlowReader(host, port, path + "?id=slow-" + i,
+                    slowBytesPerSec, slowRcvBuf);
+            s.reconnectDelayMs = reconnectDelayMs;
+            s.connect();
+            slows.add(s);
+        }
+        if (slows.isEmpty()) {
             System.out.println("느린 구독자 없음(대조군)");
+        } else if (reconnectDelayMs > 0) {
+            System.out.println("재접속 폭풍 조건: 절단 후 " + reconnectDelayMs + "ms 뒤 재접속");
         }
 
         // JIT 워밍업 구간은 백분위 계산에서 뺀다. 모든 모드에 같은 값을 쓴다.
@@ -81,11 +85,11 @@ public class Client {
             n.ws = ws;
             normals.add(n);
         }
-        System.out.println("접속 완료: 정상 " + normalCount + "개 + 느린 구독자 1개");
+        System.out.println("접속 완료: 정상 " + normalCount + "개 + 느린 구독자 " + slows.size() + "개");
 
         long t0 = System.currentTimeMillis();
-        if (slow != null) {
-            slow.start(t0);
+        for (SlowReader s : slows) {
+            s.start(t0);
         }
         for (Normal n : normals) {
             n.t0 = t0;
@@ -96,8 +100,8 @@ public class Client {
         for (Normal n : normals) {
             n.stop();
         }
-        if (slow != null) {
-            slow.stop();
+        for (SlowReader s : slows) {
+            s.stop();
         }
         long elapsed = System.currentTimeMillis() - t0;
 
@@ -106,8 +110,9 @@ public class Client {
         sb.append(String.format(Locale.ROOT,
                 "mode=%s run=%s 측정시간=%.1fs 정상구독자=%d 느린구독자=%s%n",
                 mode, run, elapsed / 1000.0, normalCount,
-                slow == null ? "없음(대조군)"
-                        : String.format(Locale.ROOT, "1(읽기 %d B/s, SO_RCVBUF %dB)", slowBytesPerSec, slowRcvBuf)));
+                slows.isEmpty() ? "없음(대조군)"
+                        : String.format(Locale.ROOT, "%d(읽기 %d B/s, SO_RCVBUF %dB)",
+                                slows.size(), slowBytesPerSec, slowRcvBuf)));
         sb.append(String.format(Locale.ROOT,
                 "백분위는 워밍업 %ds를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.%n", warmup));
         sb.append("\n-- 정상 구독자 --\n");
@@ -146,17 +151,34 @@ public class Client {
                 minLastSeq == Long.MAX_VALUE ? 0 : minLastSeq, maxLastSeq));
 
         sb.append("\n-- 느린 구독자 --\n");
-        sb.append(slow == null ? "없음(대조군)\n" : slow.report());
+        if (slows.isEmpty()) {
+            sb.append("없음(대조군)\n");
+        } else {
+            for (SlowReader s : slows) {
+                sb.append(s.report());
+            }
+        }
+        long slowBytesTotal = 0;
+        int slowReconnectsTotal = 0;
+        int slowClosed = 0;
+        for (SlowReader s : slows) {
+            slowBytesTotal += s.readBytes;
+            slowReconnectsTotal += s.reconnects;
+            if (!"n/a".equals(s.closedAtSeconds())) {
+                slowClosed++;
+            }
+        }
 
         sb.append(String.format(Locale.ROOT,
                 "%nSUMMARY mode=%s run=%s recv_total=%d lat_p50_ms=%.0f lat_p95_ms=%.0f lat_p99_ms=%.0f "
                         + "lat_max_ms=%.0f last_seq_min=%d last_seq_max=%d worst_client_p95_ms=%.0f "
-                        + "worst_client_max_ms=%.0f slow_read_bytes=%d slow_closed_at_s=%s "
-                        + "slow_reconnects=%d%n",
+                        + "worst_client_max_ms=%.0f slow_count=%d slow_read_bytes=%d "
+                        + "slow_closed_at_s=%s slow_closed_n=%d slow_reconnects=%d%n",
                 mode, run, totalRecv, pct(agg, 50), pct(agg, 95), pct(agg, 99), pct(agg, 100),
                 minLastSeq == Long.MAX_VALUE ? 0 : minLastSeq, maxLastSeq, worstP95, worstMax,
-                slow == null ? 0 : slow.readBytes, slow == null ? "n/a" : slow.closedAtSeconds(),
-                slow == null ? 0 : slow.reconnects));
+                slows.size(), slowBytesTotal,
+                slows.isEmpty() ? "n/a" : slows.get(0).closedAtSeconds(),
+                slowClosed, slowReconnectsTotal));
 
         String text = sb.toString();
         System.out.print(text);

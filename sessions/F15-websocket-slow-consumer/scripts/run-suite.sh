@@ -36,8 +36,13 @@ seconds_for() {
   esac
 }
 
+# 느린 구독자 수. 원래 1 로 박혀 있었다. 스윕을 돌리려고 환경변수로 뺐다.
+SLOW=${SLOW:-1}
+# 같은 모드를 다른 SLOW 로 두 번 돌리면 결과 파일이 겹친다. 라벨에 접미사를 붙인다.
+LABEL_SUFFIX=${LABEL_SUFFIX:-}
+
 for mode in $MODES; do
-  slow=1
+  slow=$SLOW
   bps="$SLOW_BPS"
   export STREAM_BLOCKING_SEND_TIMEOUT_MS=0
   export STREAM_BUFFER_LIMIT_BYTES=1048576
@@ -77,8 +82,8 @@ for mode in $MODES; do
   secs="$(seconds_for "$mode")"
 
   for run in $(seq 1 "$RUNS"); do
-    label="${mode}-r${run}"
-    echo "=== ${label} (${secs}s, 정상 ${NORMAL} + 느린 1, ${TICK_RATE} ticks/s, -Xmx${HEAP}m) ==="
+    label="${mode}${LABEL_SUFFIX}-r${run}"
+    echo "=== ${label} (${secs}s, 정상 ${NORMAL} + 느린 ${slow}, ${TICK_RATE} ticks/s, -Xmx${HEAP}m) ==="
     export SAMPLE_NAME="server-${label}"
     export STREAM_LABEL="$label"
 
