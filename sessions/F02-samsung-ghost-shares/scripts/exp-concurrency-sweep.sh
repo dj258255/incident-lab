@@ -25,6 +25,30 @@ PSQL(){ docker exec -i "$DB" psql -U lab -d ledger -X -qAt "$@"; }
 for _ in $(seq 1 60); do [ "$(PSQL -c 'SELECT 1')" = "1" ] && break; sleep 2; done
 [ "$(PSQL -c 'SELECT 1')" = "1" ] || { echo "중단: $DB 가 쿼리를 받지 못합니다" >&2; exit 2; }
 
+# 기반 스키마부터 확인한다. 러너가 단계마다 볼륨까지 지우고 새로 띄우므로 표가 없다.
+# 처음에는 reset_ledger 함수만 확인했는데, 08-designs.sql 이 함수는 만들고 표는 안
+# 만들기 때문에 그 확인은 통과했다. 그리고 매 세션이 "relation holdings does not exist"
+# 를 찍으며 돌아 벽시계만 남았다. 표와 행 수까지 확인한다.
+ensure_schema(){
+  local n
+  n=$(PSQL -c "SELECT count(*) FROM information_schema.tables
+               WHERE table_schema='public' AND table_name IN ('holdings','company')")
+  if [ "${n:-0}" != "2" ]; then
+    echo "기반 스키마가 없습니다. 01-schema.sql 과 00-seed-holdings.sql 을 겁니다."
+    docker exec -i "$DB" psql -U lab -d ledger -X -q -v ON_ERROR_STOP=1 < "$ROOT/sql/01-schema.sql" >/dev/null 2>&1
+    docker exec -i "$DB" psql -U lab -d ledger -X -q -v ON_ERROR_STOP=1 < "$ROOT/sql/00-seed-holdings.sql" >/dev/null 2>&1
+  fi
+  n=$(PSQL -c "SELECT count(*) FROM information_schema.tables
+               WHERE table_schema='public' AND table_name IN ('holdings','company')")
+  [ "${n:-0}" = "2" ] || { echo "중단: holdings 와 company 표가 없습니다" >&2; exit 3; }
+  local rows
+  rows=$(PSQL -c "SELECT count(*) FROM holdings")
+  case "${rows:-0}" in ''|*[!0-9]*) rows=0 ;; esac
+  [ "$rows" -gt 0 ] || { echo "중단: holdings 가 비어 있습니다" >&2; exit 3; }
+  echo "스키마 확인: holdings ${rows}행"
+}
+ensure_schema
+
 # 08-designs.sql 이 남기는 함수들이 있어야 한다. 없으면 먼저 걸어 준다.
 HAVE=$(PSQL -c "SELECT count(*) FROM pg_proc WHERE proname='reset_ledger'")
 if [ "${HAVE:-0}" = "0" ]; then
@@ -33,6 +57,14 @@ if [ "${HAVE:-0}" = "0" ]; then
 fi
 HAVE=$(PSQL -c "SELECT count(*) FROM pg_proc WHERE proname='reset_ledger'")
 [ "${HAVE:-0}" != "0" ] || { echo "중단: reset_ledger 함수가 없습니다" >&2; exit 3; }
+
+# 매 회차 끝에 표가 여전히 있는지 본다. 없으면 그 뒤 값은 전부 빈 루프의 시간이다.
+guard_rows(){
+  local rows
+  rows=$(PSQL -c "SELECT count(*) FROM holdings" 2>/dev/null)
+  case "${rows:-0}" in ''|*[!0-9]*) rows=0 ;; esac
+  [ "$rows" -gt 0 ] || { echo "중단: 실행 중에 holdings 가 사라졌습니다" >&2; exit 4; }
+}
 
 drop_triggers(){
   PSQL -c "DROP TRIGGER IF EXISTS trg_total_cap ON holdings;
@@ -118,6 +150,7 @@ for d in none A B C D; do
     for run in $(seq 1 "$REPEAT"); do
       apply "$d"
       MS=$(run_wave "$n" "$PER")
+      guard_rows
       ERR=$(grep -c "ERROR" /tmp/f02sw-err.txt 2>/dev/null || echo 0)
       echo "$d,$n,$run,$MS,$ERR" >> "$OUT/concurrency-sweep.csv"
       VALS="$VALS $MS"

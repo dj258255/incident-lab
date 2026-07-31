@@ -50,3 +50,20 @@
   손으로 ANALYZE 를 돌린 것이 아니라, autovacuum 이 정한 시점에 걸리게 합니다.
   autovacuum_analyze_scale_factor=0.001, threshold=50, naptime=5s
   직전 last_autoanalyze = 없음
+  관측 창 안에 autoanalyze 가 걸리지 않았습니다.
+
+  플랜을 조건마다 확인합니다:
+                                                       QUERY PLAN                                                    
+    -----------------------------------------------------------------------------------------------------------------
+     Aggregate  (cost=42206.69..42206.70 rows=1 width=8)
+       ->  Hash Join  (cost=103.83..42198.45 rows=3298 width=0)
+             Hash Cond: (i.org_id = r.org_id)
+             ->  Seq Scan on ip_rule i  (cost=0.00..41649.00 rows=133 width=4)
+                   Filter: (rule_kind = 'burst'::text)
+             ->  Hash  (cost=72.83..72.83 rows=2480 width=4)
+                   ->  Index Scan using req_log_blocked_until_idx on req_log r  (cost=0.43..72.83 rows=2480 width=4)
+                         Index Cond: (blocked_until IS NOT NULL)
+    (8 rows)
+    
+
+  설정을 되돌렸습니다. 각 조건 1회 실행이고 1절만 200회입니다.

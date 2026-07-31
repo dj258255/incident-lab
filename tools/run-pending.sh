@@ -50,6 +50,7 @@ steps=(
   "F15slow|F15-websocket-slow-consumer|none|bash scripts/exp-slow-count-sweep.sh"
   "F02conc|F02-samsung-ghost-shares|compose-db|bash scripts/exp-concurrency-sweep.sh"
   "A22or|A22-index-not-used|compose|PYRUN scripts/exp-or-and-index-merge.py --out results/or-and-index-merge.json"
+  "R14jdbc|R14-charset-timezone|compose|bash scripts/exp-jdbc-roundtrip.sh"
 )
 
 if [ "${1:-}" = "--list" ]; then

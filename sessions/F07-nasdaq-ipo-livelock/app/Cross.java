@@ -76,6 +76,10 @@ public class Cross {
         int cancelsRejected;     // 컷오프로 거부한 취소
         int missedButMarketable; // 이번 크로스에 반영되지 못한 취소 중 크로스 가격에서 체결 조건을 만족하는 것
         double roundMedianMs;    // 라운드 1회(뷰 구성 + 계산 + 검증) 소요시간 중앙값
+        // 확정 실패일 때 어느 상한에 먼저 닿았는지. capMs 와 maxRecalc 를 같은 비율로
+        // 함께 올려서 세 조건 중 어느 것이 결정적이었는지 갈리지 않았다.
+        // "recalc" 또는 "time", 확정에 성공하면 빈 문자열이다.
+        String capHit = "";
 
         double effIntervalMs() { return cancelsArrived == 0 ? Double.NaN : (elapsedNanos / 1e6) / cancelsArrived; }
         double measuredRatio() { return effIntervalMs() / roundMedianMs; }
@@ -354,7 +358,13 @@ public class Cross {
                 LockSupport.parkNanos(DRAIN_MS * 1_000_000L);
                 continue;
             }
-            if (recalcs >= MAX_RECALC || System.nanoTime() - t0 >= capNanos) break;   // 상한 도달 = 확정 실패
+            // 어느 상한이 먼저 걸렸는지 남긴다. 둘을 함께 올리면 이 구분이 사라진다.
+            boolean hitRecalc = recalcs >= MAX_RECALC;
+            boolean hitTime = System.nanoTime() - t0 >= capNanos;
+            if (hitRecalc || hitTime) {
+                t.capHit = hitRecalc && hitTime ? "both" : (hitRecalc ? "recalc" : "time");
+                break;   // 상한 도달 = 확정 실패
+            }
         }
         long elapsed = System.nanoTime() - t0;
 

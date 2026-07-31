@@ -1,0 +1,578 @@
+# 동시 세션 수를 늘리면 어느 설계가 먼저 무너지는가
+# PostgreSQL 16.14
+# 총 매도 200회 고정, 세션 수 2 4 8 16, 조건마다 3회
+
+  총량을 고정했으므로 세션이 늘수록 벽시계가 줄면 나란히 돈 것이고,
+  일정하면 줄을 선 것이고, 늘어나면 경합 비용이 일보다 큰 것입니다.
+
+### 대조군(가드 없음)
+      세션        회차별 벽시계     중앙 2세션 대비
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+           2                 [76,56,74]       74ms    1.00배
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+           4                 [93,89,74]       89ms    1.20배
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+           8                 [82,78,88]       82ms    1.11배
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+          16              [132,136,141]      136ms    1.84배
+
+### A. 문장 단위 + advisory
+      세션        회차별 벽시계     중앙 2세션 대비
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+           2                 [67,73,70]       70ms    1.00배
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+           4                 [76,73,81]       76ms    1.09배
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+           8                [104,84,83]       84ms    1.20배
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+          16              [124,165,162]      162ms    2.31배
+
+### B. 행 단위 + WHEN
+      세션        회차별 벽시계     중앙 2세션 대비
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+           2                 [68,75,62]       68ms    1.00배
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+           4                 [68,73,71]       71ms    1.04배
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+           8                 [92,90,77]       90ms    1.32배
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+          16              [148,163,157]      157ms    2.31배
+
+### C. 전이 테이블
+      세션        회차별 벽시계     중앙 2세션 대비
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+           2                 [63,69,72]       69ms    1.00배
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+           4                 [73,99,71]       73ms    1.06배
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+           8                 [90,80,86]       86ms    1.25배
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "holdings" does not exist
+          16              [158,181,181]      181ms    2.62배
+
+### D. 물질화 합계 + CHECK
+      세션        회차별 벽시계     중앙 2세션 대비
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "company" does not exist
+ERROR:  relation "company" does not exist
+LINE 1: UPDATE company SET total_shares=(SELECT coalesce(sum(shares)...
+               ^
+ERROR:  relation "company" does not exist
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "company" does not exist
+ERROR:  relation "company" does not exist
+LINE 1: UPDATE company SET total_shares=(SELECT coalesce(sum(shares)...
+               ^
+ERROR:  relation "company" does not exist
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "company" does not exist
+ERROR:  relation "company" does not exist
+LINE 1: UPDATE company SET total_shares=(SELECT coalesce(sum(shares)...
+               ^
+ERROR:  relation "company" does not exist
+ERROR:  relation "holdings" does not exist
+           2                 [73,71,71]       71ms    1.00배
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "company" does not exist
+ERROR:  relation "company" does not exist
+LINE 1: UPDATE company SET total_shares=(SELECT coalesce(sum(shares)...
+               ^
+ERROR:  relation "company" does not exist
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "company" does not exist
+ERROR:  relation "company" does not exist
+LINE 1: UPDATE company SET total_shares=(SELECT coalesce(sum(shares)...
+               ^
+ERROR:  relation "company" does not exist
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "company" does not exist
+ERROR:  relation "company" does not exist
+LINE 1: UPDATE company SET total_shares=(SELECT coalesce(sum(shares)...
+               ^
+ERROR:  relation "company" does not exist
+ERROR:  relation "holdings" does not exist
+           4                 [82,66,67]       67ms    0.94배
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "company" does not exist
+ERROR:  relation "company" does not exist
+LINE 1: UPDATE company SET total_shares=(SELECT coalesce(sum(shares)...
+               ^
+ERROR:  relation "company" does not exist
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "company" does not exist
+ERROR:  relation "company" does not exist
+LINE 1: UPDATE company SET total_shares=(SELECT coalesce(sum(shares)...
+               ^
+ERROR:  relation "company" does not exist
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "company" does not exist
+ERROR:  relation "company" does not exist
+LINE 1: UPDATE company SET total_shares=(SELECT coalesce(sum(shares)...
+               ^
+ERROR:  relation "company" does not exist
+ERROR:  relation "holdings" does not exist
+           8                 [84,87,88]       87ms    1.23배
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "company" does not exist
+ERROR:  relation "company" does not exist
+LINE 1: UPDATE company SET total_shares=(SELECT coalesce(sum(shares)...
+               ^
+ERROR:  relation "company" does not exist
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "company" does not exist
+ERROR:  relation "company" does not exist
+LINE 1: UPDATE company SET total_shares=(SELECT coalesce(sum(shares)...
+               ^
+ERROR:  relation "company" does not exist
+ERROR:  relation "holdings" does not exist
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+NOTICE:  relation "holdings" does not exist, skipping
+ERROR:  relation "company" does not exist
+CONTEXT:  SQL statement "ALTER TABLE company DROP CONSTRAINT IF EXISTS chk_total_within_issued"
+PL/pgSQL function reset_ledger() line 7 at SQL statement
+ERROR:  relation "company" does not exist
+ERROR:  relation "company" does not exist
+LINE 1: UPDATE company SET total_shares=(SELECT coalesce(sum(shares)...
+               ^
+ERROR:  relation "company" does not exist
+ERROR:  relation "holdings" does not exist
+          16              [159,154,129]      154ms    2.17배
+
+==================================================================
+## 정리
+==================================================================
+Traceback (most recent call last):
+  File "<stdin>", line 4, in <module>
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+
+  각 조건 3회 실행이고 총 매도 횟수는 200회로 고정했습니다.
