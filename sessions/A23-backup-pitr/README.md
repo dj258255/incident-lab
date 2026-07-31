@@ -300,7 +300,78 @@ C 는 `RECOVERY` 를 줬는데도 `RESTORING` 에 남았습니다. `STOPAT` 이 
    나와 행 수 대신 그 문장이 잡혔고 `$((SAFE_N - ACC_N))` 이 산술 오류로 죽었습니다.
    `sqlcmd -d` 로 접속해 그 줄이 아예 없게 했습니다.
 
-## 7. 해소: 백업을 믿지 않는 절차
+## 7. Oracle 대조
+
+`scripts/exp5-oracle-pitr.sh`, 원문은 `results/exp5-oracle-pitr.txt`.
+Oracle AI Database 26ai Free (23.26.2.0.0). 무료 공개 이미지입니다.
+
+| | 사고 전 | 사고 후 | `UNTIL TIME` 복구 후 |
+|---|---|---|---|
+| Oracle 26ai Free | 1,500행 | 1,000행 | **1,500행** |
+
+```
+RUN {
+  SHUTDOWN IMMEDIATE;
+  STARTUP MOUNT;
+  SET UNTIL TIME "TO_DATE('2026-07-31 02:40:54','YYYY-MM-DD HH24:MI:SS')";
+  RESTORE DATABASE;
+  RECOVER DATABASE;
+  ALTER DATABASE OPEN RESETLOGS;
+}
+```
+
+### 7.1 RESETLOGS 가 인케네이션을 만든다
+
+복구를 마치고 `RESETLOGS` 로 열면 데이터베이스의 계보가 갈립니다.
+
+```console
+SQL> SELECT incarnation#, status, resetlogs_change# FROM v$database_incarnation;
+    1 PARENT     1
+    2 PARENT     1924245
+    3 PARENT     2953770
+    4 CURRENT    2956222
+```
+
+네 번 열렸고 지금은 4번입니다. **그 시점 이후의 옛 아카이브 로그는 새 인케네이션에
+적용할 수 없습니다.** 되돌아가려면 `RESET DATABASE TO INCARNATION` 을 먼저 해야 합니다.
+
+MySQL·PostgreSQL·SQL Server 에는 이 개념이 없습니다. **복구를 여러 번 시도할 때
+"어느 복구본에서 갈라져 나온 것인가"를 데이터베이스가 스스로 관리하는 것이 Oracle 쪽
+특징이고, 그만큼 관리 대상이 하나 더 있습니다.**
+
+### 7.2 목표 시각의 리두가 아직 아카이브되지 않았으면 그 앞까지만 간다
+
+처음 실행에서 복구 후 행 수가 1,000 이었습니다. 목표 시각이 사고 직전인데 백업 시점까지만
+되돌아간 것입니다. 원인은 그 시점의 리두가 **아직 현재 온라인 로그에만 있고 아카이브되지
+않은 것**이었습니다. 목표 시각을 잡기 전에 `ALTER SYSTEM ARCHIVE LOG CURRENT` 를 넣어
+고쳤습니다.
+
+이것은 PostgreSQL 의 `archive_timeout` 과 같은 자리입니다. **"방금 커밋했으니 복구할 수
+있다"가 아니라 "그 리두가 아카이브로 떨어졌으니 복구할 수 있다"입니다.**
+
+### 7.3 아카이브 로그 모드 전환은 밟지 못했다
+
+이 이미지는 `ARCHIVELOG` 로 출고됩니다. 끄고 켜는 과정을 재현하지 못했습니다. 다만 다른
+엔진과 갈리는 자리는 남습니다. Oracle 은 켜려면 데이터베이스를 `MOUNT` 상태로 내렸다
+올려야 하고 그동안 닫혀 있습니다. PostgreSQL 은 `archive_mode` 를 켜고 재기동하면 되고,
+MySQL 은 `log-bin` 을 켜고 재기동하면 됩니다. **`MOUNT` 라는 중간 상태가 하나 더 있는
+것이 Oracle 쪽 절차의 차이입니다.**
+
+### 7.4 네 엔진 대조
+
+| | MySQL 8.4 | PostgreSQL 17.5 | SQL Server 2022 | Oracle 26ai |
+|---|---|---|---|---|
+| 복구 재료 | 풀 덤프 + binlog | 베이스 백업 + WAL | 전체 백업 + 로그 백업 | RMAN 백업 + 아카이브 로그 |
+| 로그 보관 전제 | `log-bin` | `archive_mode=on` | DB별 복구 모델 `FULL` | `ARCHIVELOG` 모드 |
+| 전제를 켜는 비용 | 재기동 | 재기동 | `ALTER DATABASE` (온라인) | 재기동 + `MOUNT` 단계 |
+| 경계 지정 | `--stop-position`, `--stop-datetime` | `recovery_target_*` | `STOPAT` | `SET UNTIL TIME` |
+| 경계 포함 | 그 위치 직전까지 | `inclusive` 로 선택 | 고정(그 시각까지 포함) | 그 시각 직전까지 |
+| 복구본의 계보 | 없음 | 타임라인(`.history`) | 없음 | **인케네이션** |
+| 안 열리는 함정 | 없음 | 목표 도달 후 `pause` | `STOPAT` 이 로그 끝보다 뒤면 `RESTORING` | 리두가 아카이브 안 됐으면 그 앞까지만 |
+
+**네 엔진이 같은 사고를 네 자리에서 다르게 막습니다.** 절차서를 한 엔진에서 쓰고 다른
+엔진에 옮기면 그 자리마다 다시 걸립니다.
+## 8. 해소: 백업을 믿지 않는 절차
 
 실험에서 나온 것을 운영 체크리스트로 정리하면 이렇습니다.
 
@@ -314,7 +385,7 @@ C 는 `RECOVERY` 를 줬는데도 `RESTORING` 에 남았습니다. `STOPAT` 이 
 | 복구 도구가 그 환경에 있는가 | 사고 당일에 확인하면 늦다 |
 | 복구 시간이 RTO 안인가 | 리허설에서 실측. 추정하지 않는다 |
 
-## 8. 예상과 달랐던 점
+## 9. 예상과 달랐던 점
 
 ### 함정 셋을 제가 직접 밟았습니다
 
@@ -330,7 +401,8 @@ MySQL의 PITR 문서(9.5절)에는 GTID 관련 경고가 한 줄도 없습니다
 
 ## 못 한 것
 
-- **Oracle 을 아직 다루지 않았습니다.** Oracle Database Free 23ai 컨테이너가 공개돼 있어 실행은 가능해 보이는데 `RMAN` 의 `UNTIL TIME` 실습에 아카이브 로그 모드 전환이 필요해 넣지 않았습니다. 라이선스 문제가 아니라 아직 안 한 것입니다.
+- **Oracle 의 아카이브 로그 모드 전환을 밟지 못했습니다.** 이미지가 `ARCHIVELOG` 로 출고됩니다. 끄고 다시 켜면 되는데 그러려면 데이터베이스를 내렸다 올려야 해서 다른 조건에 영향을 줍니다.
+- **Oracle 쪽도 1회 실행입니다.** 7절의 값에 반복 측정이 없습니다.
 - **SQL Server 쪽도 조건마다 1회씩입니다.** ARM 에뮬레이션이라 시간 수치는 적지 않았습니다.
 - **논리·물리 백업의 복원 시간을 비교하지 않았습니다.** 벤더 문서가 백업 속도만 명시하고 복원 속도 비교는 없어서, 직접 재면 독자적 기여가 되는 자리입니다.
 - **데이터 규모가 작습니다.** 1,500행이라 RTO 절대값은 의미가 없고 구조만 유효합니다.

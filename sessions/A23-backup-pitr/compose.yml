@@ -114,6 +114,19 @@ services:
     volumes:
       - a23mssqlbackup:/var/opt/mssql/backup
 
+  # Oracle 대조. Database Free 23ai 는 무료 공개다. 아카이브 로그 모드 전환이 필요해
+  # 미뤄 두었는데, 그 전환 자체가 이 세션의 소재이기도 하다.
+  oracle:
+    image: container-registry.oracle.com/database/free:latest
+    container_name: a23-oracle
+    profiles: ["oracle"]
+    cpus: 4
+    mem_limit: 4g
+    shm_size: 1g
+    environment:
+      ORACLE_PWD: "Lab_Passw0rd1"
+    ports: ["11521:1521"]
+
 volumes:
   a23mssqlbackup:
   a23pgdata:
