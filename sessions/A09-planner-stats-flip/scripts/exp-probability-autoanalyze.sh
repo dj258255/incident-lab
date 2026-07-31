@@ -148,6 +148,49 @@ echo "  저장된 값의 개수만 갈립니다. 컬럼을 고르는 것으로 �
 echo "  통계의 양과 그것을 읽는 플래너의 시간입니다."
 echo
 
+# ── 2-b) 플래너 시간을 직접 잰다 ───────────────────────────────────────
+# 2절이 "통계의 양과 그것을 읽는 플래너의 시간" 을 아낀다고 적어 놓고 플래너 시간은
+# 안 쟀다. EXPLAIN 은 SUMMARY 로 Planning Time 을 돌려준다. 그 값을 target 을 바꿔
+# 가며 중앙값으로 잡는다. 실행 시간이 섞이지 않게 ANALYZE 없이 EXPLAIN 만 돌린다.
+echo "## 2-b) target 이 플래너 시간을 얼마나 늘리는가"
+echo "  2절은 통계의 양이 준다고만 적었습니다. 플래너 시간을 직접 잽니다."
+echo "  EXPLAIN 의 Planning Time 을 조건마다 ${PLAN_REPS:-9}회 재고 중앙값을 씁니다."
+echo
+PLAN_REPS=${PLAN_REPS:-9}
+PLAN_SQL="SELECT count(*) FROM req_log r
+          JOIN ip_rule i ON i.org_id = r.org_id AND i.rule_kind = 'burst'
+          WHERE r.blocked_until IS NOT NULL"
+plan_ms(){
+  P "EXPLAIN (COSTS OFF, SUMMARY ON) $PLAN_SQL" \
+    | grep -i "Planning Time" | grep -oE "[0-9.]+" | head -1
+}
+: > "$OUT/planner-time.csv"
+echo "target,rep,planning_ms,stat_bytes,stat_values" >> "$OUT/planner-time.csv"
+printf "  %10s %28s %12s %14s %12s\n" "target" "회차별 Planning Time" "중앙" "pg_statistic" "저장된 값"
+for t in 1 10 100 1000 10000; do
+  set_target_all "$t"
+  P "ANALYZE req_log" >/dev/null
+  SZ=$(P "SELECT pg_total_relation_size('pg_statistic')")
+  VALS=$(P "SELECT COALESCE(SUM(COALESCE(array_length(most_common_vals::text::text[],1),0)
+                          + COALESCE(array_length(histogram_bounds::text::text[],1),0)),0)
+            FROM pg_stats WHERE tablename='req_log'")
+  VS=""
+  for r in $(seq 1 "$PLAN_REPS"); do
+    MS=$(plan_ms)
+    case "${MS:-}" in ''|*[!0-9.]*) MS=0 ;; esac
+    echo "$t,$r,$MS,${SZ:-0},${VALS:-0}" >> "$OUT/planner-time.csv"
+    VS="$VS $MS"
+  done
+  MED=$(echo $VS | tr ' ' '\n' | grep -v '^$' | sort -g | awk '{a[NR]=$1} END{print a[int((NR+1)/2)]}')
+  printf "  %10s %28s %10sms %13sB %12s\n" "$t" "[$(echo $VS | tr ' ' ',' | cut -c1-26)]" \
+    "${MED:-?}" "${SZ:-?}" "${VALS:-?}"
+done
+echo
+echo "  플래너는 조건마다 통계를 읽어 선택도를 계산합니다. MCV 목록과 히스토그램이"
+echo "  길수록 그 계산이 오래 걸립니다. 위 표의 증가분이 target 을 올리는 값입니다."
+echo "  질의 하나의 플래닝이므로, 초당 수천 건이 도는 서버에서는 이 값에 그만큼 곱합니다."
+echo
+
 # ── 3) 자동 analyze 가 방아쇠가 되는 과정 ───────────────────────────────
 echo "## 3) 자동 analyze 가 플랜을 뒤집는 순간"
 echo "  손으로 ANALYZE 를 돌린 것이 아니라, autovacuum 이 정한 시점에 걸리게 합니다."

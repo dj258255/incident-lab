@@ -113,6 +113,13 @@ run_case long  MAXLIFE=600000
 run_case short-nocache MAXLIFE=30000  JAVA_TOOL_OPTIONS=-Dsun.net.inetaddr.ttl=0
 run_case long-nocache  MAXLIFE=600000 JAVA_TOOL_OPTIONS=-Dsun.net.inetaddr.ttl=0
 
+# maxLifetime 을 두 값으로만 봤다는 것이 README 에 남아 있었다. 30초와 600초 사이가
+# 계단인지 완만한 곡선인지 갈리지 않는다. 캐시를 끈 상태에서 다섯 점을 더 찍는다.
+# 캐시가 켜져 있으면 재생성 시각이 흩어져도 같은 IP 로 가므로 이 축이 안 보인다.
+for ml in 5000 10000 60000 120000 300000; do
+  run_case "ml${ml}" MAXLIFE=$ml JAVA_TOOL_OPTIONS=-Dsun.net.inetaddr.ttl=0
+done
+
 echo
 echo "## 정리"
 column -s, -t "$OUT/query-share.csv" 2>/dev/null || cat "$OUT/query-share.csv"

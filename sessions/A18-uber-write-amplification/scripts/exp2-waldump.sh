@@ -24,6 +24,7 @@
 set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$ROOT/results"; mkdir -p "$OUT"
+COMPS=${COMPS:-"off pglz lz4 zstd"}
 ROWS=${ROWS:-500000}
 PGBIN=/usr/lib/postgresql/17/bin
 
@@ -52,6 +53,9 @@ start_pg(){ # $1 = wal_compression 값
     off:off) ;;
     on:off) echo "중단: wal_compression 을 on 으로 줬는데 off 입니다" >&2; exit 3 ;;
     on:*)   ;;
+    # pglz, lz4, zstd 는 그대로 돌아온다. lz4 와 zstd 가 빌드에 없으면 서버가
+    # 아예 안 뜨고 위 준비 대기에서 걸린다.
+    pglz:pglz|lz4:lz4|zstd:zstd) ;;
     *) echo "중단: wal_compression 이 $1 인데 $got 입니다" >&2; exit 3 ;;
   esac
   echo "  wal_compression 적용값 = $got"
@@ -129,11 +133,11 @@ echo "# WAL 을 레코드와 FPI 로 가르고, autovacuum 을 끄고, 압축 �
 echo "# 호스트: $(uname -srm), $(sysctl -n hw.ncpu 2>/dev/null || nproc)코어, \
 $(python3 -c "print(f'{$(sysctl -n hw.memsize 2>/dev/null || echo 0)/1073741824:.0f}GB')" 2>/dev/null || echo '?')"
 echo "# 컨테이너: --cpus 4 --memory 4g, autovacuum=off, ${ROWS}행"
-echo "# 조건마다 1회 실행입니다."
+echo "# 압축 조건: ${COMPS}. 조건마다 1회 실행입니다."
 : > "$OUT/waldump-summary.csv"
 echo "wal_compression,label,table,wal_bytes,hot_pct" >> "$OUT/waldump-summary.csv"
 
-for COMP in off on; do
+for COMP in $COMPS; do
   echo
   echo "## wal_compression = $COMP"
   start_pg "$COMP"
@@ -153,25 +157,39 @@ for COMP in off on; do
 done
 
 echo
-echo "## 압축이 배수를 얼마나 바꾸는가"
-python3 - "$OUT/waldump-summary.csv" <<'PY'
+echo "## 압축 방식이 배수를 얼마나 바꾸는가"
+python3 - "$OUT/waldump-summary.csv" <<'STATS'
 import csv, sys, collections
-d=collections.defaultdict(dict)
-for r in csv.DictReader(open(sys.argv[1])):
-    d[r['label']][r['wal_compression']] = int(r['wal_bytes'])
-print(f"  {'조건':<24} {'압축 끔':>11} {'압축 켬':>11} {'줄어든 비율':>12}")
-base_off = d.get('인덱스 0개(ff100)', {}).get('off')
-base_on  = d.get('인덱스 0개(ff100)', {}).get('on')
+d = collections.defaultdict(dict)
+order = []
+for r in csv.DictReader(open(sys.argv[1], encoding="utf-8")):
+    c = r["wal_compression"]
+    if c not in order:
+        order.append(c)
+    d[r["label"]][c] = int(r["wal_bytes"])
+print("  " + "{:<24}".format("조건") + "".join(f"{c:>11}" for c in order)
+      + "{:>15}".format("off 대비 최선"))
 for label, v in d.items():
-    off, on = v.get('off'), v.get('on')
-    if not off or not on: continue
-    print(f"  {label:<24} {off/1048576:>10.1f}MB {on/1048576:>10.1f}MB {100*(1-on/off):>11.1f}%")
+    if not all(c in v for c in order):
+        continue
+    cells = "".join(f"{v[c]/1048576:>10.1f}MB" for c in order)
+    off = v.get("off")
+    others = [v[c] for c in order if c != "off"]
+    gain = 100 * (1 - min(others) / off) if off and others else 0
+    print(f"  {label:<24}{cells}{gain:>14.1f}%")
 print()
-print("  인덱스 0개 대비 배수")
-print(f"  {'조건':<24} {'압축 끔':>11} {'압축 켬':>11}")
+print("  압축 방식별로 인덱스 0개 대비 배수")
+print("  " + "{:<24}".format("조건") + "".join(f"{c:>11}" for c in order))
+base = d.get("인덱스 0개(ff100)", {})
 for label, v in d.items():
-    off, on = v.get('off'), v.get('on')
-    if not off or not on: continue
-    print(f"  {label:<24} {off/base_off:>10.2f}배 {on/base_on:>10.2f}배")
-PY
+    if not all(c in v for c in order) or not base:
+        continue
+    cells = "".join(f"{v[c]/base[c]:>10.2f}배" for c in order)
+    print(f"  {label:<24}{cells}")
+print()
+print("  압축은 FPI 만 줄입니다. 레코드 자체는 안 줄이므로 FPI 비중이 큰 조건에서만")
+print("  값을 합니다. 방식별 차이는 압축률과 CPU 사이의 교환입니다.")
+STATS
+echo
+echo "  각 조건 1회 실행입니다."
 } 2>&1 | tee "$OUT/exp2-waldump.txt"
