@@ -1,0 +1,10 @@
+# AFTER_COMMIT 을 부하 아래에서
+# 쓰기 8개, 관찰자 4명, 창 12초. 각 조건 1회 실행입니다.
+# MySQL 8.4.3
+
+### wait_point = AFTER_SYNC
+  매달린 창 12초 동안
+    소스에 들어간 행 = 0
+    관찰자 4명이 실제로 읽은 서로 다른 행 = 0
+    승격 후 복제본에 남은 행 = ERROR 1146 (42S02) at line 1: Table 'spoon.obs' doesn't exist
+scripts/exp-after-commit-load.sh: line 95: ERROR: unbound variable

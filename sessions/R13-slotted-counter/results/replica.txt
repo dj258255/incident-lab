@@ -1,5 +1,5 @@
 # 복제를 붙이고 슬롯 유무에 따른 복제 지연을 잰다
-# 원본 8.4.3, 복제본 8.4.3
+# 원본 8.4.3, 복제본 
 # 복제본은 read-only, SOURCE_AUTO_POSITION=1, SOURCE_HEARTBEAT_PERIOD=0.5
 # 부하 VU 100, 30s, 방송 1000개, zipf 분포
 
@@ -7,24 +7,4 @@
 부하 직후 복제본이 뒤처진 양과 따라잡기까지 걸린 시간을 함께 봅니다.
 
 ## single (mode=atomic slots=0)
-  복제 상태: Yes,Yes
-  부하 30s (VU 100)
-  원본 처리량 초당 933.1건, 원본 합계 60921400
-  부하 직후 복제본 합계 59346600  → 뒤처진 양 1574800
-  Seconds_Behind_Source = 2
-  따라잡기까지 0.53초
-
-## slot64 (mode=slot slots=64)
-  복제 상태: Yes,Yes
-  부하 30s (VU 100)
-  원본 처리량 초당 2841.9건, 원본 합계 194182100
-  부하 직후 복제본 합계 35703700  → 뒤처진 양 158478400
-  Seconds_Behind_Source = 23
-  따라잡기까지 41.83초
-
-## 정리
-label   rps     src_sum    rep_sum_at_end  behind     seconds_behind_source  catchup_s
-single  933.1   60921400   59346600        1574800    2                      .530427000
-slot64  2841.9  194182100  35703700        158478400  23                     41.827465000
-
-  각 조건 1회 실행입니다.
+Error response from daemon: No such container: r13-replica

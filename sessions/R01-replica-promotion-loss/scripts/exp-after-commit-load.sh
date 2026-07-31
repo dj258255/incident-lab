@@ -26,6 +26,24 @@ NET=$(docker inspect r01-source -f '{{range $k,$v := .NetworkSettings.Networks}}
 
 wait_up(){ for _ in $(seq 1 90); do [ "$(S 'SELECT 1')" = "1" ] && return 0; sleep 2; done; return 1; }
 
+# 복제가 붙어 있는지 확인하고 없으면 구성한다. 컨테이너만 띄우고 이 스크립트를 돌리면
+# 레플리카에 스키마가 없어 "Table 'spoon.obs' doesn't exist" 가 숫자 자리에 들어가고,
+# set -u 와 만나 unbound variable 로 죽는다. 실제로 그렇게 났다.
+ensure_replication(){
+  wait_up || { echo "중단: r01-source 가 쿼리를 받지 못합니다" >&2; exit 2; }
+  for _ in $(seq 1 90); do [ "$(R 'SELECT 1')" = "1" ] && break; sleep 2; done
+  local io
+  io=$(R "SELECT SERVICE_STATE FROM performance_schema.replication_connection_status" 2>/dev/null | head -1)
+  if [ "$io" != "ON" ]; then
+    echo "복제가 붙어 있지 않습니다. setup.sh 를 먼저 돌립니다."
+    bash "$ROOT/scripts/setup.sh" >/dev/null 2>&1 || true
+    sleep 3
+    io=$(R "SELECT SERVICE_STATE FROM performance_schema.replication_connection_status" 2>/dev/null | head -1)
+  fi
+  [ "$io" = "ON" ] || { echo "중단: 복제가 붙지 않았습니다(SERVICE_STATE=${io:-없음})" >&2; exit 3; }
+  echo "복제 확인: SERVICE_STATE=$io"
+}
+
 setup_semi(){ # $1=AFTER_SYNC|AFTER_COMMIT
   S "INSTALL PLUGIN rpl_semi_sync_source SONAME 'semisync_source.so'" >/dev/null 2>&1 || true
   R "INSTALL PLUGIN rpl_semi_sync_replica SONAME 'semisync_replica.so'" >/dev/null 2>&1 || true
@@ -91,8 +109,11 @@ run_case(){ # $1=wait_point
   R "STOP REPLICA; RESET REPLICA ALL" >/dev/null 2>&1 || true
   R "SET GLOBAL read_only=0; SET GLOBAL super_read_only=0" >/dev/null 2>&1 || true
   SURVIVED=$(R "SELECT COUNT(*) FROM spoon.obs")
-  echo "    승격 후 복제본에 남은 행 = ${SURVIVED:-0}"
-  LOST=$(( ${SEEN:-0} - ${SURVIVED:-0} ))
+  case "${SURVIVED:-}" in ''|*[!0-9]*) SURVIVED=0 ;; esac
+  case "${SEEN:-}" in ''|*[!0-9]*) SEEN=0 ;; esac
+  case "${ONSRC:-}" in ''|*[!0-9]*) ONSRC=0 ;; esac
+  echo "    승격 후 복제본에 남은 행 = ${SURVIVED}"
+  LOST=$(( SEEN - SURVIVED ))
   [ "$LOST" -lt 0 ] && LOST=0
   echo "    **읽혔는데 사라진 행 = ${LOST}**"
   echo "$WP,${ONSRC:-0},${SEEN:-0},${SURVIVED:-0},$LOST" >> "$OUT/after-commit-load.csv"
@@ -101,7 +122,7 @@ run_case(){ # $1=wait_point
 {
 echo "# AFTER_COMMIT 을 부하 아래에서"
 echo "# 쓰기 ${WRITERS}개, 관찰자 ${OBSERVERS}명, 창 ${WINDOW}초. 각 조건 1회 실행입니다."
-wait_up || { echo "중단: r01-source 가 쿼리를 받지 못합니다" >&2; exit 2; }
+ensure_replication
 echo "# MySQL $(S 'SELECT VERSION()')"
 : > "$OUT/after-commit-load.csv"
 echo "wait_point,on_source,seen_by_observers,survived,lost" >> "$OUT/after-commit-load.csv"

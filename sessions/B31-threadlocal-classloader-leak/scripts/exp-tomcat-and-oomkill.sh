@@ -44,8 +44,10 @@ for run in $(seq 1 "$REPEAT"); do
      java -cp /tmp/lab -Xmx256m -XX:MaxMetaspaceSize=24m LeakLab /tmp/webapp leak 20000" \
     > "$LOG" 2>&1 || true
   # 마지막으로 찍힌 사이클 번호를 뽑는다. 형식이 바뀌어도 숫자만 걷도록 넉넉히 잡는다.
-  N=$(grep -oE '[0-9,]+ *사이클|cycle[s]? *[0-9,]+' "$LOG" | tail -1 | grep -oE '[0-9,]+' | tr -d ',')
-  [ -n "${N:-}" ] || N=$(grep -oE '^[0-9,]+' "$LOG" | tail -1 | tr -d ',')
+  # OutOfMemoryError 가 난 줄에서 사이클 수를 뽑는다. 진행 로그의 마지막 줄을 잡으면
+  # 2,000 같은 중간 지점이 "터진 지점"으로 기록된다. 실제로 그렇게 나왔다.
+  N=$(grep -E "OutOfMemoryError" "$LOG" | grep -oE '[0-9,]+ *사이클' | head -1 | grep -oE '[0-9,]+' | tr -d ',')
+  [ -n "${N:-}" ] || N="OOM 줄 없음"
   CYCLES+=("${N:-읽기실패}")
   OOM=$(grep -c "OutOfMemoryError" "$LOG" || true)
   printf "  run%d  마지막 사이클 %-10s OutOfMemoryError %s회\n" "$run" "${N:-?}" "$OOM"
@@ -148,11 +150,15 @@ SH
 TC=b31-tomcat
 docker rm -f "$TC" >/dev/null 2>&1 || true
 docker run -d --name "$TC" -p 18081:8080 -v "$WORK":/work tomcat:10.1-jdk21 >/dev/null
+# curl -f 는 404 를 실패로 본다. Tomcat 10.1 은 루트에 기본 앱이 없어 404 를 돌려주므로
+# -f 를 쓰면 실제로 떴는데 "안 떴다"로 판정한다. 상태 코드가 무엇이든 응답이 오면 뜬 것이다.
+tomcat_up(){ [ -n "$(curl -s -o /dev/null -w '%{http_code}' --max-time 3 http://127.0.0.1:18081/ 2>/dev/null)" ] \
+             && [ "$(curl -s -o /dev/null -w '%{http_code}' --max-time 3 http://127.0.0.1:18081/ 2>/dev/null)" != "000" ]; }
 for _ in $(seq 1 60); do
-  curl -sf http://127.0.0.1:18081/ >/dev/null 2>&1 && break
+  tomcat_up && break
   sleep 2
 done
-if ! curl -sf http://127.0.0.1:18081/ >/dev/null 2>&1; then
+if ! tomcat_up; then
   echo "  Tomcat 이 뜨지 않았습니다. 이 절은 건너뜁니다."
   docker logs "$TC" 2>&1 | tail -5 | sed 's/^/    /'
 else
@@ -161,8 +167,8 @@ else
   echo "  WAR 를 10회 올렸다 내립니다. 매번 /leak 을 몇 번 찔러 ThreadLocal 을 채웁니다."
   for i in $(seq 1 10); do
     docker exec "$TC" cp /work/leakapp.war /usr/local/tomcat/webapps/leakapp.war
-    for _ in $(seq 1 30); do
-      curl -sf http://127.0.0.1:18081/leakapp/leak >/dev/null 2>&1 && break
+    for _ in $(seq 1 40); do
+      [ "$(curl -s -o /dev/null -w '%{http_code}' --max-time 3 http://127.0.0.1:18081/leakapp/leak)" = "200" ] && break
       sleep 1
     done
     for _ in $(seq 1 20); do curl -s http://127.0.0.1:18081/leakapp/leak >/dev/null 2>&1; done

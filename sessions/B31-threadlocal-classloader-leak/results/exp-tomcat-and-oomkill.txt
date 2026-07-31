@@ -1,0 +1,82 @@
+# 실제 Tomcat 재배포, 커널 OOM-Kill, 사이클 수 반복
+# 각 조건 1회 실행이고 3절만 3회입니다.
+
+==================================================================
+## 3) MaxMetaspaceSize=24m 에서 몇 사이클에 터지는가
+==================================================================
+  발행된 3,773 사이클이 반복되는 값인지 봅니다.
+
+  run1  마지막 사이클 2000       OutOfMemoryError 2회
+  run2  마지막 사이클 3773       OutOfMemoryError 2회
+  run3  마지막 사이클 2000       OutOfMemoryError 2회
+  회차별 사이클: 2000 3773 2000
+
+==================================================================
+## 2) Metaspace 상한 없이 컨테이너 메모리만 좁히면
+==================================================================
+  MaxMetaspaceSize 의 JVM 기본값은 무제한입니다. 그러면 Metaspace 가 자라도
+  JVM 은 OutOfMemoryError 를 던지지 않고 컨테이너 메모리를 계속 밀어 올립니다.
+  한도에 닿으면 죽이는 것은 JVM 이 아니라 커널입니다.
+
+  종료 코드 = 137, OOMKilled = true
+  마지막 사이클 = 읽기실패
+  JVM 의 OutOfMemoryError = 0회
+
+  읽는 법. OOMKilled=true 이고 OutOfMemoryError 가 0회면 **JVM 은 아무 말도 못 하고
+  죽은 것**입니다. 스택 트레이스도 힙 덤프도 남지 않습니다. 종료 코드 137 은
+  SIGKILL(128+9)이고, 이것이 실무에서 더 흔한 실패 경로입니다.
+  MaxMetaspaceSize 를 걸어 두면 적어도 JVM 이 유언을 남깁니다.
+
+==================================================================
+## 1) 실제 Tomcat 에 WAR 를 올렸다 내리기
+==================================================================
+  Tomcat 은 이 문제를 알고 탐지 코드를 갖고 있습니다(WebappClassLoaderBase).
+  재배포 때 ThreadLocal 이 웹앱 클래스로더가 적재한 값을 붙잡고 있으면 경고를
+  남깁니다. 그 로그가 나오는지가 이 절의 답입니다.
+
+Unable to find image 'tomcat:10.1-jdk21' locally
+10.1-jdk21: Pulling from library/tomcat
+4b987da45db4: Pulling fs layer
+9e44d8ad4e27: Pulling fs layer
+21b28e1a74a1: Pulling fs layer
+8d110e2a54aa: Pulling fs layer
+f84c941ad63c: Pulling fs layer
+6de79fafff38: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+bcef8c2f034b: Pulling fs layer
+6de79fafff38: Waiting
+4f4fb700ef54: Waiting
+bcef8c2f034b: Waiting
+8d110e2a54aa: Waiting
+f84c941ad63c: Waiting
+9e44d8ad4e27: Download complete
+4b987da45db4: Download complete
+8d110e2a54aa: Verifying Checksum
+8d110e2a54aa: Download complete
+f84c941ad63c: Verifying Checksum
+f84c941ad63c: Download complete
+4b987da45db4: Pull complete
+6de79fafff38: Verifying Checksum
+6de79fafff38: Download complete
+4f4fb700ef54: Download complete
+9e44d8ad4e27: Pull complete
+21b28e1a74a1: Verifying Checksum
+21b28e1a74a1: Download complete
+bcef8c2f034b: Download complete
+21b28e1a74a1: Pull complete
+8d110e2a54aa: Pull complete
+f84c941ad63c: Pull complete
+6de79fafff38: Pull complete
+4f4fb700ef54: Pull complete
+bcef8c2f034b: Pull complete
+Digest: sha256:066ffc02851e87519297644191a0232d38f652e37ad98b8661fde171811e7861
+Status: Downloaded newer image for tomcat:10.1-jdk21
+  Tomcat 이 뜨지 않았습니다. 이 절은 건너뜁니다.
+    31-Jul-2026 06:31:23.345 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [253] milliseconds
+    31-Jul-2026 06:31:23.362 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+    31-Jul-2026 06:31:23.363 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/10.1.57]
+    31-Jul-2026 06:31:23.369 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+    31-Jul-2026 06:31:23.374 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [28] milliseconds
+
+  Tomcat 탐지 코드가 몇 버전부터 들어갔는지는 여전히 확인하지 못했습니다.
+  위 로그는 이 이미지(tomcat:10.1-jdk21)에서 나온 것입니다.

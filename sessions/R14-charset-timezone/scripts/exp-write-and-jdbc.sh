@@ -61,7 +61,11 @@ docker exec -d "$CN" bash -c "
     S=\$(date +%s%N)
     OUT=\$(mysql -uroot -plab spoon -N -B -e \"INSERT INTO conv_w (name, memo) VALUES ('w','w')\" 2>&1)
     E=\$(date +%s%N)
-    if [ -n \"\$OUT\" ]; then ERR=\$(echo \"\$OUT\" | head -1 | tr ',' ' '); OK=0; else ERR=; OK=1; fi
+    # 경고를 실패로 세면 안 된다. mysql 은 비밀번호를 명령줄에 주면
+    # \"Using a password on the command line interface can be insecure\" 를 stderr 로
+    # 내보내는데, 그것을 실패로 잡아 104건 전부가 실패로 기록됐다.
+    ERRLINE=\$(echo \"\$OUT\" | grep -v \"Warning\" | grep -iE \"ERROR|error\" | head -1 | tr ',' ' ')
+    if [ -n \"\$ERRLINE\" ]; then ERR=\$ERRLINE; OK=0; else ERR=; OK=1; fi
     echo \"\$S,\$(( (E-S)/1000000 )),\$OK,\$ERR\" >> /tmp/convert-writes.csv
     sleep 0.02
   done"

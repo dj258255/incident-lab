@@ -1,120 +1,120 @@
-1785477112.878277000 {"ts":"2026-07-31T05:51:52.928304711","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
-1785477113.475532000 {"ts":"2026-07-31T05:51:53.520488711","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
-1785477114.061917000 {"ts":"2026-07-31T05:51:54.122570503","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
-1785477114.679687000 {"ts":"2026-07-31T05:51:54.723550711","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
-1785477115.271273000 {"ts":"2026-07-31T05:51:55.321112378","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
-1785477115.868036000 {"ts":"2026-07-31T05:51:55.927284545","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
-1785477116.480240000 {"ts":"2026-07-31T05:51:56.554630379","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
-1785477117.123516000 {"ts":"2026-07-31T05:51:57.188963254","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
-1785477117.744967000 {"ts":"2026-07-31T05:51:57.825134296","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
-1785477118.409696000 {"ts":"2026-07-31T05:51:58.452558005","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
-1785477118.997703000 {"ts":"2026-07-31T05:51:59.053259130","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
-1785477119.625253000 {"ts":"2026-07-31T05:51:59.669229547","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
-1785477120.210503000 {"ts":"2026-07-31T05:52:00.252764172","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
-1785477120.789784000 {"ts":"2026-07-31T05:52:00.823749256","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
-1785477121.366506000 {"ts":"2026-07-31T05:52:01.423288798","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
-1785477121.962742000 {"ts":"2026-07-31T05:52:02.001172882","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
-1785477122.561783000 {"ts":"2026-07-31T05:52:02.623896132","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
-1785477123.177995000 {"ts":"2026-07-31T05:52:03.220141341","resolved":"172.31.0.11","db":"ERR:RecoverableDataAccessException","db_msg":"StatementCallback; SQL [SELECT @@server_id AS sid, @@read_only AS ro]; Communications link failure The last packet succe"}
-1785477123.817062000 {"ts":"2026-07-31T05:52:03.855153883","resolved":"172.31.0.11","db":"ERR:RecoverableDataAccessException","db_msg":"StatementCallback; SQL [SELECT @@server_id AS sid, @@read_only AS ro]; Communications link failure The last packet succe"}
-1785477124.413648000 {"ts":"2026-07-31T05:52:04.449886508","resolved":"172.31.0.11","db":"ERR:RecoverableDataAccessException","db_msg":"StatementCallback; SQL [SELECT @@server_id AS sid, @@read_only AS ro]; Communications link failure The last packet succe"}
-1785477125.018276000 {"ts":"2026-07-31T05:52:05.056822675","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477128.658725000 {"ts":"2026-07-31T05:52:08.718851468","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477132.305046000 {"ts":"2026-07-31T05:52:12.349033137","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477135.885122000 {"ts":"2026-07-31T05:52:15.922077472","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477139.468459000 {"ts":"2026-07-31T05:52:19.530749584","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477143.075255000 {"ts":"2026-07-31T05:52:23.119911211","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477146.670894000 {"ts":"2026-07-31T05:52:26.710458837","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477150.446761000 {"ts":"2026-07-31T05:52:30.566308881","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477154.115099000 {"ts":"2026-07-31T05:52:34.146481174","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477157.706572000 {"ts":"2026-07-31T05:52:37.749944301","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477161.297510000 {"ts":"2026-07-31T05:52:41.350274761","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477165.164429000 {"ts":"2026-07-31T05:52:45.272295596","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477168.815331000 {"ts":"2026-07-31T05:52:48.854615625","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477172.410310000 {"ts":"2026-07-31T05:52:52.478347085","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477176.015330000 {"ts":"2026-07-31T05:52:56.048817962","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477179.588334000 {"ts":"2026-07-31T05:52:59.612963380","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477183.146936000 {"ts":"2026-07-31T05:53:03.174552091","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477186.704688000 {"ts":"2026-07-31T05:53:06.727360051","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477190.263761000 {"ts":"2026-07-31T05:53:10.286558469","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477193.816514000 {"ts":"2026-07-31T05:53:13.850576221","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477197.408825000 {"ts":"2026-07-31T05:53:17.477477500","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477201.019920000 {"ts":"2026-07-31T05:53:21.058370793","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477204.604591000 {"ts":"2026-07-31T05:53:24.646937253","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477208.199436000 {"ts":"2026-07-31T05:53:28.229420921","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477211.802422000 {"ts":"2026-07-31T05:53:31.897564757","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477216.392758000 {"ts":"2026-07-31T05:53:36.470942217","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477220.008860000 {"ts":"2026-07-31T05:53:40.055359135","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477223.595519000 {"ts":"2026-07-31T05:53:43.632247554","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477227.207763000 {"ts":"2026-07-31T05:53:47.260557916","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477231.440908000 {"ts":"2026-07-31T05:53:51.629545585","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477235.181144000 {"ts":"2026-07-31T05:53:55.234959420","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477238.788000000 {"ts":"2026-07-31T05:53:58.838773630","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477242.379921000 {"ts":"2026-07-31T05:54:02.415032715","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477245.957100000 {"ts":"2026-07-31T05:54:05.994725092","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477249.548336000 {"ts":"2026-07-31T05:54:09.588963052","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477253.164765000 {"ts":"2026-07-31T05:54:13.204061637","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477256.738135000 {"ts":"2026-07-31T05:54:16.770558555","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477260.328598000 {"ts":"2026-07-31T05:54:20.376529251","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477263.926555000 {"ts":"2026-07-31T05:54:23.964906419","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477267.507738000 {"ts":"2026-07-31T05:54:27.543635504","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477271.083282000 {"ts":"2026-07-31T05:54:31.121505715","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477274.653518000 {"ts":"2026-07-31T05:54:34.682602591","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477278.220698000 {"ts":"2026-07-31T05:54:38.255837968","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477281.784199000 {"ts":"2026-07-31T05:54:41.821487428","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477285.368363000 {"ts":"2026-07-31T05:54:45.396754138","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477288.937902000 {"ts":"2026-07-31T05:54:48.979470625","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477292.514362000 {"ts":"2026-07-31T05:54:52.554426002","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477296.080851000 {"ts":"2026-07-31T05:54:56.118319962","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477299.656126000 {"ts":"2026-07-31T05:54:59.692510756","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477303.235093000 {"ts":"2026-07-31T05:55:03.272675841","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477306.814525000 {"ts":"2026-07-31T05:55:06.848074884","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477310.379177000 {"ts":"2026-07-31T05:55:10.417291886","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477313.950728000 {"ts":"2026-07-31T05:55:13.990050179","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477317.555729000 {"ts":"2026-07-31T05:55:17.588396375","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477321.132041000 {"ts":"2026-07-31T05:55:21.167537585","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477324.703417000 {"ts":"2026-07-31T05:55:24.744907003","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477328.294266000 {"ts":"2026-07-31T05:55:28.328517672","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477331.860349000 {"ts":"2026-07-31T05:55:31.893256215","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477335.426664000 {"ts":"2026-07-31T05:55:35.463418675","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477338.996786000 {"ts":"2026-07-31T05:55:39.027770635","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477342.571756000 {"ts":"2026-07-31T05:55:42.600720637","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477346.143179000 {"ts":"2026-07-31T05:55:46.169901805","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477349.693677000 {"ts":"2026-07-31T05:55:49.731722876","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477353.259818000 {"ts":"2026-07-31T05:55:53.281990002","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477356.811423000 {"ts":"2026-07-31T05:55:56.834005254","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477360.366199000 {"ts":"2026-07-31T05:56:00.386084381","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477363.913152000 {"ts":"2026-07-31T05:56:03.936100841","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477367.463695000 {"ts":"2026-07-31T05:56:07.484602426","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477371.021324000 {"ts":"2026-07-31T05:56:11.043854719","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477374.577230000 {"ts":"2026-07-31T05:56:14.596650721","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477378.130389000 {"ts":"2026-07-31T05:56:18.149647833","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477381.681454000 {"ts":"2026-07-31T05:56:21.700458710","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477385.233199000 {"ts":"2026-07-31T05:56:25.260214920","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477388.785765000 {"ts":"2026-07-31T05:56:28.812592713","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477392.347733000 {"ts":"2026-07-31T05:56:32.374496715","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477395.903661000 {"ts":"2026-07-31T05:56:35.928734217","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477399.458314000 {"ts":"2026-07-31T05:56:39.479072343","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477403.006475000 {"ts":"2026-07-31T05:56:43.027442054","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477406.565339000 {"ts":"2026-07-31T05:56:46.585268264","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477410.112760000 {"ts":"2026-07-31T05:56:50.131695376","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477413.663655000 {"ts":"2026-07-31T05:56:53.684090253","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477417.213684000 {"ts":"2026-07-31T05:56:57.236298546","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477420.775347000 {"ts":"2026-07-31T05:57:00.803754173","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477424.337335000 {"ts":"2026-07-31T05:57:04.364302424","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477427.908468000 {"ts":"2026-07-31T05:57:07.938865468","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477431.467585000 {"ts":"2026-07-31T05:57:11.502083303","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477435.037884000 {"ts":"2026-07-31T05:57:15.067234888","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477438.661351000 {"ts":"2026-07-31T05:57:18.695289125","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477442.233499000 {"ts":"2026-07-31T05:57:22.277385710","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477445.814428000 {"ts":"2026-07-31T05:57:25.857523420","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477449.401253000 {"ts":"2026-07-31T05:57:29.459884422","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477453.013737000 {"ts":"2026-07-31T05:57:33.077163132","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477456.612377000 {"ts":"2026-07-31T05:57:36.642806967","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477460.178514000 {"ts":"2026-07-31T05:57:40.211442302","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477463.744856000 {"ts":"2026-07-31T05:57:43.780242429","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477467.314425000 {"ts":"2026-07-31T05:57:47.346309791","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477470.897206000 {"ts":"2026-07-31T05:57:50.938875668","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477474.464770000 {"ts":"2026-07-31T05:57:54.500639545","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477478.053623000 {"ts":"2026-07-31T05:57:58.172832130","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
-1785477481.720760000 {"ts":"2026-07-31T05:58:01.751060048","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785478928.696844000 {"ts":"2026-07-31T06:22:08.708740219","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
+1785478929.228654000 {"ts":"2026-07-31T06:22:09.253090094","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
+1785478929.778489000 {"ts":"2026-07-31T06:22:09.802748678","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
+1785478930.325324000 {"ts":"2026-07-31T06:22:10.346692553","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
+1785478930.865978000 {"ts":"2026-07-31T06:22:10.883029011","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
+1785478931.403815000 {"ts":"2026-07-31T06:22:11.423720178","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
+1785478931.941852000 {"ts":"2026-07-31T06:22:11.959493387","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
+1785478932.479364000 {"ts":"2026-07-31T06:22:12.496562346","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
+1785478933.021751000 {"ts":"2026-07-31T06:22:13.044429679","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
+1785478933.564037000 {"ts":"2026-07-31T06:22:13.590284263","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
+1785478934.108650000 {"ts":"2026-07-31T06:22:14.124293971","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
+1785478934.640761000 {"ts":"2026-07-31T06:22:14.658709097","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
+1785478935.174490000 {"ts":"2026-07-31T06:22:15.189663722","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
+1785478935.709591000 {"ts":"2026-07-31T06:22:15.733557347","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
+1785478936.254832000 {"ts":"2026-07-31T06:22:16.269657541","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
+1785478936.780079000 {"ts":"2026-07-31T06:22:16.794066500","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
+1785478937.308285000 {"ts":"2026-07-31T06:22:17.323923667","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
+1785478937.837244000 {"ts":"2026-07-31T06:22:17.849694584","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
+1785478938.363732000 {"ts":"2026-07-31T06:22:18.375477209","resolved":"172.31.0.11","server_id":1,"read_only":0,"db":"OK"}
+1785478938.893236000 {"ts":"2026-07-31T06:22:18.906493418","resolved":"172.31.0.11","db":"ERR:RecoverableDataAccessException","db_msg":"StatementCallback; SQL [SELECT @@server_id AS sid, @@read_only AS ro]; Communications link failure The last packet succe"}
+1785478939.438071000 {"ts":"2026-07-31T06:22:19.453400210","resolved":"172.31.0.11","db":"ERR:RecoverableDataAccessException","db_msg":"StatementCallback; SQL [SELECT @@server_id AS sid, @@read_only AS ro]; Communications link failure The last packet succe"}
+1785478939.968149000 {"ts":"2026-07-31T06:22:19.981747668","resolved":"172.31.0.11","db":"ERR:RecoverableDataAccessException","db_msg":"StatementCallback; SQL [SELECT @@server_id AS sid, @@read_only AS ro]; Communications link failure The last packet succe"}
+1785478940.499369000 {"ts":"2026-07-31T06:22:20.511152877","resolved":"172.31.0.11","db":"ERR:RecoverableDataAccessException","db_msg":"StatementCallback; SQL [SELECT @@server_id AS sid, @@read_only AS ro]; Communications link failure The last packet succe"}
+1785478941.028649000 {"ts":"2026-07-31T06:22:21.046807377","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785478944.573102000 {"ts":"2026-07-31T06:22:24.588231879","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785478948.106997000 {"ts":"2026-07-31T06:22:28.121997255","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785478951.642169000 {"ts":"2026-07-31T06:22:31.661501465","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785478955.185486000 {"ts":"2026-07-31T06:22:35.199614509","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785478958.728297000 {"ts":"2026-07-31T06:22:38.743400927","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785478962.265981000 {"ts":"2026-07-31T06:22:42.288036054","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785478965.807667000 {"ts":"2026-07-31T06:22:45.819268555","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785478969.343354000 {"ts":"2026-07-31T06:22:49.362632335","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785478972.889568000 {"ts":"2026-07-31T06:22:52.911831045","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785478976.438835000 {"ts":"2026-07-31T06:22:56.460032338","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785478979.991841000 {"ts":"2026-07-31T06:23:00.013782215","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785478983.542182000 {"ts":"2026-07-31T06:23:03.563749383","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785478987.091353000 {"ts":"2026-07-31T06:23:07.107299218","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785478990.637990000 {"ts":"2026-07-31T06:23:10.660113428","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785478994.183339000 {"ts":"2026-07-31T06:23:14.205257513","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785478997.731685000 {"ts":"2026-07-31T06:23:17.751911","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479001.285192000 {"ts":"2026-07-31T06:23:21.306862794","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479004.838109000 {"ts":"2026-07-31T06:23:24.862029962","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479008.391317000 {"ts":"2026-07-31T06:23:28.413042922","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479011.941411000 {"ts":"2026-07-31T06:23:31.958966882","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479015.483928000 {"ts":"2026-07-31T06:23:35.510883801","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479019.041969000 {"ts":"2026-07-31T06:23:39.063244427","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479022.584600000 {"ts":"2026-07-31T06:23:42.604265179","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479026.131088000 {"ts":"2026-07-31T06:23:46.151994500","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479029.678603000 {"ts":"2026-07-31T06:23:49.699771376","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479033.224771000 {"ts":"2026-07-31T06:23:53.246893628","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479036.776214000 {"ts":"2026-07-31T06:23:56.799564130","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479040.325332000 {"ts":"2026-07-31T06:24:00.347547590","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479043.872294000 {"ts":"2026-07-31T06:24:03.894231716","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479047.421133000 {"ts":"2026-07-31T06:24:07.442524218","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479050.974438000 {"ts":"2026-07-31T06:24:10.991037386","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479054.520724000 {"ts":"2026-07-31T06:24:14.539743805","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479058.066427000 {"ts":"2026-07-31T06:24:18.088748626","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479061.616470000 {"ts":"2026-07-31T06:24:21.639993461","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479065.173046000 {"ts":"2026-07-31T06:24:25.194448462","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479068.724908000 {"ts":"2026-07-31T06:24:28.743218006","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479072.274470000 {"ts":"2026-07-31T06:24:32.288697049","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479075.817391000 {"ts":"2026-07-31T06:24:35.839998426","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479079.370473000 {"ts":"2026-07-31T06:24:39.394460344","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479082.926060000 {"ts":"2026-07-31T06:24:42.942578554","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479086.467868000 {"ts":"2026-07-31T06:24:46.492946750","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479090.023930000 {"ts":"2026-07-31T06:24:50.044059918","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479093.576233000 {"ts":"2026-07-31T06:24:53.595743545","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479097.123861000 {"ts":"2026-07-31T06:24:57.142329963","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479100.667647000 {"ts":"2026-07-31T06:25:00.688185965","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479104.211392000 {"ts":"2026-07-31T06:25:04.227735717","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479107.755138000 {"ts":"2026-07-31T06:25:07.778850135","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479111.299762000 {"ts":"2026-07-31T06:25:11.323039928","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479114.845331000 {"ts":"2026-07-31T06:25:14.860737597","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479118.389249000 {"ts":"2026-07-31T06:25:18.411782042","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479121.936728000 {"ts":"2026-07-31T06:25:21.957130919","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479125.484066000 {"ts":"2026-07-31T06:25:25.508447837","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479129.040782000 {"ts":"2026-07-31T06:25:29.061713964","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479132.588850000 {"ts":"2026-07-31T06:25:32.609465507","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479136.133252000 {"ts":"2026-07-31T06:25:36.157029801","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479139.685191000 {"ts":"2026-07-31T06:25:39.709682886","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479143.239965000 {"ts":"2026-07-31T06:25:43.262930888","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479146.790814000 {"ts":"2026-07-31T06:25:46.810837917","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479150.341118000 {"ts":"2026-07-31T06:25:50.361838752","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479153.894476000 {"ts":"2026-07-31T06:25:53.919452420","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479157.449041000 {"ts":"2026-07-31T06:25:57.471679255","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479161.000795000 {"ts":"2026-07-31T06:26:01.021057215","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479164.555280000 {"ts":"2026-07-31T06:26:04.577456425","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479168.108742000 {"ts":"2026-07-31T06:26:08.130339093","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479171.663559000 {"ts":"2026-07-31T06:26:11.686482095","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479175.216204000 {"ts":"2026-07-31T06:26:15.233533388","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479178.767672000 {"ts":"2026-07-31T06:26:18.790029209","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479182.322651000 {"ts":"2026-07-31T06:26:22.342282544","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479185.877568000 {"ts":"2026-07-31T06:26:25.899124838","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479189.425823000 {"ts":"2026-07-31T06:26:29.442131256","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479192.978033000 {"ts":"2026-07-31T06:26:32.993179841","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479196.530795000 {"ts":"2026-07-31T06:26:36.554056551","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479200.088640000 {"ts":"2026-07-31T06:26:40.109774594","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479203.640230000 {"ts":"2026-07-31T06:26:43.654027846","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479207.183642000 {"ts":"2026-07-31T06:26:47.208060042","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479210.743944000 {"ts":"2026-07-31T06:26:50.765971668","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479214.295814000 {"ts":"2026-07-31T06:26:54.319765504","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479217.852041000 {"ts":"2026-07-31T06:26:57.875535880","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479221.412357000 {"ts":"2026-07-31T06:27:01.436558674","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479224.959011000 {"ts":"2026-07-31T06:27:04.979442967","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479228.515423000 {"ts":"2026-07-31T06:27:08.542153760","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479232.070070000 {"ts":"2026-07-31T06:27:12.090423345","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479235.616662000 {"ts":"2026-07-31T06:27:15.646406139","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479239.177214000 {"ts":"2026-07-31T06:27:19.201162793","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479242.729691000 {"ts":"2026-07-31T06:27:22.752432961","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479246.285846000 {"ts":"2026-07-31T06:27:26.308206629","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479249.850150000 {"ts":"2026-07-31T06:27:29.873244923","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479253.397857000 {"ts":"2026-07-31T06:27:33.422360591","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479256.945654000 {"ts":"2026-07-31T06:27:36.966962093","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479260.506153000 {"ts":"2026-07-31T06:27:40.526091470","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479264.056581000 {"ts":"2026-07-31T06:27:44.085737305","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479267.627593000 {"ts":"2026-07-31T06:27:47.650149292","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479271.178785000 {"ts":"2026-07-31T06:27:51.201003169","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479274.729252000 {"ts":"2026-07-31T06:27:54.752710129","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479278.286349000 {"ts":"2026-07-31T06:27:58.309062297","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}
+1785479281.844905000 {"ts":"2026-07-31T06:28:01.862932257","resolved":"172.31.0.11","db":"ERR:CannotGetJdbcConnectionException","db_msg":"Failed to obtain JDBC Connection"}

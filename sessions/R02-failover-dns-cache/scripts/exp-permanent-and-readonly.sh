@@ -40,10 +40,21 @@ echo
 
 docker exec r02-db-b mysql -uroot -plab -e "SET GLOBAL read_only=ON; SET GLOBAL server_id=2;" 2>/dev/null
 # 창이 지나면 읽기 전용을 푸는 백그라운드 작업. 승격이 끝나는 시점을 흉내 낸다.
+#
+# 시각의 기준이 중요하다. 처음에는 스크립트 시작에서 세었는데, failover.sh 가 앱을
+# 띄우는 데 30초 남짓 쓰고 그 뒤에 페일오버를 일으키므로 창이 페일오버보다 먼저
+# 닫혔다. 그래서 "읽기 전용 구간"에 실제로는 읽기 전용이 아니었고, 관측된 쓰기 실패
+# 네 건은 A 가 죽어서 난 것이었다. failover.sh 가 남기는 타임스탬프 파일을 기다렸다가
+# 그 시점부터 센다.
+rm -f "$OUT/readonly-window-failover-ts.txt"
 (
-  sleep $((10 + RO_WINDOW))
+  for _ in $(seq 1 300); do
+    [ -f "$OUT/readonly-window-failover-ts.txt" ] && break
+    sleep 1
+  done
+  sleep "$RO_WINDOW"
   docker exec r02-db-b mysql -uroot -plab -e "SET GLOBAL read_only=OFF;" 2>/dev/null
-  echo "[$(date '+%H:%M:%S')] B 의 read_only 를 해제했습니다(승격 완료 시점)"
+  echo "[$(date '+%H:%M:%S')] B 의 read_only 를 해제했습니다(페일오버 +${RO_WINDOW}초)"
 ) &
 RELEASER=$!
 
