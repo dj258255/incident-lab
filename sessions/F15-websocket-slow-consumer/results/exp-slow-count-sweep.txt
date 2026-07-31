@@ -11,3 +11,75 @@
 ==================================================================
 ## unbounded, 느린 구독자 1명
 ==================================================================
+  === unbounded-s1-r1 (110s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+  SUMMARY mode=unbounded run=1 recv_total=1075480 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=2 lat_max_ms=11071 last_seq_min=215096 last_seq_max=215096 worst_client_p95_ms=1 worst_client_max_ms=11071 slow_count=1 slow_read_bytes=3279276 slow_closed_at_s=none slow_closed_n=1 slow_reconnects=0
+  === 정리 ===
+
+==================================================================
+## terminate, 느린 구독자 1명
+==================================================================
+  === terminate-s1-r1 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+  SUMMARY mode=terminate run=1 recv_total=670224 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=2 lat_max_ms=10 last_seq_min=134040 last_seq_max=134046 worst_client_p95_ms=1 worst_client_max_ms=10 slow_count=1 slow_read_bytes=175213 slow_closed_at_s=5.5 slow_closed_n=1 slow_reconnects=0
+  === 정리 ===
+
+==================================================================
+## direct, 느린 구독자 2명
+==================================================================
+  === direct-s2-r1 (45s, 정상 5 + 느린 2, 3000 ticks/s, -Xmx128m) ===
+  SUMMARY mode=direct run=1 recv_total=15152 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=2 lat_max_ms=939 last_seq_min=3030 last_seq_max=3031 worst_client_p95_ms=1 worst_client_max_ms=939 slow_count=2 slow_read_bytes=2787876 slow_closed_at_s=none slow_closed_n=2 slow_reconnects=0
+  === 정리 ===
+
+==================================================================
+## unbounded, 느린 구독자 2명
+==================================================================
+  === unbounded-s2-r1 (110s, 정상 5 + 느린 2, 3000 ticks/s, -Xmx128m) ===
+  SUMMARY mode=unbounded run=1 recv_total=1031730 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=2 lat_max_ms=10490 last_seq_min=206346 last_seq_max=206346 worst_client_p95_ms=1 worst_client_max_ms=10490 slow_count=2 slow_read_bytes=6572727 slow_closed_at_s=none slow_closed_n=2 slow_reconnects=0
+  === 정리 ===
+
+==================================================================
+## terminate, 느린 구독자 2명
+==================================================================
+  === terminate-s2-r1 (45s, 정상 5 + 느린 2, 3000 ticks/s, -Xmx128m) ===
+  SUMMARY mode=terminate run=1 recv_total=670284 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=2 lat_max_ms=10 last_seq_min=134052 last_seq_max=134058 worst_client_p95_ms=1 worst_client_max_ms=10 slow_count=2 slow_read_bytes=350426 slow_closed_at_s=5.5 slow_closed_n=2 slow_reconnects=0
+  === 정리 ===
+
+==================================================================
+## direct, 느린 구독자 4명
+==================================================================
+  === direct-s4-r1 (45s, 정상 5 + 느린 4, 3000 ticks/s, -Xmx128m) ===
+  SUMMARY mode=direct run=1 recv_total=15422 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=2 lat_max_ms=899 last_seq_min=3084 last_seq_max=3085 worst_client_p95_ms=1 worst_client_max_ms=899 slow_count=4 slow_read_bytes=5660928 slow_closed_at_s=none slow_closed_n=4 slow_reconnects=0
+  === 정리 ===
+
+==================================================================
+## unbounded, 느린 구독자 4명
+==================================================================
+  === unbounded-s4-r1 (110s, 정상 5 + 느린 4, 3000 ticks/s, -Xmx128m) ===
+  SUMMARY mode=unbounded run=1 recv_total=962760 lat_p50_ms=1 lat_p95_ms=1 lat_p99_ms=3 lat_max_ms=755 last_seq_min=192552 last_seq_max=192552 worst_client_p95_ms=1 worst_client_max_ms=755 slow_count=4 slow_read_bytes=14103180 slow_closed_at_s=none slow_closed_n=4 slow_reconnects=0
+  === 정리 ===
+
+==================================================================
+## terminate, 느린 구독자 4명
+==================================================================
+  === terminate-s4-r1 (45s, 정상 5 + 느린 4, 3000 ticks/s, -Xmx128m) ===
+  SUMMARY mode=terminate run=1 recv_total=667666 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=2 lat_max_ms=27 last_seq_min=133530 last_seq_max=133536 worst_client_p95_ms=1 worst_client_max_ms=27 slow_count=4 slow_read_bytes=1074921 slow_closed_at_s=17.3 slow_closed_n=4 slow_reconnects=0
+  === 정리 ===
+
+==================================================================
+## 정리
+==================================================================
+  모드             느린     정상 p95     정상 max       수신 합     절단        느린 읽기
+  direct          1         1ms      1070ms     15,338      1       1363KB
+  direct          2         1ms       939ms     15,152      2       2723KB
+  direct          4         1ms       899ms     15,422      4       5528KB
+  terminate       1         1ms        10ms    670,224      1        171KB
+  terminate       2         1ms        10ms    670,284      2        342KB
+  terminate       4         1ms        27ms    667,666      4       1050KB
+  unbounded       1         1ms     11071ms  1,075,480      1       3202KB
+  unbounded       2         1ms     10490ms  1,031,730      2       6419KB
+  unbounded       4         1ms       755ms    962,760      4      13773KB
+
+  정상 구독자의 지연이 느린 구독자 수에 따라 어떻게 가는지가 이 표의 요지입니다.
+  direct 는 한 스레드가 순서대로 쓰므로 느린 쪽이 늘수록 나빠져야 하고,
+  terminate 는 넘친 구독자만 끊으므로 정상 쪽이 거의 그대로여야 합니다.
+
+  각 조건 1회 실행입니다.

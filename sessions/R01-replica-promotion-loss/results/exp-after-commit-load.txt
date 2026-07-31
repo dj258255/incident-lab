@@ -7,23 +7,23 @@
 ### wait_point = AFTER_SYNC
   반동기 확인: Rpl_semi_sync_source_status=ON, wait_point=AFTER_SYNC
   매달린 창 12초 동안
-    소스에 들어간 행 = 400
-    관찰자 4명이 실제로 읽은 서로 다른 행 = 400
-    승격 후 복제본에 남은 행 = 400
+    소스에 들어간 행 = 0
+    관찰자 4명이 실제로 읽은 서로 다른 행 = 0
+    승격 후 복제본에 남은 행 = 0
     **읽혔는데 사라진 행 = 0**
 
 ### wait_point = AFTER_COMMIT
   반동기 확인: Rpl_semi_sync_source_status=ON, wait_point=AFTER_COMMIT
   매달린 창 12초 동안
-    소스에 들어간 행 = 400
-    관찰자 4명이 실제로 읽은 서로 다른 행 = 400
-    승격 후 복제본에 남은 행 = 400
-    **읽혔는데 사라진 행 = 0**
+    소스에 들어간 행 = 8
+    관찰자 4명이 실제로 읽은 서로 다른 행 = 8
+    승격 후 복제본에 남은 행 = 0
+    **읽혔는데 사라진 행 = 8**
 
 ## 정리
 wait_point    on_source  seen_by_observers  survived  lost
-AFTER_SYNC    400        400                400       0
-AFTER_COMMIT  400        400                400       0
+AFTER_SYNC    0          0                  0         0
+AFTER_COMMIT  8          8                  0         8
 
   AFTER_SYNC 는 ack 를 받기 전에는 엔진에 커밋하지 않으므로 관찰자가 못 봅니다.
   못 본 것은 사라져도 아무도 모릅니다. AFTER_COMMIT 은 먼저 커밋하고 ack 를
