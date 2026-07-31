@@ -4,3 +4,10 @@
 ==================================================================
 ## direct, 느린 구독자 1명
 ==================================================================
+  === direct-s1-r1 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+  SUMMARY mode=direct run=1 recv_total=15338 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=5 lat_max_ms=1070 last_seq_min=3067 last_seq_max=3068 worst_client_p95_ms=1 worst_client_max_ms=1070 slow_count=1 slow_read_bytes=1395576 slow_closed_at_s=none slow_closed_n=1 slow_reconnects=0
+  === 정리 ===
+
+==================================================================
+## unbounded, 느린 구독자 1명
+==================================================================

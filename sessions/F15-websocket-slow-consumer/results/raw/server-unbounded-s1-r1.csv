@@ -1,0 +1,5 @@
+# mode=unbounded label=unbounded-s1-r1 tickRate=3000 symbols=20 payloadBytes=480 queueCapacity=1000 bufferLimitBytes=1048576 sendTimeLimitMs=5000 blockingSendTimeoutMs=0 heapMaxMB=123
+t_s,heap_used_mb,heap_max_mb,published,published_per_s,delivered_per_s,slow_queue_msgs,slow_queue_mb,normal_queue_msgs_max,normal_queue_mb_max,dropped_total,closed_sessions,gc_count,gc_ms,broadcast_blocked_ms,oom
+0,19.1,123.8,2586,2586,13109,2406,1.10,0,0.00,0,0,6,54,10,0
+1,36.3,123.8,5592,3006,15150,5292,2.42,0,0.00,0,0,6,54,10,0
+2,22.2,123.8,8562,2970,14880,8202,3.75,6,0.00,0,0,7,64,10,0
