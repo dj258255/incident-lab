@@ -56,6 +56,7 @@ steps=(
   "A23rto|A23-backup-pitr|compose-a23|bash scripts/exp8-mysql-repeat.sh"
   "A02ddl|A02-mdl-storm|compose|bash scripts/exp-ddl-kinds.sh"
   "A08extra|A08-buffer-pool-sizing|none|bash scripts/run-extra.sh"
+  "A14subtx|A14-xid-wraparound|compose|bash scripts/exp-subtx-burn.sh"
 )
 
 if [ "${1:-}" = "--list" ]; then
