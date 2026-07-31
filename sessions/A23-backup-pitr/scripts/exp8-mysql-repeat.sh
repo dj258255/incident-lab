@@ -19,9 +19,19 @@ BINLOG_ROWS=${BINLOG_ROWS:-20000}
 M(){ docker exec a23-mysql mysql -uroot -plab -N -B -e "$1" 2>&1 | grep -v "^mysql: \[Warning\]"; }
 R(){ docker exec a23-restore mysql -uroot -plab -N -B -e "$1" 2>&1 | grep -v "^mysql: \[Warning\]"; }
 
+# ping 만 보면 부족하다. initdb 가 도는 동안 임시 서버가 떠 있어 ping 은 통하는데
+# 곧 재기동되면서 그 사이 질의가 Access denied 로 떨어진다. 실제로 그렇게 나서
+# 헤더의 SELECT VERSION() 이 에러 문자열이 되고, 그 뒤 적재가 통째로 0행이 됐다.
+# 실제 질의가 두 번 연속 통해야 준비된 것으로 본다.
 wait_up(){
-  for _ in $(seq 1 90); do
-    docker exec "$1" mysqladmin ping -uroot -plab >/dev/null 2>&1 && return 0
+  local ok=0
+  for _ in $(seq 1 120); do
+    if [ "$(docker exec "$1" mysql -uroot -plab -N -B -e 'SELECT 1' 2>/dev/null | tr -d ' ')" = "1" ]; then
+      ok=$((ok + 1))
+      [ "$ok" -ge 2 ] && return 0
+    else
+      ok=0
+    fi
     sleep 2
   done
   return 1

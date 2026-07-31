@@ -1,0 +1,38 @@
+{
+ "total_rows": 3000000,
+ "created_at 만": {
+  "ms": 5.75,
+  "plan": "range / idx_created",
+  "rows": 72854,
+  "count": 36000
+ },
+ "buyer_name 만": {
+  "ms": 7.28,
+  "plan": "ref / idx_buyer",
+  "rows": 60236,
+  "count": 29942
+ },
+ "or_cases": [
+  {
+   "label": "OR (index_merge 켬)",
+   "ms": 95.4,
+   "plan": "index_merge/idx_created,idx_buyer",
+   "rows": 133090,
+   "count": 65577
+  },
+  {
+   "label": "OR (index_merge 끔)",
+   "ms": 602.42,
+   "plan": "ALL/없음",
+   "rows": 2985200,
+   "count": 65577
+  },
+  {
+   "label": "UNION 으로 손으로 가름",
+   "ms": 24.9,
+   "plan": "ALL/없음 + range/idx_created + ref/idx_buyer + ALL/없음",
+   "rows": 584056620370960,
+   "count": 65577
+  }
+ ]
+}
