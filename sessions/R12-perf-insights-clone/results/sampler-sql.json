@@ -1,0 +1,39 @@
+{
+ "samples": 190,
+ "duration_s": 190,
+ "top_sql": [
+  {
+   "digest_text": "UPDATE `hotrow` SET `val` = `val` + ? WHERE `id` = ?",
+   "samples": 458,
+   "aas": 2.41,
+   "by_wait": {
+    "cpu": 458
+   }
+  },
+  {
+   "digest_text": "SELECT `pad` FROM `big` WHERE `id` = ?",
+   "samples": 87,
+   "aas": 0.46,
+   "by_wait": {
+    "cpu": 87
+   }
+  },
+  {
+   "digest_text": "SELECT `val` FROM `small` WHERE `id` = ?",
+   "samples": 13,
+   "aas": 0.07,
+   "by_wait": {
+    "cpu": 13
+   }
+  },
+  {
+   "digest_text": "(질의 없음)",
+   "samples": 9,
+   "aas": 0.05,
+   "by_wait": {
+    "cpu": 9
+   }
+  }
+ ],
+ "other_events": []
+}
