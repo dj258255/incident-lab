@@ -18,6 +18,7 @@ set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$ROOT/results"; mkdir -p "$OUT"
 DUR=${DUR:-20}
+REPEAT=${REPEAT:-3}
 CLIENTS=${CLIENTS:-64}
 
 P(){ docker exec a19-primary psql -U postgres -d spoon -qAt -c "$1" 2>&1; }
@@ -58,14 +59,24 @@ for spec in "16:" "17.5:32"; do
   echo "  서버 = $(P 'SHOW server_version')"
   echo "  SLRU 설정 = $(P "SELECT COALESCE((SELECT setting FROM pg_settings WHERE name='subtransaction_buffers'),'GUC 없음')")"
   # 64 미만 조건을 새로 넣는다. 63 은 PGPROC 캐시 안에 들어간다.
+  # 조건마다 REPEAT 회 돌린다. 1회 실행으로는 두 버전의 1.00배가 "같다" 인지
+  # "차이가 회차 폭에 묻혔다" 인지 갈리지 않는다.
   for c in "none:0" "sub63:63" "sub64:64" "sub10k:10000" "sub500k:500000"; do
-    label="v${tag%%.*}-${c%%:*}"
-    bash "$ROOT/scripts/run-primary.sh" "$label" "${c##*:}" "$CLIENTS" "$DUR" >/dev/null 2>&1
-    tps=$(tps_of "$label")
-    slru=$(P "SELECT blks_hit||' / '||blks_read FROM pg_stat_slru WHERE lower(name) IN ('subtransaction','subtrans')")
-    printf "  %-12s 서브트랜잭션 %7s  tps %10s  SLRU hit/read %s\n" \
-      "${c%%:*}" "${c##*:}" "${tps:-읽기실패}" "$slru"
-    echo "$tag,${c%%:*},${c##*:},${tps:-},$slru" >> "$OUT/version-compare.csv"
+    VALS=""
+    for run in $(seq 1 "$REPEAT"); do
+      label="v${tag%%.*}-${c%%:*}-r${run}"
+      bash "$ROOT/scripts/run-primary.sh" "$label" "${c##*:}" "$CLIENTS" "$DUR" >/dev/null 2>&1
+      tps=$(tps_of "$label")
+      case "${tps:-}" in ''|*[!0-9.]*) tps=0 ;; esac
+      slru=$(P "SELECT blks_hit||' / '||blks_read FROM pg_stat_slru WHERE lower(name) IN ('subtransaction','subtrans')")
+      echo "$tag,${c%%:*},${c##*:},${tps},$slru,$run" >> "$OUT/version-compare.csv"
+      VALS="$VALS $tps"
+    done
+    MED=$(echo $VALS | tr ' ' '\n' | grep -v '^$' | sort -g | awk '{a[NR]=$1} END{print a[int((NR+1)/2)]}')
+    LO=$(echo $VALS | tr ' ' '\n' | grep -v '^$' | sort -g | head -1)
+    HI=$(echo $VALS | tr ' ' '\n' | grep -v '^$' | sort -g | tail -1)
+    printf "  %-12s 서브트랜잭션 %7s  tps 중앙 %10s  폭 %s~%s  SLRU hit/read %s\n" \
+      "${c%%:*}" "${c##*:}" "${MED:-읽기실패}" "${LO:-?}" "${HI:-?}" "$slru"
   done
   echo
 done
@@ -74,34 +85,39 @@ echo "=================================================================="
 echo "## 정리"
 echo "=================================================================="
 python3 - "$OUT/version-compare.csv" <<'PY'
-import csv, sys, collections
-rows = collections.defaultdict(dict)
+import statistics, sys, collections
+raw = collections.defaultdict(list)
 try:
     for line in open(sys.argv[1], encoding='utf-8'):
         parts = line.rstrip("\n").split(",")
         if len(parts) < 4: continue
-        ver, cond, nsub, tps = parts[0], parts[1], parts[2], parts[3]
-        try: rows[cond][ver] = float(tps)
-        except ValueError: pass
+        ver, cond, tps = parts[0], parts[1], parts[3]
+        try:
+            v = float(tps)
+        except ValueError:
+            continue
+        if v > 0:
+            raw[(cond, ver)].append(v)
 except FileNotFoundError:
     print("  결과 파일이 없습니다"); raise SystemExit
+rows = {k: statistics.median(v) for k, v in raw.items()}
 order = ["none", "sub63", "sub64", "sub10k", "sub500k"]
-print(f"  {'조건':<10} {'16 tps':>12} {'17.5 tps':>12} {'17.5/16':>10}")
+print(f"  {'조건':<10} {'16 중앙':>11} {'16 폭':>16} {'17.5 중앙':>11} {'17.5 폭':>16} {'17.5/16':>9}")
 for c in order:
-    v = rows.get(c, {})
-    a, b = v.get("16"), v.get("17.5")
-    if a and b:
-        print(f"  {c:<10} {a:>12,.0f} {b:>12,.0f} {b/a:>9.2f}배")
-    elif a or b:
-        print(f"  {c:<10} {a or 0:>12,.0f} {b or 0:>12,.0f} {'한쪽만':>10}")
+    a, b = rows.get((c, "16")), rows.get((c, "17.5"))
+    if not (a and b):
+        continue
+    ra, rb = raw[(c, "16")], raw[(c, "17.5")]
+    print(f"  {c:<10} {a:>11,.0f} {min(ra):>7,.0f}~{max(ra):<8,.0f} "
+          f"{b:>11,.0f} {min(rb):>7,.0f}~{max(rb):<8,.0f} {b/a:>8.2f}배")
 print()
-base = rows.get("none", {})
+print("  회차 폭이 겹치면 그 조건의 배수는 인용하면 안 됩니다.")
+print()
 print("  같은 버전 안에서 none 대비 배수")
 print(f"  {'조건':<10} {'16':>10} {'17.5':>10}")
 for c in order[1:]:
-    v = rows.get(c, {})
     def r(ver):
-        b0, b1 = base.get(ver), v.get(ver)
+        b0, b1 = rows.get(("none", ver)), rows.get((c, ver))
         return f"{b1/b0:.2f}배" if b0 and b1 else "-"
     print(f"  {c:<10} {r('16'):>10} {r('17.5'):>10}")
 PY
