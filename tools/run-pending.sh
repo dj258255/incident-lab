@@ -53,6 +53,7 @@ steps=(
   "R14jdbc|R14-charset-timezone|compose|bash scripts/exp-jdbc-roundtrip.sh"
   "F07cap|F07-nasdaq-ipo-livelock|none|bash scripts/run-cap-sweep.sh"
   "R04phys|R04-replication-slot-wal|compose|bash scripts/exp5-physical-slot.sh"
+  "A23rto|A23-backup-pitr|compose-mysql-restore|bash scripts/exp8-mysql-repeat.sh"
 )
 
 if [ "${1:-}" = "--list" ]; then
