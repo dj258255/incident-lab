@@ -5,76 +5,76 @@
   "buffer_pool_mb": 256,
   "rows": 1200000,
   "pad_bytes": 120,
-  "total_s": 20.17,
-  "rows_per_s": 59495.2,
+  "total_s": 18.74,
+  "rows_per_s": 64050.7,
   "data_length_bytes": 201048064,
   "data_length_mb": 191.7,
   "bytes_per_row": 167.5,
   "disk_reads": 6,
-  "read_requests": 4899805,
-  "pages_written": 13451,
-  "data_written_mb": 469.0,
+  "read_requests": 4899795,
+  "pages_written": 13651,
+  "data_written_mb": 472.2,
   "data_read_mb": 0.1,
   "chunks": [
     {
       "rows": 100000,
-      "elapsed_s": 1.78,
-      "rate_per_s": 56109.8
+      "elapsed_s": 1.7,
+      "rate_per_s": 58957.5
     },
     {
       "rows": 200000,
-      "elapsed_s": 3.48,
-      "rate_per_s": 58874.1
+      "elapsed_s": 3.31,
+      "rate_per_s": 62048.0
     },
     {
       "rows": 300000,
-      "elapsed_s": 5.16,
-      "rate_per_s": 59481.2
+      "elapsed_s": 4.9,
+      "rate_per_s": 62912.5
     },
     {
       "rows": 400000,
-      "elapsed_s": 6.94,
-      "rate_per_s": 56087.9
+      "elapsed_s": 6.52,
+      "rate_per_s": 61553.1
     },
     {
       "rows": 500000,
-      "elapsed_s": 8.87,
-      "rate_per_s": 51893.9
+      "elapsed_s": 8.06,
+      "rate_per_s": 64998.8
     },
     {
       "rows": 600000,
-      "elapsed_s": 10.52,
-      "rate_per_s": 60817.5
+      "elapsed_s": 9.76,
+      "rate_per_s": 58833.8
     },
     {
       "rows": 700000,
-      "elapsed_s": 12.16,
-      "rate_per_s": 60796.5
+      "elapsed_s": 11.21,
+      "rate_per_s": 69030.6
     },
     {
       "rows": 800000,
-      "elapsed_s": 13.78,
-      "rate_per_s": 61597.8
+      "elapsed_s": 12.63,
+      "rate_per_s": 70395.3
     },
     {
       "rows": 900000,
-      "elapsed_s": 15.39,
-      "rate_per_s": 62135.9
+      "elapsed_s": 14.1,
+      "rate_per_s": 67955.2
     },
     {
       "rows": 1000000,
-      "elapsed_s": 16.98,
-      "rate_per_s": 62971.5
+      "elapsed_s": 15.68,
+      "rate_per_s": 63161.3
     },
     {
       "rows": 1100000,
-      "elapsed_s": 18.59,
-      "rate_per_s": 62202.4
+      "elapsed_s": 17.14,
+      "rate_per_s": 68739.9
     },
     {
       "rows": 1200000,
-      "elapsed_s": 20.17,
-      "rate_per_s": 63285.0
+      "elapsed_s": 18.74,
+      "rate_per_s": 62646.5
     }
   ]
 }
