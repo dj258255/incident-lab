@@ -17,6 +17,9 @@ NORMAL=${NORMAL:-5}
 TICK_RATE=${TICK_RATE:-3000}
 HEAP=${HEAP:-128}
 SLOW_BPS=${SLOW_BPS:-32768}
+# 재접속 폭풍 조건. 0이면 끄고, 양수면 절단당한 느린 구독자가 그 밀리초 뒤 다시 붙는다.
+# 절단이 해소책이 되려면 재접속까지 견뎌야 한다는 것이 이 조건의 질문이다.
+RECONNECT_MS=${RECONNECT_MS:-0}
 
 export HOST_UID="$(id -u)"
 export HOST_GID="$(id -g)"
@@ -94,7 +97,7 @@ for mode in $MODES; do
       java -Xmx640m \
         -Durl=ws://app:8080/stream \
         -Dnormal="$NORMAL" -Dslow="$slow" -Dseconds="$secs" -DslowBytesPerSec="$bps" \
-        -Dmode="$mode" -Drun="$run" \
+        -Dmode="$mode" -Drun="$run" -DreconnectDelayMs="$RECONNECT_MS" \
         -Dout="/results/client-${label}.txt" \
         /client/Client.java 2>&1 | tail -n 40
 

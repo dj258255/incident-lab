@@ -49,11 +49,20 @@ public class Client {
         int port = uri.getPort() < 0 ? 80 : uri.getPort();
         String path = uri.getPath();
 
+        // 재접속 폭풍 조건. 0이면 끄고, 양수면 절단당한 뒤 그 밀리초만큼 쉬고 다시 붙는다.
+        // 실제 클라이언트는 끊기면 다시 붙는다. 절단이 해소책이 되려면 그 재접속까지
+        // 견뎌야 한다는 것이 이 조건의 질문이다.
+        int reconnectDelayMs = Integer.parseInt(System.getProperty("reconnectDelayMs", "0"));
+
         // 느린 구독자를 먼저 붙인다. 발행은 구독자가 다 붙어야 시작한다.
         SlowReader slow = null;
         if (slowCount > 0) {
             slow = new SlowReader(host, port, path + "?id=slow-1", slowBytesPerSec, slowRcvBuf);
+            slow.reconnectDelayMs = reconnectDelayMs;
             slow.connect();
+            if (reconnectDelayMs > 0) {
+                System.out.println("재접속 폭풍 조건: 절단 후 " + reconnectDelayMs + "ms 뒤 재접속");
+            }
         } else {
             System.out.println("느린 구독자 없음(대조군)");
         }
@@ -142,10 +151,12 @@ public class Client {
         sb.append(String.format(Locale.ROOT,
                 "%nSUMMARY mode=%s run=%s recv_total=%d lat_p50_ms=%.0f lat_p95_ms=%.0f lat_p99_ms=%.0f "
                         + "lat_max_ms=%.0f last_seq_min=%d last_seq_max=%d worst_client_p95_ms=%.0f "
-                        + "worst_client_max_ms=%.0f slow_read_bytes=%d slow_closed_at_s=%s%n",
+                        + "worst_client_max_ms=%.0f slow_read_bytes=%d slow_closed_at_s=%s "
+                        + "slow_reconnects=%d%n",
                 mode, run, totalRecv, pct(agg, 50), pct(agg, 95), pct(agg, 99), pct(agg, 100),
                 minLastSeq == Long.MAX_VALUE ? 0 : minLastSeq, maxLastSeq, worstP95, worstMax,
-                slow == null ? 0 : slow.readBytes, slow == null ? "n/a" : slow.closedAtSeconds()));
+                slow == null ? 0 : slow.readBytes, slow == null ? "n/a" : slow.closedAtSeconds(),
+                slow == null ? 0 : slow.reconnects));
 
         String text = sb.toString();
         System.out.print(text);
@@ -296,6 +307,8 @@ public class Client {
         volatile boolean running = true;
         volatile long closedAtMillis;
         volatile String closeNote = "";
+        volatile int reconnectDelayMs = 0;
+        volatile int reconnects = 0;
         private long t0;
         private Thread thread;
         private final CountDownLatch done = new CountDownLatch(1);
@@ -362,8 +375,25 @@ public class Client {
                             break; // 보낼 게 없다. 다음 주기에 다시 본다.
                         }
                         if (r < 0) {
-                            closedAtMillis = System.currentTimeMillis();
+                            if (closedAtMillis == 0) {
+                                closedAtMillis = System.currentTimeMillis();
+                            }
                             closeNote = "서버가 스트림을 닫음(EOF)";
+                            // 재접속 폭풍 조건이면 다시 붙는다. 실제 클라이언트가 하는 일이다.
+                            if (reconnectDelayMs > 0 && running) {
+                                try {
+                                    closeQuietly();
+                                    Thread.sleep(reconnectDelayMs);
+                                    connect();
+                                    reconnects++;
+                                    budget = 0;   // 새 소켓이므로 이번 주기는 여기서 끝낸다
+                                    break;
+                                } catch (IOException re) {
+                                    closeNote = "재접속 실패: " + re.getClass().getSimpleName();
+                                    done.countDown();
+                                    return;
+                                }
+                            }
                             done.countDown();
                             return;
                         }
@@ -379,6 +409,11 @@ public class Client {
             } finally {
                 done.countDown();
             }
+        }
+
+        void closeQuietly() {
+            try { if (in != null) in.close(); } catch (IOException ignored) {}
+            try { if (sock != null) sock.close(); } catch (IOException ignored) {}
         }
 
         void stop() {
