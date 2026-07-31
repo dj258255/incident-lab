@@ -45,9 +45,14 @@ xid_now(){ Q "SELECT pg_snapshot_xmax(pg_current_snapshot())::text::bigint"; }
 # 업무량(넣는 행 수)은 조건마다 다르므로, 아래에서 행당 XID 로 정규화한다.
 run_case(){ # $1=세이브포인트 수
   local sp="$1" body="" i
-  for i in $(seq 1 "$sp"); do
-    body="${body} SAVEPOINT s${i}; INSERT INTO subtx_burn (n) VALUES (${i});"
-  done
+  # macOS 의 BSD seq 는 `seq 1 0` 에 빈 출력이 아니라 "1" 과 "0" 두 줄을 낸다.
+  # 그래서 세이브포인트 0개 조건에 세이브포인트가 두 개 붙어 트랜잭션당 3 XID 가
+  # 나왔다. GNU seq 는 빈 출력이라 리눅스에서는 안 났을 버그다. 0 이면 아예 안 돈다.
+  if [ "$sp" -gt 0 ]; then
+    for i in $(seq 1 "$sp"); do
+      body="${body} SAVEPOINT s${i}; INSERT INTO subtx_burn (n) VALUES (${i});"
+    done
+  fi
   Q "TRUNCATE subtx_burn" >/dev/null
   local x0 x1 r1 t0 t1
   x0=$(xid_now)
@@ -63,7 +68,8 @@ run_case(){ # $1=세이브포인트 수
   r1=$(Q "SELECT count(*) FROM subtx_burn")
   case "${r1:-}" in ''|*[!0-9]*) r1=0 ;; esac
   local expect=$(( TXNS * (sp + 1) ))
-  if [ "$r1" -lt "$expect" ]; then
+  # 정확히 같아야 한다. -lt 로만 보면 3배가 나와도 통과한다. 실제로 그렇게 지나갔다.
+  if [ "$r1" -ne "$expect" ]; then
     echo "  세이브포인트 ${sp}개: 넣은 행이 ${r1}건입니다(기대 ${expect}). 이 조건은 버립니다"
     return 1
   fi

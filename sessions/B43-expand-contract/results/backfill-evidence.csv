@@ -4,3 +4,4 @@ run,phase,ms,hit_blocks,read_blocks,dirtied,written
 2,baseline,104.7,55872,114668,0,260
 2,during,127.1,58476,194424,0,400
 3,baseline,107.0,55872,114664,0,0
+3,during,128.0,60612,193796,0,384
