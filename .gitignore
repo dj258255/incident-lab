@@ -18,3 +18,9 @@ results/dump/
 results/*.binlog
 
 results/*-app.log
+
+# pgbench 의 -d 는 16 에서 --debug 다(17 에서는 --dbname). 잘못 주면 문장마다 로그가
+# 찍혀 결과 파일이 100MB 를 넘고 GitHub 이 푸시를 거부한다. 실제로 A19 에서 그렇게 됐다.
+sessions/*/results/*-reader.txt
+!sessions/*/results/v17-*-reader.txt
+.run-state/
