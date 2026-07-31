@@ -1,2 +1,6 @@
 arm,pk_type,secondary,data_bytes,index_bytes,ibd_bytes
 t_int,INT,없음,127533056,0,138412032
+t_bigint,BIGINT,없음,140165120,0,150994944
+t_int_unsigned,INT UNSIGNED,없음,127533056,0,138412032
+t_bigint_idx,BIGINT,KEY idx_user (user_id),140165120,70926336,222298112
+t_int_idx,INT,KEY idx_user (user_id),127533056,56197120,192937984

@@ -1,0 +1,2 @@
+# mode=direct label=direct-s1-r1 tickRate=3000 symbols=20 payloadBytes=480 queueCapacity=1000 bufferLimitBytes=1048576 sendTimeLimitMs=5000 blockingSendTimeoutMs=0 heapMaxMB=123
+t_s,heap_used_mb,heap_max_mb,published,published_per_s,delivered_per_s,slow_queue_msgs,slow_queue_mb,normal_queue_msgs_max,normal_queue_mb_max,dropped_total,closed_sessions,gc_count,gc_ms,broadcast_blocked_ms,oom
