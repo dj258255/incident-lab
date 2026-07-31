@@ -19,11 +19,12 @@ CN=a14-pg
 TXNS=${TXNS:-2000}
 SP_LIST=${SP_LIST:-"0 1 4 16"}
 
-# 서버가 뜰 때까지 기다리고 데이터베이스 이름을 정한다. 이 세션은 lab 을 쓰는데
-# 컨테이너를 새로 띄우면 postgres 만 있을 수 있다.
+# 서버가 뜰 때까지 기다리고 데이터베이스 이름을 정한다.
+# 이 세션의 compose 는 POSTGRES_DB=spoon 이다. 처음에 lab 과 postgres 만 후보로 두어
+# 180초를 헛돌고 "쿼리를 받지 못합니다" 로 끝났다. 실제 이름을 먼저 본다.
 DBNAME=""
 for _ in $(seq 1 90); do
-  for d in lab postgres; do
+  for d in spoon lab postgres; do
     if [ "$(docker exec "$CN" psql -U postgres -d "$d" -X -qAt -c 'SELECT 1' 2>/dev/null)" = "1" ]; then
       DBNAME="$d"; break 2
     fi

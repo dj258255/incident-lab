@@ -92,6 +92,11 @@ teardown(){
   # 열아홉 단계를 돌리는 동안 볼륨이 계속 쌓인다. 실제로 258GB 가 쌓여 디스크가 99% 로
   # 차고 git 인덱스 쓰기가 타임아웃됐다. 붙어 있지 않은 볼륨도 함께 정리한다.
   docker volume prune -f >/dev/null 2>&1 || true
+  # 네트워크도 지운다. compose 스택마다 네트워크가 하나씩 생기는데 teardown 이
+  # 컨테이너만 지우면 네트워크가 남는다. 서른 개쯤 쌓이면 Docker 의 주소 풀이 고갈되어
+  # "all predefined address pools have been fully subnetted" 로 다음 스택이 아예 안 뜬다.
+  # 실제로 B43 이 그 상태에서 "준비되지 않았습니다" 로 죽었다.
+  docker network prune -f >/dev/null 2>&1 || true
 }
 
 bring_up(){ # $1=세션경로 $2=방식
