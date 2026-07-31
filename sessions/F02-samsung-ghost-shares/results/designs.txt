@@ -1,0 +1,187 @@
+# 설계 넷의 비용과 동시 매도의 직렬화
+# PostgreSQL 16.14
+# 조건마다 1회 실행입니다.
+
+NOTICE:  table "share_credits" does not exist, skipping
+NOTICE:  table "holdings" does not exist, skipping
+NOTICE:  table "company" does not exist, skipping
+00-seed-holdings.sql: No such file or directory
+Timing is off.
+
+==================================================================
+설계 넷을 나란히: 매도 비용, 매수 비용, 직렬화
+==================================================================
+CREATE TABLE
+TRUNCATE TABLE
+CREATE FUNCTION
+CREATE FUNCTION
+
+--- A. 현재 설계: 문장 단위 트리거 + advisory lock ---
+NOTICE:  trigger "trg_total_cap" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_row" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_trans" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_sync_total" for relation "holdings" does not exist, skipping
+NOTICE:  constraint "chk_total_within_issued" of relation "company" does not exist, skipping
+NOTICE:  column "total_shares" of relation "company" does not exist, skipping
+ reset_ledger 
+--------------
+ 
+(1 row)
+
+CREATE FUNCTION
+CREATE TRIGGER
+ bench_run 
+-----------
+ 
+(1 row)
+
+ bench_run 
+-----------
+ 
+(1 row)
+
+
+--- B. 행 단위 트리거: 늘어나는 경우에만 검증 ---
+NOTICE:  trigger "trg_total_cap_row" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_trans" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_sync_total" for relation "holdings" does not exist, skipping
+NOTICE:  constraint "chk_total_within_issued" of relation "company" does not exist, skipping
+NOTICE:  column "total_shares" of relation "company" does not exist, skipping
+ reset_ledger 
+--------------
+ 
+(1 row)
+
+CREATE FUNCTION
+CREATE TRIGGER
+CREATE TRIGGER
+ bench_run 
+-----------
+ 
+(1 row)
+
+ bench_run 
+-----------
+ 
+(1 row)
+
+
+--- C. 전이 테이블: 문장 단위이면서 증감을 구분 ---
+NOTICE:  trigger "trg_total_cap" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_trans" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_sync_total" for relation "holdings" does not exist, skipping
+NOTICE:  constraint "chk_total_within_issued" of relation "company" does not exist, skipping
+NOTICE:  column "total_shares" of relation "company" does not exist, skipping
+ reset_ledger 
+--------------
+ 
+(1 row)
+
+CREATE FUNCTION
+CREATE TRIGGER
+ bench_run 
+-----------
+ 
+(1 row)
+
+ bench_run 
+-----------
+ 
+(1 row)
+
+
+--- D. 물질화 합계 컬럼 + CHECK ---
+NOTICE:  trigger "trg_total_cap" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_row" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_sync_total" for relation "holdings" does not exist, skipping
+NOTICE:  constraint "chk_total_within_issued" of relation "company" does not exist, skipping
+NOTICE:  column "total_shares" of relation "company" does not exist, skipping
+ reset_ledger 
+--------------
+ 
+(1 row)
+
+ALTER TABLE
+UPDATE 1
+ALTER TABLE
+CREATE FUNCTION
+CREATE TRIGGER
+ bench_run 
+-----------
+ 
+(1 row)
+
+ bench_run 
+-----------
+ 
+(1 row)
+
+
+D 설계가 착오 배치를 막는지 확인:
+NOTICE:  거부됨(CHECK 위반): new row for relation "company" violates check constraint "chk_total_within_issue
+DO
+
+==================================================================
+설계별 비용 (200회씩, 1회 실행)
+==================================================================
+             설계             |      연산       | 횟수 | 총 소요(ms) | 건당(ms) 
+------------------------------+-----------------+------+-------------+----------
+ A. 문장 단위 + advisory lock | 매도(합계 감소) |  200 |        34.2 |    0.171
+ A. 문장 단위 + advisory lock | 매수(합계 증가) |  200 |        30.2 |    0.151
+ B. 행 단위 + WHEN            | 매도(합계 감소) |  200 |        20.8 |    0.104
+ B. 행 단위 + WHEN            | 매수(합계 증가) |  200 |        30.9 |    0.155
+ C. 전이 테이블               | 매도(합계 감소) |  200 |        22.1 |    0.111
+ C. 전이 테이블               | 매수(합계 증가) |  200 |        26.2 |    0.131
+ D. 물질화 합계 + CHECK       | 매도(합계 감소) |  200 |        24.9 |    0.125
+ D. 물질화 합계 + CHECK       | 매수(합계 증가) |  200 |        20.1 |    0.101
+(8 rows)
+
+
+매도 한 건의 비용을 A 대비 배수로:
+             설계             | 총 소요(ms) | A 대비 
+------------------------------+-------------+--------
+ B. 행 단위 + WHEN            |        20.8 |   0.61
+ C. 전이 테이블               |        22.1 |   0.65
+ D. 물질화 합계 + CHECK       |        24.9 |   0.73
+ A. 문장 단위 + advisory lock |        34.2 |   1.00
+(4 rows)
+
+
+==================================================================
+동시 매도 넷이 붙었을 때의 직렬화
+==================================================================
+  네 세션이 각각 매도 50회를 던집니다. 총 200회로 위 표와 같은 양입니다.
+  한 세션이 걸리는 시간이 위의 총 소요와 비슷하면 직렬화가 없는 것이고,
+  네 배 가까이 늘어나면 넷이 줄을 선 것입니다.
+
+  설계                       가장 빠른 세션 가장 느린 세션     실패
+NOTICE:  trigger "trg_total_cap" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_row" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_trans" for relation "holdings" does not exist, skipping
+  A. 문장 단위 + advisory lock         76ms        103ms        0
+0건
+NOTICE:  trigger "trg_total_cap_row" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_trans" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_sync_total" for relation "holdings" does not exist, skipping
+NOTICE:  constraint "chk_total_within_issued" of relation "company" does not exist, skipping
+NOTICE:  column "total_shares" of relation "company" does not exist, skipping
+  B. 행 단위 + WHEN               3102ms       6131ms        0
+0건
+NOTICE:  trigger "trg_total_cap" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_trans" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_sync_total" for relation "holdings" does not exist, skipping
+NOTICE:  constraint "chk_total_within_issued" of relation "company" does not exist, skipping
+NOTICE:  column "total_shares" of relation "company" does not exist, skipping
+  C. 전이 테이블                1095ms       2113ms        0
+0건
+NOTICE:  trigger "trg_total_cap" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_row" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_sync_total" for relation "holdings" does not exist, skipping
+NOTICE:  constraint "chk_total_within_issued" of relation "company" does not exist, skipping
+NOTICE:  column "total_shares" of relation "company" does not exist, skipping
+  D. 물질화 합계 + CHECK          76ms         96ms        0
+0건
+
+  네 세션이 같은 양(각 50회, 합 200회)을 던졌습니다. 위 표의 시간과 앞 표의
+  총 소요를 견주면 직렬화 정도가 보입니다. 한 세션의 시간이 앞 표의 200회 총
+  소요와 비슷하면 넷이 줄을 선 것이고, 4분의 1에 가까우면 나란히 돈 것입니다.

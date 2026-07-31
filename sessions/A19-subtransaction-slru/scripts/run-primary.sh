@@ -31,7 +31,7 @@ if [ "$NSUB" -gt 0 ]; then
   TARGET=$((TOP + NSUB + 2000))
   for _ in $(seq 1 60); do
     [ "$(P "SELECT txid_current()")" -ge "$TARGET" ] && break
-    docker exec a19-primary pgbench -U postgres -d spoon -n -f /scripts/burn.sql -c 8 -j 4 -T 2 >/dev/null 2>&1
+    docker exec a19-primary pgbench -U postgres -n -f /scripts/burn.sql -c 8 -j 4 -T 2 spoon >/dev/null 2>&1
   done
 else
   LTX=""
@@ -46,8 +46,9 @@ fi
     sleep 0.2
   done ) &
 SAMP=$!
-docker exec a19-primary pgbench -U postgres -d spoon -n -M prepared \
-  -f /scripts/p-reader.sql -c "$CLIENTS" -j 4 -T "$DUR" -P 5 > "$OUT/$LABEL-reader.txt" 2>&1
+# -d 는 16 에서 --debug 다. 데이터베이스는 마지막 위치 인자로 준다.
+docker exec a19-primary pgbench -U postgres -n -M prepared \
+  -f /scripts/p-reader.sql -c "$CLIENTS" -j 4 -T "$DUR" -P 5 spoon > "$OUT/$LABEL-reader.txt" 2>&1
 wait $SAMP 2>/dev/null || true
 SL=$(P "SELECT blks_hit||' '||blks_read FROM pg_stat_slru WHERE lower(name) IN ('subtransaction','subtrans')")
 echo "$SL" > "$OUT/$LABEL-slru.txt"

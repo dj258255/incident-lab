@@ -1,0 +1,4 @@
+scans=25
+table_pages=129216
+read_io_estimate=3230400
+window_s=60

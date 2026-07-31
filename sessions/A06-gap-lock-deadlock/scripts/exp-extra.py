@@ -125,7 +125,7 @@ print("## 2) 인덱스 없는 UPDATE 가 잡는 락 수")
 run_sql("DROP TABLE IF EXISTS wide")
 run_sql("CREATE TABLE wide (id INT PRIMARY KEY, grp INT, val INT)")
 run_sql("INSERT INTO wide (id, grp, val) "
-        "SELECT n, n %% 100, 0 FROM ("
+        "SELECT n, n % 100, 0 FROM ("
         "  SELECT a.i + b.i*10 + c.i*100 + 1 AS n FROM "
         "  (SELECT 0 i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION "
         "   SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) a,"

@@ -146,11 +146,13 @@ print(f"  원 컬럼 buyer_name: 서로 다른 값 {distinct_old}개 / {total:,}
 cur.execute("SHOW COLUMNS FROM orders LIKE 'buyer_email'")
 if not cur.fetchall():
     print("  선택도 높은 컬럼 buyer_email 을 만듭니다(주문번호를 섞어 값마다 다르게).")
+    # 생성 컬럼은 AUTO_INCREMENT 컬럼을 참조할 수 없다(에러 3109).
+    # id 대신 order_no 를 쓴다. 값마다 다르므로 선택도는 그대로 높다.
     cur.execute("ALTER TABLE orders ADD COLUMN buyer_email VARCHAR(64) "
-                "GENERATED ALWAYS AS (CONCAT(MD5(id), '@example.com')) STORED")
+                "GENERATED ALWAYS AS (CONCAT(MD5(order_no), '@example.com')) STORED")
     cur.execute("ALTER TABLE orders ADD KEY idx_email (buyer_email)")
     cur.execute("ALTER TABLE orders ADD COLUMN buyer_email_rev VARCHAR(64) "
-                "GENERATED ALWAYS AS (REVERSE(CONCAT(MD5(id), '@example.com'))) STORED")
+                "GENERATED ALWAYS AS (REVERSE(CONCAT(MD5(order_no), '@example.com'))) STORED")
     cur.execute("ALTER TABLE orders ADD KEY idx_email_rev (buyer_email_rev)")
 cur.execute("SELECT COUNT(DISTINCT buyer_email) FROM orders")
 distinct_new = cur.fetchone()[0]

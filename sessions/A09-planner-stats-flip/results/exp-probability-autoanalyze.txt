@@ -1,0 +1,54 @@
+# null_frac=1 의 확률, 컬럼 하나만 올리는 비용, 자동 analyze
+# PostgreSQL 16.14
+
+## 데이터
+  전체 12000000행, non-null 2400행, 힙 64868블록
+  non-null 이 들어 있는 블록 = 17개
+
+## 1) target=1 에서 null_frac=1 이 나오는 빈도
+  ANALYZE 를 200회 돌립니다.
+  실측: 200회 중 195회
+  단순 무작위 표본이라면 = 9.418e-01  (188.3518회 기대)
+  블록을 300개 고른다고 보면 = 9.244e-01  (184.8761회 기대)
+  실측 비율 = 0.9750
+
+  읽는 법. PostgreSQL 의 ANALYZE 는 단순 무작위 표본이 아닙니다.
+  acquire_sample_rows 가 블록을 먼저 뽑고 그 블록들 안에서만 행을 고릅니다.
+  그래서 값이 소수의 블록에 몰려 있으면 '한 건도 못 잡을' 확률이 단순 무작위보다
+  크게 올라갑니다. 위 두 이론값의 자릿수 차이가 그 몫입니다.
+
+## 2) 네 컬럼을 함께 올릴 때와 한 컬럼만 올릴 때
+  ANALYZE 의 표본 크기는 테이블 단위로 300 x (대상 컬럼 target 의 최댓값)입니다.
+  그러면 한 컬럼만 올려도 표본은 같아집니다. 줄어드는 것이 있는지 봅니다.
+
+  조건                    ANALYZE   pg_statistic 저장된 값  null_frac
+  네 컬럼 모두 target=100      0.23s        303104B          205 0.99993336
+  네 컬럼 모두 target=1000      0.74s        311296B         1152  0.9998367
+  blocked_until 만 target=100      0.21s        311296B          209     0.9998
+  blocked_until 만 target=1000      0.71s        311296B          275    0.99976
+
+  ANALYZE 소요가 두 조건에서 비슷하면 표본 크기가 같다는 뜻입니다.
+  저장된 값의 개수만 갈립니다. 컬럼을 고르는 것으로 아끼는 것은 스캔이 아니라
+  통계의 양과 그것을 읽는 플래너의 시간입니다.
+
+## 3) 자동 analyze 가 플랜을 뒤집는 순간
+  손으로 ANALYZE 를 돌린 것이 아니라, autovacuum 이 정한 시점에 걸리게 합니다.
+  autovacuum_analyze_scale_factor=0.001, threshold=50, naptime=5s
+  직전 last_autoanalyze = 없음
+  관측 창 안에 autoanalyze 가 걸리지 않았습니다.
+
+  플랜을 조건마다 확인합니다:
+                                                       QUERY PLAN                                                    
+    -----------------------------------------------------------------------------------------------------------------
+     Aggregate  (cost=42042.97..42042.98 rows=1 width=8)
+       ->  Merge Join  (cost=41907.08..42023.75 rows=7689 width=0)
+             Merge Cond: (i.org_id = r.org_id)
+             ->  Sort  (cost=41659.76..41660.43 rows=267 width=4)
+                   Sort Key: i.org_id
+                   ->  Seq Scan on ip_rule i  (cost=0.00..41649.00 rows=267 width=4)
+                         Filter: (rule_kind = 'burst'::text)
+             ->  Sort  (cost=247.32..254.52 rows=2880 width=4)
+                   Sort Key: r.org_id
+                   ->  Index Scan using req_log_blocked_until_idx on req_log r  (cost=0.43..81.84 rows=2880 width=4)
+
+  설정을 되돌렸습니다. 각 조건 1회 실행이고 1절만 200회입니다.
