@@ -22,7 +22,32 @@ WINDOW=${WINDOW:-12}
 
 S(){ docker exec r01-source mysql -uroot -plab -N -B -e "$1" 2>&1 | grep -v "^mysql: \[Warning\]"; }
 R(){ docker exec r01-replica mysql -uroot -plab -N -B -e "$1" 2>&1 | grep -v "^mysql: \[Warning\]"; }
-NET=$(docker inspect r01-source -f '{{range $k,$v := .NetworkSettings.Networks}}{{$k}}{{end}}')
+# 두 컨테이너가 default 와 repl-net 두 네트워크에 붙어 있다. 아래 템플릿을 중괄호
+# 하나로 쓰면 두 이름이 한 문자열로 붙어 "r01_defaultr01_repl-net" 같은 값이 되고,
+# docker network disconnect 가 "그런 네트워크 없음" 으로 실패한다. 그 실패를
+# 2>/dev/null || true 가 삼켜서 복제망이 한 번도 안 끊긴 채로 돌았다. 결과는
+# "유실 0건" 이었고 성공처럼 읽혔다. 줄바꿈으로 갈라 전부 다룬다.
+NETS=$(docker inspect r01-replica -f '{{range $k,$v := .NetworkSettings.Networks}}{{$k}}{{"\n"}}{{end}}' | grep -v '^$')
+[ -n "$NETS" ] || { echo "중단: r01-replica 의 네트워크를 못 읽었습니다" >&2; exit 2; }
+
+cut_replication(){
+  local n
+  for n in $NETS; do docker network disconnect "$n" r01-replica >/dev/null 2>&1 || true; done
+  # 끊겼는지 확인한다. 수신 스레드가 살아 있으면 이 조건은 성립하지 않는다.
+  local st
+  for _ in $(seq 1 20); do
+    st=$(R "SELECT SERVICE_STATE FROM performance_schema.replication_connection_status" 2>/dev/null | head -1)
+    [ "$st" != "ON" ] && return 0
+    sleep 1
+  done
+  echo "  중단: 복제망을 끊었는데 수신 스레드가 여전히 ON 입니다(네트워크 ${NETS//$'\n'/ })"
+  return 1
+}
+
+join_replication(){
+  local n
+  for n in $NETS; do docker network connect "$n" r01-replica >/dev/null 2>&1 || true; done
+}
 
 wait_up(){ for _ in $(seq 1 90); do [ "$(S 'SELECT 1')" = "1" ] && return 0; sleep 2; done; return 1; }
 
@@ -100,7 +125,7 @@ run_case(){ # $1=wait_point
   # 환경 되돌리기
   docker start r01-source >/dev/null 2>&1 || true
   wait_up || { echo "  소스가 다시 뜨지 않았습니다"; return 1; }
-  docker network connect "$NET" r01-replica >/dev/null 2>&1 || true
+  join_replication
   sleep 2
   rebind_replication || return 1
 
@@ -142,7 +167,7 @@ run_case(){ # $1=wait_point
   sleep 2
 
   # 복제망을 끊는다. 이제 ack 가 오지 않는다.
-  docker network disconnect "$NET" r01-replica >/dev/null 2>&1 || true
+  cut_replication || return 1
   sleep 1
 
   # 쓰기 여럿. 각각 커밋에서 매달린다.
@@ -175,7 +200,7 @@ run_case(){ # $1=wait_point
 
   # 소스를 죽이고 복제본을 승격한다.
   docker kill r01-source >/dev/null 2>&1 || true
-  docker network connect "$NET" r01-replica >/dev/null 2>&1 || true
+  join_replication
   sleep 2
   R "STOP REPLICA; RESET REPLICA ALL" >/dev/null 2>&1 || true
   R "SET GLOBAL read_only=0; SET GLOBAL super_read_only=0" >/dev/null 2>&1 || true
