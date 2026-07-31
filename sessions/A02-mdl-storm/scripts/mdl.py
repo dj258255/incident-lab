@@ -34,6 +34,12 @@ p.add_argument("--ddl-at", type=int, default=25)
 p.add_argument("--long-end", type=int, default=45)
 p.add_argument("--lock-wait-timeout", type=int, default=2)   # ddl-timeout 조건에서만 쓴다
 p.add_argument("--out", required=True)
+# 지금까지 쟀던 DDL 은 ADD COLUMN 하나다. MySQL 8.4 에서 그것은 INSTANT 라 실행 자체가
+# 0.09초이고, 테이블을 다시 쓰는 DDL 이 같은 MDL 대기 아래에서 어떻게 되는지는 안 봤다.
+# 알고리즘을 명시해 셋을 갈라 잰다. 명시하면 그 알고리즘으로 못 할 때 서버가 거부하므로,
+# "INSTANT 인 줄 알았는데 COPY 였다" 같은 일이 안 생긴다.
+p.add_argument("--ddl", default="instant", choices=["instant", "inplace", "copy"],
+               help="instant=ADD COLUMN, inplace=ADD INDEX, copy=테이블 재작성")
 args = p.parse_args()
 
 HOST = os.environ.get("MYSQL_HOST", "127.0.0.1")
@@ -93,6 +99,16 @@ def long_txn(t0):
     mark(t0, "롱 트랜잭션", "커밋")
 
 
+# 알고리즘을 명시한 세 DDL. 서버가 그 알고리즘으로 못 하면 에러를 내므로 조건이 안 선 채로
+# 지나가지 않는다.
+DDL_STMT = {
+    "instant": "ALTER TABLE orders ADD COLUMN memo VARCHAR(64) NULL, ALGORITHM=INSTANT",
+    "inplace": "ALTER TABLE orders ADD INDEX idx_mdl_probe (status, amount), "
+               "ALGORITHM=INPLACE, LOCK=NONE",
+    "copy":    "ALTER TABLE orders ADD COLUMN memo VARCHAR(64) NULL, ALGORITHM=COPY",
+}
+
+
 def ddl(t0, result):
     time.sleep(max(0, args.ddl_at - (time.time() - t0)))
     c = connect()
@@ -102,19 +118,19 @@ def ddl(t0, result):
         mark(t0, "DDL", f"lock_wait_timeout={args.lock_wait_timeout}초로 설정")
     cur.execute("SELECT @@lock_wait_timeout")
     lwt = cur.fetchone()[0]
-    stmt = "ALTER TABLE orders ADD COLUMN memo VARCHAR(64) NULL"
+    stmt = DDL_STMT[args.ddl]
     mark(t0, "DDL", f"실행 시작 (lock_wait_timeout={lwt}) {stmt}")
     s = time.perf_counter()
     try:
         cur.execute(stmt)
         el = time.perf_counter() - s
         result.update({"ok": True, "elapsed_s": round(el, 2), "error": None,
-                       "lock_wait_timeout": lwt})
+                       "lock_wait_timeout": lwt, "ddl_kind": args.ddl, "stmt": stmt})
         mark(t0, "DDL", f"성공, {el:.2f}초 걸림")
     except Exception as e:
         el = time.perf_counter() - s
         result.update({"ok": False, "elapsed_s": round(el, 2), "error": str(e),
-                       "lock_wait_timeout": lwt})
+                       "lock_wait_timeout": lwt, "ddl_kind": args.ddl, "stmt": stmt})
         mark(t0, "DDL", f"실패, {el:.2f}초 뒤 {e}")
     c.close()
 
@@ -153,6 +169,12 @@ def main():
                     WHERE TABLE_SCHEMA='lab' AND TABLE_NAME='orders' AND COLUMN_NAME='memo'""")
     if acur.fetchone()[0]:
         acur.execute("ALTER TABLE orders DROP COLUMN memo")
+    # inplace 조건은 컬럼이 아니라 인덱스를 남긴다. 이것도 지워야 다음 회차가 중복으로 죽지 않는다.
+    acur.execute("""SELECT COUNT(*) FROM information_schema.STATISTICS
+                    WHERE TABLE_SCHEMA='lab' AND TABLE_NAME='orders'
+                      AND INDEX_NAME='idx_mdl_probe'""")
+    if acur.fetchone()[0]:
+        acur.execute("ALTER TABLE orders DROP INDEX idx_mdl_probe")
     print(f"[{args.case}] MySQL {version}, 행 {rows_max:,}, "
           f"기본 lock_wait_timeout {default_lwt}초", flush=True)
 

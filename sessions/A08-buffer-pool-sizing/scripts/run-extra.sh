@@ -90,7 +90,9 @@ echo
 # ── 2) 쓰기를 섞은 축소 ─────────────────────────────────────────────────
 echo "## 2) 쓰기를 섞으면 축소가 얼마나 더 걸리는가"
 echo "  읽기 전용 축소 3.5초는 하한입니다. 더티 페이지가 없었기 때문입니다."
-for wr in 0.0 0.2; do
+# 쓰기 비율을 0.2 하나만 봤다. 더티 페이지가 늘수록 축소가 얼마나 더 걸리는지
+# 곡선을 그리려면 점이 더 있어야 한다.
+for wr in 0.0 0.1 0.2 0.4 0.8; do
   BP_SIZE=2G docker compose down >/dev/null 2>&1 || true
   BP_SIZE=2G docker compose up -d --wait mysql >/dev/null 2>&1
   BP_SIZE=2G docker compose run --rm load python workload.py \
@@ -161,4 +163,57 @@ PY
 noovr
 echo
 echo "  각 조건 1회 실행입니다."
+
+# ── 5) 워밍업까지 없앤 진짜 콜드 스타트 ────────────────────────────────
+# 8절의 --cold 는 임포트 시점의 풀 스캔만 없앴고 측정 전 워밍업 30초는 그대로 뒀다.
+# 그래서 "콜드" 라고 적었지만 실제로는 30초 데워진 상태에서 잰 값이다.
+# 워밍업을 0 으로 두고 같은 조건을 다시 잰다.
+echo "=================================================================="
+echo "## 5) 워밍업까지 없앤 콜드 스타트"
+echo "=================================================================="
+echo "  8절의 콜드 조건도 측정 전 워밍업 30초는 그대로 뒀습니다. 그것까지 없앱니다."
+echo "  기동 직후 첫 요청이 실제로 얼마나 느린지가 이 표의 질문입니다."
+echo
+for sz in 256M 1G 2G; do
+  for wu in 0 30; do
+    BP_SIZE="$sz" docker compose down >/dev/null 2>&1 || true
+    BP_SIZE="$sz" docker compose up -d --wait mysql >/dev/null 2>&1
+    BP_SIZE="$sz" docker compose run --rm load python workload.py \
+      --dist hot --warmup "$wu" --duration 60 --cold \
+      --label "truecold-${sz}-w${wu}" \
+      --out "/results/extra-truecold-${sz}-w${wu}.json" >/dev/null 2>&1
+  done
+done
+python3 - "$OUT"/extra-truecold-*.json <<'PY'
+import json, sys, re, collections
+rows = collections.defaultdict(dict)
+for f in sys.argv[1:]:
+    m = re.search(r"truecold-(\w+)-w(\d+)\.json$", f)
+    if not m:
+        continue
+    try:
+        d = json.load(open(f, encoding='utf-8'))
+    except Exception:
+        continue
+    rows[m.group(1)][m.group(2)] = d
+if not rows:
+    print("  결과 파일이 없습니다")
+else:
+    print(f"  {'풀 크기':<10} {'워밍업':>8} {'qps':>10} {'p95':>10} {'p99':>10} {'최대':>10}")
+    for sz in ('256M', '1G', '2G'):
+        for wu in ('0', '30'):
+            d = rows.get(sz, {}).get(wu)
+            if not d:
+                continue
+            def g(k):
+                v = d.get(k)
+                return v if isinstance(v, (int, float)) else 0
+            print(f"  {sz:<10} {wu+'초':>8} {g('qps'):>10.1f} {g('p95_ms'):>9.1f}ms "
+                  f"{g('p99_ms'):>9.1f}ms {g('max_ms'):>9.1f}ms")
+    print()
+    print("  워밍업 0 과 30 의 차이가 기동 직후에 실제로 물리는 값입니다.")
+    print("  풀이 작을수록 그 차이가 작아야 합니다. 데울 자리가 애초에 없기 때문입니다.")
+PY
+echo
+
 } 2>&1 | tee "$OUT/extra-run.txt"

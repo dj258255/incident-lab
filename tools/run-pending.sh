@@ -54,6 +54,8 @@ steps=(
   "F07cap|F07-nasdaq-ipo-livelock|none|bash scripts/run-cap-sweep.sh"
   "R04phys|R04-replication-slot-wal|compose|bash scripts/exp5-physical-slot.sh"
   "A23rto|A23-backup-pitr|compose-a23|bash scripts/exp8-mysql-repeat.sh"
+  "A02ddl|A02-mdl-storm|compose|bash scripts/exp-ddl-kinds.sh"
+  "A08extra|A08-buffer-pool-sizing|none|bash scripts/run-extra.sh"
 )
 
 if [ "${1:-}" = "--list" ]; then
