@@ -1,1 +1,3 @@
 wait_point,on_source,seen_by_observers,survived,lost
+AFTER_SYNC,400,400,400,0
+AFTER_COMMIT,400,400,400,0

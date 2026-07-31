@@ -1,0 +1,44 @@
+## 1) 락 판별 세 방법을 같은 순간에
+   같은 부하에서 세 방법을 번갈아 재고, 값과 비용을 나란히 놓습니다.
+
+   방법                                중앙값       최대        조회 비용 중앙
+   data_lock_waits                    28       28           0.69ms
+   sys.innodb_lock_waits              21       28           1.83ms
+   ENGINE STATUS(LOCK WAIT)            7        7           0.79ms
+
+   ENGINE STATUS 텍스트 크기 중앙 10,344바이트, 잘림 0/40회
+
+## 1-b) 대기가 없을 때 세 방법의 비용
+   워커를 띄우지 않고 같은 방법을 같은 횟수로 재 봅니다.
+
+   방법                              대기 중앙        조회 비용 중앙         부하 있을 때 대비
+   data_lock_waits                     0           2.75ms              4.01배
+   sys.innodb_lock_waits               0           2.34ms              1.28배
+   ENGINE STATUS(LOCK WAIT)            0           1.32ms              1.67배
+
+   ENGINE STATUS 텍스트 크기 중앙 4,509바이트, 잘림 0/40회
+
+   읽는 법. 세 값이 같은 방향으로 움직이면 어느 것을 써도 판별은 됩니다.
+   갈리는 것은 비용과 형태입니다. data_lock_waits 는 숫자를 바로 주고,
+   sys 뷰는 같은 정보에 질의 텍스트를 붙이는 대신 조인이 붙고,
+   ENGINE STATUS 는 매번 수만 바이트를 파싱해야 하며 트랜잭션이 많으면 잘립니다.
+   1초 간격 샘플러에 넣을 것은 가장 싼 것이어야 합니다.
+
+## 2) top SQL 분해를 반복해서
+   같은 부하로 40초씩 3회 재고 AAS 분해가 모이는지 봅니다.
+   회차 1: 샘플 40회
+     AAS  7.55  UPDATE `live` SET `view_count` = `view_count` + ? WHERE `id`
+     AAS  0.03  (질의 없음)
+   회차 2: 샘플 40회
+     AAS  7.60  UPDATE `live` SET `view_count` = `view_count` + ? WHERE `id`
+   회차 3: 샘플 40회
+     AAS  7.65  UPDATE `live` SET `view_count` = `view_count` + ? WHERE `id`
+
+   질의                                                    회차1      회차2      회차3
+   (질의 없음)                                              0.03     0.00     0.00
+   UPDATE `live` SET `view_count` = `view_count` +      7.55     7.60     7.65
+
+   회차마다 같은 질의가 같은 자리를 차지하면 분해가 안정적인 것입니다.
+
+원문: results/lock-alternatives.json
+1절은 40샘플 1회, 2절은 40초 3회입니다.
