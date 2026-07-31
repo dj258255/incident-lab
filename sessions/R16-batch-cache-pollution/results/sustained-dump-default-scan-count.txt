@@ -1,0 +1,5 @@
+scans=2
+table_pages=131008
+read_io_estimate=262016
+dump_bytes=4908011588
+window_s=60

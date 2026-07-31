@@ -1,4 +1,4 @@
 scans=22
-table_pages=129216
-read_io_estimate=2842752
+table_pages=131008
+read_io_estimate=2882176
 window_s=60
