@@ -15,31 +15,31 @@
   "hot_max_id": 1853062,
   "warmup_s": 30,
   "duration_s": 90,
-  "queries": 714899,
-  "qps": 7943.3,
-  "p50_ms": 0.139,
-  "p95_ms": 0.988,
-  "p99_ms": 2.096,
-  "max_ms": 19.403,
-  "mean_ms": 0.249,
-  "read_requests": 3154924,
-  "disk_reads": 290004,
-  "hit_rate_pct": 90.8079,
-  "data_read_mb": 4531.5,
+  "queries": 685539,
+  "qps": 7617.1,
+  "p50_ms": 0.142,
+  "p95_ms": 1.053,
+  "p99_ms": 2.171,
+  "max_ms": 22.987,
+  "mean_ms": 0.259,
+  "read_requests": 3022388,
+  "disk_reads": 275823,
+  "hit_rate_pct": 90.874,
+  "data_read_mb": 4310.2,
   "pages_data": 8191,
   "pages_total": 8192,
-  "pages_dirty": 1406,
+  "pages_dirty": 1365,
   "read_ahead": 0,
-  "read_ahead_evicted": 0,
-  "pages_read": 290017,
+  "read_ahead_evicted": 38,
+  "pages_read": 275850,
   "cold_start": false,
   "write_ratio": 0.1,
   "action": {
     "sql": "SET GLOBAL innodb_buffer_pool_size = 134217728",
     "stmt_start_s": 30.0,
     "stmt_ms": 0.2,
-    "settle_s": 3.04,
-    "final_status": "Completed resizing buffer pool at 260731 19:12:58.",
+    "settle_s": 35.05,
+    "final_status": "Completed resizing buffer pool at 260731 20:14:48.",
     "status_trail": [
       [
         0.0,
@@ -47,15 +47,23 @@
       ],
       [
         0.1,
-        "buffer pool 0 : withdrawing blocks. (38726/122865)"
+        "buffer pool 0 : withdrawing blocks. (38724/122865)"
       ],
       [
-        1.02,
-        "buffer pool 0 : withdrawing blocks. (121279/122865)"
+        1.01,
+        "buffer pool 0 : withdrawing blocks. (121482/122865)"
       ],
       [
         3.04,
-        "Completed resizing buffer pool at 260731 19:12:58."
+        "buffer pool 0 : withdrawing blocks. (122863/122865)"
+      ],
+      [
+        7.11,
+        "buffer pool 0 : withdrawing blocks. (122864/122865)"
+      ],
+      [
+        35.05,
+        "Completed resizing buffer pool at 260731 20:14:48."
       ]
     ],
     "final_pool_mb": 128,

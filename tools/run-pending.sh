@@ -65,6 +65,7 @@ steps=(
   "A14subtx|A14-xid-wraparound|compose|bash scripts/exp-subtx-burn.sh"
   "R16dump|R16-batch-cache-pollution|compose|R16SEED"
   "B43av|B43-expand-contract|compose|bash scripts/exp-backfill-evidence.sh"
+  "A08order|A08-buffer-pool-sizing|none|bash scripts/exp-shrink-order.sh"
 )
 
 if [ "${1:-}" = "--list" ]; then

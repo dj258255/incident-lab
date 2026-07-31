@@ -15,27 +15,71 @@
   "hot_max_id": 1853062,
   "warmup_s": 30,
   "duration_s": 90,
-  "queries": 1160985,
-  "qps": 12899.8,
-  "p50_ms": 0.135,
-  "p95_ms": 0.224,
-  "p99_ms": 0.257,
-  "max_ms": 6.359,
-  "mean_ms": 0.152,
-  "read_requests": 3930472,
-  "disk_reads": 421332,
-  "hit_rate_pct": 89.2804,
-  "data_read_mb": 6583.6,
-  "pages_data": 8229,
+  "queries": 1132266,
+  "qps": 12580.7,
+  "p50_ms": 0.14,
+  "p95_ms": 0.23,
+  "p99_ms": 0.262,
+  "max_ms": 5.004,
+  "mean_ms": 0.156,
+  "read_requests": 3832592,
+  "disk_reads": 410116,
+  "hit_rate_pct": 89.2993,
+  "data_read_mb": 6408.5,
+  "pages_data": 8230,
   "pages_total": 8192,
   "pages_dirty": 0,
   "read_ahead": 0,
   "read_ahead_evicted": 0,
-  "pages_read": 421351,
+  "pages_read": 410143,
   "cold_start": false,
   "write_ratio": 0.0,
   "action": {
     "sql": "SET GLOBAL innodb_buffer_pool_size = 134217728",
+    "stmt_start_s": 30.0,
+    "stmt_ms": 0.2,
+    "settle_s": 65.1,
+    "final_status": "Completed resizing buffer pool at 260731 20:13:06.",
+    "status_trail": [
+      [
+        0.0,
+        "Withdrawing blocks to be shrunken."
+      ],
+      [
+        0.11,
+        "buffer pool 0 : withdrawing blocks. (38788/122865)"
+      ],
+      [
+        3.09,
+        "buffer pool 0 : withdrawing blocks. (122422/122865)"
+      ],
+      [
+        15.04,
+        "buffer pool 0 : withdrawing blocks. (122589/122865)"
+      ],
+      [
+        25.1,
+        "buffer pool 0 : withdrawing blocks. (122712/122865)"
+      ],
+      [
+        35.05,
+        "buffer pool 0 : withdrawing blocks. (122772/122865)"
+      ],
+      [
+        45.08,
+        "buffer pool 0 : withdrawing blocks. (122806/122865)"
+      ],
+      [
+        55.04,
+        "buffer pool 0 : withdrawing blocks. (122821/122865)"
+      ],
+      [
+        65.1,
+        "Completed resizing buffer pool at 260731 20:13:06."
+      ]
+    ],
+    "final_pool_mb": 128,
+    "saw_status": true,
     "at_s": 30
   }
 }
