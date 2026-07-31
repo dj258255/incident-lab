@@ -52,6 +52,7 @@ steps=(
   "A22or|A22-index-not-used|compose|PYRUN scripts/exp-or-and-index-merge.py --out results/or-and-index-merge.json"
   "R14jdbc|R14-charset-timezone|compose|bash scripts/exp-jdbc-roundtrip.sh"
   "F07cap|F07-nasdaq-ipo-livelock|none|bash scripts/run-cap-sweep.sh"
+  "R04phys|R04-replication-slot-wal|compose|bash scripts/exp5-physical-slot.sh"
 )
 
 if [ "${1:-}" = "--list" ]; then
