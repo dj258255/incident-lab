@@ -1,1 +1,5 @@
 # [pool20-r3] 측정 직전 호스트 상태
+2026-07-31T18:13:05+0900
+18:13  up  3:12, 2 users, load averages: 5.05 4.49 5.56
+Darwin 25.3.0 arm64
+nproc=

@@ -70,6 +70,20 @@ run_case(){ # $1=wait_point
   sleep 2
   setup_semi "$WP"
 
+  # 반동기가 실제로 켜졌는지 확인한다. 안 켜졌으면 이 조건은 성립하지 않는다.
+  # 앞선 실행에서 AFTER_SYNC 조건에 400건이 그대로 들어가고 복제본에도 400건이
+  # 남았다. 매달려야 할 커밋이 하나도 안 매달렸다는 뜻이고, 반동기가 안 붙은
+  # 상태로 "유실 0건"이라는 결과만 남았다.
+  local semi
+  semi=$(S "SELECT VARIABLE_VALUE FROM performance_schema.global_status
+            WHERE VARIABLE_NAME='Rpl_semi_sync_source_status'")
+  if [ "$semi" != "ON" ]; then
+    echo "  중단: 반동기가 켜지지 않았습니다(Rpl_semi_sync_source_status=${semi:-없음})"
+    echo "  플러그인 상태: $(S "SELECT PLUGIN_NAME||'='||PLUGIN_STATUS FROM information_schema.PLUGINS WHERE PLUGIN_NAME LIKE 'rpl_semi%'" | tr '\n' ' ')"
+    return 1
+  fi
+  echo "  반동기 확인: Rpl_semi_sync_source_status=$semi, wait_point=$(S "SELECT @@rpl_semi_sync_source_wait_point")"
+
   # 복제망을 끊는다. 이제 ack 가 오지 않는다.
   docker network disconnect "$NET" r01-replica >/dev/null 2>&1 || true
   sleep 1

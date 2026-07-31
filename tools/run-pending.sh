@@ -31,7 +31,7 @@ steps=(
   "R12|R12-perf-insights-clone|compose|PYRUN scripts/exp-lock-alternatives.py --out results/lock-alternatives.json"
   "B52extra|B52-jpa-list-api|compose|bash scripts/exp-insert-extra.sh"
   "R01|R01-replica-promotion-loss|compose|bash scripts/exp-after-commit-load.sh"
-  "R13|R13-slotted-counter|compose|bash scripts/exp-uniform-and-repeat.sh"
+  "R13|R13-slotted-counter|compose-repl|bash scripts/exp-uniform-and-repeat.sh"
   "A23logical|A23-backup-pitr|compose-mysql-restore|bash scripts/exp7-logical-vs-physical.sh"
   "F03|F03-market-open-connection-storm|none|bash scripts/exp-pool-sweep.sh"
   "R03|R03-reader-endpoint-skew|compose|bash scripts/exp-repeat-load.sh"
@@ -78,6 +78,9 @@ bring_up(){ # $1=세션경로 $2=방식
     compose-db)             (cd "$1" && docker compose up -d db >/dev/null 2>&1) ;;
     compose-mysql-restore)  (cd "$1" && docker compose up -d mysql restore >/dev/null 2>&1) ;;
     compose-oracle)         (cd "$1" && docker compose --profile oracle up -d oracle >/dev/null 2>&1) ;;
+    # 복제본이 repl 프로파일 뒤에 있어 기본 up 으로는 안 뜬다. 그러면 복제 대조가
+    # 헤더만 찍고 데이터 행이 하나도 없는 표를 남긴다. 실제로 그렇게 났다.
+    compose-repl)           (cd "$1" && docker compose --profile repl up -d >/dev/null 2>&1) ;;
     f01spring)              : ;;
     none)                   : ;;
   esac

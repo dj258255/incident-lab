@@ -38,7 +38,17 @@ echo "  B 를 read_only=ON 으로 두고 페일오버한 뒤, ${RO_WINDOW}초 �
 echo "  그동안 앱은 B 에 붙지만 쓰기는 실패합니다."
 echo
 
+# B 가 준비될 때까지 기다린 뒤 읽기 전용을 건다. 컨테이너를 막 띄운 직후에는
+# SET GLOBAL 이 안 먹고, 그러면 "읽기 전용 구간"이 읽기 전용이 아닌 채로 돈다.
+# 앞선 실행에서 페일오버 5.1초 뒤 쓰기가 성공해 창이 성립하지 않았다.
+for _ in $(seq 1 60); do
+  docker exec r02-db-b mysqladmin ping -uroot -plab >/dev/null 2>&1 && break
+  sleep 2
+done
 docker exec r02-db-b mysql -uroot -plab -e "SET GLOBAL read_only=ON; SET GLOBAL server_id=2;" 2>/dev/null
+RO=$(docker exec r02-db-b mysql -uroot -plab -N -B -e "SELECT @@read_only" 2>/dev/null | tr -d ' ')
+[ "$RO" = "1" ] || { echo "중단: B 의 read_only 가 안 켜졌습니다(값 ${RO:-없음})" >&2; exit 3; }
+echo "  B 의 read_only 확인 = $RO"
 # 창이 지나면 읽기 전용을 푸는 백그라운드 작업. 승격이 끝나는 시점을 흉내 낸다.
 #
 # 시각의 기준이 중요하다. 처음에는 스크립트 시작에서 세었는데, failover.sh 가 앱을
