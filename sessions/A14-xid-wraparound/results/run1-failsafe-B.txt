@@ -1,0 +1,34 @@
+SET
+INFO:  aggressively vacuuming "spoon.public.big"
+WARNING:  bypassing nonessential maintenance of table "spoon.public.big" as a failsafe after 0 index scans
+DETAIL:  The table's relfrozenxid or relminmxid is too far in the past.
+HINT:  Consider increasing configuration parameter "maintenance_work_mem" or "autovacuum_work_mem".
+You might also need to consider other ways for VACUUM to keep up with the allocation of transaction IDs.
+INFO:  finished vacuuming "spoon.public.big": index scans: 0
+pages: 0 removed, 61729 remain, 61729 scanned (100.00% of total)
+tuples: 1000000 removed, 4000000 remain, 0 are dead but not yet removable
+removable cutoff: 720856, which was 0 XIDs old when operation ended
+new relfrozenxid: 720856, which is 120011 XIDs ahead of previous value
+frozen: 61729 pages from table (100.00% of total) had 4000000 tuples frozen
+index scan bypassed by failsafe: 61729 pages from table (100.00% of total) have 1000000 dead item identifiers
+avg read rate: 0.413 MB/s, avg write rate: 385.002 MB/s
+buffer usage: 123554 hits, 32 misses, 29849 dirtied
+WAL usage: 61730 records, 34936 full page images, 237695594 bytes
+system usage: CPU: user: 0.27 s, system: 0.22 s, elapsed: 0.60 s
+INFO:  aggressively vacuuming "spoon.pg_toast.pg_toast_16504"
+WARNING:  bypassing nonessential maintenance of table "spoon.pg_toast.pg_toast_16504" as a failsafe after 0 index scans
+DETAIL:  The table's relfrozenxid or relminmxid is too far in the past.
+HINT:  Consider increasing configuration parameter "maintenance_work_mem" or "autovacuum_work_mem".
+You might also need to consider other ways for VACUUM to keep up with the allocation of transaction IDs.
+INFO:  finished vacuuming "spoon.pg_toast.pg_toast_16504": index scans: 0
+pages: 0 removed, 0 remain, 0 scanned (100.00% of total)
+tuples: 0 removed, 0 remain, 0 are dead but not yet removable
+removable cutoff: 720856, which was 0 XIDs old when operation ended
+new relfrozenxid: 720856, which is 120004 XIDs ahead of previous value
+frozen: 0 pages from table (100.00% of total) had 0 tuples frozen
+index scan bypassed by failsafe: 0 pages from table (100.00% of total) have 0 dead item identifiers
+avg read rate: 0.000 MB/s, avg write rate: 0.000 MB/s
+buffer usage: 21 hits, 0 misses, 0 dirtied
+WAL usage: 1 records, 0 full page images, 188 bytes
+system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+VACUUM

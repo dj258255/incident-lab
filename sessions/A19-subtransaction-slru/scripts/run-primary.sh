@@ -13,7 +13,9 @@ LABEL="$1"; NSUB="$2"; CLIENTS="${3:-64}"; DUR="${4:-20}"
 P() { docker exec a19-primary psql -U postgres -d spoon -qAt -c "$1"; }
 
 P "SELECT pg_stat_reset_shared('slru')" >/dev/null
-BUFS=$(P "SHOW subtransaction_buffers")
+# 16 에는 이 GUC 가 없다. SHOW 로 물으면 에러 문자열이 그대로 값에 들어가므로
+# pg_settings 에서 읽고 없으면 "없음(16 이하)"으로 적는다.
+BUFS=$(P "SELECT COALESCE((SELECT setting FROM pg_settings WHERE name='subtransaction_buffers'),'없음(16 이하, 32 고정)')")
 
 if [ "$NSUB" -gt 0 ]; then
   bash "$ROOT/scripts/p-long-tx.sh" "$NSUB" $((DUR + 40)) 500000 > "$OUT/$LABEL-longtx.log" 2>&1 &
@@ -47,7 +49,7 @@ SAMP=$!
 docker exec a19-primary pgbench -U postgres -d spoon -n -M prepared \
   -f /scripts/p-reader.sql -c "$CLIENTS" -j 4 -T "$DUR" -P 5 > "$OUT/$LABEL-reader.txt" 2>&1
 wait $SAMP 2>/dev/null || true
-SL=$(P "SELECT blks_hit||' '||blks_read FROM pg_stat_slru WHERE name='subtransaction'")
+SL=$(P "SELECT blks_hit||' '||blks_read FROM pg_stat_slru WHERE lower(name) IN ('subtransaction','subtrans')")
 echo "$SL" > "$OUT/$LABEL-slru.txt"
 [ -n "$LTX" ] && { P "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE query LIKE 'SELECT pg_sleep%'" >/dev/null; wait $LTX 2>/dev/null; }
 

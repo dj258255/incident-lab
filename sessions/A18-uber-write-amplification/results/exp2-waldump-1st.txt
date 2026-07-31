@@ -1,0 +1,25 @@
+# WAL 을 레코드와 FPI 로 가르고, autovacuum 을 끄고, 압축 대조까지
+# 호스트: Darwin 25.3.0 arm64, 12코어, 32GB
+# 컨테이너: --cpus 4 --memory 4g, autovacuum=off, 500000행
+# 조건마다 1회 실행입니다.
+
+## wal_compression = off
+  적재 중...
+  PostgreSQL 17.5 (Debian 17.5-1.pgdg130+1)
+  인덱스 0개(ff100)      WAL  266.6MB  HOT   0.0%   1.75초
+    리소스 매니저별 분해 (레코드 바이트 / FPI 바이트)
+  인덱스 10개(ff100)     WAL  589.3MB  HOT   0.0%   9.95초
+    리소스 매니저별 분해 (레코드 바이트 / FPI 바이트)
+  인덱스 0개(ff70)       WAL  209.6MB  HOT  45.2%   1.52초
+    리소스 매니저별 분해 (레코드 바이트 / FPI 바이트)
+  인덱스 10개(ff70)      WAL  392.0MB  HOT  45.2%   5.95초
+    리소스 매니저별 분해 (레코드 바이트 / FPI 바이트)
+  인덱스 컬럼 갱신(v10) WAL  598.3MB  HOT   0.0%  11.27초
+    리소스 매니저별 분해 (레코드 바이트 / FPI 바이트)
+  2차 갱신 인덱스 10개 WAL  280.8MB  HOT  57.5%   4.46초
+    리소스 매니저별 분해 (레코드 바이트 / FPI 바이트)
+  2차 갱신 인덱스 0개 WAL  179.3MB  HOT  57.5%   1.32초
+    리소스 매니저별 분해 (레코드 바이트 / FPI 바이트)
+
+## wal_compression = on
+중단: wal_compression 이 on 이 아니라 pglz 입니다

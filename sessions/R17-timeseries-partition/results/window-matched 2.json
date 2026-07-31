@@ -1,0 +1,24 @@
+{
+ "DELETE": {
+  "dur": 0.11,
+  "before": 4.7,
+  "during": 5.2,
+  "after": 5.3,
+  "nb": 25316,
+  "nd": 264,
+  "na": 1098852,
+  "after_window": 470.1,
+  "total_window": 480.0
+ },
+ "DROP": {
+  "dur": 0.12,
+  "before": 4.7,
+  "during": 6.2,
+  "after": 5.0,
+  "nb": 25733,
+  "nd": 227,
+  "na": 1157776,
+  "after_window": 470.0,
+  "total_window": 480.0
+ }
+}

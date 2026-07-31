@@ -1,0 +1,73 @@
+lab-f01-hanmac-spring  | == [Spring] 실제 주문접수 API 재현 (POST /orders, 내장 Tomcat + Jackson + @Valid) ==
+lab-f01-hanmac-spring  |   /orders/buggy      : 201 접수 110건 (정상 100 + NaN 10), 422 거부 10건 (Infinity는 상한 초과)
+lab-f01-hanmac-spring  |   /orders/bigdecimal : 201 접수 100건, 500 서버오류 20건 (BigDecimal.valueOf(NaN/Inf) 예외)
+lab-f01-hanmac-spring  |   /orders/fixed      : 201 접수 100건, 422 거부 3건, 503 킬스위치 17건 (비정상 3건에서 발동)
+lab-f01-hanmac-spring  |   입력 @Valid 검증은 전부 통과했다. 문제는 입력이 아니라 서버가 계산한 파생값이다.
+lab-f01-hanmac-spring  | 
+lab-f01-hanmac-spring  | == [Spring] 조건별 재측정 (가드 단독 / 킬스위치 · 정렬 / 섞은 배치, 섞음 시드 20131212) ==
+lab-f01-hanmac-spring  | 
+lab-f01-hanmac-spring  | [조건 A] /orders/fixed · 정렬 배치 · 유한성 가드 + 킬스위치
+lab-f01-hanmac-spring  |   201 접수     100건 (정상 100 / Inf 0 / NaN 0)
+lab-f01-hanmac-spring  |   422 거부       3건 (정상 0 / Inf 3 / NaN 0)
+lab-f01-hanmac-spring  |   503 킬스위치  17건 (정상 0 / Inf 7 / NaN 10)  <- 정상 0건이 부수 피해
+lab-f01-hanmac-spring  | 
+lab-f01-hanmac-spring  | [조건 B] /orders/guard · 정렬 배치 · 유한성 가드 단독
+lab-f01-hanmac-spring  |   201 접수     100건 (정상 100 / Inf 0 / NaN 0)
+lab-f01-hanmac-spring  |   422 거부      20건 (정상 0 / Inf 10 / NaN 10)
+lab-f01-hanmac-spring  |   503 킬스위치   0건 (정상 0 / Inf 0 / NaN 0)  <- 정상 0건이 부수 피해
+lab-f01-hanmac-spring  | 
+lab-f01-hanmac-spring  | [조건 C] /orders/fixed · 섞은 배치 · 유한성 가드 + 킬스위치
+lab-f01-hanmac-spring  |   201 접수      16건 (정상 16 / Inf 0 / NaN 0)
+lab-f01-hanmac-spring  |   422 거부       3건 (정상 0 / Inf 2 / NaN 1)
+lab-f01-hanmac-spring  |   503 킬스위치 101건 (정상 84 / Inf 8 / NaN 9)  <- 정상 84건이 부수 피해
+lab-f01-hanmac-spring  | 
+lab-f01-hanmac-spring  | [조건 D] /orders/guard · 섞은 배치 · 유한성 가드 단독
+lab-f01-hanmac-spring  |   201 접수     100건 (정상 100 / Inf 0 / NaN 0)
+lab-f01-hanmac-spring  |   422 거부      20건 (정상 0 / Inf 10 / NaN 10)
+lab-f01-hanmac-spring  |   503 킬스위치   0건 (정상 0 / Inf 0 / NaN 0)  <- 정상 0건이 부수 피해
+lab-f01-hanmac-spring  | 
+lab-f01-hanmac-spring  | == [Spring] 가드에 구멍이 있을 때 킬스위치가 무엇을 건지는가 ==
+lab-f01-hanmac-spring  | 
+lab-f01-hanmac-spring  |   앞의 조건들은 가드가 완전한 화이트리스트(isFinite)라 NaN 도 Infinity 도 다 잡습니다.
+lab-f01-hanmac-spring  |   실무의 가드는 자주 불완전합니다. isInfinite 만 확인하거나 절댓값으로 상한을 보면
+lab-f01-hanmac-spring  |   Infinity 는 걸리는데 NaN 은 두 비교가 모두 false 라 그대로 지나갑니다.
+lab-f01-hanmac-spring  |   그 조건에서 킬스위치의 탐지원이 가드와 같은지 다른지로 결과가 갈립니다.
+lab-f01-hanmac-spring  | 
+lab-f01-hanmac-spring  | [조건 E] /orders/leaky · 구멍 난 가드 + 가드 연동 킬스위치
+lab-f01-hanmac-spring  |   201 접수     100건 (정상 100 / Inf 0 / NaN 0)
+lab-f01-hanmac-spring  |   422 거부       3건 (정상 0 / Inf 3 / NaN 0)
+lab-f01-hanmac-spring  |   503 킬스위치  17건 (정상 0 / Inf 7 / NaN 10)  <- 정상 0건이 부수 피해
+lab-f01-hanmac-spring  | 
+lab-f01-hanmac-spring  | [조건 F] /orders/leaky-independent · 같은 가드 + 독립 탐지 킬스위치
+lab-f01-hanmac-spring  |   201 접수     100건 (정상 100 / Inf 0 / NaN 0)
+lab-f01-hanmac-spring  |   422 거부       3건 (정상 0 / Inf 3 / NaN 0)
+lab-f01-hanmac-spring  |   503 킬스위치  17건 (정상 0 / Inf 7 / NaN 10)  <- 정상 0건이 부수 피해
+lab-f01-hanmac-spring  | 
+lab-f01-hanmac-spring  |   조건 E 는 NaN 0건이 접수됐습니다. 킬스위치가 세는 것이 '가드가 거부한 건수'라,
+lab-f01-hanmac-spring  |   가드가 못 잡은 값은 거부되지 않으니 킬스위치도 세지 못합니다.
+lab-f01-hanmac-spring  |   조건 F 는 NaN 접수 0건입니다. 탐지원을 접수 결과(기준가 이탈)로 옮기면
+lab-f01-hanmac-spring  |   가드가 무엇을 놓치든 셀 수 있습니다.
+lab-f01-hanmac-spring  | 
+lab-f01-hanmac-spring  |   **킬스위치의 값어치는 존재가 아니라 탐지원이 가드와 독립인가에서 나옵니다.**
+lab-f01-hanmac-spring  |   가드가 거부한 건수만 세는 킬스위치는 가드의 사본이지 두 번째 방어선이 아닙니다.
+lab-f01-hanmac-spring  | 
+lab-f01-hanmac-spring  | == [Spring] 킬스위치 임계값 스윕 (섞은 배치, /orders/fixed) ==
+lab-f01-hanmac-spring  | 
+lab-f01-hanmac-spring  |   임계값          201 접수     422 거부     503 차단       정상 부수 피해
+lab-f01-hanmac-spring  |   1                 0          1        119            100
+lab-f01-hanmac-spring  |   3                16          3        101             84
+lab-f01-hanmac-spring  |   5                19          5         96             81
+lab-f01-hanmac-spring  |   10               48         10         62             52
+lab-f01-hanmac-spring  |   20               89         20         11             11
+lab-f01-hanmac-spring  |   50              100         20          0              0
+lab-f01-hanmac-spring  |   999             100         20          0              0
+lab-f01-hanmac-spring  | 
+lab-f01-hanmac-spring  |   임계값 999 는 사실상 킬스위치를 끈 조건입니다. 가드 단독과 같아야 합니다.
+lab-f01-hanmac-spring  |   임계값을 낮출수록 비정상은 빨리 멈추고 정상 주문의 부수 피해가 커집니다.
+lab-f01-hanmac-spring  |   이 배치는 정상 100 대 비정상 20 이라 그 교환이 눈에 보입니다.
+lab-f01-hanmac-spring  |   실제 값은 도메인이 정합니다. 한맥의 경우 2분 남짓에 3만 6천 건이 나갔으므로
+lab-f01-hanmac-spring  |   부수 피해를 아끼려다 임계값을 높게 잡는 쪽이 훨씬 비쌌습니다.
+[Klab-f01-hanmac-spring exited with code 0
+Aborting on container exit...
+ Container lab-f01-hanmac-spring  Stopping
+ Container lab-f01-hanmac-spring  Stopped

@@ -267,6 +267,66 @@ DROP 자체는 0.12초였고 그 구간의 INSERT p95는 5.7ms로 흔들리지 �
 
 파티션 키 제약 위반 에러가 참고 자료에는 1491로 인용돼 있었는데 8.4.3 실측은 **1503**이었고, 메시지에 "(prefixed columns are not considered)"가 붙어 있었습니다. 문서 인용은 실행으로 확인한 뒤에 옮겨야 한다는 것을 세션 안에서 다시 확인했습니다.
 
+## 7. MDL 대조군과 LOCK=NONE 과 OPTIMIZE TABLE (2026-07-31)
+
+`scripts/exp-mdl-control.sh`, 결과는 `results/exp-mdl-control.txt` 입니다.
+
+### 대조군이 없어서 못 하던 말
+
+3절은 "열린 트랜잭션 뒤에 DDL 이 서면 그 뒤의 SELECT 까지 갇힌다"를 보였는데,
+**DDL 없이 열린 트랜잭션만 있는 조건**을 재지 않았습니다. 그러면 갇힌 원인이 DDL 인지
+열린 트랜잭션 자체인지 갈리지 않습니다. 셋을 나란히 놓았습니다.
+
+| 조건 | DDL 대기 | 일반 SELECT |
+|---|---|---|
+| A. 열린 트랜잭션만 (DDL 없음) | 해당 없음 | **89ms** |
+| B. 열린 트랜잭션 + `DROP PARTITION` | 18,030ms | **14,994ms** |
+| C. 열린 트랜잭션 + `LOCK=NONE` | 실행 불가 | 실행 불가 |
+
+**A 가 89ms 입니다.** 열린 트랜잭션이 25초를 붙잡고 있어도 다른 SELECT 는 지나갑니다.
+읽기끼리는 MDL 이 공유이기 때문입니다. B 의 14,994ms 와 168배 차이이고, 그 차이를
+만드는 것이 대기 행렬에 낀 배타 MDL 하나입니다. **이제 3절의 결론에 대조군이 붙습니다.**
+
+### `LOCK=NONE` 은 붙일 수가 없습니다
+
+4절이 "이 실험은 LOCK 절이 없으므로 LOCK=NONE 을 명시해도 걸린다는 근거로 쓰면 안 된다"고
+적어 두었습니다. 붙여 봤습니다.
+
+```console
+mysql> ALTER TABLE watch_log_part DROP PARTITION p20260715, ALGORITHM=DEFAULT, LOCK=NONE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that
+corresponds to your MySQL server version for the right syntax to use near
+'=DEFAULT, LOCK=NONE' at line 1
+```
+
+**문법이 거부합니다.** `DROP PARTITION` 은 `ALGORITHM` 과 `LOCK` 절을 받지 않습니다.
+그러니까 "`LOCK=NONE` 을 명시해도 걸리는가"라는 질문 자체가 성립하지 않습니다.
+명시할 방법이 없습니다. 4절의 주의 문구는 **더 강한 형태로 바뀝니다.** 이 실험이
+LOCK 절을 안 쓴 것이 아니라 쓸 수 없습니다.
+
+### `OPTIMIZE TABLE` 은 잰 값이 의미가 없습니다
+
+앞 실험들이 파티션을 떨궈 테이블이 비어 있는 상태에서 돌았습니다.
+
+```
+실행 전 크기 0MB, DATA_FREE 0MB
+OPTIMIZE TABLE 소요 = 205ms
+그동안 들어온 일반 SELECT = 72ms
+실행 후 크기 0MB, DATA_FREE 0MB
+```
+
+**빈 테이블을 재구축한 205ms 입니다.** DELETE 가 남긴 공간을 되찾는 비용이 아닙니다.
+이 값을 인용하면 안 됩니다. 건진 것은 MySQL 이 돌려준 note 하나입니다.
+
+```
+Table does not support optimize, doing recreate + analyze instead
+```
+
+InnoDB 는 `OPTIMIZE TABLE` 을 그대로 지원하지 않고 `ALTER TABLE ... FORCE` 로 바꿔
+실행합니다. 재구축이므로 온라인 DDL 이 적용되고, 그래서 그동안 SELECT 가 72ms 로
+지나갔습니다. **DELETE 뒤 공간 회수에 드는 실제 비용은 데이터가 든 상태에서 다시
+재야 합니다.**
+
 ## 못 한 것
 
 - **퍼지 지연을 재현하지 못했습니다.** 공식 문서가 경고하는 "퍼지가 뒤처져 테이블이 커지는" 상태를 만들려면 지속 고부하와 장기 트랜잭션 조합이 더 필요합니다. 이 세션의 규모(700만 행, NVMe)에서는 도달하지 못했습니다.
@@ -275,7 +335,7 @@ DROP 자체는 0.12초였고 그 구간의 INSERT p95는 5.7ms로 흔들리지 �
 - **두 실험 사이에 실질적인 안정화 구간이 없었습니다.** 대기 루프의 임계값(히스토리 리스트 길이 1000)이 실측 최대 3과 맞지 않아 항상 즉시 통과했습니다. 실험 간 간섭을 배제하지 못했습니다.
 - **MDL 실험에 대조군이 없습니다.** `DROP PARTITION` 없이 SELECT만 넣은 경우를 재지 않았습니다. `LOCK=NONE`을 붙인 조건도 실행하지 않았습니다.
 - **범위 프루닝에 파티션 하나가 더 남는 이유를 특정하지 못했습니다.** NULL 때문이 아니라는 것까지만 확인했습니다.
-- **`OPTIMIZE TABLE`을 돌려 보지 않았습니다.** DELETE가 회수하지 못한 공간을 실제로 되찾는 데 드는 시간과 부하를 재지 않았습니다.
+- **`OPTIMIZE TABLE` 을 데이터가 든 상태에서 재지 못했습니다.** 7절은 앞 실험들이 파티션을 떨군 뒤라 빈 테이블을 재구축한 205ms 였습니다. 회수 비용이 아닙니다.
 - **파티션 수 실험은 조건마다 1회씩입니다.** 위 표의 값에 반복 측정이 없고, 단건 조회의 11.2배는 `table_open_cache` 와 `innodb_open_files` 설정에 좌우될 수 있는데 그 조합은 재지 않았습니다.
 - **행 수가 실제 운영보다 작습니다.** 수억 행이 아니라 700만 행입니다. DELETE와 DROP의 차이는 행 수에 비례해 벌어지는 구조라 방향은 같겠지만, 절대값은 이 규모의 결과입니다.
 - **pt-archiver를 직접 돌려 보지 않았습니다.** 청크 삭제를 직접 구현해 비교했고, 도구 자체의 스로틀링(복제 지연 감시 등)은 다루지 않았습니다.

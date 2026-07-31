@@ -6,6 +6,7 @@
 // 시나리오
 //   zipf   : 방송 1,000개, Zipf(s=1.2). 평상시 피크를 가정한 기본 실험
 //   hotspot: 전량을 방송 1개로. 인기 방송 하나에 후원이 몰리는 순간의 상한 측정
+//   uniform: 방송 1,000개에 고르게. 쏠림이 없을 때 자동 슬롯이 어떻게 하는지 본다
 import http from "k6/http";
 import { check } from "k6";
 import { Trend, Counter } from "k6/metrics";
@@ -37,6 +38,10 @@ const cdf = (() => {
 
 function pickLive() {
   if (SCENARIO === "hotspot") return 1;
+  // uniform: 방송 전체에 고르게 뿌린다. 자동 슬롯이 "쏠림이 없을 때도 슬롯을 헛되이
+  // 늘리는가"를 보려면 이 조건이 필요하다. 쏠린 부하에서만 재면 자동 조절이
+  // 실제로 조절을 하는지, 그냥 항상 늘리는지 갈리지 않는다.
+  if (SCENARIO === "uniform") return 1 + Math.floor(Math.random() * LIVES);
   const r = Math.random();
   let lo = 0, hi = LIVES - 1;
   while (lo < hi) {

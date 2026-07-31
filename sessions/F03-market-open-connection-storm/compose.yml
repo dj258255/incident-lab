@@ -23,6 +23,11 @@ services:
     environment:
       # 계층별 몫을 가르는 조건에서만 바꾼다. 기본 200은 Spring Boot 기본값과 같다.
       TOMCAT_MAX_THREADS: ${TOMCAT_MAX_THREADS:-200}
+      # 풀 크기를 바꿔 가며 재려고 밖으로 뺀다. 기본값은 application.properties 와 같은 10이다.
+      # Spring Boot 의 완화 바인딩이 이 환경변수를 hikari.maximum-pool-size 로 읽는다.
+      SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: ${POOL_SIZE:-10}
+      # 부하 차단 허용 수. 풀 크기와 같게 두는 것이 기본이라 함께 움직인다.
+      MTS_SHED_PERMITS: ${SHED_PERMITS:-10}
     expose:
       - "8080"
     # 부하(k6)는 같은 compose 네트워크에서 app:8080으로 붙는다. 아래 18083은 부하 경로가 아니라

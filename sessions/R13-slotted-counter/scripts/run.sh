@@ -43,7 +43,9 @@ pkill -f 'sponsor-api.jar' 2>/dev/null || true
 sleep 1
 
 # 힙을 고정한다. 변형마다 힙이 달라지면 GC 동작이 달라져 비교가 흔들린다.
+# 자동 슬롯의 문턱을 밖에서 받는다. 안 주면 앱 기본값(lab.auto-step=200)이다.
 MODE="$MODE" COUNTER_SLOTS="$SLOTS" LIVES="$LIVES" \
+  ${AUTO_STEP:+LAB_AUTO_STEP="$AUTO_STEP"} \
   "$JAVA_BIN" -Xms1g -Xmx1g -XX:+UseG1GC \
   -jar "$ROOT/app/build/libs/sponsor-api.jar" > "$OUT/${LABEL}.app.log" 2>&1 &
 APP_PID=$!

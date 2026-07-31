@@ -1,0 +1,18 @@
+# 대량 삽입: 같은 빈 테이블에서 20000행
+# MySQL 8.4.3
+
+## A. batch_size=500, rewriteBatchedStatements=true
+  saveAll 자동 ID(IDENTITY)            8.34초  쿼리  20010개  적재 20000행
+  saveAll 직접 ID                      8.57초  쿼리  20090개  적재 20000행
+  saveAll 직접 ID + Persistable        0.45초  쿼리     87개  적재 20000행
+  JDBC batchUpdate                       0.32초  쿼리      9개  적재 20000행
+
+## B. batch_size=500, rewriteBatchedStatements=false
+  saveAll 직접 ID                     15.91초  쿼리  40052개  적재 20000행
+  saveAll 직접 ID + Persistable        7.12초  쿼리  20049개  적재 20000행
+  JDBC batchUpdate                       6.81초  쿼리  20010개  적재 20000행
+
+## 정리
+  쿼리 수는 SHOW GLOBAL STATUS 의 Questions 차분입니다. 왕복이 줄었는지를 봅니다.
+  네 방식 모두 ID 를 직접 부여하는 조건(saveAll 자동 ID 제외)이고 빈 테이블에 넣습니다.
+  각 조건 1회 실행입니다.

@@ -1,0 +1,33 @@
+SET
+INFO:  aggressively vacuuming "spoon.public.big"
+INFO:  launched 2 parallel vacuum workers for index vacuuming (planned: 2)
+INFO:  finished vacuuming "spoon.public.big": index scans: 1
+pages: 0 removed, 61729 remain, 61729 scanned (100.00% of total)
+tuples: 1000000 removed, 4000000 remain, 0 are dead but not yet removable
+removable cutoff: 600843, which was 0 XIDs old when operation ended
+new relfrozenxid: 600843, which is 120011 XIDs ahead of previous value
+frozen: 61729 pages from table (100.00% of total) had 4000000 tuples frozen
+index scan needed: 61729 pages from table (100.00% of total) had 1000000 dead item identifiers removed
+index "big_pkey": pages: 13712 in total, 0 newly deleted, 0 currently deleted, 0 reusable
+index "big_i1": pages: 13713 in total, 0 newly deleted, 0 currently deleted, 0 reusable
+index "big_i2": pages: 4246 in total, 664 newly deleted, 664 currently deleted, 0 reusable
+index "big_i3": pages: 4237 in total, 0 newly deleted, 0 currently deleted, 0 reusable
+index "big_i4": pages: 4233 in total, 0 newly deleted, 0 currently deleted, 0 reusable
+index "big_i5": pages: 19228 in total, 0 newly deleted, 0 currently deleted, 0 reusable
+avg read rate: 198.808 MB/s, avg write rate: 491.665 MB/s
+buffer usage: 191977 hits, 58051 misses, 143564 dirtied
+WAL usage: 242451 records, 163606 full page images, 1054164546 bytes
+system usage: CPU: user: 0.76 s, system: 0.63 s, elapsed: 2.28 s
+INFO:  aggressively vacuuming "spoon.pg_toast.pg_toast_16487"
+INFO:  finished vacuuming "spoon.pg_toast.pg_toast_16487": index scans: 0
+pages: 0 removed, 0 remain, 0 scanned (100.00% of total)
+tuples: 0 removed, 0 remain, 0 are dead but not yet removable
+removable cutoff: 600843, which was 0 XIDs old when operation ended
+new relfrozenxid: 600843, which is 120004 XIDs ahead of previous value
+frozen: 0 pages from table (100.00% of total) had 0 tuples frozen
+index scan not needed: 0 pages from table (100.00% of total) had 0 dead item identifiers removed
+avg read rate: 0.000 MB/s, avg write rate: 0.000 MB/s
+buffer usage: 22 hits, 0 misses, 0 dirtied
+WAL usage: 1 records, 0 full page images, 188 bytes
+system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+VACUUM

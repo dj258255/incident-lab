@@ -1,0 +1,27 @@
+INFO:  vacuuming "lab.public.orders_v2"
+INFO:  finished vacuuming "lab.public.orders_v2": index scans: 1
+pages: 0 removed, 91022 remain, 91022 scanned (100.00% of total)
+tuples: 1799612 removed, 3000000 remain, 0 are dead but not yet removable
+removable cutoff: 813, which was 0 XIDs old when operation ended
+new relfrozenxid: 772, which is 3 XIDs ahead of previous value
+frozen: 19 pages from table (0.02% of total) had 287 tuples frozen
+index scan needed: 42636 pages from table (46.84% of total) had 2999563 dead item identifiers removed
+index "orders_v2_pkey": pages: 16454 in total, 0 newly deleted, 0 currently deleted, 0 reusable
+avg read rate: 446.644 MB/s, avg write rate: 390.636 MB/s
+buffer usage: 110587 hits, 130632 misses, 114251 dirtied
+WAL usage: 175659 records, 51645 full page images, 76130026 bytes
+system usage: CPU: user: 1.43 s, system: 0.44 s, elapsed: 2.28 s
+INFO:  vacuuming "lab.pg_toast.pg_toast_16397"
+INFO:  finished vacuuming "lab.pg_toast.pg_toast_16397": index scans: 0
+pages: 0 removed, 0 remain, 0 scanned (100.00% of total)
+tuples: 0 removed, 0 remain, 0 are dead but not yet removable
+removable cutoff: 813, which was 0 XIDs old when operation ended
+new relfrozenxid: 813, which is 43 XIDs ahead of previous value
+frozen: 0 pages from table (100.00% of total) had 0 tuples frozen
+index scan not needed: 0 pages from table (100.00% of total) had 0 dead item identifiers removed
+avg read rate: 2.042 MB/s, avg write rate: 0.000 MB/s
+buffer usage: 32 hits, 1 misses, 0 dirtied
+WAL usage: 1 records, 0 full page images, 188 bytes
+system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+INFO:  analyzing "public.orders_v2"
+INFO:  "orders_v2": scanned 30000 of 91022 pages, containing 985876 live rows and 0 dead rows; 30000 rows in sample, 2991214 estimated total rows

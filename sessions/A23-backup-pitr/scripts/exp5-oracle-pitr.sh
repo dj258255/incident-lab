@@ -30,7 +30,12 @@ EOF
 }
 
 # sqlplus 출력은 앞에 탭이 붙는다. 공백만 보는 패턴으로는 못 잡는다.
-ready(){ SQL "SELECT 'PING' FROM dual;" | grep -q "PING"; }
+# 준비 확인. 질의문에 없는 문자열이 결과로 나와야 성공으로 본다.
+# 원래 SELECT 'PING' 을 던지고 출력에서 PING 을 찾았는데, 실패하면 sqlplus 가
+# 질의문을 그대로 echo 하므로 그 안의 PING 이 매칭됐다. 인스턴스가 안 떠 있는데도
+# 준비된 것으로 판정해 그대로 진행했고, 실험 전체가 ORA-01034 로 채워졌다.
+# 문자열을 이어 붙이면 질의문에는 PING 이 없고 결과에만 나온다.
+ready(){ SQL "SELECT 'PI'||'NG' FROM dual;" | grep -q "PING"; }
 for _ in $(seq 1 120); do ready && break; sleep 5; done
 ready || { echo "중단: a23-oracle 이 쿼리를 받지 못합니다" >&2; SQL "SELECT 1 FROM dual;" | head -5 >&2; exit 2; }
 

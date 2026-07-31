@@ -395,3 +395,80 @@ A·B·C 가 구별되지 않고, E 가 대조군 D 와 같은 수준입니다.
 - **CSV 라벨에 쉼표를 넣으면 열이 밀립니다.** 라벨을 `/` 로 바꾸고 다시 돌렸습니다.
 - **결과 파일이 있어도 데이터는 없을 수 있습니다.** A08 은 컨테이너 정리로 700만 행이
   사라진 상태였고, 시드부터 다시 돌려야 했습니다(38초).
+
+---
+
+## 2026-07-31 6차: 32편 전수 재훑기
+
+앞 회차들이 다루지 않은 편까지 전부 열어 "이 환경에서 실제로 되는가"를 다시 나눴습니다.
+아래는 **된다고 판단해 스크립트를 쓴 항목**과 **되는데 아직 안 쓴 항목**입니다.
+
+### 이 회차에 찾은 잘못된 항목
+
+- **F07 nasdaq-ipo-livelock**: "취소를 큐에 모아 라운드 사이에만 반영하는 설계 같은 대안은
+  구현하지 않았습니다"라고 적혀 있었는데, **해소 A(스냅샷 동결)의 구현이 정확히 그것입니다.**
+  코드 주석이 "계산 중 도착한 취소는 접수만 하고 다음 라운드로 이월"이라 적고 결과 표에
+  `이월취소` 열까지 있습니다. **이미 한 것을 안 했다고 적어 둔 항목**입니다.
+  실제로 안 한 것(검증을 유지한 채 재계산 상한으로 확정하는 설계, 취소 우선순위 큐)으로
+  문구를 바꿨습니다.
+
+- **호스트 사양 미기록 7편**: 소급해 채우려다 `index-not-used` 가 Rocky Linux 9.6 /
+  ARM Neoverse-N1 을 기록하고 있는 것을 봤습니다. 이 랩은 최소 두 장비를 오갔습니다.
+  원 회차의 호스트를 이 맥으로 단정하면 틀립니다. "2026-07-31 재측정 회차는 이 호스트,
+  그 이전은 기록 없음"으로 갈라 적었습니다. `tools/capture-env.sh` 를 새로 만들어
+  `nproc`·`free` 부재(macOS)에서 조용히 빈 값이 나오던 문제도 함께 고쳤습니다.
+
+### 스크립트를 쓴 항목 (큐에 걸림)
+
+| 세션 | 항목 |
+|---|---|
+| A08 | 콜드 출발, 쓰기 혼합 축소, 코어 수, 리드어헤드 카운터, 인스턴스 8 |
+| A14 | 13 대 17 대조, 멀티XID 경로, failsafe 반복 3회 |
+| A18 | `pg_waldump` 로 레코드·FPI 분해, autovacuum off, v10 분리, 압축 대조 |
+| A22 | `CONVERT` 방향, 조건별 곡선, 선행 와일드카드 재설계 |
+| R03 | 반복 3회, 인스턴스별 쿼리 수, `maxLifetime` 분리 |
+| R17 | MDL 대조군, `LOCK=NONE`, `OPTIMIZE TABLE` |
+| F02 | 설계 넷(문장/행/전이 테이블/물질화) 비용과 직렬화 |
+| F07 | 상한 1초·10초·60초 스윕 |
+
+### 되는데 아직 스크립트를 안 쓴 항목
+
+**없습니다.** 2026-07-31 에 전부 작성해 큐에 걸었습니다. 아래가 그 목록입니다.
+
+| 세션 | 스크립트 | 잡는 항목 |
+|---|---|---|
+| A06 gap-lock | `scripts/exp-extra.py` | 획득 순서 엇갈림, 락 수 반복, 백오프 네 방식, `SKIP LOCKED` 가 통하는 큐 |
+| A08 buffer-pool | `scripts/run-extra.sh` | 콜드 출발, 쓰기 혼합 축소, 코어 수, 리드어헤드, 인스턴스 8 |
+| A09 planner-stats | `scripts/exp-probability-autoanalyze.sh` | `null_frac=1` 확률 200회, 한 컬럼만 target, 자동 analyze 방아쇠 |
+| A14 xid-wraparound | `scripts/exp-version-diff.sh` | 13 대 17, 멀티XID 경로, failsafe 반복 |
+| A18 write-amplification | `scripts/exp2-waldump.sh` | `pg_waldump` 분해, autovacuum off, v10 분리, 압축 대조 |
+| A19 subtransaction | `scripts/exp-version-and-under64.sh` | 16 대 17, 활성 63 조건 |
+| A22 index-not-used | `scripts/exp-convert-side.py` | `CONVERT` 방향, 조건별 곡선, 와일드카드 재설계 |
+| A23 backup-pitr | `scripts/exp6-oracle-archivelog.sh`, `exp7-logical-vs-physical.sh` | 아카이브 로그 전환, 논리 대 물리 복원 |
+| B31 threadlocal | `scripts/exp-tomcat-and-oomkill.sh` | 실제 Tomcat 재배포, 커널 OOM-Kill, 사이클 반복 |
+| B43 expand-contract | `scripts/exp-backfill-evidence.sh` | 백필 지연의 양성 증거, VACUUM 회수, 비율 반복 |
+| B52 jpa-list-api | `scripts/exp-insert-extra.sh` | `batch_size` 스윕, 큰 테이블 삽입, MySQL 타이브레이커 |
+| F01 hanmac | `spring/` 의 `/orders/leaky`, `/orders/leaky-independent` | 가드에 구멍이 있을 때, 임계값 스윕 |
+| F02 ghost-shares | `sql/08-designs.sql`, `scripts/run-designs.sh` | 설계 넷 비용, 증감 구분, 직렬화 |
+| F03 market-open | `scripts/exp-pool-sweep.sh` | 풀 크기 스윕, `max-threads` 반복 |
+| F07 nasdaq | `scripts/run-cap-sweep.sh` | 상한 1초·10초·60초 |
+| F13 matching | `app/Principles.java` | 원칙 넷, 동시호가 예외 |
+| F17 bigdecimal | `app/SeedSweep.java` | 걸음별 반올림 방향, 시드 30개 |
+| R01 replica-promotion | `scripts/exp-after-commit-load.sh` | `AFTER_COMMIT` 부하 아래 |
+| R02 failover-dns | `scripts/exp-permanent-and-readonly.sh` | 영구 캐시, 읽기 전용 승격 구간 |
+| R03 reader-skew | `scripts/exp-repeat-load.sh` | 반복 3회, 인스턴스별 쿼리 수, `maxLifetime` 분리 |
+| R04 replication-slot | `scripts/exp4-heartbeat.sh` | 하트비트 다섯 조건 |
+| R12 perf-insights | `scripts/exp-lock-alternatives.py` | 락 판별 세 방법, top SQL 반복 |
+| R13 slotted-counter | `scripts/exp-uniform-and-repeat.sh` | 고른 부하의 자동 슬롯, 문턱 스윕, 복제 반복 |
+| R14 charset-timezone | `scripts/exp-write-and-jdbc.sh` | 전환 중 쓰기, 두 tzdata 한 서버, 자바의 DST |
+| R16 batch-cache | `scripts/exp-sustained.sh` | 지속 스캔 반복 횟수 기록 |
+| R17 timeseries | `scripts/exp-mdl-control.sh` | MDL 대조군, `LOCK=NONE`, `OPTIMIZE TABLE` |
+
+실행은 Docker VM 이 7.7GB 뿐이라 순차 큐로 돕니다. 결과가 나오는 대로 각 세션의
+README 와 블로그 글에 절을 붙입니다.
+
+### 이 환경에서 안 되는 것으로 남는 것
+
+클라우드 실계정(RDS·Aurora·CloudWatch), TB급 규모, Linux 호스트가 필요한 커널·디스크
+조건(loop 장치, `dm-delay`, 블록 I/O 스로틀링), 1차 자료 확보(의결서·판결문·지면 원문),
+그리고 공개된 적 없는 사내 원인 분석입니다.

@@ -17,7 +17,7 @@ RDS의 Performance Insights는 관리형 DB 관측의 표준 화면이었습니�
 
 | 항목 | 값 |
 |---|---|
-| 호스트 | **기록하지 않았습니다.** `uname -srm`·`nproc`·`free -g`가 없어 CPU 수, 메모리, 저장 장치를 확인할 수 없습니다 |
+| 호스트 | 2026-07-31 재측정 회차는 macOS 26.3.1, Apple M2 Pro 12코어, 32GB 에서 돌았고 컨테이너 런타임 VM 은 12코어 7.7GB 입니다(`results/00-host.txt`). 그 이전 회차의 호스트는 기록이 없어 확인되지 않습니다 |
 | 컨테이너 | MySQL 8.4.3, `cpus: 4`, `mem_limit: 2g`, 버퍼 풀 256MB, `max_connections=200` |
 | 데이터 | `small` 10만 행, `hotrow` 1행, `big` 400만 행 약 1.1GB |
 | 부하 생성기 | Python(CPython) + PyMySQL, 스레드 8개, 동기 드라이버 |

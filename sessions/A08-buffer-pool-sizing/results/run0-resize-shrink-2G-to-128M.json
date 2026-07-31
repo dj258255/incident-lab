@@ -1,0 +1,59 @@
+{
+  "label": "shrink-2G-to-128M",
+  "dist": "hot",
+  "buffer_pool_mb": 2048,
+  "chunk_mb": 128,
+  "instances": 1,
+  "flush_method": "O_DIRECT",
+  "mysql_version": "8.4.3",
+  "procs": 2,
+  "hot_frac": 0.25,
+  "hot_prob": 0.95,
+  "id_min": 1,
+  "id_max": 7412245,
+  "row_count": 7000000,
+  "hot_max_id": 1853062,
+  "warmup_s": 30,
+  "duration_s": 90,
+  "queries": 228048,
+  "qps": 2533.9,
+  "p50_ms": 0.387,
+  "p95_ms": 1.978,
+  "p99_ms": 4.188,
+  "max_ms": 374.946,
+  "mean_ms": 0.777,
+  "read_requests": 750309,
+  "disk_reads": 61027,
+  "hit_rate_pct": 91.8664,
+  "data_read_mb": 953.6,
+  "pages_data": 8192,
+  "pages_total": 8192,
+  "action": {
+    "sql": "SET GLOBAL innodb_buffer_pool_size = 134217728",
+    "stmt_start_s": 30.03,
+    "stmt_ms": 4.6,
+    "settle_s": 3.48,
+    "final_status": "Completed resizing buffer pool at 260729  0:25:58.",
+    "status_trail": [
+      [
+        0.01,
+        "buffer pool 0 : withdrawing blocks. (38969/122868)"
+      ],
+      [
+        3.28,
+        "buffer pool 0 : resizing with chunks 16 to 1."
+      ],
+      [
+        3.38,
+        "Resizing also other hash tables."
+      ],
+      [
+        3.48,
+        "Completed resizing buffer pool at 260729  0:25:58."
+      ]
+    ],
+    "final_pool_mb": 128,
+    "saw_status": true,
+    "at_s": 30
+  }
+}

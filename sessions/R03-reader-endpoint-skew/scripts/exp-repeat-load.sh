@@ -13,7 +13,7 @@
 #        이 세션의 주장이 쿼리 축에서도 성립한다.
 #
 #   3) maxLifetime 흔들림을 분리 측정하지 않았습니다
-#      → DNS 캐시를 끈 상태(networkaddress.cache.ttl=0)에서 maxLifetime 만 바꾼다.
+#      → DNS 캐시를 끈 상태(sun.net.inetaddr.ttl=0)에서 maxLifetime 만 바꾼다.
 #        캐시가 켜져 있으면 재생성 시각이 흩어져도 같은 IP 로 가므로 두 원인이 섞인다.
 set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -104,8 +104,14 @@ run_case long  MAXLIFE=600000
 
 # DNS 캐시를 끄고 maxLifetime 만 바꾼다. 이러면 재생성될 때마다 DNS 를 새로 묻는다.
 # 캐시가 켜져 있으면 재생성 시각이 흩어져도 같은 IP 로 가므로 두 원인이 섞인다.
-run_case short-nocache MAXLIFE=30000  JAVA_TOOL_OPTIONS=-Dnetworkaddress.cache.ttl=0
-run_case long-nocache  MAXLIFE=600000 JAVA_TOOL_OPTIONS=-Dnetworkaddress.cache.ttl=0
+#
+# 옵션 이름 주의. networkaddress.cache.ttl 은 java.security 파일이 읽는 **보안 속성**이라
+# -D 로 넘기면 안 먹는다. 시스템 속성으로 같은 일을 하는 것은 sun.net.inetaddr.ttl 이다.
+# 처음에 앞의 것을 넘겨 돌렸더니 캐시가 그대로 켜진 채로 "캐시 끔" 조건이 됐고,
+# 세 회차가 전부 중앙 100% 로 나와 캐시 조건과 구별되지 않았다.
+# **에러가 안 나고 조용히 무시되는 쪽이라 결과만 보면 알 수 없다.**
+run_case short-nocache MAXLIFE=30000  JAVA_TOOL_OPTIONS=-Dsun.net.inetaddr.ttl=0
+run_case long-nocache  MAXLIFE=600000 JAVA_TOOL_OPTIONS=-Dsun.net.inetaddr.ttl=0
 
 echo
 echo "## 정리"

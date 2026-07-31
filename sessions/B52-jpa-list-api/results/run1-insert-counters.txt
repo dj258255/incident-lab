@@ -1,0 +1,6 @@
+$ # 1만 건 삽입 시 서버가 실제로 받은 쿼리 수 (SHOW GLOBAL STATUS 전후 차이)
+$ # 앱 조건: hibernate.jdbc.batch_size=500, rewriteBatchedStatements=true
+mode                 elapsed   SELECT      INSERT
+saveAll(IDENTITY)     4620ms        2       10000    <- 배치가 전혀 안 됨
+saveAll(직접ID)       4555ms    10022          20    <- 배치는 되나 merge가 행마다 SELECT
+jdbc batchUpdate       141ms        3           1    <- multi-value INSERT 한 방

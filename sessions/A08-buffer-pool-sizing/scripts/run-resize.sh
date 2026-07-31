@@ -11,6 +11,8 @@ cd "$(dirname "$0")/.."
 WARMUP=${WARMUP:-30}
 DURATION=${DURATION:-90}
 AT=${AT:-30}
+# 반복 측정용 접두어. run-sweep.sh 와 같은 이유다.
+PREFIX=${OUT_PREFIX:-}
 
 # 128M 같은 표기를 바이트로 바꾼다. 원래 numfmt --from=iec 를 썼는데 그것은 GNU coreutils
 # 명령이라 macOS 기본 설치에는 없다. 없으면 명령 치환이 빈 문자열이 되고 SQL 이
@@ -38,8 +40,8 @@ run() {
     --label "$name" \
     --action-at "$AT" \
     --action-sql "SET GLOBAL innodb_buffer_pool_size = ${target_bytes}" \
-    --out "/results/resize-${name}.json" \
-    --timeline "/results/resize-${name}-timeline.csv"
+    --out "/results/${PREFIX}resize-${name}.json" \
+    --timeline "/results/${PREFIX}resize-${name}-timeline.csv"
 }
 
 # 대조군: 같은 부하를 같은 시간 동안 걸되 리사이즈를 하지 않는다.
@@ -50,8 +52,8 @@ BP_SIZE=128M docker compose up -d --wait mysql
 BP_SIZE=128M docker compose run --rm load python workload.py \
   --dist hot --warmup "$WARMUP" --duration "$DURATION" \
   --label "control-128M" \
-  --out "/results/resize-control.json" \
-  --timeline "/results/resize-control-timeline.csv"
+  --out "/results/${PREFIX}resize-control.json" \
+  --timeline "/results/${PREFIX}resize-control-timeline.csv"
 
 run "grow-128M-to-2G" 128M 2G
 run "shrink-2G-to-128M" 2G 128M

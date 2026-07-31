@@ -1,0 +1,39 @@
+# MDL 대조군, LOCK=NONE, OPTIMIZE TABLE
+# MySQL 8.4.3
+# 조건마다 1회 실행입니다.
+
+  현재 파티션: p20260714 p20260715 p20260716 p20260717 p20260718 p20260719 p20260720 p20260721 p20260722 p20260723 p20260724 p20260725 p20260726 p20260727 
+
+## A. 대조군: 열린 트랜잭션만 있고 DDL 이 없다
+  DDL 이 없으면 열린 트랜잭션은 다른 SELECT 를 막지 않아야 합니다.
+  일반 SELECT 소요 = 89ms
+
+## B. 열린 트랜잭션 뒤에 DROP PARTITION 이 서면
+  떨군 파티션 = p20260714
+  DROP PARTITION 대기 = 18030ms
+  그 뒤에 선 일반 SELECT = 14994ms
+
+## C. DROP PARTITION 에 LOCK=NONE 을 명시하면
+  MySQL 매뉴얼은 DROP PARTITION 이 ALGORITHM=DEFAULT, LOCK=DEFAULT 로 동작한다고
+  적습니다. LOCK=NONE 을 요구하면 받아 주는지부터 봅니다.
+  거부됨: ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=DEFAULT, LOCK=NONE' at line 1 
+
+### 세 조건 나란히
+  조건                                     DDL 대기       SELECT
+  A. 열린 트랜잭션만 (DDL 없음)              -         89ms
+  B. 열린 트랜잭션 + DROP PARTITION       18030ms      14994ms
+  C. 열린 트랜잭션 + LOCK=NONE          미실행    미실행
+
+## D. OPTIMIZE TABLE 로 공간을 되찾는 비용
+  DELETE 가 비운 공간은 테이블 파일에 남습니다. 되찾으려면 재구축이 필요합니다.
+  실행 전 크기 0MB, DATA_FREE 0MB
+  OPTIMIZE TABLE 소요 = 205ms
+  그동안 들어온 일반 SELECT = 72ms
+  실행 후 크기 0MB, DATA_FREE 0MB
+  MySQL 이 뭐라고 답했는지:
+    | spoon.watch_log_part | optimize | note     | Table does not support optimize, doing recreate + analyze instead |
+    | spoon.watch_log_part | optimize | status   | OK                                                                |
+
+  InnoDB 는 OPTIMIZE TABLE 을 그대로 지원하지 않고 ALTER TABLE ... FORCE 로 바꿔
+  실행합니다. 그래서 위 note 에 'Table does not support optimize' 가 뜹니다.
+  재구축이므로 온라인 DDL 이 적용되고, 그동안 SELECT 는 위 값만큼만 기다립니다.

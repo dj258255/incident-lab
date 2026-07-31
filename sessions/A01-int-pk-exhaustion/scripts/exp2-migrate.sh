@@ -23,6 +23,19 @@ say() { echo "$*" | tee -a "$OUT/exp2.txt"; }
 
 ROWS="${ROWS:-3000000}"
 
+# MySQL 이 쿼리를 받을 때까지 기다린다. 없으면 컨테이너가 뜨자마자 시작한 회차에서
+# CREATE TABLE 이 실패하고, 그 뒤 ALTER 가 "Table doesn't exist"로 0.16초에 끝난다.
+# 반복 측정 run1 이 실제로 그렇게 나왔다. 실패한 회차가 "아주 빠른 회차"로 보이는 쪽이라
+# 표에 그대로 들어가면 결론을 뒤집는다.
+wait_ready() {
+  for _ in $(seq 1 90); do
+    [ "$(MQ 'SELECT 1')" = "1" ] && return 0
+    sleep 2
+  done
+  echo "중단: MySQL 이 쿼리를 받지 못합니다" >&2
+  exit 2
+}
+
 seed() {
   M -e "DROP TABLE IF EXISTS $1;
         CREATE TABLE $1 (
@@ -110,7 +123,10 @@ say "=============================================================="
 
 say ""
 say "방법 A. ALTER TABLE ... MODIFY id BIGINT (한 방)"
+wait_ready
 seed sponsor_a
+SEEDED=$(MQ "SELECT COUNT(*) FROM sponsor_a")
+[ "${SEEDED:-0}" -ge "$ROWS" ] || { echo "중단: sponsor_a 적재가 ${SEEDED:-0}행에서 멈췄습니다(기대 ${ROWS})" >&2; exit 3; }
 say "  적재 $(MQ "SELECT COUNT(*) FROM sponsor_a")행, $(MQ "SELECT ROUND((DATA_LENGTH+INDEX_LENGTH)/1024/1024) FROM information_schema.TABLES WHERE TABLE_SCHEMA='spoon' AND TABLE_NAME='sponsor_a'")MB"
 writer_start sponsor_a "$OUT/writer-a.csv"; WPID=$(cat "$OUT/writer.pid")
 sleep 5

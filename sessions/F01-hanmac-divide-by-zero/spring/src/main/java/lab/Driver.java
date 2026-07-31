@@ -55,6 +55,23 @@ public class Driver implements ApplicationRunner {
         return b;
     }
 
+    /**
+     * NaN 만 섞은 배치. 가드에 구멍이 있는 조건의 대조에 반드시 필요하다.
+     *
+     * 처음에는 orderedBook() 으로 조건 E 와 F 를 재고 둘이 같은 결과를 냈다.
+     * 이유는 Infinity 10건이 NaN 보다 먼저 오기 때문이다. 구멍 난 가드도 Infinity 는
+     * 잡으므로 그때 killswitch.record() 가 불려 임계값에 닿고, 뒤따르는 NaN 이
+     * 킬스위치에 막힌다. **가드가 못 잡는 값을 킬스위치가 막은 것이 아니라
+     * 다른 종류의 비정상이 먼저 와서 대신 켜 준 것이다.**
+     * 그 우연을 걷어내려면 가드가 아무것도 못 잡는 배치가 필요하다.
+     */
+    private static List<Ord> nanOnlyBook() {
+        List<Ord> b = new ArrayList<>();
+        for (int i = 0; i < 100; i++) b.add(new Ord(Type.NORMAL, 100.0, 3.0, 30.0));
+        for (int i = 0; i < 20; i++)  b.add(new Ord(Type.NAN, 100.0, 0.0, 0.0));
+        return b;
+    }
+
     /** 같은 120건을 고정 시드로 섞는다. 최소 재현과 같은 시드다. */
     private static List<Ord> mixedBook() {
         List<Ord> b = new ArrayList<>(orderedBook());
@@ -171,6 +188,70 @@ public class Driver implements ApplicationRunner {
         printCondition("조건 B", "/orders/guard · 정렬 배치 · 유한성 가드 단독", guardOrdered);
         printCondition("조건 C", "/orders/fixed · 섞은 배치 · 유한성 가드 + 킬스위치", fixedMixed);
         printCondition("조건 D", "/orders/guard · 섞은 배치 · 유한성 가드 단독", guardMixed);
+
+        // ── 2026-07-31 추가 ────────────────────────────────────────────
+        // "못 한 것"의 두 항목을 잡는다.
+        //   가드가 놓치는 값이 있을 때 킬스위치가 무엇을 건지는가
+        //   임계값을 3 하나만 썼다
+        System.out.println("== [Spring] 가드에 구멍이 있을 때 킬스위치가 무엇을 건지는가 ==");
+        System.out.println();
+        System.out.println("  앞의 조건들은 가드가 완전한 화이트리스트(isFinite)라 NaN 도 Infinity 도 다 잡습니다.");
+        System.out.println("  실무의 가드는 자주 불완전합니다. isInfinite 만 확인하거나 절댓값으로 상한을 보면");
+        System.out.println("  Infinity 는 걸리는데 NaN 은 두 비교가 모두 false 라 그대로 지나갑니다.");
+        System.out.println("  그 조건에서 킬스위치의 탐지원이 가드와 같은지 다른지로 결과가 갈립니다.");
+        System.out.println();
+        List<Ord> nanOnly = nanOnlyBook();
+        killswitch.reset();
+        int[][] leakyOrdered = fire("/orders/leaky", ordered);
+        killswitch.reset();
+        int[][] leakyIndep = fire("/orders/leaky-independent", ordered);
+        killswitch.reset();
+        int[][] leakyNan = fire("/orders/leaky", nanOnly);
+        killswitch.reset();
+        int[][] leakyNanIndep = fire("/orders/leaky-independent", nanOnly);
+        System.out.println("  먼저 Infinity 가 섞인 배치입니다(정상 100 + Inf 10 + NaN 10).");
+        printCondition("조건 E", "/orders/leaky · 구멍 난 가드 + 가드 연동 킬스위치", leakyOrdered);
+        printCondition("조건 F", "/orders/leaky-independent · 같은 가드 + 독립 탐지 킬스위치", leakyIndep);
+        System.out.println("  두 조건이 같습니다. 가드가 Infinity 는 잡으므로 그때 킬스위치가 켜지고");
+        System.out.println("  뒤따르는 NaN 이 막힙니다. **가드가 못 잡는 값을 킬스위치가 막은 것이 아니라");
+        System.out.println("  다른 종류의 비정상이 먼저 와서 대신 켜 준 것입니다.** 그 우연을 걷어냅니다.");
+        System.out.println();
+        System.out.println("  이번에는 NaN 만 있는 배치입니다(정상 100 + NaN 20). 가드가 아무것도 못 잡습니다.");
+        printCondition("조건 E2", "/orders/leaky · NaN 만 · 가드 연동 킬스위치", leakyNan);
+        printCondition("조건 F2", "/orders/leaky-independent · NaN 만 · 독립 탐지 킬스위치", leakyNanIndep);
+        System.out.printf("  조건 E2 는 NaN %d건이 접수됐습니다. 킬스위치가 세는 것이 '가드가 거부한 건수'라,%n",
+                of(leakyNan, Type.NAN, CREATED));
+        System.out.println("  가드가 못 잡은 값은 거부되지 않으니 킬스위치도 세지 못합니다.");
+        System.out.printf("  조건 F2 는 NaN 접수 %d건입니다. 탐지원을 접수 결과(기준가 이탈)로 옮기면%n",
+                of(leakyNanIndep, Type.NAN, CREATED));
+        System.out.println("  가드가 무엇을 놓치든 셀 수 있습니다.");
+        System.out.println();
+        System.out.println("  **킬스위치의 값어치는 존재가 아니라 탐지원이 가드와 독립인가에서 나옵니다.**");
+        System.out.println("  가드가 거부한 건수만 세는 킬스위치는 가드의 사본이지 두 번째 방어선이 아닙니다.");
+        System.out.println();
+
+        // 임계값 스윕. 발동까지 몇 건이 지나가는지와 정상 주문의 부수 피해를 함께 본다.
+        System.out.println("== [Spring] 킬스위치 임계값 스윕 (섞은 배치, /orders/fixed) ==");
+        System.out.println();
+        System.out.printf("  %-8s %10s %10s %10s %14s%n",
+                "임계값", "201 접수", "422 거부", "503 차단", "정상 부수 피해");
+        int original = killswitch.threshold();
+        for (int th : new int[]{1, 3, 5, 10, 20, 50, 999}) {
+            killswitch.reset();
+            killswitch.setThreshold(th);
+            int[][] t = fire("/orders/fixed", mixed);
+            System.out.printf("  %-8d %10d %10d %10d %14d%n",
+                    th, sum(t, CREATED), sum(t, REJECTED), sum(t, KILLED),
+                    of(t, Type.NORMAL, KILLED));
+        }
+        killswitch.setThreshold(original);
+        killswitch.reset();
+        System.out.println();
+        System.out.println("  임계값 999 는 사실상 킬스위치를 끈 조건입니다. 가드 단독과 같아야 합니다.");
+        System.out.println("  임계값을 낮출수록 비정상은 빨리 멈추고 정상 주문의 부수 피해가 커집니다.");
+        System.out.println("  이 배치는 정상 100 대 비정상 20 이라 그 교환이 눈에 보입니다.");
+        System.out.println("  실제 값은 도메인이 정합니다. 한맥의 경우 2분 남짓에 3만 6천 건이 나갔으므로");
+        System.out.println("  부수 피해를 아끼려다 임계값을 높게 잡는 쪽이 훨씬 비쌌습니다.");
 
         System.exit(SpringApplication.exit(ctx, () -> 0));
     }

@@ -1,8 +1,8 @@
 label,seconds,queries,rows,batch_size,rewrite
-saveAll 자동 ID(IDENTITY),12.739293000,20011,20000,500,true
-saveAll 직접 ID,12.634450000,20092,20000,500,true
-saveAll 직접 ID + Persistable,.527556000,87,20000,500,true
-JDBC batchUpdate,.364336000,9,20000,500,true
-saveAll 직접 ID,19.013075000,40053,20000,500,false
-saveAll 직접 ID + Persistable,7.675580000,20050,20000,500,false
-JDBC batchUpdate,7.388088000,20010,20000,500,false
+saveAll 자동 ID(IDENTITY),8.342111000,20010,20000,500,true
+saveAll 직접 ID,8.570234000,20090,20000,500,true
+saveAll 직접 ID + Persistable,.451032000,87,20000,500,true
+JDBC batchUpdate,.321914000,9,20000,500,true
+saveAll 직접 ID,15.914825000,40052,20000,500,false
+saveAll 직접 ID + Persistable,7.119808000,20049,20000,500,false
+JDBC batchUpdate,6.814184000,20010,20000,500,false

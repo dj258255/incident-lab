@@ -1,0 +1,57 @@
+{
+  "label": "grow-128M-to-2G",
+  "dist": "hot",
+  "buffer_pool_mb": 128,
+  "chunk_mb": 128,
+  "instances": 1,
+  "flush_method": "O_DIRECT",
+  "mysql_version": "8.4.3",
+  "procs": 2,
+  "hot_frac": 0.25,
+  "hot_prob": 0.95,
+  "id_min": 1,
+  "id_max": 7412245,
+  "row_count": 7000000,
+  "hot_max_id": 1853062,
+  "warmup_s": 30,
+  "duration_s": 90,
+  "queries": 1227434,
+  "qps": 13638.2,
+  "p50_ms": 0.128,
+  "p95_ms": 0.218,
+  "p99_ms": 0.26,
+  "max_ms": 47.227,
+  "mean_ms": 0.143,
+  "read_requests": 3968895,
+  "disk_reads": 259108,
+  "hit_rate_pct": 93.4715,
+  "data_read_mb": 4048.9,
+  "pages_data": 49229,
+  "pages_total": 131072,
+  "pages_dirty": 0,
+  "read_ahead": 0,
+  "read_ahead_evicted": 0,
+  "pages_read": 259130,
+  "cold_start": false,
+  "write_ratio": 0.0,
+  "action": {
+    "sql": "SET GLOBAL innodb_buffer_pool_size = 2147483648",
+    "stmt_start_s": 30.0,
+    "stmt_ms": 0.2,
+    "settle_s": 0.15,
+    "final_status": "Completed resizing buffer pool at 260731  4:56:29.",
+    "status_trail": [
+      [
+        0.05,
+        "Resizing also other hash tables."
+      ],
+      [
+        0.15,
+        "Completed resizing buffer pool at 260731  4:56:29."
+      ]
+    ],
+    "final_pool_mb": 2048,
+    "saw_status": true,
+    "at_s": 30
+  }
+}

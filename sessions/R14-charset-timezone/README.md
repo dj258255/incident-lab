@@ -24,7 +24,7 @@
 | 항목 | 값 |
 |---|---|
 | DB | MySQL 8.4.3 공식 Docker 이미지, 기본 설정 (`character_set_server=utf8mb4`, `STRICT_TRANS_TABLES` 포함) |
-| 호스트 사양 | **기록하지 않았습니다.** `uname -srm`·`nproc`·`free -g`를 남기지 않아 어느 장비였는지 확인되지 않습니다 |
+| 호스트 사양 | 2026-07-31 재측정 회차는 macOS 26.3.1, Apple M2 Pro 12코어, 32GB 에서 돌았고 컨테이너 런타임 VM 은 12코어 7.7GB 입니다(`results/00-host.txt`). 그 이전 회차의 호스트는 기록이 없어 확인되지 않습니다 |
 | 자원 상한 | 걸지 않았습니다. 성능 측정이 아니라 동작 재현입니다 |
 | 클라이언트 | mysql CLI, 접속 문자셋을 `--default-character-set=utf8mb4`로 고정 (지뢰 6이 그 이유입니다) |
 | 일시 | 2026-07-29 |

@@ -1,0 +1,121 @@
+# PostgreSQL 13 과 17 의 wraparound 임계값과 문구를 나란히
+# 조건마다 1회 실행입니다.
+
+Unable to find image 'postgres:13' locally
+13: Pulling from library/postgres
+51365f04b688: Pulling fs layer
+67a0685eff33: Pulling fs layer
+289ba9b84cf8: Pulling fs layer
+9830e9766e5f: Pulling fs layer
+2b148d8d601c: Pulling fs layer
+c6e27ff4af67: Pulling fs layer
+8e69676c8795: Pulling fs layer
+5900f9d8e37a: Pulling fs layer
+bb74cba8e387: Pulling fs layer
+fa7624935209: Pulling fs layer
+e77a22e259ea: Pulling fs layer
+9dd2f137d98b: Pulling fs layer
+81c1bd4a8bc2: Pulling fs layer
+1de5cb393304: Pulling fs layer
+5900f9d8e37a: Waiting
+bb74cba8e387: Waiting
+fa7624935209: Waiting
+e77a22e259ea: Waiting
+9dd2f137d98b: Waiting
+81c1bd4a8bc2: Waiting
+1de5cb393304: Waiting
+2b148d8d601c: Waiting
+c6e27ff4af67: Waiting
+8e69676c8795: Waiting
+9830e9766e5f: Waiting
+67a0685eff33: Download complete
+289ba9b84cf8: Verifying Checksum
+289ba9b84cf8: Download complete
+51365f04b688: Verifying Checksum
+51365f04b688: Download complete
+9830e9766e5f: Verifying Checksum
+9830e9766e5f: Download complete
+2b148d8d601c: Verifying Checksum
+2b148d8d601c: Download complete
+8e69676c8795: Verifying Checksum
+8e69676c8795: Download complete
+c6e27ff4af67: Verifying Checksum
+c6e27ff4af67: Download complete
+5900f9d8e37a: Verifying Checksum
+5900f9d8e37a: Download complete
+51365f04b688: Pull complete
+67a0685eff33: Pull complete
+289ba9b84cf8: Pull complete
+9830e9766e5f: Pull complete
+fa7624935209: Verifying Checksum
+fa7624935209: Download complete
+2b148d8d601c: Pull complete
+c6e27ff4af67: Pull complete
+8e69676c8795: Pull complete
+5900f9d8e37a: Pull complete
+e77a22e259ea: Verifying Checksum
+e77a22e259ea: Download complete
+9dd2f137d98b: Verifying Checksum
+9dd2f137d98b: Download complete
+81c1bd4a8bc2: Download complete
+1de5cb393304: Verifying Checksum
+1de5cb393304: Download complete
+bb74cba8e387: Verifying Checksum
+bb74cba8e387: Download complete
+bb74cba8e387: Pull complete
+fa7624935209: Pull complete
+e77a22e259ea: Pull complete
+9dd2f137d98b: Pull complete
+81c1bd4a8bc2: Pull complete
+1de5cb393304: Pull complete
+Digest: sha256:4689940c683801b4ab839ab3b0a0a3555a5fe425371422310944e89eca7d8068
+Status: Downloaded newer image for postgres:13
+  13 = 13.23 (Debian 13.23-1.pgdg13+1)
+  17 = 17.10 (Debian 17.10-1.pgdg13+1)
+
+## 1) vacuum_failsafe_age 는 14 에서 들어왔습니다
+  v13       vacuum_failsafe_age = (없음)     vacuum_multixact_failsafe_age = (없음)
+  v17       vacuum_failsafe_age = 1600000000   vacuum_multixact_failsafe_age = 1600000000
+  13 에는 두 항목이 없습니다. 인덱스 정리를 건너뛰는 응급 모드 자체가 없습니다.
+  그래서 13 에서 wraparound 가 임박하면 VACUUM 이 인덱스를 다 훑고 갑니다.
+
+## 2) 임계값 관련 설정 기본값
+  설정                                             13             17
+  autovacuum_freeze_max_age                   200000000      200000000
+  autovacuum_multixact_freeze_max_age         400000000      400000000
+  vacuum_freeze_min_age                        50000000       50000000
+  vacuum_multixact_freeze_min_age               5000000        5000000
+  vacuum_freeze_table_age                     150000000      150000000
+  vacuum_multixact_freeze_table_age           150000000      150000000
+
+## 3) 같은 질의에 두 버전이 내놓는 문구
+  wraparound 경고 문구는 소스에 상수로 박혀 있고 버전마다 다릅니다.
+  age 를 임계값 위로 올리지 않아도, 남은 XID 를 계산하는 같은 질의로 두 버전의
+  카탈로그 구성을 나란히 볼 수 있습니다.
+  --- v13 ---
+      datname  | age | remaining  
+    -----------+-----+------------
+     postgres  |   8 | 2147483639
+     spoon     |   8 | 2147483639
+     template1 |   8 | 2147483639
+    (3 rows)
+    
+  --- v17 ---
+      datname  | age | remaining  
+    -----------+-----+------------
+     postgres  |   9 | 2147483638
+     spoon     |   9 | 2147483638
+     template1 |   9 | 2147483638
+    (3 rows)
+    
+
+## 4) 멀티XID 는 별도 축입니다
+  한 행을 두 트랜잭션이 동시에 공유 잠금하면 멀티XID 가 만들어집니다.
+  그 age 는 XID age 와 따로 자라고 임계값도 따로입니다.
+  v13       next_multixact_id = 1        튜플에 멀티XID 표시 = 예  relminmxid age = 0
+  v17       next_multixact_id = 1        튜플에 멀티XID 표시 = 예  relminmxid age = 0
+
+  멀티XID 소진은 XID 소진과 다른 카운터입니다. 32비트 공간을 따로 쓰고
+  autovacuum_multixact_freeze_max_age 로 따로 감시합니다. 행을 여러 트랜잭션이
+  동시에 잠그는 패턴(FOR SHARE, 외래 키 검사)이 많은 워크로드에서는 이쪽이 먼저
+  찰 수 있습니다. 이 랩은 존재와 경로만 보였고 소진까지 태우지는 않았습니다.

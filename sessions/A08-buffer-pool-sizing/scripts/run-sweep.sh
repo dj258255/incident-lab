@@ -15,6 +15,13 @@ cd "$(dirname "$0")/.."
 
 SIZES=${SIZES:-"128M 256M 512M 1G 1536M 2G"}
 DISTS=${DISTS:-"uniform hot"}
+# 반복 측정용 접두어. 회차마다 파일 이름을 처음부터 다르게 쓴다.
+#
+# 원래는 회차가 끝난 뒤 sweep-*.json 을 run<N>-* 로 옮기는 방식이었는데,
+# 3회 반복에서 run2 의 hot-2G 파일이 run3 의 내용으로 덮인 채 run2 이름을 달고
+# 있었다(실행 로그와 전수 대조해 발견). 원인은 짚지 못했고, 사후에 이름을 바꾸는
+# 방식 자체를 없앤다. 로그와 파일이 어긋나면 로그가 원본이다.
+PREFIX=${OUT_PREFIX:-}
 WARMUP=${WARMUP:-30}
 DURATION=${DURATION:-60}
 
@@ -26,7 +33,7 @@ for sz in $SIZES; do
     BP_SIZE=$sz docker compose run --rm load python workload.py \
       --dist "$dist" --warmup "$WARMUP" --duration "$DURATION" \
       --label "${dist}-${sz}" \
-      --out "/results/sweep-${dist}-${sz}.json"
+      --out "/results/${PREFIX}sweep-${dist}-${sz}.json"
   done
 done
 

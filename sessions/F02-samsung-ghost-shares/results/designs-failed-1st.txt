@@ -1,0 +1,99 @@
+# 설계 넷의 비용과 동시 매도의 직렬화
+# PostgreSQL 16.14
+# 조건마다 1회 실행입니다.
+
+NOTICE:  table "share_credits" does not exist, skipping
+NOTICE:  table "holdings" does not exist, skipping
+NOTICE:  table "company" does not exist, skipping
+00-seed-holdings.sql: No such file or directory
+Timing is off.
+
+==================================================================
+설계 넷을 나란히: 매도 비용, 매수 비용, 직렬화
+==================================================================
+CREATE TABLE
+TRUNCATE TABLE
+CREATE FUNCTION
+CREATE FUNCTION
+
+--- A. 현재 설계: 문장 단위 트리거 + advisory lock ---
+NOTICE:  trigger "trg_total_cap" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_row" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_trans" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_sync_total" for relation "holdings" does not exist, skipping
+NOTICE:  constraint "chk_total_within_issued" of relation "company" does not exist, skipping
+NOTICE:  column "total_shares" of relation "company" does not exist, skipping
+ERROR:  null value in column "holder" of relation "holdings" violates not-null constraint
+DETAIL:  Failing row contains (1, null, 100, 0).
+CONTEXT:  SQL statement "INSERT INTO holdings (account_id, shares, cash_krw)
+    SELECT g, 100, 0 FROM generate_series(1, 1000) g"
+PL/pgSQL function reset_ledger() line 10 at SQL statement
+
+==================================================================
+동시 매도 넷이 붙었을 때의 직렬화
+==================================================================
+  네 세션이 각각 매도 50회를 던집니다. 총 200회로 위 표와 같은 양입니다.
+  한 세션이 걸리는 시간이 위의 총 소요와 비슷하면 직렬화가 없는 것이고,
+  네 배 가까이 늘어나면 넷이 줄을 선 것입니다.
+
+  설계                       가장 빠른 세션 가장 느린 세션     실패
+NOTICE:  trigger "trg_total_cap" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_row" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_trans" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_sync_total" for relation "holdings" does not exist, skipping
+NOTICE:  constraint "chk_total_within_issued" of relation "company" does not exist, skipping
+NOTICE:  column "total_shares" of relation "company" does not exist, skipping
+ERROR:  null value in column "holder" of relation "holdings" violates not-null constraint
+DETAIL:  Failing row contains (1, null, 100, 0).
+CONTEXT:  SQL statement "INSERT INTO holdings (account_id, shares, cash_krw)
+    SELECT g, 100, 0 FROM generate_series(1, 1000) g"
+PL/pgSQL function reset_ledger() line 10 at SQL statement
+ERROR:  function assert_total_within_issued() does not exist
+  A. 문장 단위 + advisory lock         80ms         82ms        0
+0건
+NOTICE:  trigger "trg_total_cap" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_row" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_trans" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_sync_total" for relation "holdings" does not exist, skipping
+NOTICE:  constraint "chk_total_within_issued" of relation "company" does not exist, skipping
+NOTICE:  column "total_shares" of relation "company" does not exist, skipping
+ERROR:  null value in column "holder" of relation "holdings" violates not-null constraint
+DETAIL:  Failing row contains (1, null, 100, 0).
+CONTEXT:  SQL statement "INSERT INTO holdings (account_id, shares, cash_krw)
+    SELECT g, 100, 0 FROM generate_series(1, 1000) g"
+PL/pgSQL function reset_ledger() line 10 at SQL statement
+ERROR:  function assert_row_increase() does not exist
+  B. 행 단위 + WHEN                 68ms         68ms        0
+0건
+NOTICE:  trigger "trg_total_cap" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_row" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_trans" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_sync_total" for relation "holdings" does not exist, skipping
+NOTICE:  constraint "chk_total_within_issued" of relation "company" does not exist, skipping
+NOTICE:  column "total_shares" of relation "company" does not exist, skipping
+ERROR:  null value in column "holder" of relation "holdings" violates not-null constraint
+DETAIL:  Failing row contains (1, null, 100, 0).
+CONTEXT:  SQL statement "INSERT INTO holdings (account_id, shares, cash_krw)
+    SELECT g, 100, 0 FROM generate_series(1, 1000) g"
+PL/pgSQL function reset_ledger() line 10 at SQL statement
+ERROR:  function assert_transition() does not exist
+  C. 전이 테이블                  82ms         83ms        0
+0건
+NOTICE:  trigger "trg_total_cap" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_row" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_total_cap_trans" for relation "holdings" does not exist, skipping
+NOTICE:  trigger "trg_sync_total" for relation "holdings" does not exist, skipping
+NOTICE:  constraint "chk_total_within_issued" of relation "company" does not exist, skipping
+NOTICE:  column "total_shares" of relation "company" does not exist, skipping
+ERROR:  null value in column "holder" of relation "holdings" violates not-null constraint
+DETAIL:  Failing row contains (1, null, 100, 0).
+CONTEXT:  SQL statement "INSERT INTO holdings (account_id, shares, cash_krw)
+    SELECT g, 100, 0 FROM generate_series(1, 1000) g"
+PL/pgSQL function reset_ledger() line 10 at SQL statement
+ERROR:  function sync_total() does not exist
+  D. 물질화 합계 + CHECK          61ms         62ms        0
+0건
+
+  네 세션이 같은 양(각 50회, 합 200회)을 던졌습니다. 위 표의 시간과 앞 표의
+  총 소요를 견주면 직렬화 정도가 보입니다. 한 세션의 시간이 앞 표의 200회 총
+  소요와 비슷하면 넷이 줄을 선 것이고, 4분의 1에 가까우면 나란히 돈 것입니다.

@@ -45,8 +45,16 @@ start_pg(){ # $1 = wal_compression 값
   [ "$(P 'SELECT 1')" = "1" ] || { echo "중단: a18-pg 가 쿼리를 받지 못합니다" >&2; exit 2; }
   # 켠 값이 실제로 들어갔는지 확인한다. 안 들어간 채로 "압축 켠 조건"이라고 적으면
   # 두 조건이 같은 값을 내고 그것을 압축 효과 없음으로 잘못 읽는다.
+  # on 은 서버가 pglz 로 정규화해 돌려준다(15부터 pglz·lz4·zstd 를 받으므로).
+  # 그래서 문자열 일치로 보면 안 되고, 켜졌는지 꺼졌는지로 판정한다.
   local got; got=$(P "SELECT current_setting('wal_compression')")
-  [ "$got" = "$1" ] || { echo "중단: wal_compression 이 $1 이 아니라 $got 입니다" >&2; exit 3; }
+  case "$1:$got" in
+    off:off) ;;
+    on:off) echo "중단: wal_compression 을 on 으로 줬는데 off 입니다" >&2; exit 3 ;;
+    on:*)   ;;
+    *) echo "중단: wal_compression 이 $1 인데 $got 입니다" >&2; exit 3 ;;
+  esac
+  echo "  wal_compression 적용값 = $got"
   [ "$(P "SELECT current_setting('autovacuum')")" = "off" ] || { echo "중단: autovacuum 이 안 꺼졌습니다" >&2; exit 3; }
 }
 
@@ -77,18 +85,13 @@ waldump_split(){ # $1=lsn0 $2=lsn1
       --start="$1" --end="$2" --stats 2>/dev/null \
     | python3 -c "
 import re, sys
-rows=[]
+rows = []
 for line in sys.stdin:
-    if not line.startswith(' ') and '/' in line:
-        pass
-    m = re.match(r'^(\S[^:]*?)\s*:\s+', line)
+    # 형식: <이름> <N> (  x.xx) <rec> (  x.xx) <fpi> (  x.xx) <comb> (  x.xx)
+    m = re.match(r'^(\S+)\s+(\d+)\s+\(\s*[\d.]+\)\s+(\d+)\s+\(\s*[\d.]+\)\s+'
+                 r'(\d+)\s+\(\s*[\d.]+\)\s+(\d+)\s+\(\s*[\d.]+\)', line)
     if not m: continue
-    name = m.group(1).strip()
-    nums = re.findall(r'(\d+)\s*\(', line)
-    # 형식: N (x.x%) rec_bytes (x.x%) fpi_bytes (x.x%) combined (x.x%)
-    parts = re.findall(r'(\d+)\s+\(\s*[\d.]+\s*%\)', line)
-    if len(parts) < 4: continue
-    cnt, rec, fpi, comb = (int(x) for x in parts[:4])
+    name, cnt, rec, fpi, comb = m.group(1), *(int(m.group(i)) for i in (2,3,4,5))
     if name.lower().startswith('total'): continue
     if comb == 0: continue
     rows.append((name, cnt, rec, fpi, comb))
