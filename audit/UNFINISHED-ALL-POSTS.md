@@ -306,3 +306,47 @@ C6(gh-ost, pt-osc, Debezium)은 손대지 않았습니다. Oracle 도 남았습�
 - **C7 나머지**: charset-timezone 의 `utf8mb4` 전환과 DST, replica-promotion-loss 의
   `AFTER_COMMIT` 비교와 복구 실행, websocket 의 재접속 폭풍, perf-insights-clone 의
   top SQL 분해.
+
+## 2026-07-31 4차: C6·C7·C4 실행분
+
+| 세션 | 항목 | 결과 |
+|---|---|---|
+| R14 charset-timezone | utf8mb4 전환 실행 | `INPLACE` 를 에러 1846 으로 거부하고 COPY 로만. 100만 행 4.6초, 크기 불변(선언 상한만 바뀜). `VARCHAR(191)` 이 767÷4 라는 것도 확인 |
+| R14 charset-timezone | DST 결손·중복 시각 | 결손 `02:30` 이 에러도 NULL 도 아니고 `03:00` 과 같은 순간을 반환. 중복 `01:30` 은 EDT 쪽만 나오고 EST 쪽은 도달 불가. 저장 뒤에는 구별 불가(3,600초 차이) |
+| R14 charset-timezone | 낡은 tzdata | 멕시코 하계 시간제 폐지로 2022 년 여름 오프셋 5시간, 2023 년 6시간. tzdata 2022b 이전이면 둘 다 5 |
+| R01 replica-promotion | `AFTER_COMMIT` 대조 | 매달린 커밋을 다른 세션이 1건 읽었고 승격 후 사라짐. `AFTER_SYNC` 는 애초에 안 읽힘. **유실량이 아니라 성격이 다름** |
+| R01 replica-promotion | 평상시 커밋 지연 | 세 조건이 구별되지 않음(5.17/5.29/5.16ms). 같은 호스트라 복제 왕복이 커밋 비용에 묻힘. **이 환경에서는 못 잼** |
+| R01 replica-promotion | 복구 경로 | 유실 50행 전부 회수. 다만 옛 소스가 떠야 하고 id 가 안 겹쳐야 하고 순서가 뒤섞여도 되는 데이터여야 함 |
+| F15 websocket | 재접속 폭풍 | 정상 구독자 p95 가 세 조건 모두 1ms. **절단은 재접속에도 버팀.** 다만 느린 구독자 수신량이 재접속 횟수에 비례(173KB→511KB→1,250KB) |
+| R12 perf-insights | top SQL 분해 | 핫 로우 UPDATE 하나가 AAS 2.41 로 전체의 81%. 대기 이벤트만으로는 "무엇이"까지이고 SQL 축이 "어느 질의가"를 답함 |
+| R12 perf-insights | 미분류 이벤트 이름 | 이름을 남기도록 고쳤으나 재실행에서 0건. 처음 실행의 21% 는 재현 못 함 |
+| A01 int-pk | `gh-ost` | 소스에서 빌드해 실행. 27.5초로 가장 느리지만 p95 7ms 로 가장 낮음. 트리거 대신 binlog 를 읽기 때문 |
+| R04 replication-slot | Debezium | 기동은 성공, **하트비트 효과는 못 쟀음**(action.query 가 안 돎, 싱크가 병목). 건진 것은 "컨슈머가 살아 있음 ≠ 슬롯 전진" |
+| R04 replication-slot | 반복 측정 4회 | 무효화 53~60초. 그때 `pg_wal` 이 128MB 와 224MB 로 갈려 최악을 상한의 3.5배로 봐야 함 |
+| A23 backup-pitr | Oracle `RMAN UNTIL TIME` | 사고 전 1,500행 복구 성공. `RESETLOGS` 가 인케네이션을 만들고 옛 아카이브 로그를 새 계보에 못 씀. 네 엔진 대조표 완성 |
+| A23 backup-pitr | 반복 측정 4회 | PostgreSQL PITR 네 조건이 4회 모두 동일 |
+| A17 uuid-page-split | 반복 측정 3회 | 충전율은 안정(92.1% 셋), 전체 스캔은 2.5배 범위. **절대 시간 인용 금지** |
+
+### 이 회차에 밟은 결함
+
+- **`sqlplus` 는 한 줄에 두 문장을 두면 뒤엣것을 놓칩니다.** `DELETE ...; COMMIT;` 을
+  한 줄에 써서 커밋이 안 됐고 "사고 후 1500행"이라는 틀린 값이 나왔습니다.
+- **Oracle `UNTIL TIME` 은 리두가 아카이브돼야 그 시점까지 갑니다.** 안 그러면 백업
+  시점까지만 되돌아갑니다. `ALTER SYSTEM ARCHIVE LOG CURRENT` 를 먼저 넣어야 합니다.
+- **Debezium 의 설정 경로는 `/debezium/config` 입니다.** `/debezium/conf` 에 넣으면
+  기동은 되고 설정만 안 읽힙니다.
+- **앞 실험의 GUC 가 다음 실험을 오염시킵니다.** R04 에서 `max_slot_wal_keep_size=64MB`
+  가 남아 Debezium 조건의 슬롯이 무효화됐고 지연이 리셋됐습니다.
+- **`gh-ost` 는 Go 1.25.12 이상을 요구합니다.** 1.24 로는 빌드가 안 됩니다.
+- **R12·R04·A22 의 테이블이 비어 있었습니다.** 컨테이너를 정리하면서 볼륨 없는 세션의
+  데이터가 사라졌고, 시드를 먼저 돌려야 한다는 것을 소요 시간이 알려 줬습니다.
+
+### 남은 것
+
+- **반복 측정**: buffer-pool-sizing, int-pk-exhaustion, jpa-list-api, mdl-storm,
+  reader-endpoint-skew 가 남았습니다.
+- **Debezium 하트비트**: 싱크를 제대로 된 것으로 바꾸고 `heartbeat.action.query` 가 왜
+  안 도는지부터 밝혀야 합니다.
+- **Oracle 아카이브 로그 모드 전환**: 이미지가 `ARCHIVELOG` 로 출고돼 끄고 켜는 과정을
+  못 밟았습니다.
+- **B 등급 항목들**: 클라우드 실계정, TB급 규모, Linux 호스트가 필요한 커널·디스크 조건.
