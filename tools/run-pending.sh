@@ -12,6 +12,12 @@
 # 단계를 건너뛴다. 실패한 단계는 done 을 안 남기므로 다음 실행에서 다시 시도한다.
 #
 # Docker VM 이 7.7GB 뿐이라 단계마다 앞의 컨테이너를 내리고 시작한다.
+#
+# 실행 중인 셸 스크립트를 편집하면 안 된다. bash 는 스크립트를 바이트 오프셋으로
+# 증분해 읽으므로, 앞부분에 줄을 넣으면 읽던 위치가 어긋나 뒤쪽이 엉뚱하게 파싱된다.
+# 실제로 A08 의 run-extra.sh 를 돌리는 중에 앞 절에 네 줄을 넣었더니, 파일 자체는
+# bash -n 을 통과하는데 그 실행만 "syntax error near unexpected token" 으로 죽었다.
+# 고칠 것이 있으면 그 단계가 끝난 뒤에 고치고 --redo 로 다시 건다.
 set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 STATE="$ROOT/.run-state"
