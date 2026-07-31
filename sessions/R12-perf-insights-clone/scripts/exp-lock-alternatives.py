@@ -148,6 +148,49 @@ print()
 print(f"   ENGINE STATUS 텍스트 크기 중앙 {med('engine_bytes'):,.0f}바이트, "
       f"잘림 {sum(1 for r in rows if r['engine_truncated'])}/{len(rows)}회")
 print()
+
+# ── 1-b) 대기가 없을 때 ────────────────────────────────────────────────
+# 위는 락 경합이 있는 조건 하나다. "세 방법을 부하 없는 구간에서 재지 않았습니다"가
+# README 에 남아 있었다. 판별 비용이 대기 유무에 따라 달라지는지 본다.
+# ENGINE STATUS 는 대기 목록이 비어도 전체 상태를 통째로 만들어 내므로, 비용이
+# 대기 수와 무관하다면 그것이 이 방법의 성질이다.
+print("## 1-b) 대기가 없을 때 세 방법의 비용")
+print("   워커를 띄우지 않고 같은 방법을 같은 횟수로 재 봅니다.")
+idle_rows = []
+for _ in range(args.samples):
+    dlw, t_dlw = timed(count_data_lock_waits, cur)
+    try:
+        sysv, t_sys = timed(count_sys_view, cur)
+    except pymysql.Error:
+        sysv, t_sys = None, 0.0
+    (waiting, lockwait, trunc, size), t_eng = timed(parse_engine_status, cur)
+    idle_rows.append({"data_lock_waits": dlw, "ms_dlw": round(t_dlw, 2),
+                      "sys_view": sysv, "ms_sys": round(t_sys, 2),
+                      "engine_lockwait": lockwait, "engine_truncated": trunc,
+                      "engine_bytes": size, "ms_engine": round(t_eng, 2)})
+    time.sleep(0.2)
+
+
+def imed(k):
+    xs = [r[k] for r in idle_rows if r[k] is not None]
+    return statistics.median(xs) if xs else 0
+
+
+print()
+print(f"   {'방법':<26} {'대기 중앙':>10} {'조회 비용 중앙':>15} {'부하 있을 때 대비':>18}")
+for label, cnt, cost, bcost in (
+        ("data_lock_waits", 'data_lock_waits', 'ms_dlw', med('ms_dlw')),
+        ("sys.innodb_lock_waits", 'sys_view', 'ms_sys', med('ms_sys')),
+        ("ENGINE STATUS(LOCK WAIT)", 'engine_lockwait', 'ms_engine', med('ms_engine'))):
+    ic = imed(cost)
+    ratio = (ic / bcost) if bcost else 0
+    print(f"   {label:<26} {imed(cnt):>10.0f} {ic:>14.2f}ms {ratio:>17.2f}배")
+print()
+print(f"   ENGINE STATUS 텍스트 크기 중앙 {imed('engine_bytes'):,.0f}바이트, "
+      f"잘림 {sum(1 for r in idle_rows if r['engine_truncated'])}/{len(idle_rows)}회")
+print()
+out["idle"] = {"samples": idle_rows}
+
 print("   읽는 법. 세 값이 같은 방향으로 움직이면 어느 것을 써도 판별은 됩니다.")
 print("   갈리는 것은 비용과 형태입니다. data_lock_waits 는 숫자를 바로 주고,")
 print("   sys 뷰는 같은 정보에 질의 텍스트를 붙이는 대신 조인이 붙고,")
