@@ -200,8 +200,19 @@ echo "  백필이 끝난 시각부터 autovacuum 이 그 표에 처음 붙는 �
 echo "  임계값은 기본값 그대로 둡니다(autovacuum_vacuum_scale_factor 0.2)."
 echo
 
-TBL=${AV_TABLE:-orders}
-P "SELECT reltuples::bigint FROM pg_class WHERE relname='${TBL}'" >/dev/null 2>&1 || TBL=orders
+# 이 세션의 표는 orders_v1 과 orders_v2 다. 처음에 orders 로 두었더니 pg_stat_user_tables
+# 조회가 빈 값을 돌려주고 "산 튜플 ?" 과 "문턱 ?" 이 찍힌 채로 진행됐다. 있는 표를 고른다.
+TBL=${AV_TABLE:-}
+if [ -z "$TBL" ]; then
+  TBL=$(P "SELECT relname FROM pg_stat_user_tables ORDER BY n_live_tup DESC LIMIT 1")
+fi
+ROWS_AV=$(P "SELECT COALESCE(n_live_tup,0) FROM pg_stat_user_tables WHERE relname='${TBL}'")
+case "${ROWS_AV:-0}" in ''|*[!0-9]*) ROWS_AV=0 ;; esac
+if [ -z "${TBL:-}" ] || [ "$ROWS_AV" -lt 1000 ]; then
+  echo "  중단: 관측할 표를 못 찾았습니다(표 ${TBL:-없음}, 산 튜플 ${ROWS_AV})"
+  echo
+  TBL=""
+fi
 
 # 기본 임계값과 현재 죽은 튜플 수를 나란히 찍는다. 임계값을 안 넘으면 영원히 안 돈다.
 echo "  설정: naptime $(P "SELECT current_setting('autovacuum_naptime')"), \
@@ -218,14 +229,23 @@ echo "  표 ${TBL}: 산 튜플 ${LIVE:-?}, autovacuum 이 걸리는 죽은 튜�
 # 백필을 한 번 더 돌려 죽은 튜플을 만든다. 문턱을 확실히 넘기려고 전 행을 건드린다.
 echo "  죽은 튜플을 만듭니다(전 행 갱신)."
 T_BACKFILL_END=$(date +%s%N)
-P "UPDATE ${TBL} SET id_new = id_new" >/dev/null 2>&1 \
-  || P "UPDATE ${TBL} SET amount = amount" >/dev/null 2>&1 \
-  || { echo "  중단: 갱신할 컬럼을 못 찾았습니다"; }
+# 갱신할 컬럼을 스키마에서 고른다. 이름을 박아 두면 세션마다 다르다.
+UPD_COL=$(P "SELECT column_name FROM information_schema.columns
+             WHERE table_schema='public' AND table_name='${TBL}'
+               AND data_type IN ('integer','bigint','numeric') LIMIT 1")
+if [ -n "${UPD_COL:-}" ]; then
+  P "UPDATE ${TBL} SET ${UPD_COL} = ${UPD_COL}" >/dev/null 2>&1 \
+    || echo "  경고: 전 행 갱신이 실패했습니다"
+else
+  echo "  중단: 갱신할 숫자 컬럼을 못 찾았습니다"
+fi
 T_BACKFILL_END=$(date +%s%N)
 DEAD=$(P "SELECT COALESCE(n_dead_tup,0) FROM pg_stat_user_tables WHERE relname='${TBL}'")
 echo "  백필 종료 시점의 죽은 튜플 ${DEAD:-?}"
 
-if [ "${DEAD:-0}" -lt "${NEED:-1}" ]; then
+if [ -z "${TBL:-}" ]; then
+  echo "  표를 못 찾아 이 절을 건너뜁니다."
+elif [ "${DEAD:-0}" -lt "${NEED:-1}" ]; then
   echo "  죽은 튜플이 문턱에 못 미칩니다. 이 조건에서는 autovacuum 이 안 걸립니다."
 else
   echo "  기다립니다(최대 180초)."
