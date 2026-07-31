@@ -1,0 +1,59 @@
+# Debezium 하트비트: 켜고 action.query 까지 줘도 publication 밖이면 소용없다
+# PostgreSQL PostgreSQL 17.5 (Debian 17.5-1.pgdg130+1
+# Debezium Server 3.0, 조건마다 90초 관측, 1회 실행
+# 스냅샷은 snapshot.mode=no_data 로 걷어 냈고, 싱크는 스레드 방식으로 바꿨습니다.
+
+### A. 하트비트 없음
+  하트비트 0ms, action.query no, 대상 쓰기 no
+  publication = watch_log
+  90초 동안
+    슬롯 지연     11.1MB → 336.4MB  (증가 325.3MB)
+    pg_wal        480MB → 352MB
+    하트비트 행   0 → 0 (90초에 0회)
+    other_log     300400행 / watch_log 0행
+
+### B. 주기만(action.query 없음)
+  하트비트 3000ms, action.query no, 대상 쓰기 no
+  publication = watch_log
+  90초 동안
+    슬롯 지연     11.1MB → 335.3MB  (증가 324.2MB)
+    pg_wal        256MB → 352MB
+    하트비트 행   0 → 0 (90초에 0회)
+    other_log     300800행 / watch_log 0행
+
+### C. 주기+query, 테이블이 publication 밖
+  하트비트 3000ms, action.query yes, 대상 쓰기 no
+  publication = watch_log
+  90초 동안
+    슬롯 지연     11.1MB → 336.8MB  (증가 325.7MB)
+    pg_wal        368MB → 352MB
+    하트비트 행   1 → 30 (90초에 29회)
+    other_log     301200행 / watch_log 0행
+
+### E. 주기+query, 테이블이 publication 안
+  하트비트 3000ms, action.query yes, 대상 쓰기 no
+  publication = dbz_heartbeat, watch_log
+  90초 동안
+    슬롯 지연     11.1MB → 44.6MB  (증가 33.5MB)
+    pg_wal        368MB → 256MB
+    하트비트 행   1 → 30 (90초에 29회)
+    other_log     301200행 / watch_log 0행
+
+### D. 하트비트 없이 대상 테이블에도 쓰기
+  하트비트 0ms, action.query no, 대상 쓰기 yes
+  publication = watch_log
+  90초 동안
+    슬롯 지연     22.7MB → 62.4MB  (증가 39.7MB)
+    pg_wal        256MB → 256MB
+    하트비트 행   0 → 0 (90초에 0회)
+    other_log     302000행 / watch_log 302000행
+
+## 정리 (증가분이 판단 기준입니다)
+label                                  heartbeat_ms              action_query  target_write  lag0_b    lag1_b     growth_b   heartbeat_rows
+A. 하트비트 없음                       0                         no            no            11687856  352766208  341078352  0
+B. 주기만(action.query 없음)           3000                      no            no            11688008  351611744  339923736  0
+C. 주기+query                           테이블이 publication 밖  3000          yes           no        11688072   353201824  341513752       29
+E. 주기+query                           테이블이 publication 안  3000          yes           no        11688176   46764800   35076624        29
+D. 하트비트 없이 대상 테이블에도 쓰기  0                         no            yes           23843032  65472200   41629168   0
+
+  각 조건 1회 실행입니다.

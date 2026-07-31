@@ -1,0 +1,54 @@
+# Debezium 하트비트: 주기만으로는 안 되고 action.query 가 있어야 한다
+# PostgreSQL PostgreSQL 17.5 (Debian 17.5-1.pgdg130+1
+# Debezium Server 3.0, 조건마다 90초 관측, 1회 실행
+# 스냅샷은 snapshot.mode=no_data 로 걷어 냈습니다. exp3 이 하트비트를 0으로
+# 본 원인이 스냅샷이 관측 창을 다 잡아먹은 것이었습니다.
+
+### A. 하트비트 없음
+  슬롯 생성됨. 하트비트 0ms, action.query no, 대상 쓰기 no
+  스트리밍 진입까지 3초 (진입 확인 = 예)
+  90초 동안
+    슬롯 지연     11.2MB → 332.7MB
+    pg_wal        32MB → 352MB
+    하트비트 행   0 → 0 (90초에 0회)
+    other_log     297200행
+    watch_log     0행
+
+### B. 하트비트 주기만(action.query 없음)
+  슬롯 생성됨. 하트비트 3000ms, action.query no, 대상 쓰기 no
+  스트리밍 진입까지 3초 (진입 확인 = 예)
+  90초 동안
+    슬롯 지연     11.1MB → 331.5MB
+    pg_wal        368MB → 352MB
+    하트비트 행   0 → 0 (90초에 0회)
+    other_log     297600행
+    watch_log     0행
+
+### C. 하트비트 주기 + action.query
+  슬롯 생성됨. 하트비트 3000ms, action.query yes, 대상 쓰기 no
+  스트리밍 진입까지 2초 (진입 확인 = 예)
+  90초 동안
+    슬롯 지연     344.5MB → 633.0MB
+    pg_wal        368MB → 656MB
+    하트비트 행   1 → 30 (90초에 29회)
+    other_log     297200행
+    watch_log     0행
+
+### D. C 와 같은데 대상 테이블에도 쓰기
+  슬롯 생성됨. 하트비트 3000ms, action.query yes, 대상 쓰기 yes
+  스트리밍 진입까지 3초 (진입 확인 = 예)
+  90초 동안
+    슬롯 지연     22.3MB → 335.2MB
+    pg_wal        672MB → 480MB
+    하트비트 행   1 → 28 (90초에 27회)
+    other_log     301600행
+    watch_log     302000행
+
+## 정리
+label                                  heartbeat_ms  action_query  target_write  lag0_b     lag1_b     wal0_mb  wal1_mb  heartbeat_rows
+A. 하트비트 없음                       0             no            no            11696232   348900136  32       352      0
+B. 하트비트 주기만(action.query 없음)  3000          no            no            11687752   347642072  368      352      0
+C. 하트비트 주기 + action.query        3000          yes           no            361237528  663773904  368      656      29
+D. C 와 같은데 대상 테이블에도 쓰기    3000          yes           yes           23375808   351452520  672      480      27
+
+  각 조건 1회 실행입니다.

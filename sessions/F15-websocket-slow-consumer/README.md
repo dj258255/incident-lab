@@ -190,7 +190,7 @@ Spring 데코레이터에 같은 512KB를 주면 4.3초에 끊고 p95 2ms입니�
 
 이 관찰은 조건마다 1회 실행이라 방향까지만 읽어야 합니다.
 
-## 안 한 것
+## 못 한 것
 
 - **STOMP와 메시지 브로커 경로는 다루지 않았습니다.** 원시 WebSocket 핸들러만 씁니다. Spring 문서가 말하는 `sendTimeLimit`, `sendBufferSizeLimit`은 STOMP 설정에도 있지만 여기서는 데코레이터를 직접 감쌌습니다.
 - **Netty 기반 서버는 재현하지 않았습니다.** 내장 Tomcat만 썼습니다. `WriteBufferWaterMark` 같은 Netty의 백프레셔 장치는 동작이 다를 수 있고, 그 기본값은 공식 문서에서 확인하지 못했습니다.

@@ -47,6 +47,14 @@ p.add_argument("--timeline")                            # 1초 버킷 지연 시
 p.add_argument("--action-at", type=int)                 # 측정 시작 후 N초에 아래 SQL을 실행
 p.add_argument("--action-sql")
 p.add_argument("--label", default="")
+# 콜드에서 출발한다. 아래 COUNT(*)가 임포트 시점에 클러스터드 인덱스를 통째로 훑기 때문에
+# 원래는 모든 조건이 풀 스캔 직후 상태에서 워밍업을 시작한다. 큰 풀 조건의 0페이지 miss는
+# 그 스캔이 만들어 준 값이다. 이 플래그를 켜면 MIN/MAX 만 읽는다. B-Tree 의 양 끝 리프
+# 페이지만 건드리므로 버퍼 풀이 비어 있는 채로 시작한다. 행 수는 통계에서 근사치를 읽는다.
+p.add_argument("--cold", action="store_true")
+# 읽기 사이에 쓰기를 섞는다. 읽기 전용이면 축소할 때 플러시할 더티 페이지가 없어
+# 실험 2의 축소 시간이 하한이 된다. 0이면 안 섞는다.
+p.add_argument("--write-ratio", type=float, default=0.0)
 args = p.parse_args()
 
 HOST = os.environ.get("MYSQL_HOST", "127.0.0.1")
@@ -64,8 +72,18 @@ def connect():
 # 차이가 없다. 범위를 700만으로 잘라 쓰면 뒤쪽 40만 행이 영영 조회되지 않아 워킹셋 계산이 틀어진다.
 _c = connect()
 _cur = _c.cursor()
-_cur.execute("SELECT MIN(id), MAX(id), COUNT(*) FROM orders")
-ID_MIN, ID_MAX, ROW_COUNT = _cur.fetchone()
+if args.cold:
+    # MIN/MAX 는 PK 의 첫 리프와 끝 리프만 읽는다. 행 수는 통계의 근사치를 쓴다.
+    # 정확한 행 수가 필요한 자리가 아니고, 정확히 세려면 전체를 훑어야 하므로
+    # 콜드라는 조건 자체가 깨진다.
+    _cur.execute("SELECT MIN(id), MAX(id) FROM orders")
+    ID_MIN, ID_MAX = _cur.fetchone()
+    _cur.execute("SELECT TABLE_ROWS FROM information_schema.TABLES "
+                 "WHERE TABLE_SCHEMA='lab' AND TABLE_NAME='orders'")
+    ROW_COUNT = _cur.fetchone()[0]
+else:
+    _cur.execute("SELECT MIN(id), MAX(id), COUNT(*) FROM orders")
+    ID_MIN, ID_MAX, ROW_COUNT = _cur.fetchone()
 _c.close()
 HOT_MAX = ID_MIN + max(1, int((ID_MAX - ID_MIN) * args.hot_frac))
 
@@ -85,8 +103,12 @@ def worker(seed, t_measure_start, t_end, q):
         else:
             pk = rnd.randint(ID_MIN, ID_MAX)
         t0 = time.perf_counter()
-        cur.execute("SELECT id, user_id, status, amount FROM orders WHERE id = %s", (pk,))
-        cur.fetchall()
+        if args.write_ratio > 0 and rnd.random() < args.write_ratio:
+            # 같은 행을 갱신한다. 페이지를 더티로 만드는 것이 목적이라 값은 중요하지 않다.
+            cur.execute("UPDATE orders SET amount = amount + 1 WHERE id = %s", (pk,))
+        else:
+            cur.execute("SELECT id, user_id, status, amount FROM orders WHERE id = %s", (pk,))
+            cur.fetchall()
         el = (time.perf_counter() - t0) * 1000
         if now >= t_measure_start:
             local.append((round(now - t_measure_start, 3), round(el, 4)))
@@ -95,10 +117,15 @@ def worker(seed, t_measure_start, t_end, q):
 
 
 def counters(cur):
+    # read_ahead 두 개를 같이 읽는다. O_DIRECT 조건에서 블록 I/O 가 InnoDB 가 센 읽기의
+    # 2.0배로 나온 것을 리드어헤드로 의심했는데, 의심만 적고 확인하지 않았다.
+    # 리드어헤드가 원인이면 Innodb_buffer_pool_read_ahead 가 0 이 아니어야 한다.
     cur.execute("""SHOW GLOBAL STATUS WHERE Variable_name IN
                    ('Innodb_buffer_pool_read_requests','Innodb_buffer_pool_reads',
                     'Innodb_data_read','Innodb_buffer_pool_pages_data',
-                    'Innodb_buffer_pool_pages_total','Innodb_buffer_pool_wait_free')""")
+                    'Innodb_buffer_pool_pages_total','Innodb_buffer_pool_wait_free',
+                    'Innodb_buffer_pool_read_ahead','Innodb_buffer_pool_read_ahead_evicted',
+                    'Innodb_pages_read','Innodb_buffer_pool_pages_dirty')""")
     return {k: int(v) for k, v in cur.fetchall()}
 
 
@@ -145,7 +172,16 @@ def main():
             s = time.perf_counter()
             stmt_start_s = time.time() - t_measure_start   # 측정 시작 기준 경과초
             print(f"  실행: {args.action_sql}", flush=True)
-            cc.execute(args.action_sql)
+            try:
+                cc.execute(args.action_sql)
+            except Exception as ex:
+                # 실패를 스레드 안에서 삼키면 리사이즈 없이 잰 값이 리사이즈 결과로 저장된다.
+                # 실제로 numfmt 가 없는 호스트에서 SQL 이 빈 값으로 나가 에러 1064 가 났고,
+                # 그대로 진행돼 결과 파일만 정상으로 보였다. 결과에 남겨 fail-closed 로 만든다.
+                action.update({"error": f"{type(ex).__name__}: {ex}"})
+                print(f"  실행 실패: {ex}", flush=True)
+                c.close()
+                return
             e = time.perf_counter()
             # SET GLOBAL은 즉시 돌아오고 리사이즈는 백그라운드로 진행된다. 진행 상황은
             # Innodb_buffer_pool_resize_status에 문자열로 실린다.
@@ -229,6 +265,15 @@ def main():
         "data_read_mb": round(bytes_read / 1024 / 1024, 1),
         "pages_data": after["Innodb_buffer_pool_pages_data"],
         "pages_total": after["Innodb_buffer_pool_pages_total"],
+        "pages_dirty": after["Innodb_buffer_pool_pages_dirty"],
+        # 리드어헤드가 실제로 돌았는지. O_DIRECT 조건의 블록 I/O 격차를 이것으로 가른다.
+        "read_ahead": after["Innodb_buffer_pool_read_ahead"] - before["Innodb_buffer_pool_read_ahead"],
+        "read_ahead_evicted": (after["Innodb_buffer_pool_read_ahead_evicted"]
+                               - before["Innodb_buffer_pool_read_ahead_evicted"]),
+        # InnoDB 가 센 페이지 읽기 총량. disk_reads 와 갈리면 리드어헤드 몫이다.
+        "pages_read": after["Innodb_pages_read"] - before["Innodb_pages_read"],
+        "cold_start": bool(args.cold),
+        "write_ratio": args.write_ratio,
     }
     if action:
         action["at_s"] = args.action_at

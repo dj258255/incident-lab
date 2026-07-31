@@ -1,0 +1,6 @@
+label,heartbeat_ms,action_query,target_write,lag0_b,lag1_b,growth_b,heartbeat_rows
+A. 하트비트 없음,0,no,no,11687840,350489912,338802072,0
+B. 주기만(action.query 없음),3000,no,no,11687992,351630504,339942512,0
+C. 주기+query / 테이블이 publication 밖,3000,yes,no,11688056,349993952,338305896,29
+E. 주기+query / 테이블이 publication 안,3000,yes,no,11728264,69662640,57934376,29
+D. 하트비트 없이 대상 테이블에도 쓰기,0,no,yes,23396064,28827752,5431688,0

@@ -12,16 +12,32 @@ WARMUP=${WARMUP:-30}
 DURATION=${DURATION:-90}
 AT=${AT:-30}
 
+# 128M 같은 표기를 바이트로 바꾼다. 원래 numfmt --from=iec 를 썼는데 그것은 GNU coreutils
+# 명령이라 macOS 기본 설치에는 없다. 없으면 명령 치환이 빈 문자열이 되고 SQL 이
+# "SET GLOBAL innodb_buffer_pool_size = " 로 나가 에러 1064 만 남는다. 실패한 줄이
+# 워커 스레드 안이라 스크립트는 그대로 진행하고, 리사이즈 없이 잰 값이 리사이즈 결과로
+# 저장된다. 조용히 틀리는 쪽이라 셸 안에서 직접 계산한다.
+to_bytes() {
+  local unit=${1: -1}
+  case "$unit" in
+    G|g) echo $(( ${1%[Gg]} * 1024 * 1024 * 1024 )) ;;
+    M|m) echo $(( ${1%[Mm]} * 1024 * 1024 )) ;;
+    *)   echo "$1" ;;
+  esac
+}
+
 run() {
   local name=$1 start=$2 target=$3
-  echo "=============== 리사이즈 ${start} -> ${target} ==============="
+  local target_bytes; target_bytes=$(to_bytes "$target")
+  [ -n "$target_bytes" ] || { echo "중단: ${target} 를 바이트로 못 바꿨습니다" >&2; exit 3; }
+  echo "=============== 리사이즈 ${start} -> ${target} (${target_bytes} 바이트) ==============="
   BP_SIZE=$start docker compose down >/dev/null 2>&1 || true
   BP_SIZE=$start docker compose up -d --wait mysql
   BP_SIZE=$start docker compose run --rm load python workload.py \
     --dist hot --warmup "$WARMUP" --duration "$DURATION" \
     --label "$name" \
     --action-at "$AT" \
-    --action-sql "SET GLOBAL innodb_buffer_pool_size = $(numfmt --from=iec "$target")" \
+    --action-sql "SET GLOBAL innodb_buffer_pool_size = ${target_bytes}" \
     --out "/results/resize-${name}.json" \
     --timeline "/results/resize-${name}-timeline.csv"
 }
