@@ -187,4 +187,71 @@ if len(ratios) >= 2:
 PY
 echo
 echo "  각 회차 1회 실행이고 조회만 3회 중앙값입니다."
+
+# ── autovacuum 이 언제 도는가 ──────────────────────────────────────────
+# README 에 "autovacuum 이 언제 도는지는 재지 않았습니다" 가 남아 있었다.
+# 본문은 백필 직후 DDL 이 autovacuum 락 대기로 1초를 잃은 장면을 적어 두었는데,
+# 그 autovacuum 이 백필 종료 후 몇 초 만에 시작하는지는 안 봤다. 그 값이 있어야
+# "백필 뒤 몇 초를 비우고 DDL 을 걸어야 하는가" 에 답할 수 있다.
+echo "=================================================================="
+echo "## autovacuum 이 백필 뒤 언제 도는가"
+echo "=================================================================="
+echo "  백필이 끝난 시각부터 autovacuum 이 그 표에 처음 붙는 시각까지를 잽니다."
+echo "  임계값은 기본값 그대로 둡니다(autovacuum_vacuum_scale_factor 0.2)."
+echo
+
+TBL=${AV_TABLE:-orders}
+P "SELECT reltuples::bigint FROM pg_class WHERE relname='${TBL}'" >/dev/null 2>&1 || TBL=orders
+
+# 기본 임계값과 현재 죽은 튜플 수를 나란히 찍는다. 임계값을 안 넘으면 영원히 안 돈다.
+echo "  설정: naptime $(P "SELECT current_setting('autovacuum_naptime')"), \
+scale_factor $(P "SELECT current_setting('autovacuum_vacuum_scale_factor')"), \
+threshold $(P "SELECT current_setting('autovacuum_vacuum_threshold')")"
+BEFORE_AV=$(P "SELECT COALESCE(autovacuum_count,0) FROM pg_stat_user_tables WHERE relname='${TBL}'")
+LIVE=$(P "SELECT COALESCE(n_live_tup,0) FROM pg_stat_user_tables WHERE relname='${TBL}'")
+NEED=$(P "SELECT (current_setting('autovacuum_vacuum_threshold')::bigint
+                  + current_setting('autovacuum_vacuum_scale_factor')::float
+                    * COALESCE(n_live_tup,0))::bigint
+          FROM pg_stat_user_tables WHERE relname='${TBL}'")
+echo "  표 ${TBL}: 산 튜플 ${LIVE:-?}, autovacuum 이 걸리는 죽은 튜플 문턱 ${NEED:-?}"
+
+# 백필을 한 번 더 돌려 죽은 튜플을 만든다. 문턱을 확실히 넘기려고 전 행을 건드린다.
+echo "  죽은 튜플을 만듭니다(전 행 갱신)."
+T_BACKFILL_END=$(date +%s%N)
+P "UPDATE ${TBL} SET id_new = id_new" >/dev/null 2>&1 \
+  || P "UPDATE ${TBL} SET amount = amount" >/dev/null 2>&1 \
+  || { echo "  중단: 갱신할 컬럼을 못 찾았습니다"; }
+T_BACKFILL_END=$(date +%s%N)
+DEAD=$(P "SELECT COALESCE(n_dead_tup,0) FROM pg_stat_user_tables WHERE relname='${TBL}'")
+echo "  백필 종료 시점의 죽은 튜플 ${DEAD:-?}"
+
+if [ "${DEAD:-0}" -lt "${NEED:-1}" ]; then
+  echo "  죽은 튜플이 문턱에 못 미칩니다. 이 조건에서는 autovacuum 이 안 걸립니다."
+else
+  echo "  기다립니다(최대 180초)."
+  FOUND=""
+  for _ in $(seq 1 180); do
+    NOW=$(P "SELECT COALESCE(autovacuum_count,0) FROM pg_stat_user_tables WHERE relname='${TBL}'")
+    RUNNING=$(P "SELECT count(*) FROM pg_stat_activity
+                 WHERE backend_type='autovacuum worker' AND query LIKE '%${TBL}%'")
+    if [ "${RUNNING:-0}" != "0" ] && [ -z "$FOUND" ]; then
+      T_START=$(date +%s%N)
+      FOUND="running"
+      echo "  autovacuum 이 붙었습니다: 백필 종료 +$(python3 -c "print(f'{(${T_START}-${T_BACKFILL_END})/1e9:.1f}')")초"
+    fi
+    if [ "${NOW:-0}" -gt "${BEFORE_AV:-0}" ]; then
+      T_DONE=$(date +%s%N)
+      echo "  autovacuum 이 끝났습니다: 백필 종료 +$(python3 -c "print(f'{(${T_DONE}-${T_BACKFILL_END})/1e9:.1f}')")초"
+      break
+    fi
+    sleep 1
+  done
+  [ -n "${T_DONE:-}" ] || echo "  180초 안에 autovacuum 이 안 끝났습니다."
+fi
+echo
+echo "  이 값이 백필 뒤 DDL 을 걸기 전에 비워야 하는 시간입니다. 그 안에 DDL 을 걸면"
+echo "  본문 6절에 적은 대로 deadlock_timeout(기본 1초) 만큼을 락 대기로 잃습니다."
+echo "  autovacuum_naptime 이 기본 60초이므로 문턱을 넘겨도 바로 붙지는 않습니다."
+echo
+
 } 2>&1 | tee "$OUT/exp-backfill-evidence.txt"

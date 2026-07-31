@@ -57,6 +57,8 @@ steps=(
   "A02ddl|A02-mdl-storm|compose|bash scripts/exp-ddl-kinds.sh"
   "A08extra|A08-buffer-pool-sizing|none|bash scripts/run-extra.sh"
   "A14subtx|A14-xid-wraparound|compose|bash scripts/exp-subtx-burn.sh"
+  "R16dump|R16-batch-cache-pollution|compose|R16SEED"
+  "B43av|B43-expand-contract|compose|bash scripts/exp-backfill-evidence.sh"
 )
 
 if [ "${1:-}" = "--list" ]; then

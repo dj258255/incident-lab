@@ -57,7 +57,53 @@ run_case() {
   wait $W
 }
 
+# 배치 종류를 바꿔 가며 돈다. 지금까지는 순수 집계 스캔 하나였고,
+# README 에 "mysqldump 는 다루지 않았습니다. 스캔에 더해 덤프 출력 I/O 가 겹칩니다"
+# 가 남아 있었다. 원 사례(Percona 2011)가 mysqldump 였으므로 그것도 잰다.
+# 같은 창에서 배치를 mysqldump 로 바꾼다. 집계 스캔과 다른 점은 읽은 것을 밖으로
+# 내보내는 I/O 가 겹친다는 것이고, 원 사례가 그 조건이었다.
+run_dump_case() {
+  local name="$1" obt="$2"
+  echo "== 지속 mysqldump $name (old_blocks_time=$obt) $(date '+%H:%M:%S') =="
+  SQL "SET GLOBAL innodb_old_blocks_time = $obt;"
+  SQL "SELECT COUNT(*), SUM(amount) FROM orders_hot;" >/dev/null   # 예열
+  sleep 3
+  "$PY" "$ROOT/scripts/workload.py" 240 "$OUT/$name-lat.csv" "$OUT/$name-bp.csv" &
+  local W=$!
+  sleep 60
+  date +%s.%N > "$OUT/$name-batch-start.txt"
+  END=$(( $(date +%s) + 60 ))
+  N=0
+  BYTES=0
+  while [ "$(date +%s)" -lt "$END" ]; do
+    # --single-transaction 을 빼면 잠금이 걸려 다른 축이 섞인다. 이 실험은 캐시 오염만 본다.
+    B=$(docker exec r16-mysql mysqldump -uroot -plab --single-transaction \
+          spoon settlement_history 2>/dev/null | wc -c | tr -d ' ')
+    case "${B:-0}" in ''|*[!0-9]*) B=0 ;; esac
+    BYTES=$(( BYTES + B ))
+    N=$((N+1))
+  done
+  date +%s.%N > "$OUT/$name-batch-done.txt"
+  if [ "$BYTES" -lt 1000000 ]; then
+    echo "  경고: 덤프 출력이 ${BYTES}바이트뿐입니다. mysqldump 가 제대로 안 돌았을 수 있습니다"
+  fi
+  PAGES=$(docker exec r16-mysql mysql -uroot -plab spoon -N -B -e \
+    "SELECT ROUND(DATA_LENGTH/16384) FROM information_schema.TABLES
+     WHERE TABLE_SCHEMA='spoon' AND TABLE_NAME='settlement_history'" 2>/dev/null)
+  {
+    echo "scans=${N}"
+    echo "table_pages=${PAGES:-0}"
+    echo "read_io_estimate=$(( N * ${PAGES:-0} ))"
+    echo "dump_bytes=${BYTES}"
+    echo "window_s=60"
+  } > "$OUT/$name-scan-count.txt"
+  echo "덤프 ${N}회 반복 (테이블 ${PAGES:-?}페이지, 출력 $(python3 -c "print(f'{${BYTES}/1048576:.1f}')")MB)"
+  wait $W
+}
+
 run_case sustained-off 0
 run_case sustained-default 1000
+run_dump_case sustained-dump-off 0
+run_dump_case sustained-dump-default 1000
 SQL "SET GLOBAL innodb_old_blocks_time = 1000;"
 echo "지속 스캔 실험 종료"
