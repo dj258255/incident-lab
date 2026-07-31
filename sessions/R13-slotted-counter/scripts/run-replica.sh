@@ -29,7 +29,17 @@ LIVES="${LIVES:-1000}"
 
 for _ in $(seq 1 90); do [ "$(S 'SELECT 1')" = "1" ] && break; sleep 2; done
 [ "$(S 'SELECT 1')" = "1" ] || { echo "중단: r13-mysql 이 쿼리를 받지 못합니다" >&2; exit 2; }
+# 복제본은 profiles: ["repl"] 뒤에 있어 기본 `docker compose up` 으로는 안 뜬다.
+# 이 스크립트는 컨테이너가 이미 있다고 보고 docker exec 만 했고, 없으면
+# "No such container" 를 찍은 뒤 그대로 진행해 두 조건 다 빈 표를 남겼다.
+# 여기서 직접 띄우고, 안 뜨면 멈춘다.
+if ! docker inspect r13-replica >/dev/null 2>&1; then
+  echo "복제본이 없습니다. repl 프로파일로 띄웁니다."
+  (cd "$ROOT" && docker compose --profile repl up -d replica >/dev/null 2>&1)
+fi
 for _ in $(seq 1 90); do [ "$(docker exec r13-replica mysql -uroot -plab -N -e 'SELECT 1' 2>/dev/null)" = "1" ] && break; sleep 2; done
+[ "$(docker exec r13-replica mysql -uroot -plab -N -e 'SELECT 1' 2>/dev/null)" = "1" ] \
+  || { echo "중단: r13-replica 가 쿼리를 받지 못합니다" >&2; exit 2; }
 
 setup_replication() {
   # 복제본 스키마를 원본과 맞춘다. GTID 를 쓰므로 덤프로 초기 상태를 맞춘다.

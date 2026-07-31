@@ -54,6 +54,31 @@ setup_semi(){ # $1=AFTER_SYNC|AFTER_COMMIT
   sleep 2
 }
 
+# 조건 하나가 끝나면 복제본을 승격하느라 RESET REPLICA ALL 을 건다. 그러면 다음
+# 조건에서 START REPLICA 가 붙을 곳을 모른다. 앞선 실행에서 두 번째 조건의 복제본이
+# 첫 조건의 표(400행)를 그대로 들고 있어서, 소스에 8행뿐인데 "남은 행 400" 이 찍혔다.
+# 조건마다 복제를 처음부터 다시 붙인다.
+rebind_replication(){
+  R "STOP REPLICA; RESET REPLICA ALL" >/dev/null 2>&1 || true
+  R "SET GLOBAL read_only=0; SET GLOBAL super_read_only=0" >/dev/null 2>&1 || true
+  R "DROP DATABASE IF EXISTS spoon" >/dev/null 2>&1 || true
+  S "DROP DATABASE IF EXISTS spoon; CREATE DATABASE spoon" >/dev/null 2>&1 || true
+  S "RESET BINARY LOGS AND GTIDS" >/dev/null 2>&1 || true
+  R "RESET BINARY LOGS AND GTIDS" >/dev/null 2>&1 || true
+  R "CHANGE REPLICATION SOURCE TO
+       SOURCE_HOST='source', SOURCE_USER='root', SOURCE_PASSWORD='lab',
+       SOURCE_AUTO_POSITION=1, GET_SOURCE_PUBLIC_KEY=1;
+     START REPLICA" >/dev/null 2>&1
+  local st=
+  for _ in $(seq 1 40); do
+    st=$(R "SELECT SERVICE_STATE FROM performance_schema.replication_connection_status" 2>/dev/null | head -1)
+    [ "$st" = "ON" ] && return 0
+    sleep 1
+  done
+  echo "  중단: 복제가 다시 붙지 않았습니다(SERVICE_STATE=${st:-없음})"
+  return 1
+}
+
 run_case(){ # $1=wait_point
   local WP="$1"
   echo
@@ -63,26 +88,45 @@ run_case(){ # $1=wait_point
   docker start r01-source >/dev/null 2>&1 || true
   wait_up || { echo "  소스가 다시 뜨지 않았습니다"; return 1; }
   docker network connect "$NET" r01-replica >/dev/null 2>&1 || true
-  R "START REPLICA" >/dev/null 2>&1 || true
-  sleep 3
-  S "DROP TABLE IF EXISTS spoon.obs;
-     CREATE TABLE spoon.obs (id INT AUTO_INCREMENT PRIMARY KEY, tag VARCHAR(20)) ENGINE=InnoDB" >/dev/null
   sleep 2
+  rebind_replication || return 1
+
+  S "CREATE TABLE spoon.obs (id INT AUTO_INCREMENT PRIMARY KEY, tag VARCHAR(20)) ENGINE=InnoDB" >/dev/null
+
+  # 표가 복제본까지 갔는지 본다. 안 갔으면 승격 후 행 수가 표 없음 오류가 되고,
+  # 그 문자열이 숫자 자리에 들어간다.
+  local ok=
+  for _ in $(seq 1 30); do
+    ok=$(R "SELECT COUNT(*) FROM information_schema.TABLES
+            WHERE TABLE_SCHEMA='spoon' AND TABLE_NAME='obs'" 2>/dev/null | head -1)
+    [ "$ok" = "1" ] && break
+    sleep 1
+  done
+  [ "$ok" = "1" ] || { echo "  중단: 표가 복제본까지 가지 않았습니다"; return 1; }
+
   setup_semi "$WP"
 
-  # 반동기가 실제로 켜졌는지 확인한다. 안 켜졌으면 이 조건은 성립하지 않는다.
+  # 반동기 상태는 설정만 켠다고 ON 이 되지 않는다. 반동기 복제본이 붙어 ack 를
+  # 한 번 보내야 ON 이다. 설정 직후에 읽으면 OFF 라서 탐침 쓰기를 한 건 하고 기다린다.
   # 앞선 실행에서 AFTER_SYNC 조건에 400건이 그대로 들어가고 복제본에도 400건이
   # 남았다. 매달려야 할 커밋이 하나도 안 매달렸다는 뜻이고, 반동기가 안 붙은
   # 상태로 "유실 0건"이라는 결과만 남았다.
-  local semi
-  semi=$(S "SELECT VARIABLE_VALUE FROM performance_schema.global_status
-            WHERE VARIABLE_NAME='Rpl_semi_sync_source_status'")
+  local semi=
+  for _ in $(seq 1 30); do
+    S "INSERT INTO spoon.obs (tag) VALUES ('probe')" >/dev/null 2>&1
+    semi=$(S "SELECT VARIABLE_VALUE FROM performance_schema.global_status
+              WHERE VARIABLE_NAME='Rpl_semi_sync_source_status'" 2>/dev/null | head -1)
+    [ "$semi" = "ON" ] && break
+    sleep 1
+  done
   if [ "$semi" != "ON" ]; then
     echo "  중단: 반동기가 켜지지 않았습니다(Rpl_semi_sync_source_status=${semi:-없음})"
-    echo "  플러그인 상태: $(S "SELECT PLUGIN_NAME||'='||PLUGIN_STATUS FROM information_schema.PLUGINS WHERE PLUGIN_NAME LIKE 'rpl_semi%'" | tr '\n' ' ')"
+    echo "  플러그인 상태: $(S "SELECT CONCAT(PLUGIN_NAME,'=',PLUGIN_STATUS) FROM information_schema.PLUGINS WHERE PLUGIN_NAME LIKE 'rpl_semi%'" | tr '\n' ' ')"
     return 1
   fi
   echo "  반동기 확인: Rpl_semi_sync_source_status=$semi, wait_point=$(S "SELECT @@rpl_semi_sync_source_wait_point")"
+  S "DELETE FROM spoon.obs; ALTER TABLE spoon.obs AUTO_INCREMENT=1" >/dev/null 2>&1
+  sleep 2
 
   # 복제망을 끊는다. 이제 ack 가 오지 않는다.
   docker network disconnect "$NET" r01-replica >/dev/null 2>&1 || true

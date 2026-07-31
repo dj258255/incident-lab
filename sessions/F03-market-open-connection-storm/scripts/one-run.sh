@@ -45,9 +45,9 @@ NET="$(docker inspect -f '{{range $k, $v := .NetworkSettings.Networks}}{{$k}}{{e
   echo "# [$LABEL] 측정 직전 호스트 상태"
   date '+%Y-%m-%dT%H:%M:%S%z'
   uptime
-  uname -srm; echo "nproc=$(nproc)"; free -g | sed -n '1,2p'
-  echo "-- CPU 상위 5 --"
-  top -bn1 | sed -n '8,12p'
+  # nproc 과 free 는 GNU 명령이라 macOS 에 없다. 없으면 빈 값을 내는 데서 그치지 않고
+  # set -e 아래에서 실행 자체를 끊는다. 실제로 이 줄에서 멈춰 k6 가 돌지 않았다.
+  bash ../../tools/capture-env.sh 2>/dev/null || uname -srm
   echo "route=$ROUTE TOMCAT_MAX_THREADS=$TOMCAT_MAX_THREADS RATE=$RATE VUS=$VUS PREVUS=${PREVUS:-$VUS} RAMP=$RAMP HOLD=$HOLD DOWN=$DOWN"
 } | tee "$OUT/$LABEL-load.txt"
 

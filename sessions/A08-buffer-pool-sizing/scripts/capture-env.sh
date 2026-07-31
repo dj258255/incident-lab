@@ -4,10 +4,10 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 {
-  echo "호스트 커널: $(uname -sr)"
-  echo "호스트 CPU: $(nproc) 코어"
-  echo "호스트 메모리: $(free -g | awk '/^Mem:/{print $2}')GB"
-  echo "도커: $(docker --version)"
+  # nproc 과 free 는 GNU 명령이라 macOS 에 없다. 그대로 두면 "호스트 CPU:  코어"
+  # 같은 줄이 남는데, 실패한 줄이 성공한 줄과 모양이 같아 눈에 안 띈다.
+  # 공용 도구로 옮겼다. 컨테이너가 실제로 쓰는 Docker VM 사양도 함께 남는다.
+  bash ../../tools/capture-env.sh
   echo
   BP_SIZE=2G docker compose exec -T mysql mysql -uroot -plab lab -N -B -e "
     SELECT CONCAT('MySQL 버전: ', @@version);

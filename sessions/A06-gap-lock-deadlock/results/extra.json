@@ -1,0 +1,220 @@
+{
+ "crossed_order": [
+  {
+   "isolation": "REPEATABLE READ",
+   "deadlocks": 30,
+   "rounds": 30,
+   "errors": {
+    "1213": 30
+   }
+  },
+  {
+   "isolation": "READ COMMITTED",
+   "deadlocks": 30,
+   "rounds": 30,
+   "errors": {
+    "1213": 30
+   }
+  }
+ ],
+ "lock_counts": [
+  {
+   "isolation": "REPEATABLE READ",
+   "with_index": false,
+   "counts": [
+    1007,
+    1007,
+    1007
+   ],
+   "median": 1007,
+   "kinds": [
+    "RECORD/X:1006",
+    "TABLE/IX:1"
+   ]
+  },
+  {
+   "isolation": "REPEATABLE READ",
+   "with_index": true,
+   "counts": [
+    22,
+    22,
+    22
+   ],
+   "median": 22,
+   "kinds": [
+    "RECORD/X,REC_NOT_GAP:10",
+    "RECORD/X:10",
+    "TABLE/IX:1",
+    "RECORD/X,GAP:1"
+   ]
+  },
+  {
+   "isolation": "READ COMMITTED",
+   "with_index": false,
+   "counts": [
+    11,
+    11,
+    11
+   ],
+   "median": 11,
+   "kinds": [
+    "RECORD/X,REC_NOT_GAP:10",
+    "TABLE/IX:1"
+   ]
+  },
+  {
+   "isolation": "READ COMMITTED",
+   "with_index": true,
+   "counts": [
+    21,
+    21,
+    21
+   ],
+   "median": 21,
+   "kinds": [
+    "RECORD/X,REC_NOT_GAP:20",
+    "TABLE/IX:1"
+   ]
+  }
+ ],
+ "backoff": [
+  {
+   "backoff": "없음",
+   "max_try": 4,
+   "ok": 60,
+   "of": 60,
+   "attempts": 61,
+   "elapsed_s": 13.7,
+   "final_amount": 60000,
+   "errors": {
+    "1213": 1
+   }
+  },
+  {
+   "backoff": "없음",
+   "max_try": 8,
+   "ok": 60,
+   "of": 60,
+   "attempts": 61,
+   "elapsed_s": 13.6,
+   "final_amount": 60000,
+   "errors": {
+    "1213": 1
+   }
+  },
+  {
+   "backoff": "선형",
+   "max_try": 4,
+   "ok": 60,
+   "of": 60,
+   "attempts": 61,
+   "elapsed_s": 13.8,
+   "final_amount": 60000,
+   "errors": {
+    "1213": 1
+   }
+  },
+  {
+   "backoff": "선형",
+   "max_try": 8,
+   "ok": 60,
+   "of": 60,
+   "attempts": 61,
+   "elapsed_s": 13.6,
+   "final_amount": 60000,
+   "errors": {
+    "1213": 1
+   }
+  },
+  {
+   "backoff": "지수",
+   "max_try": 4,
+   "ok": 60,
+   "of": 60,
+   "attempts": 61,
+   "elapsed_s": 13.6,
+   "final_amount": 60000,
+   "errors": {
+    "1213": 1
+   }
+  },
+  {
+   "backoff": "지수",
+   "max_try": 8,
+   "ok": 60,
+   "of": 60,
+   "attempts": 61,
+   "elapsed_s": 13.6,
+   "final_amount": 60000,
+   "errors": {
+    "1213": 1
+   }
+  },
+  {
+   "backoff": "지수+지터",
+   "max_try": 4,
+   "ok": 60,
+   "of": 60,
+   "attempts": 61,
+   "elapsed_s": 13.5,
+   "final_amount": 60000,
+   "errors": {
+    "1213": 1
+   }
+  },
+  {
+   "backoff": "지수+지터",
+   "max_try": 8,
+   "ok": 60,
+   "of": 60,
+   "attempts": 61,
+   "elapsed_s": 13.4,
+   "final_amount": 60000,
+   "errors": {
+    "1213": 1
+   }
+  }
+ ],
+ "queue": [
+  {
+   "mode": "plain",
+   "done": 200,
+   "of": 200,
+   "elapsed_s": 1.1,
+   "per_s": 185.7,
+   "distribution": {
+    "에러1213": 34,
+    "w1": 45,
+    "w2": 51,
+    "w0": 53,
+    "w3": 51
+   }
+  },
+  {
+   "mode": "skiplocked",
+   "done": 200,
+   "of": 200,
+   "elapsed_s": 0.9,
+   "per_s": 224.4,
+   "distribution": {
+    "w3": 50,
+    "w0": 51,
+    "w2": 49,
+    "w1": 50
+   }
+  },
+  {
+   "mode": "nowait",
+   "done": 200,
+   "of": 200,
+   "elapsed_s": 2.7,
+   "per_s": 75.2,
+   "distribution": {
+    "에러3572": 171,
+    "w2": 97,
+    "w0": 101,
+    "w1": 2
+   }
+  }
+ ]
+}

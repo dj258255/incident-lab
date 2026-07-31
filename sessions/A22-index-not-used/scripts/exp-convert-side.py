@@ -16,7 +16,9 @@
      서로 다른 값이 많은 컬럼으로 다시 짠다.
 """
 import json
+import os
 import statistics
+import subprocess
 import sys
 import time
 
@@ -28,6 +30,35 @@ REPEAT = 5
 conn = pymysql.connect(host="127.0.0.1", port=13313, user="root", password="lab",
                        database="spoon", autocommit=True)
 cur = conn.cursor()
+
+
+def ensure_seeded():
+    """러너가 단계마다 컨테이너를 볼륨까지 지우고 새로 띄운다.
+
+    schema.sql 은 initdb 로 들어가지만 적재는 따로다. 확인하지 않으면 COUNT(*)=0 이
+    그대로 분모로 들어간다. 실제로 ZeroDivisionError 로 끝났고, 그 직전까지의 출력은
+    정상으로 보였다. 비어 있으면 채우고, 채운 뒤에도 비어 있으면 멈춘다.
+    """
+    cur.execute("SELECT COUNT(*) FROM information_schema.TABLES "
+                "WHERE TABLE_SCHEMA='spoon' AND TABLE_NAME='orders'")
+    if cur.fetchone()[0] == 0:
+        sys.exit("중단: orders 표가 없습니다. compose 의 initdb 가 돌지 않았습니다")
+    cur.execute("SELECT COUNT(*) FROM orders")
+    n = cur.fetchone()[0]
+    if n:
+        return n
+    print("orders 가 비어 있습니다. seed.py 를 먼저 돌립니다.", flush=True)
+    subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                                 "seed.py")], check=True)
+    cur.execute("SELECT COUNT(*) FROM orders")
+    n = cur.fetchone()[0]
+    if n == 0:
+        sys.exit("중단: 적재 후에도 orders 가 비어 있습니다")
+    print(f"적재 완료 {n:,}행", flush=True)
+    return n
+
+
+ensure_seeded()
 
 
 def explain_row(sql):

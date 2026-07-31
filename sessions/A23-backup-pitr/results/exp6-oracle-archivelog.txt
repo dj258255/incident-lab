@@ -1,0 +1,41 @@
+# Oracle 아카이브 로그 모드 전환에 드는 정지 시간
+# Oracle AI Database 26ai Free Release 23.26.2.0.0 - Develop, Learn, and Run for Free
+# 출고 상태 log_mode = ARCHIVELOG, open_mode = READWRITE
+
+## 1) ARCHIVELOG 를 끈다
+  이것부터가 정지를 요구합니다. 데이터베이스를 내리고 mount 로 올려야 합니다.
+    Database closed.
+    Database dismounted.
+    Database mounted.
+  전환 후 log_mode = NOARCHIVELOG, open_mode = READWRITE
+  끄는 데 걸린 시간 = 12초 (그동안 데이터베이스가 질의를 받지 않습니다)
+
+## 2) NOARCHIVELOG 상태에서 RMAN 이 무엇을 말하는가
+  이 상태에서는 리두가 덮어써지므로 백업 시점 뒤로는 되돌아갈 재료가 없습니다.
+    RMAN-00571: ===========================================================
+    RMAN-00569: =============== ERROR MESSAGE STACK FOLLOWS ===============
+    RMAN-00571: ===========================================================
+    RMAN-03002: failure of restore command at 07/31/2026 09:18:33
+    RMAN-06026: some targets not found - aborting restore
+  아카이브 로그 자체도 확인합니다:
+    archived_logs=0
+
+## 3) ARCHIVELOG 로 되돌린다
+    Database closed.
+    Database dismounted.
+    Database mounted.
+  전환 후 log_mode = ARCHIVELOG, open_mode = READWRITE
+  켜는 데 걸린 시간 = 11초
+  전환 직후 아카이브가 실제로 도는지 확인합니다:
+    archived_logs=1
+
+## 정리
+  ARCHIVELOG → NOARCHIVELOG        12초
+  NOARCHIVELOG → ARCHIVELOG        11초
+
+  이 랩은 데이터가 1,500행이라 정지 시간이 거의 기동 시간입니다. 운영 규모에서는
+  SHUTDOWN IMMEDIATE 가 열린 트랜잭션의 롤백을 기다리므로 더 길어집니다.
+  갈리는 자리는 길이가 아니라 단계입니다. MySQL 의 log-bin 과 PostgreSQL 의
+  archive_mode 는 설정을 바꾸고 재기동 한 번이면 끝나는데, Oracle 은 데이터베이스를
+  mount 상태에 두는 단계가 하나 더 있습니다. 열린 채로는 바꿀 수 없습니다.
+  각 방향 1회 실행입니다.
