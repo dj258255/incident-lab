@@ -3,30 +3,44 @@
 # 행 수 3000000. INT AUTO_INCREMENT 를 BIGINT 로 옮긴다.
 
 ## 1) 한 방 ALTER (COPY)
-  소요 4.6초
-  [alter] 4.6초 동안 시작한 쓰기 3건 중 성공 3건 = 초당 0.6건
-  [alter] 전환 직전 5초 기준선 = 초당 47.0건
-  [alter] 지연 중앙값 9ms, p95 4576ms, 최대 4576ms, 실패 0건
+  소요 4.4초
+  [alter] 4.4초 동안 시작한 쓰기 3건 중 성공 3건 = 초당 0.7건
+  [alter] 전환 직전 5초 기준선 = 초당 53.0건
+  [alter] 지연 중앙값 7ms, p95 4312ms, 최대 4312ms, 실패 0건
 
 ## 2) pt-online-schema-change
     Altering `spoon`.`sponsor_pt`...
     Creating new table...
     Altering new table...
-    2026-07-30T18:27:53 Creating triggers...
-    2026-07-30T18:27:53 Copying approximately 2993877 rows...
-    2026-07-30T18:28:03 Copied rows OK.
-    2026-07-30T18:28:03 Swapping tables...
-    2026-07-30T18:28:03 Dropping old table...
-    2026-07-30T18:28:03 Dropping triggers...
+    2026-07-31T01:24:33 Creating triggers...
+    2026-07-31T01:24:33 Copying approximately 2993877 rows...
+    2026-07-31T01:24:42 Copied rows OK.
+    2026-07-31T01:24:42 Swapping tables...
+    2026-07-31T01:24:42 Dropping old table...
+    2026-07-31T01:24:42 Dropping triggers...
     Successfully altered `spoon`.`sponsor_pt`.
-  소요 11.8초
-  [ptosc] 11.8초 동안 시작한 쓰기 500건 중 성공 500건 = 초당 42.3건
-  [ptosc] 전환 직전 5초 기준선 = 초당 47.8건
-  [ptosc] 지연 중앙값 9ms, p95 16ms, 최대 74ms, 실패 0건
+  소요 10.7초
+  [ptosc] 10.7초 동안 시작한 쓰기 564건 중 성공 564건 = 초당 52.9건
+  [ptosc] 전환 직전 5초 기준선 = 초당 53.2건
+  [ptosc] 지연 중앙값 5ms, p95 7ms, 최대 29ms, 실패 0건
 
-## 3) 결과 검산
-  sponsor_alter: 컬럼 bigint, 행 수 3000289
-  sponsor_pt: 컬럼 bigint, 행 수 3000789
+## 3) gh-ost
+  공개 컨테이너 이미지가 없어 소스에서 빌드한 바이너리를 쓴다(tools/gh-ost/README.md).
+    Copy: 3000583/3000583 100.0%; Applied: 1167; Backlog: 0/1000; Time: 21s(total), 21s(copy); streamer: binlog.000004:252355761; Lag: 0.01s, HeartbeatLag: 0.09s, State: migrating; ETA: due
+    Copy: 3000583/3000583 100.0%; Applied: 1167; Backlog: 7/1000; Time: 22s(total), 21s(copy); streamer: binlog.000004:252359589; Lag: 0.01s, HeartbeatLag: 0.01s, State: migrating; ETA: due
+    # Migrating `spoon`.`sponsor_gh`; Ghost table is `spoon`.`_sponsor_gh_gho`
+    # Migrating 1b095dcb8014:3306; inspecting 1b095dcb8014:3306; executing on c3fef8453915
+    Copy: 3000583/3000583 100.0%; Applied: 1168; Backlog: 0/1000; Time: 22s(total), 21s(copy); streamer: binlog.000004:252361654; Lag: 0.01s, HeartbeatLag: 0.09s, State: migrating; ETA: due
+    # Done
+  소요 27.5초
+  [ghost] 27.5초 동안 시작한 쓰기 1432건 중 성공 1432건 = 초당 52.1건
+  [ghost] 전환 직전 5초 기준선 = 초당 54.0건
+  [ghost] 지연 중앙값 5ms, p95 7ms, 최대 998ms, 실패 0건
+
+## 4) 결과 검산
+  sponsor_alter: 컬럼 bigint, 행 수 3000324
+  sponsor_pt: 컬럼 bigint, 행 수 3000886
+  sponsor_gh: 컬럼 bigint, 행 수 3001759
 
 ## 정리
   각 조건 1회 실행입니다.

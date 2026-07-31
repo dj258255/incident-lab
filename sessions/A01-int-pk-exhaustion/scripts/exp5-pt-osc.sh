@@ -121,8 +121,32 @@ printf "  소요 %.1f초\n" "$(echo "$B1-$B0" | bc)"
 tally "$B0" "$B1" ptosc
 echo
 
-echo "## 3) 결과 검산"
-for tb in sponsor_alter sponsor_pt; do
+echo "## 3) gh-ost"
+echo "  공개 컨테이너 이미지가 없어 소스에서 빌드한 바이너리를 쓴다(tools/gh-ost/README.md)."
+GHOST="$ROOT/../../tools/gh-ost/gh-ost.linux-arm64"
+if [ ! -x "$GHOST" ]; then
+  echo "  건너뜀: $GHOST 가 없습니다. tools/gh-ost/README.md 의 빌드 절차를 보세요."
+else
+  seed sponsor_gh
+  # gh-ost 는 binlog 를 읽어 변경분을 따라간다. row 형식과 full 이미지가 필요하다.
+  M "SET GLOBAL binlog_format='ROW'; SET GLOBAL binlog_row_image='FULL'" >/dev/null 2>&1
+  start_writer sponsor_gh
+  C0=$(date +%s.%N)
+  docker run --rm --network "$NET" -v "$GHOST":/gh-ost:ro alpine:3.20 /gh-ost \
+    --host=a01-mysql --port=3306 --user=root --password=lab \
+    --database=spoon --table=sponsor_gh \
+    --alter="MODIFY id BIGINT AUTO_INCREMENT" \
+    --allow-on-master --initially-drop-ghost-table --initially-drop-old-table \
+    --execute 2>&1 | grep -E "Migrating|Copy:|State|Done|ERROR|FATAL" | tail -6 | sed 's/^/    /'
+  C1=$(date +%s.%N)
+  stop_writer
+  printf "  소요 %.1f초\n" "$(echo "$C1-$C0" | bc)"
+  tally "$C0" "$C1" ghost
+fi
+echo
+
+echo "## 4) 결과 검산"
+for tb in sponsor_alter sponsor_pt sponsor_gh; do
   echo "  $tb: 컬럼 $(M "SELECT COLUMN_TYPE FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='spoon' AND TABLE_NAME='$tb' AND COLUMN_NAME='id'"), 행 수 $(M "SELECT COUNT(*) FROM $tb")"
 done
 echo
