@@ -112,6 +112,10 @@ for f in sys.argv[1:]:
     if a.get("error"):
         print(f"  {d.get('write_ratio',0):<10} 실행 실패: {a['error']}")
         continue
+    if "settle_s" not in a:
+        # 기본값 0 으로 찍으면 "축소가 0초 걸렸다" 는 정상 모양의 숫자가 된다.
+        print(f"  {d.get('write_ratio',0):<10} 측정값 없음(리사이즈 관측이 안 남았습니다)")
+        continue
     print(f"  {d.get('write_ratio',0):<10} {a.get('stmt_ms',0):>9.0f}ms {a.get('settle_s',0):>9.2f}초 "
           f"{d.get('max_ms') or 0:>10.1f}ms {d.get('pages_dirty',0):>10,} {a.get('final_pool_mb',0):>7}MB")
 PY

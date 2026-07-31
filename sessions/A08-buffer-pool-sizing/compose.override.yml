@@ -3,7 +3,7 @@ services:
     cpus: 2
     command:
       - --innodb-buffer-pool-size=${BP_SIZE:-128M}
-      - --innodb-buffer-pool-instances=1
+      - --innodb-buffer-pool-instances=8
       - --innodb-flush-method=O_DIRECT
       - --innodb-flush-neighbors=0
       - --innodb-io-capacity=2000

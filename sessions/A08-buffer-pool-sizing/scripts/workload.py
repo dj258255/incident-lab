@@ -219,7 +219,12 @@ def main():
                   f"최종 풀 {final_size//1024//1024}MB", flush=True)
             for t, st in trail:
                 print(f"    +{t:.2f}초  {st}", flush=True)
-        threading.Thread(target=fire, daemon=True).start()
+        # 데몬 스레드로 띄우고 join 을 안 하면, 본 스레드가 먼저 JSON 을 쓰고 끝날 때
+        # action 에 sql 과 at_s 만 남는다. 그러면 집계가 stmt_ms·settle_s·final_pool_mb 를
+        # 기본값 0 으로 읽어 "문장 반환 0ms, 안정까지 0.00초, 최종 풀 0MB" 라는 정상 모양의
+        # 숫자가 표에 들어간다. 실제로 쓰기 비율 0.0 조건이 그렇게 나왔다.
+        action_thread = threading.Thread(target=fire, daemon=True)
+        action_thread.start()
 
     time.sleep(max(0, t_end - time.time()))
     after = counters(acur)
@@ -276,6 +281,12 @@ def main():
         "write_ratio": args.write_ratio,
     }
     if action:
+        # 리사이즈 관측이 끝날 때까지 기다린다. 위 루프의 상한이 180초이므로 넉넉히 준다.
+        action_thread.join(timeout=200)
+        if action_thread.is_alive():
+            action["error"] = "리사이즈 관측 스레드가 200초 안에 안 끝났습니다"
+        elif "settle_s" not in action and "error" not in action:
+            action["error"] = "리사이즈 관측값이 안 남았습니다"
         action["at_s"] = args.action_at
         out["action"] = action
 
