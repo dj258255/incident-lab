@@ -4,8 +4,8 @@
   계측 = 폐기한 클래스로더에 WeakReference를 걸고 GC 후 생존 수를 센다
 
 [부하] 누수 조건(웹앱 안 ThreadLocal + remove 없음)으로 재배포 200,000회를 돌린다
-    2,000 사이클: Metaspace 11.5 MB
+    2,000 사이클: Metaspace 11.4 MB
     4,000 사이클: Metaspace 21.2 MB
-    6,000 사이클: Metaspace 30.9 MB
+    6,000 사이클: Metaspace 30.8 MB
     8,000 사이클: Metaspace 40.5 MB
    10,000 사이클: Metaspace 50.2 MB

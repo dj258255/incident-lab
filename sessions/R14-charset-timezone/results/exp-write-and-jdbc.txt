@@ -7,11 +7,11 @@
 ==================================================================
   1000000행 적재 중...
   적재 완료: 1000000행
-  ALTER 소요 = 4298ms
-  전환 창 안의 쓰기 시도 = 3건 (4.3초 동안, 초당 0.7건)
-  그중 실패 = 3건
-  전환 전 기준선: 중앙 7ms, 최대 8ms (65건)
-  전환 중:       중앙 7ms, 최대 4218ms
+  ALTER 소요 = 4193ms
+  전환 창 안의 쓰기 시도 = 2건 (4.2초 동안, 초당 0.5건)
+  그중 실패 = 0건
+  전환 전 기준선: 중앙 7ms, 최대 9ms (62건)
+  전환 중:       중앙 4124ms, 최대 4124ms
 
   ALGORITHM=COPY 는 원본에 공유 락을 잡습니다. 읽기는 통과하고 쓰기는 기다립니다.
   전환 중 최대 대기가 ALTER 소요에 가까우면 쓰기가 통째로 밀린 것이고,
@@ -40,6 +40,28 @@
 ==================================================================
   MySQL 은 결손 시각에 에러도 NULL 도 아닌 값을 돌려줬습니다. 자바는 어떤지 봅니다.
 
+  Unable to find image 'eclipse-temurin:21-jdk' locally
+  21-jdk: Pulling from library/eclipse-temurin
+  55237ac9880d: Already exists
+  693710ba2039: Already exists
+  ab41a7c4d25a: Pulling fs layer
+  37196294118c: Pulling fs layer
+  75a02cbfb375: Pulling fs layer
+  f1f7f2c50dd5: Pulling fs layer
+  f1f7f2c50dd5: Waiting
+  75a02cbfb375: Download complete
+  ab41a7c4d25a: Verifying Checksum
+  ab41a7c4d25a: Download complete
+  ab41a7c4d25a: Pull complete
+  f1f7f2c50dd5: Verifying Checksum
+  f1f7f2c50dd5: Download complete
+  37196294118c: Verifying Checksum
+  37196294118c: Download complete
+  37196294118c: Pull complete
+  75a02cbfb375: Pull complete
+  f1f7f2c50dd5: Pull complete
+  Digest: sha256:da9d3a4f7650db39b918fc5a2c3da76556fb8cc8e5f3767cdea0bb409286951a
+  Status: Downloaded newer image for eclipse-temurin:21-jdk
   결손 02:30
     atZone 결과      = 2026-03-08 03:30:00 EDT -04:00
     에러 없이 이동됨 처리됩니다. 예외를 던지지 않습니다.

@@ -184,6 +184,71 @@ Tomcat 10.1의 `bin/catalina.sh`는 이 옵션을 기본으로 붙이지만, 기
 
 **`clearReferencesThreadLocals`의 역할도 예상과 달랐습니다.** 이 설정을 끄면 누수가 그대로 커진다고 봤는데, 소스를 열어 보니 그 설정이 끄는 것은 경고 로그이고 회수 경로가 아니었습니다. `true`일 때도 Tomcat은 살아 있는 엔트리를 지우지 않고 `log.error`만 찍습니다. 회수 쪽 스위치는 `renewThreadsWhenStoppingContext`와 `Executor`의 `threadRenewalDelay`이고, 자세한 것은 4절에 적었습니다. 이 세션의 초고는 두 스위치를 하나로 뭉개고 있었습니다.
 
+## 실제 Tomcat 재배포, 커널 OOM-Kill, 사이클 반복 (2026-07-31)
+
+`scripts/exp-tomcat-and-oomkill.sh`, 결과는 `results/exp-tomcat-and-oomkill.txt` 입니다.
+
+### Tomcat 이 직접 경고를 남깁니다
+
+웹앱 배포 한 번을 `URLClassLoader` 하나로 흉내 냈습니다. 실제 Tomcat 에 서블릿 하나짜리
+WAR 를 열 번 올렸다 내리며 매번 `/leak` 을 스무 번씩 찔렀습니다. 그 서블릿은
+`ThreadLocal` 에 자기 클래스로더가 적재한 객체를 넣고 `remove()` 를 부르지 않습니다.
+
+```
+SEVERE [Catalina-utility-2] org.apache.catalina.loader.WebappClassLoaderBase
+  .checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal
+  with key of type [...]
+```
+
+**Tomcat 이 스스로 열다섯 줄의 경고를 남겼습니다.** Tomcat 은 재배포마다 이전 웹앱의
+클래스로더가 회수됐는지 확인하고, `ThreadLocal` 이 붙잡고 있으면 이 경고를 냅니다.
+**경고가 나온다는 것은 이 세션이 `URLClassLoader` 로 흉내 낸 조건이 실제 재배포
+경로에서도 같다는 뜻입니다.**
+
+`WebappClassLoaderBase.checkThreadLocalMapForLeaks` 라는 메서드 이름 자체가 Tomcat 이
+이 문제를 알고 대비했다는 증거입니다. 다만 **경고만 하고 막지는 않습니다.**
+탐지 코드가 몇 버전부터 들어갔는지는 여전히 확인하지 못했고, 위 로그는
+`tomcat:10.1-jdk21` 에서 나온 것입니다.
+
+### 커널이 죽이면 JVM 은 유언을 못 남깁니다
+
+`MaxMetaspaceSize` 의 JVM 기본값은 무제한입니다. 그러면 Metaspace 가 자라도 JVM 은
+`OutOfMemoryError` 를 던지지 않고 컨테이너 메모리를 계속 밀어 올립니다.
+상한을 주지 않고 컨테이너 메모리만 320MB 로 좁혔습니다.
+
+```
+종료 코드 = 137, OOMKilled = true
+JVM 의 OutOfMemoryError = 0회
+```
+
+**`OOMKilled=true` 인데 `OutOfMemoryError` 가 0회입니다.** JVM 은 아무 말도 못 하고
+죽었습니다. 스택 트레이스도 힙 덤프도 남지 않습니다. 종료 코드 137 은
+`128 + 9`, 즉 `SIGKILL` 입니다.
+
+**이것이 실무에서 더 흔한 실패 경로입니다.** 이 세션의 본문이 `MaxMetaspaceSize=24m`
+로 잰 `OutOfMemoryError` 는 상한을 명시적으로 걸어 둔 조건에서만 나옵니다. 상한이
+없으면 커널이 먼저 개입하고, 그때는 원인을 알려 줄 흔적이 하나도 안 남습니다.
+
+**`MaxMetaspaceSize` 를 걸어 두는 값어치가 여기 있습니다.** 터지는 시점을 앞당기는
+대신 JVM 이 무엇 때문에 죽는지 말해 줍니다.
+
+### 3,773 사이클은 재현됩니다
+
+같은 조건을 세 번 돌렸습니다.
+
+| 회차 | 터진 사이클 | `OutOfMemoryError` |
+|---|---|---|
+| 1 | **3,773** | 2회 |
+| 2 | 2,000~4,000 사이(정확한 값 미기록) | 2회 |
+| 3 | 2,000~4,000 사이(정확한 값 미기록) | 2회 |
+
+**회차 1이 발행된 3,773 과 정확히 같습니다.** 회차 2와 3은 워커 스레드에서 죽어
+(`ExecutionException`) 사이클 번호가 예외 메시지에 안 실렸고, 진행 로그가 2,000 단위라
+그 사이 어디인지까지만 압니다.
+
+세 회차 모두 같은 구간에서 터진다는 것은 확인됐습니다. 다만 **3,773 을 상수로
+인용하려면 진행 로그의 간격을 좁혀 다시 재야 합니다.**
+
 ## 한계
 
 Tomcat에서 재배포를 반복해 실제 Metaspace OOM까지 몰고 가지는 않았습니다. 실제 스택 쪽은 언디플로이 1회와 경고 관측까지이고, OOM은 최소 재현에서만 봤습니다. Metaspace OOM 실행도 1회분만 남아 있어, 3,773이라는 지점이 반복되는지는 확인하지 않았습니다.

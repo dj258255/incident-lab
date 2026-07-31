@@ -37,7 +37,7 @@ Caused by: java.lang.OutOfMemoryError: Metaspace
 	at java.base/java.lang.reflect.Method.acquireMethodAccessor(Method.java:726)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
 	at LeakLab.lambda$deploy$1(LeakLab.java:143)
-	at LeakLab$$Lambda/0x0000004001007a20.call(Unknown Source)
+	at LeakLab$$Lambda/0x0000000701007a20.call(Unknown Source)
 	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)

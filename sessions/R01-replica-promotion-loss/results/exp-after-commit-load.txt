@@ -1,10 +1,31 @@
 # AFTER_COMMIT 을 부하 아래에서
 # 쓰기 8개, 관찰자 4명, 창 12초. 각 조건 1회 실행입니다.
+복제가 붙어 있지 않습니다. setup.sh 를 먼저 돌립니다.
+복제 확인: SERVICE_STATE=ON
 # MySQL 8.4.3
 
 ### wait_point = AFTER_SYNC
   매달린 창 12초 동안
-    소스에 들어간 행 = 0
-    관찰자 4명이 실제로 읽은 서로 다른 행 = 0
-    승격 후 복제본에 남은 행 = ERROR 1146 (42S02) at line 1: Table 'spoon.obs' doesn't exist
-scripts/exp-after-commit-load.sh: line 95: ERROR: unbound variable
+    소스에 들어간 행 = 400
+    관찰자 4명이 실제로 읽은 서로 다른 행 = 400
+    승격 후 복제본에 남은 행 = 400
+    **읽혔는데 사라진 행 = 0**
+
+### wait_point = AFTER_COMMIT
+  매달린 창 12초 동안
+    소스에 들어간 행 = 8
+    관찰자 4명이 실제로 읽은 서로 다른 행 = 8
+    승격 후 복제본에 남은 행 = 400
+    **읽혔는데 사라진 행 = 0**
+
+## 정리
+wait_point    on_source  seen_by_observers  survived  lost
+AFTER_SYNC    400        400                400       0
+AFTER_COMMIT  8          8                  400       0
+
+  AFTER_SYNC 는 ack 를 받기 전에는 엔진에 커밋하지 않으므로 관찰자가 못 봅니다.
+  못 본 것은 사라져도 아무도 모릅니다. AFTER_COMMIT 은 먼저 커밋하고 ack 를
+  기다리므로 그 사이 관찰자가 봅니다. 본 것이 사라지는 것이 이 설정의 대가입니다.
+  한 건짜리 관측은 '가능하다'까지이고, 위 표의 마지막 열이 그 크기입니다.
+
+  환경을 되돌립니다.

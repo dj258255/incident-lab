@@ -65,7 +65,11 @@ fi
 # lakehouse 처럼 이 랩과 무관한 것은 건드리지 않는다.
 teardown(){
   docker ps -q --filter "name=^/a[0-9]" --filter "name=^/r[0-9]" --filter "name=^/b[0-9]" \
-             --filter "name=^/lab-" --filter "name=^/f0" 2>/dev/null | xargs -r docker rm -f >/dev/null 2>&1 || true
+             --filter "name=^/lab-" --filter "name=^/f0" 2>/dev/null | xargs -r docker rm -f -v >/dev/null 2>&1 || true
+  # -v 를 빠뜨리면 익명 볼륨이 남는다. 이 러너는 단계마다 컨테이너를 새로 띄우므로
+  # 열아홉 단계를 돌리는 동안 볼륨이 계속 쌓인다. 실제로 258GB 가 쌓여 디스크가 99% 로
+  # 차고 git 인덱스 쓰기가 타임아웃됐다. 붙어 있지 않은 볼륨도 함께 정리한다.
+  docker volume prune -f >/dev/null 2>&1 || true
 }
 
 bring_up(){ # $1=세션경로 $2=방식
