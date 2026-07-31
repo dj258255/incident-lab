@@ -1,0 +1,42 @@
+# Debezium Server 로 같은 조건을 잰다
+# Debezium Server 3.0
+# PostgreSQL PostgreSQL 17.5 (Debian 17.5-1.pgdg130+1
+# 조건마다 60초 관측, 1회 실행
+
+### A. 살아 있고 대상 테이블에 쓰기 있음
+  슬롯 생성됨. 하트비트 = 0ms, 대상 테이블 쓰기 = yes, Debezium = yes
+  60초 동안: 슬롯 지연 932KB → 439.5MB, pg_wal 256MB → 464MB
+  슬롯 상태 = extended
+  other_log 행 수 = 197600
+  하트비트 테이블 행 수 = 0
+
+### B1. 살아 있는데 대상은 조용, 하트비트 없음
+  슬롯 생성됨. 하트비트 = 0ms, 대상 테이블 쓰기 = no, Debezium = yes
+  60초 동안: 슬롯 지연 456KB → 219.9MB, pg_wal 464MB → 256MB
+  슬롯 상태 = reserved
+  other_log 행 수 = 198000
+  하트비트 테이블 행 수 = 0
+
+### B2. 살아 있는데 대상은 조용, 하트비트 5초
+  슬롯 생성됨. 하트비트 = 5000ms, 대상 테이블 쓰기 = no, Debezium = yes
+  60초 동안: 슬롯 지연 456KB → 219.8MB, pg_wal 256MB → 256MB
+  슬롯 상태 = reserved
+  other_log 행 수 = 198000
+  하트비트 테이블 행 수 = 0
+
+### C. Debezium 이 죽음
+  슬롯 생성됨. 하트비트 = 5000ms, 대상 테이블 쓰기 = yes, Debezium = no
+  Debezium 을 죽였습니다
+  60초 동안: 슬롯 지연 39.5MB → 446.0MB, pg_wal 256MB → 464MB
+  슬롯 상태 = extended
+  other_log 행 수 = 200000
+  하트비트 테이블 행 수 = 0
+
+## 정리
+label                                 heartbeat_ms    target_write  dbz_alive  lag0_mb   lag1_mb    wal0_mb    wal1_mb
+A. 살아 있고 대상 테이블에 쓰기 있음  0               yes           yes        954312    460803864  256        464
+B1. 살아 있는데 대상은 조용            하트비트 없음  0             no         yes       466816     230532272  464      256
+B2. 살아 있는데 대상은 조용            하트비트 5초   5000          no         yes       466816     230522808  256      256
+C. Debezium 이 죽음                   5000            yes           no         41382720  467695440  256        464
+
+  각 조건 1회 실행입니다.

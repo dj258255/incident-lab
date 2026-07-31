@@ -1,0 +1,20 @@
+[20:07:39] 안전장치 설정: max_slot_wal_keep_size = 64MB
+[20:07:40] 현재값 64MB
+[20:07:41] 슬롯 생성. 컨슈머는 붙이지 않는다 (죽은 CDC 상태로 시작)
+[20:07:41] 쓰기 시작
+[20:07:41]   t=1s  WAL 80MB  슬롯지연 0MB  상태 reserved  여유 70MB
+[20:08:02]   t=10s  WAL 96MB  슬롯지연 73MB  상태 unreserved  여유 -1MB
+[20:08:23]   t=19s  WAL 128MB  슬롯지연 MB  상태 lost  여유 0MB
+[20:08:23]   슬롯이 무효화됐다. 더 쌓지 않는다.
+[20:08:23] 최종 상태
+ slot_name | active | wal_status | lag | safe_wal 
+-----------+--------+------------+-----+----------
+ cdc_slot  | f      | lost       |     | 
+(1 row)
+
+[20:08:23] WAL 128 MB, 파일 8개
+[20:08:23] 무효화된 슬롯에 컨슈머를 다시 붙이면
+  pg_recvlogical: error: could not send replication command "START_REPLICATION SLOT "cdc_slot" LOGICAL 0/0": ERROR:  can no longer get changes from replication slot "cdc_slot"
+  DETAIL:  This slot has been invalidated because it exceeded the maximum reserved size.
+  pg_recvlogical: disconnected; waiting 5 seconds to try again
+[20:08:28] 종료
