@@ -8,3 +8,13 @@
 
 ## single (mode=atomic slots=0)
 Error response from daemon: No such container: r13-replica
+  복제가 시작되지 않았습니다:
+
+## slot64 (mode=slot slots=64)
+Error response from daemon: No such container: r13-replica
+  복제가 시작되지 않았습니다:
+
+## 정리
+label  rps  src_sum  rep_sum_at_end  behind  seconds_behind_source  catchup_s
+
+  각 조건 1회 실행입니다.

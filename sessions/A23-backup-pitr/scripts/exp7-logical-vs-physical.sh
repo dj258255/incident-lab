@@ -71,8 +71,11 @@ for rows in $SIZES; do
   echo "  적재 ${N}행, 테이블 $(python3 -c "print(f'{${SZ:-0}/1048576:.1f}')")MB"
   echo
 
+  # ── 패스 1: 논리 백업과 복원만 ─────────────────────────────────────
+  # 물리 쪽과 같은 루프에서 돌리면 물리 복원이 복구 인스턴스의 데이터 디렉터리를
+  # 통째로 갈아엎어 다음 논리 복원이 깨진다. 실제로 첫 회차만 성공하고 나머지는
+  # "Table 'bench.t' doesn't exist" 가 행 수 자리에 들어갔다. 패스를 나눈다.
   for run in $(seq 1 "$REPEAT"); do
-    # ── 논리: mysqldump → 복원 ──────────────────────────────────────
     T0=$(date +%s%N)
     docker exec a23-mysql mysqldump -uroot -plab --single-transaction bench \
       > "$OUT/bench-${rows}.sql" 2>/dev/null
@@ -83,13 +86,23 @@ for rows in $SIZES; do
     docker exec -i a23-restore mysql -uroot -plab bench < "$OUT/bench-${rows}.sql" 2>/dev/null
     T3=$(date +%s%N)
     RN=$(R "SELECT COUNT(*) FROM bench.t")
+    case "${RN:-}" in ''|*[!0-9]*) RN=0 ;; esac
     L_BACKUP=$(python3 -c "print(f'{($T1-$T0)/1e9:.2f}')")
     L_RESTORE=$(python3 -c "print(f'{($T3-$T2)/1e9:.2f}')")
-    echo "$rows,$run,logical,backup,$L_BACKUP,$DUMP_B" >> "$OUT/logical-vs-physical.csv"
-    echo "$rows,$run,logical,restore,$L_RESTORE,$DUMP_B" >> "$OUT/logical-vs-physical.csv"
+    if [ "$RN" -lt "$N" ]; then
+      printf "  run%d  논리 실패(복원 후 %s행, 기대 %s행). 이 회차는 버립니다\n" "$run" "$RN" "$N"
+    else
+      echo "$rows,$run,logical,backup,$L_BACKUP,$DUMP_B" >> "$OUT/logical-vs-physical.csv"
+      echo "$rows,$run,logical,restore,$L_RESTORE,$DUMP_B" >> "$OUT/logical-vs-physical.csv"
+      printf "  run%d  논리 백업 %6ss 복원 %6ss (%sMB, 복원 후 %s행)\n" \
+        "$run" "$L_BACKUP" "$L_RESTORE" \
+        "$(python3 -c "print(f'{${DUMP_B:-0}/1048576:.1f}')")" "$RN"
+    fi
+    rm -f "$OUT/bench-${rows}.sql"
+  done
 
-    # ── 물리: 콜드 복사 → 복원 ─────────────────────────────────────
-    # 서버를 멈추고 데이터 디렉터리를 통째로 옮긴다. 이것이 콜드 백업의 대가다.
+  # ── 패스 2: 물리 백업과 복원만 ─────────────────────────────────────
+  for run in $(seq 1 "$REPEAT"); do
     T4=$(date +%s%N)
     docker stop a23-mysql >/dev/null
     docker run --rm --volumes-from a23-mysql -v "$OUT":/backup alpine \
@@ -107,18 +120,19 @@ for rows in $SIZES; do
     wait_up a23-restore || echo "  경고: a23-restore 재기동 확인 실패"
     T7=$(date +%s%N)
     PN=$(R "SELECT COUNT(*) FROM bench.t")
+    case "${PN:-}" in ''|*[!0-9]*) PN=0 ;; esac
     P_BACKUP=$(python3 -c "print(f'{($T5-$T4)/1e9:.2f}')")
     P_RESTORE=$(python3 -c "print(f'{($T7-$T6)/1e9:.2f}')")
-    echo "$rows,$run,physical,backup,$P_BACKUP,$PHYS_B" >> "$OUT/logical-vs-physical.csv"
-    echo "$rows,$run,physical,restore,$P_RESTORE,$PHYS_B" >> "$OUT/logical-vs-physical.csv"
-
-    printf "  run%d  논리 백업 %6ss 복원 %6ss (%sMB, 복원 후 %s행)\n" \
-      "$run" "$L_BACKUP" "$L_RESTORE" \
-      "$(python3 -c "print(f'{${DUMP_B:-0}/1048576:.1f}')")" "${RN:-?}"
-    printf "        물리 백업 %6ss 복원 %6ss (%sMB, 복원 후 %s행)\n" \
-      "$P_BACKUP" "$P_RESTORE" \
-      "$(python3 -c "print(f'{${PHYS_B:-0}/1048576:.1f}')")" "${PN:-?}"
-    rm -f "$OUT/bench-${rows}.sql" "$OUT/bench-phys.tar"
+    if [ "$PN" -lt "$N" ]; then
+      printf "  run%d  물리 실패(복원 후 %s행, 기대 %s행). 이 회차는 버립니다\n" "$run" "$PN" "$N"
+    else
+      echo "$rows,$run,physical,backup,$P_BACKUP,$PHYS_B" >> "$OUT/logical-vs-physical.csv"
+      echo "$rows,$run,physical,restore,$P_RESTORE,$PHYS_B" >> "$OUT/logical-vs-physical.csv"
+      printf "  run%d  물리 백업 %6ss 복원 %6ss (%sMB, 복원 후 %s행)\n" \
+        "$run" "$P_BACKUP" "$P_RESTORE" \
+        "$(python3 -c "print(f'{${PHYS_B:-0}/1048576:.1f}')")" "$PN"
+    fi
+    rm -f "$OUT/bench-phys.tar"
   done
   echo
 done

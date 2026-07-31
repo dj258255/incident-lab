@@ -43,7 +43,7 @@ NET="$(docker inspect -f '{{range $k, $v := .NetworkSettings.Networks}}{{$k}}{{e
 # 이 값 없이는 지연 수치를 읽을 수 없다. 부하 테스트 세션에서는 필수 기록이다.
 {
   echo "# [$LABEL] 측정 직전 호스트 상태"
-  date -Is
+  date '+%Y-%m-%dT%H:%M:%S%z'
   uptime
   uname -srm; echo "nproc=$(nproc)"; free -g | sed -n '1,2p'
   echo "-- CPU 상위 5 --"
@@ -66,7 +66,7 @@ docker logs lab-f03-app > "$OUT/$LABEL-app.log" 2>&1
 
 {
   echo "# [$LABEL] 측정 직후 호스트 상태"
-  date -Is
+  date '+%Y-%m-%dT%H:%M:%S%z'
   uptime
 } >> "$OUT/$LABEL-load.txt"
 
