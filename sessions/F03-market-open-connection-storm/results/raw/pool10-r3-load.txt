@@ -24,3 +24,6 @@
 ### 기록 시각
   2026-07-31 18:51:15 KST
 route=fixed TOMCAT_MAX_THREADS=200 RATE=400 VUS=2600 PREVUS=2600 RAMP=5s HOLD=20s DOWN=5s
+# [pool10-r3] 측정 직후 호스트 상태
+2026-07-31T18:51:46+0900
+18:51  up  3:51, 2 users, load averages: 5.70 10.74 11.19

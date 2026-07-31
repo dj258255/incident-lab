@@ -88,3 +88,62 @@ market_open   [  79% ] 0010/2600 VUs  23.8s/30s  400.00 iters/s
 
 running (0m24.8s), 0010/2600 VUs, 8920 complete and 0 interrupted iterations
 market_open   [  83% ] 0010/2600 VUs  24.8s/30s  400.00 iters/s
+
+running (0m25.8s), 0011/2600 VUs, 9292 complete and 0 interrupted iterations
+market_open   [  86% ] 0011/2600 VUs  25.8s/30s  333.83 iters/s
+
+running (0m26.8s), 0010/2600 VUs, 9587 complete and 0 interrupted iterations
+market_open   [  89% ] 0010/2600 VUs  26.8s/30s  253.77 iters/s
+
+running (0m27.8s), 0010/2600 VUs, 9801 complete and 0 interrupted iterations
+market_open   [  93% ] 0010/2600 VUs  27.8s/30s  173.67 iters/s
+
+running (0m28.8s), 0006/2600 VUs, 9939 complete and 0 interrupted iterations
+market_open   [  96% ] 0006/2600 VUs  28.8s/30s  093.38 iters/s
+
+running (0m29.8s), 0001/2600 VUs, 9997 complete and 0 interrupted iterations
+market_open   [  99% ] 0001/2600 VUs  29.8s/30s  015.27 iters/s
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 39996  1332.922456/s
+    checks_succeeded...: 25.00% 9999 out of 39996
+    checks_failed......: 75.00% 29997 out of 39996
+
+    ✗ 200 정상 응답
+      ↳  51% — ✓ 5188 / ✗ 4811
+    ✗ 503 부하 차단(의도된 흘려보냄)
+      ↳  48% — ✓ 4811 / ✗ 5188
+    ✗ 500 서버오류(커넥션 타임아웃)
+      ↳  0% — ✓ 0 / ✗ 9999
+    ✗ 응답 못 받음(status 0)
+      ↳  0% — ✓ 0 / ✗ 9999
+
+    CUSTOM
+    cnt_200........................: 5188   172.897332/s
+    cnt_503........................: 4811   160.333282/s
+    dur_200_ok.....................: avg=52.09ms  min=50.4ms   med=51.74ms  max=80.55ms p(90)=53.59ms p(95)=54.55ms
+    dur_503_shed...................: avg=440.91µs min=129.16µs med=329.54µs max=13.77ms p(90)=715.2µs p(95)=1.15ms 
+
+    HTTP
+    http_req_duration..............: avg=27.24ms  min=129.16µs med=50.76ms  max=80.55ms p(90)=52.71ms p(95)=53.64ms
+      { expected_response:true }...: avg=52.09ms  min=50.4ms   med=51.74ms  max=80.55ms p(90)=53.59ms p(95)=54.55ms
+    http_req_failed................: 48.11% 4811 out of 9999
+    http_reqs......................: 9999   333.230614/s
+
+    EXECUTION
+    iteration_duration.............: avg=27.48ms  min=215.58µs med=50.9ms   max=82.11ms p(90)=53.07ms p(95)=54.11ms
+    iterations.....................: 9999   333.230614/s
+    vus............................: 1      min=1            max=11  
+    vus_max........................: 2600   min=2600         max=2600
+
+    NETWORK
+    data_received..................: 1.5 MB 50 kB/s
+    data_sent......................: 750 kB 25 kB/s
+
+
+
+
+running (0m30.0s), 0000/2600 VUs, 9999 complete and 0 interrupted iterations
+market_open ✓ [ 100% ] 0000/2600 VUs  30s  006.32 iters/s

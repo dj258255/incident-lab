@@ -39,8 +39,16 @@ p95 = num(r'http_req_duration[^\n]*?p\(95\)=([\d.]+)(?:ms|s)')
 reqs = num(r'http_reqs[^\n]*?:\s*([\d]+)')
 rate = num(r'http_reqs[^\n]*?\s([\d.]+)/s')
 # 상태코드별. 앱이 503 으로 흘려보낸 몫을 본다.
-shed = num(r'shed[^\n]*?:\s*([\d]+)')
-print(f"{p95},{reqs},{rate},{shed}")
+#
+# 처음에는 shed[^\n]*?:\s*([\d]+) 로 뽑았다. k6 요약의 카운터 이름은 cnt_503 이고
+# shed 가 들어간 줄은 dur_503_shed 뿐인데, 그 줄의 콜론 뒤는 avg= 로 시작해 숫자가
+# 안 나온다. 그래서 값이 빈 문자열이 되고 표에는 "차단 0" 이 찍혔다. 실제로는
+# 9,999건 중 4,802건이 503 이었다. 절반을 버린 조건이 안 버린 조건과 같아 보였다.
+c200 = num(r'cnt_200[.\s]*:\s*(\d+)')
+c503 = num(r'cnt_503[.\s]*:\s*(\d+)')
+# 집계 p95 는 503 이 0.3ms 라 끌려 내려간다. 성공 응답만의 p95 를 따로 뽑는다.
+p95_ok = num(r'dur_200_ok[^\n]*?p\(95\)=([\d.]+)(m?s)')
+print(f"{p95},{reqs},{rate},{c503 or 0},{c200 or 0},{p95_ok}")
 PY
 }
 
@@ -56,7 +64,7 @@ echo "=================================================================="
 echo "  부하 차단 허용 수는 풀 크기와 같게 둡니다(기본 설계와 같은 관계)."
 echo
 : > "$OUT/pool-sweep.csv"
-echo "pool,run,p95_ms,http_reqs,req_per_s,shed" >> "$OUT/pool-sweep.csv"
+echo "pool,run,p95_ms,http_reqs,req_per_s,shed,served,p95_ok_ms" >> "$OUT/pool-sweep.csv"
 for pool in 10 20 50 100; do
   for run in $(seq 1 "$REPEAT"); do
     label="pool${pool}-r${run}"

@@ -1,5 +1,29 @@
 # [th800-r3] 측정 직전 호스트 상태
-2026-07-31T18:14:45+0900
-18:14  up  3:14, 2 users, load averages: 4.38 4.41 5.40
-Darwin 25.3.0 arm64
-nproc=
+2026-07-31T19:06:06+0900
+19:06  up  4:05, 2 users, load averages: 6.83 6.82 8.14
+## 측정 환경
+
+### 호스트
+  OS          Darwin 25.3.0 arm64
+  macOS       26.3.1
+  CPU         Apple M2 Pro
+  코어        12
+  메모리      32GB
+  저장 장치   Protocol Apple Fabric  Solid State Yes  
+
+### 컨테이너 런타임
+  Docker version 27.4.0, build bde2b89
+  Docker Compose version v2.31.0-desktop.2
+  런타임 VM   12코어, 7.7GB
+  스토리지    overlay2
+
+### 이 시점에 떠 있던 다른 컨테이너
+  lab-f03-app f03-market-open-connection-storm-app
+  lab-f03-db postgres:16-alpine
+
+### 기록 시각
+  2026-07-31 19:06:06 KST
+route=buggy TOMCAT_MAX_THREADS=800 RATE=400 VUS=2600 PREVUS=2600 RAMP=5s HOLD=20s DOWN=5s
+# [th800-r3] 측정 직후 호스트 상태
+2026-07-31T19:06:39+0900
+19:06  up  4:06, 2 users, load averages: 5.95 6.62 8.02

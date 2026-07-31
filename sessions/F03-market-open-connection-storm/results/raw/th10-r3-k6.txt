@@ -1,0 +1,184 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: /scripts/spike.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 2600 max VUs, 1m0s max duration (incl. graceful stop):
+              * market_open: Up to 400.00 iterations/s for 30s over 3 stages (maxVUs: 2600, gracefulStop: 30s)
+
+
+running (0m00.8s), 0003/2600 VUs, 23 complete and 0 interrupted iterations
+market_open   [   3% ] 0003/2600 VUs  00.8s/30s  065.11 iters/s
+
+running (0m01.8s), 0009/2600 VUs, 122 complete and 0 interrupted iterations
+market_open   [   6% ] 0009/2600 VUs  01.8s/30s  145.05 iters/s
+
+running (0m02.8s), 0018/2600 VUs, 299 complete and 0 interrupted iterations
+market_open   [   9% ] 0018/2600 VUs  02.8s/30s  225.39 iters/s
+
+running (0m03.8s), 0093/2600 VUs, 490 complete and 0 interrupted iterations
+market_open   [  13% ] 0093/2600 VUs  03.8s/30s  305.55 iters/s
+
+running (0m04.8s), 0248/2600 VUs, 680 complete and 0 interrupted iterations
+market_open   [  16% ] 0248/2600 VUs  04.8s/30s  385.43 iters/s
+
+running (0m05.8s), 0453/2600 VUs, 874 complete and 0 interrupted iterations
+market_open   [  19% ] 0453/2600 VUs  05.8s/30s  400.00 iters/s
+
+running (0m06.8s), 0663/2600 VUs, 1064 complete and 0 interrupted iterations
+market_open   [  23% ] 0663/2600 VUs  06.8s/30s  400.00 iters/s
+
+running (0m07.8s), 0872/2600 VUs, 1254 complete and 0 interrupted iterations
+market_open   [  26% ] 0872/2600 VUs  07.8s/30s  400.00 iters/s
+
+running (0m08.8s), 1083/2600 VUs, 1444 complete and 0 interrupted iterations
+market_open   [  29% ] 1083/2600 VUs  08.8s/30s  400.00 iters/s
+
+running (0m09.8s), 1293/2600 VUs, 1634 complete and 0 interrupted iterations
+market_open   [  33% ] 1293/2600 VUs  09.8s/30s  400.00 iters/s
+
+running (0m10.8s), 1512/2600 VUs, 1814 complete and 0 interrupted iterations
+market_open   [  36% ] 1512/2600 VUs  10.8s/30s  400.00 iters/s
+
+running (0m11.8s), 1723/2600 VUs, 2004 complete and 0 interrupted iterations
+market_open   [  39% ] 1723/2600 VUs  11.8s/30s  400.00 iters/s
+
+running (0m12.8s), 1933/2600 VUs, 2194 complete and 0 interrupted iterations
+market_open   [  43% ] 1933/2600 VUs  12.8s/30s  400.00 iters/s
+
+running (0m13.8s), 2142/2600 VUs, 2384 complete and 0 interrupted iterations
+market_open   [  46% ] 2142/2600 VUs  13.8s/30s  400.00 iters/s
+
+running (0m14.8s), 2352/2600 VUs, 2574 complete and 0 interrupted iterations
+market_open   [  49% ] 2352/2600 VUs  14.8s/30s  400.00 iters/s
+
+running (0m15.8s), 2564/2600 VUs, 2763 complete and 0 interrupted iterations
+market_open   [  53% ] 2563/2600 VUs  15.8s/30s  400.00 iters/s
+time="2026-07-31T09:59:21Z" level=warning msg="Insufficient VUs, reached 2600 active VUs and cannot initialize more" executor=ramping-arrival-rate scenario=market_open
+
+running (0m16.8s), 2596/2600 VUs, 2954 complete and 0 interrupted iterations
+market_open   [  56% ] 2596/2600 VUs  16.8s/30s  400.00 iters/s
+
+running (0m17.8s), 2598/2600 VUs, 3144 complete and 0 interrupted iterations
+market_open   [  59% ] 2598/2600 VUs  17.8s/30s  400.00 iters/s
+
+running (0m18.8s), 2596/2600 VUs, 3330 complete and 0 interrupted iterations
+market_open   [  63% ] 2596/2600 VUs  18.8s/30s  400.00 iters/s
+
+running (0m19.8s), 2596/2600 VUs, 3524 complete and 0 interrupted iterations
+market_open   [  66% ] 2596/2600 VUs  19.8s/30s  400.00 iters/s
+
+running (0m20.8s), 2593/2600 VUs, 3714 complete and 0 interrupted iterations
+market_open   [  69% ] 2593/2600 VUs  20.8s/30s  400.00 iters/s
+
+running (0m21.8s), 2600/2600 VUs, 3894 complete and 0 interrupted iterations
+market_open   [  73% ] 2600/2600 VUs  21.8s/30s  400.00 iters/s
+
+running (0m22.8s), 2600/2600 VUs, 4074 complete and 0 interrupted iterations
+market_open   [  76% ] 2600/2600 VUs  22.8s/30s  400.00 iters/s
+
+running (0m23.8s), 2597/2600 VUs, 4264 complete and 0 interrupted iterations
+market_open   [  79% ] 2597/2600 VUs  23.8s/30s  400.00 iters/s
+
+running (0m24.8s), 2600/2600 VUs, 4444 complete and 0 interrupted iterations
+market_open   [  83% ] 2600/2600 VUs  24.8s/30s  400.00 iters/s
+
+running (0m25.8s), 2599/2600 VUs, 4634 complete and 0 interrupted iterations
+market_open   [  86% ] 2599/2600 VUs  25.8s/30s  334.54 iters/s
+
+running (0m26.8s), 2600/2600 VUs, 4814 complete and 0 interrupted iterations
+market_open   [  89% ] 2600/2600 VUs  26.8s/30s  254.40 iters/s
+
+running (0m27.8s), 2595/2600 VUs, 5004 complete and 0 interrupted iterations
+market_open   [  93% ] 2595/2600 VUs  27.8s/30s  174.59 iters/s
+
+running (0m28.8s), 2540/2600 VUs, 5194 complete and 0 interrupted iterations
+market_open   [  96% ] 2540/2600 VUs  28.8s/30s  094.23 iters/s
+
+running (0m29.8s), 2404/2600 VUs, 5384 complete and 0 interrupted iterations
+market_open   [  99% ] 2404/2600 VUs  29.8s/30s  015.27 iters/s
+
+running (0m30.8s), 2215/2600 VUs, 5574 complete and 0 interrupted iterations
+market_open ↓ [ 100% ] 2375/2600 VUs  30s  006.32 iters/s
+
+running (0m31.8s), 2025/2600 VUs, 5764 complete and 0 interrupted iterations
+market_open ↓ [ 100% ] 2375/2600 VUs  30s  006.32 iters/s
+
+running (0m32.8s), 1835/2600 VUs, 5954 complete and 0 interrupted iterations
+market_open ↓ [ 100% ] 2375/2600 VUs  30s  006.32 iters/s
+
+running (0m33.8s), 1645/2600 VUs, 6144 complete and 0 interrupted iterations
+market_open ↓ [ 100% ] 2375/2600 VUs  30s  006.32 iters/s
+
+running (0m34.8s), 1455/2600 VUs, 6334 complete and 0 interrupted iterations
+market_open ↓ [ 100% ] 2375/2600 VUs  30s  006.32 iters/s
+
+running (0m35.8s), 1275/2600 VUs, 6514 complete and 0 interrupted iterations
+market_open ↓ [ 100% ] 2375/2600 VUs  30s  006.32 iters/s
+
+running (0m36.8s), 1085/2600 VUs, 6704 complete and 0 interrupted iterations
+market_open ↓ [ 100% ] 2375/2600 VUs  30s  006.32 iters/s
+
+running (0m37.8s), 0895/2600 VUs, 6894 complete and 0 interrupted iterations
+market_open ↓ [ 100% ] 2375/2600 VUs  30s  006.32 iters/s
+
+running (0m38.8s), 0705/2600 VUs, 7084 complete and 0 interrupted iterations
+market_open ↓ [ 100% ] 2375/2600 VUs  30s  006.32 iters/s
+
+running (0m39.8s), 0515/2600 VUs, 7274 complete and 0 interrupted iterations
+market_open ↓ [ 100% ] 2375/2600 VUs  30s  006.32 iters/s
+
+running (0m40.8s), 0325/2600 VUs, 7464 complete and 0 interrupted iterations
+market_open ↓ [ 100% ] 2375/2600 VUs  30s  006.32 iters/s
+
+running (0m41.8s), 0135/2600 VUs, 7654 complete and 0 interrupted iterations
+market_open ↓ [ 100% ] 2375/2600 VUs  30s  006.32 iters/s
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 31156  731.903069/s
+    checks_succeeded...: 25.00% 7789 out of 31156
+    checks_failed......: 75.00% 23367 out of 31156
+
+    ✓ 200 정상 응답
+    ✗ 503 부하 차단(의도된 흘려보냄)
+      ↳  0% — ✓ 0 / ✗ 7789
+    ✗ 500 서버오류(커넥션 타임아웃)
+      ↳  0% — ✓ 0 / ✗ 7789
+    ✗ 응답 못 받음(status 0)
+      ↳  0% — ✓ 0 / ✗ 7789
+
+    CUSTOM
+    cnt_200........................: 7789   182.975767/s
+    dur_200_ok.....................: avg=8.62s min=51.22ms med=9.57s max=13.93s p(90)=13.86s p(95)=13.87s
+
+    HTTP
+    http_req_duration..............: avg=8.62s min=51.22ms med=9.57s max=13.93s p(90)=13.86s p(95)=13.87s
+      { expected_response:true }...: avg=8.62s min=51.22ms med=9.57s max=13.93s p(90)=13.86s p(95)=13.87s
+    http_req_failed................: 0.00%  0 out of 7789
+    http_reqs......................: 7789   182.975767/s
+
+    EXECUTION
+    dropped_iterations.............: 2210   51.916349/s
+    iteration_duration.............: avg=8.62s min=51.45ms med=9.57s max=13.93s p(90)=13.86s p(95)=13.87s
+    iterations.....................: 7789   182.975767/s
+    vus............................: 135    min=3         max=2600
+    vus_max........................: 2600   min=2600      max=2600
+
+    NETWORK
+    data_received..................: 981 kB 23 kB/s
+    data_sent......................: 584 kB 14 kB/s
+
+
+
+
+running (0m42.6s), 0000/2600 VUs, 7789 complete and 0 interrupted iterations
+market_open ✓ [ 100% ] 0000/2600 VUs  30s  006.32 iters/s
