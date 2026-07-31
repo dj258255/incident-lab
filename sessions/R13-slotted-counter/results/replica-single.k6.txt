@@ -1,4 +1,4 @@
-time="2026-07-30T20:45:36+09:00" level=info msg="[분포] 시나리오=zipf 방송=1000 s=1.2 | 1위 방송 23.1% · 상위10 56.9% · 상위1% 56.9%" source=console
+time="2026-07-31T18:47:53+09:00" level=info msg="[분포] 시나리오=zipf 방송=1000 s=1.2 | 1위 방송 23.1% · 상위10 56.9% · 상위1% 56.9%" source=console
 
 
   █ THRESHOLDS 
@@ -9,30 +9,30 @@ time="2026-07-30T20:45:36+09:00" level=info msg="[분포] 시나리오=zipf 방�
 
   █ TOTAL RESULTS 
 
-    checks_total.......: 28146   933.144812/s
-    checks_succeeded...: 100.00% 28146 out of 28146
-    checks_failed......: 0.00%   0 out of 28146
+    checks_total.......: 31306   1037.559928/s
+    checks_succeeded...: 100.00% 31306 out of 31306
+    checks_failed......: 0.00%   0 out of 31306
 
     ✓ status 200
 
     CUSTOM
-    sponsor_latency................: avg=106.73ms min=4.97ms med=48.23ms p(95)=324.06ms p(99)=375.14ms max=454.76ms
+    sponsor_latency................: avg=95.95ms min=4.42ms med=43.81ms p(95)=286.16ms p(99)=323.99ms max=438.84ms
 
     HTTP
-    http_req_duration..............: avg=106.73ms min=4.97ms med=48.23ms p(95)=324.06ms p(99)=375.14ms max=454.76ms
-      { expected_response:true }...: avg=106.73ms min=4.97ms med=48.23ms p(95)=324.06ms p(99)=375.14ms max=454.76ms
-    http_req_failed................: 0.00%  0 out of 28146
-    http_reqs......................: 28146  933.144812/s
+    http_req_duration..............: avg=95.95ms min=4.42ms med=43.81ms p(95)=286.16ms p(99)=323.99ms max=438.84ms
+      { expected_response:true }...: avg=95.95ms min=4.42ms med=43.81ms p(95)=286.16ms p(99)=323.99ms max=438.84ms
+    http_req_failed................: 0.00%  0 out of 31306
+    http_reqs......................: 31306  1037.559928/s
 
     EXECUTION
-    iteration_duration.............: avg=106.81ms min=5.02ms med=48.31ms p(95)=324.2ms  p(99)=375.22ms max=455.08ms
-    iterations.....................: 28146  933.144812/s
+    iteration_duration.............: avg=96.03ms min=4.47ms med=43.88ms p(95)=286.25ms p(99)=324.17ms max=439.85ms
+    iterations.....................: 31306  1037.559928/s
     vus............................: 100    min=100        max=100
     vus_max........................: 100    min=100        max=100
 
     NETWORK
-    data_received..................: 2.1 MB 68 kB/s
-    data_sent......................: 4.8 MB 160 kB/s
+    data_received..................: 2.3 MB 76 kB/s
+    data_sent......................: 5.4 MB 178 kB/s
 
 
 

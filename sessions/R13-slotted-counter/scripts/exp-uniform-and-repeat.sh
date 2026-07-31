@@ -89,41 +89,16 @@ echo
 echo "=================================================================="
 echo "## 2) 복제 대조를 ${REPEAT}회"
 echo "=================================================================="
-: > "$OUT/replica-repeat.csv"
 for run in $(seq 1 "$REPEAT"); do
   echo "### 회차 $run"
   bash "$ROOT/scripts/run-replica.sh" > "$OUT/replica-run${run}.log" 2>&1 || true
-  # run-replica.sh 가 남기는 값을 뽑는다. 형식이 바뀌어도 죽지 않게 넉넉히 잡는다.
-  grep -E "single|slot64" "$OUT/replica-run${run}.log" \
-    | grep -oE "(single|slot64)[^0-9]*([0-9.]+)초" | head -4 | sed 's/^/    /'
-  for m in single slot64; do
-    V=$(grep -oE "${m}[^0-9]*([0-9.]+)초" "$OUT/replica-run${run}.log" | head -1 | grep -oE '[0-9.]+')
-    echo "$run,$m,${V:-}" >> "$OUT/replica-repeat.csv"
-  done
 done
 echo
-python3 - "$OUT/replica-repeat.csv" <<'PY'
-import csv, sys, collections, statistics
-rows = collections.defaultdict(list)
-for line in open(sys.argv[1], encoding='utf-8'):
-    parts = line.rstrip('\n').split(',')
-    if len(parts) < 3 or not parts[2]: continue
-    try: rows[parts[1]].append(float(parts[2]))
-    except ValueError: pass
-if rows:
-    print(f"  {'조건':<10} {'회차별':<28} {'중앙':>9} {'폭':>9}")
-    for k in ('single', 'slot64'):
-        xs = rows.get(k, [])
-        if not xs: continue
-        print(f"  {k:<10} {str([round(x,2) for x in xs]):<28} "
-              f"{statistics.median(xs):>8.2f}초 {max(xs)-min(xs):>8.2f}초")
-    s, t = rows.get('single'), rows.get('slot64')
-    if s and t:
-        print()
-        print(f"  배수 중앙 {statistics.median(t)/statistics.median(s):.1f}배")
-else:
-    print("  회차 값을 못 뽑았습니다. 로그를 직접 확인해야 합니다.")
-PY
+# 회차 값을 셸 정규식으로 뽑다가 한 건도 못 잡은 적이 있다.
+# "single" 과 시간 사이의 (mode=atomic slots=0) 에 숫자가 들어 있어서
+# [^0-9]* 가 건너뛰지 못했다. 로그는 멀쩡한데 표만 비었다.
+# 절 단위로 읽는 파이썬으로 옮겼고, 남은 로그로 다시 돌릴 수 있다.
+python3 "$ROOT/scripts/summarize-replica-repeat.py" "$OUT"/replica-run*.log
 echo
 echo "  각 조건 1회 실행이고 복제 대조만 ${REPEAT}회입니다."
 } 2>&1 | tee "$OUT/exp-uniform-and-repeat.txt"
