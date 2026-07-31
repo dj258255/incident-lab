@@ -22,6 +22,7 @@ import argparse
 import json
 import os
 import statistics
+import subprocess
 import sys
 import time
 
@@ -43,9 +44,33 @@ def scalar(sql):
     return r[0] if r else None
 
 
-total = scalar("SELECT COUNT(*) FROM orders")
-if not total:
-    sys.exit("중단: orders 가 비어 있습니다. exp-convert-side.py 가 적재를 담당합니다")
+def ensure_seeded():
+    """러너가 단계마다 볼륨까지 지우므로 표는 있어도 비어 있다.
+
+    처음에는 비면 그냥 멈추게 하고 적재는 exp-convert-side.py 에 맡겼는데,
+    두 스크립트가 서로 다른 단계로 돌기 때문에 이 쪽이 먼저 오면 항상 멈춘다.
+    실제로 그렇게 났다. 각자 자기 적재를 책임진다.
+    """
+    cur.execute("SELECT COUNT(*) FROM information_schema.TABLES "
+                "WHERE TABLE_SCHEMA='spoon' AND TABLE_NAME='orders'")
+    if cur.fetchone()[0] == 0:
+        sys.exit("중단: orders 표가 없습니다. compose 의 initdb 가 돌지 않았습니다")
+    cur.execute("SELECT COUNT(*) FROM orders")
+    n = cur.fetchone()[0]
+    if n:
+        return n
+    print("orders 가 비어 있습니다. seed.py 를 먼저 돌립니다.", flush=True)
+    subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                                 "seed.py")], check=True)
+    cur.execute("SELECT COUNT(*) FROM orders")
+    n = cur.fetchone()[0]
+    if n == 0:
+        sys.exit("중단: 적재 후에도 orders 가 비어 있습니다")
+    print(f"적재 완료 {n:,}행", flush=True)
+    return n
+
+
+total = ensure_seeded()
 
 
 def explain(sql):

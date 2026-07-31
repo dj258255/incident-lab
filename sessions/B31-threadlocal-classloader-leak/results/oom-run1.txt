@@ -1,29 +1,3 @@
-Unable to find image 'eclipse-temurin:21-jdk-alpine' locally
-21-jdk-alpine: Pulling from library/eclipse-temurin
-14a4754c352f: Pulling fs layer
-c4528e8515ec: Pulling fs layer
-2d9ad1632bf4: Pulling fs layer
-4c9d07f7518f: Pulling fs layer
-eab2a9682f8c: Pulling fs layer
-4c9d07f7518f: Waiting
-eab2a9682f8c: Waiting
-14a4754c352f: Verifying Checksum
-14a4754c352f: Download complete
-14a4754c352f: Pull complete
-c4528e8515ec: Verifying Checksum
-c4528e8515ec: Download complete
-c4528e8515ec: Pull complete
-eab2a9682f8c: Verifying Checksum
-eab2a9682f8c: Download complete
-4c9d07f7518f: Verifying Checksum
-4c9d07f7518f: Download complete
-2d9ad1632bf4: Verifying Checksum
-2d9ad1632bf4: Download complete
-2d9ad1632bf4: Pull complete
-4c9d07f7518f: Pull complete
-eab2a9682f8c: Pull complete
-Digest: sha256:1ff763083f2993d57d0bf374ab10bb3e2cb873af6c13a04458ebbd3e0337dc76
-Status: Downloaded newer image for eclipse-temurin:21-jdk-alpine
 == B31 ThreadLocal·ClassLoader 누수 재현 (JDK 21.0.11+10-LTS) ==
   웹앱 클래스 경로 = /tmp/webapp (실행기 클래스패스에는 없다)
   JVM 인자 = [-Xmx256m, -XX:MaxMetaspaceSize=24m]
@@ -31,19 +5,41 @@ Status: Downloaded newer image for eclipse-temurin:21-jdk-alpine
 
 [부하] 누수 조건(웹앱 안 ThreadLocal + remove 없음)으로 재배포 20,000회를 돌린다
     2,000 사이클: Metaspace 11.5 MB
-Exception in thread "main"     3,773 사이클에서 java.lang.OutOfMemoryError: Metaspace
-java.lang.OutOfMemoryError: Metaspace
-	at java.base/java.lang.ClassLoader.defineClass1(Native Method)
-	at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1027)
-	at java.base/java.security.SecureClassLoader.defineClass(SecureClassLoader.java:150)
-	at java.base/java.net.URLClassLoader.defineClass(URLClassLoader.java:524)
-	at java.base/java.net.URLClassLoader$1.run(URLClassLoader.java:427)
-	at java.base/java.net.URLClassLoader$1.run(URLClassLoader.java:421)
-	at java.base/java.security.AccessController.executePrivileged(AccessController.java:809)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
-	at java.base/java.net.URLClassLoader.findClass(URLClassLoader.java:420)
-	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:593)
-	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)
-	at LeakLab.deploy(LeakLab.java:135)
+Exception in thread "main" java.util.concurrent.ExecutionException: java.lang.OutOfMemoryError: Metaspace
+	at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+	at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:191)
+	at LeakLab.deploy(LeakLab.java:145)
 	at LeakLab.stress(LeakLab.java:219)
 	at LeakLab.main(LeakLab.java:63)
+Caused by: java.lang.OutOfMemoryError: Metaspace
+	at java.base/java.lang.ClassLoader.defineClass0(Native Method)
+	at java.base/java.lang.System$2.defineClass(System.java:2395)
+	at java.base/java.lang.invoke.MethodHandles$Lookup$ClassDefiner.defineClass(MethodHandles.java:2505)
+	at java.base/java.lang.invoke.InvokerBytecodeGenerator.loadMethod(InvokerBytecodeGenerator.java:249)
+	at java.base/java.lang.invoke.InvokerBytecodeGenerator.generateCustomizedCode(InvokerBytecodeGenerator.java:712)
+	at java.base/java.lang.invoke.LambdaForm.compileToBytecode(LambdaForm.java:849)
+	at java.base/java.lang.invoke.LambdaForm.prepare(LambdaForm.java:807)
+	at java.base/java.lang.invoke.MethodHandle.<init>(MethodHandle.java:482)
+	at java.base/java.lang.invoke.BoundMethodHandle.<init>(BoundMethodHandle.java:52)
+	at java.base/java.lang.invoke.BoundMethodHandle$Species_LL.<init>(java/lang/invoke/BoundMethodHandle$Species_LL)
+	at java.base/java.lang.invoke.BoundMethodHandle$Species_LL.make(java/lang/invoke/BoundMethodHandle$Species_LL)
+	at java.base/java.lang.invoke.DirectMethodHandle$Holder.invokeStatic(DirectMethodHandle$Holder)
+	at java.base/java.lang.invoke.BoundMethodHandle$Species_LL.copyWith(java/lang/invoke/BoundMethodHandle$Species_LL)
+	at java.base/java.lang.invoke.MethodHandleImpl.makePairwiseConvertByEditor(MethodHandleImpl.java:355)
+	at java.base/java.lang.invoke.MethodHandleImpl.makePairwiseConvert(MethodHandleImpl.java:265)
+	at java.base/java.lang.invoke.MethodHandleImpl.makePairwiseConvert(MethodHandleImpl.java:382)
+	at java.base/java.lang.invoke.MethodHandle.asTypeUncached(MethodHandle.java:905)
+	at java.base/java.lang.invoke.MethodHandle.asType(MethodHandle.java:870)
+	at java.base/jdk.internal.reflect.MethodHandleAccessorFactory.makeSpecializedTarget(MethodHandleAccessorFactory.java:246)
+	at java.base/jdk.internal.reflect.MethodHandleAccessorFactory.getDirectMethod(MethodHandleAccessorFactory.java:182)
+	at java.base/jdk.internal.reflect.MethodHandleAccessorFactory.newMethodAccessor(MethodHandleAccessorFactory.java:81)
+	at java.base/jdk.internal.reflect.ReflectionFactory.newMethodAccessor(ReflectionFactory.java:159)
+	at java.base/java.lang.reflect.Method.acquireMethodAccessor(Method.java:726)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
+	at LeakLab.lambda$deploy$1(LeakLab.java:143)
+	at LeakLab$$Lambda/0x000000e801007a20.call(Unknown Source)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.runWith(Thread.java:1596)
+	at java.base/java.lang.Thread.run(Thread.java:1583)

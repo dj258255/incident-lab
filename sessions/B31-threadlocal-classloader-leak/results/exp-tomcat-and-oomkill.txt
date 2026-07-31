@@ -1,15 +1,15 @@
 # 실제 Tomcat 재배포, 커널 OOM-Kill, 사이클 수 반복
-# 각 조건 1회 실행이고 3절만 3회입니다.
+# 각 조건 1회 실행이고 3절만 3회입니다. 4절은 두 조건 1회씩입니다.
 
 ==================================================================
 ## 3) MaxMetaspaceSize=24m 에서 몇 사이클에 터지는가
 ==================================================================
   발행된 3,773 사이클이 반복되는 값인지 봅니다.
 
-  run1  마지막 사이클 3773       OutOfMemoryError 2회
-  run2  마지막 사이클 OOM 줄 없음 OutOfMemoryError 2회
+  run1  마지막 사이클 OOM 줄 없음 OutOfMemoryError 2회
+  run2  마지막 사이클 3773       OutOfMemoryError 2회
   run3  마지막 사이클 OOM 줄 없음 OutOfMemoryError 2회
-  회차별 사이클: 3773 OOM 줄 없음 OOM 줄 없음
+  회차별 사이클: OOM 줄 없음 3773 OOM 줄 없음
 
 ==================================================================
 ## 2) Metaspace 상한 없이 컨테이너 메모리만 좁히면
@@ -34,77 +34,4 @@
   재배포 때 ThreadLocal 이 웹앱 클래스로더가 적재한 값을 붙잡고 있으면 경고를
   남깁니다. 그 로그가 나오는지가 이 절의 답입니다.
 
-Unable to find image 'tomcat:10.1-jdk21' locally
-10.1-jdk21: Pulling from library/tomcat
-4b987da45db4: Pulling fs layer
-9e44d8ad4e27: Pulling fs layer
-21b28e1a74a1: Pulling fs layer
-8d110e2a54aa: Pulling fs layer
-f84c941ad63c: Pulling fs layer
-6de79fafff38: Pulling fs layer
-4f4fb700ef54: Pulling fs layer
-bcef8c2f034b: Pulling fs layer
-6de79fafff38: Waiting
-4f4fb700ef54: Waiting
-bcef8c2f034b: Waiting
-8d110e2a54aa: Waiting
-f84c941ad63c: Waiting
-4b987da45db4: Verifying Checksum
-4b987da45db4: Download complete
-9e44d8ad4e27: Verifying Checksum
-9e44d8ad4e27: Download complete
-8d110e2a54aa: Verifying Checksum
-8d110e2a54aa: Download complete
-f84c941ad63c: Verifying Checksum
-f84c941ad63c: Download complete
-4b987da45db4: Pull complete
-6de79fafff38: Verifying Checksum
-6de79fafff38: Download complete
-4f4fb700ef54: Verifying Checksum
-4f4fb700ef54: Download complete
-9e44d8ad4e27: Pull complete
-21b28e1a74a1: Verifying Checksum
-21b28e1a74a1: Download complete
-bcef8c2f034b: Verifying Checksum
-bcef8c2f034b: Download complete
-21b28e1a74a1: Pull complete
-8d110e2a54aa: Pull complete
-f84c941ad63c: Pull complete
-6de79fafff38: Pull complete
-4f4fb700ef54: Pull complete
-bcef8c2f034b: Pull complete
-Digest: sha256:066ffc02851e87519297644191a0232d38f652e37ad98b8661fde171811e7861
-Status: Downloaded newer image for tomcat:10.1-jdk21
   WAR 를 10회 올렸다 내립니다. 매번 /leak 을 몇 번 찔러 ThreadLocal 을 채웁니다.
-    1회차 배포·해제 완료
-    2회차 배포·해제 완료
-    3회차 배포·해제 완료
-    4회차 배포·해제 완료
-    5회차 배포·해제 완료
-    6회차 배포·해제 완료
-    7회차 배포·해제 완료
-    8회차 배포·해제 완료
-    9회차 배포·해제 완료
-    10회차 배포·해제 완료
-
-  Tomcat 이 남긴 누수 관련 로그:
-    31-Jul-2026 08:43:11.095 SEVERE [Catalina-utility-2] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
-    31-Jul-2026 08:43:11.095 SEVERE [Catalina-utility-2] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
-    31-Jul-2026 08:43:11.095 SEVERE [Catalina-utility-2] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
-    31-Jul-2026 08:43:11.096 SEVERE [Catalina-utility-2] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
-    31-Jul-2026 08:43:11.096 SEVERE [Catalina-utility-2] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
-    31-Jul-2026 08:43:31.142 SEVERE [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
-    31-Jul-2026 08:43:31.143 SEVERE [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
-    31-Jul-2026 08:43:31.143 SEVERE [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
-    31-Jul-2026 08:43:31.143 SEVERE [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
-    31-Jul-2026 08:43:31.144 SEVERE [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
-    31-Jul-2026 08:43:51.185 SEVERE [Catalina-utility-2] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
-    31-Jul-2026 08:43:51.186 SEVERE [Catalina-utility-2] org.apache.catalina.loader.WebappClassLoaderBase.checkThreadLocalMapForLeaks The web application [leakapp] created a ThreadLocal with key of type [
-
-  누수 경고 줄 수 = 15
-  Tomcat 은 재배포마다 이전 웹앱의 클래스로더가 회수됐는지 확인하고,
-  ThreadLocal 이 붙잡고 있으면 위와 같은 경고를 남깁니다. 경고가 있다는 것은
-  이 세션이 URLClassLoader 로 흉내 낸 조건이 실제 재배포 경로에서도 같다는 뜻입니다.
-
-  Tomcat 탐지 코드가 몇 버전부터 들어갔는지는 여전히 확인하지 못했습니다.
-  위 로그는 이 이미지(tomcat:10.1-jdk21)에서 나온 것입니다.
