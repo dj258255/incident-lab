@@ -35,7 +35,14 @@ EOF
 # 질의문을 그대로 echo 하므로 그 안의 PING 이 매칭됐다. 인스턴스가 안 떠 있는데도
 # 준비된 것으로 판정해 그대로 진행했고, 실험 전체가 ORA-01034 로 채워졌다.
 # 문자열을 이어 붙이면 질의문에는 PING 이 없고 결과에만 나온다.
-ready(){ SQL "SELECT 'PI'||'NG' FROM dual;" | grep -q "PING"; }
+# 질의가 답하는 것만으로는 부족하다. 기동 중에는 인스턴스가 SYSDBA 질의를 받으면서도
+# 데이터베이스가 MOUNTED 상태일 수 있고, 그때 SHUTDOWN IMMEDIATE 를 던지면
+# ORA-01154(database busy) 가 난다. 실제로 그렇게 났다.
+# 열려 있는지(READ WRITE)까지 확인한다.
+ready(){
+  SQL "SELECT 'PI'||'NG' FROM dual;" | grep -q "PING" || return 1
+  SQL "SELECT open_mode FROM v\$database;" | grep -q "READ WRITE"
+}
 for _ in $(seq 1 120); do ready && break; sleep 5; done
 ready || { echo "중단: a23-oracle 이 쿼리를 받지 못합니다" >&2; SQL "SELECT 1 FROM dual;" | head -5 >&2; exit 2; }
 
