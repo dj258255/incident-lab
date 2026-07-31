@@ -241,6 +241,23 @@ public class Cross {
         int total = intervals.length * ATTEMPTS;
         System.out.printf(Locale.US, "검산: 확정 실패 = 버그 %d/%d회 / 스냅샷 동결 %d/%d회 / 접수 컷오프 %d/%d회 (유입률 %d개 x %d회씩)%n",
                 bugFail, total, snapFail, total, cutFail, total, intervals.length, ATTEMPTS);
+        // capMs 와 maxRecalc 중 어느 쪽에 먼저 닿았는지 센다. 둘을 같은 비율로 함께
+        // 올리면 이 구분이 사라져서 "어느 상한이 결정적이었는가" 에 답할 수 없다.
+        int hitRecalc = 0, hitTime = 0, hitBoth = 0;
+        for (Trial[] arr : buggy) {
+            for (Trial t : arr) {
+                if (t.committed) continue;
+                switch (t.capHit) {
+                    case "recalc" -> hitRecalc++;
+                    case "time" -> hitTime++;
+                    case "both" -> hitBoth++;
+                    default -> { }
+                }
+            }
+        }
+        System.out.printf(Locale.US,
+                "      확정 실패 %d건이 닿은 상한 = maxRecalc %d건 / capMs %d건 / 동시 %d건%n",
+                bugFail, hitRecalc, hitTime, hitBoth);
         System.out.printf(Locale.US, "      취소를 냈는데 크로스 체결 조건을 만족한 주문 합계 = 스냅샷 동결 %,d건(참가자에게 접수됐다고 응답) / 접수 컷오프 %,d건(참가자에게 거부로 응답)%n",
                 snapMissed, cutMissed);
         System.out.println("      라이브락 구간에서 블로킹된 스레드는 0개다. 두 스레드 모두 계속 일했고 확정된 크로스만 0건이다.");

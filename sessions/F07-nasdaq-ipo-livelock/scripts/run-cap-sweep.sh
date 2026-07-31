@@ -13,6 +13,11 @@
 # 않는 라운드"는 오지 않는다. 그 예측을 실제로 확인하는 것이 이 실험이다.
 #
 # 상한과 재계산 상한을 같이 늘린다. 하나만 늘리면 다른 쪽에 먼저 걸려 답이 안 나온다.
+#
+# 그런데 함께 올리면 "어느 상한이 결정적이었는가" 에 답할 수 없다. 그것이 README 에
+# 남아 있었다. 그래서 두 가지를 더 한다.
+#   1) 확정 실패마다 어느 상한에 먼저 닿았는지 Cross.java 가 기록하게 했다
+#   2) 아래에 한쪽만 올린 조건 둘을 더 넣어 서로 갈라 본다
 set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$ROOT/results"; mkdir -p "$OUT"
@@ -26,7 +31,10 @@ echo "  compose.yml 의 기본값은 capMs=1000, maxRecalc=200 입니다."
 echo "  상한을 10초와 60초로 늘리고 재계산 상한도 같은 비율로 올립니다."
 echo
 
-for spec in "1000:200" "10000:2000" "60000:12000"; do
+# 앞 셋은 함께 올린 조건이고 뒤 둘은 한쪽만 올린 조건이다.
+#   시간만 60초로 : 재계산 상한이 먼저 걸리면 확정 실패가 maxRecalc 로 기록된다
+#   재계산만 12000: 시간 상한이 먼저 걸리면 capMs 로 기록된다
+for spec in "1000:200" "10000:2000" "60000:12000" "60000:200" "1000:12000"; do
   IFS=: read -r cap recalc <<< "$spec"
   echo "=================================================================="
   echo "## capMs=${cap}, maxRecalc=${recalc}"
@@ -34,21 +42,23 @@ for spec in "1000:200" "10000:2000" "60000:12000"; do
   docker run --rm -v "$ROOT/app":/app -w /app "$IMG" \
     sh -c "javac Cross.java 2>&1 && java -Dorders=8000 -Dticks=400 \
              -DmaxRecalc=${recalc} -DcapMs=${cap} Cross" \
-    | tee "$OUT/cap-${cap}.txt" \
-    | grep -E "^\[버그\]|^검산:|확정 실패 판정|^ *[0-9]" | head -20
+    | tee "$OUT/cap-${cap}-${recalc}.txt" \
+    | grep -E "^\[버그\]|^검산:|닿은 상한|확정 실패 판정|^ *[0-9]" | head -22
   echo
 done
 
 echo "=================================================================="
 echo "## 세 조건의 버그 구간 확정 실패 건수"
 echo "=================================================================="
-printf "  %-14s %-14s %s\n" "capMs" "maxRecalc" "확정 실패(버그 구간)"
+printf "  %-14s %-14s %-14s %s\n" "capMs" "maxRecalc" "확정 실패" "닿은 상한"
 for spec in "1000:200" "10000:2000" "60000:12000"; do
   IFS=: read -r cap recalc <<< "$spec"
   # 검산 줄에서 버그 쪽 건수를 뽑는다. 형식: "검산: 확정 실패 = 버그 24/72회 / ..."
-  line=$(grep "^검산:" "$OUT/cap-${cap}.txt" 2>/dev/null | head -1)
+  line=$(grep "^검산:" "$OUT/cap-${cap}-${recalc}.txt" 2>/dev/null | head -1)
   n=$(echo "$line" | sed -n 's/.*버그 \([0-9]*\/[0-9]*\)회.*/\1/p')
-  printf "  %-14s %-14s %s\n" "$cap" "$recalc" "${n:-읽기 실패}"
+  hit=$(grep "닿은 상한" "$OUT/cap-${cap}-${recalc}.txt" 2>/dev/null | head -1 \
+        | sed -n 's/.*상한 = \(.*\)$/\1/p')
+  printf "  %-14s %-14s %-14s %s\n" "$cap" "$recalc" "${n:-읽기 실패}" "${hit:-}"
 done
 echo
 echo "  실패가 몰린 구간과 그때의 재계산 횟수를 함께 보십시오."

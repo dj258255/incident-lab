@@ -67,3 +67,76 @@
       Heap             774193건  레코드     87.7MB  FPI     38.4MB  FPI 비중  30.5%
       Btree            279662건  레코드     21.6MB  FPI      4.9MB  FPI 비중  18.5%
       Transaction           1건  레코드      0.0MB  FPI      0.0MB  FPI 비중   0.0%
+  인덱스 10개(ff70)      WAL  332.5MB  HOT  45.2%   7.12초
+    리소스 매니저별 분해 (레코드 바이트 / FPI 바이트)
+      Btree           3068875건  레코드    193.3MB  FPI     11.0MB  FPI 비중   5.4%
+      Heap             774193건  레코드     87.7MB  FPI     38.4MB  FPI 비중  30.5%
+      Standby               1건  레코드      0.0MB  FPI      0.0MB  FPI 비중   0.0%
+      Transaction           1건  레코드      0.0MB  FPI      0.0MB  FPI 비중   0.0%
+  인덱스 컬럼 갱신(v10) WAL  530.9MB  HOT   0.0%  13.68초
+    리소스 매니저별 분해 (레코드 바이트 / FPI 바이트)
+      Btree           5607752건  레코드    369.4MB  FPI     22.9MB  FPI 비중   5.8%
+      Heap             774193건  레코드     87.7MB  FPI     38.2MB  FPI 비중  30.4%
+      Standby               1건  레코드      0.0MB  FPI      0.0MB  FPI 비중   0.0%
+      Transaction           1건  레코드      0.0MB  FPI      0.0MB  FPI 비중   0.0%
+  2차 갱신 인덱스 10개 WAL  219.6MB  HOT  57.5%   5.57초
+    리소스 매니저별 분해 (레코드 바이트 / FPI 바이트)
+      Btree           1677521건  레코드    102.2MB  FPI     11.7MB  FPI 비중  10.3%
+      Heap             650364건  레코드     63.4MB  FPI     21.1MB  FPI 비중  24.9%
+      Heap2             16130건  레코드      0.9MB  FPI     18.7MB  FPI 비중  95.4%
+      Transaction           1건  레코드      0.0MB  FPI      0.0MB  FPI 비중   0.0%
+  2차 갱신 인덱스 0개 WAL  121.6MB  HOT  57.5%   2.20초
+    리소스 매니저별 분해 (레코드 바이트 / FPI 바이트)
+      Heap             650364건  레코드     63.4MB  FPI     21.1MB  FPI 비중  24.9%
+      Heap2             16130건  레코드      0.9MB  FPI     18.7MB  FPI 비중  95.4%
+      Btree            150364건  레코드      9.2MB  FPI      7.2MB  FPI 비중  43.9%
+      Transaction           1건  레코드      0.0MB  FPI      0.0MB  FPI 비중   0.0%
+
+## wal_compression = lz4
+  wal_compression 적용값 = lz4
+  적재 중...
+  PostgreSQL 17.5 (Debian 17.5-1.pgdg130+1)
+  인덱스 0개(ff100)      WAL  215.9MB  HOT   0.0%   1.78초
+    리소스 매니저별 분해 (레코드 바이트 / FPI 바이트)
+      Heap            1000000건  레코드    132.2MB  FPI     39.7MB  FPI 비중  23.1%
+      Btree            506835건  레코드     36.5MB  FPI      5.4MB  FPI 비중  13.0%
+      Transaction           1건  레코드      0.0MB  FPI      0.0MB  FPI 비중   0.0%
+  인덱스 10개(ff100)     WAL  535.8MB  HOT   0.0%   8.99초
+    리소스 매니저별 분해 (레코드 바이트 / FPI 바이트)
+      Btree           5588889건  레코드    348.0MB  FPI     12.7MB  FPI 비중   3.5%
+      Heap            1000000건  레코드    132.2MB  FPI     39.7MB  FPI 비중  23.1%
+      Standby               1건  레코드      0.0MB  FPI      0.0MB  FPI 비중   0.0%
+      Transaction           1건  레코드      0.0MB  FPI      0.0MB  FPI 비중   0.0%
+  인덱스 0개(ff70)       WAL  156.9MB  HOT  45.2%   1.40초
+    리소스 매니저별 분해 (레코드 바이트 / FPI 바이트)
+      Heap             774193건  레코드     87.7MB  FPI     40.7MB  FPI 비중  31.7%
+      Btree            279662건  레코드     21.6MB  FPI      5.4MB  FPI 비중  20.1%
+      Transaction           1건  레코드      0.0MB  FPI      0.0MB  FPI 비중   0.0%
+  인덱스 10개(ff70)      WAL  336.5MB  HOT  45.2%   5.84초
+    리소스 매니저별 분해 (레코드 바이트 / FPI 바이트)
+      Btree           3068875건  레코드    193.3MB  FPI     12.6MB  FPI 비중   6.1%
+      Heap             774193건  레코드     87.7MB  FPI     40.7MB  FPI 비중  31.7%
+      Transaction           1건  레코드      0.0MB  FPI      0.0MB  FPI 비중   0.0%
+  인덱스 컬럼 갱신(v10) WAL  537.1MB  HOT   0.0%  12.15초
+    리소스 매니저별 분해 (레코드 바이트 / FPI 바이트)
+      Btree           5607752건  레코드    369.4MB  FPI     26.7MB  FPI 비중   6.8%
+      Heap             774193건  레코드     87.7MB  FPI     40.6MB  FPI 비중  31.6%
+      Standby               1건  레코드      0.0MB  FPI      0.0MB  FPI 비중   0.0%
+      Transaction           1건  레코드      0.0MB  FPI      0.0MB  FPI 비중   0.0%
+  2차 갱신 인덱스 10개 WAL  223.5MB  HOT  57.5%   4.47초
+    리소스 매니저별 분해 (레코드 바이트 / FPI 바이트)
+      Btree           1677521건  레코드    102.2MB  FPI     13.6MB  FPI 비중  11.7%
+      Heap             650364건  레코드     63.4MB  FPI     22.3MB  FPI 비중  26.1%
+      Heap2             16130건  레코드      0.9MB  FPI     19.5MB  FPI 비중  95.6%
+      Standby               1건  레코드      0.0MB  FPI      0.0MB  FPI 비중   0.0%
+      Transaction           1건  레코드      0.0MB  FPI      0.0MB  FPI 비중   0.0%
+  2차 갱신 인덱스 0개 WAL  124.8MB  HOT  57.5%   1.27초
+    리소스 매니저별 분해 (레코드 바이트 / FPI 바이트)
+      Heap             650364건  레코드     63.4MB  FPI     22.3MB  FPI 비중  26.1%
+      Heap2             16130건  레코드      0.9MB  FPI     19.5MB  FPI 비중  95.6%
+      Btree            150364건  레코드      9.2MB  FPI      8.3MB  FPI 비중  47.5%
+      Transaction           1건  레코드      0.0MB  FPI      0.0MB  FPI 비중   0.0%
+
+## wal_compression = zstd
+  wal_compression 적용값 = zstd
+  적재 중...

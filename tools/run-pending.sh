@@ -51,6 +51,7 @@ steps=(
   "F02conc|F02-samsung-ghost-shares|compose-db|bash scripts/exp-concurrency-sweep.sh"
   "A22or|A22-index-not-used|compose|PYRUN scripts/exp-or-and-index-merge.py --out results/or-and-index-merge.json"
   "R14jdbc|R14-charset-timezone|compose|bash scripts/exp-jdbc-roundtrip.sh"
+  "F07cap|F07-nasdaq-ipo-livelock|none|bash scripts/run-cap-sweep.sh"
 )
 
 if [ "${1:-}" = "--list" ]; then
