@@ -1,0 +1,82 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: /Users/beomsu/Desktop/incident-lab/sessions/R13-slotted-counter/scripts/load.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 100 max VUs, 1m10s max duration (incl. graceful stop):
+              * sponsor: 100 looping VUs for 1m0s (gracefulStop: 10s)
+
+time="2026-07-31T18:35:24+09:00" level=info msg="[분포] 시나리오=zipf 방송=1000 s=1.2 | 1위 방송 23.1% · 상위10 56.9% · 상위1% 56.9%" source=console
+
+running (0m01.0s), 100/100 VUs, 3516 complete and 0 interrupted iterations
+sponsor   [   2% ] 100 VUs  0m01.0s/1m0s
+
+running (0m02.0s), 100/100 VUs, 7239 complete and 0 interrupted iterations
+sponsor   [   3% ] 100 VUs  0m02.0s/1m0s
+
+running (0m03.0s), 100/100 VUs, 11099 complete and 0 interrupted iterations
+sponsor   [   5% ] 100 VUs  0m03.0s/1m0s
+
+running (0m04.0s), 100/100 VUs, 14801 complete and 0 interrupted iterations
+sponsor   [   7% ] 100 VUs  0m04.0s/1m0s
+
+running (0m05.0s), 100/100 VUs, 18627 complete and 0 interrupted iterations
+sponsor   [   8% ] 100 VUs  0m05.0s/1m0s
+
+running (0m06.0s), 100/100 VUs, 22443 complete and 0 interrupted iterations
+sponsor   [  10% ] 100 VUs  0m06.0s/1m0s
+
+running (0m07.0s), 100/100 VUs, 26309 complete and 0 interrupted iterations
+sponsor   [  12% ] 100 VUs  0m07.0s/1m0s
+
+running (0m08.0s), 100/100 VUs, 29970 complete and 0 interrupted iterations
+sponsor   [  13% ] 100 VUs  0m08.0s/1m0s
+
+running (0m09.0s), 100/100 VUs, 34173 complete and 0 interrupted iterations
+sponsor   [  15% ] 100 VUs  0m09.0s/1m0s
+
+running (0m10.0s), 100/100 VUs, 37999 complete and 0 interrupted iterations
+sponsor   [  17% ] 100 VUs  0m10.0s/1m0s
+
+running (0m11.0s), 100/100 VUs, 42031 complete and 0 interrupted iterations
+sponsor   [  18% ] 100 VUs  0m11.0s/1m0s
+
+running (0m12.0s), 100/100 VUs, 46297 complete and 0 interrupted iterations
+sponsor   [  20% ] 100 VUs  0m12.0s/1m0s
+
+running (0m13.0s), 100/100 VUs, 50409 complete and 0 interrupted iterations
+sponsor   [  22% ] 100 VUs  0m13.0s/1m0s
+
+running (0m14.0s), 100/100 VUs, 54408 complete and 0 interrupted iterations
+sponsor   [  23% ] 100 VUs  0m14.0s/1m0s
+
+running (0m15.0s), 100/100 VUs, 58720 complete and 0 interrupted iterations
+sponsor   [  25% ] 100 VUs  0m15.0s/1m0s
+
+running (0m16.0s), 100/100 VUs, 62894 complete and 0 interrupted iterations
+sponsor   [  27% ] 100 VUs  0m16.0s/1m0s
+
+running (0m17.0s), 100/100 VUs, 67082 complete and 0 interrupted iterations
+sponsor   [  28% ] 100 VUs  0m17.0s/1m0s
+
+running (0m18.0s), 100/100 VUs, 71479 complete and 0 interrupted iterations
+sponsor   [  30% ] 100 VUs  0m18.0s/1m0s
+
+running (0m19.0s), 100/100 VUs, 75464 complete and 0 interrupted iterations
+sponsor   [  32% ] 100 VUs  0m19.0s/1m0s
+
+running (0m20.0s), 100/100 VUs, 79623 complete and 0 interrupted iterations
+sponsor   [  33% ] 100 VUs  0m20.0s/1m0s
+
+running (0m21.0s), 100/100 VUs, 83802 complete and 0 interrupted iterations
+sponsor   [  35% ] 100 VUs  0m21.0s/1m0s
+
+running (0m22.0s), 100/100 VUs, 87810 complete and 0 interrupted iterations
+sponsor   [  37% ] 100 VUs  0m22.0s/1m0s

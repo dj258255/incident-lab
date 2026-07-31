@@ -44,6 +44,7 @@ steps=(
   "F01|F01-hanmac-divide-by-zero|f01spring|F01SPRING"
   "R16|R16-batch-cache-pollution|compose|R16SEED"
   "A09|A09-planner-stats-flip|compose|bash scripts/exp-probability-autoanalyze.sh"
+  "R17mdl|R17-timeseries-partition|compose|bash scripts/exp-mdl-repeat-and-optimize.sh"
 )
 
 if [ "${1:-}" = "--list" ]; then

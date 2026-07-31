@@ -45,10 +45,24 @@ for _ in $(seq 1 60); do
   docker exec r02-db-b mysqladmin ping -uroot -plab >/dev/null 2>&1 && break
   sleep 2
 done
-docker exec r02-db-b mysql -uroot -plab -e "SET GLOBAL read_only=ON; SET GLOBAL server_id=2;" 2>/dev/null
-RO=$(docker exec r02-db-b mysql -uroot -plab -N -B -e "SELECT @@read_only" 2>/dev/null | tr -d ' ')
-[ "$RO" = "1" ] || { echo "중단: B 의 read_only 가 안 켜졌습니다(값 ${RO:-없음})" >&2; exit 3; }
-echo "  B 의 read_only 확인 = $RO"
+# read_only 만으로는 이 앱을 막지 못한다. read_only 는 SUPER 또는 CONNECTION_ADMIN 을
+# 가진 계정에는 적용되지 않고, 이 랩의 앱은 root 로 붙는다. 실제로 read_only=1 을
+# 확인까지 하고 돌렸는데 페일오버 +5.5초에 쓰기가 성공했다. 해제는 +25초였다.
+# super_read_only 는 SUPER 계정까지 막는다. 둘 다 켜고 둘 다 확인한다.
+docker exec r02-db-b mysql -uroot -plab -e \
+  "SET GLOBAL super_read_only=ON; SET GLOBAL server_id=2;" 2>/dev/null
+read -r RO SRO <<< "$(docker exec r02-db-b mysql -uroot -plab -N -B \
+  -e "SELECT @@read_only, @@super_read_only" 2>/dev/null)"
+[ "$RO" = "1" ] && [ "$SRO" = "1" ] \
+  || { echo "중단: B 가 읽기 전용이 아닙니다(read_only=${RO:-없음} super_read_only=${SRO:-없음})" >&2; exit 3; }
+echo "  B 의 읽기 전용 확인 = read_only $RO, super_read_only $SRO"
+# 앱과 같은 계정으로 실제 쓰기를 한 번 시도해 정말 막히는지 본다. 설정값만 보고
+# 넘어가면 위와 같은 일이 다시 난다.
+PROBE=$(docker exec r02-db-b mysql -uroot -plab spoon -N -B \
+  -e "CREATE TABLE IF NOT EXISTS ro_probe (id INT PRIMARY KEY); INSERT INTO ro_probe VALUES (1)" 2>&1)
+echo "$PROBE" | grep -qi "read.only" \
+  || { echo "중단: 읽기 전용인데 root 쓰기가 막히지 않았습니다: ${PROBE:-오류 없음}" >&2; exit 3; }
+echo "  root 쓰기 탐침이 막혔습니다: $(echo "$PROBE" | head -1)"
 # 창이 지나면 읽기 전용을 푸는 백그라운드 작업. 승격이 끝나는 시점을 흉내 낸다.
 #
 # 시각의 기준이 중요하다. 처음에는 스크립트 시작에서 세었는데, failover.sh 가 앱을
@@ -63,8 +77,9 @@ rm -f "$OUT/readonly-window-failover-ts.txt"
     sleep 1
   done
   sleep "$RO_WINDOW"
-  docker exec r02-db-b mysql -uroot -plab -e "SET GLOBAL read_only=OFF;" 2>/dev/null
-  echo "[$(date '+%H:%M:%S')] B 의 read_only 를 해제했습니다(페일오버 +${RO_WINDOW}초)"
+  docker exec r02-db-b mysql -uroot -plab -e \
+    "SET GLOBAL super_read_only=OFF; SET GLOBAL read_only=OFF;" 2>/dev/null
+  echo "[$(date '+%H:%M:%S')] B 의 읽기 전용을 해제했습니다(페일오버 +${RO_WINDOW}초)"
 ) &
 RELEASER=$!
 
@@ -84,7 +99,7 @@ WPOLL=$!
 bash "$ROOT/scripts/failover.sh" readonly-window -Dsun.net.inetaddr.ttl=0
 kill $WPOLL 2>/dev/null || true
 wait $RELEASER 2>/dev/null || true
-docker exec r02-db-b mysql -uroot -plab -e "SET GLOBAL read_only=OFF;" 2>/dev/null
+docker exec r02-db-b mysql -uroot -plab -e "SET GLOBAL super_read_only=OFF; SET GLOBAL read_only=OFF;" 2>/dev/null
 
 # ── 정리 ────────────────────────────────────────────────────────────────
 {

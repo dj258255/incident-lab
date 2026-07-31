@@ -61,22 +61,35 @@ setup_semi(){ # $1=AFTER_SYNC|AFTER_COMMIT
 rebind_replication(){
   R "STOP REPLICA; RESET REPLICA ALL" >/dev/null 2>&1 || true
   R "SET GLOBAL read_only=0; SET GLOBAL super_read_only=0" >/dev/null 2>&1 || true
+
+  # 순서가 중요하다. 데이터베이스를 지운 뒤에 binlog 를 리셋하면 그 CREATE DATABASE 가
+  # binlog 에서 지워져 복제본에 안 간다. 그러면 다음 CREATE TABLE 이 복제본에서
+  # "Unknown database" 로 죽고, IO 스레드는 ON 인데 표만 안 생긴다.
+  # 지우기 → 리셋 → 복제 붙이기 → 그다음에 만들기 순으로 간다.
   R "DROP DATABASE IF EXISTS spoon" >/dev/null 2>&1 || true
-  S "DROP DATABASE IF EXISTS spoon; CREATE DATABASE spoon" >/dev/null 2>&1 || true
+  S "DROP DATABASE IF EXISTS spoon" >/dev/null 2>&1 || true
   S "RESET BINARY LOGS AND GTIDS" >/dev/null 2>&1 || true
   R "RESET BINARY LOGS AND GTIDS" >/dev/null 2>&1 || true
   R "CHANGE REPLICATION SOURCE TO
        SOURCE_HOST='source', SOURCE_USER='root', SOURCE_PASSWORD='lab',
        SOURCE_AUTO_POSITION=1, GET_SOURCE_PUBLIC_KEY=1;
      START REPLICA" >/dev/null 2>&1
-  local st=
+  local st= sql=
   for _ in $(seq 1 40); do
     st=$(R "SELECT SERVICE_STATE FROM performance_schema.replication_connection_status" 2>/dev/null | head -1)
-    [ "$st" = "ON" ] && return 0
+    # IO 스레드만 보면 부족하다. 적용 스레드가 죽어 있으면 문장이 안 실행된다.
+    sql=$(R "SELECT SERVICE_STATE FROM performance_schema.replication_applier_status" 2>/dev/null | head -1)
+    [ "$st" = "ON" ] && [ "$sql" = "ON" ] && break
     sleep 1
   done
-  echo "  중단: 복제가 다시 붙지 않았습니다(SERVICE_STATE=${st:-없음})"
-  return 1
+  if [ "$st" != "ON" ] || [ "$sql" != "ON" ]; then
+    echo "  중단: 복제가 다시 붙지 않았습니다(수신 ${st:-없음}, 적용 ${sql:-없음})"
+    R "SELECT LAST_ERROR_MESSAGE FROM performance_schema.replication_applier_status_by_worker
+       WHERE LAST_ERROR_MESSAGE <> ''" 2>/dev/null | head -2 | sed 's/^/    /'
+    return 1
+  fi
+  S "CREATE DATABASE spoon" >/dev/null 2>&1 || true
+  return 0
 }
 
 run_case(){ # $1=wait_point
