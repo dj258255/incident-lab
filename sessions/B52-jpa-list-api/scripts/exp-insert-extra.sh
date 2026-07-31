@@ -166,4 +166,66 @@ echo "  100행씩 끊는데 한 시각에 $((TOTAL / DISTINCT))행이 있으므�
 echo "  다음 질의의 > 조건이 남은 행을 통째로 넘깁니다. 타이브레이커로 id 를 더하면"
 echo "  같은 시각 안에서도 순서가 정해져 경계가 안전해집니다."
 pkill -f 'list-api.jar' 2>/dev/null || true
+
+# ── 4) 무작위 id 로 넣으면 ──────────────────────────────────────────────
+# 2절은 큰 테이블도 같은 비용이라고 봤는데 그때 id 가 순증했다. 순증이면 새 행이 항상
+# 오른쪽 끝 페이지에 붙어 기존 페이지를 안 건드린다. 무작위면 아무 페이지나 열게 되고
+# 페이지 분할이 난다. 이건 JPA 가 아니라 DB 쪽 이야기라 SQL 로 직접 잰다.
+echo "=================================================================="
+echo "## 4) 같은 큰 테이블에 순증 id 와 무작위 id"
+echo "=================================================================="
+echo "  ${PRELOAD}행이 든 표에 ${N}행을 넣습니다. id 만 다릅니다."
+echo
+
+RAND_MAX=$(( PRELOAD * 100 ))
+for kind in seq rand; do
+  M "DROP TABLE IF EXISTS ins_probe" >/dev/null
+  M "CREATE TABLE ins_probe (
+       id BIGINT PRIMARY KEY, live_id BIGINT NOT NULL, user_id BIGINT NOT NULL,
+       amount INT NOT NULL, created_at DATETIME(3) NOT NULL,
+       KEY idx_live (live_id, created_at)
+     ) ENGINE=InnoDB" >/dev/null
+  M "INSERT INTO ins_probe SELECT n, 1, n % 1000, 1000, NOW(3) FROM (
+       SELECT @r := @r + 1 AS n FROM information_schema.COLUMNS c1,
+         information_schema.COLUMNS c2, (SELECT @r := 0) r LIMIT ${PRELOAD}
+     ) t" >/dev/null 2>&1
+  PRE=$(M "SELECT COUNT(*) FROM ins_probe")
+  case "${PRE:-0}" in ''|*[!0-9]*) PRE=0 ;; esac
+  [ "$PRE" -gt 0 ] || { echo "  중단: ins_probe 적재 실패" >&2; break; }
+  M "ANALYZE TABLE ins_probe" >/dev/null 2>&1
+  SZ0=$(M "SELECT DATA_LENGTH+INDEX_LENGTH FROM information_schema.TABLES
+           WHERE TABLE_SCHEMA='spoon' AND TABLE_NAME='ins_probe'")
+
+  if [ "$kind" = "seq" ]; then
+    EXPR="${PRELOAD} + n"
+    LBL="순증 id"
+  else
+    # 이미 든 구간 밖의 무작위 값. 충돌을 피하려고 범위를 넓게 잡고 중복은 무시한다.
+    EXPR="${PRELOAD} + 1 + FLOOR(RAND(42) * ${RAND_MAX})"
+    LBL="무작위 id"
+  fi
+  T0=$(date +%s%N)
+  M "INSERT IGNORE INTO ins_probe (id, live_id, user_id, amount, created_at)
+     SELECT ${EXPR}, 1, n % 1000, 1000, NOW(3) FROM (
+       SELECT @q := @q + 1 AS n FROM information_schema.COLUMNS c1,
+         information_schema.COLUMNS c2, (SELECT @q := 0) q LIMIT ${N}
+     ) t" >/dev/null 2>&1
+  T1=$(date +%s%N)
+  M "ANALYZE TABLE ins_probe" >/dev/null 2>&1
+  SZ1=$(M "SELECT DATA_LENGTH+INDEX_LENGTH FROM information_schema.TABLES
+           WHERE TABLE_SCHEMA='spoon' AND TABLE_NAME='ins_probe'")
+  AFTER=$(M "SELECT COUNT(*) FROM ins_probe")
+  ADDED=$(( ${AFTER:-0} - PRE ))
+  printf "  %-12s %8s초  넣은 행 %8s  크기 %7.1fMB → %7.1fMB (증가 %6.1fMB, 행당 %5.0fB)\n" \
+    "$LBL" "$(python3 -c "print(f'{($T1-$T0)/1e9:.2f}')")" "$ADDED" \
+    "$(python3 -c "print(${SZ0:-0}/1048576)")" "$(python3 -c "print(${SZ1:-0}/1048576)")" \
+    "$(python3 -c "print((${SZ1:-0}-${SZ0:-0})/1048576)")" \
+    "$(python3 -c "print((${SZ1:-0}-${SZ0:-0})/max(1,${ADDED}))")"
+done
+echo
+echo "  순증 id 는 새 행이 항상 오른쪽 끝 페이지에 붙습니다. 무작위 id 는 아무 페이지나"
+echo "  열게 되어 페이지 분할이 납니다. 행당 바이트가 그 차이를 보입니다."
+echo "  INSERT IGNORE 를 쓰므로 무작위 쪽은 충돌한 행이 빠집니다. 넣은 행 수를 함께 봅니다."
+echo
+
 } 2>&1 | tee "$OUT/exp-insert-extra.txt"
