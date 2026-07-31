@@ -62,7 +62,7 @@ PROBE=$(docker exec r02-db-b mysql -uroot -plab spoon -N -B \
   -e "CREATE TABLE IF NOT EXISTS ro_probe (id INT PRIMARY KEY); INSERT INTO ro_probe VALUES (1)" 2>&1)
 echo "$PROBE" | grep -qi "read.only" \
   || { echo "중단: 읽기 전용인데 root 쓰기가 막히지 않았습니다: ${PROBE:-오류 없음}" >&2; exit 3; }
-echo "  root 쓰기 탐침이 막혔습니다: $(echo "$PROBE" | head -1)"
+echo "  root 쓰기 탐침이 막혔습니다: $(echo "$PROBE" | grep -i "read.only" | head -1)"
 # 창이 지나면 읽기 전용을 푸는 백그라운드 작업. 승격이 끝나는 시점을 흉내 낸다.
 #
 # 시각의 기준이 중요하다. 처음에는 스크립트 시작에서 세었는데, failover.sh 가 앱을
