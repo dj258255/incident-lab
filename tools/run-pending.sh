@@ -53,7 +53,7 @@ steps=(
   "R14jdbc|R14-charset-timezone|compose|bash scripts/exp-jdbc-roundtrip.sh"
   "F07cap|F07-nasdaq-ipo-livelock|none|bash scripts/run-cap-sweep.sh"
   "R04phys|R04-replication-slot-wal|compose|bash scripts/exp5-physical-slot.sh"
-  "A23rto|A23-backup-pitr|compose-mysql-restore|bash scripts/exp8-mysql-repeat.sh"
+  "A23rto|A23-backup-pitr|compose-a23|bash scripts/exp8-mysql-repeat.sh"
 )
 
 if [ "${1:-}" = "--list" ]; then
@@ -88,6 +88,8 @@ bring_up(){ # $1=세션경로 $2=방식
     compose-db)             (cd "$1" && docker compose up -d db >/dev/null 2>&1) ;;
     compose-mysql)          (cd "$1" && docker compose up -d mysql >/dev/null 2>&1) ;;
     compose-mysql-restore)  (cd "$1" && docker compose up -d mysql restore >/dev/null 2>&1) ;;
+    # mysqlbinlog 가 mysql 이미지에 없어 tools 컨테이너가 함께 있어야 한다.
+    compose-a23)            (cd "$1" && docker compose up -d mysql restore tools >/dev/null 2>&1) ;;
     compose-oracle)         (cd "$1" && docker compose --profile oracle up -d oracle >/dev/null 2>&1) ;;
     # 복제본이 repl 프로파일 뒤에 있어 기본 up 으로는 안 뜬다. 그러면 복제 대조가
     # 헤더만 찍고 데이터 행이 하나도 없는 표를 남긴다. 실제로 그렇게 났다.

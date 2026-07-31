@@ -88,7 +88,12 @@ for run in $(seq 1 "$REPEAT"); do
   echo "$run,backup,$BK,$DUMP_B," >> "$OUT/mysql-rto-repeat.csv"
 
   # ── 2) 덤프 복원 ─────────────────────────────────────────────────────
+  # mysqldump 는 기본값(--set-gtid-purged=AUTO)에서 SET @@GLOBAL.GTID_PURGED 를 넣는다.
+  # 대상에 GTID 가 이미 있으면 그 문장이 실패하고 복원 전체가 거기서 멈춘다.
+  # 첫 회차는 깨끗해서 통과했고, 그 회차의 binlog 적용이 GTID 를 남기자 2회차부터
+  # 복원 후 0행이 됐다. 회차마다 GTID 를 비운다.
   R "DROP DATABASE IF EXISTS rto" >/dev/null
+  R "RESET BINARY LOGS AND GTIDS" >/dev/null 2>&1 || R "RESET MASTER" >/dev/null 2>&1 || true
   T2=$(date +%s%N)
   docker exec -i a23-restore mysql -uroot -plab < "$OUT/dump/rto-full.sql" 2>/dev/null
   T3=$(date +%s%N)
@@ -103,29 +108,46 @@ for run in $(seq 1 "$REPEAT"); do
 
   # ── 3) binlog 적용 ───────────────────────────────────────────────────
   # 백업 이후의 쓰기를 만들고, 그 구간만 뽑아 복구 인스턴스에 적용한다.
-  POS0=$(M "SELECT Position FROM performance_schema.log_status" 2>/dev/null | head -1)
-  BINFILE=$(M "SHOW BINARY LOG STATUS" 2>/dev/null | awk '{print $1}' | head -1)
-  [ -n "${BINFILE:-}" ] || BINFILE=$(M "SHOW MASTER STATUS" 2>/dev/null | awk '{print $1}' | head -1)
-  POS_BEFORE=$(M "SHOW BINARY LOG STATUS" 2>/dev/null | awk '{print $2}' | head -1)
-  [ -n "${POS_BEFORE:-}" ] || POS_BEFORE=$(M "SHOW MASTER STATUS" 2>/dev/null | awk '{print $2}' | head -1)
+  # 좌표를 한 번에 읽는다. 두 번 나눠 읽으면 그 사이에 위치가 움직여 구간이 어긋난다.
+  read -r BINFILE POS_BEFORE <<< "$(M "SHOW BINARY LOG STATUS" 2>/dev/null | head -1 | awk '{print $1, $2}')"
+  if [ -z "${BINFILE:-}" ]; then
+    read -r BINFILE POS_BEFORE <<< "$(M "SHOW MASTER STATUS" 2>/dev/null | head -1 | awk '{print $1, $2}')"
+  fi
 
   M "INSERT INTO rto.sponsor (live_id, user_id, amount, memo)
      SELECT n % 1000, n % 50000, n % 10000, CONCAT('b', MD5(n)) FROM (
        SELECT @b := @b + 1 AS n FROM information_schema.COLUMNS c1,
          information_schema.COLUMNS c2, (SELECT @b := 0) b LIMIT ${BINLOG_ROWS}
      ) t" >/dev/null 2>&1
-  POS_AFTER=$(M "SHOW BINARY LOG STATUS" 2>/dev/null | awk '{print $2}' | head -1)
-  [ -n "${POS_AFTER:-}" ] || POS_AFTER=$(M "SHOW MASTER STATUS" 2>/dev/null | awk '{print $2}' | head -1)
+  read -r BINAFTER POS_AFTER <<< "$(M "SHOW BINARY LOG STATUS" 2>/dev/null | head -1 | awk '{print $1, $2}')"
+  if [ -z "${POS_AFTER:-}" ]; then
+    read -r BINAFTER POS_AFTER <<< "$(M "SHOW MASTER STATUS" 2>/dev/null | head -1 | awk '{print $1, $2}')"
+  fi
+  # 구간 도중에 binlog 파일이 넘어가면 한 파일만 잘라 내는 이 방식이 안 맞는다.
+  if [ "${BINAFTER:-}" != "${BINFILE:-}" ]; then
+    echo "  run${run} binlog 파일이 ${BINFILE} 에서 ${BINAFTER} 로 넘어갔습니다. 이 구간은 건너뜁니다"
+    continue
+  fi
 
   if [ -z "${BINFILE:-}" ] || [ -z "${POS_BEFORE:-}" ] || [ -z "${POS_AFTER:-}" ]; then
     echo "  run${run} binlog 좌표를 못 읽었습니다. 이 구간은 건너뜁니다"
     continue
   fi
+  # mysql:8.4 이미지에는 mysqlbinlog 가 없다. 1절이 이미 알고 있던 사실인데 이 스크립트가
+  # 그대로 불러서, "command not found" 가 2>&1 에 삼켜지고 "적용 0행" 으로만 남았다.
+  # 1절과 같이 a23-tools 컨테이너에서 변환하고 그 SQL 을 복구 인스턴스에 먹인다.
+  # results/dump 가 a23-tools 의 /dump 로 마운트돼 있다.
   docker exec a23-mysql bash -c "cat /var/lib/mysql/$BINFILE" > "$OUT/dump/rto-binlog" 2>/dev/null
+  docker exec a23-tools bash -c \
+    "mysqlbinlog --skip-gtids --start-position=$POS_BEFORE --stop-position=$POS_AFTER \
+       /dump/rto-binlog > /dump/rto-recover.sql" 2>/dev/null
+  SQL_B=$(wc -c < "$OUT/dump/rto-recover.sql" 2>/dev/null | tr -d ' ')
+  if [ "${SQL_B:-0}" -lt 1000 ]; then
+    echo "  run${run} binlog 변환 결과가 ${SQL_B:-0}바이트뿐입니다. 이 구간은 건너뜁니다"
+    continue
+  fi
   T4=$(date +%s%N)
-  docker exec -i a23-restore bash -c \
-    "mysqlbinlog --start-position=$POS_BEFORE --stop-position=$POS_AFTER - \
-     | mysql -uroot -plab" < "$OUT/dump/rto-binlog" >/dev/null 2>&1
+  docker exec -i a23-restore mysql -uroot -plab < "$OUT/dump/rto-recover.sql" >/dev/null 2>&1
   T5=$(date +%s%N)
   BS=$(secs "$T4" "$T5")
   RN2=$(R "SELECT COUNT(*) FROM rto.sponsor")
