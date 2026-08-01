@@ -103,7 +103,12 @@ run_case(){ # $1=라벨 $2=슬롯종류(physical|logical|none) $3=keep설정(빈
         COALESCE(pg_size_pretty(pg_wal_lsn_diff(pg_current_wal_lsn(), restart_lsn)),'?'), ', '), '없음')
         FROM pg_replication_slots")"
   fi
-  echo "$label,$kind,${keep:--1},${w0:-0},${w1:-0},${grow:-0}" >> "$OUT/physical-slot.csv"
+  # 라벨에 쉼표가 있다("논리 슬롯, 컨슈머 없음"). 따옴표 없이 쓰면 필드가 7개가 되고
+  # csv.DictReader 가 컬럼을 한 칸씩 민다. 그래서 grow_mb 가 wal_after_mb 를 읽어
+  # 증가분 560.0MB 자리에 종료 시점 크기 816.0MB 가 들어갔고, 배수가 35배 대신
+  # 51배로 발행됐다. 흔적은 요약표에 남아 있었다. "상한" 칸이 -1 이 아니라 logical 이다.
+  # 라벨을 따옴표로 감싼다.
+  echo "\"$label\",$kind,${keep:--1},${w0:-0},${w1:-0},${grow:-0}" >> "$OUT/physical-slot.csv"
 }
 
 {

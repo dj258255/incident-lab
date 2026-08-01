@@ -14,78 +14,78 @@
               * load: 16 looping VUs for 15s (gracefulStop: 5s)
 
 
-running (01.0s), 16/16 VUs, 37432 complete and 0 interrupted iterations
+running (01.0s), 16/16 VUs, 38220 complete and 0 interrupted iterations
 load   [   7% ] 16 VUs  01.0s/15s
 
-running (02.0s), 16/16 VUs, 79666 complete and 0 interrupted iterations
+running (02.0s), 16/16 VUs, 83549 complete and 0 interrupted iterations
 load   [  13% ] 16 VUs  02.0s/15s
 
-running (03.0s), 16/16 VUs, 123955 complete and 0 interrupted iterations
+running (03.0s), 16/16 VUs, 129864 complete and 0 interrupted iterations
 load   [  20% ] 16 VUs  03.0s/15s
 
-running (04.0s), 16/16 VUs, 171429 complete and 0 interrupted iterations
+running (04.0s), 16/16 VUs, 177112 complete and 0 interrupted iterations
 load   [  27% ] 16 VUs  04.0s/15s
 
-running (05.0s), 16/16 VUs, 218095 complete and 0 interrupted iterations
+running (05.0s), 16/16 VUs, 224874 complete and 0 interrupted iterations
 load   [  33% ] 16 VUs  05.0s/15s
 
-running (06.0s), 16/16 VUs, 263649 complete and 0 interrupted iterations
+running (06.0s), 16/16 VUs, 273695 complete and 0 interrupted iterations
 load   [  40% ] 16 VUs  06.0s/15s
 
-running (07.0s), 16/16 VUs, 310003 complete and 0 interrupted iterations
+running (07.0s), 16/16 VUs, 322954 complete and 0 interrupted iterations
 load   [  47% ] 16 VUs  07.0s/15s
 
-running (08.0s), 16/16 VUs, 357922 complete and 0 interrupted iterations
+running (08.0s), 16/16 VUs, 371813 complete and 0 interrupted iterations
 load   [  53% ] 16 VUs  08.0s/15s
 
-running (09.0s), 16/16 VUs, 407090 complete and 0 interrupted iterations
+running (09.0s), 16/16 VUs, 421960 complete and 0 interrupted iterations
 load   [  60% ] 16 VUs  09.0s/15s
 
-running (10.0s), 16/16 VUs, 457577 complete and 0 interrupted iterations
+running (10.0s), 16/16 VUs, 471782 complete and 0 interrupted iterations
 load   [  67% ] 16 VUs  10.0s/15s
 
-running (11.0s), 16/16 VUs, 506492 complete and 0 interrupted iterations
+running (11.0s), 16/16 VUs, 521733 complete and 0 interrupted iterations
 load   [  73% ] 16 VUs  11.0s/15s
 
-running (12.0s), 16/16 VUs, 555943 complete and 0 interrupted iterations
+running (12.0s), 16/16 VUs, 571941 complete and 0 interrupted iterations
 load   [  80% ] 16 VUs  12.0s/15s
 
-running (13.0s), 16/16 VUs, 605747 complete and 0 interrupted iterations
+running (13.0s), 16/16 VUs, 622848 complete and 0 interrupted iterations
 load   [  87% ] 16 VUs  13.0s/15s
 
-running (14.0s), 16/16 VUs, 655055 complete and 0 interrupted iterations
+running (14.0s), 16/16 VUs, 673302 complete and 0 interrupted iterations
 load   [  93% ] 16 VUs  14.0s/15s
 
-running (15.0s), 16/16 VUs, 705399 complete and 0 interrupted iterations
+running (15.0s), 16/16 VUs, 724272 complete and 0 interrupted iterations
 load   [ 100% ] 16 VUs  15.0s/15s
 
 
   █ TOTAL RESULTS 
 
     CUSTOM
-    cnt_201........................: 705713 47045.968249/s
-    cnt_nan_accepted...............: 70789  4719.109675/s
-    dur_ms.........................: avg=297.66µs min=37.91µs med=251.45µs max=10.88ms p(90)=459.62µs p(95)=568.87µs
-    passed_before_trip.............: 705713 47045.968249/s
+    cnt_201........................: 724695 48311.326573/s
+    cnt_nan_accepted...............: 72310  4820.499692/s
+    dur_ms.........................: avg=289.83µs min=7.62µs med=244.95µs max=11.32ms p(90)=458.54µs p(95)=572.37µs
+    passed_before_trip.............: 724695 48311.326573/s
 
     HTTP
-    http_req_duration..............: avg=297.66µs min=37.91µs med=251.45µs max=10.88ms p(90)=459.62µs p(95)=568.87µs
-      { expected_response:true }...: avg=297.66µs min=37.91µs med=251.45µs max=10.88ms p(90)=459.62µs p(95)=568.87µs
-    http_req_failed................: 0.00%  0 out of 705713
-    http_reqs......................: 705713 47045.968249/s
+    http_req_duration..............: avg=289.83µs min=7.62µs med=244.95µs max=11.32ms p(90)=458.54µs p(95)=572.37µs
+      { expected_response:true }...: avg=289.83µs min=7.62µs med=244.95µs max=11.32ms p(90)=458.54µs p(95)=572.37µs
+    http_req_failed................: 0.00%  0 out of 724695
+    http_reqs......................: 724695 48311.326573/s
 
     EXECUTION
-    iteration_duration.............: avg=334.91µs min=60µs    med=284.83µs max=11.21ms p(90)=502.79µs p(95)=627.91µs
-    iterations.....................: 705713 47045.968249/s
+    iteration_duration.............: avg=326.37µs min=57.7µs med=277.66µs max=11.35ms p(90)=501.29µs p(95)=628.2µs 
+    iterations.....................: 724695 48311.326573/s
     vus............................: 16     min=16          max=16
     vus_max........................: 16     min=16          max=16
 
     NETWORK
-    data_received..................: 101 MB 6.7 MB/s
-    data_sent......................: 116 MB 7.8 MB/s
+    data_received..................: 103 MB 6.9 MB/s
+    data_sent......................: 120 MB 8.0 MB/s
 
 
 
 
-running (15.0s), 00/16 VUs, 705713 complete and 0 interrupted iterations
+running (15.0s), 00/16 VUs, 724695 complete and 0 interrupted iterations
 load ✓ [ 100% ] 16 VUs  15s

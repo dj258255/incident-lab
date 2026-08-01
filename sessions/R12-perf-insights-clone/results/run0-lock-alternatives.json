@@ -1,0 +1,480 @@
+{
+ "lock_methods": {
+  "samples": [
+   {
+    "data_lock_waits": 21,
+    "ms_dlw": 3.22,
+    "sys_view": 23,
+    "ms_sys": 6.77,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10327,
+    "ms_engine": 0.85
+   },
+   {
+    "data_lock_waits": 21,
+    "ms_dlw": 0.62,
+    "sys_view": 20,
+    "ms_sys": 1.73,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10327,
+    "ms_engine": 0.63
+   },
+   {
+    "data_lock_waits": 21,
+    "ms_dlw": 0.7,
+    "sys_view": 20,
+    "ms_sys": 1.66,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10326,
+    "ms_engine": 0.72
+   },
+   {
+    "data_lock_waits": 28,
+    "ms_dlw": 0.71,
+    "sys_view": 25,
+    "ms_sys": 1.9,
+    "engine_waiting": 6,
+    "engine_lockwait": 6,
+    "engine_truncated": false,
+    "engine_bytes": 9639,
+    "ms_engine": 0.69
+   },
+   {
+    "data_lock_waits": 21,
+    "ms_dlw": 0.6,
+    "sys_view": 21,
+    "ms_sys": 1.73,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10326,
+    "ms_engine": 0.74
+   },
+   {
+    "data_lock_waits": 21,
+    "ms_dlw": 0.71,
+    "sys_view": 21,
+    "ms_sys": 1.9,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10326,
+    "ms_engine": 0.77
+   },
+   {
+    "data_lock_waits": 21,
+    "ms_dlw": 0.79,
+    "sys_view": 21,
+    "ms_sys": 1.68,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10325,
+    "ms_engine": 0.77
+   },
+   {
+    "data_lock_waits": 28,
+    "ms_dlw": 0.7,
+    "sys_view": 21,
+    "ms_sys": 1.63,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10326,
+    "ms_engine": 0.77
+   },
+   {
+    "data_lock_waits": 21,
+    "ms_dlw": 0.66,
+    "sys_view": 21,
+    "ms_sys": 1.71,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10326,
+    "ms_engine": 0.62
+   },
+   {
+    "data_lock_waits": 28,
+    "ms_dlw": 0.66,
+    "sys_view": 21,
+    "ms_sys": 1.79,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10342,
+    "ms_engine": 0.84
+   },
+   {
+    "data_lock_waits": 28,
+    "ms_dlw": 0.78,
+    "sys_view": 25,
+    "ms_sys": 1.85,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10353,
+    "ms_engine": 0.71
+   },
+   {
+    "data_lock_waits": 21,
+    "ms_dlw": 0.65,
+    "sys_view": 21,
+    "ms_sys": 1.67,
+    "engine_waiting": 6,
+    "engine_lockwait": 6,
+    "engine_truncated": false,
+    "engine_bytes": 9653,
+    "ms_engine": 0.89
+   },
+   {
+    "data_lock_waits": 28,
+    "ms_dlw": 0.58,
+    "sys_view": 19,
+    "ms_sys": 1.59,
+    "engine_waiting": 6,
+    "engine_lockwait": 6,
+    "engine_truncated": false,
+    "engine_bytes": 9656,
+    "ms_engine": 0.75
+   },
+   {
+    "data_lock_waits": 21,
+    "ms_dlw": 0.66,
+    "sys_view": 25,
+    "ms_sys": 1.73,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10344,
+    "ms_engine": 0.62
+   },
+   {
+    "data_lock_waits": 28,
+    "ms_dlw": 0.66,
+    "sys_view": 28,
+    "ms_sys": 1.93,
+    "engine_waiting": 6,
+    "engine_lockwait": 6,
+    "engine_truncated": false,
+    "engine_bytes": 9654,
+    "ms_engine": 0.84
+   },
+   {
+    "data_lock_waits": 28,
+    "ms_dlw": 0.61,
+    "sys_view": 19,
+    "ms_sys": 1.57,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10355,
+    "ms_engine": 0.93
+   },
+   {
+    "data_lock_waits": 21,
+    "ms_dlw": 0.79,
+    "sys_view": 18,
+    "ms_sys": 1.73,
+    "engine_waiting": 6,
+    "engine_lockwait": 6,
+    "engine_truncated": false,
+    "engine_bytes": 9655,
+    "ms_engine": 0.81
+   },
+   {
+    "data_lock_waits": 28,
+    "ms_dlw": 0.71,
+    "sys_view": 20,
+    "ms_sys": 2.15,
+    "engine_waiting": 6,
+    "engine_lockwait": 6,
+    "engine_truncated": false,
+    "engine_bytes": 9655,
+    "ms_engine": 0.76
+   },
+   {
+    "data_lock_waits": 21,
+    "ms_dlw": 0.68,
+    "sys_view": 20,
+    "ms_sys": 1.76,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10356,
+    "ms_engine": 0.68
+   },
+   {
+    "data_lock_waits": 15,
+    "ms_dlw": 1.2,
+    "sys_view": 17,
+    "ms_sys": 1.88,
+    "engine_waiting": 6,
+    "engine_lockwait": 6,
+    "engine_truncated": false,
+    "engine_bytes": 9654,
+    "ms_engine": 1.09
+   },
+   {
+    "data_lock_waits": 15,
+    "ms_dlw": 0.68,
+    "sys_view": 21,
+    "ms_sys": 2.07,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10353,
+    "ms_engine": 0.63
+   },
+   {
+    "data_lock_waits": 28,
+    "ms_dlw": 0.67,
+    "sys_view": 23,
+    "ms_sys": 1.68,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10353,
+    "ms_engine": 0.75
+   },
+   {
+    "data_lock_waits": 21,
+    "ms_dlw": 0.61,
+    "sys_view": 28,
+    "ms_sys": 1.88,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10353,
+    "ms_engine": 1.8
+   },
+   {
+    "data_lock_waits": 21,
+    "ms_dlw": 0.61,
+    "sys_view": 21,
+    "ms_sys": 1.84,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10352,
+    "ms_engine": 0.72
+   },
+   {
+    "data_lock_waits": 28,
+    "ms_dlw": 0.5,
+    "sys_view": 23,
+    "ms_sys": 1.63,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10353,
+    "ms_engine": 0.74
+   },
+   {
+    "data_lock_waits": 28,
+    "ms_dlw": 0.61,
+    "sys_view": 25,
+    "ms_sys": 1.77,
+    "engine_waiting": 6,
+    "engine_lockwait": 6,
+    "engine_truncated": false,
+    "engine_bytes": 9666,
+    "ms_engine": 0.75
+   },
+   {
+    "data_lock_waits": 28,
+    "ms_dlw": 0.82,
+    "sys_view": 21,
+    "ms_sys": 1.75,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10352,
+    "ms_engine": 0.64
+   },
+   {
+    "data_lock_waits": 21,
+    "ms_dlw": 0.68,
+    "sys_view": 20,
+    "ms_sys": 1.62,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10364,
+    "ms_engine": 0.68
+   },
+   {
+    "data_lock_waits": 28,
+    "ms_dlw": 0.64,
+    "sys_view": 23,
+    "ms_sys": 1.94,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10354,
+    "ms_engine": 0.8
+   },
+   {
+    "data_lock_waits": 21,
+    "ms_dlw": 0.8,
+    "sys_view": 20,
+    "ms_sys": 1.78,
+    "engine_waiting": 6,
+    "engine_lockwait": 6,
+    "engine_truncated": false,
+    "engine_bytes": 9662,
+    "ms_engine": 0.74
+   },
+   {
+    "data_lock_waits": 28,
+    "ms_dlw": 0.7,
+    "sys_view": 21,
+    "ms_sys": 1.63,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10354,
+    "ms_engine": 0.59
+   },
+   {
+    "data_lock_waits": 28,
+    "ms_dlw": 0.8,
+    "sys_view": 28,
+    "ms_sys": 2.04,
+    "engine_waiting": 6,
+    "engine_lockwait": 6,
+    "engine_truncated": false,
+    "engine_bytes": 9664,
+    "ms_engine": 0.74
+   },
+   {
+    "data_lock_waits": 28,
+    "ms_dlw": 0.51,
+    "sys_view": 19,
+    "ms_sys": 1.67,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10353,
+    "ms_engine": 0.66
+   },
+   {
+    "data_lock_waits": 21,
+    "ms_dlw": 0.65,
+    "sys_view": 19,
+    "ms_sys": 1.71,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10354,
+    "ms_engine": 0.78
+   },
+   {
+    "data_lock_waits": 21,
+    "ms_dlw": 0.7,
+    "sys_view": 21,
+    "ms_sys": 1.86,
+    "engine_waiting": 6,
+    "engine_lockwait": 6,
+    "engine_truncated": false,
+    "engine_bytes": 9664,
+    "ms_engine": 0.84
+   },
+   {
+    "data_lock_waits": 28,
+    "ms_dlw": 0.6,
+    "sys_view": 23,
+    "ms_sys": 2.0,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10354,
+    "ms_engine": 0.63
+   },
+   {
+    "data_lock_waits": 28,
+    "ms_dlw": 0.64,
+    "sys_view": 25,
+    "ms_sys": 1.85,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10355,
+    "ms_engine": 0.9
+   },
+   {
+    "data_lock_waits": 21,
+    "ms_dlw": 0.76,
+    "sys_view": 21,
+    "ms_sys": 1.81,
+    "engine_waiting": 6,
+    "engine_lockwait": 6,
+    "engine_truncated": false,
+    "engine_bytes": 9667,
+    "ms_engine": 0.84
+   },
+   {
+    "data_lock_waits": 28,
+    "ms_dlw": 0.75,
+    "sys_view": 21,
+    "ms_sys": 2.09,
+    "engine_waiting": 6,
+    "engine_lockwait": 6,
+    "engine_truncated": false,
+    "engine_bytes": 9670,
+    "ms_engine": 0.84
+   },
+   {
+    "data_lock_waits": 21,
+    "ms_dlw": 0.66,
+    "sys_view": 21,
+    "ms_sys": 1.77,
+    "engine_waiting": 7,
+    "engine_lockwait": 7,
+    "engine_truncated": false,
+    "engine_bytes": 10358,
+    "ms_engine": 0.73
+   }
+  ],
+  "median_ms": {
+   "data_lock_waits": 0.675,
+   "sys_view": 1.77,
+   "engine_status": 0.75
+  }
+ },
+ "top_sql_runs": [
+  {
+   "samples": 40,
+   "top": [
+    {
+     "digest_text": "UPDATE `live` SET `view_count` = `view_count` + ? WHERE `id`",
+     "aas": 7.72
+    }
+   ]
+  },
+  {
+   "samples": 40,
+   "top": [
+    {
+     "digest_text": "UPDATE `live` SET `view_count` = `view_count` + ? WHERE `id`",
+     "aas": 7.53
+    }
+   ]
+  },
+  {
+   "samples": 40,
+   "top": [
+    {
+     "digest_text": "UPDATE `live` SET `view_count` = `view_count` + ? WHERE `id`",
+     "aas": 7.62
+    }
+   ]
+  }
+ ]
+}
