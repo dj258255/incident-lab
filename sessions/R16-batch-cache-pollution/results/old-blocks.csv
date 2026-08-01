@@ -1,0 +1,13 @@
+label,old_blocks_time,old_blocks_pct,mode,oltp_ms,pool_reads
+배치 없음 (기준선),1000,37,alone,31364,512810
+배치 없음 (기준선),1000,37,alone,25519,398207
+배치 없음 (기준선),1000,37,alone,25117,397028
+배치 없음 (기준선),1000,37,alone,25519,398207
+배치 겹침, time=0 pct=37,0,37,with_batch,66142,839524
+배치 겹침, time=0 pct=37,0,37,with_batch,73170,914008
+배치 겹침, time=0 pct=37,0,37,with_batch,68904,877767
+배치 겹침, time=0 pct=37,0,37,with_batch,68904,877767
+배치 겹침, time=1000 pct=37 (기본),1000,37,with_batch,85031,1201648
+배치 겹침, time=1000 pct=37 (기본),1000,37,with_batch,83366,1166529
+배치 겹침, time=1000 pct=37 (기본),1000,37,with_batch,81491,1141302
+배치 겹침, time=1000 pct=37 (기본),1000,37,with_batch,83366,1166529

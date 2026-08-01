@@ -1,0 +1,19 @@
+# 복제본을 먼저 ALTER 하고 복제를 재개할 수 있는가
+# 소스 MySQL 8.4.3 · 행 기반 복제 · GTID
+# 소스는 INT 를 유지하고 복제본만 BIGINT 로 올린 상태에서 복제를 재개합니다.
+
+## replica_type_conversions = 빈 값(기본)
+  복제본 id 컬럼 타입 bigint
+  복제본 행 수          1행 → 1행 (소스는 6행)
+  복제 적용 에러       **13146** Worker 1 failed executing transaction '673b4326-8d84-11f1-896b-0242ac130002:3' at source log binlog.000001, end_log_pos 909; Column 0 of table 'lab.events' cannot be converted from type 'int' to type 'bigint'
+  판정                     **복제가 멈췄습니다.** 복제본이 소스를 못 따라갑니다
+
+## replica_type_conversions = ALL_NON_LOSSY
+  복제본 id 컬럼 타입 bigint
+  복제본 행 수          1행 → 4행 (소스는 6행)
+  복제 적용 에러       없음
+  판정                     복제가 이어졌습니다
+
+==================================================================
+  소스 최종 행 수: 4
+  소스 id 타입:    int

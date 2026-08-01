@@ -1,0 +1,13 @@
+# LOCK=NONE 을 명시해도 MDL 대기에 걸리는가
+# MySQL 8.4.3
+
+## 1. 문법이 받아들여지는가 (막는 트랜잭션 없음)
+  (절 없음)                 통과 (66ms)
+  LOCK=NONE                    **거부** ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your 
+  LOCK=SHARED                  **거부** ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your 
+  ALGORITHM=INPLACE, LOCK=NONE **거부** ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your 
+
+## 2. 열린 트랜잭션이 있을 때 (20초 보유)
+  (절 없음)           대기 중인 MDL 종류 EXCLUSIVE · 뒤에 선 SELECT 14838ms
+  LOCK=NONE              대기 중인 MDL 종류 (없음) · 뒤에 선 SELECT 61ms
+      DDL 결과: ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that 

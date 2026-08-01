@@ -1,0 +1,3 @@
+replica_type_conversions,replica_col_type,rows_before,rows_after,error_no,error
+off,bigint,1,1,13146,"Worker 1 failed executing transaction '673b4326-8d84-11f1-896b-0242ac130002:3' at source log binlog.000001, end_log_pos 909; Column 0 of table 'lab.events' cannot be converted from type 'int' to type 'bigint'"
+all_non_lossy,bigint,1,4,0,""

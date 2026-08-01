@@ -1,0 +1,5 @@
+table_state,kind,deadlocks,inserted,attempted
+empty,seq,175,25,200
+empty,uuid,49,151,200
+preload,seq,175,25,200
+preload,uuid,41,159,200

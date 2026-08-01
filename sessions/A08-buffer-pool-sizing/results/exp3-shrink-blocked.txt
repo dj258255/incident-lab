@@ -1,0 +1,18 @@
+# 열린 트랜잭션이 버퍼 풀 축소를 막는가
+# MySQL 8.4.3 · 2G -> 256M · 청크 128M · 인스턴스 1
+# 트랜잭션은 30초 동안 20만 행에 FOR UPDATE 를 쥡니다
+
+## 조건 A. 여는 트랜잭션 없음
+  시작 전 status              
+  최종 status                  Completed resizing buffer pool at 260801  8:31:32.
+  최종 buffer pool size        256M
+  축소 완료까지            **1초**
+
+## 조건 B. 20만 행에 락을 쥔 트랜잭션이 열려 있음
+  테이블 크기               453M (목표 크기 256M)
+  연 트랜잭션이 쥔 락    1522389개
+  시작 전 status              Completed resizing buffer pool at 260801  8:31:32.
+  최종 status                  Completed resizing buffer pool at 260801  8:32:20.
+  최종 buffer pool size        256M
+  축소 완료까지            **35초**
+
