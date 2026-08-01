@@ -99,8 +99,13 @@ c422 = num(r'cnt_422[.\s]*:\s*(\d+)')
 c503 = num(r'cnt_503[.\s]*:\s*(\d+)')
 passed = num(r'passed_before_trip[.\s]*:\s*(\d+)')
 rps = num(r'http_reqs[^\n]*?\s([\d.]+)/s')
-p95 = num(r'dur_ms[^\n]*?p\(95\)=([\d.]+)')
-mx = num(r'dur_ms[^\n]*?max=([\d.]+)')
+# k6 는 µs, ms, s 를 섞어 찍는다. 숫자만 뽑으면 210.43µs 가 210.43 이 되고
+# 그것을 ms 로 적으면 1000배가 틀린다. 실제로 그렇게 나서, 동시성을 4배 올렸는데
+# p95 가 568.87 에서 1.98 로 떨어지는 곡선이 남았다. 공용 헬퍼로 단위까지 읽는다.
+sys.path.insert(0, "/Users/beomsu/Desktop/incident-lab/tools")
+import k6unit
+p95 = k6unit.ms(t, 'dur_ms', 'p(95)', '')
+mx = k6unit.ms(t, 'dur_ms', 'max', '')
 total = c201 + c422 + c503
 if total == 0:
     print(f"  VU {vus:<4} k6 출력을 못 읽었습니다. 이 조건은 버립니다")

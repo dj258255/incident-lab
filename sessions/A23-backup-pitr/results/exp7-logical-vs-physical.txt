@@ -5,43 +5,15 @@
 ==================================================================
 ## 100000행
 ==================================================================
-  File "<string>", line 1
-    print(f'{ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)/1048576:.1f}')
-                                                                                                              ^
-SyntaxError: closing parenthesis ')' does not match opening parenthesis '{'
-  적재 ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)행, 테이블 MB
-
-scripts/exp7-logical-vs-physical.sh: line 98: [: ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES): integer expression expected
-  run1  논리 백업   0.07s 복원   0.06s (0.0MB, 복원 후 0행)
-scripts/exp7-logical-vs-physical.sh: line 98: [: ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES): integer expression expected
-  run2  논리 백업   0.06s 복원   0.05s (0.0MB, 복원 후 0행)
-scripts/exp7-logical-vs-physical.sh: line 98: [: ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES): integer expression expected
-  run3  논리 백업   0.06s 복원   0.06s (0.0MB, 복원 후 0행)
-scripts/exp7-logical-vs-physical.sh: line 132: [: ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES): integer expression expected
-  run1  물리 백업  11.02s 복원   3.85s (212.3MB, 복원 후 0행)
-scripts/exp7-logical-vs-physical.sh: line 132: [: ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES): integer expression expected
-  run2  물리 백업   2.10s 복원   3.61s (199.5MB, 복원 후 0행)
-scripts/exp7-logical-vs-physical.sh: line 132: [: ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES): integer expression expected
-  run3  물리 백업   1.93s 복원   4.50s (199.5MB, 복원 후 0행)
-
+  중단: 원본 bench.t 가 0행입니다(기대 100000). 이 규모는 건너뜁니다
 ==================================================================
 ## 1000000행
 ==================================================================
-  적재 1000000행, 테이블 227.0MB
-
-  run1  논리 백업   0.74s 복원   9.12s (78.9MB, 복원 후 1000000행)
-  run2  논리 백업   0.81s 복원   8.97s (78.9MB, 복원 후 1000000행)
-  run3  논리 백업   0.88s 복원   9.02s (78.9MB, 복원 후 1000000행)
-  run1  물리 백업   2.93s 복원   4.26s (533.1MB, 복원 후 1000000행)
-  run2  물리 백업   2.79s 복원   3.95s (533.1MB, 복원 후 1000000행)
-  run3  물리 백업   2.06s 복원   4.71s (533.1MB, 복원 후 1000000행)
-
+  중단: 원본 bench.t 가 0행입니다(기대 1000000). 이 규모는 건너뜁니다
 ==================================================================
 ## 정리
 ==================================================================
          행 수       논리 백업       논리 복원       물리 백업       물리 복원      복원 배수
-     100,000       0.06s       0.06s       2.10s       3.85s      0.02배
-   1,000,000       0.81s       9.02s       2.79s       4.26s      2.12배
 
   논리 복원은 SQL 을 다시 실행합니다. 파싱하고 행을 넣고 인덱스를 다시 만듭니다.
   물리 복원은 파일을 옮기고 서버를 띄웁니다. 복원 쪽 배수가 그 차이입니다.

@@ -24,9 +24,18 @@ SIZES=${SIZES:-"100000 1000000"}
 M(){ docker exec a23-mysql mysql -uroot -plab -N -B -e "$1" 2>&1 | grep -v "^mysql: \[Warning\]"; }
 R(){ docker exec a23-restore mysql -uroot -plab -N -B -e "$1" 2>&1 | grep -v "^mysql: \[Warning\]"; }
 
+# ping 만 보면 부족하다. initdb 가 도는 동안 임시 서버가 떠 있어 ping 은 통하는데
+# 곧 재기동되면서 그 사이 질의가 실패한다. 실제로 그 창에서 시드가 통째로 날아가
+# "원본 bench.t 가 0행" 으로 끝났다. 실제 질의가 두 번 연속 통해야 준비된 것으로 본다.
 wait_up(){ # $1=컨테이너
-  for _ in $(seq 1 90); do
-    docker exec "$1" mysqladmin ping -uroot -plab >/dev/null 2>&1 && return 0
+  local ok=0
+  for _ in $(seq 1 120); do
+    if [ "$(docker exec "$1" mysql -uroot -plab -N -B -e 'SELECT 1' 2>/dev/null | tr -d ' ')" = "1" ]; then
+      ok=$((ok + 1))
+      [ "$ok" -ge 2 ] && return 0
+    else
+      ok=0
+    fi
     sleep 2
   done
   return 1
@@ -43,6 +52,7 @@ seed(){ # $1=행 수
        KEY idx_a (a), KEY idx_c (c)
      )" >/dev/null
   # 인덱스가 둘 있어야 복원 쪽 비용이 드러난다. 논리 복원은 인덱스를 다시 만든다.
+  # 적재 SQL 의 오류를 삼키지 않는다. 앞서 2>&1 로 묻어 두어 0행이 조용히 남았다.
   M "INSERT INTO bench.t (a, b, c)
      SELECT MD5(n), MD5(n+1), n % 1000 FROM (
        SELECT @r := @r + 1 AS n FROM information_schema.COLUMNS c1,
