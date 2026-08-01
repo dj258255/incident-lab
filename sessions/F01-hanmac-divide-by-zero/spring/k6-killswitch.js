@@ -23,7 +23,8 @@ const DURATION = __ENV.DURATION || '10s';
 const PATH = __ENV.EP || '/orders/leaky-independent';
 const NAN_PCT = Number(__ENV.NAN_PCT || 0.1);
 
-const cnt201 = new Counter('cnt_201');       // 접수
+const cnt201 = new Counter('cnt_201');       // 접수(정상 + NaN)
+const cntNanAccepted = new Counter('cnt_nan_accepted');  // 접수된 것 중 NaN
 const cnt422 = new Counter('cnt_422');       // 가드나 이탈 판정으로 거부
 const cnt503 = new Counter('cnt_503');       // 킬스위치가 막음
 const cntOther = new Counter('cnt_other');
@@ -50,19 +51,23 @@ export default function () {
   // NAN_PCT 비율로 days=0 인 주문을 섞는다. days 가 0 이면 numerator/days 가
   // Infinity 또는 NaN 이 되고, numerator 도 0 이면 NaN 이다.
   //
-  // 정상 주문은 반드시 접수(201)되는 값이어야 한다. 처음에 numerator=1, days=30 을
-  // 썼더니 px = base * (1 + 1/30) 이 상한을 넘어 네 조건 다 접수가 0건이었다.
-  // numerator 를 0 으로 두면 px = base 그대로라 확실히 대역 안이다.
+  // 컨트롤러의 대역은 LOWER=90, UPPER=130 이다. base 를 100000 으로 두면 px 가
+  // 상한을 한참 넘어 정상 주문이 전부 거부된다. 처음에 그렇게 쟀고, 그래서 접수된
+  // 것이 전부 NaN 이었다(우연히 원하는 값이 나왔지만 "정상 주문" 이 정상이 아니었다).
+  // base 를 대역 안으로 옮긴다. px = 100 * (1 + 1/30) = 103.33 이다.
   const isNan = Math.random() < NAN_PCT;
   const body = isNan
-    ? { base: 100000, numerator: 0, days: 0 }      // 0/0 = NaN
-    : { base: 100000, numerator: 0, days: 30 };    // px = base, 확실히 접수
+    ? { base: 100, numerator: 0, days: 0 }        // 0/0 = NaN → 가드 구멍으로 접수된다
+    : { base: 100, numerator: 1, days: 30 };      // px = 103.33, 대역 안
 
   const res = http.post(`${TARGET}${PATH}`, JSON.stringify(body), {
     headers: { 'Content-Type': 'application/json' },
   });
   dur.add(res.timings.duration);
 
+  // 정상도 NaN 도 201 이라 상태코드로는 안 갈린다. 응답 본문으로 가른다.
+  // 컨트롤러가 "accepted px=NaN" 을 돌려주므로 그것을 센다.
+  if (res.status === 201 && res.body && res.body.indexOf('NaN') >= 0) cntNanAccepted.add(1);
   if (res.status === 201) cnt201.add(1);
   else if (res.status === 422) cnt422.add(1);
   else if (res.status === 503) cnt503.add(1);

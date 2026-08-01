@@ -66,6 +66,14 @@ for rows in $SIZES; do
   echo "=================================================================="
   seed "$rows"
   N=$(M "SELECT COUNT(*) FROM bench.t")
+  case "${N:-}" in ''|*[!0-9]*) N=0 ;; esac
+  # 원본 적재부터 확인한다. 이걸 안 보면 적재가 0행일 때 복원도 0행이라
+  # RN >= N 이 0 >= 0 으로 통과하고, 그 회차가 "논리 복원 0.06초" 로 표에 들어간다.
+  # 실제로 10만 행 조건 여섯 회차가 전부 그렇게 남았다(덤프 0.0MB, 복원 후 0행).
+  if [ "$N" -lt "$rows" ]; then
+    echo "  중단: 원본 bench.t 가 ${N}행입니다(기대 ${rows}). 이 규모는 건너뜁니다"
+    continue
+  fi
   SZ=$(M "SELECT ROUND((DATA_LENGTH+INDEX_LENGTH)) FROM information_schema.TABLES
           WHERE TABLE_SCHEMA='bench' AND TABLE_NAME='t'")
   echo "  적재 ${N}행, 테이블 $(python3 -c "print(f'{${SZ:-0}/1048576:.1f}')")MB"

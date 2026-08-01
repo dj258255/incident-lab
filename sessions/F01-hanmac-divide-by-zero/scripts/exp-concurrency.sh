@@ -73,7 +73,7 @@ echo "  안 걸립니다. 초당 접수 건수가 곧 잘못된 주문이 쌓이
 echo
 
 : > "$OUT/concurrency.csv"
-echo "vus,passed_before_trip,c201,c422,c503,rps,p95_ms,max_ms" >> "$OUT/concurrency.csv"
+echo "vus,passed_before_trip,c201,c422,c503,rps,p95_ms,max_ms,c_nan" >> "$OUT/concurrency.csv"
 
 for vus in $VUS_LIST; do
   reset_ks || continue
@@ -94,6 +94,7 @@ def num(pat, d=0):
     m = re.search(pat, t)
     return float(m.group(1)) if m else d
 c201 = num(r'cnt_201[.\s]*:\s*(\d+)')
+cnan = num(r'cnt_nan_accepted[.\s]*:\s*(\d+)')
 c422 = num(r'cnt_422[.\s]*:\s*(\d+)')
 c503 = num(r'cnt_503[.\s]*:\s*(\d+)')
 passed = num(r'passed_before_trip[.\s]*:\s*(\d+)')
@@ -105,10 +106,10 @@ if total == 0:
     print(f"  VU {vus:<4} k6 출력을 못 읽었습니다. 이 조건은 버립니다")
 else:
     # NaN 비율이 10% 이므로 접수된 것 중 대략 그만큼이 잘못된 주문이다.
-    print(f"  VU {vus:<4} 접수 {c201:>8.0f}건  거부 {c422:>7.0f}  차단 {c503:>7.0f}  "
-          f"{rps:>8.1f}/s  접수 {c201/15:>7.1f}/s  p95 {p95:>7.1f}ms")
+    print(f"  VU {vus:<4} 접수 {c201:>8.0f}건(그중 NaN {cnan:>7.0f})  거부 {c422:>7.0f}  "
+          f"차단 {c503:>7.0f}  NaN 초당 {cnan/15:>7.1f}/s  p95 {p95:>7.1f}ms")
     with open(csvp, 'a', encoding='utf-8') as f:
-        f.write(f"{vus},{passed:.0f},{c201:.0f},{c422:.0f},{c503:.0f},{rps},{p95},{mx}\n")
+        f.write(f"{vus},{passed:.0f},{c201:.0f},{c422:.0f},{c503:.0f},{rps},{p95},{mx},{cnan:.0f}\n")
 PY
 done
 
@@ -123,10 +124,10 @@ T = int(sys.argv[2])
 if not rows:
     print("  유효한 조건이 없습니다"); raise SystemExit
 SEC = 15.0
-print(f"  {'동시성':>6} {'접수 건수':>11} {'초당 접수':>11} {'VU 1 대비':>11} {'p95':>9} {'2분 환산':>12}")
+print(f"  {'동시성':>6} {'NaN 접수':>11} {'초당':>11} {'VU 1 대비':>11} {'p95':>9} {'2분 환산':>12}")
 base = None
 for r in rows:
-    c = int(r['c201'])
+    c = int(r.get('c_nan') or r['c201'])
     if base is None:
         base = c
     per = c / SEC
