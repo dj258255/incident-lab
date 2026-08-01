@@ -1,0 +1,90 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: /w/k6-killswitch.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 64 max VUs, 20s max duration (incl. graceful stop):
+              * load: 64 looping VUs for 15s (gracefulStop: 5s)
+
+
+running (01.0s), 64/64 VUs, 33193 complete and 0 interrupted iterations
+load   [   7% ] 64 VUs  01.0s/15s
+
+running (02.0s), 64/64 VUs, 71220 complete and 0 interrupted iterations
+load   [  13% ] 64 VUs  02.0s/15s
+
+running (03.0s), 64/64 VUs, 109176 complete and 0 interrupted iterations
+load   [  20% ] 64 VUs  03.0s/15s
+
+running (04.0s), 64/64 VUs, 149425 complete and 0 interrupted iterations
+load   [  27% ] 64 VUs  04.0s/15s
+
+running (05.0s), 64/64 VUs, 189958 complete and 0 interrupted iterations
+load   [  33% ] 64 VUs  05.0s/15s
+
+running (06.0s), 64/64 VUs, 230969 complete and 0 interrupted iterations
+load   [  40% ] 64 VUs  06.0s/15s
+
+running (07.0s), 64/64 VUs, 272286 complete and 0 interrupted iterations
+load   [  47% ] 64 VUs  07.0s/15s
+
+running (08.0s), 64/64 VUs, 310611 complete and 0 interrupted iterations
+load   [  53% ] 64 VUs  08.0s/15s
+
+running (09.0s), 64/64 VUs, 346869 complete and 0 interrupted iterations
+load   [  60% ] 64 VUs  09.0s/15s
+
+running (10.0s), 64/64 VUs, 385215 complete and 0 interrupted iterations
+load   [  67% ] 64 VUs  10.0s/15s
+
+running (11.0s), 64/64 VUs, 424699 complete and 0 interrupted iterations
+load   [  73% ] 64 VUs  11.0s/15s
+
+running (12.0s), 64/64 VUs, 467718 complete and 0 interrupted iterations
+load   [  80% ] 64 VUs  12.0s/15s
+
+running (13.0s), 64/64 VUs, 511965 complete and 0 interrupted iterations
+load   [  87% ] 64 VUs  13.0s/15s
+
+running (14.0s), 64/64 VUs, 555340 complete and 0 interrupted iterations
+load   [  93% ] 64 VUs  14.0s/15s
+
+running (15.0s), 64/64 VUs, 600201 complete and 0 interrupted iterations
+load   [ 100% ] 64 VUs  15.0s/15s
+
+
+  █ TOTAL RESULTS 
+
+    CUSTOM
+    cnt_422..............: 26      1.733243/s
+    cnt_503..............: 600680  40043.252622/s
+    dur_ms...............: avg=1.42ms min=96.87µs  med=1.23ms max=33.76ms p(90)=2.27ms p(95)=2.9ms 
+    passed_before_trip...: 26      1.733243/s
+
+    HTTP
+    http_req_duration....: avg=1.42ms min=96.87µs  med=1.23ms max=33.76ms p(90)=2.27ms p(95)=2.9ms 
+    http_req_failed......: 100.00% 600706 out of 600706
+    http_reqs............: 600706  40044.985865/s
+
+    EXECUTION
+    iteration_duration...: avg=1.58ms min=147.45µs med=1.36ms max=35.11ms p(90)=2.53ms p(95)=3.23ms
+    iterations...........: 600706  40044.985865/s
+    vus..................: 64      min=64               max=64
+    vus_max..............: 64      min=64               max=64
+
+    NETWORK
+    data_received........: 91 MB   6.0 MB/s
+    data_sent............: 108 MB  7.2 MB/s
+
+
+
+
+running (15.0s), 00/64 VUs, 600706 complete and 0 interrupted iterations
+load ✓ [ 100% ] 64 VUs  15s

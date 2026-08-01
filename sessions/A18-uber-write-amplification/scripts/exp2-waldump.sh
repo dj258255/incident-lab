@@ -180,12 +180,19 @@ for label, v in d.items():
 print()
 print("  압축 방식별로 인덱스 0개 대비 배수")
 print("  " + "{:<24}".format("조건") + "".join(f"{c:>11}" for c in order))
-base = d.get("인덱스 0개(ff100)", {})
-for label, v in d.items():
-    if not all(c in v for c in order) or not base:
+# 분모를 조건마다 맞춰야 한다. 전부 인덱스 0개(ff100) 으로 나누면 ff70 행이
+# fillfactor 와 인덱스 수를 동시에 바꾼 비교가 되어, 인덱스 효과로 귀속할 수 없다.
+# 이 세션이 6절에서 정확히 그 이유로 1.4배를 철회했는데 여기서 같은 오류를 냈었다.
+PAIRS = [("인덱스 10개(ff100)", "인덱스 0개(ff100)"),
+         ("인덱스 컬럼 갱신(v10)", "인덱스 0개(ff100)"),
+         ("인덱스 10개(ff70)", "인덱스 0개(ff70)"),
+         ("2차 갱신 인덱스 10개", "2차 갱신 인덱스 0개")]
+for label, basel in PAIRS:
+    v, b = d.get(label), d.get(basel)
+    if not v or not b or not all(c in v and c in b for c in order):
         continue
-    cells = "".join(f"{v[c]/base[c]:>10.2f}배" for c in order)
-    print(f"  {label:<24}{cells}")
+    cells = "".join(f"{v[c]/b[c]:>10.2f}배" for c in order)
+    print(f"  {label:<24}{cells}   (분모 {basel})")
 print()
 print("  압축은 FPI 만 줄입니다. 레코드 자체는 안 줄이므로 FPI 비중이 큰 조건에서만")
 print("  값을 합니다. 방식별 차이는 압축률과 CPU 사이의 교환입니다.")

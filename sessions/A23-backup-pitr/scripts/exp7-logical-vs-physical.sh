@@ -81,7 +81,13 @@ for rows in $SIZES; do
       > "$OUT/bench-${rows}.sql" 2>/dev/null
     T1=$(date +%s%N)
     DUMP_B=$(wc -c < "$OUT/bench-${rows}.sql" | tr -d ' ')
+    # mysqldump 는 기본값(--set-gtid-purged=AUTO)에서 SET @@GLOBAL.GTID_PURGED 를 넣는다.
+    # 대상에 GTID 가 이미 있으면 그 문장이 실패하고 복원 전체가 거기서 멈춘다.
+    # 그래서 첫 회차만 성공하고 2회차부터 복원 후 0행이 됐다. 이 절이 "원인을 짚지
+    # 못했습니다" 로 남겨 뒀던 것이 이것이고, 11절이 같은 증상으로 원인을 밝혔다.
+    # 회차마다 대상의 GTID 를 비운다.
     R "DROP DATABASE IF EXISTS bench; CREATE DATABASE bench" >/dev/null
+    R "RESET BINARY LOGS AND GTIDS" >/dev/null 2>&1 || R "RESET MASTER" >/dev/null 2>&1 || true
     T2=$(date +%s%N)
     docker exec -i a23-restore mysql -uroot -plab bench < "$OUT/bench-${rows}.sql" 2>/dev/null
     T3=$(date +%s%N)

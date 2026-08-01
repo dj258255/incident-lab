@@ -38,7 +38,7 @@ steps=(
   "B52extra|B52-jpa-list-api|compose|bash scripts/exp-insert-extra.sh"
   "R01|R01-replica-promotion-loss|compose|bash scripts/exp-after-commit-load.sh"
   "R13|R13-slotted-counter|compose-repl|bash scripts/exp-uniform-and-repeat.sh"
-  "A23logical|A23-backup-pitr|compose-mysql-restore|bash scripts/exp7-logical-vs-physical.sh"
+  "A23logical|A23-backup-pitr|compose-a23|bash scripts/exp7-logical-vs-physical.sh"
   "F03|F03-market-open-connection-storm|none|bash scripts/exp-pool-sweep.sh"
   "R03|R03-reader-endpoint-skew|compose|bash scripts/exp-repeat-load.sh"
   "A23oracle|A23-backup-pitr|compose-oracle|bash scripts/exp6-oracle-archivelog.sh"

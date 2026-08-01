@@ -14,6 +14,10 @@
 import http from 'k6/http';
 import { Counter, Trend } from 'k6/metrics';
 
+// k6 는 자기 컨테이너 안에서 돈다. localhost 로 쏘면 k6 자신을 가리켜 요청이 아예 안
+// 나간다. 실제로 15초에 18만 회를 돌면서 data_received 가 0 B 였다. compose 네트워크의
+// 서비스 이름으로 쏜다.
+const TARGET = __ENV.TARGET || 'http://app:8080';
 const VUS = Number(__ENV.VUS || 1);
 const DURATION = __ENV.DURATION || '10s';
 const PATH = __ENV.EP || '/orders/leaky-independent';
@@ -50,7 +54,7 @@ export default function () {
     ? { base: 100000, numerator: 0, days: 0 }      // 0/0 = NaN
     : { base: 100000, numerator: 1, days: 30 };    // 정상
 
-  const res = http.post(`http://localhost:8080${PATH}`, JSON.stringify(body), {
+  const res = http.post(`${TARGET}${PATH}`, JSON.stringify(body), {
     headers: { 'Content-Type': 'application/json' },
   });
   dur.add(res.timings.duration);

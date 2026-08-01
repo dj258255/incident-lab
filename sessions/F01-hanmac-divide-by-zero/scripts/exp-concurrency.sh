@@ -46,6 +46,8 @@ done
 [ -n "$READY" ] || { echo "중단: 앱이 준비되지 않았습니다" >&2; exit 2; }
 echo "준비 확인 완료"
 
+# k6 가 붙을 주소. 컨테이너 이름과 compose 서비스 이름 둘 다 네트워크에서 풀린다.
+TARGET=${TARGET:-http://app:8080}
 NET=$(docker inspect "$CN" -f '{{range $k,$v := .NetworkSettings.Networks}}{{$k}}{{"\n"}}{{end}}' | grep -v '^$' | head -1)
 [ -n "$NET" ] || { echo "중단: 앱의 네트워크를 못 읽었습니다" >&2; exit 2; }
 
@@ -79,8 +81,13 @@ for vus in $VUS_LIST; do
   reset_ks || continue
   LOG="$OUT/k6-vus${vus}.txt"
   docker run --rm --network "$NET" -v "$SPRING":/w -w /w \
-    -e VUS="$vus" -e DURATION="$DURATION" -e EP="$EP" \
+    -e VUS="$vus" -e DURATION="$DURATION" -e EP="$EP" -e TARGET="$TARGET" \
     grafana/k6 run --address= /w/k6-killswitch.js > "$LOG" 2>&1 || true
+  # 요청이 실제로 나갔는지 먼저 본다. 주소가 틀리면 k6 는 에러 없이 빈 통계를 낸다.
+  if grep -qE "data_received[.\s]*:\s*0 B" "$LOG"; then
+    echo "  VU ${vus} 요청이 한 건도 안 나갔습니다(data_received 0 B). 대상 주소를 확인하십시오"
+    continue
+  fi
   python3 - "$LOG" "$vus" "$OUT/concurrency.csv" <<'PY'
 import re, sys
 log, vus, csvp = sys.argv[1], sys.argv[2], sys.argv[3]
