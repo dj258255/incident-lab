@@ -1,0 +1,9 @@
+# 자동 analyze 를 관측 창 안에 거는 조건
+
+  조건                             대기(초) 돌았는가 n_mod_since_analyze
+  naptime=60s scale=0.001 thr=50           60 **돌았음**              0
+  naptime=1s scale=0.001 thr=50             5 **돌았음**              0
+  naptime=1s scale=0.0 thr=0                5 **돌았음**              0
+
+  autovacuum_naptime 기본값은 60초입니다. 갱신 직후 몇 초 안에 확인하면
+  워커가 아직 한 바퀴도 안 돈 상태라 last_autoanalyze 가 당연히 그대로입니다.

@@ -1,0 +1,4 @@
+condition,naptime,scale_factor,threshold,waited_s,autoanalyzed,n_mod_since
+naptime=60s scale=0.001 thr=50,60,0.001,50,60,**돌았음**,0
+naptime=1s scale=0.001 thr=50,1,0.001,50,5,**돌았음**,0
+naptime=1s scale=0.0 thr=0,1,0.0,0,5,**돌았음**,0
