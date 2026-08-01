@@ -1,0 +1,582 @@
+{
+  "images": [
+    {
+      "type": "term",
+      "out": "01-volatile-alter.png",
+      "font": 21,
+      "title": "docker compose up  ·  B43 재현 (postgres:16-alpine, PostgreSQL 16.14, 300만 행 195 MB)",
+      "lines": [
+        "$ docker compose up --abort-on-container-exit",
+        "",
+        "lab-b43-runner | [2] 실험 1: 상수 기본값 ADD COLUMN. 카탈로그대로 걸면 재현에 실패한다",
+        "lab-b43-runner |  ALTER 전 relfilenode | 힙 크기 ",
+        "lab-b43-runner | ----------------------+---------",
+        "lab-b43-runner |                 16385 | 195 MB",
+        "lab-b43-runner | ALTER TABLE",
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "Time: 3.614 ms",
+            "green"
+          ]
+        ],
+        "lab-b43-runner | ALTER TABLE",
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "Time: 1.245 ms",
+            "green"
+          ]
+        ],
+        "lab-b43-runner | ALTER TABLE",
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "Time: 3.728 ms",
+            "green"
+          ]
+        ],
+        "lab-b43-runner |  ALTER 후 relfilenode | 힙 크기 ",
+        "lab-b43-runner | ----------------------+---------",
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "                16385 | 195 MB",
+            "green"
+          ]
+        ],
+        "lab-b43-runner |      컬럼     | 힙에 없는 값을 카탈로그로 대신하나 | 카탈로그에 저장된 기본값 ",
+        "lab-b43-runner | --------------+------------------------------------+--------------------------",
+        [
+          [
+            "lab-b43-runner |  status_code  | t                                  | ",
+            "fg"
+          ],
+          [
+            "{0}",
+            "green"
+          ]
+        ],
+        "",
+        "lab-b43-runner | [3] 실험 2·3: volatile 기본값 ADD COLUMN. 재작성이 일어나고 그동안 SELECT가 막힌다",
+        "lab-b43-runner |   기준선 3회차: 3000000 Time: 311.744 ms ",
+        "lab-b43-runner | ALTER TABLE",
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "Time: 11316.601 ms (00:11.317)",
+            "red"
+          ]
+        ],
+        "lab-b43-runner |  ALTER 후 relfilenode | 힙 크기 ",
+        "lab-b43-runner | ----------------------+---------",
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "                16407 | 290 MB",
+            "red"
+          ]
+        ],
+        "lab-b43-runner |  pid |  세션  |      요청한 락      | 상태 |  대기 이벤트  | 막고 있는 pid | 경과(초) |                      질의                      ",
+        "lab-b43-runner | -----+--------+---------------------+------+---------------+---------------+----------+------------------------------------------------",
+        [
+          [
+            "lab-b43-runner |  263 | ddl    | ",
+            "fg"
+          ],
+          [
+            "AccessExclusiveLock",
+            "red"
+          ],
+          [
+            " | 획득 | -             | {}            |      2.0 | ALTER TABLE orders_v1 ADD COLUMN trace_id uuid",
+            "fg"
+          ]
+        ],
+        [
+          [
+            "lab-b43-runner |  271 | reader | AccessShareLock     | ",
+            "fg"
+          ],
+          [
+            "대기",
+            "red"
+          ],
+          [
+            " | Lock:relation | {263}         |      1.0 | SELECT count(*) FROM orders_v1;",
+            "fg"
+          ]
+        ],
+        "lab-b43-runner | (2 rows)",
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "Time: 10936.495 ms (00:10.936)",
+            "red"
+          ]
+        ]
+      ]
+    },
+    {
+      "type": "term",
+      "out": "02-lock-queue.png",
+      "font": 21,
+      "title": "docker compose up  ·  B43 실험 4 락 큐잉 (장기 트랜잭션 뒤에 선 밀리초짜리 DDL)",
+      "lines": [
+        "$ docker compose up --abort-on-container-exit",
+        "",
+        "lab-b43-runner | [4] 실험 4: 락 큐잉. 빠른 ALTER가 장기 트랜잭션 뒤에 서면 뒤따르는 SELECT까지 전부 줄을 선다",
+        "lab-b43-runner |   기준선 1회차: 3000000 Time: 284.154 ms ",
+        "lab-b43-runner | 타임라인: 0초 장기 트랜잭션(12초 유지) / 2초 ALTER / 4·5·6초 평범한 SELECT 3건",
+        "",
+        [
+          [
+            "lab-b43-pg | 2026-07-28 22:44:05.960 UTC [342] reader-3DETAIL:  Process holding the lock: 316. ",
+            "fg"
+          ],
+          [
+            "Wait queue: 325, 333, 341, 342.",
+            "red"
+          ]
+        ],
+        [
+          [
+            "lab-b43-pg | 2026-07-28 22:44:10.974 UTC [325] ddlLOG:  process 325 acquired AccessExclusiveLock on relation 16385 of database 16384 ",
+            "fg"
+          ],
+          [
+            "after 10009.453 ms",
+            "red"
+          ]
+        ],
+        [
+          [
+            "lab-b43-pg | 2026-07-28 22:44:10.984 UTC [333] reader-1LOG:  process 333 acquired AccessShareLock on relation 16385 of database 16384 ",
+            "fg"
+          ],
+          [
+            "after 8022.182 ms",
+            "red"
+          ],
+          [
+            " at character 22",
+            "fg"
+          ]
+        ],
+        "",
+        "lab-b43-runner | --- 대기 사슬 (장기 트랜잭션 시작 7초 시점) ---",
+        "lab-b43-runner |  pid |   세션   |      요청한 락      | 상태 |   대기 이벤트   | 막고 있는 pid | 경과(초) |                      질의                      ",
+        "lab-b43-runner | -----+----------+---------------------+------+-----------------+---------------+----------+------------------------------------------------",
+        "lab-b43-runner |  316 | long-txn | AccessShareLock     | 획득 | Timeout:PgSleep | {}            |      7.0 | SELECT pg_sleep(12);",
+        [
+          [
+            "lab-b43-runner |  325 | ddl      | ",
+            "fg"
+          ],
+          [
+            "AccessExclusiveLock | 대기",
+            "red"
+          ],
+          [
+            " | Lock:relation   | {316}         |      5.0 | ALTER TABLE orders_v1 ADD COLUMN is_test boole",
+            "fg"
+          ]
+        ],
+        [
+          [
+            "lab-b43-runner |  333 | reader-1 | AccessShareLock     | 대기 | Lock:relation   | ",
+            "fg"
+          ],
+          [
+            "{325}",
+            "red"
+          ],
+          [
+            "         |      3.0 | SELECT count(*) FROM orders_v1;",
+            "fg"
+          ]
+        ],
+        [
+          [
+            "lab-b43-runner |  341 | reader-2 | AccessShareLock     | 대기 | Lock:relation   | ",
+            "fg"
+          ],
+          [
+            "{325}",
+            "red"
+          ],
+          [
+            "         |      2.0 | SELECT count(*) FROM orders_v1;",
+            "fg"
+          ]
+        ],
+        [
+          [
+            "lab-b43-runner |  342 | reader-3 | AccessShareLock     | 대기 | Lock:relation   | ",
+            "fg"
+          ],
+          [
+            "{325}",
+            "red"
+          ],
+          [
+            "         |      1.0 | SELECT count(*) FROM orders_v1;",
+            "fg"
+          ]
+        ],
+        "lab-b43-runner | (5 rows)",
+        "",
+        "lab-b43-runner | --- ALTER 세션: 실험 1에서 밀리초에 끝났던 것과 같은 종류의 문장이다 ---",
+        "lab-b43-runner | ALTER TABLE",
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "Time: 10028.718 ms (00:10.029)",
+            "yellow"
+          ]
+        ],
+        "lab-b43-runner | --- 뒤에 줄 선 평범한 SELECT 3건 ---",
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "Time: 9014.036 ms (00:09.014)",
+            "red"
+          ]
+        ],
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "Time: 7981.576 ms (00:07.982)",
+            "red"
+          ]
+        ],
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "Time: 6998.568 ms (00:06.999)",
+            "red"
+          ]
+        ]
+      ]
+    },
+    {
+      "type": "term",
+      "out": "03-fixed-run.png",
+      "font": 21,
+      "title": "docker compose up  ·  B43 해소와 재계측 (lock_timeout과 3단계 expand-contract)",
+      "lines": [
+        "$ docker compose up --abort-on-container-exit",
+        "",
+        "lab-b43-runner | [5] 해소 1: lock_timeout으로 대기를 끊는다 (기본값 0 = 무제한)",
+        "lab-b43-runner |  lock_timeout ",
+        "lab-b43-runner | --------------",
+        "lab-b43-runner |  2s",
+        [
+          [
+            "lab-b43-runner | psql:/scripts/fast-alter-timeout.sql:6: ",
+            "fg"
+          ],
+          [
+            "ERROR:  canceling statement due to lock timeout",
+            "yellow"
+          ]
+        ],
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "Time: 2001.193 ms (00:02.001)",
+            "yellow"
+          ]
+        ],
+        "lab-b43-runner | --- ALTER 뒤에 줄 섰던 SELECT (3초 시점 시작) ---",
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "Time: 1196.543 ms (00:01.197)",
+            "green"
+          ]
+        ],
+        "lab-b43-runner | --- 장기 트랜잭션이 끝난 뒤 같은 ALTER를 다시 건다 ---",
+        "lab-b43-runner | ALTER TABLE",
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "Time: 2.889 ms",
+            "green"
+          ]
+        ],
+        "",
+        "lab-b43-runner | [6] 해소 2: 3단계 expand-contract (orders_v2, 손대지 않은 3000000행)",
+        "lab-b43-runner | --- 1단계(expand): nullable 컬럼 추가 ---",
+        "lab-b43-runner | ALTER TABLE",
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "Time: 1.495 ms",
+            "green"
+          ]
+        ],
+        "lab-b43-runner |  1단계 후 relfilenode | 힙 크기 ",
+        "lab-b43-runner | ----------------------+---------",
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "                16392 | 195 MB",
+            "green"
+          ]
+        ],
+        [
+          [
+            "lab-b43-runner |   ",
+            "fg"
+          ],
+          [
+            "백필 전체 소요 = 39.522 초 (100000행 x 30청크)",
+            "fg"
+          ]
+        ],
+        [
+          [
+            "lab-b43-runner |     백필 중 SELECT 1회차: 3000000 ",
+            "fg"
+          ],
+          [
+            "Time: 283.134 ms",
+            "green"
+          ],
+          [
+            " ",
+            "fg"
+          ]
+        ],
+        [
+          [
+            "lab-b43-runner |     백필 중 SELECT 5회차: 3000000 ",
+            "fg"
+          ],
+          [
+            "Time: 2422.325 ms (00:02.422)",
+            "yellow"
+          ],
+          [
+            " ",
+            "fg"
+          ]
+        ],
+        "lab-b43-runner | --- 3단계(contract) 앞: CHECK ... NOT VALID ---",
+        "lab-b43-runner | ALTER TABLE",
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "Time: 3.436 ms",
+            "green"
+          ]
+        ],
+        "lab-b43-runner | --- VALIDATE 세션이 락을 쥐고 있는 동안의 락 상태 ---",
+        "lab-b43-runner |  pid |  세션  |        요청한 락         | 상태 |   대기 이벤트   | 막고 있는 pid | 경과(초) |              질의               ",
+        "lab-b43-runner | -----+--------+--------------------------+------+-----------------+---------------+----------+---------------------------------",
+        [
+          [
+            "lab-b43-runner |  637 | ddl    | ",
+            "fg"
+          ],
+          [
+            "ShareUpdateExclusiveLock",
+            "green"
+          ],
+          [
+            " | 획득 | Timeout:PgSleep | {}            |      0.6 | SELECT pg_sleep(5);",
+            "fg"
+          ]
+        ],
+        [
+          [
+            "lab-b43-runner |  639 | reader | AccessShareLock          | ",
+            "fg"
+          ],
+          [
+            "획득",
+            "green"
+          ],
+          [
+            " | IO:DataFileRead | {}            |      0.0 | SELECT count(*) FROM orders_v2;",
+            "fg"
+          ]
+        ],
+        [
+          [
+            "lab-b43-runner |  641 | reader | AccessShareLock          | ",
+            "fg"
+          ],
+          [
+            "획득",
+            "green"
+          ],
+          [
+            " | IO:DataFileRead | {}            |      0.0 | SELECT count(*) FROM orders_v2;",
+            "fg"
+          ]
+        ],
+        [
+          [
+            "lab-b43-runner |  642 | reader | AccessShareLock          | ",
+            "fg"
+          ],
+          [
+            "획득",
+            "green"
+          ],
+          [
+            " | IO:DataFileRead | {}            |      0.0 | SELECT count(*) FROM orders_v2;",
+            "fg"
+          ]
+        ],
+        "lab-b43-runner | (4 rows)",
+        "lab-b43-runner | ALTER TABLE",
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "Time: 402.312 ms",
+            "green"
+          ]
+        ],
+        "lab-b43-runner | --- 같은 시각에 돌린 SELECT ---",
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "Time: 318.703 ms",
+            "green"
+          ]
+        ],
+        "lab-b43-runner | --- 마지막: 검증된 CHECK가 있는 상태에서 SET NOT NULL ---",
+        "lab-b43-runner | ALTER TABLE",
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "Time: 2.354 ms",
+            "green"
+          ]
+        ],
+        "lab-b43-runner | --- 대조군: 검증된 CHECK를 떼고 같은 SET NOT NULL을 다시 건다 ---",
+        "lab-b43-runner | ALTER TABLE",
+        [
+          [
+            "lab-b43-runner | ",
+            "fg"
+          ],
+          [
+            "Time: 474.538 ms",
+            "yellow"
+          ]
+        ]
+      ]
+    },
+    {
+      "type": "bar",
+      "out": "04-select-wait.png",
+      "w": 1420,
+      "title": "다른 세션의 SELECT count(*)가 막힌 시간 (초, 300만 행)",
+      "bars": [
+        {
+          "label": "volatile 기본값 ALTER",
+          "value": 10.94,
+          "color": "red"
+        },
+        {
+          "label": "장기 트랜잭션 뒤 ALTER",
+          "value": 9.01,
+          "color": "red"
+        },
+        {
+          "label": "lock_timeout 2초",
+          "value": 1.2,
+          "color": "yellow"
+        },
+        {
+          "label": "3단계 expand-contract",
+          "value": 0.32,
+          "color": "green"
+        }
+      ],
+      "note": "PostgreSQL 16.14, 300만 행 195MB, 락 없을 때 기준선 0.16~0.31초. 러너가 출력한 ms 값을 1000으로 나눈 값. 2026-07-28"
+    },
+    {
+      "type": "bar",
+      "out": "05-lock-hold.png",
+      "title": "모든 행에 uuid 컬럼을 만드는 첫 DDL의 ACCESS EXCLUSIVE 보유 시간 (ms)",
+      "bars": [
+        {
+          "label": "ADD COLUMN uuid NOT NULL DEFAULT gen_random_uuid()",
+          "value": 11316.601,
+          "color": "red"
+        },
+        {
+          "label": "ADD COLUMN uuid (nullable, 기본값 없음)",
+          "value": 1.495,
+          "color": "green"
+        }
+      ],
+      "note": "PostgreSQL 16.14, 같은 시드로 만든 300만 행 테이블 두 벌. 두 문장 모두 대기 없이 즉시 락을 얻었으므로 문장 시간이 곧 보유 시간이다. 2026-07-28"
+    }
+  ]
+}

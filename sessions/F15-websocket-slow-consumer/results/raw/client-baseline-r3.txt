@@ -1,19 +1,19 @@
 == F15 클라이언트 측정 ==
-mode=baseline run=3 측정시간=45.1s 정상구독자=5 느린구독자=없음(대조군)
+mode=baseline run=3 측정시간=45.0s 정상구독자=5 느린구독자=없음(대조군)
 백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
 
 -- 정상 구독자 --
 id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
-normal-1     129804     129804       0ms       1ms       4ms      54ms     1.9ms      56ms  -
-normal-2     129906     129906       0ms       1ms       5ms      59ms     2.0ms      60ms  -
-normal-3     129906     129906       0ms       1ms       4ms      52ms     1.9ms      54ms  -
-normal-4     129906     129906       0ms       1ms       5ms      58ms     1.9ms      60ms  -
-normal-5     129906     129906       0ms       1ms       4ms      58ms     1.9ms      60ms  -
+normal-1     133051     133051       0ms       1ms       1ms      52ms     1.9ms      54ms  -
+normal-2     133062     133062       0ms       1ms       2ms      52ms     1.9ms      54ms  -
+normal-3     133062     133062       0ms       1ms       1ms      53ms     1.9ms      55ms  -
+normal-4     133062     133062       0ms       1ms       1ms      52ms     1.9ms      54ms  -
+normal-5     133062     133062       0ms       1ms       1ms      53ms     1.9ms      55ms  -
 
-합계 수신 649428건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=5ms max=59ms
-최종 수신 틱 seq: 최소 129804, 최대 129906
+합계 수신 665299건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=1ms max=53ms
+최종 수신 틱 seq: 최소 133051, 최대 133062
 
 -- 느린 구독자 --
 없음(대조군)
 
-SUMMARY mode=baseline run=3 recv_total=649428 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=5 lat_max_ms=59 last_seq_min=129804 last_seq_max=129906 worst_client_p95_ms=1 worst_client_max_ms=59 slow_read_bytes=0 slow_closed_at_s=n/a
+SUMMARY mode=baseline run=3 recv_total=665299 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=1 lat_max_ms=53 last_seq_min=133051 last_seq_max=133062 worst_client_p95_ms=1 worst_client_max_ms=53 slow_count=0 slow_read_bytes=0 slow_closed_at_s=n/a slow_closed_n=0 slow_reconnects=0

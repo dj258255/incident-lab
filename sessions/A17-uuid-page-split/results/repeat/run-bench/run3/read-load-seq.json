@@ -1,0 +1,80 @@
+{
+  "arm": "seq",
+  "table": "t_seq",
+  "mysql_version": "8.4.3",
+  "buffer_pool_mb": 256,
+  "rows": 1200000,
+  "pad_bytes": 120,
+  "total_s": 18.74,
+  "rows_per_s": 64050.7,
+  "data_length_bytes": 201048064,
+  "data_length_mb": 191.7,
+  "bytes_per_row": 167.5,
+  "disk_reads": 6,
+  "read_requests": 4899795,
+  "pages_written": 13651,
+  "data_written_mb": 472.2,
+  "data_read_mb": 0.1,
+  "chunks": [
+    {
+      "rows": 100000,
+      "elapsed_s": 1.7,
+      "rate_per_s": 58957.5
+    },
+    {
+      "rows": 200000,
+      "elapsed_s": 3.31,
+      "rate_per_s": 62048.0
+    },
+    {
+      "rows": 300000,
+      "elapsed_s": 4.9,
+      "rate_per_s": 62912.5
+    },
+    {
+      "rows": 400000,
+      "elapsed_s": 6.52,
+      "rate_per_s": 61553.1
+    },
+    {
+      "rows": 500000,
+      "elapsed_s": 8.06,
+      "rate_per_s": 64998.8
+    },
+    {
+      "rows": 600000,
+      "elapsed_s": 9.76,
+      "rate_per_s": 58833.8
+    },
+    {
+      "rows": 700000,
+      "elapsed_s": 11.21,
+      "rate_per_s": 69030.6
+    },
+    {
+      "rows": 800000,
+      "elapsed_s": 12.63,
+      "rate_per_s": 70395.3
+    },
+    {
+      "rows": 900000,
+      "elapsed_s": 14.1,
+      "rate_per_s": 67955.2
+    },
+    {
+      "rows": 1000000,
+      "elapsed_s": 15.68,
+      "rate_per_s": 63161.3
+    },
+    {
+      "rows": 1100000,
+      "elapsed_s": 17.14,
+      "rate_per_s": 68739.9
+    },
+    {
+      "rows": 1200000,
+      "elapsed_s": 18.74,
+      "rate_per_s": 62646.5
+    }
+  ]
+}

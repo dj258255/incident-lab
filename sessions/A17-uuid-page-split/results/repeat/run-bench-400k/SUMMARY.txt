@@ -1,0 +1,41 @@
+# 반복 요약 (3/3 회차 정상 종료)
+
+## 회차마다 내용이 같은 파일
+  01-bench-fast.txt
+  02-bench-slow.txt
+  03-report.txt
+  bench-seq.json
+  bench-uuid4_bin.json
+  bench-uuid4_char.json
+  bench-uuid7_bin.json
+  bench-uuid7_counter.json
+  charset-and-secondary.json
+  exp-charset-and-secondary.txt
+  exp3-rate-curve.txt
+  pilot-seq.json
+  pilot-uuid4_bin.json
+  pilot-uuid4_char.json
+  pilot-uuid7_bin.json
+  pilot-uuid7_counter.json
+  rate-curve.csv
+  read-load-seq.json
+  read-load-uuid4_bin.json
+  read-load-uuid7_bin.json
+  read-seq-run0.json
+  read-seq-run1.json
+  read-seq-run2.json
+  read-seq.json
+  read-uuid4_bin-run0.json
+  read-uuid4_bin-run1.json
+  read-uuid4_bin-run2.json
+  read-uuid4_bin.json
+  read-uuid7_bin-run0.json
+  read-uuid7_bin.json
+  render.json
+  이 파일들은 스크립트가 다시 쓰지 않았습니다. 반복해도 새로 잰 것이 없습니다.
+  **여기에 '폭 0%'가 나오면 안정적인 것이 아니라 측정이 없었던 것입니다.**
+
+  비교할 새 결과가 없습니다. 이 스크립트는 반복 대상이 아닙니다.
+
+  폭이 30%를 넘는 줄은 1회 값으로 소수점을 인용하면 안 됩니다.
+  두 조건의 차이가 각자의 폭보다 작으면 그 비교 자체가 성립하지 않습니다.

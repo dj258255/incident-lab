@@ -1,0 +1,2 @@
+Flag --no-summary has been deprecated, use --summary-mode=disabled instead
+time="2026-07-28T21:26:40+09:00" level=info msg="[분포] 시나리오=zipf 방송=1000 s=1.2 | 1위 방송 23.1% · 상위10 56.9% · 상위1% 56.9%" source=console

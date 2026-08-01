@@ -1,0 +1,45 @@
+{
+  "arm": "uuid7_bin",
+  "table": "t_uuid7_bin",
+  "mysql_version": "8.4.3",
+  "buffer_pool_mb": 256,
+  "rows": 500000,
+  "pad_bytes": 120,
+  "total_s": 23.28,
+  "rows_per_s": 21474.4,
+  "data_length_bytes": 148635648,
+  "data_length_mb": 141.8,
+  "bytes_per_row": 297.3,
+  "disk_reads": 10,
+  "read_requests": 2112963,
+  "pages_written": 8479,
+  "data_written_mb": 324.0,
+  "data_read_mb": 0.2,
+  "chunks": [
+    {
+      "rows": 100000,
+      "elapsed_s": 4.81,
+      "rate_per_s": 20808.2
+    },
+    {
+      "rows": 200000,
+      "elapsed_s": 9.34,
+      "rate_per_s": 22045.3
+    },
+    {
+      "rows": 300000,
+      "elapsed_s": 13.97,
+      "rate_per_s": 21629.8
+    },
+    {
+      "rows": 400000,
+      "elapsed_s": 18.72,
+      "rate_per_s": 21045.1
+    },
+    {
+      "rows": 500000,
+      "elapsed_s": 23.28,
+      "rate_per_s": 21898.0
+    }
+  ]
+}

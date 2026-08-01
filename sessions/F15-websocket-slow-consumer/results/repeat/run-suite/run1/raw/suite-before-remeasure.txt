@@ -1,0 +1,625 @@
+=== baseline-r1 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 없음(대조군)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=baseline run=1 측정시간=45.0s 정상구독자=5 느린구독자=없음(대조군)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1     129138     129138       0ms       1ms       5ms      22ms     2.0ms      61ms  -
+normal-2     129150     129150       0ms       1ms       4ms      23ms     2.0ms      61ms  -
+normal-3     129150     129150       0ms       1ms       5ms      22ms     2.0ms      61ms  -
+normal-4     129150     129150       0ms       1ms       4ms      22ms     2.0ms      61ms  -
+normal-5     129150     129150       0ms       1ms       5ms      22ms     2.0ms      61ms  -
+
+합계 수신 645738건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=5ms max=23ms
+최종 수신 틱 seq: 최소 129138, 최대 129150
+
+-- 느린 구독자 --
+없음(대조군)
+
+SUMMARY mode=baseline run=1 recv_total=645738 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=5 lat_max_ms=23 last_seq_min=129138 last_seq_max=129150 worst_client_p95_ms=1 worst_client_max_ms=23 slow_read_bytes=0 slow_closed_at_s=n/a
+=== baseline-r2 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 없음(대조군)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=baseline run=2 측정시간=45.0s 정상구독자=5 느린구독자=없음(대조군)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1     127866     127866       0ms       1ms       5ms     129ms     2.0ms     130ms  -
+normal-2     127908     127908       0ms       1ms       6ms     137ms     2.0ms     138ms  -
+normal-3     127908     127908       0ms       1ms       6ms     129ms     2.0ms     131ms  -
+normal-4     127908     127908       0ms       1ms       6ms     128ms     2.0ms     129ms  -
+normal-5     127908     127908       0ms       1ms       6ms     128ms     2.0ms     129ms  -
+
+합계 수신 639498건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=6ms max=137ms
+최종 수신 틱 seq: 최소 127866, 최대 127908
+
+-- 느린 구독자 --
+없음(대조군)
+
+SUMMARY mode=baseline run=2 recv_total=639498 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=6 lat_max_ms=137 last_seq_min=127866 last_seq_max=127908 worst_client_p95_ms=1 worst_client_max_ms=137 slow_read_bytes=0 slow_closed_at_s=n/a
+=== baseline-r3 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 없음(대조군)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=baseline run=3 측정시간=45.1s 정상구독자=5 느린구독자=없음(대조군)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1     129804     129804       0ms       1ms       4ms      54ms     1.9ms      56ms  -
+normal-2     129906     129906       0ms       1ms       5ms      59ms     2.0ms      60ms  -
+normal-3     129906     129906       0ms       1ms       4ms      52ms     1.9ms      54ms  -
+normal-4     129906     129906       0ms       1ms       5ms      58ms     1.9ms      60ms  -
+normal-5     129906     129906       0ms       1ms       4ms      58ms     1.9ms      60ms  -
+
+합계 수신 649428건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=5ms max=59ms
+최종 수신 틱 seq: 최소 129804, 최대 129906
+
+-- 느린 구독자 --
+없음(대조군)
+
+SUMMARY mode=baseline run=3 recv_total=649428 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=5 lat_max_ms=59 last_seq_min=129804 last_seq_max=129906 worst_client_p95_ms=1 worst_client_max_ms=59 slow_read_bytes=0 slow_closed_at_s=n/a
+=== direct-r1 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=direct run=1 측정시간=45.1s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1       3266       3266       1ms      10ms      20ms      25ms     2.1ms    1378ms  -
+normal-2       3265       3265       1ms       9ms    1262ms    1378ms     2.1ms    1377ms  -
+normal-3       3265       3265       1ms       9ms    1262ms    1378ms     2.2ms    1378ms  -
+normal-4       3266       3266       0ms       8ms      17ms      24ms     2.1ms    1377ms  -
+normal-5       3266       3266       1ms      11ms      24ms      28ms     2.1ms    1378ms  -
+
+합계 수신 16328건, 정상 구독자 전체 지연 p50=1ms p95=9ms p99=23ms max=1378ms
+최종 수신 틱 seq: 최소 3265, 최대 3266
+
+-- 느린 구독자 --
+slow-1  읽은 바이트 1,464,372 (평균 31.7 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
+
+SUMMARY mode=direct run=1 recv_total=16328 lat_p50_ms=1 lat_p95_ms=9 lat_p99_ms=23 lat_max_ms=1378 last_seq_min=3265 last_seq_max=3266 worst_client_p95_ms=11 worst_client_max_ms=1378 slow_read_bytes=1464372 slow_closed_at_s=none
+=== direct-r2 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=direct run=2 측정시간=45.0s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1       3168       3168       1ms       7ms      15ms      17ms     2.2ms     808ms  -
+normal-2       3167       3167       1ms      12ms     687ms     806ms     2.2ms     807ms  -
+normal-3       3167       3167       1ms      11ms     687ms     806ms     2.1ms     808ms  -
+normal-4       3168       3168       1ms       6ms      16ms      21ms     2.1ms     806ms  -
+normal-5       3168       3168       1ms       9ms      21ms      27ms     2.1ms     808ms  -
+
+합계 수신 15838건, 정상 구독자 전체 지연 p50=1ms p95=9ms p99=23ms max=806ms
+최종 수신 틱 seq: 최소 3167, 최대 3168
+
+-- 느린 구독자 --
+slow-1  읽은 바이트 1,467,648 (평균 31.8 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
+
+SUMMARY mode=direct run=2 recv_total=15838 lat_p50_ms=1 lat_p95_ms=9 lat_p99_ms=23 lat_max_ms=806 last_seq_min=3167 last_seq_max=3168 worst_client_p95_ms=12 worst_client_max_ms=806 slow_read_bytes=1467648 slow_closed_at_s=none
+=== direct-r3 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=direct run=3 측정시간=45.2s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1       3168       3168       1ms       9ms      51ms      59ms     2.2ms     796ms  -
+normal-2       3167       3167       1ms      16ms     686ms     796ms     2.2ms     796ms  -
+normal-3       3167       3167       1ms      12ms     686ms     796ms     2.2ms     795ms  -
+normal-4       3168       3168       1ms      10ms      50ms      58ms     2.3ms     796ms  -
+normal-5       3168       3168       1ms      10ms      50ms      58ms     2.3ms     796ms  -
+
+합계 수신 15838건, 정상 구독자 전체 지연 p50=1ms p95=11ms p99=57ms max=796ms
+최종 수신 틱 seq: 최소 3167, 최대 3168
+
+-- 느린 구독자 --
+slow-1  읽은 바이트 1,467,648 (평균 31.7 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
+
+SUMMARY mode=direct run=3 recv_total=15838 lat_p50_ms=1 lat_p95_ms=11 lat_p99_ms=57 lat_max_ms=796 last_seq_min=3167 last_seq_max=3168 worst_client_p95_ms=16 worst_client_max_ms=796 slow_read_bytes=1467648 slow_closed_at_s=none
+=== direct-stalled-r1 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=direct-stalled run=1 측정시간=45.1s 정상구독자=5 느린구독자=1(읽기 0 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1      71256      71256       0ms       2ms      12ms      37ms     1.9ms   20013ms  -
+normal-2      71256      71256       0ms       2ms      14ms   20066ms     2.0ms   20022ms  -
+normal-3      71257      71257       0ms       2ms      12ms   20059ms     2.0ms   20005ms  -
+normal-4      71256      71256       0ms       2ms      15ms      59ms     2.0ms   20045ms  -
+normal-5      71257      71257       0ms       2ms      14ms      48ms     2.0ms   20051ms  -
+
+합계 수신 356282건, 정상 구독자 전체 지연 p50=0ms p95=2ms p99=13ms max=20066ms
+최종 수신 틱 seq: 최소 71256, 최대 71257
+
+-- 느린 구독자 --
+slow-1  한 바이트도 읽지 않음(완전 정지 클라이언트). 읽지 않으므로 서버의 종료를 클라이언트에서 감지하지 않는다. 서버 로그로 확인할 것.
+
+SUMMARY mode=direct-stalled run=1 recv_total=356282 lat_p50_ms=0 lat_p95_ms=2 lat_p99_ms=13 lat_max_ms=20066 last_seq_min=71256 last_seq_max=71257 worst_client_p95_ms=2 worst_client_max_ms=20066 slow_read_bytes=0 slow_closed_at_s=none
+=== direct-stalled-r2 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=direct-stalled run=2 측정시간=45.1s 정상구독자=5 느린구독자=1(읽기 0 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1      71454      71454       0ms       2ms       9ms      59ms     1.9ms   20018ms  -
+normal-2      71544      71544       0ms       2ms       8ms   20028ms     1.9ms   20012ms  -
+normal-3      71544      71544       0ms       2ms       8ms   20027ms     1.9ms   20012ms  -
+normal-4      71574      71574       0ms       2ms       8ms      59ms     2.0ms   20012ms  -
+normal-5      71575      71575       0ms       2ms       8ms      58ms     1.9ms   20013ms  -
+
+합계 수신 357691건, 정상 구독자 전체 지연 p50=0ms p95=2ms p99=8ms max=20028ms
+최종 수신 틱 seq: 최소 71454, 최대 71575
+
+-- 느린 구독자 --
+slow-1  한 바이트도 읽지 않음(완전 정지 클라이언트). 읽지 않으므로 서버의 종료를 클라이언트에서 감지하지 않는다. 서버 로그로 확인할 것.
+
+SUMMARY mode=direct-stalled run=2 recv_total=357691 lat_p50_ms=0 lat_p95_ms=2 lat_p99_ms=8 lat_max_ms=20028 last_seq_min=71454 last_seq_max=71575 worst_client_p95_ms=2 worst_client_max_ms=20028 slow_read_bytes=0 slow_closed_at_s=none
+=== direct-stalled-r3 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=direct-stalled run=3 측정시간=45.1s 정상구독자=5 느린구독자=1(읽기 0 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1      70914      70914       0ms       3ms      14ms      70ms     2.0ms   20088ms  -
+normal-2      70950      70950       0ms       3ms      14ms   20101ms     2.0ms   20088ms  -
+normal-3      70950      70950       0ms       3ms      18ms   20091ms     2.0ms   20078ms  -
+normal-4      70950      70950       0ms       3ms      13ms      70ms     2.0ms   20089ms  -
+normal-5      70950      70950       0ms       3ms      14ms      70ms     2.0ms   20088ms  -
+
+합계 수신 354714건, 정상 구독자 전체 지연 p50=0ms p95=3ms p99=15ms max=20101ms
+최종 수신 틱 seq: 최소 70914, 최대 70950
+
+-- 느린 구독자 --
+slow-1  한 바이트도 읽지 않음(완전 정지 클라이언트). 읽지 않으므로 서버의 종료를 클라이언트에서 감지하지 않는다. 서버 로그로 확인할 것.
+
+SUMMARY mode=direct-stalled run=3 recv_total=354714 lat_p50_ms=0 lat_p95_ms=3 lat_p99_ms=15 lat_max_ms=20101 last_seq_min=70914 last_seq_max=70950 worst_client_p95_ms=3 worst_client_max_ms=20101 slow_read_bytes=0 slow_closed_at_s=none
+=== unbounded-r1 (110s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=unbounded run=1 측정시간=110.1s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1     215037     215037       0ms       1ms       7ms    7559ms     2.0ms    1770ms  -
+normal-2     215037     215037       0ms       1ms       6ms    7217ms     2.0ms    1663ms  -
+normal-3     215037     215037       0ms       1ms       6ms    7101ms     2.0ms    1080ms  -
+normal-4     215037     215037       0ms       1ms       6ms    7324ms     2.0ms    1663ms  -
+normal-5     215037     215037       0ms       1ms       6ms    6733ms     2.0ms    1616ms  -
+
+합계 수신 1075185건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=6ms max=7559ms
+최종 수신 틱 seq: 최소 215037, 최대 215037
+
+-- 느린 구독자 --
+slow-1  읽은 바이트 3,521,700 (평균 31.0 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
+
+SUMMARY mode=unbounded run=1 recv_total=1075185 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=6 lat_max_ms=7559 last_seq_min=215037 last_seq_max=215037 worst_client_p95_ms=1 worst_client_max_ms=7559 slow_read_bytes=3521700 slow_closed_at_s=none
+=== unbounded-r2 (110s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=unbounded run=2 측정시간=110.1s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1     215043     215043       0ms       2ms       6ms    9077ms     2.0ms    2305ms  -
+normal-2     215043     215043       0ms       1ms       6ms    9295ms     2.0ms    1357ms  -
+normal-3     215043     215043       0ms       1ms       6ms    9077ms     2.0ms    4009ms  -
+normal-4     215043     215043       0ms       1ms       6ms    9185ms     2.0ms    1868ms  -
+normal-5     215043     215043       0ms       1ms       6ms    9295ms     2.0ms    2293ms  -
+
+합계 수신 1075215건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=6ms max=9295ms
+최종 수신 틱 seq: 최소 215043, 최대 215043
+
+-- 느린 구독자 --
+slow-1  읽은 바이트 3,448,074 (평균 30.4 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
+
+SUMMARY mode=unbounded run=2 recv_total=1075215 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=6 lat_max_ms=9295 last_seq_min=215043 last_seq_max=215043 worst_client_p95_ms=2 worst_client_max_ms=9295 slow_read_bytes=3448074 slow_closed_at_s=none
+=== unbounded-r3 (110s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=unbounded run=3 측정시간=110.1s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1     215084     215084       0ms       1ms       5ms    5688ms     2.0ms    1238ms  -
+normal-2     215084     215084       0ms       1ms       5ms    5805ms     2.0ms    2230ms  -
+normal-3     215084     215084       0ms       1ms       5ms    5913ms     2.0ms    2105ms  -
+normal-4     215084     215084       0ms       1ms       5ms    5544ms     2.0ms    1662ms  -
+normal-5     214912     214912       0ms       1ms       4ms    1752ms     2.0ms     286ms  서버가 끊음 code=4500 reason=OOM: Java heap space
+
+합계 수신 1075248건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=5ms max=5913ms
+최종 수신 틱 seq: 최소 214912, 최대 215084
+
+-- 느린 구독자 --
+slow-1  읽은 바이트 3,583,944 (평균 31.7 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
+
+SUMMARY mode=unbounded run=3 recv_total=1075248 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=5 lat_max_ms=5913 last_seq_min=214912 last_seq_max=215084 worst_client_p95_ms=1 worst_client_max_ms=5913 slow_read_bytes=3583944 slow_closed_at_s=none
+=== bounded-r1 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=bounded run=1 측정시간=45.1s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1     129388     129762       0ms       1ms       6ms      76ms     2.0ms      77ms  -
+normal-2     129858     129858       0ms       1ms       5ms      72ms     2.0ms      74ms  -
+normal-3     129858     129858       0ms       1ms       5ms      77ms     2.0ms      73ms  -
+normal-4     129569     129858       0ms       1ms       5ms      76ms     2.0ms      77ms  -
+normal-5     129745     129858       0ms       1ms       5ms      70ms     2.0ms      70ms  -
+
+합계 수신 648418건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=5ms max=77ms
+최종 수신 틱 seq: 최소 129762, 최대 129858
+
+-- 느린 구독자 --
+slow-1  읽은 바이트 1,464,372 (평균 31.4 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
+
+SUMMARY mode=bounded run=1 recv_total=648418 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=5 lat_max_ms=77 last_seq_min=129762 last_seq_max=129858 worst_client_p95_ms=1 worst_client_max_ms=77 slow_read_bytes=1464372 slow_closed_at_s=none
+=== bounded-r2 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=bounded run=2 측정시간=45.0s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1     130530     130530       0ms       1ms       5ms      41ms     2.0ms      43ms  -
+normal-2     130530     130530       0ms       1ms       4ms      41ms     2.0ms      42ms  -
+normal-3     130530     130530       0ms       1ms       4ms      41ms     2.0ms      42ms  -
+normal-4     130530     130530       0ms       1ms       4ms      41ms     2.0ms      43ms  -
+normal-5     130530     130530       0ms       1ms       4ms      41ms     2.0ms      43ms  -
+
+합계 수신 652650건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=4ms max=41ms
+최종 수신 틱 seq: 최소 130530, 최대 130530
+
+-- 느린 구독자 --
+slow-1  읽은 바이트 1,464,372 (평균 31.3 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
+
+SUMMARY mode=bounded run=2 recv_total=652650 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=4 lat_max_ms=41 last_seq_min=130530 last_seq_max=130530 worst_client_p95_ms=1 worst_client_max_ms=41 slow_read_bytes=1464372 slow_closed_at_s=none
+=== bounded-r3 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=bounded run=3 측정시간=45.1s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1     129504     129504       0ms       1ms       5ms      95ms     2.0ms      97ms  -
+normal-2     129558     129558       0ms       1ms       5ms      89ms     2.0ms      91ms  -
+normal-3     129588     129588       0ms       1ms       6ms      68ms     2.0ms      70ms  -
+normal-4     129588     129588       1ms       1ms       6ms      95ms     2.0ms      96ms  -
+normal-5     129588     129588       0ms       1ms       5ms      68ms     2.0ms      69ms  -
+
+합계 수신 647826건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=5ms max=95ms
+최종 수신 틱 seq: 최소 129504, 최대 129588
+
+-- 느린 구독자 --
+slow-1  읽은 바이트 1,457,820 (평균 31.4 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
+
+SUMMARY mode=bounded run=3 recv_total=647826 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=5 lat_max_ms=95 last_seq_min=129504 last_seq_max=129588 worst_client_p95_ms=1 worst_client_max_ms=95 slow_read_bytes=1457820 slow_closed_at_s=none
+=== conflate-r1 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=conflate run=1 측정시간=45.2s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1     127429     128910       0ms       1ms       5ms      67ms     2.0ms     116ms  -
+normal-2     127861     129216       0ms       1ms       4ms      64ms     2.0ms     115ms  -
+normal-3     127997     129234       0ms       1ms       5ms      67ms     2.0ms     115ms  -
+normal-4     128081     129240       0ms       1ms       5ms      68ms     2.0ms     116ms  -
+normal-5     127817     129234       0ms       1ms       4ms      62ms     2.0ms     115ms  -
+
+합계 수신 639185건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=5ms max=68ms
+최종 수신 틱 seq: 최소 128910, 최대 129240
+
+-- 느린 구독자 --
+slow-1  읽은 바이트 1,457,820 (평균 31.4 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
+
+SUMMARY mode=conflate run=1 recv_total=639185 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=5 lat_max_ms=68 last_seq_min=128910 last_seq_max=129240 worst_client_p95_ms=1 worst_client_max_ms=68 slow_read_bytes=1457820 slow_closed_at_s=none
+=== conflate-r2 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=conflate run=2 측정시간=45.3s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1     127545     128646       0ms       1ms       4ms      62ms     2.0ms      71ms  -
+normal-2     128273     129158       1ms       1ms       5ms     133ms     2.0ms     134ms  -
+normal-3     127843     129156       0ms       1ms       5ms     131ms     2.0ms     132ms  -
+normal-4     128094     129168       0ms       1ms       4ms     126ms     2.0ms     127ms  -
+normal-5     128019     129157       1ms       1ms       5ms     130ms     2.0ms     131ms  -
+
+합계 수신 639774건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=5ms max=133ms
+최종 수신 틱 seq: 최소 128646, 최대 129168
+
+-- 느린 구독자 --
+slow-1  읽은 바이트 1,470,924 (평균 31.4 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
+
+SUMMARY mode=conflate run=2 recv_total=639774 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=5 lat_max_ms=133 last_seq_min=128646 last_seq_max=129168 worst_client_p95_ms=1 worst_client_max_ms=133 slow_read_bytes=1470924 slow_closed_at_s=none
+=== conflate-r3 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=conflate run=3 측정시간=45.3s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1     116900     125346       1ms       4ms      13ms     167ms     2.1ms     168ms  -
+normal-2     118184     126006       1ms       4ms      13ms     162ms     2.1ms     163ms  -
+normal-3     116755     126007       1ms       5ms      13ms     164ms     2.1ms     236ms  -
+normal-4     117724     126009       1ms       4ms      12ms     161ms     2.1ms     162ms  -
+normal-5     116884     126006       1ms       4ms      14ms     161ms     2.1ms     162ms  -
+
+합계 수신 586447건, 정상 구독자 전체 지연 p50=1ms p95=4ms p99=13ms max=167ms
+최종 수신 틱 seq: 최소 125346, 최대 126009
+
+-- 느린 구독자 --
+slow-1  읽은 바이트 1,461,096 (평균 30.8 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
+
+SUMMARY mode=conflate run=3 recv_total=586447 lat_p50_ms=1 lat_p95_ms=4 lat_p99_ms=13 lat_max_ms=167 last_seq_min=125346 last_seq_max=126009 worst_client_p95_ms=5 worst_client_max_ms=167 slow_read_bytes=1461096 slow_closed_at_s=none
+=== terminate-r1 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=terminate run=1 측정시간=45.1s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1     123702     123702       1ms      12ms     515ms     587ms     2.0ms     117ms  -
+normal-2     124038     124038       0ms      11ms     582ms     664ms     2.0ms     119ms  -
+normal-3     124050     124050       0ms       9ms     542ms     617ms     2.0ms     122ms  -
+normal-4     124038     124038       1ms       8ms     305ms     364ms     2.0ms     118ms  -
+normal-5     124050     124050       1ms      10ms     486ms     533ms     2.0ms     122ms  -
+
+합계 수신 619878건, 정상 구독자 전체 지연 p50=0ms p95=10ms p99=508ms max=664ms
+최종 수신 틱 seq: 최소 123702, 최대 124050
+
+-- 느린 구독자 --
+slow-1  읽은 바이트 222,032 (평균 4.7 KB/s, 목표 32.0 KB/s)  서버가 t=6.9s에 끊음 — 서버가 스트림을 닫음(EOF)
+
+SUMMARY mode=terminate run=1 recv_total=619878 lat_p50_ms=0 lat_p95_ms=10 lat_p99_ms=508 lat_max_ms=664 last_seq_min=123702 last_seq_max=124050 worst_client_p95_ms=12 worst_client_max_ms=664 slow_read_bytes=222032 slow_closed_at_s=6.9
+=== terminate-r2 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=terminate run=2 측정시간=45.0s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1      18686      18686     679ms    2146ms    2249ms    2268ms     1.6ms     118ms  서버가 끊음 code=4500 reason=buffer 3128828 bytes exceeded limit 1048576 for 3s
+normal-2      20151      20151     484ms    1668ms    1888ms    1907ms     1.5ms     125ms  서버가 끊음 code=4500 reason=buffer 2461581 bytes exceeded limit 1048576 for 3s
+normal-3     124038     124038       0ms     896ms    1451ms    1654ms     2.0ms     273ms  -
+normal-4     124079     124079       0ms     737ms    1315ms    1453ms     2.0ms     282ms  -
+normal-5      19552      19552     629ms    1847ms    1965ms    2050ms     1.5ms     129ms  서버가 끊음 code=4500 reason=buffer 2734132 bytes exceeded limit 1048576 for 3s
+
+합계 수신 306506건, 정상 구독자 전체 지연 p50=0ms p95=1209ms p99=1761ms max=2268ms
+최종 수신 틱 seq: 최소 18686, 최대 124079
+
+-- 느린 구독자 --
+slow-1  읽은 바이트 233,616 (평균 5.0 KB/s, 목표 32.0 KB/s)  서버가 t=7.3s에 끊음 — 서버가 스트림을 닫음(EOF)
+
+SUMMARY mode=terminate run=2 recv_total=306506 lat_p50_ms=0 lat_p95_ms=1209 lat_p99_ms=1761 lat_max_ms=2268 last_seq_min=18686 last_seq_max=124079 worst_client_p95_ms=2146 worst_client_max_ms=2268 slow_read_bytes=233616 slow_closed_at_s=7.3
+=== terminate-r3 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=terminate run=3 측정시간=45.1s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1     126792     126792       1ms      70ms     242ms     354ms     2.0ms     132ms  -
+normal-2     126912     126912       0ms     490ms     874ms    1049ms     2.0ms      72ms  -
+normal-3     126960     126960       0ms       4ms      85ms     259ms     2.0ms      73ms  -
+normal-4     126966     126966       0ms     883ms    1075ms    1153ms     2.0ms     115ms  -
+normal-5     126967     126967       0ms     784ms     928ms    1005ms     2.0ms      77ms  -
+
+합계 수신 634597건, 정상 구독자 전체 지연 p50=0ms p95=175ms p99=964ms max=1153ms
+최종 수신 틱 seq: 최소 126792, 최대 126967
+
+-- 느린 구독자 --
+slow-1  읽은 바이트 222,234 (평균 4.8 KB/s, 목표 32.0 KB/s)  서버가 t=39.0s에 끊음 — 서버가 스트림을 닫음(EOF)
+
+SUMMARY mode=terminate run=3 recv_total=634597 lat_p50_ms=0 lat_p95_ms=175 lat_p99_ms=964 lat_max_ms=1153 last_seq_min=126792 last_seq_max=126967 worst_client_p95_ms=883 worst_client_max_ms=1153 slow_read_bytes=222234 slow_closed_at_s=39.0
+=== terminate-tight-r1 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개
+== F15 클라이언트 측정 ==
+mode=terminate-tight run=1 측정시간=45.0s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1       2406       2406       0ms       0ms       0ms       0ms     0.0ms       0ms  서버가 끊음 code=4500 reason=buffer 638028 bytes exceeded limit 524288 for 1s
+normal-2       2888       2888       0ms       0ms       0ms       0ms     0.0ms       0ms  서버가 끊음 code=4500 reason=buffer 593960 bytes exceeded limit 524288 for 1s
+normal-3       2478       2478       0ms       0ms       0ms       0ms     0.0ms       0ms  서버가 끊음 code=4500 reason=buffer 778854 bytes exceeded limit 524288 for 1s
+normal-4       2169       2169       0ms       0ms       0ms       0ms     0.0ms       0ms  서버가 끊음 code=4500 reason=buffer 834897 bytes exceeded limit 524288 for 1s
+normal-5       2289       2289       0ms       0ms       0ms       0ms     0.0ms       0ms  서버가 끊음 code=4500 reason=buffer 776938 bytes exceeded limit 524288 for 1s
+
+합계 수신 12230건, 정상 구독자 전체 지연 p50=0ms p95=0ms p99=0ms max=0ms
+최종 수신 틱 seq: 최소 2169, 최대 2888
+
+-- 느린 구독자 --
+slow-1  읽은 바이트 178,592 (평균 3.9 KB/s, 목표 32.0 KB/s)  서버가 t=5.7s에 끊음 — 서버가 스트림을 닫음(EOF)
+
+SUMMARY mode=terminate-tight run=1 recv_total=12230 lat_p50_ms=0 lat_p95_ms=0 lat_p99_ms=0 lat_max_ms=0 last_seq_min=2169 last_seq_max=2888 worst_client_p95_ms=0 worst_client_max_ms=0 slow_read_bytes=178592 slow_closed_at_s=5.7
+=== terminate-tight-r2 (45s, 정상 5 + 느린 1, 3000 ticks/s, -Xmx128m) ===
+ Network f15_default Creating 
+ Network f15_default Created 
+ Container lab-f15-app Creating 
+ Container lab-f15-app Created 
+ Container lab-f15-app Starting 
+ Container lab-f15-app Started 
+느린 구독자 핸드셰이크: HTTP/1.1 101  (SO_RCVBUF 요청 8192B, 실제 8192B)
+접속 완료: 정상 5개 + 느린 구독자 1개

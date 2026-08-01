@@ -1,0 +1,10 @@
+$ docker exec r13-mysql mysql -uroot -plab spoon -t -e SELECT TABLE_NAME, TABLE_ROWS FROM information_schema.TABLES WHERE TABLE_SCHEMA='spoon' ORDER BY TABLE_NAME;
+mysql: [Warning] Using a password on the command line interface can be insecure.
++-------------------+------------+
+| TABLE_NAME        | TABLE_ROWS |
++-------------------+------------+
+| live_counter      |       1000 |
+| live_counter_slot |      13015 |
+| live_counter_v    |       1000 |
+| sponsor_log       |     237680 |
++-------------------+------------+

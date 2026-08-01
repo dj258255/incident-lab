@@ -1,0 +1,19 @@
+== F15 클라이언트 측정 ==
+mode=terminate run=1 측정시간=45.0s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
+백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
+
+-- 정상 구독자 --
+id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
+normal-1     132442     132442       0ms       1ms       2ms      42ms     2.1ms     119ms  -
+normal-2     132456     132456       0ms       1ms       2ms      42ms     2.1ms     119ms  -
+normal-3     132456     132456       0ms       1ms       2ms      41ms     2.1ms     119ms  -
+normal-4     132456     132456       0ms       1ms       2ms      42ms     2.1ms     119ms  -
+normal-5     132456     132456       0ms       1ms       2ms      42ms     2.1ms     119ms  -
+
+합계 수신 662266건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms max=42ms
+최종 수신 틱 seq: 최소 132442, 최대 132456
+
+-- 느린 구독자 --
+slow-1  읽은 바이트 175,213 (평균 3.8 KB/s, 목표 32.0 KB/s)  서버가 t=5.5s에 끊음 — 서버가 스트림을 닫음(EOF)
+
+SUMMARY mode=terminate run=1 recv_total=662266 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=2 lat_max_ms=42 last_seq_min=132442 last_seq_max=132456 worst_client_p95_ms=1 worst_client_max_ms=42 slow_count=1 slow_read_bytes=175213 slow_closed_at_s=5.5 slow_closed_n=1 slow_reconnects=0

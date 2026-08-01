@@ -1,0 +1,4 @@
+$ docker compose -f /Users/beomsu/Desktop/incident-lab/sessions/R13-slotted-counter/compose.yml ps
+NAME        IMAGE              COMMAND                  SERVICE   CREATED       STATUS                   PORTS
+r13-mysql   mysql:8.4.3        "docker-entrypoint.s…"   mysql     3 hours ago   Up 3 hours (healthy)     33060/tcp, 0.0.0.0:13306->3306/tcp
+r13-redis   redis:7.4-alpine   "docker-entrypoint.s…"   redis     3 hours ago   Up 4 minutes (healthy)   0.0.0.0:16379->6379/tcp

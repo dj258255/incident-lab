@@ -23,11 +23,14 @@ for r in $(seq 1 "$N"); do
   echo "  회차 $r ..."
   # **세션 디렉터리에서 실행한다.** 저장소 루트에서 돌리면 docker compose 가
   # 설정 파일을 못 찾아 "no configuration file provided"로 죽는다. MDL 세션이 그랬다.
-  ( cd "$SESSION" && env "$@" "$OLDPWD/$SCRIPT" ) > "$REP/run$r.log" 2>&1
+  # 실행 비트가 없는 스크립트도 있다. bash 로 부르면 그 조건이 사라진다.
+  ( cd "$SESSION" && env "$@" bash "$OLDPWD/$SCRIPT" ) > "$REP/run$r.log" 2>&1
   RC=$?
   mkdir -p "$REP/run$r"
-  # results 바로 아래의 파일만 뜬다(repeat 디렉터리 자신은 뺀다)
-  find "$BASE" -maxdepth 1 -type f -exec cp {} "$REP/run$r/" \; 2>/dev/null
+  # results 아래를 뜬다. 하위 디렉터리에 결과를 쓰는 세션도 있어서(웹소켓의 results/raw)
+  # 최상위만 뜨면 "새 결과가 없습니다"로 끝난다. repeat 디렉터리 자신은 뺀다.
+  ( cd "$BASE" && find . -type f -not -path "./repeat/*" -not -name "*.png" \
+      -exec sh -c 'mkdir -p "$0/$(dirname "$1")" && cp "$1" "$0/$1"' "$OLDPWD/$REP/run$r" {} \; ) 2>/dev/null
   echo "$RC" > "$REP/run$r/.exit"
 done
 
@@ -47,7 +50,7 @@ import hashlib
 def h(f):
     try: return hashlib.sha256(f.read_bytes()).hexdigest()
     except Exception: return None
-allnames = sorted({p.name for r in alive for p in r.iterdir() if p.is_file() and not p.name.startswith('.')})
+allnames = sorted({str(p.relative_to(r)) for r in alive for p in r.rglob("*") if p.is_file() and not p.name.startswith('.')})
 stale = []
 for name in allnames:
     hs = [h(r/name) for r in alive if (r/name).exists()]
@@ -58,7 +61,7 @@ if stale:
     print("  이 파일들은 스크립트가 다시 쓰지 않았습니다. 반복해도 새로 잰 것이 없습니다.")
     print("  **여기에 '폭 0%'가 나오면 안정적인 것이 아니라 측정이 없었던 것입니다.**")
 
-csvs = sorted({p.name for r in alive for p in r.glob("*.csv")})
+csvs = sorted({str(p.relative_to(r)) for r in alive for p in r.rglob("*.csv")})
 csvs = [c for c in csvs if c not in stale]
 fresh = [t for t in allnames if t not in stale and t.rsplit('.',1)[-1] in ('csv','txt','json')]
 if not fresh:
@@ -104,7 +107,7 @@ for name in csvs:
 # "3/3 정상 종료"만 찍혀서 반복을 한 것처럼 보인다. 실제로는 아무것도 안 비교했다.
 # 텍스트 결과도 줄 단위로 맞대고 숫자만 다른 줄의 폭을 잰다.
 import re
-txts = [t for t in sorted({p.name for r in alive for p in r.glob("*.txt")}) if t not in stale]
+txts = [t for t in sorted({str(p.relative_to(r)) for r in alive for p in r.rglob("*.txt")}) if t not in stale]
 NUM = re.compile(r'-?\d+(?:\.\d+)?')
 for name in txts:
     lines = []
@@ -145,7 +148,7 @@ def flat(o, pre=""):
     elif isinstance(o,(int,float)) and not isinstance(o,bool):
         out[pre]=float(o)
     return out
-jsons = [j for j in sorted({p.name for r in alive for p in r.glob("*.json")}) if j not in stale]
+jsons = [j for j in sorted({str(p.relative_to(r)) for r in alive for p in r.rglob("*.json")}) if j not in stale]
 for name in jsons:
     ds=[]
     for r in alive:

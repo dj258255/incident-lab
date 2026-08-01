@@ -1,0 +1,11 @@
+rows_per_ms,kind,data_mb,pages_read,seconds
+1,v7ctr,21.6,8,2.2
+1,v7plain,21.6,7,1.8
+5,v7ctr,21.6,8,1.5
+5,v7plain,30.6,8,1.5
+20,v7ctr,21.6,8,1.5
+20,v7plain,35.6,8,1.6
+100,v7ctr,21.6,8,1.4
+100,v7plain,41.6,8,1.6
+1000,v7ctr,21.6,8,2.0
+1000,v7plain,35.6,7,1.6

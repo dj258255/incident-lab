@@ -1,0 +1,8 @@
+$ docker exec r13-mysql mysql -uroot -plab -t -e SELECT VERSION() AS version, @@innodb_buffer_pool_size AS buffer_pool,
+          @@transaction_isolation AS isolation, @@innodb_flush_log_at_trx_commit AS flush_at_commit;
+mysql: [Warning] Using a password on the command line interface can be insecure.
++---------+-------------+-----------------+-----------------+
+| version | buffer_pool | isolation       | flush_at_commit |
++---------+-------------+-----------------+-----------------+
+| 8.4.3   |  1207959552 | REPEATABLE-READ |               1 |
++---------+-------------+-----------------+-----------------+

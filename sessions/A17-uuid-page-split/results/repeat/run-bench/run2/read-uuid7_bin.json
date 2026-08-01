@@ -1,0 +1,45 @@
+{
+ "arm": "uuid7_bin",
+ "table": "t_uuid7_bin",
+ "buffer_pool_mb": 256,
+ "rows": 1200000,
+ "data_mb": 339.0,
+ "clustered_pages_total": 21696,
+ "point": {
+  "n": 300,
+  "p50_ms": 0.121,
+  "p95_ms": 0.243,
+  "max_ms": 0.404,
+  "disk_reads": 48,
+  "read_requests": 951
+ },
+ "range_scan": {
+  "ms": 209.5,
+  "disk_reads": 1233,
+  "limit": 100000
+ },
+ "full_scan": {
+  "ms": 588.3,
+  "disk_reads": 7301
+ },
+ "page_fill_sample": {
+  "sampled_pages": 16242,
+  "of_total_pages": 21696,
+  "coverage_pct": 74.9,
+  "avg_data_bytes": 10327.2,
+  "min_data_bytes": 75,
+  "max_data_bytes": 16200,
+  "avg_records_per_page": 64.6,
+  "avg_fill_pct": 63.0
+ },
+ "page_fill_histogram": {
+  "0~10%": 2770,
+  "10~20%": 1348,
+  "20~30%": 1,
+  "40~50%": 2178,
+  "50~60%": 347,
+  "70~80%": 200,
+  "80~90%": 2887,
+  "90~100%": 6342
+ }
+}

@@ -1,0 +1,76 @@
+Picked up JAVA_TOOL_OPTIONS: -Xmx128m -Xms128m
+18:07:37.825 INFO  Starting StreamApp v0.0.1 using Java 21.0.11 with PID 1 (/app/app.jar started by ? in /app)
+18:07:37.826 INFO  No active profile set, falling back to 1 default profile: "default"
+18:07:38.294 INFO  Tomcat initialized with port 8080 (http)
+18:07:38.317 INFO  Root WebApplicationContext: initialization completed in 465 ms
+18:07:38.508 INFO  Tomcat started on port 8080 (http) with context path '/'
+18:07:38.513 INFO  Started StreamApp in 0.884 seconds (process running for 1.107)
+18:07:39.173 INFO  Initializing Servlet 'dispatcherServlet'
+18:07:39.174 INFO  Completed initialization in 1 ms
+[connect] slow-1 mode=bounded subscribers=1
+[connect] normal-1 mode=bounded subscribers=2
+[connect] normal-2 mode=bounded subscribers=3
+[connect] normal-3 mode=bounded subscribers=4
+[connect] normal-4 mode=bounded subscribers=5
+[connect] normal-5 mode=bounded subscribers=6
+[publish] 시작. 구독자 6명, 3000 ticks/s, 종목 20개, 틱 480B
+[t=  0s] heap=  34.7/124MB  발행=    36/s  전달=    176/s  느린클라 큐=      8건   0.00MB  정상클라 큐 최대=  17건  드롭=0  종료=0  GC=40ms  브로드캐스트차단=0ms
+[t=  1s] heap=  21.9/124MB  발행=  2994/s  전달=  15216/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=1787  종료=0  GC=48ms  브로드캐스트차단=8ms
+[t=  2s] heap=  39.7/124MB  발행=  3006/s  전달=  15090/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=4733  종료=0  GC=48ms  브로드캐스트차단=8ms
+[t=  3s] heap=  23.0/124MB  발행=  2886/s  전달=  14490/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   6건  드롭=7565  종료=0  GC=53ms  브로드캐스트차단=8ms
+[t=  4s] heap=  39.9/124MB  발행=  2886/s  전달=  14478/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   6건  드롭=10385  종료=0  GC=53ms  브로드캐스트차단=13ms
+[t=  5s] heap=  23.5/124MB  발행=  2988/s  전달=  14994/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   6건  드롭=13313  종료=0  GC=56ms  브로드캐스트차단=13ms
+[t=  6s] heap=  41.3/124MB  발행=  3000/s  전달=  15078/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=16253  종료=0  GC=56ms  브로드캐스트차단=13ms
+[t=  7s] heap=  25.3/124MB  발행=  3000/s  전달=  15060/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=19193  종료=0  GC=58ms  브로드캐스트차단=13ms
+[t=  8s] heap=  43.0/124MB  발행=  2982/s  전달=  14970/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=22115  종료=0  GC=58ms  브로드캐스트차단=13ms
+[t=  9s] heap=  26.8/124MB  발행=  2970/s  전달=  14970/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   6건  드롭=24971  종료=0  GC=59ms  브로드캐스트차단=13ms
+[t= 10s] heap=  44.1/124MB  발행=  2970/s  전달=  14910/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=27875  종료=0  GC=59ms  브로드캐스트차단=13ms
+[t= 11s] heap=  28.1/124MB  발행=  2994/s  전달=  15030/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=30809  종료=0  GC=64ms  브로드캐스트차단=17ms
+[t= 12s] heap=  45.6/124MB  발행=  3012/s  전달=  15120/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=33761  종료=0  GC=64ms  브로드캐스트차단=18ms
+[t= 13s] heap=  29.1/124MB  발행=  2970/s  전달=  14910/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=36671  종료=0  GC=67ms  브로드캐스트차단=18ms
+[t= 14s] heap=  47.1/124MB  발행=  2987/s  전달=  14970/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   6건  드롭=39599  종료=0  GC=67ms  브로드캐스트차단=18ms
+[t= 15s] heap=  29.8/124MB  발행=  2869/s  전달=  14430/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=42407  종료=0  GC=70ms  브로드캐스트차단=28ms
+[t= 16s] heap=  47.4/124MB  발행=  3008/s  전달=  15091/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   6건  드롭=45359  종료=0  GC=70ms  브로드캐스트차단=28ms
+[t= 17s] heap=  31.3/124MB  발행=  2998/s  전달=  15119/s  느린클라 큐=    970건   0.44MB  정상클라 큐 최대=   0건  드롭=48263  종료=0  GC=71ms  브로드캐스트차단=28ms
+[t= 18s] heap=  15.8/124MB  발행=  3012/s  전달=  15109/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   6건  드롭=51185  종료=0  GC=74ms  브로드캐스트차단=28ms
+[t= 19s] heap=  33.2/124MB  발행=  2976/s  전달=  14921/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   6건  드롭=54101  종료=0  GC=74ms  브로드캐스트차단=28ms
+[t= 20s] heap=  15.8/124MB  발행=  2856/s  전달=  14369/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=56898  종료=0  GC=77ms  브로드캐스트차단=28ms
+[t= 21s] heap=  33.9/124MB  발행=  3012/s  전달=  15120/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=59850  종료=0  GC=77ms  브로드캐스트차단=28ms
+[t= 22s] heap=  17.8/124MB  발행=  2988/s  전달=  15000/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=62778  종료=0  GC=81ms  브로드캐스트차단=28ms
+[t= 23s] heap=  35.2/124MB  발행=  2946/s  전달=  14790/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   1건  드롭=65665  종료=0  GC=81ms  브로드캐스트차단=28ms
+[t= 24s] heap=  18.6/124MB  발행=  3006/s  전달=  15065/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   6건  드롭=68610  종료=0  GC=82ms  브로드캐스트차단=28ms
+[t= 25s] heap=  35.2/124MB  발행=  2772/s  전달=  13945/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=71322  종료=0  GC=82ms  브로드캐스트차단=28ms
+[t= 26s] heap=  19.2/124MB  발행=  3006/s  전달=  15132/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   6건  드롭=74208  종료=0  GC=86ms  브로드캐스트차단=29ms
+[t= 27s] heap=  36.7/124MB  발행=  3006/s  전달=  15108/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=77154  종료=0  GC=86ms  브로드캐스트차단=29ms
+[t= 28s] heap=  20.5/124MB  발행=  2982/s  전달=  14970/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=80076  종료=0  GC=87ms  브로드캐스트차단=30ms
+[t= 29s] heap=  38.0/124MB  발행=  2976/s  전달=  14943/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=82993  종료=0  GC=87ms  브로드캐스트차단=30ms
+[t= 30s] heap=  21.8/124MB  발행=  3012/s  전달=  15091/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   6건  드롭=85944  종료=0  GC=88ms  브로드캐스트차단=30ms
+[t= 31s] heap=  39.5/124MB  발행=  2988/s  전달=  15026/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   1건  드롭=88872  종료=0  GC=88ms  브로드캐스트차단=30ms
+[t= 32s] heap=  23.8/124MB  발행=  3015/s  전달=  15120/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   6건  드롭=91830  종료=0  GC=91ms  브로드캐스트차단=30ms
+[t= 33s] heap=  41.2/124MB  발행=  3009/s  전달=  15120/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=94776  종료=0  GC=91ms  브로드캐스트차단=30ms
+[t= 34s] heap=  25.2/124MB  발행=  2994/s  전달=  15090/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=97650  종료=0  GC=94ms  브로드캐스트차단=30ms
+[t= 35s] heap=  42.7/124MB  발행=  2994/s  전달=  15030/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=100584  종료=0  GC=94ms  브로드캐스트차단=30ms
+[t= 36s] heap=  25.9/124MB  발행=  2952/s  전달=  14820/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=103476  종료=0  GC=97ms  브로드캐스트차단=33ms
+[t= 37s] heap=  43.5/124MB  발행=  2994/s  전달=  15030/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   1건  드롭=106411  종료=0  GC=97ms  브로드캐스트차단=34ms
+[t= 38s] heap=  27.4/124MB  발행=  3000/s  전달=  15060/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=109350  종료=0  GC=100ms  브로드캐스트차단=34ms
+[t= 39s] heap=  44.8/124MB  발행=  2952/s  전달=  14820/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=112242  종료=0  GC=100ms  브로드캐스트차단=34ms
+[t= 40s] heap=  28.6/124MB  발행=  3012/s  전달=  15120/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   0건  드롭=115194  종료=0  GC=104ms  브로드캐스트차단=34ms
+[t= 41s] heap=  46.2/124MB  발행=  2994/s  전달=  15018/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   6건  드롭=118128  종료=0  GC=104ms  브로드캐스트차단=34ms
+[t= 42s] heap=  30.2/124MB  발행=  2994/s  전달=  15041/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   6건  드롭=121064  종료=0  GC=107ms  브로드캐스트차단=34ms
+[t= 43s] heap=  47.7/124MB  발행=  2988/s  전달=  15066/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   6건  드롭=123937  종료=0  GC=107ms  브로드캐스트차단=34ms
+[t= 44s] heap=  31.5/124MB  발행=  3002/s  전달=  15054/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=   6건  드롭=126877  종료=0  GC=110ms  브로드캐스트차단=36ms
+[transport-error] normal-1 java.io.EOFException
+[transport-error] normal-2 java.io.EOFException
+[transport-error] normal-3 java.io.EOFException
+[transport-error] normal-4 java.io.EOFException
+[transport-error] normal-5 java.io.EOFException
+[transport-error] normal-1 java.io.IOException: java.io.IOException: Broken pipe
+[disconnect] normal-4 status=CloseStatus[code=1006, reason=null]
+[disconnect] normal-1 status=CloseStatus[code=1006, reason=Broken pipe]
+[disconnect] normal-5 status=CloseStatus[code=1006, reason=null]
+[disconnect] normal-3 status=CloseStatus[code=1006, reason=null]
+[disconnect] normal-2 status=CloseStatus[code=1006, reason=null]
+[transport-error] slow-1 java.io.EOFException
+[transport-error] slow-1 java.io.IOException: java.io.IOException: Broken pipe
+[disconnect] slow-1 status=CloseStatus[code=1006, reason=Broken pipe]
+[t= 45s] heap=  47.5/124MB  발행=  3004/s  전달=  12414/s  느린클라 큐=   1000건   0.46MB  정상클라 큐 최대=  11건  드롭=129595  종료=6  GC=110ms  브로드캐스트차단=36ms
