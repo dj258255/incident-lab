@@ -89,8 +89,16 @@ restore() { # $1=라벨 $2=STOPAT 시각 또는 빈 문자열 $3=첫 복원에 N
   fi
   local n st
   st=$(Q "SELECT state_desc FROM sys.databases WHERE name='$db'" | head -1)
-  n=$(Q "USE $db; SELECT COUNT(*) FROM sponsor" 2>/dev/null | head -1)
-  echo "    상태 $st, 행 수 ${n:-조회불가}"
+  # USE 를 쓰면 "Changed database context to ..." 가 첫 줄로 나와 그 문자열이
+  # 행 수 자리에 찍힌다. 위에서 QD 를 만들어 놓고 여기서만 Q 를 쓰고 있었다.
+  # 그리고 RESTORING 인 데이터베이스는 접속 자체가 거부되므로, 숫자가 아니면
+  # ODBC 에러 문장을 그대로 흘리지 말고 상태로 말한다.
+  n=$(QD "$db" "SELECT COUNT(*) FROM sponsor" 2>/dev/null | head -1 | tr -d ' \r')
+  case "$n" in
+    ''|*[!0-9]*) n="열 수 없음(상태 $st)" ;;
+    *)           n="${n}행" ;;
+  esac
+  echo "    상태 $st, 행 수 $n"
 }
 
 echo
@@ -113,8 +121,12 @@ echo "## 정리"
 printf "  %-40s %s행\n" "사고 전" "$SAFE_N"
 printf "  %-40s %s행\n" "사고 후" "$ACC_N"
 echo "  복구 A NORECOVERY 누락  → 로그를 이어 붙일 수 없음"
-printf "  %-40s %s행\n" "복구 B STOPAT=사고 직전" "$(QD r_b "SELECT COUNT(*) FROM sponsor" 2>/dev/null | head -1)"
-printf "  %-40s %s행\n" "복구 C STOPAT=사고 시각" "$(QD r_c "SELECT COUNT(*) FROM sponsor" 2>/dev/null | head -1)"
+rows_of(){  # 숫자면 "N행", 아니면 왜 못 읽는지
+  local v; v=$(QD "$1" "SELECT COUNT(*) FROM sponsor" 2>/dev/null | head -1 | tr -d ' \r')
+  case "$v" in ''|*[!0-9]*) echo "열 수 없음(RESTORING 에 남음)" ;; *) echo "${v}행" ;; esac
+}
+printf "  %-40s %s\n" "복구 B STOPAT=사고 직전" "$(rows_of r_b)"
+printf "  %-40s %s\n" "복구 C STOPAT=사고 시각" "$(rows_of r_c)"
 echo
 echo "  각 조건 1회 실행입니다."
 } 2>&1 | tee "$OUT/exp4-mssql-pitr.txt"
