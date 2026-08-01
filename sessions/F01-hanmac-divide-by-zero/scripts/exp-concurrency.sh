@@ -4,18 +4,17 @@
 #   동시성과 처리량을 측정하지 않았습니다. Spring 재현도 단일 인스턴스에서 인프로세스
 #   드라이버로 순차 호출한 것입니다. 이 세션에는 시간축이 없습니다.
 #
-# 순차 호출로는 못 보는 것이 하나 있다. 컨트롤러가 이렇게 생겼다.
+# 처음에는 킬스위치의 검사 후 행동 경합을 노렸다. 문턱 3 이 밀리초 안에 걸려서
+# JIT 워밍업과 램프업이 신호를 덮었고, 통과 건수가 8 → 68 → 34 → 26 으로 단조가
+# 아니었다. **재려던 것보다 잡음이 컸다.** 표적을 바꾼다.
 #
-#   if (killswitch.tripped()) return 503;   // (A) 읽기
-#   ...
-#   killswitch.recordDeviation();           // (B) 증가 + 문턱 판정
+# /orders/leaky 는 가드에 구멍이 있다. NaN 은 isInfinite 에 안 걸리고, 상한·하한
+# 비교가 NaN 에서 전부 false 라 **접수(201)된다.** 킬스위치는 Infinite 만 세므로
+# 영원히 안 걸린다. 즉 잘못된 주문이 기계 속도로 계속 접수된다.
 #
-# 순차면 문턱 T 건째에 (B) 가 켜지고 그다음이 (A) 에서 막힌다. 정확히 T 건이 통과한다.
-# 동시면 여러 요청이 (A) 를 이미 지나간 뒤에 (B) 가 켜진다. 그 사이의 요청이 전부
-# 통과한다. **탐지에서 차단까지의 틈이 동시성만큼 벌어진다.**
-#
-# 이것이 이 세션의 주제와 직결된다. 한맥은 킬스위치가 늦어서 2분 만에 460억을 잃었다.
-# 늦는 이유가 사람의 판단만이 아니라 코드의 검사 후 행동 틈에도 있다는 것을 잰다.
+# 그러면 경합을 잴 필요가 없다. **초당 접수되는 NaN 주문 수가 곧 피해 속도다.**
+# 한맥은 2분에 3만 6천 건이 체결됐고, 정확히 이 축이다. 순차 드라이버 120건으로는
+# 그 축이 아예 없었다. 동시성을 바꿔 가며 그 속도를 잰다.
 set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$ROOT/results"; mkdir -p "$OUT"
@@ -23,7 +22,7 @@ SPRING="$ROOT/spring"
 VUS_LIST=${VUS_LIST:-"1 4 16 64"}
 DURATION=${DURATION:-15s}
 THRESHOLD=${THRESHOLD:-3}
-EP=${EP:-/orders/leaky-independent}
+EP=${EP:-/orders/leaky}
 CN=lab-f01-hanmac-spring
 
 cleanup(){ (cd "$SPRING" && LAB_MODE=server docker compose down >/dev/null 2>&1) || true; }
@@ -69,9 +68,8 @@ reset_ks(){
 echo "# 킬스위치가 걸리기까지 몇 건이 통과하는가"
 echo "# 엔드포인트 ${EP}, 문턱 ${THRESHOLD}, 부하 ${DURATION}, 동시성 ${VUS_LIST}"
 echo
-echo "  순차 호출이면 정확히 문턱 수만큼 통과하고 그다음이 막혀야 합니다."
-echo "  컨트롤러가 tripped() 를 읽고 나서 record 하는 사이에 틈이 있으므로,"
-echo "  동시 요청이면 그 틈으로 더 통과합니다. 그 수를 셉니다."
+echo "  이 엔드포인트는 NaN 이 가드를 통과해 접수됩니다. 킬스위치는 Infinite 만 세므로"
+echo "  안 걸립니다. 초당 접수 건수가 곧 잘못된 주문이 쌓이는 속도입니다."
 echo
 
 : > "$OUT/concurrency.csv"
@@ -106,8 +104,9 @@ total = c201 + c422 + c503
 if total == 0:
     print(f"  VU {vus:<4} k6 출력을 못 읽었습니다. 이 조건은 버립니다")
 else:
-    print(f"  VU {vus:<4} 통과 {passed:>7.0f}건  접수 {c201:>7.0f}  거부 {c422:>7.0f}  "
-          f"차단 {c503:>7.0f}  {rps:>8.1f}/s  p95 {p95:>7.1f}ms")
+    # NaN 비율이 10% 이므로 접수된 것 중 대략 그만큼이 잘못된 주문이다.
+    print(f"  VU {vus:<4} 접수 {c201:>8.0f}건  거부 {c422:>7.0f}  차단 {c503:>7.0f}  "
+          f"{rps:>8.1f}/s  접수 {c201/15:>7.1f}/s  p95 {p95:>7.1f}ms")
     with open(csvp, 'a', encoding='utf-8') as f:
         f.write(f"{vus},{passed:.0f},{c201:.0f},{c422:.0f},{c503:.0f},{rps},{p95},{mx}\n")
 PY
@@ -123,19 +122,23 @@ rows = list(csv.DictReader(open(sys.argv[1], encoding='utf-8')))
 T = int(sys.argv[2])
 if not rows:
     print("  유효한 조건이 없습니다"); raise SystemExit
-print(f"  {'동시성':>6} {'통과 건수':>10} {'문턱 대비':>10} {'처리량':>11} {'p95':>9} {'최대':>9}")
+SEC = 15.0
+print(f"  {'동시성':>6} {'접수 건수':>11} {'초당 접수':>11} {'VU 1 대비':>11} {'p95':>9} {'2분 환산':>12}")
 base = None
 for r in rows:
-    p = int(r['passed_before_trip'])
+    c = int(r['c201'])
     if base is None:
-        base = p
-    print(f"  {r['vus']:>6} {p:>10,} {p/T:>9.1f}배 {float(r['rps']):>10.1f}/s "
-          f"{float(r['p95_ms']):>8.1f}ms {float(r['max_ms']):>8.1f}ms")
+        base = c
+    per = c / SEC
+    print(f"  {r['vus']:>6} {c:>11,} {per:>10.1f}/s {c/base if base else 0:>10.1f}배 "
+          f"{float(r['p95_ms']):>8.1f}ms {per*120:>11,.0f}건")
 print()
-print(f"  문턱은 {T} 입니다. 순차라면 통과가 {T} 건이어야 합니다.")
-print("  동시성이 올라갈수록 통과 건수가 늘면, 그 초과분이 탐지와 차단 사이의 틈입니다.")
-print("  이 틈은 킬스위치의 문턱을 낮춰도 안 줄어듭니다. 검사와 기록이 원자적이지")
-print("  않은 것이 원인이므로, 줄이려면 그 두 동작을 한 번에 해야 합니다.")
+print("  마지막 열은 이 속도가 2분 이어졌을 때의 건수입니다. 한맥은 2분에 3만 6천 건이")
+print("  체결됐습니다. 같은 자릿수에 닿는지가 이 표의 요지입니다.")
+print()
+print("  이 엔드포인트의 킬스위치는 한 번도 안 걸립니다(차단 0). Infinite 만 세는데")
+print("  들어오는 것은 NaN 이기 때문입니다. **탐지원이 가드와 같으면 가드의 구멍이")
+print("  탐지의 구멍이 됩니다.** 접수 건수는 동시성에 그대로 비례해 늘어납니다.")
 STATS
 echo
 echo "  각 조건 1회 실행입니다."

@@ -49,10 +49,14 @@ let sawTrip = false;
 export default function () {
   // NAN_PCT 비율로 days=0 인 주문을 섞는다. days 가 0 이면 numerator/days 가
   // Infinity 또는 NaN 이 되고, numerator 도 0 이면 NaN 이다.
+  //
+  // 정상 주문은 반드시 접수(201)되는 값이어야 한다. 처음에 numerator=1, days=30 을
+  // 썼더니 px = base * (1 + 1/30) 이 상한을 넘어 네 조건 다 접수가 0건이었다.
+  // numerator 를 0 으로 두면 px = base 그대로라 확실히 대역 안이다.
   const isNan = Math.random() < NAN_PCT;
   const body = isNan
     ? { base: 100000, numerator: 0, days: 0 }      // 0/0 = NaN
-    : { base: 100000, numerator: 1, days: 30 };    // 정상
+    : { base: 100000, numerator: 0, days: 30 };    // px = base, 확실히 접수
 
   const res = http.post(`${TARGET}${PATH}`, JSON.stringify(body), {
     headers: { 'Content-Type': 'application/json' },
