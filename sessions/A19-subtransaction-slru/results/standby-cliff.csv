@@ -1,0 +1,5 @@
+label,long_tx,subtx,standby_reads,primary_updates,wal_assignment,standby_subtrans
+A 기준선(둘 다 없음),no,no,1276,66000,0,0/0
+B 롱TX만,yes,no,1114,66000,0,0/0
+C 서브TX만,no,yes,1286,62400,936,0/72788
+D 롱TX + 서브TX (GitLab),yes,yes,1006,63600,1890,0/115420156

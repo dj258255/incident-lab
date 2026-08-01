@@ -1,0 +1,11 @@
+round,method,seconds
+1,copy,5.1
+1,ec,37.7
+2,copy,5.3
+2,ec,40.4
+3,copy,5.2
+3,ec,41.8
+4,copy,5.9
+4,ec,37.4
+5,copy,5.2
+5,ec,37.6

@@ -49,8 +49,19 @@ M "ANALYZE TABLE orders, legacy, nums;" >/dev/null
 # 비밀번호 경고가 1행에 끼어서 헤더를 못 걸렀고, 열 번호도 밀렸다.
 # 실행계획 문자열 대신 **핸들러 카운터**로 본다. 인덱스를 탔는지 안 탔는지는
 # 옵티마이저가 뭐라고 적었는가가 아니라 실제로 몇 행을 만졌는가로 갈린다.
+# 캐싱을 안 지우면 뒤 조건이 앞 조건이 데워 놓은 버퍼 풀을 쓴다. 그러면 벽시계
+# 차이가 접근 방식의 차이인지 캐시 상태의 차이인지 갈리지 않는다.
+# 조건마다 컨테이너를 재시작해 버퍼 풀과 적응형 해시 인덱스를 비우고, 같은 방식으로
+# 데운 뒤 잰다. 호스트 페이지 캐시는 이 방법으로 안 지워지므로 그 조건은 밝혀 둔다.
+reset_cache(){
+  docker restart "$C" >/dev/null
+  for _ in $(seq 1 90); do [ "$(M 'SELECT 1' | tail -1)" = "1" ] && break; sleep 2; done
+  # 전 조건에 똑같이 적용되는 웜업. 세 테이블을 같은 순서로 한 번씩 훑는다.
+  M "SELECT COUNT(*) FROM orders; SELECT COUNT(*) FROM legacy; SELECT COUNT(*) FROM nums;" >/dev/null
+}
 probe(){ # $1 = 라벨, $2 = 쿼리
   local out t0 t1
+  reset_cache
   t0=$(date +%s%N)
   out=$(docker exec -i "$C" mysql -uroot -plab -N -B lab -e "
     FLUSH STATUS;
