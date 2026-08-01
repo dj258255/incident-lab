@@ -4,16 +4,16 @@ mode=unbounded run=2 측정시간=110.0s 정상구독자=5 느린구독자=1(읽
 
 -- 정상 구독자 --
 id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
-normal-1     216620     216620       0ms       1ms       2ms     246ms     2.1ms     411ms  -
-normal-2     216613     216613       0ms       1ms       3ms     406ms     2.1ms     250ms  -
-normal-3     216609     216609       0ms       1ms       3ms     622ms     2.1ms     411ms  -
-normal-4     216610     216610       0ms       1ms       2ms     418ms     2.1ms     411ms  -
-normal-5     216611     216611       0ms       1ms       2ms     427ms     2.1ms     249ms  -
+normal-1     216490     216490       0ms       1ms       2ms     431ms     2.1ms     412ms  -
+normal-2     216498     216498       0ms       1ms       3ms     420ms     2.1ms     236ms  -
+normal-3     216498     216498       0ms       1ms       3ms     802ms     2.1ms     236ms  -
+normal-4     216494     216494       0ms       1ms       2ms     612ms     2.1ms     412ms  -
+normal-5     216493     216493       0ms       1ms       2ms     600ms     2.1ms     411ms  -
 
-합계 수신 1083063건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=3ms max=622ms
-최종 수신 틱 seq: 최소 216609, 최대 216620
+합계 수신 1082473건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms max=802ms
+최종 수신 틱 seq: 최소 216490, 최대 216498
 
 -- 느린 구독자 --
-slow-1  읽은 바이트 3,524,976 (평균 31.2 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
+slow-1  읽은 바이트 3,492,216 (평균 31.0 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
 
-SUMMARY mode=unbounded run=2 recv_total=1083063 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=3 lat_max_ms=622 last_seq_min=216609 last_seq_max=216620 worst_client_p95_ms=1 worst_client_max_ms=622 slow_count=1 slow_read_bytes=3524976 slow_closed_at_s=none slow_closed_n=1 slow_reconnects=0
+SUMMARY mode=unbounded run=2 recv_total=1082473 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=2 lat_max_ms=802 last_seq_min=216490 last_seq_max=216498 worst_client_p95_ms=1 worst_client_max_ms=802 slow_count=1 slow_read_bytes=3492216 slow_closed_at_s=none slow_closed_n=1 slow_reconnects=0

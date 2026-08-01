@@ -1,5 +1,0 @@
-strategy,peak_concurrent_attempts,rejected_total,settle_tick,reconnect_rate_pct
-none,500,2880,12,100.0
-fixed,500,2880,120,100.0
-exp,500,2700,299,72.0
-exp_jitter,500,1131,29,100.0

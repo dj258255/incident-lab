@@ -1,0 +1,97 @@
+# 반복 요약 (3/3 회차 정상 종료)
+
+## 회차마다 내용이 같은 파일
+  chunked-done-ts.txt
+  chunked-elapsed.txt
+  chunked-oltp.csv
+  chunked-poll.csv
+  chunked-start-ts.txt
+  chunked.log
+  delete-done-ts.txt
+  delete-elapsed.txt
+  delete-oltp-w120.csv
+  delete-oltp.csv
+  delete-poll-w120.csv
+  delete-poll.csv
+  delete-start-ts.txt
+  drop-done-ts.txt
+  drop-elapsed.txt
+  drop-oltp-w120.csv
+  drop-oltp.csv
+  drop-output.txt
+  drop-poll-w120.csv
+  drop-poll.csv
+  drop-start-ts.txt
+  error-1503.txt
+  exp-mdl-control.txt
+  exp-partition-count.json
+  exp3-lock-none.txt
+  exp4-partition-cache.txt
+  experiments.log
+  mdl-b-drop.txt
+  mdl-drop-elapsed.txt
+  mdl-locks.txt
+  mdl-select-elapsed.txt
+  optimize-loaded-out.txt
+  optimize-ms.txt
+  optimize-out.txt
+  partition-cache.csv
+  post-ibd.txt
+  pre-state.txt
+  pruning-explain.txt
+  seed.log
+  superseded/README.md
+  superseded/delete-oltp 2.csv
+  superseded/delete-poll 2.csv
+  superseded/drop-oltp 2.csv
+  superseded/drop-poll 2.csv
+  superseded/window-matched 2.json
+  window-matched.json
+  이 파일들은 스크립트가 다시 쓰지 않았습니다. 반복해도 새로 잰 것이 없습니다.
+  **여기에 '폭 0%'가 나오면 안정적인 것이 아니라 측정이 없었던 것입니다.**
+
+## mdl-repeat.csv  (회차마다 [6] 행)
+  조건                        열                              중앙         최소         최대     폭/중앙
+  1                         select_ms                      66         58         86    42.4%  **폭 큼**
+  1                         ddl_wait_ms             1.302e+04  1.301e+04  1.302e+04     0.1%
+  1                         select_ms                    9991       9985       9997     0.1%
+  2                         select_ms                      65         57         76    29.2%
+  2                         ddl_wait_ms             1.301e+04    1.3e+04  1.302e+04     0.1%
+  2                         select_ms                    9991       9977       9993     0.2%
+  3                         select_ms                      70         67         76    12.9%
+  3                         ddl_wait_ms             1.301e+04  1.301e+04  1.303e+04     0.1%
+  3                         select_ms                    9994       9992      1e+04     0.1%
+
+## exp-mdl-repeat-and-optimize.txt  (숫자가 흔들리는 줄 19개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  OPTIMIZE TABLE 소요 = 4278ms                               1       2979       2968       4278    44.0%  **폭 큼**
+  A 열린 트랜잭션만          SELECT 58ms                          1         66         58         86    42.4%  **폭 큼**
+  A 열린 트랜잭션만          SELECT 76ms                          1         65         57         76    29.2%
+  그동안 들어온 일반 SELECT = 59ms                                 1         50         48         59    22.0%
+  중앙값 배수 149배                                              1        149        131        151    13.4%
+  A 열린 트랜잭션만          SELECT 67ms                          1         70         67         76    12.9%
+  B 트랜잭션 + DROP(p20260715)  DDL 13012ms  SELECT 9991ms     3       9991       9977       9993     0.2%
+  B 트랜잭션 + DROP(p20260716)  DDL 13011ms  SELECT 9992ms     2  1.301e+04  1.301e+04  1.303e+04     0.1%
+  DROP 자체 대기 회차별 [13017, 13012, 13011] 중앙 13012ms          3  1.301e+04  1.301e+04  1.303e+04     0.1%
+  B 트랜잭션 + DROP(p20260716)  DDL 13011ms  SELECT 9992ms     3       9994       9992      1e+04     0.1%
+  B 트랜잭션 + DROP(p20260714)  DDL 13017ms  SELECT 9991ms     3       9991       9985       9997     0.1%
+  B 트랜잭션 + DROP(p20260715)  DDL 13012ms  SELECT 9991ms     2  1.301e+04    1.3e+04  1.302e+04     0.1%
+
+## mdl-repeat-b-1.txt  (숫자가 흔들리는 줄 1개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  13017                                                    1  1.302e+04  1.301e+04  1.302e+04     0.1%
+
+## mdl-repeat-b-2.txt  (숫자가 흔들리는 줄 1개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  13012                                                    1  1.301e+04    1.3e+04  1.302e+04     0.1%
+
+## mdl-repeat-b-3.txt  (숫자가 흔들리는 줄 1개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  13011                                                    1  1.301e+04  1.301e+04  1.303e+04     0.1%
+
+## optimize-loaded-ms.txt  (숫자가 흔들리는 줄 1개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  4278                                                     1       2979       2968       4278    44.0%  **폭 큼**
+
+  폭이 30%를 넘는 줄은 1회 값으로 소수점을 인용하면 안 됩니다.
+  두 조건의 차이가 각자의 폭보다 작으면 그 비교 자체가 성립하지 않습니다.

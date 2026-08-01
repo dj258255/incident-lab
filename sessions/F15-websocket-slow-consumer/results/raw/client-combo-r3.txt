@@ -1,19 +1,19 @@
 == F15 클라이언트 측정 ==
-mode=combo run=3 측정시간=45.0s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
+mode=combo run=3 측정시간=45.1s 정상구독자=5 느린구독자=1(읽기 32768 B/s, SO_RCVBUF 8192B)
 백분위는 워밍업 5s를 뺀 구간의 값이고, 수신건수와 최종틱seq는 전 구간 값이다.
 
 -- 정상 구독자 --
 id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
-normal-1     133775     133776       0ms       1ms       2ms      20ms     2.0ms      25ms  -
-normal-2     133782     133782       1ms       1ms       2ms      23ms     2.0ms      25ms  -
-normal-3     133781     133782       1ms       1ms       2ms      23ms     2.0ms      25ms  -
-normal-4     133782     133782       0ms       1ms       2ms      20ms     2.0ms      25ms  -
-normal-5     133782     133782       0ms       1ms       2ms      20ms     2.0ms      25ms  -
+normal-1     133425     133434       0ms       1ms       2ms      27ms     2.1ms      59ms  -
+normal-2     133443     133446       0ms       1ms       2ms      27ms     2.1ms      59ms  -
+normal-3     133434     133458       0ms       1ms       2ms      27ms     2.1ms      59ms  -
+normal-4     133456     133457       0ms       1ms       2ms      27ms     2.1ms      59ms  -
+normal-5     133425     133458       0ms       1ms       2ms      27ms     2.1ms      59ms  -
 
-합계 수신 668902건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms max=23ms
-최종 수신 틱 seq: 최소 133776, 최대 133782
+합계 수신 667183건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms max=27ms
+최종 수신 틱 seq: 최소 133434, 최대 133458
 
 -- 느린 구독자 --
-slow-1  읽은 바이트 1,454,544 (평균 31.5 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
+slow-1  읽은 바이트 1,447,992 (평균 31.3 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
 
-SUMMARY mode=combo run=3 recv_total=668902 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=2 lat_max_ms=23 last_seq_min=133776 last_seq_max=133782 worst_client_p95_ms=1 worst_client_max_ms=23 slow_count=1 slow_read_bytes=1454544 slow_closed_at_s=none slow_closed_n=1 slow_reconnects=0
+SUMMARY mode=combo run=3 recv_total=667183 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=2 lat_max_ms=27 last_seq_min=133434 last_seq_max=133458 worst_client_p95_ms=1 worst_client_max_ms=27 slow_count=1 slow_read_bytes=1447992 slow_closed_at_s=none slow_closed_n=1 slow_reconnects=0

@@ -1,0 +1,1962 @@
+# 반복 요약 (2/3 회차 정상 종료)
+
+## 회차마다 내용이 같은 파일
+  backoff.csv
+  exp-slow-count-sweep.txt
+  exp3-backoff.txt
+  medians.json
+  raw/client-direct-s1-r1.txt
+  raw/client-direct-s2-r1.txt
+  raw/client-direct-s4-r1.txt
+  raw/client-terminate-rc0-r1.txt
+  raw/client-terminate-rc100-r1.txt
+  raw/client-terminate-rc1000-r1.txt
+  raw/client-terminate-s1-r1.txt
+  raw/client-terminate-s2-r1.txt
+  raw/client-terminate-s4-r1.txt
+  raw/client-unbounded-s1-r1.txt
+  raw/client-unbounded-s2-r1.txt
+  raw/client-unbounded-s4-r1.txt
+  raw/server-direct-s1-r1.csv
+  raw/server-direct-s2-r1.csv
+  raw/server-direct-s4-r1.csv
+  raw/server-terminate-rc0-r1.csv
+  raw/server-terminate-rc100-r1.csv
+  raw/server-terminate-rc1000-r1.csv
+  raw/server-terminate-s1-r1.csv
+  raw/server-terminate-s2-r1.csv
+  raw/server-terminate-s4-r1.csv
+  raw/server-unbounded-s1-r1.csv
+  raw/server-unbounded-s2-r1.csv
+  raw/server-unbounded-s4-r1.csv
+  raw/serverlog-direct-s1-r1.txt
+  raw/serverlog-direct-s2-r1.txt
+  raw/serverlog-direct-s4-r1.txt
+  raw/serverlog-terminate-rc0-r1.txt
+  raw/serverlog-terminate-rc100-r1.txt
+  raw/serverlog-terminate-rc1000-r1.txt
+  raw/serverlog-terminate-s1-r1.txt
+  raw/serverlog-terminate-s2-r1.txt
+  raw/serverlog-terminate-s4-r1.txt
+  raw/serverlog-unbounded-s1-r1.txt
+  raw/serverlog-unbounded-s2-r1.txt
+  raw/serverlog-unbounded-s4-r1.txt
+  raw/suite-before-remeasure.txt
+  render.json
+  report.txt
+  이 파일들은 스크립트가 다시 쓰지 않았습니다. 반복해도 새로 잰 것이 없습니다.
+  **여기에 '폭 0%'가 나오면 안정적인 것이 아니라 측정이 없었던 것입니다.**
+
+## raw/server-baseline-r1.csv  (회차마다 [46, 47] 행)
+  회차마다 행 수가 다릅니다. 조건이 일부 안 선 회차가 있다는 뜻입니다.
+  수치 열이 없습니다.
+
+## raw/server-baseline-r2.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-baseline-r3.csv  (회차마다 [46, 47] 행)
+  회차마다 행 수가 다릅니다. 조건이 일부 안 선 회차가 있다는 뜻입니다.
+  수치 열이 없습니다.
+
+## raw/server-bounded-r1.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-bounded-r2.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-bounded-r3.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-combo-r1.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-combo-r2.csv  (회차마다 [46, 47] 행)
+  회차마다 행 수가 다릅니다. 조건이 일부 안 선 회차가 있다는 뜻입니다.
+  수치 열이 없습니다.
+
+## raw/server-combo-r3.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-combo-stalled-r1.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-combo-stalled-r2.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-combo-stalled-r3.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-conflate-r1.csv  (회차마다 [46, 47] 행)
+  회차마다 행 수가 다릅니다. 조건이 일부 안 선 회차가 있다는 뜻입니다.
+  수치 열이 없습니다.
+
+## raw/server-conflate-r2.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-conflate-r3.csv  (회차마다 [46, 47] 행)
+  회차마다 행 수가 다릅니다. 조건이 일부 안 선 회차가 있다는 뜻입니다.
+  수치 열이 없습니다.
+
+## raw/server-decorator-r1.csv  (회차마다 [46, 47] 행)
+  회차마다 행 수가 다릅니다. 조건이 일부 안 선 회차가 있다는 뜻입니다.
+  수치 열이 없습니다.
+
+## raw/server-decorator-r2.csv  (회차마다 [46, 47] 행)
+  회차마다 행 수가 다릅니다. 조건이 일부 안 선 회차가 있다는 뜻입니다.
+  수치 열이 없습니다.
+
+## raw/server-decorator-r3.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-direct-r1.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-direct-r2.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-direct-r3.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-direct-stalled-r1.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-direct-stalled-r2.csv  (회차마다 [46, 47] 행)
+  회차마다 행 수가 다릅니다. 조건이 일부 안 선 회차가 있다는 뜻입니다.
+  수치 열이 없습니다.
+
+## raw/server-direct-stalled-r3.csv  (회차마다 [46, 47] 행)
+  회차마다 행 수가 다릅니다. 조건이 일부 안 선 회차가 있다는 뜻입니다.
+  수치 열이 없습니다.
+
+## raw/server-terminate-r1.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-terminate-r2.csv  (회차마다 [46, 47] 행)
+  회차마다 행 수가 다릅니다. 조건이 일부 안 선 회차가 있다는 뜻입니다.
+  수치 열이 없습니다.
+
+## raw/server-terminate-r3.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-terminate-tight-r1.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-terminate-tight-r2.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-terminate-tight-r3.csv  (회차마다 [46] 행)
+  수치 열이 없습니다.
+
+## raw/server-unbounded-r1.csv  (회차마다 [95, 96] 행)
+  회차마다 행 수가 다릅니다. 조건이 일부 안 선 회차가 있다는 뜻입니다.
+  수치 열이 없습니다.
+
+## raw/server-unbounded-r2.csv  (회차마다 [96, 99] 행)
+  회차마다 행 수가 다릅니다. 조건이 일부 안 선 회차가 있다는 뜻입니다.
+  수치 열이 없습니다.
+
+## raw/server-unbounded-r3.csv  (회차마다 [97, 101] 행)
+  회차마다 행 수가 다릅니다. 조건이 일부 안 선 회차가 있다는 뜻입니다.
+  수치 열이 없습니다.
+
+## summary.csv  (회차마다 [45] 행)
+  조건                        열                              중앙         최소         최대     폭/중앙
+  baseline                  run                             1          1          1     0.0%
+  baseline                  seconds                      44.5         44         45     2.2%
+  baseline                  published               1.321e+05   1.32e+05  1.322e+05     0.1%
+  baseline                  publish_per_s                2970       2939       3001     2.1%
+  baseline                  heap_peak_mb                 47.1       46.9       47.3     0.8%
+  baseline                  heap_end_mb                  20.3         20       20.6     3.0%
+  baseline                  slow_queue_peak_mb              0          0          0     0.0%
+  baseline                  gc_ms                       136.5        136        137     0.7%
+  baseline                  broadcast_blocked_ms          221        133        309    79.6%  **폭 큼**
+  baseline                  closed_sessions               2.5          0          5   200.0%  **폭 큼**
+  baseline                  oom                             0          0          0     0.0%
+  baseline                  recv_total              6.634e+05  6.576e+05  6.693e+05     1.8%
+  baseline                  lat_p50_ms                      0          0          0     0.0%
+  baseline                  lat_p95_ms                      1          1          1     0.0%
+  baseline                  lat_p99_ms                    1.5          1          2    66.7%  **폭 큼**
+  baseline                  lat_max_ms                   31.5         16         47    98.4%  **폭 큼**
+  baseline                  worst_client_p95_ms             1          1          1     0.0%
+  baseline                  last_seq_min            1.327e+05  1.315e+05  1.338e+05     1.8%
+  baseline                  run                             2          2          2     0.0%
+  baseline                  seconds                        45         45         45     0.0%
+  baseline                  published               1.324e+05  1.314e+05  1.334e+05     1.5%
+  baseline                  publish_per_s                2942       2919       2965     1.6%
+  baseline                  heap_peak_mb                45.45       43.6       47.3     8.1%
+  baseline                  heap_end_mb                  21.3       18.7       23.9    24.4%
+  baseline                  slow_queue_peak_mb              0          0          0     0.0%
+  baseline                  gc_ms                       129.5        128        131     2.3%
+  baseline                  broadcast_blocked_ms        283.5        170        397    80.1%  **폭 큼**
+  baseline                  closed_sessions                 5          5          5     0.0%
+  baseline                  oom                             0          0          0     0.0%
+  baseline                  recv_total              6.603e+05  6.558e+05  6.648e+05     1.4%
+  baseline                  lat_p50_ms                      0          0          0     0.0%
+  baseline                  lat_p95_ms                      1          1          1     0.0%
+  baseline                  lat_p99_ms                    1.5          1          2    66.7%  **폭 큼**
+  baseline                  lat_max_ms                     39         36         42    15.4%
+  baseline                  worst_client_p95_ms             1          1          1     0.0%
+  baseline                  last_seq_min            1.321e+05  1.312e+05   1.33e+05     1.4%
+  baseline                  run                             3          3          3     0.0%
+  baseline                  seconds                        45         45         45     0.0%
+  baseline                  published               1.337e+05  1.336e+05  1.338e+05     0.2%
+  baseline                  publish_per_s                2972       2969       2974     0.2%
+  baseline                  heap_peak_mb                 46.9       46.6       47.2     1.3%
+  baseline                  heap_end_mb                 24.25       23.9       24.6     2.9%
+  baseline                  slow_queue_peak_mb              0          0          0     0.0%
+  baseline                  gc_ms                       127.5        126        129     2.4%
+  baseline                  broadcast_blocked_ms        200.5        146        255    54.4%  **폭 큼**
+  baseline                  closed_sessions                 5          5          5     0.0%
+  baseline                  oom                             0          0          0     0.0%
+  baseline                  recv_total              6.663e+05  6.653e+05  6.673e+05     0.3%
+  baseline                  lat_p50_ms                      0          0          0     0.0%
+  baseline                  lat_p95_ms                      1          1          1     0.0%
+  baseline                  lat_p99_ms                      1          1          1     0.0%
+  baseline                  lat_max_ms                     49         45         53    16.3%
+  baseline                  worst_client_p95_ms             1          1          1     0.0%
+  baseline                  last_seq_min            1.332e+05  1.331e+05  1.334e+05     0.3%
+  bounded                   run                             1          1          1     0.0%
+  bounded                   seconds                        45         45         45     0.0%
+  bounded                   published               1.343e+05  1.342e+05  1.344e+05     0.2%
+  bounded                   publish_per_s                2984       2981       2986     0.2%
+  bounded                   heap_peak_mb                 47.3       46.9       47.7     1.7%
+  bounded                   heap_end_mb                 14.85       14.1       15.6    10.1%
+  bounded                   slow_queue_peak_mb           0.46       0.46       0.46     0.0%
+  bounded                   gc_ms                       107.5        103        112     8.4%
+  bounded                   broadcast_blocked_ms         11.5          7         16    78.3%  **폭 큼**
+  bounded                   closed_sessions                 6          6          6     0.0%
+  bounded                   oom                             0          0          0     0.0%
+  bounded                   recv_total              6.696e+05  6.686e+05  6.706e+05     0.3%
+  bounded                   lat_p50_ms                      0          0          0     0.0%
+  bounded                   lat_p95_ms                      1          1          1     0.0%
+  bounded                   lat_p99_ms                    1.5          1          2    66.7%  **폭 큼**
+  bounded                   lat_max_ms                   16.5         10         23    78.8%  **폭 큼**
+  bounded                   worst_client_p95_ms             1          1          1     0.0%
+  bounded                   last_seq_min            1.339e+05  1.337e+05  1.341e+05     0.3%
+  bounded                   run                             2          2          2     0.0%
+  bounded                   seconds                        45         45         45     0.0%
+  bounded                   published               1.343e+05  1.341e+05  1.345e+05     0.3%
+  bounded                   publish_per_s                2984       2980       2988     0.3%
+  bounded                   heap_peak_mb                47.75       47.7       47.8     0.2%
+  bounded                   heap_end_mb                 15.85         15       16.7    10.7%
+  bounded                   slow_queue_peak_mb           0.46       0.46       0.46     0.0%
+  bounded                   gc_ms                         116        111        121     8.6%
+  bounded                   broadcast_blocked_ms           14         12         16    28.6%
+  bounded                   closed_sessions                 6          6          6     0.0%
+  bounded                   oom                             0          0          0     0.0%
+  bounded                   recv_total              6.696e+05  6.685e+05  6.707e+05     0.3%
+  bounded                   lat_p50_ms                      0          0          0     0.0%
+  bounded                   lat_p95_ms                      1          1          1     0.0%
+  bounded                   lat_p99_ms                      2          2          2     0.0%
+  bounded                   lat_max_ms                   17.5         13         22    51.4%  **폭 큼**
+  bounded                   worst_client_p95_ms             1          1          1     0.0%
+  bounded                   last_seq_min            1.339e+05  1.337e+05  1.341e+05     0.3%
+  bounded                   run                             3          3          3     0.0%
+  bounded                   seconds                        45         45         45     0.0%
+  bounded                   published                1.34e+05  1.338e+05  1.342e+05     0.3%
+  bounded                   publish_per_s                2976       2972       2981     0.3%
+  bounded                   heap_peak_mb                 47.5       47.4       47.6     0.4%
+  bounded                   heap_end_mb                  30.4       16.3       44.5    92.8%  **폭 큼**
+  bounded                   slow_queue_peak_mb           0.46       0.46       0.46     0.0%
+  bounded                   gc_ms                         115        112        118     5.2%
+  bounded                   broadcast_blocked_ms           31         14         48   109.7%  **폭 큼**
+  bounded                   closed_sessions                 4          2          6   100.0%  **폭 큼**
+  bounded                   oom                             0          0          0     0.0%
+  bounded                   recv_total              6.689e+05   6.67e+05  6.708e+05     0.6%
+  bounded                   lat_p50_ms                      0          0          0     0.0%
+  bounded                   lat_p95_ms                      1          1          1     0.0%
+  bounded                   lat_p99_ms                    1.5          1          2    66.7%  **폭 큼**
+  bounded                   lat_max_ms                   31.5         19         44    79.4%  **폭 큼**
+  bounded                   worst_client_p95_ms             1          1          1     0.0%
+  bounded                   last_seq_min            1.338e+05  1.334e+05  1.341e+05     0.6%
+  combo                     run                             1          1          1     0.0%
+  combo                     seconds                        45         45         45     0.0%
+  combo                     published               1.339e+05  1.337e+05  1.341e+05     0.3%
+  combo                     publish_per_s                2976       2970       2981     0.4%
+  combo                     heap_peak_mb                47.05         47       47.1     0.2%
+  combo                     heap_end_mb                  36.4       34.6       38.2     9.9%
+  combo                     slow_queue_peak_mb           0.01       0.01       0.01     0.0%
+  combo                     gc_ms                       100.5         97        104     7.0%
+  combo                     broadcast_blocked_ms           26          7         45   146.2%  **폭 큼**
+  combo                     closed_sessions                 6          6          6     0.0%
+  combo                     oom                             0          0          0     0.0%
+  combo                     recv_total               6.67e+05  6.655e+05  6.686e+05     0.5%
+  combo                     lat_p50_ms                      0          0          0     0.0%
+  combo                     lat_p95_ms                      1          1          1     0.0%
+  combo                     lat_p99_ms                      2          2          2     0.0%
+  combo                     lat_max_ms                   23.5         20         27    29.8%
+  combo                     worst_client_p95_ms             1          1          1     0.0%
+  combo                     last_seq_min            1.334e+05  1.331e+05  1.337e+05     0.4%
+  combo                     run                             2          2          2     0.0%
+  combo                     seconds                        45         45         45     0.0%
+  combo                     published               1.337e+05  1.337e+05  1.337e+05     0.1%
+  combo                     publish_per_s                2971       2970       2972     0.1%
+  combo                     heap_peak_mb                   46       45.6       46.4     1.7%
+  combo                     heap_end_mb                  35.4       35.2       35.6     1.1%
+  combo                     slow_queue_peak_mb           0.01       0.01       0.01     0.0%
+  combo                     gc_ms                          98         93        103    10.2%
+  combo                     broadcast_blocked_ms         26.5         16         37    79.2%  **폭 큼**
+  combo                     closed_sessions                 6          6          6     0.0%
+  combo                     oom                             0          0          0     0.0%
+  combo                     recv_total              6.659e+05  6.657e+05  6.661e+05     0.1%
+  combo                     lat_p50_ms                    0.5          0          1   200.0%  **폭 큼**
+  combo                     lat_p95_ms                      1          1          1     0.0%
+  combo                     lat_p99_ms                      2          2          2     0.0%
+  combo                     lat_max_ms                   35.5         25         46    59.2%  **폭 큼**
+  combo                     worst_client_p95_ms             1          1          1     0.0%
+  combo                     last_seq_min            1.332e+05  1.332e+05  1.332e+05     0.1%
+  combo                     run                             3          3          3     0.0%
+  combo                     seconds                        45         45         45     0.0%
+  combo                     published                1.34e+05   1.34e+05   1.34e+05     0.0%
+  combo                     publish_per_s                2978       2978       2979     0.0%
+  combo                     heap_peak_mb                 46.5       46.2       46.8     1.3%
+  combo                     heap_end_mb                  37.3       35.8       38.8     8.0%
+  combo                     slow_queue_peak_mb           0.01       0.01       0.01     0.0%
+  combo                     gc_ms                        96.5         96         97     1.0%
+  combo                     broadcast_blocked_ms           23         13         33    87.0%  **폭 큼**
+  combo                     closed_sessions               5.5          5          6    18.2%
+  combo                     oom                             0          0          0     0.0%
+  combo                     recv_total              6.681e+05  6.672e+05   6.69e+05     0.3%
+  combo                     lat_p50_ms                    0.5          0          1   200.0%  **폭 큼**
+  combo                     lat_p95_ms                      1          1          1     0.0%
+  combo                     lat_p99_ms                      2          2          2     0.0%
+  combo                     lat_max_ms                   19.5         12         27    76.9%  **폭 큼**
+  combo                     worst_client_p95_ms             1          1          1     0.0%
+  combo                     last_seq_min            1.336e+05  1.334e+05  1.338e+05     0.3%
+  combo-stalled             run                             1          1          1     0.0%
+  combo-stalled             seconds                        45         45         45     0.0%
+  combo-stalled             published               1.334e+05  1.332e+05  1.335e+05     0.3%
+  combo-stalled             publish_per_s                2964       2959       2968     0.3%
+  combo-stalled             heap_peak_mb                 44.2       43.5       44.9     3.2%
+  combo-stalled             heap_end_mb                 43.15       42.9       43.4     1.2%
+  combo-stalled             slow_queue_peak_mb           0.01       0.01       0.01     0.0%
+  combo-stalled             gc_ms                       134.5        105        164    43.9%  **폭 큼**
+  combo-stalled             broadcast_blocked_ms           30         24         36    40.0%  **폭 큼**
+  combo-stalled             closed_sessions                 6          6          6     0.0%
+  combo-stalled             oom                             0          0          0     0.0%
+  combo-stalled             recv_total              6.646e+05  6.645e+05  6.646e+05     0.0%
+  combo-stalled             lat_p50_ms                    0.5          0          1   200.0%  **폭 큼**
+  combo-stalled             lat_p95_ms                      1          1          1     0.0%
+  combo-stalled             lat_p99_ms                      2          2          2     0.0%
+  combo-stalled             lat_max_ms                     38         31         45    36.8%  **폭 큼**
+  combo-stalled             worst_client_p95_ms             1          1          1     0.0%
+  combo-stalled             last_seq_min            1.329e+05  1.329e+05  1.329e+05     0.0%
+  combo-stalled             run                             2          2          2     0.0%
+  combo-stalled             seconds                        45         45         45     0.0%
+  combo-stalled             published               1.338e+05  1.338e+05  1.338e+05     0.0%
+  combo-stalled             publish_per_s                2974       2973       2974     0.0%
+  combo-stalled             heap_peak_mb                46.85       46.8       46.9     0.2%
+  combo-stalled             heap_end_mb                 45.65         45       46.3     2.8%
+  combo-stalled             slow_queue_peak_mb           0.01       0.01       0.01     0.0%
+  combo-stalled             gc_ms                         132        100        164    48.5%  **폭 큼**
+  combo-stalled             broadcast_blocked_ms         29.5         16         43    91.5%  **폭 큼**
+  combo-stalled             closed_sessions                 6          6          6     0.0%
+  combo-stalled             oom                             0          0          0     0.0%
+  combo-stalled             recv_total              6.662e+05  6.656e+05  6.669e+05     0.2%
+  combo-stalled             lat_p50_ms                      1          1          1     0.0%
+  combo-stalled             lat_p95_ms                      1          1          1     0.0%
+  combo-stalled             lat_p99_ms                      2          2          2     0.0%
+  combo-stalled             lat_max_ms                     36         35         37     5.6%
+  combo-stalled             worst_client_p95_ms             1          1          1     0.0%
+  combo-stalled             last_seq_min            1.333e+05  1.331e+05  1.334e+05     0.2%
+  combo-stalled             run                             3          3          3     0.0%
+  combo-stalled             seconds                        45         45         45     0.0%
+  combo-stalled             published               1.338e+05  1.336e+05   1.34e+05     0.3%
+  combo-stalled             publish_per_s                2974       2970       2978     0.3%
+  combo-stalled             heap_peak_mb                   46       45.5       46.5     2.2%
+  combo-stalled             heap_end_mb                  45.9       45.5       46.3     1.7%
+  combo-stalled             slow_queue_peak_mb           0.01       0.01       0.01     0.0%
+  combo-stalled             gc_ms                         136         98        174    55.9%  **폭 큼**
+  combo-stalled             broadcast_blocked_ms         23.5         18         29    46.8%  **폭 큼**
+  combo-stalled             closed_sessions                 6          6          6     0.0%
+  combo-stalled             oom                             0          0          0     0.0%
+  combo-stalled             recv_total              6.669e+05  6.668e+05  6.669e+05     0.0%
+  combo-stalled             lat_p50_ms                      0          0          0     0.0%
+  combo-stalled             lat_p95_ms                      1          1          1     0.0%
+  combo-stalled             lat_p99_ms                      2          2          2     0.0%
+  combo-stalled             lat_max_ms                   30.5         24         37    42.6%  **폭 큼**
+  combo-stalled             worst_client_p95_ms             1          1          1     0.0%
+  combo-stalled             last_seq_min            1.334e+05  1.334e+05  1.334e+05     0.0%
+  conflate                  run                             1          1          1     0.0%
+  conflate                  seconds                        45         45         45     0.0%
+  conflate                  published               1.339e+05  1.335e+05  1.344e+05     0.7%
+  conflate                  publish_per_s                2977       2967       2987     0.7%
+  conflate                  heap_peak_mb                46.45       46.3       46.6     0.6%
+  conflate                  heap_end_mb                  37.8       33.4       42.2    23.3%
+  conflate                  slow_queue_peak_mb           0.01       0.01       0.01     0.0%
+  conflate                  gc_ms                       123.5         91        156    52.6%  **폭 큼**
+  conflate                  broadcast_blocked_ms           35         20         50    85.7%  **폭 큼**
+  conflate                  closed_sessions               5.5          5          6    18.2%
+  conflate                  oom                             0          0          0     0.0%
+  conflate                  recv_total              6.678e+05  6.645e+05  6.711e+05     1.0%
+  conflate                  lat_p50_ms                      0          0          0     0.0%
+  conflate                  lat_p95_ms                      1          1          1     0.0%
+  conflate                  lat_p99_ms                    1.5          1          2    66.7%  **폭 큼**
+  conflate                  lat_max_ms                     25         15         35    80.0%  **폭 큼**
+  conflate                  worst_client_p95_ms             1          1          1     0.0%
+  conflate                  last_seq_min            1.336e+05  1.329e+05  1.342e+05     1.0%
+  conflate                  run                             2          2          2     0.0%
+  conflate                  seconds                        45         45         45     0.0%
+  conflate                  published                1.34e+05  1.336e+05  1.345e+05     0.7%
+  conflate                  publish_per_s                2978       2969       2988     0.6%
+  conflate                  heap_peak_mb                 47.1       46.8       47.4     1.3%
+  conflate                  heap_end_mb                 37.65       34.5       40.8    16.7%
+  conflate                  slow_queue_peak_mb           0.01       0.01       0.01     0.0%
+  conflate                  gc_ms                        93.5         93         94     1.1%
+  conflate                  broadcast_blocked_ms         26.5         16         37    79.2%  **폭 큼**
+  conflate                  closed_sessions                 6          6          6     0.0%
+  conflate                  oom                             0          0          0     0.0%
+  conflate                  recv_total              6.685e+05  6.658e+05  6.711e+05     0.8%
+  conflate                  lat_p50_ms                      0          0          0     0.0%
+  conflate                  lat_p95_ms                      1          1          1     0.0%
+  conflate                  lat_p99_ms                    1.5          1          2    66.7%  **폭 큼**
+  conflate                  lat_max_ms                     20         12         28    80.0%  **폭 큼**
+  conflate                  worst_client_p95_ms             1          1          1     0.0%
+  conflate                  last_seq_min            1.337e+05  1.332e+05  1.342e+05     0.8%
+  conflate                  run                             3          3          3     0.0%
+  conflate                  seconds                        45         45         45     0.0%
+  conflate                  published                1.34e+05  1.333e+05  1.347e+05     1.0%
+  conflate                  publish_per_s                2978       2963       2994     1.0%
+  conflate                  heap_peak_mb                46.95       46.9         47     0.2%
+  conflate                  heap_end_mb                  37.4       32.8         42    24.6%
+  conflate                  slow_queue_peak_mb           0.01       0.01       0.01     0.0%
+  conflate                  gc_ms                          95         92         98     6.3%
+  conflate                  broadcast_blocked_ms           62         25         99   119.4%  **폭 큼**
+  conflate                  closed_sessions                 6          6          6     0.0%
+  conflate                  oom                             0          0          0     0.0%
+  conflate                  recv_total              6.681e+05  6.645e+05  6.717e+05     1.1%
+  conflate                  lat_p50_ms                    0.5          0          1   200.0%  **폭 큼**
+  conflate                  lat_p95_ms                      1          1          1     0.0%
+  conflate                  lat_p99_ms                    1.5          1          2    66.7%  **폭 큼**
+  conflate                  lat_max_ms                     23         11         35   104.3%  **폭 큼**
+  conflate                  worst_client_p95_ms             1          1          1     0.0%
+  conflate                  last_seq_min            1.336e+05  1.329e+05  1.343e+05     1.1%
+  decorator                 run                             1          1          1     0.0%
+  decorator                 seconds                        45         45         45     0.0%
+  decorator                 published               1.343e+05  1.342e+05  1.344e+05     0.1%
+  decorator                 publish_per_s                2984       2983       2986     0.1%
+  decorator                 heap_peak_mb                 47.9       47.7       48.1     0.8%
+  decorator                 heap_end_mb                  40.9       39.4       42.4     7.3%
+  decorator                 slow_queue_peak_mb            0.5        0.5        0.5     0.0%
+  decorator                 gc_ms                         109        107        111     3.7%
+  decorator                 broadcast_blocked_ms            3          2          4    66.7%  **폭 큼**
+  decorator                 closed_sessions                 6          6          6     0.0%
+  decorator                 oom                             0          0          0     0.0%
+  decorator                 recv_total              6.697e+05  6.688e+05  6.705e+05     0.3%
+  decorator                 lat_p50_ms                      1          1          1     0.0%
+  decorator                 lat_p95_ms                      1          1          1     0.0%
+  decorator                 lat_p99_ms                      2          2          2     0.0%
+  decorator                 lat_max_ms                   31.5         26         37    34.9%  **폭 큼**
+  decorator                 worst_client_p95_ms             1          1          1     0.0%
+  decorator                 last_seq_min            1.339e+05  1.338e+05  1.341e+05     0.3%
+  decorator                 run                             2          2          2     0.0%
+  decorator                 seconds                        45         45         45     0.0%
+  decorator                 published               1.345e+05  1.341e+05  1.348e+05     0.6%
+  decorator                 publish_per_s                2988       2980       2997     0.6%
+  decorator                 heap_peak_mb                47.15       46.8       47.5     1.5%
+  decorator                 heap_end_mb                  42.3       39.1       45.5    15.1%
+  decorator                 slow_queue_peak_mb            0.5        0.5        0.5     0.0%
+  decorator                 gc_ms                       110.5        108        113     4.5%
+  decorator                 broadcast_blocked_ms          4.5          1          8   155.6%  **폭 큼**
+  decorator                 closed_sessions                 6          6          6     0.0%
+  decorator                 oom                             0          0          0     0.0%
+  decorator                 recv_total              6.698e+05  6.683e+05  6.714e+05     0.5%
+  decorator                 lat_p50_ms                      1          1          1     0.0%
+  decorator                 lat_p95_ms                      1          1          1     0.0%
+  decorator                 lat_p99_ms                      2          2          2     0.0%
+  decorator                 lat_max_ms                     41         39         43     9.8%
+  decorator                 worst_client_p95_ms             1          1          1     0.0%
+  decorator                 last_seq_min             1.34e+05  1.336e+05  1.343e+05     0.5%
+  decorator                 run                             3          3          3     0.0%
+  decorator                 seconds                        45         45         45     0.0%
+  decorator                 published               1.351e+05  1.351e+05  1.351e+05     0.0%
+  decorator                 publish_per_s                3002       3002       3002     0.0%
+  decorator                 heap_peak_mb                 47.4       47.1       47.7     1.3%
+  decorator                 heap_end_mb                  45.9       45.4       46.4     2.2%
+  decorator                 slow_queue_peak_mb            0.5        0.5        0.5     0.0%
+  decorator                 gc_ms                         113        111        115     3.5%
+  decorator                 broadcast_blocked_ms          4.5          3          6    66.7%  **폭 큼**
+  decorator                 closed_sessions                 6          6          6     0.0%
+  decorator                 oom                             0          0          0     0.0%
+  decorator                 recv_total              6.736e+05  6.733e+05  6.738e+05     0.1%
+  decorator                 lat_p50_ms                      1          1          1     0.0%
+  decorator                 lat_p95_ms                      1          1          1     0.0%
+  decorator                 lat_p99_ms                      2          2          2     0.0%
+  decorator                 lat_max_ms                     10          8         12    40.0%  **폭 큼**
+  decorator                 worst_client_p95_ms             1          1          1     0.0%
+  decorator                 last_seq_min            1.347e+05  1.347e+05  1.348e+05     0.1%
+  direct                    run                             1          1          1     0.0%
+  direct                    seconds                        45         45         45     0.0%
+  direct                    published                    3306       3210       3402     5.8%
+  direct                    publish_per_s                73.5         71         76     6.8%
+  direct                    heap_peak_mb                 45.3       45.2       45.4     0.4%
+  direct                    heap_end_mb                 15.65       15.5       15.8     1.9%
+  direct                    slow_queue_peak_mb              0          0          0     0.0%
+  direct                    gc_ms                        58.5         56         61     8.5%
+  direct                    broadcast_blocked_ms      4.4e+04    4.4e+04  4.401e+04     0.0%
+  direct                    closed_sessions                 6          6          6     0.0%
+  direct                    oom                             0          0          0     0.0%
+  direct                    recv_total              1.545e+04   1.53e+04   1.56e+04     1.9%
+  direct                    lat_p50_ms                      0          0          0     0.0%
+  direct                    lat_p95_ms                      1          1          1     0.0%
+  direct                    lat_p99_ms                      2          2          2     0.0%
+  direct                    lat_max_ms                  986.5        982        991     0.9%
+  direct                    worst_client_p95_ms             1          1          1     0.0%
+  direct                    last_seq_min                 3090       3060       3120     1.9%
+  direct                    run                             2          2          2     0.0%
+  direct                    seconds                        45         45         45     0.0%
+  direct                    published                    3327       3168       3486     9.6%
+  direct                    publish_per_s                73.5         70         77     9.5%
+  direct                    heap_peak_mb                 45.4       45.3       45.5     0.4%
+  direct                    heap_end_mb                    16         16         16     0.0%
+  direct                    slow_queue_peak_mb              0          0          0     0.0%
+  direct                    gc_ms                        58.5         58         59     1.7%
+  direct                    broadcast_blocked_ms      4.4e+04  4.398e+04  4.403e+04     0.1%
+  direct                    closed_sessions                 6          6          6     0.0%
+  direct                    oom                             0          0          0     0.0%
+  direct                    recv_total               1.53e+04    1.5e+04   1.56e+04     3.9%
+  direct                    lat_p50_ms                      0          0          0     0.0%
+  direct                    lat_p95_ms                      1          1          1     0.0%
+  direct                    lat_p99_ms                      2          2          2     0.0%
+  direct                    lat_max_ms                    997        975       1019     4.4%
+  direct                    worst_client_p95_ms             1          1          1     0.0%
+  direct                    last_seq_min                 3060       3000       3120     3.9%
+  direct                    run                             3          3          3     0.0%
+  direct                    seconds                        45         45         45     0.0%
+  direct                    published                    3333       3162       3504    10.3%
+  direct                    publish_per_s                  74         70         78    10.8%
+  direct                    heap_peak_mb                45.55       45.4       45.7     0.7%
+  direct                    heap_end_mb                  15.8       15.7       15.9     1.3%
+  direct                    slow_queue_peak_mb              0          0          0     0.0%
+  direct                    gc_ms                          58         57         59     3.4%
+  direct                    broadcast_blocked_ms    4.401e+04    4.4e+04  4.401e+04     0.0%
+  direct                    closed_sessions                 6          6          6     0.0%
+  direct                    oom                             0          0          0     0.0%
+  direct                    recv_total              1.539e+04  1.521e+04  1.557e+04     2.3%
+  direct                    lat_p50_ms                      0          0          0     0.0%
+  direct                    lat_p95_ms                      1          1          1     0.0%
+  direct                    lat_p99_ms                    1.5          1          2    66.7%  **폭 큼**
+  direct                    lat_max_ms                  973.5        971        976     0.5%
+  direct                    worst_client_p95_ms             1          1          1     0.0%
+  direct                    last_seq_min                 3078       3042       3114     2.3%
+  direct-s1                 run                             1          1          1     0.0%
+  direct-s1                 seconds                        45         45         45     0.0%
+  direct-s1                 published                    3102       3102       3102     0.0%
+  direct-s1                 publish_per_s                  69         69         69     0.0%
+  direct-s1                 heap_peak_mb                 45.6       45.6       45.6     0.0%
+  direct-s1                 heap_end_mb                  16.7       16.7       16.7     0.0%
+  direct-s1                 slow_queue_peak_mb              0          0          0     0.0%
+  direct-s1                 gc_ms                          62         62         62     0.0%
+  direct-s1                 broadcast_blocked_ms    4.402e+04  4.402e+04  4.402e+04     0.0%
+  direct-s1                 closed_sessions                 6          6          6     0.0%
+  direct-s1                 oom                             0          0          0     0.0%
+  direct-s1                 recv_total              1.534e+04  1.534e+04  1.534e+04     0.0%
+  direct-s1                 lat_p50_ms                      0          0          0     0.0%
+  direct-s1                 lat_p95_ms                      1          1          1     0.0%
+  direct-s1                 lat_p99_ms                      5          5          5     0.0%
+  direct-s1                 lat_max_ms                   1070       1070       1070     0.0%
+  direct-s1                 worst_client_p95_ms             1          1          1     0.0%
+  direct-s1                 last_seq_min                 3067       3067       3067     0.0%
+  direct-s2                 run                             1          1          1     0.0%
+  direct-s2                 seconds                        45         45         45     0.0%
+  direct-s2                 published                    3102       3102       3102     0.0%
+  direct-s2                 publish_per_s                  69         69         69     0.0%
+  direct-s2                 heap_peak_mb                 45.5       45.5       45.5     0.0%
+  direct-s2                 heap_end_mb                  16.8       16.8       16.8     0.0%
+  direct-s2                 slow_queue_peak_mb              0          0          0     0.0%
+  direct-s2                 gc_ms                          57         57         57     0.0%
+  direct-s2                 broadcast_blocked_ms      4.4e+04    4.4e+04    4.4e+04     0.0%
+  direct-s2                 closed_sessions                 7          7          7     0.0%
+  direct-s2                 oom                             0          0          0     0.0%
+  direct-s2                 recv_total              1.515e+04  1.515e+04  1.515e+04     0.0%
+  direct-s2                 lat_p50_ms                      0          0          0     0.0%
+  direct-s2                 lat_p95_ms                      1          1          1     0.0%
+  direct-s2                 lat_p99_ms                      2          2          2     0.0%
+  direct-s2                 lat_max_ms                    939        939        939     0.0%
+  direct-s2                 worst_client_p95_ms             1          1          1     0.0%
+  direct-s2                 last_seq_min                 3030       3030       3030     0.0%
+  direct-s4                 run                             1          1          1     0.0%
+  direct-s4                 seconds                        45         45         45     0.0%
+  direct-s4                 published                    3186       3186       3186     0.0%
+  direct-s4                 publish_per_s                  71         71         71     0.0%
+  direct-s4                 heap_peak_mb                 45.5       45.5       45.5     0.0%
+  direct-s4                 heap_end_mb                  21.1       21.1       21.1     0.0%
+  direct-s4                 slow_queue_peak_mb              0          0          0     0.0%
+  direct-s4                 gc_ms                          60         60         60     0.0%
+  direct-s4                 broadcast_blocked_ms    4.403e+04  4.403e+04  4.403e+04     0.0%
+  direct-s4                 closed_sessions                 9          9          9     0.0%
+  direct-s4                 oom                             0          0          0     0.0%
+  direct-s4                 recv_total              1.542e+04  1.542e+04  1.542e+04     0.0%
+  direct-s4                 lat_p50_ms                      0          0          0     0.0%
+  direct-s4                 lat_p95_ms                      1          1          1     0.0%
+  direct-s4                 lat_p99_ms                      2          2          2     0.0%
+  direct-s4                 lat_max_ms                    899        899        899     0.0%
+  direct-s4                 worst_client_p95_ms             1          1          1     0.0%
+  direct-s4                 last_seq_min                 3084       3084       3084     0.0%
+  direct-stalled            run                             1          1          1     0.0%
+  direct-stalled            seconds                        45         45         45     0.0%
+  direct-stalled            published               7.439e+04   7.42e+04  7.457e+04     0.5%
+  direct-stalled            publish_per_s                1653       1649       1657     0.5%
+  direct-stalled            heap_peak_mb                 46.3       46.1       46.5     0.9%
+  direct-stalled            heap_end_mb                 20.35       20.2       20.5     1.5%
+  direct-stalled            slow_queue_peak_mb              0          0          0     0.0%
+  direct-stalled            gc_ms                        94.5         94         95     1.1%
+  direct-stalled            broadcast_blocked_ms    2.016e+04  2.015e+04  2.017e+04     0.1%
+  direct-stalled            closed_sessions                 6          6          6     0.0%
+  direct-stalled            oom                             0          0          0     0.0%
+  direct-stalled            recv_total              3.694e+05  3.688e+05    3.7e+05     0.3%
+  direct-stalled            lat_p50_ms                      0          0          0     0.0%
+  direct-stalled            lat_p95_ms                      1          1          1     0.0%
+  direct-stalled            lat_p99_ms                      1          1          1     0.0%
+  direct-stalled            lat_max_ms              2.007e+04  2.006e+04  2.007e+04     0.0%
+  direct-stalled            worst_client_p95_ms             1          1          1     0.0%
+  direct-stalled            last_seq_min            7.388e+04  7.376e+04    7.4e+04     0.3%
+  direct-stalled            run                             2          2          2     0.0%
+  direct-stalled            seconds                        45         45         45     0.0%
+  direct-stalled            published               7.475e+04  7.465e+04  7.484e+04     0.3%
+  direct-stalled            publish_per_s                1661       1659       1663     0.2%
+  direct-stalled            heap_peak_mb                47.25       47.2       47.3     0.2%
+  direct-stalled            heap_end_mb                  21.4       21.3       21.5     0.9%
+  direct-stalled            slow_queue_peak_mb              0          0          0     0.0%
+  direct-stalled            gc_ms                        95.5         91        100     9.4%
+  direct-stalled            broadcast_blocked_ms    2.015e+04  2.015e+04  2.015e+04     0.0%
+  direct-stalled            closed_sessions                 6          6          6     0.0%
+  direct-stalled            oom                             0          0          0     0.0%
+  direct-stalled            recv_total              3.715e+05   3.71e+05  3.719e+05     0.2%
+  direct-stalled            lat_p50_ms                      0          0          0     0.0%
+  direct-stalled            lat_p95_ms                      1          1          1     0.0%
+  direct-stalled            lat_p99_ms                      1          1          1     0.0%
+  direct-stalled            lat_max_ms              2.007e+04  2.006e+04  2.007e+04     0.0%
+  direct-stalled            worst_client_p95_ms             1          1          1     0.0%
+  direct-stalled            last_seq_min            7.429e+04   7.42e+04  7.438e+04     0.2%
+  direct-stalled            run                             3          3          3     0.0%
+  direct-stalled            seconds                        45         45         45     0.0%
+  direct-stalled            published               7.468e+04  7.433e+04  7.503e+04     0.9%
+  direct-stalled            publish_per_s                1660       1652       1667     0.9%
+  direct-stalled            heap_peak_mb                 46.5       46.1       46.9     1.7%
+  direct-stalled            heap_end_mb                  21.3       20.2       22.4    10.3%
+  direct-stalled            slow_queue_peak_mb              0          0          0     0.0%
+  direct-stalled            gc_ms                          87         78         96    20.7%
+  direct-stalled            broadcast_blocked_ms    2.014e+04  2.012e+04  2.016e+04     0.2%
+  direct-stalled            closed_sessions                 6          6          6     0.0%
+  direct-stalled            oom                             0          0          0     0.0%
+  direct-stalled            recv_total              3.713e+05  3.696e+05  3.731e+05     1.0%
+  direct-stalled            lat_p50_ms                      0          0          0     0.0%
+  direct-stalled            lat_p95_ms                      1          1          1     0.0%
+  direct-stalled            lat_p99_ms                      1          1          1     0.0%
+  direct-stalled            lat_max_ms              2.007e+04  2.007e+04  2.007e+04     0.0%
+  direct-stalled            worst_client_p95_ms             1          1          1     0.0%
+  direct-stalled            last_seq_min            7.427e+04  7.391e+04  7.462e+04     1.0%
+  terminate                 run                             1          1          1     0.0%
+  terminate                 seconds                        45         45         45     0.0%
+  terminate                 published               1.344e+05   1.34e+05  1.349e+05     0.7%
+  terminate                 publish_per_s                2987       2977       2997     0.7%
+  terminate                 heap_peak_mb                51.65       51.6       51.7     0.2%
+  terminate                 heap_end_mb                  37.5       34.4       40.6    16.5%
+  terminate                 slow_queue_peak_mb           3.89       3.87       3.91     1.0%
+  terminate                 gc_ms                       108.5        108        109     0.9%
+  terminate                 broadcast_blocked_ms         20.5         18         23    24.4%
+  terminate                 closed_sessions                 6          6          6     0.0%
+  terminate                 oom                             0          0          0     0.0%
+  terminate                 recv_total              6.693e+05  6.671e+05  6.715e+05     0.6%
+  terminate                 lat_p50_ms                    0.5          0          1   200.0%  **폭 큼**
+  terminate                 lat_p95_ms                      1          1          1     0.0%
+  terminate                 lat_p99_ms                    1.5          1          2    66.7%  **폭 큼**
+  terminate                 lat_max_ms                     21         10         32   104.8%  **폭 큼**
+  terminate                 worst_client_p95_ms             1          1          1     0.0%
+  terminate                 last_seq_min            1.339e+05  1.334e+05  1.343e+05     0.6%
+  terminate                 run                             2          2          2     0.0%
+  terminate                 seconds                        45         45         45     0.0%
+  terminate                 published               1.346e+05  1.342e+05   1.35e+05     0.6%
+  terminate                 publish_per_s                2991       2981       3001     0.7%
+  terminate                 heap_peak_mb                 51.6       51.1       52.1     1.9%
+  terminate                 heap_end_mb                 38.25       35.9       40.6    12.3%
+  terminate                 slow_queue_peak_mb          3.915       3.86       3.97     2.8%
+  terminate                 gc_ms                       111.5        103        120    15.2%
+  terminate                 broadcast_blocked_ms           10          4         16   120.0%  **폭 큼**
+  terminate                 closed_sessions                 6          6          6     0.0%
+  terminate                 oom                             0          0          0     0.0%
+  terminate                 recv_total              6.699e+05   6.68e+05  6.718e+05     0.6%
+  terminate                 lat_p50_ms                    0.5          0          1   200.0%  **폭 큼**
+  terminate                 lat_p95_ms                      1          1          1     0.0%
+  terminate                 lat_p99_ms                    1.5          1          2    66.7%  **폭 큼**
+  terminate                 lat_max_ms                   26.5         11         42   117.0%  **폭 큼**
+  terminate                 worst_client_p95_ms             1          1          1     0.0%
+  terminate                 last_seq_min             1.34e+05  1.336e+05  1.344e+05     0.6%
+  terminate                 run                             3          3          3     0.0%
+  terminate                 seconds                        45         45         45     0.0%
+  terminate                 published               1.344e+05  1.341e+05  1.348e+05     0.5%
+  terminate                 publish_per_s                2987       2979       2995     0.5%
+  terminate                 heap_peak_mb                51.55         51       52.1     2.1%
+  terminate                 heap_end_mb                  37.8       35.3       40.3    13.2%
+  terminate                 slow_queue_peak_mb          3.895       3.89        3.9     0.3%
+  terminate                 gc_ms                       109.5        104        115    10.0%
+  terminate                 broadcast_blocked_ms           11          9         13    36.4%  **폭 큼**
+  terminate                 closed_sessions                 6          6          6     0.0%
+  terminate                 oom                             0          0          0     0.0%
+  terminate                 recv_total              6.693e+05  6.673e+05  6.714e+05     0.6%
+  terminate                 lat_p50_ms                      1          1          1     0.0%
+  terminate                 lat_p95_ms                      1          1          1     0.0%
+  terminate                 lat_p99_ms                    1.5          1          2    66.7%  **폭 큼**
+  terminate                 lat_max_ms                   25.5         11         40   113.7%  **폭 큼**
+  terminate                 worst_client_p95_ms             1          1          1     0.0%
+  terminate                 last_seq_min            1.339e+05  1.335e+05  1.343e+05     0.6%
+  terminate-rc0             run                             1          1          1     0.0%
+  terminate-rc0             seconds                        45         45         45     0.0%
+  terminate-rc0             published               1.345e+05  1.345e+05  1.345e+05     0.0%
+  terminate-rc0             publish_per_s                2989       2989       2989     0.0%
+  terminate-rc0             heap_peak_mb                 51.8       51.8       51.8     0.0%
+  terminate-rc0             heap_end_mb                  37.5       37.5       37.5     0.0%
+  terminate-rc0             slow_queue_peak_mb           4.01       4.01       4.01     0.0%
+  terminate-rc0             gc_ms                          95         95         95     0.0%
+  terminate-rc0             broadcast_blocked_ms           17         17         17     0.0%
+  terminate-rc0             closed_sessions                 6          6          6     0.0%
+  terminate-rc0             oom                             0          0          0     0.0%
+  terminate-rc0             recv_total              6.688e+05  6.688e+05  6.688e+05     0.0%
+  terminate-rc0             lat_p50_ms                      0          0          0     0.0%
+  terminate-rc0             lat_p95_ms                      1          1          1     0.0%
+  terminate-rc0             lat_p99_ms                      2          2          2     0.0%
+  terminate-rc0             lat_max_ms                     16         16         16     0.0%
+  terminate-rc0             worst_client_p95_ms             1          1          1     0.0%
+  terminate-rc0             last_seq_min            1.338e+05  1.338e+05  1.338e+05     0.0%
+  terminate-rc100           run                             1          1          1     0.0%
+  terminate-rc100           seconds                        44         44         44     0.0%
+  terminate-rc100           published               1.323e+05  1.323e+05  1.323e+05     0.0%
+  terminate-rc100           publish_per_s                3006       3006       3006     0.0%
+  terminate-rc100           heap_peak_mb                 85.1       85.1       85.1     0.0%
+  terminate-rc100           heap_end_mb                  68.9       68.9       68.9     0.0%
+  terminate-rc100           slow_queue_peak_mb           4.64       4.64       4.64     0.0%
+  terminate-rc100           gc_ms                         152        152        152     0.0%
+  terminate-rc100           broadcast_blocked_ms           20         20         20     0.0%
+  terminate-rc100           closed_sessions                 1          1          1     0.0%
+  terminate-rc100           oom                             0          0          0     0.0%
+  terminate-rc100           recv_total              6.681e+05  6.681e+05  6.681e+05     0.0%
+  terminate-rc100           lat_p50_ms                      0          0          0     0.0%
+  terminate-rc100           lat_p95_ms                      1          1          1     0.0%
+  terminate-rc100           lat_p99_ms                      2          2          2     0.0%
+  terminate-rc100           lat_max_ms                     16         16         16     0.0%
+  terminate-rc100           worst_client_p95_ms             1          1          1     0.0%
+  terminate-rc100           last_seq_min            1.336e+05  1.336e+05  1.336e+05     0.0%
+  terminate-rc1000          run                             1          1          1     0.0%
+  terminate-rc1000          seconds                        44         44         44     0.0%
+  terminate-rc1000          published               1.324e+05  1.324e+05  1.324e+05     0.0%
+  terminate-rc1000          publish_per_s                3010       3010       3010     0.0%
+  terminate-rc1000          heap_peak_mb                   79         79         79     0.0%
+  terminate-rc1000          heap_end_mb                  64.3       64.3       64.3     0.0%
+  terminate-rc1000          slow_queue_peak_mb           4.72       4.72       4.72     0.0%
+  terminate-rc1000          gc_ms                         142        142        142     0.0%
+  terminate-rc1000          broadcast_blocked_ms            2          2          2     0.0%
+  terminate-rc1000          closed_sessions                 1          1          1     0.0%
+  terminate-rc1000          oom                             0          0          0     0.0%
+  terminate-rc1000          recv_total              6.692e+05  6.692e+05  6.692e+05     0.0%
+  terminate-rc1000          lat_p50_ms                      0          0          0     0.0%
+  terminate-rc1000          lat_p95_ms                      1          1          1     0.0%
+  terminate-rc1000          lat_p99_ms                      2          2          2     0.0%
+  terminate-rc1000          lat_max_ms                     11         11         11     0.0%
+  terminate-rc1000          worst_client_p95_ms             1          1          1     0.0%
+  terminate-rc1000          last_seq_min            1.338e+05  1.338e+05  1.338e+05     0.0%
+  terminate-s1              run                             1          1          1     0.0%
+  terminate-s1              seconds                        45         45         45     0.0%
+  terminate-s1              published               1.344e+05  1.344e+05  1.344e+05     0.0%
+  terminate-s1              publish_per_s                2987       2987       2987     0.0%
+  terminate-s1              heap_peak_mb                 52.1       52.1       52.1     0.0%
+  terminate-s1              heap_end_mb                  39.5       39.5       39.5     0.0%
+  terminate-s1              slow_queue_peak_mb           3.82       3.82       3.82     0.0%
+  terminate-s1              gc_ms                          95         95         95     0.0%
+  terminate-s1              broadcast_blocked_ms           11         11         11     0.0%
+  terminate-s1              closed_sessions                 6          6          6     0.0%
+  terminate-s1              oom                             0          0          0     0.0%
+  terminate-s1              recv_total              6.702e+05  6.702e+05  6.702e+05     0.0%
+  terminate-s1              lat_p50_ms                      0          0          0     0.0%
+  terminate-s1              lat_p95_ms                      1          1          1     0.0%
+  terminate-s1              lat_p99_ms                      2          2          2     0.0%
+  terminate-s1              lat_max_ms                     10         10         10     0.0%
+  terminate-s1              worst_client_p95_ms             1          1          1     0.0%
+  terminate-s1              last_seq_min             1.34e+05   1.34e+05   1.34e+05     0.0%
+  terminate-s2              run                             1          1          1     0.0%
+  terminate-s2              seconds                        45         45         45     0.0%
+  terminate-s2              published               1.344e+05  1.344e+05  1.344e+05     0.0%
+  terminate-s2              publish_per_s                2987       2987       2987     0.0%
+  terminate-s2              heap_peak_mb                 51.7       51.7       51.7     0.0%
+  terminate-s2              heap_end_mb                  40.3       40.3       40.3     0.0%
+  terminate-s2              slow_queue_peak_mb           3.83       3.83       3.83     0.0%
+  terminate-s2              gc_ms                         108        108        108     0.0%
+  terminate-s2              broadcast_blocked_ms           22         22         22     0.0%
+  terminate-s2              closed_sessions                 7          7          7     0.0%
+  terminate-s2              oom                             0          0          0     0.0%
+  terminate-s2              recv_total              6.703e+05  6.703e+05  6.703e+05     0.0%
+  terminate-s2              lat_p50_ms                      0          0          0     0.0%
+  terminate-s2              lat_p95_ms                      1          1          1     0.0%
+  terminate-s2              lat_p99_ms                      2          2          2     0.0%
+  terminate-s2              lat_max_ms                     10         10         10     0.0%
+  terminate-s2              worst_client_p95_ms             1          1          1     0.0%
+  terminate-s2              last_seq_min            1.341e+05  1.341e+05  1.341e+05     0.0%
+  terminate-s4              run                             1          1          1     0.0%
+  terminate-s4              seconds                        45         45         45     0.0%
+  terminate-s4              published               1.346e+05  1.346e+05  1.346e+05     0.0%
+  terminate-s4              publish_per_s                2992       2992       2992     0.0%
+  terminate-s4              heap_peak_mb                 53.8       53.8       53.8     0.0%
+  terminate-s4              heap_end_mb                  41.9       41.9       41.9     0.0%
+  terminate-s4              slow_queue_peak_mb           5.17       5.17       5.17     0.0%
+  terminate-s4              gc_ms                          84         84         84     0.0%
+  terminate-s4              broadcast_blocked_ms           16         16         16     0.0%
+  terminate-s4              closed_sessions                 9          9          9     0.0%
+  terminate-s4              oom                             0          0          0     0.0%
+  terminate-s4              recv_total              6.677e+05  6.677e+05  6.677e+05     0.0%
+  terminate-s4              lat_p50_ms                      0          0          0     0.0%
+  terminate-s4              lat_p95_ms                      1          1          1     0.0%
+  terminate-s4              lat_p99_ms                      2          2          2     0.0%
+  terminate-s4              lat_max_ms                     27         27         27     0.0%
+  terminate-s4              worst_client_p95_ms             1          1          1     0.0%
+  terminate-s4              last_seq_min            1.335e+05  1.335e+05  1.335e+05     0.0%
+  terminate-tight           run                             1          1          1     0.0%
+  terminate-tight           seconds                        45         45         45     0.0%
+  terminate-tight           published               1.338e+05  1.335e+05  1.341e+05     0.4%
+  terminate-tight           publish_per_s                2973       2967       2979     0.4%
+  terminate-tight           heap_peak_mb                48.55       48.4       48.7     0.6%
+  terminate-tight           heap_end_mb                 29.85       28.9       30.8     6.4%
+  terminate-tight           slow_queue_peak_mb           1.21       1.17       1.25     6.6%
+  terminate-tight           gc_ms                       104.5        100        109     8.6%
+  terminate-tight           broadcast_blocked_ms         32.5         26         39    40.0%  **폭 큼**
+  terminate-tight           closed_sessions                 6          6          6     0.0%
+  terminate-tight           oom                             0          0          0     0.0%
+  terminate-tight           recv_total              6.661e+05  6.655e+05  6.668e+05     0.2%
+  terminate-tight           lat_p50_ms                    0.5          0          1   200.0%  **폭 큼**
+  terminate-tight           lat_p95_ms                      1          1          1     0.0%
+  terminate-tight           lat_p99_ms                      2          2          2     0.0%
+  terminate-tight           lat_max_ms                   32.5         30         35    15.4%
+  terminate-tight           worst_client_p95_ms             1          1          1     0.0%
+  terminate-tight           last_seq_min            1.332e+05  1.331e+05  1.333e+05     0.2%
+  terminate-tight           run                             2          2          2     0.0%
+  terminate-tight           seconds                        45         45         45     0.0%
+  terminate-tight           published               1.338e+05  1.337e+05   1.34e+05     0.2%
+  terminate-tight           publish_per_s                2974       2972       2977     0.2%
+  terminate-tight           heap_peak_mb                48.35       48.3       48.4     0.2%
+  terminate-tight           heap_end_mb                  30.9         29       32.8    12.3%
+  terminate-tight           slow_queue_peak_mb          1.185       1.17        1.2     2.5%
+  terminate-tight           gc_ms                         108        105        111     5.6%
+  terminate-tight           broadcast_blocked_ms           13          2         24   169.2%  **폭 큼**
+  terminate-tight           closed_sessions                 6          6          6     0.0%
+  terminate-tight           oom                             0          0          0     0.0%
+  terminate-tight           recv_total               6.67e+05  6.657e+05  6.682e+05     0.4%
+  terminate-tight           lat_p50_ms                      1          1          1     0.0%
+  terminate-tight           lat_p95_ms                      1          1          1     0.0%
+  terminate-tight           lat_p99_ms                      2          2          2     0.0%
+  terminate-tight           lat_max_ms                   34.5         18         51    95.7%  **폭 큼**
+  terminate-tight           worst_client_p95_ms             1          1          1     0.0%
+  terminate-tight           last_seq_min            1.334e+05  1.331e+05  1.336e+05     0.4%
+  terminate-tight           run                             3          3          3     0.0%
+  terminate-tight           seconds                        45         45         45     0.0%
+  terminate-tight           published               1.338e+05  1.336e+05   1.34e+05     0.3%
+  terminate-tight           publish_per_s                2974       2969       2978     0.3%
+  terminate-tight           heap_peak_mb                 48.4       48.4       48.4     0.0%
+  terminate-tight           heap_end_mb                  30.8       28.6         33    14.3%
+  terminate-tight           slow_queue_peak_mb            1.2       1.18       1.22     3.3%
+  terminate-tight           gc_ms                       107.5        105        110     4.7%
+  terminate-tight           broadcast_blocked_ms           53         53         53     0.0%
+  terminate-tight           closed_sessions                 6          6          6     0.0%
+  terminate-tight           oom                             0          0          0     0.0%
+  terminate-tight           recv_total              6.661e+05  6.647e+05  6.675e+05     0.4%
+  terminate-tight           lat_p50_ms                    0.5          0          1   200.0%  **폭 큼**
+  terminate-tight           lat_p95_ms                      1          1          1     0.0%
+  terminate-tight           lat_p99_ms                      2          2          2     0.0%
+  terminate-tight           lat_max_ms                     45         44         46     4.4%
+  terminate-tight           worst_client_p95_ms             1          1          1     0.0%
+  terminate-tight           last_seq_min            1.332e+05  1.329e+05  1.335e+05     0.4%
+  unbounded                 run                             1          1          1     0.0%
+  unbounded                 seconds                       110        110        110     0.0%
+  unbounded                 published               2.154e+05  2.153e+05  2.155e+05     0.1%
+  unbounded                 publish_per_s                1958       1958       1959     0.1%
+  unbounded                 heap_peak_mb                123.7      123.7      123.7     0.0%
+  unbounded                 heap_end_mb                 123.6      123.4      123.7     0.2%
+  unbounded                 slow_queue_peak_mb          95.57      95.57      95.58     0.0%
+  unbounded                 gc_ms                   2.875e+04  2.578e+04  3.173e+04    20.7%
+  unbounded                 broadcast_blocked_ms         2536       1488       3585    82.7%  **폭 큼**
+  unbounded                 closed_sessions                 6          6          6     0.0%
+  unbounded                 oom                           1.5          1          2    66.7%  **폭 큼**
+  unbounded                 recv_total              1.077e+06  1.077e+06  1.078e+06     0.1%
+  unbounded                 lat_p50_ms                      0          0          0     0.0%
+  unbounded                 lat_p95_ms                      1          1          1     0.0%
+  unbounded                 lat_p99_ms                      2          2          2     0.0%
+  unbounded                 lat_max_ms              1.203e+04   1.18e+04  1.225e+04     3.7%
+  unbounded                 worst_client_p95_ms             1          1          1     0.0%
+  unbounded                 last_seq_min            2.154e+05  2.152e+05  2.155e+05     0.2%
+  unbounded                 run                             2          2          2     0.0%
+  unbounded                 seconds                     109.5        109        110     0.9%
+  unbounded                 published                2.16e+05  2.155e+05  2.165e+05     0.4%
+  unbounded                 publish_per_s                1972       1959       1986     1.4%
+  unbounded                 heap_peak_mb                123.7      123.7      123.7     0.0%
+  unbounded                 heap_end_mb                 123.4      123.1      123.7     0.5%
+  unbounded                 slow_queue_peak_mb          95.56      95.55      95.58     0.0%
+  unbounded                 gc_ms                   3.206e+04  2.671e+04  3.741e+04    33.4%  **폭 큼**
+  unbounded                 broadcast_blocked_ms         1580       1071       2089    64.4%  **폭 큼**
+  unbounded                 closed_sessions               2.5          0          5   200.0%  **폭 큼**
+  unbounded                 oom                           0.5          0          1   200.0%  **폭 큼**
+  unbounded                 recv_total               1.08e+06  1.078e+06  1.082e+06     0.4%
+  unbounded                 lat_p50_ms                      0          0          0     0.0%
+  unbounded                 lat_p95_ms                      1          1          1     0.0%
+  unbounded                 lat_p99_ms                    1.5          1          2    66.7%  **폭 큼**
+  unbounded                 lat_max_ms                   5764        802  1.073e+04   172.2%  **폭 큼**
+  unbounded                 worst_client_p95_ms             1          1          1     0.0%
+  unbounded                 last_seq_min             2.16e+05  2.155e+05  2.165e+05     0.4%
+  unbounded                 run                             3          3          3     0.0%
+  unbounded                 seconds                       109        109        109     0.0%
+  unbounded                 published               2.166e+05  2.165e+05  2.166e+05     0.0%
+  unbounded                 publish_per_s                1986       1986       1987     0.1%
+  unbounded                 heap_peak_mb                123.7      123.7      123.7     0.0%
+  unbounded                 heap_end_mb                 123.7      123.7      123.7     0.0%
+  unbounded                 slow_queue_peak_mb          95.56      95.55      95.56     0.0%
+  unbounded                 gc_ms                   3.768e+04   3.75e+04  3.785e+04     0.9%
+  unbounded                 broadcast_blocked_ms         3680       2568       4792    60.4%  **폭 큼**
+  unbounded                 closed_sessions                 0          0          0     0.0%
+  unbounded                 oom                             0          0          0     0.0%
+  unbounded                 recv_total              1.083e+06  1.082e+06  1.083e+06     0.0%
+  unbounded                 lat_p50_ms                      0          0          0     0.0%
+  unbounded                 lat_p95_ms                      1          1          1     0.0%
+  unbounded                 lat_p99_ms                      3          3          3     0.0%
+  unbounded                 lat_max_ms                   1364        837       1890    77.2%  **폭 큼**
+  unbounded                 worst_client_p95_ms             1          1          1     0.0%
+  unbounded                 last_seq_min            2.165e+05  2.165e+05  2.166e+05     0.1%
+  unbounded-s1              run                             1          1          1     0.0%
+  unbounded-s1              seconds                       109        109        109     0.0%
+  unbounded-s1              published               2.151e+05  2.151e+05  2.151e+05     0.0%
+  unbounded-s1              publish_per_s                1973       1973       1973     0.0%
+  unbounded-s1              heap_peak_mb                123.7      123.7      123.7     0.0%
+  unbounded-s1              heap_end_mb                 123.6      123.6      123.6     0.0%
+  unbounded-s1              slow_queue_peak_mb          95.57      95.57      95.57     0.0%
+  unbounded-s1              gc_ms                   2.589e+04  2.589e+04  2.589e+04     0.0%
+  unbounded-s1              broadcast_blocked_ms         2721       2721       2721     0.0%
+  unbounded-s1              closed_sessions                 0          0          0     0.0%
+  unbounded-s1              oom                             1          1          1     0.0%
+  unbounded-s1              recv_total              1.075e+06  1.075e+06  1.075e+06     0.0%
+  unbounded-s1              lat_p50_ms                      0          0          0     0.0%
+  unbounded-s1              lat_p95_ms                      1          1          1     0.0%
+  unbounded-s1              lat_p99_ms                      2          2          2     0.0%
+  unbounded-s1              lat_max_ms              1.107e+04  1.107e+04  1.107e+04     0.0%
+  unbounded-s1              worst_client_p95_ms             1          1          1     0.0%
+  unbounded-s1              last_seq_min            2.151e+05  2.151e+05  2.151e+05     0.0%
+  unbounded-s2              run                             1          1          1     0.0%
+  unbounded-s2              seconds                      54.5          0        109   200.0%  **폭 큼**
+  unbounded-s2              published               1.032e+05          0  2.063e+05   200.0%  **폭 큼**
+  unbounded-s2              publish_per_s               946.5          0       1893   200.0%  **폭 큼**
+  unbounded-s2              heap_peak_mb                61.85          0      123.7   200.0%  **폭 큼**
+  unbounded-s2              heap_end_mb                 61.55          0      123.1   200.0%  **폭 큼**
+  unbounded-s2              slow_queue_peak_mb          45.81          0      91.63   200.0%  **폭 큼**
+  unbounded-s2              gc_ms                   1.412e+04          0  2.824e+04   200.0%  **폭 큼**
+  unbounded-s2              broadcast_blocked_ms         1904          0       3807   200.0%  **폭 큼**
+  unbounded-s2              closed_sessions                 0          0          0     0.0%
+  unbounded-s2              oom                           0.5          0          1   200.0%  **폭 큼**
+  unbounded-s2              recv_total              1.032e+06  1.032e+06  1.032e+06     0.0%
+  unbounded-s2              lat_p50_ms                      0          0          0     0.0%
+  unbounded-s2              lat_p95_ms                      1          1          1     0.0%
+  unbounded-s2              lat_p99_ms                      2          2          2     0.0%
+  unbounded-s2              lat_max_ms              1.049e+04  1.049e+04  1.049e+04     0.0%
+  unbounded-s2              worst_client_p95_ms             1          1          1     0.0%
+  unbounded-s2              last_seq_min            2.063e+05  2.063e+05  2.063e+05     0.0%
+  unbounded-s4              run                             1          1          1     0.0%
+  unbounded-s4              seconds                       110        110        110     0.0%
+  unbounded-s4              published               1.926e+05  1.926e+05  1.926e+05     0.0%
+  unbounded-s4              publish_per_s                1751       1751       1751     0.0%
+  unbounded-s4              heap_peak_mb                123.7      123.7      123.7     0.0%
+  unbounded-s4              heap_end_mb                 123.7      123.7      123.7     0.0%
+  unbounded-s4              slow_queue_peak_mb          84.64      84.64      84.64     0.0%
+  unbounded-s4              gc_ms                   4.733e+04  4.733e+04  4.733e+04     0.0%
+  unbounded-s4              broadcast_blocked_ms         5523       5523       5523     0.0%
+  unbounded-s4              closed_sessions                 0          0          0     0.0%
+  unbounded-s4              oom                             0          0          0     0.0%
+  unbounded-s4              recv_total              9.628e+05  9.628e+05  9.628e+05     0.0%
+  unbounded-s4              lat_p50_ms                      1          1          1     0.0%
+  unbounded-s4              lat_p95_ms                      1          1          1     0.0%
+  unbounded-s4              lat_p99_ms                      3          3          3     0.0%
+  unbounded-s4              lat_max_ms                    755        755        755     0.0%
+  unbounded-s4              worst_client_p95_ms             1          1          1     0.0%
+  unbounded-s4              last_seq_min            1.926e+05  1.926e+05  1.926e+05     0.0%
+
+## raw/client-baseline-r1.txt  (숫자가 흔들리는 줄 11개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  합계 수신 657594건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms      8       31.5         16         47    98.4%  **폭 큼**
+  SUMMARY mode=baseline run=1 recv_total=657594 lat_p5     9       31.5         16         47    98.4%  **폭 큼**
+  SUMMARY mode=baseline run=1 recv_total=657594 lat_p5    14       31.5         16         47    98.4%  **폭 큼**
+  합계 수신 657594건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms      7        1.5          1          2    66.7%  **폭 큼**
+  SUMMARY mode=baseline run=1 recv_total=657594 lat_p5     8        1.5          1          2    66.7%  **폭 큼**
+  최종 수신 틱 seq: 최소 131514, 최대 131520                        2  1.327e+05  1.315e+05  1.339e+05     1.8%
+  SUMMARY mode=baseline run=1 recv_total=657594 lat_p5    11  1.327e+05  1.315e+05  1.339e+05     1.8%
+  합계 수신 657594건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms      1  6.634e+05  6.576e+05  6.693e+05     1.8%
+  SUMMARY mode=baseline run=1 recv_total=657594 lat_p5     2  6.634e+05  6.576e+05  6.693e+05     1.8%
+  최종 수신 틱 seq: 최소 131514, 최대 131520                        1  1.327e+05  1.315e+05  1.338e+05     1.8%
+  SUMMARY mode=baseline run=1 recv_total=657594 lat_p5    10  1.327e+05  1.315e+05  1.338e+05     1.8%
+
+## raw/client-baseline-r2.txt  (숫자가 흔들리는 줄 40개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-1     131160     131160       0ms       1ms       6        1.5          1          2    66.7%  **폭 큼**
+  normal-2     131160     131160       0ms       1ms       6        1.5          1          2    66.7%  **폭 큼**
+  normal-3     131160     131160       0ms       1ms       6        1.5          1          2    66.7%  **폭 큼**
+  normal-5     131161     131161       0ms       1ms       6        1.5          1          2    66.7%  **폭 큼**
+  합계 수신 655801건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms      7        1.5          1          2    66.7%  **폭 큼**
+  SUMMARY mode=baseline run=2 recv_total=655801 lat_p5     8        1.5          1          2    66.7%  **폭 큼**
+  normal-1     131160     131160       0ms       1ms       7       38.5         35         42    18.2%
+  normal-3     131160     131160       0ms       1ms       7         39         36         42    15.4%
+  합계 수신 655801건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms      8         39         36         42    15.4%
+  SUMMARY mode=baseline run=2 recv_total=655801 lat_p5     9         39         36         42    15.4%
+  SUMMARY mode=baseline run=2 recv_total=655801 lat_p5    14         39         36         42    15.4%
+  normal-2     131160     131160       0ms       1ms       7       37.5         35         40    13.3%
+
+## raw/client-baseline-r3.txt  (숫자가 흔들리는 줄 33개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-2     133062     133062       0ms       1ms       6        1.5          1          2    66.7%  **폭 큼**
+  normal-3     133062     133062       0ms       1ms       7         49         45         53    16.3%
+  normal-5     133062     133062       0ms       1ms       7         49         45         53    16.3%
+  합계 수신 665299건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=1ms      8         49         45         53    16.3%
+  SUMMARY mode=baseline run=3 recv_total=665299 lat_p5     9         49         45         53    16.3%
+  SUMMARY mode=baseline run=3 recv_total=665299 lat_p5    14         49         45         53    16.3%
+  normal-4     133062     133062       0ms       1ms       9         50         46         54    16.0%
+  normal-3     133062     133062       0ms       1ms       9         51         47         55    15.7%
+  normal-5     133062     133062       0ms       1ms       9         51         47         55    15.7%
+  normal-1     133051     133051       0ms       1ms       7       48.5         45         52    14.4%
+  normal-2     133062     133062       0ms       1ms       7       48.5         45         52    14.4%
+  normal-4     133062     133062       0ms       1ms       7       48.5         45         52    14.4%
+
+## raw/client-bounded-r1.txt  (숫자가 흔들리는 줄 39개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  slow-1  읽은 바이트 1,451,268 (평균 31.4 KB/s, 목표 32.0 KB/s     4        630        268        992   114.9%  **폭 큼**
+  normal-1     134118     134118       0ms       1ms       7       16.5         10         23    78.8%  **폭 큼**
+  normal-2     134118     134118       0ms       1ms       7       16.5         10         23    78.8%  **폭 큼**
+  normal-3     134118     134118       0ms       1ms       7       16.5         10         23    78.8%  **폭 큼**
+  normal-4     134118     134118       0ms       1ms       7       16.5         10         23    78.8%  **폭 큼**
+  normal-5     134124     134124       0ms       1ms       7       16.5         10         23    78.8%  **폭 큼**
+  합계 수신 670596건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=1ms      8       16.5         10         23    78.8%  **폭 큼**
+  SUMMARY mode=bounded run=1 recv_total=670596 lat_p50     9       16.5         10         23    78.8%  **폭 큼**
+  SUMMARY mode=bounded run=1 recv_total=670596 lat_p50    14       16.5         10         23    78.8%  **폭 큼**
+  normal-1     134118     134118       0ms       1ms       6        1.5          1          2    66.7%  **폭 큼**
+  normal-2     134118     134118       0ms       1ms       6        1.5          1          2    66.7%  **폭 큼**
+  normal-3     134118     134118       0ms       1ms       6        1.5          1          2    66.7%  **폭 큼**
+
+## raw/client-bounded-r2.txt  (숫자가 흔들리는 줄 34개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  slow-1  읽은 바이트 1,454,544 (평균 31.4 KB/s, 목표 32.0 KB/s     4        354        164        544   107.3%  **폭 큼**
+  normal-1     134124     134124       0ms       1ms       6        1.5          1          2    66.7%  **폭 큼**
+  normal-1     134124     134124       0ms       1ms       7       17.5         13         22    51.4%  **폭 큼**
+  normal-3     134136     134136       0ms       1ms       7       17.5         13         22    51.4%  **폭 큼**
+  합계 수신 670662건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms      8       17.5         13         22    51.4%  **폭 큼**
+  SUMMARY mode=bounded run=2 recv_total=670662 lat_p50     9       17.5         13         22    51.4%  **폭 큼**
+  SUMMARY mode=bounded run=2 recv_total=670662 lat_p50    14       17.5         13         22    51.4%  **폭 큼**
+  normal-5     134136     134136       0ms       1ms       7         17         13         21    47.1%  **폭 큼**
+  normal-3     134136     134136       0ms       1ms       9       20.5         16         25    43.9%  **폭 큼**
+  normal-1     134124     134124       0ms       1ms       9         20         16         24    40.0%  **폭 큼**
+  normal-2     134130     134130       0ms       1ms       9       19.5         16         23    35.9%  **폭 큼**
+  normal-4     134136     134136       0ms       1ms       9       19.5         16         23    35.9%  **폭 큼**
+
+## raw/client-bounded-r3.txt  (숫자가 흔들리는 줄 41개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  slow-1  읽은 바이트 1,451,268 (평균 31.4 KB/s, 목표 32.0 KB/s     4        492        268        716    91.1%  **폭 큼**
+  normal-1     134148     134148       0ms       1ms       7       31.5         19         44    79.4%  **폭 큼**
+  normal-2     134148     134148       0ms       1ms       7       31.5         19         44    79.4%  **폭 큼**
+  normal-3     134154     134154       0ms       1ms       7       31.5         19         44    79.4%  **폭 큼**
+  normal-4     134153     134153       0ms       1ms       7       31.5         19         44    79.4%  **폭 큼**
+  normal-5     134153     134153       0ms       1ms       7       31.5         19         44    79.4%  **폭 큼**
+  합계 수신 670756건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=1ms      8       31.5         19         44    79.4%  **폭 큼**
+  SUMMARY mode=bounded run=3 recv_total=670756 lat_p50     9       31.5         19         44    79.4%  **폭 큼**
+  SUMMARY mode=bounded run=3 recv_total=670756 lat_p50    14       31.5         19         44    79.4%  **폭 큼**
+  normal-1     134148     134148       0ms       1ms       9         33         20         46    78.8%  **폭 큼**
+  normal-2     134148     134148       0ms       1ms       9         33         20         46    78.8%  **폭 큼**
+  normal-3     134154     134154       0ms       1ms       9         33         20         46    78.8%  **폭 큼**
+
+## raw/client-combo-r1.txt  (숫자가 흔들리는 줄 33개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  slow-1  읽은 바이트 1,454,544 (평균 31.4 KB/s, 목표 32.0 KB/s     4        768        544        992    58.3%  **폭 큼**
+  normal-3     133717     133734       0ms       1ms       7       23.5         20         27    29.8%
+  normal-4     133717     133734       0ms       1ms       7       23.5         20         27    29.8%
+  합계 수신 668564건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms      8       23.5         20         27    29.8%
+  SUMMARY mode=combo run=1 recv_total=668564 lat_p50_m     9       23.5         20         27    29.8%
+  SUMMARY mode=combo run=1 recv_total=668564 lat_p50_m    14       23.5         20         27    29.8%
+  normal-1     133703     133722       0ms       1ms       7         23         20         26    26.1%
+  normal-2     133714     133734       0ms       1ms       7         23         20         26    26.1%
+  normal-5     133713     133734       0ms       1ms       7         23         20         26    26.1%
+  normal-2     133714     133734       0ms       1ms       9       28.5         27         30    10.5%
+  normal-1     133703     133722       0ms       1ms       9         28         27         29     7.1%
+  normal-3     133717     133734       0ms       1ms       9         28         27         29     7.1%
+
+## raw/client-combo-r2.txt  (숫자가 흔들리는 줄 40개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-1     133226     133230       0ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-2     133228     133242       0ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-4     133219     133242       0ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-5     133239     133242       0ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  합계 수신 666145건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms      3        0.5          0          1   200.0%  **폭 큼**
+  SUMMARY mode=combo run=2 recv_total=666145 lat_p50_m     4        0.5          0          1   200.0%  **폭 큼**
+  normal-3     133233     133242       0ms       1ms       7       30.5         15         46   101.6%  **폭 큼**
+  slow-1  읽은 바이트 1,451,268 (평균 31.4 KB/s, 목표 32.0 KB/s     4        492        268        716    91.1%  **폭 큼**
+  normal-1     133226     133230       0ms       1ms       7         26         15         37    84.6%  **폭 큼**
+  normal-4     133219     133242       0ms       1ms       7         26         15         37    84.6%  **폭 큼**
+  normal-5     133239     133242       0ms       1ms       7       25.5         15         36    82.4%  **폭 큼**
+  합계 수신 666145건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms      8       35.5         25         46    59.2%  **폭 큼**
+
+## raw/client-combo-r3.txt  (숫자가 흔들리는 줄 40개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-1     133797     133818       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-2     133789     133818       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-3     133797     133818       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-4     133798     133818       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-5     133797     133818       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  합계 수신 668978건, 정상 구독자 전체 지연 p50=1ms p95=1ms p99=2ms      3        0.5          0          1   200.0%  **폭 큼**
+  SUMMARY mode=combo run=3 recv_total=668978 lat_p50_m     4        0.5          0          1   200.0%  **폭 큼**
+  normal-1     133797     133818       1ms       1ms       9         39         19         59   102.6%  **폭 큼**
+  normal-2     133789     133818       1ms       1ms       9         39         19         59   102.6%  **폭 큼**
+  normal-3     133797     133818       1ms       1ms       9         39         19         59   102.6%  **폭 큼**
+  normal-4     133798     133818       1ms       1ms       9         39         19         59   102.6%  **폭 큼**
+  normal-5     133797     133818       1ms       1ms       9       39.5         20         59    98.7%  **폭 큼**
+
+## raw/client-combo-stalled-r1.txt  (숫자가 흔들리는 줄 12개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  합계 수신 664617건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms      3        0.5          0          1   200.0%  **폭 큼**
+  SUMMARY mode=combo-stalled run=1 recv_total=664617 l     4        0.5          0          1   200.0%  **폭 큼**
+  합계 수신 664617건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms      8         38         31         45    36.8%  **폭 큼**
+  SUMMARY mode=combo-stalled run=1 recv_total=664617 l     9         38         31         45    36.8%  **폭 큼**
+  SUMMARY mode=combo-stalled run=1 recv_total=664617 l    14         38         31         45    36.8%  **폭 큼**
+  mode=combo-stalled run=1 측정시간=45.1s 정상구독자=5 느린구독자=1(     2      45.05         45       45.1     0.2%
+  최종 수신 틱 seq: 최소 132936, 최대 132942                        1  1.329e+05  1.329e+05  1.329e+05     0.0%
+  SUMMARY mode=combo-stalled run=1 recv_total=664617 l    10  1.329e+05  1.329e+05  1.329e+05     0.0%
+  최종 수신 틱 seq: 최소 132936, 최대 132942                        2  1.329e+05  1.329e+05  1.329e+05     0.0%
+  SUMMARY mode=combo-stalled run=1 recv_total=664617 l    11  1.329e+05  1.329e+05  1.329e+05     0.0%
+  합계 수신 664617건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms      1  6.646e+05  6.645e+05  6.646e+05     0.0%
+  SUMMARY mode=combo-stalled run=1 recv_total=664617 l     2  6.646e+05  6.645e+05  6.646e+05     0.0%
+
+## raw/client-combo-stalled-r2.txt  (숫자가 흔들리는 줄 31개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-1     133376     133380       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-5     133373     133392       0ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-2     133384     133386       1ms       1ms       7         25         13         37    96.0%  **폭 큼**
+  normal-3     133367     133386       1ms       1ms       7         25         13         37    96.0%  **폭 큼**
+  normal-1     133376     133380       1ms       1ms       7       20.5         13         28    73.2%  **폭 큼**
+  normal-5     133373     133392       0ms       1ms       7       20.5         13         28    73.2%  **폭 큼**
+  normal-1     133376     133380       1ms       1ms       9       36.5         32         41    24.7%
+  normal-3     133367     133386       1ms       1ms       9       36.5         32         41    24.7%
+  normal-5     133373     133392       0ms       1ms       9       36.5         32         41    24.7%
+  normal-2     133384     133386       1ms       1ms       9       37.5         34         41    18.7%
+  normal-4     133384     133386       1ms       1ms       9         39         37         41    10.3%
+  normal-4     133384     133386       1ms       1ms       7         36         35         37     5.6%
+
+## raw/client-combo-stalled-r3.txt  (숫자가 흔들리는 줄 30개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-4     133366     133386       0ms       1ms       7       29.5         23         36    44.1%  **폭 큼**
+  normal-5     133386     133386       0ms       1ms       7       29.5         23         36    44.1%  **폭 큼**
+  normal-1     133380     133380       0ms       1ms       7       30.5         24         37    42.6%  **폭 큼**
+  합계 수신 666879건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms      8       30.5         24         37    42.6%  **폭 큼**
+  SUMMARY mode=combo-stalled run=3 recv_total=666879 l     9       30.5         24         37    42.6%  **폭 큼**
+  SUMMARY mode=combo-stalled run=3 recv_total=666879 l    14       30.5         24         37    42.6%  **폭 큼**
+  normal-2     133370     133386       0ms       1ms       7         30         24         36    40.0%  **폭 큼**
+  normal-3     133377     133386       0ms       1ms       7         30         24         36    40.0%  **폭 큼**
+  normal-4     133366     133386       0ms       1ms       9         37         36         38     5.4%
+  normal-5     133386     133386       0ms       1ms       9         37         36         38     5.4%
+  normal-2     133370     133386       0ms       1ms       9       37.5         37         38     2.7%
+  normal-3     133377     133386       0ms       1ms       9       37.5         37         38     2.7%
+
+## raw/client-conflate-r1.txt  (숫자가 흔들리는 줄 40개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-3     134218     134238       0ms       1ms       7       24.5         14         35    85.7%  **폭 큼**
+  normal-3     134218     134238       0ms       1ms       9       25.5         15         36    82.4%  **폭 큼**
+  normal-4     134243     134250       0ms       1ms       7       23.5         14         33    80.9%  **폭 큼**
+  normal-5     134230     134243       0ms       1ms       7       23.5         14         33    80.9%  **폭 큼**
+  normal-2     134223     134231       0ms       1ms       9         25         15         35    80.0%  **폭 큼**
+  normal-4     134243     134250       0ms       1ms       9         25         15         35    80.0%  **폭 큼**
+  normal-5     134230     134243       0ms       1ms       9         25         15         35    80.0%  **폭 큼**
+  합계 수신 671120건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=1ms      8         25         15         35    80.0%  **폭 큼**
+  SUMMARY mode=conflate run=1 recv_total=671120 lat_p5     9         25         15         35    80.0%  **폭 큼**
+  SUMMARY mode=conflate run=1 recv_total=671120 lat_p5    14         25         15         35    80.0%  **폭 큼**
+  normal-1     134206     134226       0ms       1ms       9         24         15         33    75.0%  **폭 큼**
+  normal-2     134223     134231       0ms       1ms       7         24         15         33    75.0%  **폭 큼**
+
+## raw/client-conflate-r2.txt  (숫자가 흔들리는 줄 39개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-1     134221     134232       0ms       1ms       9       25.5         13         38    98.0%  **폭 큼**
+  normal-2     134232     134232       0ms       1ms       9       25.5         13         38    98.0%  **폭 큼**
+  normal-3     134232     134232       0ms       1ms       9       25.5         13         38    98.0%  **폭 큼**
+  normal-4     134234     134238       0ms       1ms       9       25.5         13         38    98.0%  **폭 큼**
+  normal-5     134227     134232       0ms       1ms       9       25.5         13         38    98.0%  **폭 큼**
+  normal-1     134221     134232       0ms       1ms       7         20         12         28    80.0%  **폭 큼**
+  normal-2     134232     134232       0ms       1ms       7         20         12         28    80.0%  **폭 큼**
+  normal-4     134234     134238       0ms       1ms       7         20         12         28    80.0%  **폭 큼**
+  normal-5     134227     134232       0ms       1ms       7         20         12         28    80.0%  **폭 큼**
+  합계 수신 671146건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=1ms      8         20         12         28    80.0%  **폭 큼**
+  SUMMARY mode=conflate run=2 recv_total=671146 lat_p5     9         20         12         28    80.0%  **폭 큼**
+  SUMMARY mode=conflate run=2 recv_total=671146 lat_p5    14         20         12         28    80.0%  **폭 큼**
+
+## raw/client-conflate-r3.txt  (숫자가 흔들리는 줄 45개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-1     134328     134328       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-2     134334     134334       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-3     134334     134334       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-5     134334     134334       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  합계 수신 671664건, 정상 구독자 전체 지연 p50=1ms p95=1ms p99=1ms      3        0.5          0          1   200.0%  **폭 큼**
+  SUMMARY mode=conflate run=3 recv_total=671664 lat_p5     4        0.5          0          1   200.0%  **폭 큼**
+  normal-2     134334     134334       1ms       1ms       7         23         11         35   104.3%  **폭 큼**
+  normal-3     134334     134334       1ms       1ms       7         23         11         35   104.3%  **폭 큼**
+  합계 수신 671664건, 정상 구독자 전체 지연 p50=1ms p95=1ms p99=1ms      8         23         11         35   104.3%  **폭 큼**
+  SUMMARY mode=conflate run=3 recv_total=671664 lat_p5     9         23         11         35   104.3%  **폭 큼**
+  SUMMARY mode=conflate run=3 recv_total=671664 lat_p5    14         23         11         35   104.3%  **폭 큼**
+  normal-1     134328     134328       1ms       1ms       7       22.5         11         34   102.2%  **폭 큼**
+
+## raw/client-decorator-r1.txt  (숫자가 흔들리는 줄 30개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-1     134094     134094       1ms       1ms       7       30.5         24         37    42.6%  **폭 큼**
+  normal-4     134112     134112       1ms       1ms       7         31         25         37    38.7%  **폭 큼**
+  합계 수신 670523건, 정상 구독자 전체 지연 p50=1ms p95=1ms p99=2ms      8       31.5         26         37    34.9%  **폭 큼**
+  SUMMARY mode=decorator run=1 recv_total=670523 lat_p     9       31.5         26         37    34.9%  **폭 큼**
+  SUMMARY mode=decorator run=1 recv_total=670523 lat_p    14       31.5         26         37    34.9%  **폭 큼**
+  normal-1     134094     134094       1ms       1ms       9       34.5         31         38    20.3%
+  normal-4     134112     134112       1ms       1ms       9       34.5         31         38    20.3%
+  normal-2     134100     134100       1ms       1ms       9         34         31         37    17.6%
+  normal-3     134105     134105       1ms       1ms       9         34         31         37    17.6%
+  normal-5     134112     134112       1ms       1ms       9       34.5         32         37    14.5%
+  normal-2     134100     134100       1ms       1ms       7       27.5         26         29    10.9%
+  normal-5     134112     134112       1ms       1ms       7       27.5         26         29    10.9%
+
+## raw/client-decorator-r2.txt  (숫자가 흔들리는 줄 32개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-5     134286     134286       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-1     134274     134274       1ms       1ms       9       41.5         39         44    12.0%
+  normal-2     134280     134280       1ms       1ms       9       41.5         39         44    12.0%
+  normal-5     134286     134286       1ms       1ms       9       41.5         39         44    12.0%
+  normal-3     134280     134280       1ms       1ms       7         41         39         43     9.8%
+  normal-4     134280     134280       1ms       1ms       7         41         39         43     9.8%
+  합계 수신 671400건, 정상 구독자 전체 지연 p50=1ms p95=1ms p99=2ms      8         41         39         43     9.8%
+  SUMMARY mode=decorator run=2 recv_total=671400 lat_p     9         41         39         43     9.8%
+  SUMMARY mode=decorator run=2 recv_total=671400 lat_p    14         41         39         43     9.8%
+  slow-1  읽은 바이트 85,437 (평균 1.9 KB/s, 목표 32.0 KB/s)  서     4       1.85        1.8        1.9     5.4%
+  normal-2     134280     134280       1ms       1ms       8       2.05          2        2.1     4.9%
+  normal-5     134286     134286       1ms       1ms       8       2.05          2        2.1     4.9%
+
+## raw/client-decorator-r3.txt  (숫자가 흔들리는 줄 9개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  합계 수신 673824건, 정상 구독자 전체 지연 p50=1ms p95=1ms p99=2ms      8         10          8         12    40.0%  **폭 큼**
+  SUMMARY mode=decorator run=3 recv_total=673824 lat_p     9         10          8         12    40.0%  **폭 큼**
+  SUMMARY mode=decorator run=3 recv_total=673824 lat_p    14         10          8         12    40.0%  **폭 큼**
+  최종 수신 틱 seq: 최소 134760, 최대 134766                        1  1.347e+05  1.347e+05  1.348e+05     0.1%
+  SUMMARY mode=decorator run=3 recv_total=673824 lat_p    10  1.347e+05  1.347e+05  1.348e+05     0.1%
+  합계 수신 673824건, 정상 구독자 전체 지연 p50=1ms p95=1ms p99=2ms      1  6.736e+05  6.733e+05  6.738e+05     0.1%
+  SUMMARY mode=decorator run=3 recv_total=673824 lat_p     2  6.736e+05  6.733e+05  6.738e+05     0.1%
+  최종 수신 틱 seq: 최소 134760, 최대 134766                        2  1.347e+05  1.347e+05  1.348e+05     0.1%
+  SUMMARY mode=decorator run=3 recv_total=673824 lat_p    11  1.347e+05  1.347e+05  1.348e+05     0.1%
+
+## raw/client-direct-r1.txt  (숫자가 흔들리는 줄 44개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-2       3120       3120       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-1       3121       3121       0ms       1ms       6        1.5          1          2    66.7%  **폭 큼**
+  normal-5       3121       3121       0ms       1ms       6        1.5          1          2    66.7%  **폭 큼**
+  normal-1       3121       3121       0ms       1ms       7        3.5          3          4    28.6%
+  normal-4       3121       3121       0ms       1ms       7        3.5          3          4    28.6%
+  normal-5       3121       3121       0ms       1ms       7        3.5          3          4    28.6%
+  normal-2       3120       3120       1ms       1ms       8        2.2        2.1        2.3     9.1%
+  normal-3       3120       3120       0ms       1ms       8        2.2        2.1        2.3     9.1%
+  slow-1  읽은 바이트 1,441,440 (평균 31.2 KB/s, 목표 32.0 KB/s     4        422        404        440     8.5%
+  slow-1  읽은 바이트 1,441,440 (평균 31.2 KB/s, 목표 32.0 KB/s     3        423        405        441     8.5%
+  normal-1       3121       3121       0ms       1ms       8       2.15        2.1        2.2     4.7%
+  normal-4       3121       3121       0ms       1ms       8       2.15        2.1        2.2     4.7%
+
+## raw/client-direct-r2.txt  (숫자가 흔들리는 줄 13개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  slow-1  읽은 바이트 1,425,060 (평균 30.9 KB/s, 목표 32.0 KB/s     4         42         24         60    85.7%  **폭 큼**
+  slow-1  읽은 바이트 1,425,060 (평균 30.9 KB/s, 목표 32.0 KB/s     3        407        389        425     8.8%
+  합계 수신 15603건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms m     8        997        975       1019     4.4%
+  SUMMARY mode=direct run=2 recv_total=15603 lat_p50_m     9        997        975       1019     4.4%
+  SUMMARY mode=direct run=2 recv_total=15603 lat_p50_m    14        997        975       1019     4.4%
+  최종 수신 틱 seq: 최소 3120, 최대 3121                            1       3060       3000       3120     3.9%
+  SUMMARY mode=direct run=2 recv_total=15603 lat_p50_m    10       3060       3000       3120     3.9%
+  합계 수신 15603건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms m     1   1.53e+04    1.5e+04   1.56e+04     3.9%
+  SUMMARY mode=direct run=2 recv_total=15603 lat_p50_m     2   1.53e+04    1.5e+04   1.56e+04     3.9%
+  최종 수신 틱 seq: 최소 3120, 최대 3121                            2       3061       3001       3121     3.9%
+  SUMMARY mode=direct run=2 recv_total=15603 lat_p50_m    11       3061       3001       3121     3.9%
+  slow-1  읽은 바이트 1,425,060 (평균 30.9 KB/s, 목표 32.0 KB/s     5       30.5       30.1       30.9     2.6%
+
+## raw/client-direct-r3.txt  (숫자가 흔들리는 줄 32개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  slow-1  읽은 바이트 1,438,164 (평균 31.1 KB/s, 목표 32.0 KB/s     4        456        164        748   128.1%  **폭 큼**
+  합계 수신 15573건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms m     7        1.5          1          2    66.7%  **폭 큼**
+  SUMMARY mode=direct run=3 recv_total=15573 lat_p50_m     8        1.5          1          2    66.7%  **폭 큼**
+  normal-4       3115       3115       0ms       1ms       7         14         13         15    14.3%
+  slow-1  읽은 바이트 1,438,164 (평균 31.1 KB/s, 목표 32.0 KB/s     3      411.5        385        438    12.9%
+  normal-2       3114       3114       0ms       1ms       8       2.25        2.2        2.3     4.4%
+  normal-4       3115       3115       0ms       1ms       8       2.25        2.2        2.3     4.4%
+  normal-3       3114       3114       0ms       1ms       8       2.35        2.3        2.4     4.3%
+  normal-2       3114       3114       0ms       1ms       6      900.5        883        918     3.9%
+  normal-3       3114       3114       0ms       1ms       6      900.5        883        918     3.9%
+  SUMMARY mode=direct run=3 recv_total=15573 lat_p50_m    16  1.412e+06  1.386e+06  1.438e+06     3.7%
+  slow-1  읽은 바이트 1,438,164 (평균 31.1 KB/s, 목표 32.0 KB/s     5      30.55         30       31.1     3.6%
+
+## raw/client-direct-stalled-r1.txt  (숫자가 흔들리는 줄 33개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-1      73762      73762       0ms       1ms       7         12         11         13    16.7%
+  normal-4      73770      73770       0ms       1ms       7         12         11         13    16.7%
+  normal-5      73770      73770       0ms       1ms       7         12         11         13    16.7%
+  normal-4      73770      73770       0ms       1ms       8        1.9        1.8          2    10.5%
+  normal-5      73770      73770       0ms       1ms       8       1.85        1.8        1.9     5.4%
+  normal-2      73770      73770       0ms       1ms       8       1.95        1.9          2     5.1%
+  normal-3      73770      73770       0ms       1ms       8       1.95        1.9          2     5.1%
+  normal-3      73770      73770       0ms       1ms       2  7.389e+04  7.377e+04  7.401e+04     0.3%
+  normal-3      73770      73770       0ms       1ms       3  7.389e+04  7.377e+04  7.401e+04     0.3%
+  normal-4      73770      73770       0ms       1ms       2  7.389e+04  7.377e+04  7.401e+04     0.3%
+  normal-4      73770      73770       0ms       1ms       3  7.389e+04  7.377e+04  7.401e+04     0.3%
+  normal-5      73770      73770       0ms       1ms       2  7.389e+04  7.377e+04  7.401e+04     0.3%
+
+## raw/client-direct-stalled-r2.txt  (숫자가 흔들리는 줄 31개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-1      74196      74196       0ms       1ms       7       23.5         11         36   106.4%  **폭 큼**
+  normal-4      74207      74207       0ms       1ms       7       23.5         11         36   106.4%  **폭 큼**
+  normal-5      74208      74208       0ms       1ms       7         13         11         15    30.8%  **폭 큼**
+  normal-2      74202      74202       0ms       1ms       8       1.95        1.9          2     5.1%
+  normal-3      74202      74202       0ms       1ms       8       1.95        1.9          2     5.1%
+  normal-1      74196      74196       0ms       1ms       2  7.429e+04   7.42e+04  7.438e+04     0.2%
+  normal-1      74196      74196       0ms       1ms       3  7.429e+04   7.42e+04  7.438e+04     0.2%
+  최종 수신 틱 seq: 최소 74196, 최대 74208                          1  7.429e+04   7.42e+04  7.438e+04     0.2%
+  SUMMARY mode=direct-stalled run=2 recv_total=371015     10  7.429e+04   7.42e+04  7.438e+04     0.2%
+  normal-2      74202      74202       0ms       1ms       2  7.429e+04   7.42e+04  7.438e+04     0.2%
+  normal-2      74202      74202       0ms       1ms       3  7.429e+04   7.42e+04  7.438e+04     0.2%
+  normal-3      74202      74202       0ms       1ms       2  7.429e+04   7.42e+04  7.438e+04     0.2%
+
+## raw/client-direct-stalled-r3.txt  (숫자가 흔들리는 줄 24개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-4      74622      74622       0ms       1ms       7       20.5         15         26    53.7%  **폭 큼**
+  normal-2      74622      74622       0ms       1ms       8       1.95        1.9          2     5.1%
+  normal-4      74622      74622       0ms       1ms       8       1.95        1.9          2     5.1%
+  normal-2      74622      74622       0ms       1ms       2  7.427e+04  7.391e+04  7.462e+04     1.0%
+  normal-2      74622      74622       0ms       1ms       3  7.427e+04  7.391e+04  7.462e+04     1.0%
+  normal-3      74622      74622       0ms       1ms       2  7.427e+04  7.391e+04  7.462e+04     1.0%
+  normal-3      74622      74622       0ms       1ms       3  7.427e+04  7.391e+04  7.462e+04     1.0%
+  최종 수신 틱 seq: 최소 74622, 최대 74623                          1  7.427e+04  7.391e+04  7.462e+04     1.0%
+  SUMMARY mode=direct-stalled run=3 recv_total=373111     10  7.427e+04  7.391e+04  7.462e+04     1.0%
+  합계 수신 373111건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=1ms      1  3.713e+05  3.696e+05  3.731e+05     1.0%
+  SUMMARY mode=direct-stalled run=3 recv_total=373111      2  3.713e+05  3.696e+05  3.731e+05     1.0%
+  최종 수신 틱 seq: 최소 74622, 최대 74623                          2  7.427e+04  7.392e+04  7.462e+04     0.9%
+
+## raw/client-terminate-r1.txt  (숫자가 흔들리는 줄 40개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-2     134298     134298       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-3     134298     134298       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-4     134298     134298       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  합계 수신 671478건, 정상 구독자 전체 지연 p50=1ms p95=1ms p99=1ms      3        0.5          0          1   200.0%  **폭 큼**
+  SUMMARY mode=terminate run=1 recv_total=671478 lat_p     4        0.5          0          1   200.0%  **폭 큼**
+  normal-1     134286     134286       0ms       1ms       7         21         10         32   104.8%  **폭 큼**
+  normal-2     134298     134298       1ms       1ms       7         21         10         32   104.8%  **폭 큼**
+  normal-3     134298     134298       1ms       1ms       7         21         10         32   104.8%  **폭 큼**
+  normal-5     134298     134298       0ms       1ms       7         21         10         32   104.8%  **폭 큼**
+  합계 수신 671478건, 정상 구독자 전체 지연 p50=1ms p95=1ms p99=1ms      8         21         10         32   104.8%  **폭 큼**
+  SUMMARY mode=terminate run=1 recv_total=671478 lat_p     9         21         10         32   104.8%  **폭 큼**
+  SUMMARY mode=terminate run=1 recv_total=671478 lat_p    14         21         10         32   104.8%  **폭 큼**
+
+## raw/client-terminate-r2.txt  (숫자가 흔들리는 줄 43개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-1     134352     134352       0ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-2     134358     134358       0ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-3     134359     134359       0ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-4     134360     134360       0ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-5     134360     134360       0ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  합계 수신 671789건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=1ms      3        0.5          0          1   200.0%  **폭 큼**
+  SUMMARY mode=terminate run=2 recv_total=671789 lat_p     4        0.5          0          1   200.0%  **폭 큼**
+  normal-2     134358     134358       0ms       1ms       7       25.5         10         41   121.6%  **폭 큼**
+  normal-5     134360     134360       0ms       1ms       7       25.5         10         41   121.6%  **폭 큼**
+  normal-3     134359     134359       0ms       1ms       7       26.5         11         42   117.0%  **폭 큼**
+  합계 수신 671789건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=1ms      8       26.5         11         42   117.0%  **폭 큼**
+  SUMMARY mode=terminate run=2 recv_total=671789 lat_p     9       26.5         11         42   117.0%  **폭 큼**
+
+## raw/client-terminate-r3.txt  (숫자가 흔들리는 줄 37개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-1     134268     134268       0ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-1     134268     134268       0ms       1ms       7       25.5         11         40   113.7%  **폭 큼**
+  normal-2     134274     134274       1ms       1ms       7       25.5         11         40   113.7%  **폭 큼**
+  normal-3     134274     134274       1ms       1ms       7       25.5         11         40   113.7%  **폭 큼**
+  normal-5     134274     134274       1ms       1ms       7       25.5         11         40   113.7%  **폭 큼**
+  합계 수신 671364건, 정상 구독자 전체 지연 p50=1ms p95=1ms p99=1ms      8       25.5         11         40   113.7%  **폭 큼**
+  SUMMARY mode=terminate run=3 recv_total=671364 lat_p     9       25.5         11         40   113.7%  **폭 큼**
+  SUMMARY mode=terminate run=3 recv_total=671364 lat_p    14       25.5         11         40   113.7%  **폭 큼**
+  normal-4     134274     134274       1ms       1ms       7         25         11         39   112.0%  **폭 큼**
+  normal-1     134268     134268       0ms       1ms       9       26.5         12         41   109.4%  **폭 큼**
+  normal-2     134274     134274       1ms       1ms       9       26.5         12         41   109.4%  **폭 큼**
+  normal-3     134274     134274       1ms       1ms       9       26.5         12         41   109.4%  **폭 큼**
+
+## raw/client-terminate-tight-r1.txt  (숫자가 흔들리는 줄 31개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  합계 수신 665460건, 정상 구독자 전체 지연 p50=1ms p95=1ms p99=2ms      3        0.5          0          1   200.0%  **폭 큼**
+  SUMMARY mode=terminate-tight run=1 recv_total=665460     4        0.5          0          1   200.0%  **폭 큼**
+  normal-1     133086     133086       1ms       1ms       9       60.5         36         85    81.0%  **폭 큼**
+  normal-2     133092     133092       1ms       1ms       9       60.5         36         85    81.0%  **폭 큼**
+  normal-3     133092     133092       1ms       1ms       9       60.5         36         85    81.0%  **폭 큼**
+  normal-4     133092     133092       0ms       1ms       9       60.5         36         85    81.0%  **폭 큼**
+  normal-5     133098     133098       0ms       1ms       9       60.5         36         85    81.0%  **폭 큼**
+  normal-2     133092     133092       1ms       1ms       7       32.5         30         35    15.4%
+  합계 수신 665460건, 정상 구독자 전체 지연 p50=1ms p95=1ms p99=2ms      8       32.5         30         35    15.4%
+  SUMMARY mode=terminate-tight run=1 recv_total=665460     9       32.5         30         35    15.4%
+  SUMMARY mode=terminate-tight run=1 recv_total=665460    14       32.5         30         35    15.4%
+  normal-1     133086     133086       1ms       1ms       7         32         30         34    12.5%
+
+## raw/client-terminate-tight-r2.txt  (숫자가 흔들리는 줄 36개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-1     133626     133626       0ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  slow-1  읽은 바이트 88,442 (평균 1.9 KB/s, 목표 32.0 KB/s)  서     6       21.8        3.7       39.9   166.1%  **폭 큼**
+  SUMMARY mode=terminate-tight run=2 recv_total=668226    17       21.8        3.7       39.9   166.1%  **폭 큼**
+  normal-1     133626     133626       0ms       1ms       7       34.5         18         51    95.7%  **폭 큼**
+  normal-2     133644     133644       1ms       1ms       7       34.5         18         51    95.7%  **폭 큼**
+  normal-3     133644     133644       1ms       1ms       7       34.5         18         51    95.7%  **폭 큼**
+  normal-4     133656     133656       1ms       1ms       7       34.5         18         51    95.7%  **폭 큼**
+  normal-5     133656     133656       1ms       1ms       7       34.5         18         51    95.7%  **폭 큼**
+  합계 수신 668226건, 정상 구독자 전체 지연 p50=1ms p95=1ms p99=2ms      8       34.5         18         51    95.7%  **폭 큼**
+  SUMMARY mode=terminate-tight run=2 recv_total=668226     9       34.5         18         51    95.7%  **폭 큼**
+  SUMMARY mode=terminate-tight run=2 recv_total=668226    14       34.5         18         51    95.7%  **폭 큼**
+  slow-1  읽은 바이트 88,442 (평균 1.9 KB/s, 목표 32.0 KB/s)  서     3      367.5        293        442    40.5%  **폭 큼**
+
+## raw/client-terminate-tight-r3.txt  (숫자가 흔들리는 줄 37개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-1     133500     133500       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-2     133506     133506       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-3     133506     133506       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-4     133506     133506       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  normal-5     133506     133506       1ms       1ms       4        0.5          0          1   200.0%  **폭 큼**
+  합계 수신 667524건, 정상 구독자 전체 지연 p50=1ms p95=1ms p99=2ms      3        0.5          0          1   200.0%  **폭 큼**
+  SUMMARY mode=terminate-tight run=3 recv_total=667524     4        0.5          0          1   200.0%  **폭 큼**
+  normal-1     133500     133500       1ms       1ms       9         44         41         47    13.6%
+  normal-1     133500     133500       1ms       1ms       7       43.5         41         46    11.5%
+  normal-4     133506     133506       1ms       1ms       7         43         41         45     9.3%
+  normal-4     133506     133506       1ms       1ms       9         45         43         47     8.9%
+  normal-2     133506     133506       1ms       1ms       9       45.5         44         47     6.6%
+
+## raw/client-unbounded-r1.txt  (숫자가 흔들리는 줄 31개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  normal-4     215526     215526       0ms       1ms       9       1798       1163       2433    70.6%  **폭 큼**
+  slow-1  읽은 바이트 3,469,284 (평균 30.7 KB/s, 목표 32.0 KB/s     3      351.5        234        469    66.9%  **폭 큼**
+  normal-1     215526     215526       0ms       1ms       9       1849       1407       2291    47.8%  **폭 큼**
+  normal-2     215526     215526       0ms       1ms       6        2.5          2          3    40.0%  **폭 큼**
+  normal-4     215526     215526       0ms       1ms       6        2.5          2          3    40.0%  **폭 큼**
+  normal-2     215526     215526       0ms       1ms       9       1962       1632       2292    33.6%  **폭 큼**
+  slow-1  읽은 바이트 3,469,284 (평균 30.7 KB/s, 목표 32.0 KB/s     4        331        284        378    28.4%
+  normal-3     215526     215526       0ms       1ms       9       2567       2362       2772    16.0%
+  SUMMARY mode=unbounded run=1 recv_total=1077630 lat_    16  3.352e+06  3.234e+06  3.469e+06     7.0%
+  slow-1  읽은 바이트 3,469,284 (평균 30.7 KB/s, 목표 32.0 KB/s     5       29.7       28.7       30.7     6.7%
+  normal-1     215526     215526       0ms       1ms       7  1.187e+04  1.148e+04  1.225e+04     6.5%
+  합계 수신 1077630건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms     8  1.203e+04   1.18e+04  1.225e+04     3.7%
+
+## raw/client-unbounded-r2.txt  (숫자가 흔들리는 줄 16개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  합계 수신 1077655건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=1ms     8       5764        802  1.073e+04   172.2%  **폭 큼**
+  SUMMARY mode=unbounded run=2 recv_total=1077655 lat_     9       5764        802  1.073e+04   172.2%  **폭 큼**
+  SUMMARY mode=unbounded run=2 recv_total=1077655 lat_    14       5764        802  1.073e+04   172.2%  **폭 큼**
+  slow-1  읽은 바이트 3,452,904 (평균 30.6 KB/s, 목표 32.0 KB/s     4        560        216        904   122.9%  **폭 큼**
+  합계 수신 1077655건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=1ms     7        1.5          1          2    66.7%  **폭 큼**
+  SUMMARY mode=unbounded run=2 recv_total=1077655 lat_     8        1.5          1          2    66.7%  **폭 큼**
+  slow-1  읽은 바이트 3,452,904 (평균 30.6 KB/s, 목표 32.0 KB/s     3        472        452        492     8.5%
+  slow-1  읽은 바이트 3,452,904 (평균 30.6 KB/s, 목표 32.0 KB/s     5       30.8       30.6         31     1.3%
+  SUMMARY mode=unbounded run=2 recv_total=1077655 lat_    16  3.473e+06  3.453e+06  3.492e+06     1.1%
+  최종 수신 틱 seq: 최소 215531, 최대 215531                        2   2.16e+05  2.155e+05  2.165e+05     0.4%
+  SUMMARY mode=unbounded run=2 recv_total=1077655 lat_    11   2.16e+05  2.155e+05  2.165e+05     0.4%
+  합계 수신 1077655건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=1ms     1   1.08e+06  1.078e+06  1.082e+06     0.4%
+
+## raw/client-unbounded-r3.txt  (숫자가 흔들리는 줄 13개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  합계 수신 1082976건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=3ms     8       1364        837       1890    77.2%  **폭 큼**
+  SUMMARY mode=unbounded run=3 recv_total=1082976 lat_     9       1364        837       1890    77.2%  **폭 큼**
+  SUMMARY mode=unbounded run=3 recv_total=1082976 lat_    14       1364        837       1890    77.2%  **폭 큼**
+  slow-1  읽은 바이트 3,534,804 (평균 31.3 KB/s, 목표 32.0 KB/s     4        648        492        804    48.1%  **폭 큼**
+  slow-1  읽은 바이트 3,534,804 (평균 31.3 KB/s, 목표 32.0 KB/s     3      514.5        495        534     7.6%
+  SUMMARY mode=unbounded run=3 recv_total=1082976 lat_    16  3.515e+06  3.495e+06  3.535e+06     1.1%
+  slow-1  읽은 바이트 3,534,804 (평균 31.3 KB/s, 목표 32.0 KB/s     5      31.15         31       31.3     1.0%
+  최종 수신 틱 seq: 최소 216582, 최대 216608                        1  2.165e+05  2.165e+05  2.166e+05     0.1%
+  SUMMARY mode=unbounded run=3 recv_total=1082976 lat_    10  2.165e+05  2.165e+05  2.166e+05     0.1%
+  합계 수신 1082976건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=3ms     1  1.083e+06  1.082e+06  1.083e+06     0.0%
+  SUMMARY mode=unbounded run=3 recv_total=1082976 lat_     2  1.083e+06  1.082e+06  1.083e+06     0.0%
+  최종 수신 틱 seq: 최소 216582, 최대 216608                        2  2.166e+05  2.165e+05  2.166e+05     0.0%
+
+## raw/serverlog-baseline-r1.txt  (숫자가 흔들리는 줄 250개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  [t=  1s] heap=  44.7/124MB  발행=  3006/s  전달=  15030/    12         11          4         18   127.3%  **폭 큼**
+  [t=  1s] heap=  44.7/124MB  발행=  3006/s  전달=  15030/     2       29.4       14.1       44.7   104.1%  **폭 큼**
+  [t= 28s] heap=  41.3/124MB  발행=  2988/s  전달=  14940/     2       28.2       15.1       41.3    92.9%  **폭 큼**
+  [t=  0s] heap=  35.0/124MB  발행=   264/s  전달=   1320/     4        489        264        714    92.0%  **폭 큼**
+  [t=  0s] heap=  35.0/124MB  발행=   264/s  전달=   1320/     5       2445       1320       3570    92.0%  **폭 큼**
+  [t= 13s] heap=  46.9/124MB  발행=  2635/s  전달=  13172/     2      32.45         18       46.9    89.1%  **폭 큼**
+  [t= 32s] heap=  42.6/124MB  발행=  2988/s  전달=  14940/     2      29.55       16.5       42.6    88.3%  **폭 큼**
+  [transport-error] normal-5 java.io.EOFException          1       -3.5         -5         -2    85.7%  **폭 큼**
+  [disconnect] normal-2 status=CloseStatus[code=1006,      1       -3.5         -5         -2    85.7%  **폭 큼**
+  [t= 27s] heap=  32.4/124MB  발행=  2940/s  전달=  14700/    12      154.5         89        220    84.8%  **폭 큼**
+  [t= 32s] heap=  42.6/124MB  발행=  2988/s  전달=  14940/    12        173        100        246    84.4%  **폭 큼**
+  [t= 30s] heap=  24.9/124MB  발행=  2970/s  전달=  14850/    12        171         99        243    84.2%  **폭 큼**
+
+## raw/serverlog-baseline-r2.txt  (숫자가 흔들리는 줄 264개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  [t=  4s] heap=  13.1/124MB  발행=  2984/s  전달=  14914/     2      29.95       13.1       46.8   112.5%  **폭 큼**
+  18:59:07.430 INFO  Starting StreamApp v0.0.1 using J     3      15.04       7.43      22.65   101.2%  **폭 큼**
+  18:59:07.432 INFO  No active profile set, falling ba     3      15.04      7.432      22.65   101.2%  **폭 큼**
+  [transport-error] normal-3 java.io.EOFException          1         -2         -3         -1   100.0%  **폭 큼**
+  [t= 44s] heap=  43.4/124MB  발행=  2964/s  전달=  14820/     2      28.95       14.5       43.4    99.8%  **폭 큼**
+  18:59:07.902 INFO  Tomcat initialized with port 8080     3      15.51      7.902      23.12    98.1%  **폭 큼**
+  18:59:07.926 INFO  Root WebApplicationContext: initi     3      15.54      7.926      23.16    98.0%  **폭 큼**
+  18:59:08.165 INFO  Tomcat started on port 8080 (http     3      15.76      8.165      23.35    96.4%  **폭 큼**
+  18:59:08.171 INFO  Started StreamApp in 0.947 second     3      15.76      8.171      23.35    96.3%  **폭 큼**
+  [t= 16s] heap=  15.4/124MB  발행=  2940/s  전달=  14700/    12      107.5         57        158    94.0%  **폭 큼**
+  [t= 15s] heap=  40.6/124MB  발행=  2916/s  전달=  14580/    12        101         54        148    93.1%  **폭 큼**
+  [t= 17s] heap=  24.2/124MB  발행=  3008/s  전달=  15045/    12        108         58        158    92.6%  **폭 큼**
+
+## raw/serverlog-baseline-r3.txt  (숫자가 흔들리는 줄 277개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:00:01.046 INFO  Initializing Servlet 'dispatcherS     2       17.5          0         35   200.0%  **폭 큼**
+  19:00:01.047 INFO  Completed initialization in 1 ms      2       17.5          0         35   200.0%  **폭 큼**
+  19:00:01.047 INFO  Completed initialization in 1 ms      4        0.5          0          1   200.0%  **폭 큼**
+  19:00:01.046 INFO  Initializing Servlet 'dispatcherS     3      7.563      1.046      14.08   172.3%  **폭 큼**
+  19:00:01.047 INFO  Completed initialization in 1 ms      3      7.564      1.047      14.08   172.3%  **폭 큼**
+  18:59:58.497 INFO  Starting StreamApp v0.0.1 using J     3      35.54      12.58       58.5   129.2%  **폭 큼**
+  18:59:58.498 INFO  No active profile set, falling ba     3      35.54      12.58       58.5   129.2%  **폭 큼**
+  18:59:59.041 INFO  Tomcat initialized with port 8080     3      36.04      13.05      59.04   127.6%  **폭 큼**
+  18:59:59.090 INFO  Root WebApplicationContext: initi     3      36.08      13.07      59.09   127.5%  **폭 큼**
+  18:59:59.277 INFO  Tomcat started on port 8080 (http     3      36.27      13.27      59.28   126.8%  **폭 큼**
+  18:59:59.283 INFO  Started StreamApp in 1.04 seconds     3      36.28      13.27      59.28   126.8%  **폭 큼**
+  [t=  3s] heap=  30.9/124MB  발행=  3012/s  전달=  15063/    12         21          9         33   114.3%  **폭 큼**
+
+## raw/serverlog-bounded-r1.txt  (숫자가 흔들리는 줄 297개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:11:53.354 INFO  Completed initialization in 0 ms      4        0.5          0          1   200.0%  **폭 큼**
+  [t=  0s] heap=  19.4/124MB  발행=  2808/s  전달=  14282/    12          1          0          2   200.0%  **폭 큼**
+  [t=  1s] heap=  37.2/124MB  발행=  2976/s  전달=  14921/    12          1          0          2   200.0%  **폭 큼**
+  [t=  2s] heap=  20.8/124MB  발행=  2976/s  전달=  14959/     8          3          0          6   200.0%  **폭 큼**
+  [t=  2s] heap=  20.8/124MB  발행=  2976/s  전달=  14959/    12          1          0          2   200.0%  **폭 큼**
+  [t=  3s] heap=  38.5/124MB  발행=  3006/s  전달=  15090/    12          1          0          2   200.0%  **폭 큼**
+  [t=  4s] heap=  22.3/124MB  발행=  2988/s  전달=  15000/     8          3          0          6   200.0%  **폭 큼**
+  [t=  4s] heap=  22.3/124MB  발행=  2988/s  전달=  15000/    12          1          0          2   200.0%  **폭 큼**
+  [t=  5s] heap=  39.9/124MB  발행=  2975/s  전달=  14910/     8          3          0          6   200.0%  **폭 큼**
+  [t=  5s] heap=  39.9/124MB  발행=  2975/s  전달=  14910/    12          1          0          2   200.0%  **폭 큼**
+  [t=  6s] heap=  23.7/124MB  발행=  2995/s  전달=  15060/    12        1.5          0          3   200.0%  **폭 큼**
+  [t=  7s] heap=  41.5/124MB  발행=  3006/s  전달=  15090/    12        1.5          0          3   200.0%  **폭 큼**
+
+## raw/serverlog-bounded-r2.txt  (숫자가 흔들리는 줄 271개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  [t=  1s] heap=  39.6/124MB  발행=  3006/s  전달=  15090/     8        0.5          0          1   200.0%  **폭 큼**
+  [t=  2s] heap=  23.5/124MB  발행=  2982/s  전달=  14970/    12          2          0          4   200.0%  **폭 큼**
+  [t=  3s] heap=  41.1/124MB  발행=  2982/s  전달=  14970/     8        2.5          0          5   200.0%  **폭 큼**
+  [t=  3s] heap=  41.1/124MB  발행=  2982/s  전달=  14970/    12          2          0          4   200.0%  **폭 큼**
+  [t=  4s] heap=  24.8/124MB  발행=  2988/s  전달=  15000/    12          2          0          4   200.0%  **폭 큼**
+  [t=  5s] heap=  42.7/124MB  발행=  3000/s  전달=  15060/     8        0.5          0          1   200.0%  **폭 큼**
+  [t=  5s] heap=  42.7/124MB  발행=  3000/s  전달=  15060/    12          2          0          4   200.0%  **폭 큼**
+  [t=  6s] heap=  26.0/124MB  발행=  3006/s  전달=  15090/     8          2          0          4   200.0%  **폭 큼**
+  [t= 11s] heap=  29.1/124MB  발행=  2988/s  전달=  15029/     8          3          0          6   200.0%  **폭 큼**
+  [t= 12s] heap=  46.8/124MB  발행=  3006/s  전달=  15090/     8          3          0          6   200.0%  **폭 큼**
+  [t= 14s] heap=  47.8/124MB  발행=  3003/s  전달=  15062/     8          3          0          6   200.0%  **폭 큼**
+  [t= 18s] heap=  16.1/124MB  발행=  2994/s  전달=  15091/     8        0.5          0          1   200.0%  **폭 큼**
+
+## raw/serverlog-bounded-r3.txt  (숫자가 흔들리는 줄 317개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:13:34.665 INFO  Completed initialization in 0 ms      4        0.5          0          1   200.0%  **폭 큼**
+  [t=  1s] heap=  36.0/124MB  발행=  3012/s  전달=  15180/     8        0.5          0          1   200.0%  **폭 큼**
+  [t=  2s] heap=  19.8/124MB  발행=  3000/s  전달=  15033/     8        2.5          0          5   200.0%  **폭 큼**
+  [t=  2s] heap=  19.8/124MB  발행=  3000/s  전달=  15033/    12        1.5          0          3   200.0%  **폭 큼**
+  [t=  4s] heap=  21.2/124MB  발행=  2985/s  전달=  15023/     8          3          0          6   200.0%  **폭 큼**
+  [t=  4s] heap=  21.2/124MB  발행=  2985/s  전달=  15023/    12          2          0          4   200.0%  **폭 큼**
+  [t=  5s] heap=  39.1/124MB  발행=  2991/s  전달=  15025/    12          2          0          4   200.0%  **폭 큼**
+  [t=  6s] heap=  22.7/124MB  발행=  3000/s  전달=  15034/     8          3          0          6   200.0%  **폭 큼**
+  [t=  6s] heap=  22.7/124MB  발행=  3000/s  전달=  15034/    12          2          0          4   200.0%  **폭 큼**
+  [t=  8s] heap=  24.2/124MB  발행=  2976/s  전달=  14940/    12          2          0          4   200.0%  **폭 큼**
+  [t= 10s] heap=  25.8/124MB  발행=  2985/s  전달=  15000/     8        0.5          0          1   200.0%  **폭 큼**
+  [t= 10s] heap=  25.8/124MB  발행=  2985/s  전달=  15000/    12        3.5          0          7   200.0%  **폭 큼**
+
+## raw/serverlog-combo-r1.txt  (숫자가 흔들리는 줄 280개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  [t=  3s] heap=  45.3/124MB  발행=  2970/s  전달=  14880/     8          3          0          6   200.0%  **폭 큼**
+  [t=  3s] heap=  45.3/124MB  발행=  2970/s  전달=  14880/    12        0.5          0          1   200.0%  **폭 큼**
+  [t=  4s] heap=  30.7/124MB  발행=  3006/s  전달=  15098/     8          3          0          6   200.0%  **폭 큼**
+  [t=  4s] heap=  30.7/124MB  발행=  3006/s  전달=  15098/    12        3.5          0          7   200.0%  **폭 큼**
+  [t=  5s] heap=  15.3/124MB  발행=  2922/s  전달=  14692/     8          2          0          4   200.0%  **폭 큼**
+  [t=  7s] heap=  18.7/124MB  발행=  2946/s  전달=  14790/     8        2.5          0          5   200.0%  **폭 큼**
+  [t=  8s] heap=  37.8/124MB  발행=  3000/s  전달=  15123/     8        0.5          0          1   200.0%  **폭 큼**
+  [t= 11s] heap=  41.1/124MB  발행=  2892/s  전달=  14522/     8        0.5          0          1   200.0%  **폭 큼**
+  [t= 13s] heap=  45.2/124MB  발행=  3006/s  전달=  15120/     8        2.5          0          5   200.0%  **폭 큼**
+  [t= 20s] heap=  41.8/124MB  발행=  3012/s  전달=  15119/     8          3          0          6   200.0%  **폭 큼**
+  [t= 22s] heap=  45.8/124MB  발행=  3012/s  전달=  15120/     8          3          0          6   200.0%  **폭 큼**
+  [t= 23s] heap=  30.3/124MB  발행=  2880/s  전달=  14448/     8          3          0          6   200.0%  **폭 큼**
+
+## raw/serverlog-combo-r2.txt  (숫자가 흔들리는 줄 290개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:22:50.892 INFO  Completed initialization in 0 ms      4        0.5          0          1   200.0%  **폭 큼**
+  [t=  1s] heap=  23.2/124MB  발행=  2976/s  전달=  15160/     8        0.5          0          1   200.0%  **폭 큼**
+  [t=  1s] heap=  23.2/124MB  발행=  2976/s  전달=  15160/    12          1          0          2   200.0%  **폭 큼**
+  [t=  2s] heap=  42.4/124MB  발행=  3012/s  전달=  15091/     8          3          0          6   200.0%  **폭 큼**
+  [t=  3s] heap=  26.6/124MB  발행=  2862/s  전달=  14399/     8        0.5          0          1   200.0%  **폭 큼**
+  [t=  8s] heap=  19.8/124MB  발행=  3006/s  전달=  15090/     8          1          0          2   200.0%  **폭 큼**
+  [t= 18s] heap=  37.8/124MB  발행=  3018/s  전달=  15154/     8        2.5          0          5   200.0%  **폭 큼**
+  [t= 23s] heap=  30.1/124MB  발행=  3000/s  전달=  15060/     8          3          0          6   200.0%  **폭 큼**
+  [t= 28s] heap=  22.0/124MB  발행=  3000/s  전달=  15060/     8          3          0          6   200.0%  **폭 큼**
+  [t= 30s] heap=  25.4/124MB  발행=  2916/s  전달=  14595/     8          3          0          6   200.0%  **폭 큼**
+  [t= 31s] heap=  44.2/124MB  발행=  3006/s  전달=  15120/     8          3          0          6   200.0%  **폭 큼**
+  [t= 32s] heap=  29.4/124MB  발행=  3000/s  전달=  15031/     8          3          0          6   200.0%  **폭 큼**
+
+## raw/serverlog-combo-r3.txt  (숫자가 흔들리는 줄 299개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  [t=  0s] heap=  21.7/124MB  발행=  2712/s  전달=  13639/    12        3.5          0          7   200.0%  **폭 큼**
+  [t=  1s] heap=  40.8/124MB  발행=  3012/s  전달=  15180/    12        3.5          0          7   200.0%  **폭 큼**
+  [t=  2s] heap=  26.0/124MB  발행=  2994/s  전달=  15000/     8          3          0          6   200.0%  **폭 큼**
+  [t=  2s] heap=  26.0/124MB  발행=  2994/s  전달=  15000/    12        3.5          0          7   200.0%  **폭 큼**
+  [t=  3s] heap=  45.3/124MB  발행=  2994/s  전달=  15051/    12        3.5          0          7   200.0%  **폭 큼**
+  [t=  4s] heap=  30.1/124MB  발행=  2964/s  전달=  14850/     8          3          0          6   200.0%  **폭 큼**
+  [t=  4s] heap=  30.1/124MB  발행=  2964/s  전달=  14850/    12        3.5          0          7   200.0%  **폭 큼**
+  [t=  5s] heap=  15.0/124MB  발행=  3006/s  전달=  15120/    12          4          0          8   200.0%  **폭 큼**
+  [t=  6s] heap=  33.9/124MB  발행=  2970/s  전달=  14891/     8          3          0          6   200.0%  **폭 큼**
+  [t=  6s] heap=  33.9/124MB  발행=  2970/s  전달=  14891/    12          4          0          8   200.0%  **폭 큼**
+  [t=  7s] heap=  18.5/124MB  발행=  2964/s  전달=  14899/     8        0.5          0          1   200.0%  **폭 큼**
+  [t=  8s] heap=  37.7/124MB  발행=  2982/s  전달=  14970/     8          3          0          6   200.0%  **폭 큼**
+
+## raw/serverlog-combo-stalled-r1.txt  (숫자가 흔들리는 줄 314개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  [t=  1s] heap=  39.8/124MB  발행=  3006/s  전달=  15030/     8        2.5          0          5   200.0%  **폭 큼**
+  [t=  2s] heap=  24.9/124MB  발행=  2994/s  전달=  14970/     8        0.5          0          1   200.0%  **폭 큼**
+  [t=  2s] heap=  24.9/124MB  발행=  2994/s  전달=  14970/    12        1.5          0          3   200.0%  **폭 큼**
+  [t=  3s] heap=  43.5/124MB  발행=  2976/s  전달=  14855/    12          5          0         10   200.0%  **폭 큼**
+  [t=  4s] heap=  28.6/124MB  발행=  3012/s  전달=  15085/     8          3          0          6   200.0%  **폭 큼**
+  [t=  4s] heap=  28.6/124MB  발행=  3012/s  전달=  15085/    12          5          0         10   200.0%  **폭 큼**
+  [t=  5s] heap=  15.1/124MB  발행=  3181/s  전달=  15905/     8        0.5          0          1   200.0%  **폭 큼**
+  [t=  5s] heap=  15.1/124MB  발행=  3181/s  전달=  15905/    12          5          0         10   200.0%  **폭 큼**
+  [t=  6s] heap=  33.3/124MB  발행=  2987/s  전달=  14935/    12          5          0         10   200.0%  **폭 큼**
+  [t=  7s] heap=  16.1/124MB  발행=  2838/s  전달=  14190/     8        0.5          0          1   200.0%  **폭 큼**
+  [t= 11s] heap=  18.6/124MB  발행=  3006/s  전달=  15030/     8          3          0          6   200.0%  **폭 큼**
+  [t= 12s] heap=  34.7/124MB  발행=  2792/s  전달=  13950/     8          3          0          6   200.0%  **폭 큼**
+
+## raw/serverlog-combo-stalled-r2.txt  (숫자가 흔들리는 줄 318개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:25:21.616 INFO  Starting StreamApp v0.0.1 using J     2       12.5          0         25   200.0%  **폭 큼**
+  19:25:21.617 INFO  No active profile set, falling ba     2       12.5          0         25   200.0%  **폭 큼**
+  19:25:22.094 INFO  Tomcat initialized with port 8080     2       12.5          0         25   200.0%  **폭 큼**
+  19:25:22.119 INFO  Root WebApplicationContext: initi     2       12.5          0         25   200.0%  **폭 큼**
+  19:25:22.342 INFO  Tomcat started on port 8080 (http     2       12.5          0         25   200.0%  **폭 큼**
+  19:25:22.347 INFO  Started StreamApp in 0.953 second     2       12.5          0         25   200.0%  **폭 큼**
+  19:25:24.051 INFO  Initializing Servlet 'dispatcherS     2       12.5          0         25   200.0%  **폭 큼**
+  19:25:24.051 INFO  Completed initialization in 0 ms      2       12.5          0         25   200.0%  **폭 큼**
+  19:25:24.051 INFO  Completed initialization in 0 ms      4        0.5          0          1   200.0%  **폭 큼**
+  [t=  0s] heap=  22.4/124MB  발행=  2772/s  전달=  13998/    12          4          0          8   200.0%  **폭 큼**
+  [t=  1s] heap=  41.3/124MB  발행=  2952/s  전달=  14760/     8          3          0          6   200.0%  **폭 큼**
+  [t=  1s] heap=  41.3/124MB  발행=  2952/s  전달=  14760/    12          4          0          8   200.0%  **폭 큼**
+
+## raw/serverlog-combo-stalled-r3.txt  (숫자가 흔들리는 줄 326개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:26:15.018 INFO  Completed initialization in 0 ms      4        0.5          0          1   200.0%  **폭 큼**
+  [t=  1s] heap=  39.0/124MB  발행=  3012/s  전달=  15060/     8        0.5          0          1   200.0%  **폭 큼**
+  [t=  2s] heap=  24.1/124MB  발행=  3000/s  전달=  15001/     8        0.5          0          1   200.0%  **폭 큼**
+  [t=  4s] heap=  28.0/124MB  발행=  2982/s  전달=  14886/     8          3          0          6   200.0%  **폭 큼**
+  [t=  6s] heap=  33.0/124MB  발행=  3000/s  전달=  15000/     8        0.5          0          1   200.0%  **폭 큼**
+  [t=  8s] heap=  33.2/124MB  발행=  2994/s  전달=  14976/     8        0.5          0          1   200.0%  **폭 큼**
+  [t= 12s] heap=  33.4/124MB  발행=  2868/s  전달=  14340/     8        0.5          0          1   200.0%  **폭 큼**
+  [t= 13s] heap=  17.3/124MB  발행=  2976/s  전달=  14880/     8        2.5          0          5   200.0%  **폭 큼**
+  [t= 15s] heap=  18.0/124MB  발행=  2994/s  전달=  14957/     8          3          0          6   200.0%  **폭 큼**
+  [t= 16s] heap=  35.1/124MB  발행=  2994/s  전달=  14983/     8          3          0          6   200.0%  **폭 큼**
+  [t= 18s] heap=  34.9/124MB  발행=  2838/s  전달=  14190/     8          3          0          6   200.0%  **폭 큼**
+  [t= 19s] heap=  18.7/124MB  발행=  2970/s  전달=  14850/     8        1.5          0          3   200.0%  **폭 큼**
+
+## raw/serverlog-conflate-r1.txt  (숫자가 흔들리는 줄 315개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  [t=  1s] heap=  41.4/124MB  발행=  3018/s  전달=  15210/     8        0.5          0          1   200.0%  **폭 큼**
+  [t=  3s] heap=  45.7/124MB  발행=  2988/s  전달=  15000/     8        0.5          0          1   200.0%  **폭 큼**
+  [t=  4s] heap=  30.7/124MB  발행=  2970/s  전달=  14910/     8          1          0          2   200.0%  **폭 큼**
+  [t=  5s] heap=  15.4/124MB  발행=  3000/s  전달=  15060/     8          1          0          2   200.0%  **폭 큼**
+  [t=  6s] heap=  34.4/124MB  발행=  2988/s  전달=  15000/     8          3          0          6   200.0%  **폭 큼**
+  [t=  7s] heap=  19.3/124MB  발행=  2940/s  전달=  14760/     8          3          0          6   200.0%  **폭 큼**
+  [t=  9s] heap=  22.7/124MB  발행=  2983/s  전달=  15030/     8          3          0          6   200.0%  **폭 큼**
+  [t= 10s] heap=  42.0/124MB  발행=  2993/s  전달=  15030/     8          2          0          4   200.0%  **폭 큼**
+  [t= 17s] heap=  38.8/124MB  발행=  2976/s  전달=  14940/     8        1.5          0          3   200.0%  **폭 큼**
+  [t= 18s] heap=  23.4/124MB  발행=  2976/s  전달=  14983/     8          2          0          4   200.0%  **폭 큼**
+  [t= 24s] heap=  16.7/124MB  발행=  3000/s  전달=  15060/     8          3          0          6   200.0%  **폭 큼**
+  [t= 25s] heap=  35.5/124MB  발행=  3000/s  전달=  15060/     8          2          0          4   200.0%  **폭 큼**
+
+## raw/serverlog-conflate-r2.txt  (숫자가 흔들리는 줄 290개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:15:16.734 INFO  Completed initialization in 0 ms      4        0.5          0          1   200.0%  **폭 큼**
+  [t=  4s] heap=  30.1/124MB  발행=  2988/s  전달=  14990/     8        2.5          0          5   200.0%  **폭 큼**
+  [t=  4s] heap=  30.1/124MB  발행=  2988/s  전달=  14990/    12        0.5          0          1   200.0%  **폭 큼**
+  [t=  6s] heap=  33.6/124MB  발행=  2991/s  전달=  15029/     8        2.5          0          5   200.0%  **폭 큼**
+  [t=  7s] heap=  19.1/124MB  발행=  3006/s  전달=  15090/     8          2          0          4   200.0%  **폭 큼**
+  [t= 10s] heap=  42.1/124MB  발행=  2982/s  전달=  14970/     8          3          0          6   200.0%  **폭 큼**
+  [t= 15s] heap=  34.5/124MB  발행=  2991/s  전달=  15030/     8          3          0          6   200.0%  **폭 큼**
+  [t= 16s] heap=  19.2/124MB  발행=  2970/s  전달=  14910/     8          3          0          6   200.0%  **폭 큼**
+  [t= 19s] heap=  22.7/124MB  발행=  2964/s  전달=  14876/     8          3          0          6   200.0%  **폭 큼**
+  [t= 25s] heap=  35.4/124MB  발행=  2994/s  전달=  15030/     8          2          0          4   200.0%  **폭 큼**
+  [t= 29s] heap=  43.5/124MB  발행=  3000/s  전달=  15060/     8          3          0          6   200.0%  **폭 큼**
+  [t= 31s] heap=  46.8/124MB  발행=  2970/s  전달=  14910/     8          3          0          6   200.0%  **폭 큼**
+
+## raw/serverlog-conflate-r3.txt  (숫자가 흔들리는 줄 320개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:16:06.581 INFO  Completed initialization in 1 ms      4        0.5          0          1   200.0%  **폭 큼**
+  [t=  1s] heap=  22.6/124MB  발행=  2970/s  전달=  15122/    12          4          0          8   200.0%  **폭 큼**
+  [t=  3s] heap=  26.7/124MB  발행=  3000/s  전달=  15031/     8          3          0          6   200.0%  **폭 큼**
+  [t=  4s] heap=  45.9/124MB  발행=  2982/s  전달=  15000/     8          3          0          6   200.0%  **폭 큼**
+  [t=  6s] heap=  15.9/124MB  발행=  2994/s  전달=  15001/     8          3          0          6   200.0%  **폭 큼**
+  [t= 11s] heap=  43.1/124MB  발행=  3006/s  전달=  15090/     8          3          0          6   200.0%  **폭 큼**
+  [t= 12s] heap=  28.0/124MB  발행=  2996/s  전달=  15031/     8          3          0          6   200.0%  **폭 큼**
+  [t= 13s] heap=  47.0/124MB  발행=  3010/s  전달=  15119/     8          3          0          6   200.0%  **폭 큼**
+  [t= 15s] heap=  17.3/124MB  발행=  3000/s  전달=  15060/     8          3          0          6   200.0%  **폭 큼**
+  [t= 16s] heap=  36.0/124MB  발행=  3012/s  전달=  15120/     8          2          0          4   200.0%  **폭 큼**
+  [t= 17s] heap=  20.7/124MB  발행=  2994/s  전달=  15000/     8          3          0          6   200.0%  **폭 큼**
+  [t= 18s] heap=  39.6/124MB  발행=  2988/s  전달=  15090/     8        2.5          0          5   200.0%  **폭 큼**
+
+## raw/serverlog-decorator-r1.txt  (숫자가 흔들리는 줄 251개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:27:05.935 INFO  Completed initialization in 0 ms      4        0.5          0          1   200.0%  **폭 큼**
+  [t=  4s] heap=  24.0/124MB  발행=  3000/s  전달=  15000/    12        0.5          0          1   200.0%  **폭 큼**
+  [t=  5s] heap=  14.6/124MB  발행=  3012/s  전달=  15060/    12        0.5          0          1   200.0%  **폭 큼**
+  [t=  6s] heap=  38.6/124MB  발행=  2964/s  전달=  14820/    12        0.5          0          1   200.0%  **폭 큼**
+  [t=  7s] heap=  29.2/124MB  발행=  3006/s  전달=  15030/    12        0.5          0          1   200.0%  **폭 큼**
+  [t=  8s] heap=  19.8/124MB  발행=  3006/s  전달=  15030/    12        0.5          0          1   200.0%  **폭 큼**
+  [t=  9s] heap=  44.0/124MB  발행=  3018/s  전달=  15069/    12          1          0          2   200.0%  **폭 큼**
+  [t= 10s] heap=  34.0/124MB  발행=  2964/s  전달=  14841/    12          1          0          2   200.0%  **폭 큼**
+  19:27:03.495 INFO  Starting StreamApp v0.0.1 using J     2       14.5          2         27   172.4%  **폭 큼**
+  19:27:03.497 INFO  No active profile set, falling ba     2       14.5          2         27   172.4%  **폭 큼**
+  19:27:03.973 INFO  Tomcat initialized with port 8080     2       14.5          2         27   172.4%  **폭 큼**
+  19:27:03.995 INFO  Root WebApplicationContext: initi     2       14.5          2         27   172.4%  **폭 큼**
+
+## raw/serverlog-decorator-r2.txt  (숫자가 흔들리는 줄 261개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:27:55.820 INFO  Completed initialization in 1 ms      4        0.5          0          1   200.0%  **폭 큼**
+  [t=  1s] heap=  31.6/124MB  발행=  2994/s  전달=  16180/    12          1          0          2   200.0%  **폭 큼**
+  [t=  2s] heap=  22.3/124MB  발행=  2994/s  전달=  15000/    12          1          0          2   200.0%  **폭 큼**
+  19:27:54.462 INFO  Starting StreamApp v0.0.1 using J     2       14.5          2         27   172.4%  **폭 큼**
+  19:27:54.463 INFO  No active profile set, falling ba     2       14.5          2         27   172.4%  **폭 큼**
+  19:27:54.945 INFO  Tomcat initialized with port 8080     2       14.5          2         27   172.4%  **폭 큼**
+  19:27:54.969 INFO  Root WebApplicationContext: initi     2       14.5          2         27   172.4%  **폭 큼**
+  19:27:55.167 INFO  Tomcat started on port 8080 (http     2       14.5          2         27   172.4%  **폭 큼**
+  19:27:55.174 INFO  Started StreamApp in 0.918 second     2       14.5          2         27   172.4%  **폭 큼**
+  19:27:55.819 INFO  Initializing Servlet 'dispatcherS     2       14.5          2         27   172.4%  **폭 큼**
+  19:27:55.820 INFO  Completed initialization in 1 ms      2       14.5          2         27   172.4%  **폭 큼**
+  [t= 38s] heap=  15.6/124MB  발행=  3001/s  전달=  15030/    12        4.5          1          8   155.6%  **폭 큼**
+
+## raw/serverlog-decorator-r3.txt  (숫자가 흔들리는 줄 223개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  [t=  3s] heap=  34.4/124MB  발행=  3012/s  전달=  15030/    12        0.5          0          1   200.0%  **폭 큼**
+  [t=  4s] heap=  24.7/124MB  발행=  3006/s  전달=  15035/    12        0.5          0          1   200.0%  **폭 큼**
+  [t=  5s] heap=  15.1/124MB  발행=  3000/s  전달=  14998/    12        0.5          0          1   200.0%  **폭 큼**
+  [t=  6s] heap=  39.5/124MB  발행=  3000/s  전달=  14997/    12        0.5          0          1   200.0%  **폭 큼**
+  [t=  7s] heap=  29.9/124MB  발행=  3006/s  전달=  15060/    12        0.5          0          1   200.0%  **폭 큼**
+  [t=  8s] heap=  20.4/124MB  발행=  3006/s  전달=  15030/    12        0.5          0          1   200.0%  **폭 큼**
+  [t= 10s] heap=  34.9/124MB  발행=  3012/s  전달=  15032/    12        0.5          0          1   200.0%  **폭 큼**
+  [t= 11s] heap=  25.3/124MB  발행=  3018/s  전달=  15088/    12        0.5          0          1   200.0%  **폭 큼**
+  [t= 13s] heap=  15.8/124MB  발행=  3012/s  전달=  15090/    12        0.5          0          1   200.0%  **폭 큼**
+  [t= 14s] heap=  40.1/124MB  발행=  3018/s  전달=  15060/    12        0.5          0          1   200.0%  **폭 큼**
+  [t= 15s] heap=  30.6/124MB  발행=  3006/s  전달=  15060/    12        0.5          0          1   200.0%  **폭 큼**
+  [t= 16s] heap=  20.8/124MB  발행=  3012/s  전달=  15030/    12        0.5          0          1   200.0%  **폭 큼**
+
+## raw/serverlog-direct-r1.txt  (숫자가 흔들리는 줄 160개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:00:49.378 INFO  Starting StreamApp v0.0.1 using J     2         18          0         36   200.0%  **폭 큼**
+  19:00:49.380 INFO  No active profile set, falling ba     2         18          0         36   200.0%  **폭 큼**
+  19:00:49.861 INFO  Tomcat initialized with port 8080     2         18          0         36   200.0%  **폭 큼**
+  19:00:49.885 INFO  Root WebApplicationContext: initi     2         18          0         36   200.0%  **폭 큼**
+  19:00:50.100 INFO  Tomcat started on port 8080 (http     2         18          0         36   200.0%  **폭 큼**
+  19:00:50.107 INFO  Started StreamApp in 0.935 second     2         18          0         36   200.0%  **폭 큼**
+  19:00:51.841 INFO  Initializing Servlet 'dispatcherS     2         18          0         36   200.0%  **폭 큼**
+  19:00:51.842 INFO  Completed initialization in 1 ms      2         18          0         36   200.0%  **폭 큼**
+  19:00:51.842 INFO  Completed initialization in 1 ms      4        0.5          0          1   200.0%  **폭 큼**
+  19:00:49.378 INFO  Starting StreamApp v0.0.1 using J     3       25.9      2.421      49.38   181.3%  **폭 큼**
+  19:00:49.380 INFO  No active profile set, falling ba     3       25.9      2.423      49.38   181.3%  **폭 큼**
+  19:00:49.861 INFO  Tomcat initialized with port 8080     3      26.38       2.89      49.86   178.1%  **폭 큼**
+
+## raw/serverlog-direct-r2.txt  (숫자가 흔들리는 줄 175개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:01:43.067 INFO  Completed initialization in 0 ms      4        0.5          0          1   200.0%  **폭 큼**
+  19:01:40.605 INFO  Starting StreamApp v0.0.1 using J     2       18.5          1         36   189.2%  **폭 큼**
+  19:01:40.607 INFO  No active profile set, falling ba     2       18.5          1         36   189.2%  **폭 큼**
+  19:01:41.076 INFO  Tomcat initialized with port 8080     2       18.5          1         36   189.2%  **폭 큼**
+  19:01:41.099 INFO  Root WebApplicationContext: initi     2       18.5          1         36   189.2%  **폭 큼**
+  19:01:41.322 INFO  Tomcat started on port 8080 (http     2       18.5          1         36   189.2%  **폭 큼**
+  19:01:41.327 INFO  Started StreamApp in 0.925 second     2       18.5          1         36   189.2%  **폭 큼**
+  19:01:43.067 INFO  Initializing Servlet 'dispatcherS     2       18.5          1         36   189.2%  **폭 큼**
+  19:01:43.067 INFO  Completed initialization in 0 ms      2       18.5          1         36   189.2%  **폭 큼**
+  [t= 40s] heap=  13.7/124MB  발행=    60/s  전달=    360/     2      29.35       13.7         45   106.6%  **폭 큼**
+  [disconnect] normal-2 status=CloseStatus[code=1006,      1         -3         -4         -2    66.7%  **폭 큼**
+  [transport-error] normal-3 java.io.EOFException          1         -4         -5         -3    50.0%  **폭 큼**
+
+## raw/serverlog-direct-r3.txt  (숫자가 흔들리는 줄 158개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:02:33.309 INFO  Completed initialization in 1 ms      4        0.5          0          1   200.0%  **폭 큼**
+  19:02:31.939 INFO  Starting StreamApp v0.0.1 using J     2       19.5          2         37   179.5%  **폭 큼**
+  19:02:31.941 INFO  No active profile set, falling ba     2       19.5          2         37   179.5%  **폭 큼**
+  19:02:32.409 INFO  Tomcat initialized with port 8080     2       19.5          2         37   179.5%  **폭 큼**
+  19:02:32.432 INFO  Root WebApplicationContext: initi     2       19.5          2         37   179.5%  **폭 큼**
+  19:02:32.625 INFO  Tomcat started on port 8080 (http     2       19.5          2         37   179.5%  **폭 큼**
+  19:02:32.630 INFO  Started StreamApp in 0.901 second     2       19.5          2         37   179.5%  **폭 큼**
+  19:02:33.308 INFO  Initializing Servlet 'dispatcherS     2       19.5          2         37   179.5%  **폭 큼**
+  19:02:33.309 INFO  Completed initialization in 1 ms      2       19.5          2         37   179.5%  **폭 큼**
+  [t= 45s] heap=  15.7/124MB  발행=   108/s  전달=    360/     4        315        108        522   131.4%  **폭 큼**
+  [disconnect] normal-4 status=CloseStatus[code=1006,      1       -2.5         -4         -1   120.0%  **폭 큼**
+  [t=  1s] heap=  35.8/124MB  발행=    60/s  전달=    360/     1        1.5          1          2    66.7%  **폭 큼**
+
+## raw/serverlog-direct-stalled-r1.txt  (숫자가 흔들리는 줄 191개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:03:22.400 INFO  Starting StreamApp v0.0.1 using J     2       20.5          3         38   170.7%  **폭 큼**
+  19:03:22.402 INFO  No active profile set, falling ba     2       20.5          3         38   170.7%  **폭 큼**
+  19:03:22.897 INFO  Tomcat initialized with port 8080     2       20.5          3         38   170.7%  **폭 큼**
+  19:03:22.926 INFO  Root WebApplicationContext: initi     2       20.5          3         38   170.7%  **폭 큼**
+  19:03:23.144 INFO  Tomcat started on port 8080 (http     2       20.5          3         38   170.7%  **폭 큼**
+  19:03:23.150 INFO  Started StreamApp in 0.986 second     2       20.5          3         38   170.7%  **폭 큼**
+  19:03:24.792 INFO  Initializing Servlet 'dispatcherS     2       20.5          3         38   170.7%  **폭 큼**
+  19:03:24.793 INFO  Completed initialization in 1 ms      2       20.5          3         38   170.7%  **폭 큼**
+  [t=  1s] heap=  35.2/124MB  발행=     0/s  전달=      0/     1        1.5          1          2    66.7%  **폭 큼**
+  [t=  2s] heap=  35.2/124MB  발행=     0/s  전달=      0/     1        2.5          2          3    40.0%  **폭 큼**
+  19:03:22.400 INFO  Starting StreamApp v0.0.1 using J     3      27.73       22.4      33.05    38.4%  **폭 큼**
+  19:03:22.402 INFO  No active profile set, falling ba     3      27.73       22.4      33.06    38.4%  **폭 큼**
+
+## raw/serverlog-direct-stalled-r2.txt  (숫자가 흔들리는 줄 223개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:04:13.269 INFO  Starting StreamApp v0.0.1 using J     2       21.5          4         39   162.8%  **폭 큼**
+  19:04:13.270 INFO  No active profile set, falling ba     2       21.5          4         39   162.8%  **폭 큼**
+  19:04:13.746 INFO  Tomcat initialized with port 8080     2       21.5          4         39   162.8%  **폭 큼**
+  19:04:13.768 INFO  Root WebApplicationContext: initi     2       21.5          4         39   162.8%  **폭 큼**
+  19:04:13.960 INFO  Tomcat started on port 8080 (http     2       21.5          4         39   162.8%  **폭 큼**
+  19:04:13.967 INFO  Started StreamApp in 0.925 second     2       21.5          4         39   162.8%  **폭 큼**
+  19:04:14.623 INFO  Initializing Servlet 'dispatcherS     2       21.5          4         39   162.8%  **폭 큼**
+  19:04:14.624 INFO  Completed initialization in 1 ms      2       21.5          4         39   162.8%  **폭 큼**
+  [t= 24s] heap=  40.6/124MB  발행=  3012/s  전달=  15060/     2       27.6       14.6       40.6    94.2%  **폭 큼**
+  [t= 28s] heap=  42.3/124MB  발행=  2994/s  전달=  14970/     2      29.15         16       42.3    90.2%  **폭 큼**
+  [t= 32s] heap=  43.3/124MB  발행=  2976/s  전달=  14877/     2       30.4       17.5       43.3    84.9%  **폭 큼**
+  [t= 36s] heap=  44.6/124MB  발행=  2966/s  전달=  14828/     2      31.85       19.1       44.6    80.1%  **폭 큼**
+
+## raw/serverlog-direct-stalled-r3.txt  (숫자가 흔들리는 줄 225개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:05:04.525 INFO  Completed initialization in 1 ms      4        0.5          0          1   200.0%  **폭 큼**
+  19:05:03.164 INFO  Starting StreamApp v0.0.1 using J     2       22.5          5         40   155.6%  **폭 큼**
+  19:05:03.166 INFO  No active profile set, falling ba     2       22.5          5         40   155.6%  **폭 큼**
+  19:05:03.641 INFO  Tomcat initialized with port 8080     2       22.5          5         40   155.6%  **폭 큼**
+  19:05:03.666 INFO  Root WebApplicationContext: initi     2       22.5          5         40   155.6%  **폭 큼**
+  19:05:03.865 INFO  Tomcat started on port 8080 (http     2       22.5          5         40   155.6%  **폭 큼**
+  19:05:03.871 INFO  Started StreamApp in 0.911 second     2       22.5          5         40   155.6%  **폭 큼**
+  19:05:04.524 INFO  Initializing Servlet 'dispatcherS     2       22.5          5         40   155.6%  **폭 큼**
+  19:05:04.525 INFO  Completed initialization in 1 ms      2       22.5          5         40   155.6%  **폭 큼**
+  19:05:03.164 INFO  Starting StreamApp v0.0.1 using J     3      8.014      3.164      12.86   121.0%  **폭 큼**
+  19:05:03.166 INFO  No active profile set, falling ba     3      8.015      3.166      12.87   121.0%  **폭 큼**
+  19:05:03.641 INFO  Tomcat initialized with port 8080     3      8.489      3.641      13.34   114.2%  **폭 큼**
+
+## raw/serverlog-terminate-r1.txt  (숫자가 흔들리는 줄 347개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:16:56.354 INFO  Completed initialization in 0 ms      4        0.5          0          1   200.0%  **폭 큼**
+  [t=  3s] heap=  25.8/124MB  발행=  3138/s  전달=  15750/     8          2          0          4   200.0%  **폭 큼**
+  [t=  5s] heap=  26.9/124MB  발행=  2997/s  전달=  14970/     8          3          0          6   200.0%  **폭 큼**
+  [t=  6s] heap=  43.2/124MB  발행=  2979/s  전달=  14892/     8          3          0          6   200.0%  **폭 큼**
+  [t=  7s] heap=  25.6/124MB  발행=  2976/s  전달=  14875/     8          3          0          6   200.0%  **폭 큼**
+  [t=  9s] heap=  24.7/124MB  발행=  2994/s  전달=  14949/     8          3          0          6   200.0%  **폭 큼**
+  [t= 10s] heap=  41.2/124MB  발행=  3006/s  전달=  15051/     8          2          0          4   200.0%  **폭 큼**
+  [t= 12s] heap=  40.3/124MB  발행=  3012/s  전달=  15030/     8          3          0          6   200.0%  **폭 큼**
+  [t= 13s] heap=  23.5/124MB  발행=  3006/s  전달=  15060/     8          3          0          6   200.0%  **폭 큼**
+  [t= 14s] heap=  39.9/124MB  발행=  3006/s  전달=  15030/     8          3          0          6   200.0%  **폭 큼**
+  [t= 15s] heap=  22.2/124MB  발행=  2988/s  전달=  14940/     8          3          0          6   200.0%  **폭 큼**
+  [t= 16s] heap=  38.7/124MB  발행=  3000/s  전달=  14970/     8          3          0          6   200.0%  **폭 큼**
+
+## raw/serverlog-terminate-r2.txt  (숫자가 흔들리는 줄 349개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  [t=  1s] heap=  21.5/124MB  발행=  2993/s  전달=  15222/     8        0.5          0          1   200.0%  **폭 큼**
+  [t=  3s] heap=  25.7/124MB  발행=  3144/s  전달=  15780/     8          3          0          6   200.0%  **폭 큼**
+  [t=  3s] heap=  25.7/124MB  발행=  3144/s  전달=  15780/    12          2          0          4   200.0%  **폭 큼**
+  [t=  4s] heap=  43.0/124MB  발행=  3006/s  전달=  15030/    12        2.5          0          5   200.0%  **폭 큼**
+  [t=  5s] heap=  26.4/124MB  발행=  3000/s  전달=  14977/    12          3          0          6   200.0%  **폭 큼**
+  [t=  6s] heap=  42.8/124MB  발행=  2988/s  전달=  14963/    12          3          0          6   200.0%  **폭 큼**
+  [t=  7s] heap=  25.5/124MB  발행=  3000/s  전달=  15000/    12          3          0          6   200.0%  **폭 큼**
+  [t=  8s] heap=  41.9/124MB  발행=  2976/s  전달=  14880/    12          3          0          6   200.0%  **폭 큼**
+  [t= 10s] heap=  40.9/124MB  발행=  3012/s  전달=  15060/     8          3          0          6   200.0%  **폭 큼**
+  [t= 10s] heap=  40.9/124MB  발행=  3012/s  전달=  15060/    12        3.5          0          7   200.0%  **폭 큼**
+  [t= 11s] heap=  23.9/124MB  발행=  2982/s  전달=  14910/    12        3.5          0          7   200.0%  **폭 큼**
+  [t= 12s] heap=  40.2/124MB  발행=  3012/s  전달=  15030/    12          4          0          8   200.0%  **폭 큼**
+
+## raw/serverlog-terminate-r3.txt  (숫자가 흔들리는 줄 327개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  [t=  1s] heap=  37.8/124MB  발행=  2995/s  전달=  15030/     8          3          0          6   200.0%  **폭 큼**
+  [t=  3s] heap=  25.1/124MB  발행=  3161/s  전달=  15870/    12          3          0          6   200.0%  **폭 큼**
+  [t=  5s] heap=  25.6/124MB  발행=  2978/s  전달=  14880/     8          3          0          6   200.0%  **폭 큼**
+  [t=  5s] heap=  25.6/124MB  발행=  2978/s  전달=  14880/    12          3          0          6   200.0%  **폭 큼**
+  [t=  6s] heap=  42.3/124MB  발행=  3010/s  전달=  15060/    12          3          0          6   200.0%  **폭 큼**
+  [t=  7s] heap=  24.8/124MB  발행=  2970/s  전달=  14850/     8          3          0          6   200.0%  **폭 큼**
+  [t=  7s] heap=  24.8/124MB  발행=  2970/s  전달=  14850/    12        3.5          0          7   200.0%  **폭 큼**
+  [t=  8s] heap=  41.2/124MB  발행=  2982/s  전달=  14880/     8          3          0          6   200.0%  **폭 큼**
+  [t=  8s] heap=  41.2/124MB  발행=  2982/s  전달=  14880/    12        3.5          0          7   200.0%  **폭 큼**
+  [t=  9s] heap=  23.9/124MB  발행=  3000/s  전달=  15000/    12        3.5          0          7   200.0%  **폭 큼**
+  [t= 10s] heap=  40.6/124MB  발행=  2994/s  전달=  15000/     8          3          0          6   200.0%  **폭 큼**
+  [t= 13s] heap=  21.9/124MB  발행=  2988/s  전달=  14910/     8          3          0          6   200.0%  **폭 큼**
+
+## raw/serverlog-terminate-tight-r1.txt  (숫자가 흔들리는 줄 319개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  [t=  1s] heap=  21.7/124MB  발행=  2958/s  전달=  15032/    12        1.5          0          3   200.0%  **폭 큼**
+  [t=  2s] heap=  38.9/124MB  발행=  3006/s  전달=  15030/    12        1.5          0          3   200.0%  **폭 큼**
+  [t=  3s] heap=  21.9/124MB  발행=  2982/s  전달=  14897/    12        1.5          0          3   200.0%  **폭 큼**
+  [t=  4s] heap=  38.6/124MB  발행=  3012/s  전달=  15073/    12        1.5          0          3   200.0%  **폭 큼**
+  [t=  6s] heap=  36.4/124MB  발행=  2730/s  전달=  13620/     8          3          0          6   200.0%  **폭 큼**
+  [t=  7s] heap=  19.0/124MB  발행=  2988/s  전달=  14940/     8          3          0          6   200.0%  **폭 큼**
+  [t=  8s] heap=  35.7/124MB  발행=  3006/s  전달=  15034/     8          3          0          6   200.0%  **폭 큼**
+  [t= 11s] heap=  17.3/124MB  발행=  2988/s  전달=  14940/     8          3          0          6   200.0%  **폭 큼**
+  [t= 13s] heap=  16.0/124MB  발행=  2988/s  전달=  14940/     8          3          0          6   200.0%  **폭 큼**
+  [t= 17s] heap=  48.4/124MB  발행=  3006/s  전달=  15030/     8        0.5          0          1   200.0%  **폭 큼**
+  [t= 19s] heap=  47.5/124MB  발행=  2994/s  전달=  14970/     8          1          0          2   200.0%  **폭 큼**
+  [t= 23s] heap=  44.0/124MB  발행=  3004/s  전달=  15000/     8          3          0          6   200.0%  **폭 큼**
+
+## raw/serverlog-terminate-tight-r2.txt  (숫자가 흔들리는 줄 350개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  [t=  2s] heap=  21.8/124MB  발행=  2976/s  전달=  14857/     8          3          0          6   200.0%  **폭 큼**
+  [t=  4s] heap=  21.1/124MB  발행=  3012/s  전달=  15057/     8        1.5          0          3   200.0%  **폭 큼**
+  [t=  5s] heap=  37.5/124MB  발행=  3017/s  전달=  15063/     8          3          0          6   200.0%  **폭 큼**
+  [t=  6s] heap=  20.3/124MB  발행=  3007/s  전달=  15060/     8          2          0          4   200.0%  **폭 큼**
+  [t=  7s] heap=  36.4/124MB  발행=  2958/s  전달=  14790/     8          3          0          6   200.0%  **폭 큼**
+  [t=  8s] heap=  19.2/124MB  발행=  3000/s  전달=  15000/     8          3          0          6   200.0%  **폭 큼**
+  [t=  9s] heap=  35.5/124MB  발행=  2958/s  전달=  14790/     8          3          0          6   200.0%  **폭 큼**
+  [t=  9s] heap=  35.5/124MB  발행=  2958/s  전달=  14790/    12        0.5          0          1   200.0%  **폭 큼**
+  [t= 10s] heap=  18.0/124MB  발행=  2976/s  전달=  14883/    12        0.5          0          1   200.0%  **폭 큼**
+  [t= 11s] heap=  34.3/124MB  발행=  3012/s  전달=  15045/     8        2.5          0          5   200.0%  **폭 큼**
+  [t= 11s] heap=  34.3/124MB  발행=  3012/s  전달=  15045/    12        0.5          0          1   200.0%  **폭 큼**
+  [t= 12s] heap=  17.4/124MB  발행=  3006/s  전달=  15042/    12        0.5          0          1   200.0%  **폭 큼**
+
+## raw/serverlog-terminate-tight-r3.txt  (숫자가 흔들리는 줄 358개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:21:08.677 INFO  Completed initialization in 1 ms      4        0.5          0          1   200.0%  **폭 큼**
+  [t=  1s] heap=  22.0/124MB  발행=  2988/s  전달=  15182/    12          6          0         12   200.0%  **폭 큼**
+  [t=  2s] heap=  39.9/124MB  발행=  3010/s  전달=  15030/     8          3          0          6   200.0%  **폭 큼**
+  [t=  2s] heap=  39.9/124MB  발행=  3010/s  전달=  15030/    12          6          0         12   200.0%  **폭 큼**
+  [t=  3s] heap=  23.1/124MB  발행=  2984/s  전달=  14940/    12          6          0         12   200.0%  **폭 큼**
+  [t=  4s] heap=  39.6/124MB  발행=  2994/s  전달=  14970/     8          2          0          4   200.0%  **폭 큼**
+  [t=  5s] heap=  22.0/124MB  발행=  2994/s  전달=  14970/     8        0.5          0          1   200.0%  **폭 큼**
+  [t=  7s] heap=  21.0/124MB  발행=  2994/s  전달=  14970/     8          3          0          6   200.0%  **폭 큼**
+  [t=  8s] heap=  37.3/124MB  발행=  2994/s  전달=  14958/     8          2          0          4   200.0%  **폭 큼**
+  [t= 10s] heap=  36.5/124MB  발행=  3000/s  전달=  15000/     8          3          0          6   200.0%  **폭 큼**
+  [t= 11s] heap=  18.1/124MB  발행=  2832/s  전달=  14160/     8          3          0          6   200.0%  **폭 큼**
+  [t= 12s] heap=  34.9/124MB  발행=  3006/s  전달=  15030/     8          3          0          6   200.0%  **폭 큼**
+
+## raw/serverlog-unbounded-r1.txt  (숫자가 흔들리는 줄 440개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:05:55.868 INFO  Completed initialization in 1 ms      4        0.5          0          1   200.0%  **폭 큼**
+  [t=  6s] heap=  42.4/124MB  발행=  3000/s  전달=  14972/     8          3          0          6   200.0%  **폭 큼**
+  [t= 11s] heap=  33.3/124MB  발행=  2952/s  전달=  14790/     8        2.5          0          5   200.0%  **폭 큼**
+  [t= 13s] heap=  35.6/124MB  발행=  2988/s  전달=  14940/     8          3          0          6   200.0%  **폭 큼**
+  [t= 15s] heap=  38.1/124MB  발행=  2952/s  전달=  14760/     8          3          0          6   200.0%  **폭 큼**
+  [t= 16s] heap=  54.6/124MB  발행=  2994/s  전달=  14970/     8          3          0          6   200.0%  **폭 큼**
+  [t= 17s] heap=  41.3/124MB  발행=  2994/s  전달=  15988/     8          3          0          6   200.0%  **폭 큼**
+  [t= 18s] heap=  57.9/124MB  발행=  3000/s  전달=  15000/     8        0.5          0          1   200.0%  **폭 큼**
+  [t= 19s] heap=  44.0/124MB  발행=  3000/s  전달=  15000/     8          2          0          4   200.0%  **폭 큼**
+  [t= 20s] heap=  60.2/124MB  발행=  2994/s  전달=  14970/     8          3          0          6   200.0%  **폭 큼**
+  [t= 22s] heap=  62.7/124MB  발행=  2958/s  전달=  14760/     8          3          0          6   200.0%  **폭 큼**
+  [t= 26s] heap=  66.8/124MB  발행=  2964/s  전달=  14820/     8          3          0          6   200.0%  **폭 큼**
+
+## raw/serverlog-unbounded-r2.txt  (숫자가 흔들리는 줄 519개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:07:50.940 INFO  Completed initialization in 1 ms      4        0.5          0          1   200.0%  **폭 큼**
+  [t=  0s] heap=  20.4/124MB  발행=  2856/s  전달=  15433/    12        4.5          0          9   200.0%  **폭 큼**
+  [t=  1s] heap=  37.3/124MB  발행=  3006/s  전달=  15030/    12        4.5          0          9   200.0%  **폭 큼**
+  [t=  2s] heap=  23.3/124MB  발행=  2994/s  전달=  14970/    12        4.5          0          9   200.0%  **폭 큼**
+  [t=  3s] heap=  39.6/124MB  발행=  2934/s  전달=  14670/    12        4.5          0          9   200.0%  **폭 큼**
+  [t=  4s] heap=  25.4/124MB  발행=  2922/s  전달=  14610/     8        0.5          0          1   200.0%  **폭 큼**
+  [t=  7s] heap=  43.8/124MB  발행=  3006/s  전달=  15012/     8          3          0          6   200.0%  **폭 큼**
+  [t= 12s] heap=  48.4/124MB  발행=  3000/s  전달=  15024/     8        0.5          0          1   200.0%  **폭 큼**
+  [t= 14s] heap=  50.6/124MB  발행=  2988/s  전달=  14940/     8          1          0          2   200.0%  **폭 큼**
+  [t= 16s] heap=  53.2/124MB  발행=  2994/s  전달=  14958/     8          3          0          6   200.0%  **폭 큼**
+  [t= 18s] heap=  57.0/124MB  발행=  3012/s  전달=  15060/     8          3          0          6   200.0%  **폭 큼**
+  [t= 23s] heap=  78.7/124MB  발행=  3000/s  전달=  15000/     8          3          0          6   200.0%  **폭 큼**
+
+## raw/serverlog-unbounded-r3.txt  (숫자가 흔들리는 줄 481개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  19:09:47.291 INFO  Completed initialization in 1 ms      4        0.5          0          1   200.0%  **폭 큼**
+  [t=  1s] heap=  38.2/124MB  발행=  3006/s  전달=  15090/     8        0.5          0          1   200.0%  **폭 큼**
+  [t=  3s] heap=  41.0/124MB  발행=  2982/s  전달=  14970/     8        0.5          0          1   200.0%  **폭 큼**
+  [t=  3s] heap=  41.0/124MB  발행=  2982/s  전달=  14970/    12        0.5          0          1   200.0%  **폭 큼**
+  [t=  5s] heap=  43.7/124MB  발행=  2994/s  전달=  15030/     8          3          0          6   200.0%  **폭 큼**
+  [t=  7s] heap=  29.5/124MB  발행=  2946/s  전달=  14790/     8        0.5          0          1   200.0%  **폭 큼**
+  [t=  8s] heap=  46.2/124MB  발행=  2994/s  전달=  15030/     8          3          0          6   200.0%  **폭 큼**
+  [t= 11s] heap=  34.6/124MB  발행=  2988/s  전달=  15000/     8          3          0          6   200.0%  **폭 큼**
+  [t= 15s] heap=  39.9/124MB  발행=  2958/s  전달=  14850/     8          2          0          4   200.0%  **폭 큼**
+  [t= 16s] heap=  56.6/124MB  발행=  3012/s  전달=  15120/     8          3          0          6   200.0%  **폭 큼**
+  [t= 17s] heap=  42.6/124MB  발행=  2994/s  전달=  15006/     8          3          0          6   200.0%  **폭 큼**
+  [t= 20s] heap=  62.0/124MB  발행=  2982/s  전달=  14999/     8        0.5          0          1   200.0%  **폭 큼**
+
+  폭이 30%를 넘는 줄은 1회 값으로 소수점을 인용하면 안 됩니다.
+  두 조건의 차이가 각자의 폭보다 작으면 그 비교 자체가 성립하지 않습니다.

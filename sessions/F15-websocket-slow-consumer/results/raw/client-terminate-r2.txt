@@ -4,16 +4,16 @@ mode=terminate run=2 측정시간=45.0s 정상구독자=5 느린구독자=1(읽�
 
 -- 정상 구독자 --
 id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
-normal-1     133836     133836       0ms       1ms       2ms      35ms     2.0ms      36ms  -
-normal-2     133847     133847       0ms       1ms       2ms      35ms     2.1ms      36ms  -
-normal-3     133854     133854       0ms       1ms       2ms      35ms     2.0ms      35ms  -
-normal-4     133854     133854       0ms       1ms       2ms      34ms     2.0ms      36ms  -
-normal-5     133854     133854       0ms       1ms       2ms      35ms     2.0ms      35ms  -
+normal-1     133596     133596       1ms       1ms       2ms      41ms     2.1ms      42ms  -
+normal-2     133602     133602       1ms       1ms       2ms      41ms     2.1ms      39ms  -
+normal-3     133602     133602       1ms       1ms       2ms      42ms     2.1ms      43ms  -
+normal-4     133608     133608       1ms       1ms       2ms      41ms     2.1ms      42ms  -
+normal-5     133608     133608       1ms       1ms       2ms      41ms     2.1ms      42ms  -
 
-합계 수신 669245건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms max=35ms
-최종 수신 틱 seq: 최소 133836, 최대 133854
+합계 수신 668016건, 정상 구독자 전체 지연 p50=1ms p95=1ms p99=2ms max=42ms
+최종 수신 틱 seq: 최소 133596, 최대 133608
 
 -- 느린 구독자 --
 slow-1  읽은 바이트 175,213 (평균 3.8 KB/s, 목표 32.0 KB/s)  서버가 t=5.5s에 끊음 — 서버가 스트림을 닫음(EOF)
 
-SUMMARY mode=terminate run=2 recv_total=669245 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=2 lat_max_ms=35 last_seq_min=133836 last_seq_max=133854 worst_client_p95_ms=1 worst_client_max_ms=35 slow_count=1 slow_read_bytes=175213 slow_closed_at_s=5.5 slow_closed_n=1 slow_reconnects=0
+SUMMARY mode=terminate run=2 recv_total=668016 lat_p50_ms=1 lat_p95_ms=1 lat_p99_ms=2 lat_max_ms=42 last_seq_min=133596 last_seq_max=133608 worst_client_p95_ms=1 worst_client_max_ms=42 slow_count=1 slow_read_bytes=175213 slow_closed_at_s=5.5 slow_closed_n=1 slow_reconnects=0

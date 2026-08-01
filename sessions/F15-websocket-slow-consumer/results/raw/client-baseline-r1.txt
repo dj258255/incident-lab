@@ -4,16 +4,16 @@ mode=baseline run=1 측정시간=45.0s 정상구독자=5 느린구독자=없음(
 
 -- 정상 구독자 --
 id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
-normal-1     131514     131514       0ms       1ms       2ms      18ms     1.9ms     151ms  -
-normal-2     131520     131520       0ms       1ms       2ms      47ms     2.0ms     151ms  -
-normal-3     131520     131520       0ms       1ms       2ms      47ms     1.9ms     151ms  -
-normal-4     131520     131520       0ms       1ms       2ms      18ms     2.0ms     151ms  -
-normal-5     131520     131520       0ms       1ms       2ms      18ms     1.9ms     151ms  -
+normal-1     133848     133848       0ms       1ms       1ms      16ms     1.9ms      30ms  -
+normal-2     133860     133860       0ms       1ms       1ms      16ms     1.9ms      30ms  -
+normal-3     133860     133860       0ms       1ms       1ms      16ms     1.9ms      30ms  -
+normal-4     133860     133860       0ms       1ms       1ms      16ms     1.8ms      30ms  -
+normal-5     133860     133860       0ms       1ms       1ms      16ms     1.9ms      30ms  -
 
-합계 수신 657594건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=2ms max=47ms
-최종 수신 틱 seq: 최소 131514, 최대 131520
+합계 수신 669288건, 정상 구독자 전체 지연 p50=0ms p95=1ms p99=1ms max=16ms
+최종 수신 틱 seq: 최소 133848, 최대 133860
 
 -- 느린 구독자 --
 없음(대조군)
 
-SUMMARY mode=baseline run=1 recv_total=657594 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=2 lat_max_ms=47 last_seq_min=131514 last_seq_max=131520 worst_client_p95_ms=1 worst_client_max_ms=47 slow_count=0 slow_read_bytes=0 slow_closed_at_s=n/a slow_closed_n=0 slow_reconnects=0
+SUMMARY mode=baseline run=1 recv_total=669288 lat_p50_ms=0 lat_p95_ms=1 lat_p99_ms=1 lat_max_ms=16 last_seq_min=133848 last_seq_max=133860 worst_client_p95_ms=1 worst_client_max_ms=16 slow_count=0 slow_read_bytes=0 slow_closed_at_s=n/a slow_closed_n=0 slow_reconnects=0

@@ -4,16 +4,16 @@ mode=combo run=2 측정시간=45.1s 정상구독자=5 느린구독자=1(읽기 3
 
 -- 정상 구독자 --
 id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
-normal-1     133355     133356       1ms       1ms       2ms      32ms     2.1ms      37ms  -
-normal-2     133361     133362       1ms       1ms       2ms      33ms     2.0ms      36ms  -
-normal-3     133359     133362       1ms       1ms       2ms      33ms     2.1ms      36ms  -
-normal-4     133362     133363       1ms       1ms       2ms      33ms     2.1ms      37ms  -
-normal-5     133362     133363       1ms       1ms       2ms      33ms     2.0ms      37ms  -
+normal-1     133138     133158       1ms       1ms       2ms      15ms     2.1ms      44ms  -
+normal-2     133140     133164       1ms       1ms       2ms      25ms     2.1ms      44ms  -
+normal-3     133146     133164       0ms       1ms       2ms      15ms     2.1ms      44ms  -
+normal-4     133150     133170       1ms       1ms       2ms      15ms     2.1ms      44ms  -
+normal-5     133150     133170       1ms       1ms       2ms      15ms     2.1ms      44ms  -
 
-합계 수신 666799건, 정상 구독자 전체 지연 p50=1ms p95=1ms p99=2ms max=33ms
-최종 수신 틱 seq: 최소 133356, 최대 133363
+합계 수신 665724건, 정상 구독자 전체 지연 p50=1ms p95=1ms p99=2ms max=25ms
+최종 수신 틱 seq: 최소 133158, 최대 133170
 
 -- 느린 구독자 --
-slow-1  읽은 바이트 1,454,544 (평균 31.4 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
+slow-1  읽은 바이트 1,444,716 (평균 31.2 KB/s, 목표 32.0 KB/s)  서버가 끊지 않음(측정 끝까지 연결 유지)
 
-SUMMARY mode=combo run=2 recv_total=666799 lat_p50_ms=1 lat_p95_ms=1 lat_p99_ms=2 lat_max_ms=33 last_seq_min=133356 last_seq_max=133363 worst_client_p95_ms=1 worst_client_max_ms=33 slow_count=1 slow_read_bytes=1454544 slow_closed_at_s=none slow_closed_n=1 slow_reconnects=0
+SUMMARY mode=combo run=2 recv_total=665724 lat_p50_ms=1 lat_p95_ms=1 lat_p99_ms=2 lat_max_ms=25 last_seq_min=133158 last_seq_max=133170 worst_client_p95_ms=1 worst_client_max_ms=25 slow_count=1 slow_read_bytes=1444716 slow_closed_at_s=none slow_closed_n=1 slow_reconnects=0

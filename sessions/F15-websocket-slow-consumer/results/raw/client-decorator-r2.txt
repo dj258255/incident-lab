@@ -4,16 +4,16 @@ mode=decorator run=2 측정시간=45.0s 정상구독자=5 느린구독자=1(읽�
 
 -- 정상 구독자 --
 id             수신건수     최종틱seq    지연p50    지연p95     지연p99     지연max     간격p95     간격max  비고
-normal-1     134280     134280       1ms       1ms       2ms      19ms     1.9ms      29ms  -
-normal-2     134286     134286       1ms       1ms       2ms      19ms     2.0ms      29ms  -
-normal-3     134286     134286       1ms       1ms       2ms      19ms     2.0ms      29ms  -
-normal-4     134286     134286       1ms       1ms       2ms      19ms     2.0ms      29ms  -
-normal-5     134286     134286       1ms       1ms       2ms      19ms     1.9ms      29ms  -
+normal-1     133650     133650       1ms       1ms       2ms      39ms     2.0ms      44ms  -
+normal-2     133656     133656       1ms       1ms       2ms      39ms     2.1ms      44ms  -
+normal-3     133662     133662       1ms       1ms       2ms      39ms     2.0ms      44ms  -
+normal-4     133662     133662       1ms       1ms       2ms      39ms     2.0ms      44ms  -
+normal-5     133662     133662       0ms       1ms       2ms      39ms     2.0ms      44ms  -
 
-합계 수신 671424건, 정상 구독자 전체 지연 p50=1ms p95=1ms p99=2ms max=19ms
-최종 수신 틱 seq: 최소 134280, 최대 134286
+합계 수신 668292건, 정상 구독자 전체 지연 p50=1ms p95=1ms p99=2ms max=39ms
+최종 수신 틱 seq: 최소 133650, 최대 133662
 
 -- 느린 구독자 --
-slow-1  읽은 바이트 88,333 (평균 1.9 KB/s, 목표 32.0 KB/s)  서버가 t=2.7s에 끊음 — 서버가 스트림을 닫음(EOF)
+slow-1  읽은 바이트 85,437 (평균 1.8 KB/s, 목표 32.0 KB/s)  서버가 t=2.7s에 끊음 — 서버가 스트림을 닫음(EOF)
 
-SUMMARY mode=decorator run=2 recv_total=671424 lat_p50_ms=1 lat_p95_ms=1 lat_p99_ms=2 lat_max_ms=19 last_seq_min=134280 last_seq_max=134286 worst_client_p95_ms=1 worst_client_max_ms=19 slow_count=1 slow_read_bytes=88333 slow_closed_at_s=2.7 slow_closed_n=1 slow_reconnects=0
+SUMMARY mode=decorator run=2 recv_total=668292 lat_p50_ms=1 lat_p95_ms=1 lat_p99_ms=2 lat_max_ms=39 last_seq_min=133650 last_seq_max=133662 worst_client_p95_ms=1 worst_client_max_ms=39 slow_count=1 slow_read_bytes=85437 slow_closed_at_s=2.7 slow_closed_n=1 slow_reconnects=0

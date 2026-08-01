@@ -5,10 +5,38 @@
 ## 1) MDL 대조군을 3회씩
 ==================================================================
 ### 회차 1
-  A 열린 트랜잭션만          SELECT 58ms
-  B 트랜잭션 + DROP(p20260714)  DDL 13017ms  SELECT 9991ms
+  A 열린 트랜잭션만          SELECT 66ms
+  B 트랜잭션 + DROP(p20260720)  DDL 13020ms  SELECT 9997ms
 ### 회차 2
-  A 열린 트랜잭션만          SELECT 76ms
-  B 트랜잭션 + DROP(p20260715)  DDL 13012ms  SELECT 9991ms
+  A 열린 트랜잭션만          SELECT 65ms
+  B 트랜잭션 + DROP(p20260721)  DDL 13002ms  SELECT 9977ms
 ### 회차 3
-  A 열린 트랜잭션만          SELECT 67ms
+  A 열린 트랜잭션만          SELECT 70ms
+  B 트랜잭션 + DROP(p20260722)  DDL 13028ms  SELECT 10005ms
+
+  조건                           SELECT 회차별                        중앙         폭
+  A 열린 트랜잭션만                   [66, 65, 70]                     66ms        5ms
+  B 트랜잭션 + DROP                [9997, 9977, 10005]            9997ms       28ms
+
+  중앙값 배수 151배
+  DROP 자체 대기 회차별 [13020, 13002, 13028] 중앙 13020ms
+
+==================================================================
+## 2) 데이터가 든 표에서 OPTIMIZE TABLE
+==================================================================
+  8절의 205ms 는 앞 실험이 파티션을 다 떨군 뒤라 빈 표를 재구축한 값입니다.
+  2000000행을 넣고 절반을 지운 표에서 다시 잽니다.
+  적재 2000000행, 크기 495MB, DATA_FREE 4MB
+  1000000행 삭제 후 크기 495MB, DATA_FREE 4MB
+  DELETE 는 크기를 안 줄입니다. 지운 자리가 DATA_FREE 로 남습니다.
+
+  OPTIMIZE TABLE 소요 = 2968ms
+  그동안 들어온 일반 SELECT = 50ms
+  실행 후 크기 252MB, DATA_FREE 3MB, 행 수 1000000
+  MySQL 이 뭐라고 답했는지:
+    | spoon.opt_bench | optimize | note     | Table does not support optimize, doing recreate + analyze instead |
+    | spoon.opt_bench | optimize | status   | OK                                                                |
+
+  8절의 빈 표 205ms 와 나란히 놓으면 회수 비용이 행 수에 붙는다는 것이 보입니다.
+
+  1) 은 조건마다 3회, 2) 는 1회 실행입니다.

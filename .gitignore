@@ -24,3 +24,8 @@ results/*-app.log
 sessions/*/results/*-reader.txt
 !sessions/*/results/v17-*-reader.txt
 .run-state/
+
+# 반복 실행의 회차별 스냅숏은 중간 산출물이라 뺀다. 비교 요약(SUMMARY.txt)과
+# 회차 실행 로그(run*.log)는 남긴다. B43 처럼 결과가 표준출력으로만 나오는 세션은
+# 그 로그가 유일한 증거다.
+sessions/*/results/repeat/*/run*/
