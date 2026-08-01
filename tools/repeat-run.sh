@@ -75,6 +75,39 @@ for name in csvs:
             spread = (hi-lo)/med*100 if med else 0
             flag = "  **폭 큼**" if spread > 30 else ""
             print(f"  {label:<26}{c:<22}{med:>11.4g}{lo:>11.4g}{hi:>11.4g}{spread:>8.1f}%{flag}")
+# CSV 가 없는 세션도 있다. 결과가 .txt 뿐이면 위 비교가 통째로 비고, 그러면
+# "3/3 정상 종료"만 찍혀서 반복을 한 것처럼 보인다. 실제로는 아무것도 안 비교했다.
+# 텍스트 결과도 줄 단위로 맞대고 숫자만 다른 줄의 폭을 잰다.
+import re
+txts = sorted({p.name for r in alive for p in r.glob("*.txt")})
+NUM = re.compile(r'-?\d+(?:\.\d+)?')
+for name in txts:
+    lines = []
+    for r in alive:
+        f = r/name
+        if f.exists(): lines.append(f.read_text(encoding='utf-8', errors='replace').splitlines())
+    if len(lines) < 2: continue
+    n = min(len(x) for x in lines)
+    varying = []
+    for i in range(n):
+        col = [x[i] for x in lines]
+        if len(set(col)) == 1: continue
+        skel = [NUM.sub('#', c) for c in col]
+        if len(set(skel)) != 1: continue      # 숫자 말고 다른 게 다르면 비교 대상이 아니다
+        nums = [[float(v) for v in NUM.findall(c)] for c in col]
+        if not nums[0] or len({len(v) for v in nums}) != 1: continue
+        for j in range(len(nums[0])):
+            vals = [v[j] for v in nums]
+            med = st.median(vals); lo=min(vals); hi=max(vals)
+            if med == 0 or hi == lo: continue
+            varying.append((col[0].strip()[:52], j+1, med, lo, hi, (hi-lo)/abs(med)*100))
+    if not varying: continue
+    print(f"\n## {name}  (숫자가 흔들리는 줄 {len(varying)}개)")
+    print(f"  {'줄':<54}{'위치':>4}{'중앙':>11}{'최소':>11}{'최대':>11}{'폭/중앙':>9}")
+    for lbl,j,med,lo,hi,sp in sorted(varying, key=lambda x:-x[5])[:12]:
+        flag = "  **폭 큼**" if sp > 30 else ""
+        print(f"  {lbl:<54}{j:>4}{med:>11.4g}{lo:>11.4g}{hi:>11.4g}{sp:>8.1f}%{flag}")
+
 print()
 print("  폭이 30%를 넘는 줄은 1회 값으로 소수점을 인용하면 안 됩니다.")
 print("  두 조건의 차이가 각자의 폭보다 작으면 그 비교 자체가 성립하지 않습니다.")

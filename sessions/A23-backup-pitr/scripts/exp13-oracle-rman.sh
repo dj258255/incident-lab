@@ -37,7 +37,19 @@ EOF
 }
 ready(){ SQL "SELECT 'PI'||'NG' FROM dual;" | grep -q PING && SQL "SELECT open_mode FROM v\$database;" | grep -q "READ WRITE"; }
 for _ in $(seq 1 200); do ready && break; sleep 5; done
-ready || { echo "중단: a23-oracle 이 안 뜹니다" >&2; exit 2; }
+if ! ready; then
+  # 앞 회차가 RESETLOGS 뒤에 안 열고 끝나면 MOUNTED 에 남는다. 그 상태로 다음 실행을
+  # 시작하면 "안 뜹니다"로 중단되고, 원인이 컨테이너가 아니라 앞 실행의 뒷정리다.
+  # 스스로 회복시킨다.
+  echo "  READ WRITE 가 아닙니다($(SQL "SELECT open_mode FROM v\$database;" | tr -d ' \r\n')). 여는 중"
+  SQL "ALTER DATABASE OPEN;" >/dev/null 2>&1
+  ready || SQL "ALTER DATABASE OPEN RESETLOGS;" >/dev/null 2>&1
+  ready || { SQL "SHUTDOWN ABORT;
+STARTUP;" >/dev/null 2>&1; }
+  for _ in $(seq 1 40); do ready && break; sleep 5; done
+fi
+ready || { echo "중단: a23-oracle 을 READ WRITE 로 못 엽니다" >&2; exit 2; }
+open_pdb || echo "  주의: PDB 가 안 열립니다"
 
 # 아카이브 로그 모드가 아니면 PITR 자체가 성립하지 않는다
 MODE=$(SQL "SELECT log_mode FROM v\$database;" | tr -d ' \r\n')
