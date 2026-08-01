@@ -1,0 +1,5 @@
+run,phase,rows,verdict
+1,until_safe,500,걸림(500)
+1,until_after,0,걸림(?)
+1,old_after_resetlogs,0,막힘
+1,reset_incarnation,0,걸림
