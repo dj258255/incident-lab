@@ -34,7 +34,11 @@ def num(pat, default=''):
     m = re.search(pat, t)
     return m.group(1) if m else default
 # http_req_duration ... p(95)=123.45ms
-p95 = num(r'http_req_duration[^\n]*?p\(95\)=([\d.]+)(?:ms|s)')
+# 단위를 반드시 함께 읽는다. k6 는 값에 따라 ms 와 s 를 섞어 쓴다.
+# 숫자만 뽑으면 p(95)=13.99s 가 13.99 가 되고, 그것을 ms 로 적으면 1000배가 틀린다.
+# 실제로 스레드 스윕이 "14.0ms" 로 발행됐는데 원값은 13.99초였다.
+m = re.search(r'http_req_duration[^\n]*?p\(95\)=([\d.]+)(ms|s)\b', t)
+p95 = (float(m.group(1)) * (1000 if m.group(2) == 's' else 1)) if m else ''  # 밀리초로 통일
 # checks 또는 http_reqs 에서 총 요청 수와 초당
 reqs = num(r'http_reqs[^\n]*?:\s*([\d]+)')
 rate = num(r'http_reqs[^\n]*?\s([\d.]+)/s')
@@ -47,8 +51,14 @@ rate = num(r'http_reqs[^\n]*?\s([\d.]+)/s')
 c200 = num(r'cnt_200[.\s]*:\s*(\d+)')
 c503 = num(r'cnt_503[.\s]*:\s*(\d+)')
 # 집계 p95 는 503 이 0.3ms 라 끌려 내려간다. 성공 응답만의 p95 를 따로 뽑는다.
-p95_ok = num(r'dur_200_ok[^\n]*?p\(95\)=([\d.]+)(m?s)')
-print(f"{p95},{reqs},{rate},{c503 or 0},{c200 or 0},{p95_ok}")
+mo = re.search(r'dur_200_ok[^\n]*?p\(95\)=([\d.]+)(ms|s)\b', t)
+p95_ok = (float(mo.group(1)) * (1000 if mo.group(2) == 's' else 1)) if mo else ''
+# 성공 응답의 초당 처리량. http_reqs 는 "보낸 것" 이라 흘려보낸 것까지 센다.
+# 그것을 처리량으로 쓰면 많이 버린 조건이 좋아 보인다. cnt_200 쪽 초당을 따로 뽑는다.
+served = num(r'cnt_200[^\n]*?\s([\d.]+)/s')
+# k6 가 VU 부족으로 아예 못 보낸 요청. 이게 크면 그 조건은 목표 부하를 못 받은 것이다.
+dropped = num(r'dropped_iterations[^\n]*?:\s*(\d+)', '0')
+print(f"{p95},{reqs},{rate},{c503 or 0},{c200 or 0},{p95_ok},{served},{dropped}")
 PY
 }
 
@@ -64,7 +74,7 @@ echo "=================================================================="
 echo "  부하 차단 허용 수는 풀 크기와 같게 둡니다(기본 설계와 같은 관계)."
 echo
 : > "$OUT/pool-sweep.csv"
-echo "pool,run,p95_ms,http_reqs,req_per_s,shed,served,p95_ok_ms" >> "$OUT/pool-sweep.csv"
+echo "pool,run,p95_ms,http_reqs,req_per_s,shed,served,p95_ok_ms,served_per_s,dropped" >> "$OUT/pool-sweep.csv"
 for pool in 10 20 50 100; do
   for run in $(seq 1 "$REPEAT"); do
     label="pool${pool}-r${run}"
@@ -99,7 +109,7 @@ echo "=================================================================="
 echo "## 2) max-threads 스윕을 반복해서"
 echo "=================================================================="
 : > "$OUT/threads-repeat.csv"
-echo "threads,run,p95_ms,http_reqs,req_per_s,shed" >> "$OUT/threads-repeat.csv"
+echo "threads,run,p95_ms,http_reqs,req_per_s,shed,served,p95_ok_ms,served_per_s,dropped" >> "$OUT/threads-repeat.csv"
 for th in 10 50 200 800; do
   for run in $(seq 1 "$REPEAT"); do
     label="th${th}-r${run}"
@@ -113,17 +123,23 @@ import csv, sys, collections, statistics
 rows = collections.defaultdict(list)
 for r in csv.DictReader(open(sys.argv[1])):
     rows[r['threads']].append(r)
-print(f"  {'스레드':>8} {'p95 중앙':>12} {'p95 최소':>12} {'p95 최대':>12} {'초당 중앙':>12}")
+def med(rs, k):
+    xs = [float(x[k]) for x in rs if x.get(k)]
+    return statistics.median(xs) if xs else 0
+print(f"  {'스레드':>8} {'p95 중앙':>11} {'성공 초당':>11} {'보낸 초당':>11} "
+      f"{'성공(200)':>10} {'차단(503)':>10} {'못 보냄':>9}")
 for th in sorted(rows, key=int):
     rs = rows[th]
-    xs = [float(x['p95_ms']) for x in rs if x.get('p95_ms')]
-    ys = [float(x['req_per_s']) for x in rs if x.get('req_per_s')]
-    if not xs: continue
-    print(f"  {th:>8} {statistics.median(xs):>11.1f}ms {min(xs):>11.1f}ms "
-          f"{max(xs):>11.1f}ms {statistics.median(ys) if ys else 0:>12.1f}")
+    if not any(x.get('p95_ms') for x in rs):
+        continue
+    print(f"  {th:>8} {med(rs,'p95_ms')/1000:>10.2f}s {med(rs,'served_per_s'):>10.1f}/s "
+          f"{med(rs,'req_per_s'):>10.1f}/s {med(rs,'served'):>10,.0f} "
+          f"{med(rs,'shed'):>10,.0f} {med(rs,'dropped'):>9,.0f}")
 print()
-print("  회차별 최소와 최대가 조건 사이의 차이보다 작으면 방향을 믿을 수 있습니다.")
-print("  겹치면 그 칸의 값은 인용하면 안 됩니다.")
+print("  '성공 초당' 과 '보낸 초당' 을 갈라 봐야 합니다. 보낸 쪽만 보면 많이 버린 조건이")
+print("  좋아 보입니다. 그리고 '못 보냄' 은 k6 가 VU 부족으로 아예 못 쏜 요청이라,")
+print("  그 값이 크면 그 조건은 목표 부하를 애초에 못 받은 것입니다.")
+print("  p95 는 밀리초가 아니라 초 단위입니다. k6 가 값에 따라 단위를 바꿔 찍습니다.")
 PY
 echo
 docker compose down -v >/dev/null 2>&1 || true

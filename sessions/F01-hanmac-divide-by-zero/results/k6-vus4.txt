@@ -14,77 +14,78 @@
               * load: 4 looping VUs for 15s (gracefulStop: 5s)
 
 
-running (01.0s), 4/4 VUs, 10687 complete and 0 interrupted iterations
+running (01.0s), 4/4 VUs, 10533 complete and 0 interrupted iterations
 load   [   7% ] 4 VUs  01.0s/15s
 
-running (02.0s), 4/4 VUs, 23129 complete and 0 interrupted iterations
+running (02.0s), 4/4 VUs, 26097 complete and 0 interrupted iterations
 load   [  13% ] 4 VUs  02.0s/15s
 
-running (03.0s), 4/4 VUs, 35879 complete and 0 interrupted iterations
+running (03.0s), 4/4 VUs, 42279 complete and 0 interrupted iterations
 load   [  20% ] 4 VUs  03.0s/15s
 
-running (04.0s), 4/4 VUs, 48786 complete and 0 interrupted iterations
+running (04.0s), 4/4 VUs, 58742 complete and 0 interrupted iterations
 load   [  27% ] 4 VUs  04.0s/15s
 
-running (05.0s), 4/4 VUs, 61698 complete and 0 interrupted iterations
+running (05.0s), 4/4 VUs, 75482 complete and 0 interrupted iterations
 load   [  33% ] 4 VUs  05.0s/15s
 
-running (06.0s), 4/4 VUs, 74888 complete and 0 interrupted iterations
+running (06.0s), 4/4 VUs, 93693 complete and 0 interrupted iterations
 load   [  40% ] 4 VUs  06.0s/15s
 
-running (07.0s), 4/4 VUs, 88261 complete and 0 interrupted iterations
+running (07.0s), 4/4 VUs, 111623 complete and 0 interrupted iterations
 load   [  47% ] 4 VUs  07.0s/15s
 
-running (08.0s), 4/4 VUs, 101692 complete and 0 interrupted iterations
+running (08.0s), 4/4 VUs, 129008 complete and 0 interrupted iterations
 load   [  53% ] 4 VUs  08.0s/15s
 
-running (09.0s), 4/4 VUs, 115191 complete and 0 interrupted iterations
+running (09.0s), 4/4 VUs, 146595 complete and 0 interrupted iterations
 load   [  60% ] 4 VUs  09.0s/15s
 
-running (10.0s), 4/4 VUs, 128729 complete and 0 interrupted iterations
+running (10.0s), 4/4 VUs, 164373 complete and 0 interrupted iterations
 load   [  67% ] 4 VUs  10.0s/15s
 
-running (11.0s), 4/4 VUs, 142149 complete and 0 interrupted iterations
+running (11.0s), 4/4 VUs, 181639 complete and 0 interrupted iterations
 load   [  73% ] 4 VUs  11.0s/15s
 
-running (12.0s), 4/4 VUs, 155722 complete and 0 interrupted iterations
+running (12.0s), 4/4 VUs, 199429 complete and 0 interrupted iterations
 load   [  80% ] 4 VUs  12.0s/15s
 
-running (13.0s), 4/4 VUs, 169694 complete and 0 interrupted iterations
+running (13.0s), 4/4 VUs, 217135 complete and 0 interrupted iterations
 load   [  87% ] 4 VUs  13.0s/15s
 
-running (14.0s), 4/4 VUs, 183149 complete and 0 interrupted iterations
+running (14.0s), 4/4 VUs, 235180 complete and 0 interrupted iterations
 load   [  93% ] 4 VUs  14.0s/15s
 
-running (15.0s), 4/4 VUs, 196977 complete and 0 interrupted iterations
+running (15.0s), 4/4 VUs, 252454 complete and 0 interrupted iterations
 load   [ 100% ] 4 VUs  15.0s/15s
 
 
   █ TOTAL RESULTS 
 
     CUSTOM
-    cnt_422..............: 68      4.532724/s
-    cnt_503..............: 196962  13129.034832/s
-    dur_ms...............: avg=198.33µs min=54.83µs  med=174.58µs max=4.94ms p(90)=252.45µs p(95)=291.2µs 
-    passed_before_trip...: 68      4.532724/s
+    cnt_201........................: 25279  1685.204276/s
+    cnt_422........................: 227193 15145.639267/s
+    dur_ms.........................: avg=195.39µs min=41.79µs med=175µs    max=23.93ms p(90)=262.75µs p(95)=302.62µs
+    passed_before_trip.............: 252472 16830.843543/s
 
     HTTP
-    http_req_duration....: avg=198.33µs min=54.83µs  med=174.58µs max=4.94ms p(90)=252.45µs p(95)=291.2µs 
-    http_req_failed......: 100.00% 197030 out of 197030
-    http_reqs............: 197030  13133.567556/s
+    http_req_duration..............: avg=195.39µs min=41.79µs med=175µs    max=23.93ms p(90)=262.75µs p(95)=302.62µs
+      { expected_response:true }...: avg=195.14µs min=46.37µs med=175.7µs  max=4.88ms  p(90)=263.96µs p(95)=302.25µs
+    http_req_failed................: 89.98% 227193 out of 252472
+    http_reqs......................: 252472 16830.843543/s
 
     EXECUTION
-    iteration_duration...: avg=300.67µs min=122.91µs med=270µs    max=5.23ms p(90)=359.7µs  p(95)=414.33µs
-    iterations...........: 197030  13133.567556/s
-    vus..................: 4       min=4                max=4
-    vus_max..............: 4       min=4                max=4
+    iteration_duration.............: avg=233.36µs min=62.5µs  med=207.62µs max=24ms    p(90)=306.5µs  p(95)=359.25µs
+    iterations.....................: 252472 16830.843543/s
+    vus............................: 4      min=4                max=4
+    vus_max........................: 4      min=4                max=4
 
     NETWORK
-    data_received........: 30 MB   2.0 MB/s
-    data_sent............: 35 MB   2.4 MB/s
+    data_received..................: 34 MB  2.3 MB/s
+    data_sent......................: 42 MB  2.8 MB/s
 
 
 
 
-running (15.0s), 0/4 VUs, 197030 complete and 0 interrupted iterations
+running (15.0s), 0/4 VUs, 252472 complete and 0 interrupted iterations
 load ✓ [ 100% ] 4 VUs  15s
