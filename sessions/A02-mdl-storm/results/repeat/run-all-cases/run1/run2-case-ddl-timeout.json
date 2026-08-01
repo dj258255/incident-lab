@@ -1,0 +1,992 @@
+{
+  "case": "ddl-timeout",
+  "mysql_version": "8.4.3",
+  "rows": 2000000,
+  "default_lock_wait_timeout": 31536000,
+  "duration_s": 60,
+  "procs": 2,
+  "schedule": {
+    "long_at": 15,
+    "ddl_at": 25,
+    "long_end": 45
+  },
+  "queries": 882565,
+  "errors": 0,
+  "median_qps": 14798,
+  "stalled_seconds": [
+    25,
+    26
+  ],
+  "stall_len_s": 2,
+  "zero_seconds": [
+    26
+  ],
+  "zero_len_s": 1,
+  "ddl": {
+    "ok": false,
+    "elapsed_s": 2.0,
+    "error": "(1205, 'Lock wait timeout exceeded; try restarting transaction')",
+    "lock_wait_timeout": 2
+  },
+  "events": [
+    {
+      "at_s": 15.01,
+      "kind": "롱 트랜잭션",
+      "msg": "BEGIN 후 SELECT 실행, 커밋하지 않음"
+    },
+    {
+      "at_s": 25.0,
+      "kind": "DDL",
+      "msg": "lock_wait_timeout=2초로 설정"
+    },
+    {
+      "at_s": 25.0,
+      "kind": "DDL",
+      "msg": "실행 시작 (lock_wait_timeout=2) ALTER TABLE orders ADD COLUMN memo VARCHAR(64) NULL"
+    },
+    {
+      "at_s": 27.0,
+      "kind": "DDL",
+      "msg": "실패, 2.00초 뒤 (1205, 'Lock wait timeout exceeded; try restarting transaction')"
+    },
+    {
+      "at_s": 45.0,
+      "kind": "롱 트랜잭션",
+      "msg": "커밋"
+    }
+  ],
+  "timeline": [
+    {
+      "sec": 0,
+      "count": 13775,
+      "errors": 0,
+      "p50_ms": 0.135,
+      "p99_ms": 0.211,
+      "max_ms": 4.744
+    },
+    {
+      "sec": 1,
+      "count": 14829,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.177,
+      "max_ms": 0.287
+    },
+    {
+      "sec": 2,
+      "count": 14729,
+      "errors": 0,
+      "p50_ms": 0.131,
+      "p99_ms": 0.179,
+      "max_ms": 0.583
+    },
+    {
+      "sec": 3,
+      "count": 14735,
+      "errors": 0,
+      "p50_ms": 0.131,
+      "p99_ms": 0.182,
+      "max_ms": 0.588
+    },
+    {
+      "sec": 4,
+      "count": 14618,
+      "errors": 0,
+      "p50_ms": 0.132,
+      "p99_ms": 0.186,
+      "max_ms": 0.673
+    },
+    {
+      "sec": 5,
+      "count": 14451,
+      "errors": 0,
+      "p50_ms": 0.133,
+      "p99_ms": 0.192,
+      "max_ms": 1.528
+    },
+    {
+      "sec": 6,
+      "count": 14678,
+      "errors": 0,
+      "p50_ms": 0.131,
+      "p99_ms": 0.181,
+      "max_ms": 1.025
+    },
+    {
+      "sec": 7,
+      "count": 14792,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.178,
+      "max_ms": 0.615
+    },
+    {
+      "sec": 8,
+      "count": 14474,
+      "errors": 0,
+      "p50_ms": 0.132,
+      "p99_ms": 0.193,
+      "max_ms": 1.974
+    },
+    {
+      "sec": 9,
+      "count": 14545,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.184,
+      "max_ms": 5.386
+    },
+    {
+      "sec": 10,
+      "count": 14416,
+      "errors": 0,
+      "p50_ms": 0.135,
+      "p99_ms": 0.191,
+      "max_ms": 0.511
+    },
+    {
+      "sec": 11,
+      "count": 14820,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.178,
+      "max_ms": 0.553
+    },
+    {
+      "sec": 12,
+      "count": 14810,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.175,
+      "max_ms": 0.301
+    },
+    {
+      "sec": 13,
+      "count": 15048,
+      "errors": 0,
+      "p50_ms": 0.128,
+      "p99_ms": 0.172,
+      "max_ms": 0.213
+    },
+    {
+      "sec": 14,
+      "count": 14937,
+      "errors": 0,
+      "p50_ms": 0.128,
+      "p99_ms": 0.182,
+      "max_ms": 0.799
+    },
+    {
+      "sec": 15,
+      "count": 14942,
+      "errors": 0,
+      "p50_ms": 0.128,
+      "p99_ms": 0.178,
+      "max_ms": 0.585
+    },
+    {
+      "sec": 16,
+      "count": 15039,
+      "errors": 0,
+      "p50_ms": 0.127,
+      "p99_ms": 0.176,
+      "max_ms": 0.504
+    },
+    {
+      "sec": 17,
+      "count": 14854,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.179,
+      "max_ms": 0.714
+    },
+    {
+      "sec": 18,
+      "count": 14798,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.176,
+      "max_ms": 0.294
+    },
+    {
+      "sec": 19,
+      "count": 14964,
+      "errors": 0,
+      "p50_ms": 0.129,
+      "p99_ms": 0.174,
+      "max_ms": 0.355
+    },
+    {
+      "sec": 20,
+      "count": 14801,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.181,
+      "max_ms": 0.6
+    },
+    {
+      "sec": 21,
+      "count": 14967,
+      "errors": 0,
+      "p50_ms": 0.128,
+      "p99_ms": 0.176,
+      "max_ms": 0.351
+    },
+    {
+      "sec": 22,
+      "count": 15078,
+      "errors": 0,
+      "p50_ms": 0.127,
+      "p99_ms": 0.174,
+      "max_ms": 0.255
+    },
+    {
+      "sec": 23,
+      "count": 14782,
+      "errors": 0,
+      "p50_ms": 0.131,
+      "p99_ms": 0.177,
+      "max_ms": 0.806
+    },
+    {
+      "sec": 24,
+      "count": 14588,
+      "errors": 0,
+      "p50_ms": 0.132,
+      "p99_ms": 0.181,
+      "max_ms": 1.774
+    },
+    {
+      "sec": 25,
+      "count": 45,
+      "errors": 0,
+      "p50_ms": 0.143,
+      "p99_ms": 0.24,
+      "max_ms": 0.24
+    },
+    {
+      "sec": 26,
+      "count": 0,
+      "errors": 0,
+      "p50_ms": null,
+      "p99_ms": null,
+      "max_ms": null
+    },
+    {
+      "sec": 27,
+      "count": 14496,
+      "errors": 0,
+      "p50_ms": 0.132,
+      "p99_ms": 0.182,
+      "max_ms": 2000.963
+    },
+    {
+      "sec": 28,
+      "count": 14774,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.177,
+      "max_ms": 0.462
+    },
+    {
+      "sec": 29,
+      "count": 14705,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.182,
+      "max_ms": 0.711
+    },
+    {
+      "sec": 30,
+      "count": 15735,
+      "errors": 0,
+      "p50_ms": 0.123,
+      "p99_ms": 0.168,
+      "max_ms": 0.68
+    },
+    {
+      "sec": 31,
+      "count": 15933,
+      "errors": 0,
+      "p50_ms": 0.122,
+      "p99_ms": 0.163,
+      "max_ms": 0.207
+    },
+    {
+      "sec": 32,
+      "count": 15948,
+      "errors": 0,
+      "p50_ms": 0.121,
+      "p99_ms": 0.166,
+      "max_ms": 0.328
+    },
+    {
+      "sec": 33,
+      "count": 16002,
+      "errors": 0,
+      "p50_ms": 0.121,
+      "p99_ms": 0.163,
+      "max_ms": 0.216
+    },
+    {
+      "sec": 34,
+      "count": 15815,
+      "errors": 0,
+      "p50_ms": 0.121,
+      "p99_ms": 0.169,
+      "max_ms": 0.554
+    },
+    {
+      "sec": 35,
+      "count": 15805,
+      "errors": 0,
+      "p50_ms": 0.121,
+      "p99_ms": 0.172,
+      "max_ms": 0.545
+    },
+    {
+      "sec": 36,
+      "count": 15744,
+      "errors": 0,
+      "p50_ms": 0.122,
+      "p99_ms": 0.167,
+      "max_ms": 1.544
+    },
+    {
+      "sec": 37,
+      "count": 16088,
+      "errors": 0,
+      "p50_ms": 0.12,
+      "p99_ms": 0.162,
+      "max_ms": 0.23
+    },
+    {
+      "sec": 38,
+      "count": 15788,
+      "errors": 0,
+      "p50_ms": 0.122,
+      "p99_ms": 0.165,
+      "max_ms": 0.213
+    },
+    {
+      "sec": 39,
+      "count": 15835,
+      "errors": 0,
+      "p50_ms": 0.122,
+      "p99_ms": 0.17,
+      "max_ms": 0.591
+    },
+    {
+      "sec": 40,
+      "count": 15828,
+      "errors": 0,
+      "p50_ms": 0.122,
+      "p99_ms": 0.165,
+      "max_ms": 0.284
+    },
+    {
+      "sec": 41,
+      "count": 15288,
+      "errors": 0,
+      "p50_ms": 0.125,
+      "p99_ms": 0.172,
+      "max_ms": 0.419
+    },
+    {
+      "sec": 42,
+      "count": 15499,
+      "errors": 0,
+      "p50_ms": 0.124,
+      "p99_ms": 0.173,
+      "max_ms": 0.36
+    },
+    {
+      "sec": 43,
+      "count": 14827,
+      "errors": 0,
+      "p50_ms": 0.122,
+      "p99_ms": 0.356,
+      "max_ms": 2.058
+    },
+    {
+      "sec": 44,
+      "count": 15240,
+      "errors": 0,
+      "p50_ms": 0.126,
+      "p99_ms": 0.172,
+      "max_ms": 0.53
+    },
+    {
+      "sec": 45,
+      "count": 15429,
+      "errors": 0,
+      "p50_ms": 0.125,
+      "p99_ms": 0.171,
+      "max_ms": 0.328
+    },
+    {
+      "sec": 46,
+      "count": 15534,
+      "errors": 0,
+      "p50_ms": 0.124,
+      "p99_ms": 0.17,
+      "max_ms": 0.405
+    },
+    {
+      "sec": 47,
+      "count": 15260,
+      "errors": 0,
+      "p50_ms": 0.126,
+      "p99_ms": 0.174,
+      "max_ms": 0.502
+    },
+    {
+      "sec": 48,
+      "count": 15584,
+      "errors": 0,
+      "p50_ms": 0.123,
+      "p99_ms": 0.17,
+      "max_ms": 0.47
+    },
+    {
+      "sec": 49,
+      "count": 15342,
+      "errors": 0,
+      "p50_ms": 0.125,
+      "p99_ms": 0.169,
+      "max_ms": 0.505
+    },
+    {
+      "sec": 50,
+      "count": 15718,
+      "errors": 0,
+      "p50_ms": 0.122,
+      "p99_ms": 0.166,
+      "max_ms": 0.535
+    },
+    {
+      "sec": 51,
+      "count": 15898,
+      "errors": 0,
+      "p50_ms": 0.121,
+      "p99_ms": 0.168,
+      "max_ms": 0.534
+    },
+    {
+      "sec": 52,
+      "count": 16000,
+      "errors": 0,
+      "p50_ms": 0.121,
+      "p99_ms": 0.163,
+      "max_ms": 0.28
+    },
+    {
+      "sec": 53,
+      "count": 16052,
+      "errors": 0,
+      "p50_ms": 0.121,
+      "p99_ms": 0.161,
+      "max_ms": 0.221
+    },
+    {
+      "sec": 54,
+      "count": 15956,
+      "errors": 0,
+      "p50_ms": 0.121,
+      "p99_ms": 0.167,
+      "max_ms": 1.161
+    },
+    {
+      "sec": 55,
+      "count": 15472,
+      "errors": 0,
+      "p50_ms": 0.124,
+      "p99_ms": 0.171,
+      "max_ms": 0.358
+    },
+    {
+      "sec": 56,
+      "count": 15114,
+      "errors": 0,
+      "p50_ms": 0.126,
+      "p99_ms": 0.177,
+      "max_ms": 0.67
+    },
+    {
+      "sec": 57,
+      "count": 15384,
+      "errors": 0,
+      "p50_ms": 0.125,
+      "p99_ms": 0.171,
+      "max_ms": 0.615
+    },
+    {
+      "sec": 58,
+      "count": 15982,
+      "errors": 0,
+      "p50_ms": 0.121,
+      "p99_ms": 0.162,
+      "max_ms": 0.212
+    },
+    {
+      "sec": 59,
+      "count": 15965,
+      "errors": 0,
+      "p50_ms": 0.121,
+      "p99_ms": 0.165,
+      "max_ms": 0.679
+    }
+  ],
+  "lock_snapshots": [
+    {
+      "at_s": 0.0,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 1.0,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 2.0,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 3.0,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 4.0,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 5.0,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 6.0,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 7.0,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 8.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 9.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 10.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 11.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 12.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 13.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 14.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 15.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 16.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 17.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 18.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 19.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 20.1,
+      "granted": 2,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 21.1,
+      "granted": 2,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 22.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 23.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 24.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 25.1,
+      "granted": 2,
+      "pending": 3,
+      "types": [
+        "EXCLUSIVE:PENDING",
+        "SHARED_READ:GRANTED",
+        "SHARED_READ:PENDING",
+        "SHARED_UPGRADABLE:GRANTED"
+      ]
+    },
+    {
+      "at_s": 26.1,
+      "granted": 2,
+      "pending": 3,
+      "types": [
+        "EXCLUSIVE:PENDING",
+        "SHARED_READ:GRANTED",
+        "SHARED_READ:PENDING",
+        "SHARED_UPGRADABLE:GRANTED"
+      ]
+    },
+    {
+      "at_s": 27.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 28.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 29.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 30.1,
+      "granted": 2,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 31.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 32.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 33.1,
+      "granted": 2,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 34.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 35.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 36.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 37.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 38.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 39.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 40.1,
+      "granted": 2,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 41.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 42.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 43.1,
+      "granted": 2,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 44.1,
+      "granted": 2,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 45.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 46.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 47.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 48.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 49.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 50.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 51.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 52.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 53.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 54.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 55.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 56.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 57.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 58.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 59.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    }
+  ]
+}

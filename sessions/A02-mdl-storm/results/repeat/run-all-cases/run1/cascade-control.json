@@ -1,0 +1,33 @@
+{
+ "case": "control",
+ "rows": 2000000,
+ "pool_size": 10,
+ "acquire_timeout_s": 2.0,
+ "rps_per_endpoint": 20,
+ "requests_spawned": 800,
+ "pool_free_min": 8,
+ "pool_free_median": 10,
+ "pool_acquire_timeouts_total": 0,
+ "/orders": {
+  "ok": 400,
+  "err": 0,
+  "pool_timeout": 0,
+  "dropped": 0,
+  "codes": {},
+  "p50": 0.8,
+  "p95": 2.1,
+  "max": 37.2,
+  "n": 400
+ },
+ "/other": {
+  "ok": 400,
+  "err": 0,
+  "pool_timeout": 0,
+  "dropped": 0,
+  "codes": {},
+  "p50": 0.8,
+  "p95": 2.0,
+  "max": 38.2,
+  "n": 400
+ }
+}

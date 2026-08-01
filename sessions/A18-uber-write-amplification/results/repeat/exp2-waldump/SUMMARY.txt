@@ -1,0 +1,169 @@
+# 반복 요약 (3/3 회차 정상 종료)
+
+## measure.csv  (회차마다 [9] 행)
+  조건                        열                              중앙         최소         최대     폭/중앙
+  ff100-idx0                wal_bytes               2.795e+08  2.795e+08  2.795e+08     0.0%
+  ff100-idx0                elapsed_s                   1.568      1.568      1.568     0.0%
+  ff100-idx0                upd0                            0          0          0     0.0%
+  ff100-idx0                hot0                            0          0          0     0.0%
+  ff100-idx0                newpage0                        0          0          0     0.0%
+  ff100-idx0                upd1                        5e+05      5e+05      5e+05     0.0%
+  ff100-idx0                hot1                            0          0          0     0.0%
+  ff100-idx0                newpage1                    5e+05      5e+05      5e+05     0.0%
+  ff100-idx3                wal_bytes               3.822e+08  3.822e+08  3.822e+08     0.0%
+  ff100-idx3                elapsed_s                   3.545      3.545      3.545     0.0%
+  ff100-idx3                upd0                            0          0          0     0.0%
+  ff100-idx3                hot0                            0          0          0     0.0%
+  ff100-idx3                newpage0                        0          0          0     0.0%
+  ff100-idx3                upd1                        5e+05      5e+05      5e+05     0.0%
+  ff100-idx3                hot1                            0          0          0     0.0%
+  ff100-idx3                newpage1                    5e+05      5e+05      5e+05     0.0%
+  ff100-idx6                wal_bytes                4.84e+08   4.84e+08   4.84e+08     0.0%
+  ff100-idx6                elapsed_s                   5.295      5.295      5.295     0.0%
+  ff100-idx6                upd0                            0          0          0     0.0%
+  ff100-idx6                hot0                            0          0          0     0.0%
+  ff100-idx6                newpage0                        0          0          0     0.0%
+  ff100-idx6                upd1                        5e+05      5e+05      5e+05     0.0%
+  ff100-idx6                hot1                            0          0          0     0.0%
+  ff100-idx6                newpage1                    5e+05      5e+05      5e+05     0.0%
+  ff100-idx10               wal_bytes               6.244e+08  6.244e+08  6.244e+08     0.0%
+  ff100-idx10               elapsed_s                   8.512      8.512      8.512     0.0%
+  ff100-idx10               upd0                            0          0          0     0.0%
+  ff100-idx10               hot0                            0          0          0     0.0%
+  ff100-idx10               newpage0                        0          0          0     0.0%
+  ff100-idx10               upd1                        5e+05      5e+05      5e+05     0.0%
+  ff100-idx10               hot1                            0          0          0     0.0%
+  ff100-idx10               newpage1                    5e+05      5e+05      5e+05     0.0%
+  ff70-idx0                 wal_bytes               2.198e+08  2.198e+08  2.198e+08     0.0%
+  ff70-idx0                 elapsed_s                   1.173      1.173      1.173     0.0%
+  ff70-idx0                 upd0                            0          0          0     0.0%
+  ff70-idx0                 hot0                            0          0          0     0.0%
+  ff70-idx0                 newpage0                        0          0          0     0.0%
+  ff70-idx0                 upd1                        5e+05      5e+05      5e+05     0.0%
+  ff70-idx0                 hot1                    2.258e+05  2.258e+05  2.258e+05     0.0%
+  ff70-idx0                 newpage1                2.742e+05  2.742e+05  2.742e+05     0.0%
+  ff70-idx10                wal_bytes               4.389e+08  4.389e+08  4.389e+08     0.0%
+  ff70-idx10                elapsed_s                   5.794      5.794      5.794     0.0%
+  ff70-idx10                upd0                            0          0          0     0.0%
+  ff70-idx10                hot0                            0          0          0     0.0%
+  ff70-idx10                newpage0                        0          0          0     0.0%
+  ff70-idx10                upd1                        5e+05      5e+05      5e+05     0.0%
+  ff70-idx10                hot1                    2.258e+05  2.258e+05  2.258e+05     0.0%
+  ff70-idx10                newpage1                2.742e+05  2.742e+05  2.742e+05     0.0%
+  ff70-idx10-indexedcol     wal_bytes                6.83e+08   6.83e+08   6.83e+08     0.0%
+  ff70-idx10-indexedcol     elapsed_s                   10.31      10.31      10.31     0.0%
+  ff70-idx10-indexedcol     upd0                        5e+05      5e+05      5e+05     0.0%
+  ff70-idx10-indexedcol     hot0                    2.258e+05  2.258e+05  2.258e+05     0.0%
+  ff70-idx10-indexedcol     newpage0                2.742e+05  2.742e+05  2.742e+05     0.0%
+  ff70-idx10-indexedcol     upd1                        1e+06      1e+06      1e+06     0.0%
+  ff70-idx10-indexedcol     hot1                    2.258e+05  2.258e+05  2.258e+05     0.0%
+  ff70-idx10-indexedcol     newpage1                4.246e+05  4.246e+05  4.246e+05     0.0%
+  ff70-idx10-2ndpass        wal_bytes               2.609e+08  2.609e+08  2.609e+08     0.0%
+  ff70-idx10-2ndpass        elapsed_s                   2.004      2.004      2.004     0.0%
+  ff70-idx10-2ndpass        upd0                        1e+06      1e+06      1e+06     0.0%
+  ff70-idx10-2ndpass        hot0                    2.258e+05  2.258e+05  2.258e+05     0.0%
+  ff70-idx10-2ndpass        newpage0                        0          0          0     0.0%
+  ff70-idx10-2ndpass        upd1                      1.5e+06    1.5e+06    1.5e+06     0.0%
+  ff70-idx10-2ndpass        hot1                    6.434e+05  6.434e+05  6.434e+05     0.0%
+  ff70-idx10-2ndpass        newpage1                        0          0          0     0.0%
+  ff70-idx0-2ndpass         wal_bytes               1.846e+08  1.846e+08  1.846e+08     0.0%
+  ff70-idx0-2ndpass         elapsed_s                   0.952      0.952      0.952     0.0%
+  ff70-idx0-2ndpass         upd0                        5e+05      5e+05      5e+05     0.0%
+  ff70-idx0-2ndpass         hot0                    2.258e+05  2.258e+05  2.258e+05     0.0%
+  ff70-idx0-2ndpass         newpage0                        0          0          0     0.0%
+  ff70-idx0-2ndpass         upd1                        1e+06      1e+06      1e+06     0.0%
+  ff70-idx0-2ndpass         hot1                    5.754e+05  5.754e+05  5.754e+05     0.0%
+  ff70-idx0-2ndpass         newpage1                        0          0          0     0.0%
+
+## replication-amp.csv  (회차마다 [4] 행)
+  조건                        열                              중앙         최소         최대     폭/중앙
+  인덱스0                      extra_indexes                   0          0          0     0.0%
+  인덱스0                      wal_bytes               5.603e+07  5.603e+07  5.603e+07     0.0%
+  인덱스0                      standby_received        5.603e+07  5.603e+07  5.603e+07     0.0%
+  인덱스0                      hot_updates                     0          0          0     0.0%
+  인덱스2                      extra_indexes                   2          2          2     0.0%
+  인덱스2                      wal_bytes               6.576e+07  6.576e+07  6.576e+07     0.0%
+  인덱스2                      standby_received        6.576e+07  6.576e+07  6.576e+07     0.0%
+  인덱스2                      hot_updates                     0          0          0     0.0%
+  인덱스4                      extra_indexes                   4          4          4     0.0%
+  인덱스4                      wal_bytes               8.549e+07  8.549e+07  8.549e+07     0.0%
+  인덱스4                      standby_received        8.549e+07  8.549e+07  8.549e+07     0.0%
+  인덱스4                      hot_updates                     0          0          0     0.0%
+  인덱스8                      extra_indexes                   8          8          8     0.0%
+  인덱스8                      wal_bytes               1.242e+08  1.242e+08  1.242e+08     0.0%
+  인덱스8                      standby_received        1.242e+08  1.242e+08  1.242e+08     0.0%
+  인덱스8                      hot_updates                     0          0          0     0.0%
+
+## waldump-summary.csv  (회차마다 [28] 행)
+  조건                        열                              중앙         최소         최대     폭/중앙
+  off                       wal_bytes               2.795e+08  2.795e+08  2.795e+08     0.0%
+  off                       hot_pct                         0          0          0     0.0%
+  off                       wal_bytes               6.179e+08  6.179e+08  6.179e+08     0.0%
+  off                       hot_pct                         0          0          0     0.0%
+  off                       wal_bytes               2.198e+08  2.198e+08  2.198e+08     0.0%
+  off                       hot_pct                      45.2       45.2       45.2     0.0%
+  off                       wal_bytes                4.11e+08   4.11e+08   4.11e+08     0.0%
+  off                       hot_pct                      45.2       45.2       45.2     0.0%
+  off                       wal_bytes               6.274e+08  6.274e+08  6.274e+08     0.0%
+  off                       hot_pct                         0          0          0     0.0%
+  off                       wal_bytes               2.944e+08  2.944e+08  2.944e+08     0.0%
+  off                       hot_pct                      57.5       57.5       57.5     0.0%
+  off                       wal_bytes                1.88e+08   1.88e+08   1.88e+08     0.0%
+  off                       hot_pct                      57.5       57.5       57.5     0.0%
+  pglz                      wal_bytes               2.225e+08  2.225e+08  2.225e+08     0.0%
+  pglz                      hot_pct                         0          0          0     0.0%
+  pglz                      wal_bytes               5.568e+08  5.568e+08  5.568e+08     0.0%
+  pglz                      hot_pct                         0          0          0     0.0%
+  pglz                      wal_bytes               1.616e+08  1.616e+08  1.616e+08     0.0%
+  pglz                      hot_pct                      45.2       45.2       45.2     0.0%
+  pglz                      wal_bytes               3.487e+08  3.487e+08  3.487e+08     0.0%
+  pglz                      hot_pct                      45.2       45.2       45.2     0.0%
+  pglz                      wal_bytes               5.567e+08  5.567e+08  5.567e+08     0.0%
+  pglz                      hot_pct                         0          0          0     0.0%
+  pglz                      wal_bytes               2.302e+08  2.302e+08  2.302e+08     0.0%
+  pglz                      hot_pct                      57.5       57.5       57.5     0.0%
+  pglz                      wal_bytes               1.275e+08  1.275e+08  1.275e+08     0.0%
+  pglz                      hot_pct                      57.5       57.5       57.5     0.0%
+  lz4                       wal_bytes               2.264e+08  2.264e+08  2.264e+08     0.0%
+  lz4                       hot_pct                         0          0          0     0.0%
+  lz4                       wal_bytes               5.619e+08  5.619e+08  5.619e+08     0.0%
+  lz4                       hot_pct                         0          0          0     0.0%
+  lz4                       wal_bytes               1.645e+08  1.645e+08  1.645e+08     0.0%
+  lz4                       hot_pct                      45.2       45.2       45.2     0.0%
+  lz4                       wal_bytes               3.528e+08  3.528e+08  3.528e+08     0.0%
+  lz4                       hot_pct                      45.2       45.2       45.2     0.0%
+  lz4                       wal_bytes               5.632e+08  5.632e+08  5.632e+08     0.0%
+  lz4                       hot_pct                         0          0          0     0.0%
+  lz4                       wal_bytes               2.344e+08  2.344e+08  2.344e+08     0.0%
+  lz4                       hot_pct                      57.5       57.5       57.5     0.0%
+  lz4                       wal_bytes               1.308e+08  1.308e+08  1.308e+08     0.0%
+  lz4                       hot_pct                      57.5       57.5       57.5     0.0%
+  zstd                      wal_bytes               2.083e+08  2.083e+08  2.083e+08     0.0%
+  zstd                      hot_pct                         0          0          0     0.0%
+  zstd                      wal_bytes               5.395e+08  5.395e+08  5.395e+08     0.0%
+  zstd                      hot_pct                         0          0          0     0.0%
+  zstd                      wal_bytes               1.465e+08  1.465e+08  1.465e+08     0.0%
+  zstd                      hot_pct                      45.2       45.2       45.2     0.0%
+  zstd                      wal_bytes               3.306e+08  3.306e+08  3.306e+08     0.0%
+  zstd                      hot_pct                      45.2       45.2       45.2     0.0%
+  zstd                      wal_bytes               5.327e+08  5.327e+08  5.327e+08     0.0%
+  zstd                      hot_pct                         0          0          0     0.0%
+  zstd                      wal_bytes               2.129e+08  2.129e+08  2.129e+08     0.0%
+  zstd                      hot_pct                      57.5       57.5       57.5     0.0%
+  zstd                      wal_bytes                1.12e+08   1.12e+08   1.12e+08     0.0%
+  zstd                      hot_pct                      57.5       57.5       57.5     0.0%
+
+## exp2-waldump.txt  (숫자가 흔들리는 줄 9개)
+  줄                                                       위치         중앙         최소         최대     폭/중앙
+  2차 갱신 인덱스 0개 WAL  179.3MB  HOT  57.5%   1.20초            5       1.31        1.2        1.5    22.9%
+  인덱스 0개(ff70)       WAL  154.1MB  HOT  45.2%   2.45초      5       2.48       2.45       2.68     9.3%
+  인덱스 컬럼 갱신(v10) WAL  508.0MB  HOT   0.0%  11.76초          4       12.3      11.76      12.65     7.2%
+  인덱스 컬럼 갱신(v10) WAL  530.9MB  HOT   0.0%  13.30초          4      12.61      12.48       13.3     6.5%
+  인덱스 0개(ff100)      WAL  266.6MB  HOT   0.0%   1.75초      5       1.79       1.75       1.83     4.5%
+  인덱스 10개(ff70)      WAL  392.0MB  HOT  45.2%   6.03초      5       6.14       6.03       6.29     4.2%
+  인덱스 0개(ff70)       WAL  209.6MB  HOT  45.2%   1.53초      5       1.56       1.53       1.58     3.2%
+  인덱스 0개(ff100)      WAL  212.2MB  HOT   0.0%   2.83초      5        2.9       2.83       2.92     3.1%
+  2차 갱신 인덱스 10개 WAL  219.6MB  HOT  57.5%   5.51초           5       5.52       5.51       5.59     1.4%
+
+  폭이 30%를 넘는 줄은 1회 값으로 소수점을 인용하면 안 됩니다.
+  두 조건의 차이가 각자의 폭보다 작으면 그 비교 자체가 성립하지 않습니다.

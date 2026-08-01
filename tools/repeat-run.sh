@@ -21,7 +21,9 @@ rm -rf "$REP"; mkdir -p "$REP"
 echo "# $NAME 를 ${N}회 반복합니다"
 for r in $(seq 1 "$N"); do
   echo "  회차 $r ..."
-  env "$@" "$SCRIPT" > "$REP/run$r.log" 2>&1
+  # **세션 디렉터리에서 실행한다.** 저장소 루트에서 돌리면 docker compose 가
+  # 설정 파일을 못 찾아 "no configuration file provided"로 죽는다. MDL 세션이 그랬다.
+  ( cd "$SESSION" && env "$@" "$OLDPWD/$SCRIPT" ) > "$REP/run$r.log" 2>&1
   RC=$?
   mkdir -p "$REP/run$r"
   # results 바로 아래의 파일만 뜬다(repeat 디렉터리 자신은 뺀다)
@@ -37,7 +39,30 @@ alive = [r for r in runs if (r/".exit").exists() and (r/".exit").read_text().str
 print(f"# 반복 요약 ({len(alive)}/{n} 회차 정상 종료)")
 if len(alive) < 2:
     print("  비교할 회차가 모자랍니다."); raise SystemExit
+# **회차마다 파일이 그대로면 그 스크립트는 이 파일을 다시 쓰지 않은 것이다.**
+# 그것을 "폭 0.0%"로 적으면 아주 안정적인 측정처럼 보인다. 실제로는 측정이 없었다.
+# Uber 세션에서 exp2-waldump 를 3회 돌렸을 때 타이밍이 소수점 셋째 자리까지
+# 같게 나왔고, 알고 보니 그 스크립트가 measure.csv 를 안 건드렸다.
+import hashlib
+def h(f):
+    try: return hashlib.sha256(f.read_bytes()).hexdigest()
+    except Exception: return None
+allnames = sorted({p.name for r in alive for p in r.iterdir() if p.is_file() and not p.name.startswith('.')})
+stale = []
+for name in allnames:
+    hs = [h(r/name) for r in alive if (r/name).exists()]
+    if len(hs) >= 2 and len(set(hs)) == 1: stale.append(name)
+if stale:
+    print("\n## 회차마다 내용이 같은 파일")
+    for n in stale: print(f"  {n}")
+    print("  이 파일들은 스크립트가 다시 쓰지 않았습니다. 반복해도 새로 잰 것이 없습니다.")
+    print("  **여기에 '폭 0%'가 나오면 안정적인 것이 아니라 측정이 없었던 것입니다.**")
+
 csvs = sorted({p.name for r in alive for p in r.glob("*.csv")})
+csvs = [c for c in csvs if c not in stale]
+fresh = [t for t in allnames if t not in stale and t.rsplit('.',1)[-1] in ('csv','txt','json')]
+if not fresh:
+    print("\n  비교할 새 결과가 없습니다. 이 스크립트는 반복 대상이 아닙니다.")
 for name in csvs:
     tables = []
     for r in alive:
@@ -79,7 +104,7 @@ for name in csvs:
 # "3/3 정상 종료"만 찍혀서 반복을 한 것처럼 보인다. 실제로는 아무것도 안 비교했다.
 # 텍스트 결과도 줄 단위로 맞대고 숫자만 다른 줄의 폭을 잰다.
 import re
-txts = sorted({p.name for r in alive for p in r.glob("*.txt")})
+txts = [t for t in sorted({p.name for r in alive for p in r.glob("*.txt")}) if t not in stale]
 NUM = re.compile(r'-?\d+(?:\.\d+)?')
 for name in txts:
     lines = []
@@ -107,6 +132,41 @@ for name in txts:
     for lbl,j,med,lo,hi,sp in sorted(varying, key=lambda x:-x[5])[:12]:
         flag = "  **폭 큼**" if sp > 30 else ""
         print(f"  {lbl:<54}{j:>4}{med:>11.4g}{lo:>11.4g}{hi:>11.4g}{sp:>8.1f}%{flag}")
+
+# JSON 으로 결과를 남기는 세션도 있다. MDL 세션이 그렇고, csv 와 txt 만 보던
+# 러너는 "비교할 새 결과가 없습니다"로 끝났다. 스크립트는 실제로 돌았는데도.
+import json
+def flat(o, pre=""):
+    out={}
+    if isinstance(o, dict):
+        for k,v in o.items(): out.update(flat(v, f"{pre}.{k}" if pre else str(k)))
+    elif isinstance(o, list):
+        for i,v in enumerate(o[:20]): out.update(flat(v, f"{pre}[{i}]"))
+    elif isinstance(o,(int,float)) and not isinstance(o,bool):
+        out[pre]=float(o)
+    return out
+jsons = [j for j in sorted({p.name for r in alive for p in r.glob("*.json")}) if j not in stale]
+for name in jsons:
+    ds=[]
+    for r in alive:
+        f=r/name
+        if not f.exists(): continue
+        try: ds.append(flat(json.loads(f.read_text(encoding='utf-8'))))
+        except Exception: pass
+    if len(ds) < 2: continue
+    keys=[k for k in ds[0] if all(k in d for d in ds)]
+    rows=[]
+    for k in keys:
+        vals=[d[k] for d in ds]
+        med=st.median(vals); lo=min(vals); hi=max(vals)
+        if med==0 or hi==lo: continue
+        rows.append((k, med, lo, hi, (hi-lo)/abs(med)*100))
+    if not rows: continue
+    print(f"\n## {name}  (흔들리는 값 {len(rows)}개)")
+    print(f"  {'키':<42}{'중앙':>12}{'최소':>12}{'최대':>12}{'폭/중앙':>9}")
+    for k,med,lo,hi,sp in sorted(rows,key=lambda x:-x[4])[:10]:
+        flag="  **폭 큼**" if sp>30 else ""
+        print(f"  {k[:40]:<42}{med:>12.4g}{lo:>12.4g}{hi:>12.4g}{sp:>8.1f}%{flag}")
 
 print()
 print("  폭이 30%를 넘는 줄은 1회 값으로 소수점을 인용하면 안 됩니다.")

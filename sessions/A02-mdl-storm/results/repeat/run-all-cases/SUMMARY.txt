@@ -1,0 +1,67 @@
+# 반복 요약 (3/3 회차 정상 종료)
+
+## 회차마다 내용이 같은 파일
+  00-timeline.png
+  01-run.txt
+  01-stall.png
+  02-latency.png
+  02-report.txt
+  03-ddl.png
+  cascade-control.json
+  cascade-ddl-write.json
+  cascade-ddl.json
+  ddl-kind-copy-r1.json
+  ddl-kind-copy-r2.json
+  ddl-kind-copy-r3.json
+  ddl-kind-inplace-r1.json
+  ddl-kind-inplace-r2.json
+  ddl-kind-inplace-r3.json
+  ddl-kind-instant-r1.json
+  ddl-kind-instant-r2.json
+  ddl-kind-instant-r3.json
+  ddl-kinds.csv
+  exp-ddl-kinds.txt
+  fig-cascade-how.png
+  fig-cascade.png
+  host-run1.txt
+  host-run2.txt
+  host-run3.txt
+  render.json
+  run0-case-control.json
+  run0-case-ddl-alone.json
+  run0-case-ddl-default.json
+  run0-case-ddl-timeout.json
+  run1-01-run.txt
+  run1-02-report.txt
+  run1-case-control.json
+  run1-case-ddl-alone.json
+  run1-case-ddl-default.json
+  run1-case-ddl-timeout.json
+  run1-compose.txt
+  run1-render.json
+  run1-run-all-cases-stdout.txt
+  run2-01-run.txt
+  run2-02-report.txt
+  run2-case-control.json
+  run2-case-ddl-alone.json
+  run2-case-ddl-default.json
+  run2-case-ddl-timeout.json
+  run2-compose.txt
+  run2-render.json
+  run2-run-all-cases-stdout.txt
+  run3-01-run.txt
+  run3-02-report.txt
+  run3-case-control.json
+  run3-case-ddl-alone.json
+  run3-case-ddl-default.json
+  run3-case-ddl-timeout.json
+  run3-compose.txt
+  run3-render.json
+  run3-run-all-cases-stdout.txt
+  이 파일들은 스크립트가 다시 쓰지 않았습니다. 반복해도 새로 잰 것이 없습니다.
+  **여기에 '폭 0%'가 나오면 안정적인 것이 아니라 측정이 없었던 것입니다.**
+
+  비교할 새 결과가 없습니다. 이 스크립트는 반복 대상이 아닙니다.
+
+  폭이 30%를 넘는 줄은 1회 값으로 소수점을 인용하면 안 됩니다.
+  두 조건의 차이가 각자의 폭보다 작으면 그 비교 자체가 성립하지 않습니다.

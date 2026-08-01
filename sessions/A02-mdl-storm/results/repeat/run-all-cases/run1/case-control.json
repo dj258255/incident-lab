@@ -1,0 +1,958 @@
+{
+  "case": "control",
+  "mysql_version": "8.4.3",
+  "rows": 2000000,
+  "default_lock_wait_timeout": 31536000,
+  "duration_s": 60,
+  "procs": 2,
+  "schedule": {
+    "long_at": 15,
+    "ddl_at": 25,
+    "long_end": 45
+  },
+  "queries": 913804,
+  "errors": 0,
+  "median_qps": 15713,
+  "stalled_seconds": [],
+  "stall_len_s": 0,
+  "zero_seconds": [],
+  "zero_len_s": 0,
+  "ddl": null,
+  "events": [
+    {
+      "at_s": 15.0,
+      "kind": "롱 트랜잭션",
+      "msg": "BEGIN 후 SELECT 실행, 커밋하지 않음"
+    },
+    {
+      "at_s": 45.0,
+      "kind": "롱 트랜잭션",
+      "msg": "커밋"
+    }
+  ],
+  "timeline": [
+    {
+      "sec": 0,
+      "count": 13581,
+      "errors": 0,
+      "p50_ms": 0.134,
+      "p99_ms": 0.319,
+      "max_ms": 2.811
+    },
+    {
+      "sec": 1,
+      "count": 15873,
+      "errors": 0,
+      "p50_ms": 0.123,
+      "p99_ms": 0.169,
+      "max_ms": 0.715
+    },
+    {
+      "sec": 2,
+      "count": 14310,
+      "errors": 0,
+      "p50_ms": 0.129,
+      "p99_ms": 0.354,
+      "max_ms": 0.999
+    },
+    {
+      "sec": 3,
+      "count": 15249,
+      "errors": 0,
+      "p50_ms": 0.128,
+      "p99_ms": 0.178,
+      "max_ms": 0.592
+    },
+    {
+      "sec": 4,
+      "count": 15713,
+      "errors": 0,
+      "p50_ms": 0.124,
+      "p99_ms": 0.169,
+      "max_ms": 0.411
+    },
+    {
+      "sec": 5,
+      "count": 15670,
+      "errors": 0,
+      "p50_ms": 0.124,
+      "p99_ms": 0.175,
+      "max_ms": 0.424
+    },
+    {
+      "sec": 6,
+      "count": 15575,
+      "errors": 0,
+      "p50_ms": 0.124,
+      "p99_ms": 0.186,
+      "max_ms": 0.75
+    },
+    {
+      "sec": 7,
+      "count": 16150,
+      "errors": 0,
+      "p50_ms": 0.122,
+      "p99_ms": 0.166,
+      "max_ms": 0.364
+    },
+    {
+      "sec": 8,
+      "count": 15043,
+      "errors": 0,
+      "p50_ms": 0.127,
+      "p99_ms": 0.183,
+      "max_ms": 6.231
+    },
+    {
+      "sec": 9,
+      "count": 16181,
+      "errors": 0,
+      "p50_ms": 0.121,
+      "p99_ms": 0.171,
+      "max_ms": 1.254
+    },
+    {
+      "sec": 10,
+      "count": 15550,
+      "errors": 0,
+      "p50_ms": 0.125,
+      "p99_ms": 0.175,
+      "max_ms": 0.561
+    },
+    {
+      "sec": 11,
+      "count": 16028,
+      "errors": 0,
+      "p50_ms": 0.121,
+      "p99_ms": 0.19,
+      "max_ms": 0.698
+    },
+    {
+      "sec": 12,
+      "count": 15397,
+      "errors": 0,
+      "p50_ms": 0.126,
+      "p99_ms": 0.168,
+      "max_ms": 0.332
+    },
+    {
+      "sec": 13,
+      "count": 15186,
+      "errors": 0,
+      "p50_ms": 0.127,
+      "p99_ms": 0.243,
+      "max_ms": 0.894
+    },
+    {
+      "sec": 14,
+      "count": 16057,
+      "errors": 0,
+      "p50_ms": 0.12,
+      "p99_ms": 0.199,
+      "max_ms": 0.794
+    },
+    {
+      "sec": 15,
+      "count": 15892,
+      "errors": 0,
+      "p50_ms": 0.123,
+      "p99_ms": 0.164,
+      "max_ms": 0.43
+    },
+    {
+      "sec": 16,
+      "count": 16227,
+      "errors": 0,
+      "p50_ms": 0.119,
+      "p99_ms": 0.189,
+      "max_ms": 0.778
+    },
+    {
+      "sec": 17,
+      "count": 16771,
+      "errors": 0,
+      "p50_ms": 0.117,
+      "p99_ms": 0.163,
+      "max_ms": 1.274
+    },
+    {
+      "sec": 18,
+      "count": 16197,
+      "errors": 0,
+      "p50_ms": 0.12,
+      "p99_ms": 0.174,
+      "max_ms": 0.474
+    },
+    {
+      "sec": 19,
+      "count": 16044,
+      "errors": 0,
+      "p50_ms": 0.121,
+      "p99_ms": 0.187,
+      "max_ms": 2.718
+    },
+    {
+      "sec": 20,
+      "count": 14739,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.212,
+      "max_ms": 0.791
+    },
+    {
+      "sec": 21,
+      "count": 16502,
+      "errors": 0,
+      "p50_ms": 0.119,
+      "p99_ms": 0.171,
+      "max_ms": 0.49
+    },
+    {
+      "sec": 22,
+      "count": 15677,
+      "errors": 0,
+      "p50_ms": 0.122,
+      "p99_ms": 0.188,
+      "max_ms": 1.645
+    },
+    {
+      "sec": 23,
+      "count": 16963,
+      "errors": 0,
+      "p50_ms": 0.115,
+      "p99_ms": 0.161,
+      "max_ms": 0.413
+    },
+    {
+      "sec": 24,
+      "count": 15366,
+      "errors": 0,
+      "p50_ms": 0.125,
+      "p99_ms": 0.222,
+      "max_ms": 1.088
+    },
+    {
+      "sec": 25,
+      "count": 15393,
+      "errors": 0,
+      "p50_ms": 0.126,
+      "p99_ms": 0.213,
+      "max_ms": 1.386
+    },
+    {
+      "sec": 26,
+      "count": 12287,
+      "errors": 0,
+      "p50_ms": 0.136,
+      "p99_ms": 0.56,
+      "max_ms": 17.854
+    },
+    {
+      "sec": 27,
+      "count": 14236,
+      "errors": 0,
+      "p50_ms": 0.131,
+      "p99_ms": 0.341,
+      "max_ms": 0.802
+    },
+    {
+      "sec": 28,
+      "count": 14954,
+      "errors": 0,
+      "p50_ms": 0.127,
+      "p99_ms": 0.257,
+      "max_ms": 1.24
+    },
+    {
+      "sec": 29,
+      "count": 14987,
+      "errors": 0,
+      "p50_ms": 0.126,
+      "p99_ms": 0.212,
+      "max_ms": 16.488
+    },
+    {
+      "sec": 30,
+      "count": 15444,
+      "errors": 0,
+      "p50_ms": 0.123,
+      "p99_ms": 0.24,
+      "max_ms": 1.085
+    },
+    {
+      "sec": 31,
+      "count": 15157,
+      "errors": 0,
+      "p50_ms": 0.127,
+      "p99_ms": 0.175,
+      "max_ms": 0.864
+    },
+    {
+      "sec": 32,
+      "count": 15342,
+      "errors": 0,
+      "p50_ms": 0.126,
+      "p99_ms": 0.173,
+      "max_ms": 0.44
+    },
+    {
+      "sec": 33,
+      "count": 15409,
+      "errors": 0,
+      "p50_ms": 0.126,
+      "p99_ms": 0.171,
+      "max_ms": 0.499
+    },
+    {
+      "sec": 34,
+      "count": 14943,
+      "errors": 0,
+      "p50_ms": 0.129,
+      "p99_ms": 0.178,
+      "max_ms": 2.964
+    },
+    {
+      "sec": 35,
+      "count": 15252,
+      "errors": 0,
+      "p50_ms": 0.126,
+      "p99_ms": 0.198,
+      "max_ms": 1.019
+    },
+    {
+      "sec": 36,
+      "count": 15375,
+      "errors": 0,
+      "p50_ms": 0.125,
+      "p99_ms": 0.176,
+      "max_ms": 0.57
+    },
+    {
+      "sec": 37,
+      "count": 14790,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.201,
+      "max_ms": 0.813
+    },
+    {
+      "sec": 38,
+      "count": 14882,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.181,
+      "max_ms": 0.626
+    },
+    {
+      "sec": 39,
+      "count": 14985,
+      "errors": 0,
+      "p50_ms": 0.128,
+      "p99_ms": 0.199,
+      "max_ms": 0.77
+    },
+    {
+      "sec": 40,
+      "count": 13119,
+      "errors": 0,
+      "p50_ms": 0.139,
+      "p99_ms": 0.408,
+      "max_ms": 0.765
+    },
+    {
+      "sec": 41,
+      "count": 14392,
+      "errors": 0,
+      "p50_ms": 0.133,
+      "p99_ms": 0.208,
+      "max_ms": 4.627
+    },
+    {
+      "sec": 42,
+      "count": 14955,
+      "errors": 0,
+      "p50_ms": 0.129,
+      "p99_ms": 0.188,
+      "max_ms": 0.59
+    },
+    {
+      "sec": 43,
+      "count": 14036,
+      "errors": 0,
+      "p50_ms": 0.129,
+      "p99_ms": 0.395,
+      "max_ms": 1.214
+    },
+    {
+      "sec": 44,
+      "count": 13739,
+      "errors": 0,
+      "p50_ms": 0.134,
+      "p99_ms": 0.372,
+      "max_ms": 1.453
+    },
+    {
+      "sec": 45,
+      "count": 14999,
+      "errors": 0,
+      "p50_ms": 0.127,
+      "p99_ms": 0.241,
+      "max_ms": 0.703
+    },
+    {
+      "sec": 46,
+      "count": 14595,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.239,
+      "max_ms": 2.753
+    },
+    {
+      "sec": 47,
+      "count": 14676,
+      "errors": 0,
+      "p50_ms": 0.13,
+      "p99_ms": 0.223,
+      "max_ms": 2.89
+    },
+    {
+      "sec": 48,
+      "count": 12233,
+      "errors": 0,
+      "p50_ms": 0.134,
+      "p99_ms": 0.553,
+      "max_ms": 5.351
+    },
+    {
+      "sec": 49,
+      "count": 14599,
+      "errors": 0,
+      "p50_ms": 0.131,
+      "p99_ms": 0.226,
+      "max_ms": 0.867
+    },
+    {
+      "sec": 50,
+      "count": 15257,
+      "errors": 0,
+      "p50_ms": 0.125,
+      "p99_ms": 0.2,
+      "max_ms": 1.814
+    },
+    {
+      "sec": 51,
+      "count": 15552,
+      "errors": 0,
+      "p50_ms": 0.124,
+      "p99_ms": 0.176,
+      "max_ms": 1.529
+    },
+    {
+      "sec": 52,
+      "count": 15227,
+      "errors": 0,
+      "p50_ms": 0.126,
+      "p99_ms": 0.191,
+      "max_ms": 1.441
+    },
+    {
+      "sec": 53,
+      "count": 16317,
+      "errors": 0,
+      "p50_ms": 0.118,
+      "p99_ms": 0.181,
+      "max_ms": 1.373
+    },
+    {
+      "sec": 54,
+      "count": 15532,
+      "errors": 0,
+      "p50_ms": 0.124,
+      "p99_ms": 0.19,
+      "max_ms": 0.793
+    },
+    {
+      "sec": 55,
+      "count": 16221,
+      "errors": 0,
+      "p50_ms": 0.12,
+      "p99_ms": 0.175,
+      "max_ms": 0.621
+    },
+    {
+      "sec": 56,
+      "count": 15386,
+      "errors": 0,
+      "p50_ms": 0.122,
+      "p99_ms": 0.303,
+      "max_ms": 1.456
+    },
+    {
+      "sec": 57,
+      "count": 16227,
+      "errors": 0,
+      "p50_ms": 0.116,
+      "p99_ms": 0.236,
+      "max_ms": 0.995
+    },
+    {
+      "sec": 58,
+      "count": 16533,
+      "errors": 0,
+      "p50_ms": 0.117,
+      "p99_ms": 0.173,
+      "max_ms": 0.861
+    },
+    {
+      "sec": 59,
+      "count": 14822,
+      "errors": 0,
+      "p50_ms": 0.127,
+      "p99_ms": 0.255,
+      "max_ms": 2.744
+    }
+  ],
+  "lock_snapshots": [
+    {
+      "at_s": 0.0,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 1.0,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 2.0,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 3.0,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 4.0,
+      "granted": 2,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 5.0,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 6.0,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 7.0,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 8.0,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 9.0,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 10.0,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 11.0,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 12.0,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 13.0,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 14.0,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 15.0,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 16.0,
+      "granted": 2,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 17.0,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 18.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 19.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 20.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 21.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 22.1,
+      "granted": 2,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 23.1,
+      "granted": 1,
+      "pending": 1,
+      "types": [
+        "SHARED_READ:GRANTED",
+        "SHARED_READ:PENDING"
+      ]
+    },
+    {
+      "at_s": 24.1,
+      "granted": 2,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 25.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 26.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 27.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 28.1,
+      "granted": 2,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 29.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 30.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 31.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 32.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 33.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 34.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 35.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 36.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 37.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 38.1,
+      "granted": 2,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 39.1,
+      "granted": 2,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 40.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 41.1,
+      "granted": 2,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 42.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 43.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 44.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 45.1,
+      "granted": 2,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 46.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 47.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 48.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 49.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 50.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 51.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 52.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 53.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 54.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 55.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 56.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 57.1,
+      "granted": 1,
+      "pending": 0,
+      "types": [
+        "SHARED_READ:GRANTED"
+      ]
+    },
+    {
+      "at_s": 58.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    },
+    {
+      "at_s": 59.1,
+      "granted": 0,
+      "pending": 0,
+      "types": []
+    }
+  ]
+}

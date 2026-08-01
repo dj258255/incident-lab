@@ -1,0 +1,34 @@
+{
+ "case": "ddl",
+ "rows": 2000000,
+ "pool_size": 10,
+ "acquire_timeout_s": 2.0,
+ "rps_per_endpoint": 20,
+ "ddl": "성공 11046ms",
+ "requests_spawned": 800,
+ "pool_free_min": 0,
+ "pool_free_median": 0,
+ "pool_acquire_timeouts_total": 343,
+ "/orders": {
+  "ok": 229,
+  "err": 0,
+  "pool_timeout": 171,
+  "dropped": 0,
+  "codes": {},
+  "p50": 1079.2,
+  "p95": 2003.0,
+  "max": 11023.8,
+  "n": 400
+ },
+ "/other": {
+  "ok": 228,
+  "err": 0,
+  "pool_timeout": 172,
+  "dropped": 0,
+  "codes": {},
+  "p50": 645.9,
+  "p95": 2002.2,
+  "max": 2009.4,
+  "n": 400
+ }
+}
