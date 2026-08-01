@@ -12,6 +12,14 @@
   python3 tools/check-published-numbers.py                 # 전 세션
   python3 tools/check-published-numbers.py R04 A18         # 일부만
   python3 tools/check-published-numbers.py --blog <경로>   # 블로그 글도 함께
+  python3 tools/check-published-numbers.py --prose         # 표 밖 산문까지
+
+## 표만 보면 놓치는 자리
+
+처음에는 표 행만 봤다. 그런데 "못 한 것" 절이 표의 값을 다시 인용하는 자리가 있고,
+표를 고치면서 그쪽을 안 고치면 한 글 안에 두 값이 남는다. 실제로 R13 에서 6절 표를
+0.07초로 고쳤는데 "못 한 것"이 0.53초를 그대로 인용하고 있었고, 표만 보는 검사는
+그것을 못 잡았다. --prose 를 붙이면 표 밖 문장도 본다(후보가 크게 늘어난다).
 
 ## 무엇을 못 잡는가
 
@@ -58,7 +66,7 @@ def variants(tok: str):
         out.add(bare + '.0')
     return {v for v in out if v}
 
-def scan(doc: pathlib.Path, results: pathlib.Path):
+def scan(doc: pathlib.Path, results: pathlib.Path, prose: bool = False):
     if not doc.exists():
         return None
     haystack = []
@@ -72,10 +80,13 @@ def scan(doc: pathlib.Path, results: pathlib.Path):
     blob = '\n'.join(haystack)
     missing = []
     for lineno, line in enumerate(doc.read_text(encoding='utf-8').splitlines(), 1):
-        if not line.lstrip().startswith('|'):
-            continue                     # 표 행만 본다
-        if set(line.strip()) <= set('|-: '):
+        is_table = line.lstrip().startswith('|')
+        if not is_table and not prose:
+            continue                     # 기본은 표 행만 본다
+        if is_table and set(line.strip()) <= set('|-: '):
             continue                     # 구분선
+        if not is_table and (line.lstrip().startswith(('#', '>', '```')) or '`' in line):
+            continue                     # 헤딩·인용·코드가 섞인 줄은 건너뛴다
         for tok in NUM.findall(line):
             if not significant(tok):
                 continue
@@ -85,6 +96,7 @@ def scan(doc: pathlib.Path, results: pathlib.Path):
 
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith('-')]
+    prose = '--prose' in sys.argv
     blog_dir = None
     if '--blog' in sys.argv:
         blog_dir = pathlib.Path(sys.argv[sys.argv.index('--blog') + 1])
@@ -104,7 +116,7 @@ def main():
             if cand.exists():
                 docs.append(cand)
         for doc in docs:
-            miss = scan(doc, s / "results")
+            miss = scan(doc, s / "results", prose=prose)
             if miss:
                 total += len(miss)
                 print(f"\n=== {name} · {doc.name} · 후보 {len(miss)}건 ===")

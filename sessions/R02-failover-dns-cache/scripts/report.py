@@ -31,7 +31,10 @@ def load(label):
         elif d.get("db") == "OK":
             state = 1      # 아직 옛 인스턴스
         else:
-            state = 0      # 응답 없음
+            # 앱은 응답한다. 못 하는 것은 DB 접속이다. 처음에는 이 상태를
+            # "응답 없음"으로 그렸는데, 결과 파일을 보면 resolved 는 채워져 있고
+            # db 만 ERR:CannotGetJdbcConnectionException 이다. 라벨을 사실에 맞춘다.
+            state = 0      # DB 접속 실패(앱은 응답함)
         pts.append((t, state, d.get("resolved")))
     return pts
 
@@ -66,7 +69,7 @@ def main():
     ax.axvline(0, color=M, lw=1, ls=(0, (3, 2)))
     ax.text(0.4, 2.28, "페일오버", color=M, fontsize=9)
     ax.set_yticks([0, 1, 2])
-    ax.set_yticklabels(["응답 없음", "옛 인스턴스", "새 인스턴스"])
+    ax.set_yticklabels(["DB 접속 실패", "옛 인스턴스", "새 인스턴스"])
     ax.set_ylim(-0.3, 2.5)
     ax.set_xlabel("페일오버 이후 경과 시간(초)", color=M, fontsize=9)
     ax.set_facecolor(S)
