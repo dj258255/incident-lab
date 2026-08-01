@@ -145,6 +145,12 @@ public class Driver implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        // 서버 모드에서는 내장 드라이버를 안 돌린다. 동시 부하 실험은 밖에서 k6 로 쏘고
+        // 앱은 계속 떠 있어야 한다. 기본값은 지금까지와 같은 드라이버 실행이다.
+        if ("server".equalsIgnoreCase(System.getenv().getOrDefault("LAB_MODE", ""))) {
+            System.out.println("[Driver] LAB_MODE=server 이므로 내장 드라이버를 건너뜁니다.");
+            return;
+        }
         awaitReady();
         List<Ord> ordered = orderedBook();
         List<Ord> mixed = mixedBook();

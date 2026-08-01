@@ -8,3 +8,7 @@ services:
     container_name: lab-f01-hanmac-spring
     ports:
       - "18080:8080"
+    environment:
+      # 비어 있으면 지금까지와 같이 내장 드라이버가 돌고 컨테이너가 끝난다.
+      # server 로 두면 드라이버를 건너뛰고 앱이 계속 떠 있는다(동시 부하 실험용).
+      LAB_MODE: "${LAB_MODE:-}"

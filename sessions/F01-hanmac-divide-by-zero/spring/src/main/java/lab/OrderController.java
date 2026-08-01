@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +44,19 @@ public class OrderController {
     @GetMapping("/health")
     public String health() {
         return "ok";
+    }
+
+    // 측정용. 조건마다 킬스위치를 되돌리고 문턱을 바꾼다. 운영용 기능이 아니다.
+    @PostMapping("/killswitch/reset")
+    public String resetKillswitch(@RequestParam(defaultValue = "3") int threshold) {
+        killswitch.setThreshold(threshold);
+        killswitch.reset();
+        return "reset threshold=" + threshold;
+    }
+
+    @GetMapping("/killswitch")
+    public String killswitchState() {
+        return "tripped=" + killswitch.tripped() + " threshold=" + killswitch.threshold();
     }
 
     // (버그) 상한 초과거나 하한 미만이면 거부, 아니면 접수. NaN은 두 비교가 모두 false라 접수된다.

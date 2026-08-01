@@ -66,6 +66,7 @@ steps=(
   "R16dump|R16-batch-cache-pollution|compose|R16SEED"
   "B43av|B43-expand-contract|compose|bash scripts/exp-backfill-evidence.sh"
   "A08order|A08-buffer-pool-sizing|none|bash scripts/exp-shrink-order.sh"
+  "F01conc|F01-hanmac-divide-by-zero|none|bash scripts/exp-concurrency.sh"
 )
 
 if [ "${1:-}" = "--list" ]; then
