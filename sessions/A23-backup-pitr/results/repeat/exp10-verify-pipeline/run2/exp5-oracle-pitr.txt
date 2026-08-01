@@ -1,0 +1,46 @@
+# Oracle 시점 복구(RMAN UNTIL TIME)
+# Oracle AI Database 26ai Free Release 23.26.2.0.0 - Develop, Learn, and Run for Free
+
+## 1) 아카이브 로그 모드가 꺼져 있으면 시점 복구가 성립하지 않는다
+  현재 log_mode = ARCHIVELOG
+  → 이 이미지는 ARCHIVELOG 로 출고됩니다. 켜는 과정을 밟지 못했습니다.
+    다른 엔진과 갈리는 자리는 남습니다. 끄고 켜려면 데이터베이스를 mount 로
+    내렸다 올려야 하고 그동안 닫혀 있습니다. MySQL 의 log-bin 과 PostgreSQL 의
+    archive_mode 도 재기동이 필요하지만, PostgreSQL 은 archive_mode 만 켜면
+    되는 데 비해 Oracle 은 데이터베이스를 mount 상태로 두는 단계가 더 있습니다.
+
+## 2) 데이터와 백업
+  행 수 = 1000
+  Starting backup at 31-JUL-26
+  Finished backup at 31-JUL-26
+  Starting backup at 31-JUL-26
+  Finished backup at 31-JUL-26
+
+## 3) 백업 뒤 정상 쓰기, 그다음 사고
+  사고 직전 행 수 = 1500, 시각 = 2026-07-31 02:40:54
+  사고 후 행 수 = 1000
+  Finished backup at 31-JUL-26
+
+## 4) RMAN UNTIL TIME 으로 사고 직전까지 되돌린다
+  목표 시각 = 2026-07-31 02:40:54
+    7>   ALTER DATABASE OPEN RESETLOGS;
+    Starting restore at 31-JUL-26
+    Finished restore at 31-JUL-26
+    Starting recover at 31-JUL-26
+    Finished recover at 31-JUL-26
+  복구 후 행 수 = 1500
+
+## 5) RESETLOGS 가 남긴 것
+    1 PARENT 1
+    2 PARENT 1924245
+    3 PARENT 2953770
+    4 CURRENT 2956222
+  RESETLOGS 로 열면 인케네이션이 갈립니다. 그 시점 이후의 옛 아카이브 로그는
+  새 인케네이션에 적용할 수 없고, 되돌아가려면 RESET DATABASE TO INCARNATION 이
+  필요합니다. MySQL 과 PostgreSQL 에는 이 개념이 없습니다.
+
+## 정리
+  사고 전                   1500행
+  사고 후                   1000행
+  UNTIL TIME 복구 후        1500행
+  각 조건 1회 실행입니다.

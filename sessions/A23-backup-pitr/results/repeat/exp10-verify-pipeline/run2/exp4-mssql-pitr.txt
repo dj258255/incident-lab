@@ -1,0 +1,53 @@
+# SQL Server 시점 복구(STOPAT)
+# Microsoft SQL Server 2022 (RTM-CU26) (KB5093420) - 16.0.4265.3 (X64) 
+# 에디션: Developer Edition (64-bit)
+
+## 0) 준비
+  새 DB 의 기본 복구 모델 = FULL
+  (model 데이터베이스를 물려받는다. SIMPLE 이면 로그 백업이 거부되어 시점 복구가 불가능하다)
+  행 수 = 1000
+
+## 1) SIMPLE 에서 로그 백업을 시도한다
+  Msg 4208, Level 16, State 1, Server eeb734f36d7b, Line 1
+  The statement BACKUP LOG is not allowed while the recovery model is SIMPLE. Use BACKUP DATABASE or change the recovery model using ALTER DATABASE.
+  Msg 3013, Level 16, State 1, Server eeb734f36d7b, Line 1
+  → SIMPLE 에서는 로그 백업이 거부되므로 시점 복구가 성립하지 않는다
+
+## 2) FULL 로 바꾸고 전체 백업
+  복구 모델 = FULL
+  전체 백업 완료 (행 수 1000)
+
+## 3) 백업 뒤 정상 쓰기, 그다음 사고
+  사고 직전 행 수 = 1500, 시각 = 2026-07-30 12:13:22.922
+  사고 후 행 수 = 1000  (1500에서 500건 사라짐)
+  사고 시각 = 2026-07-30 12:13:25.390
+  로그 백업 완료 (307200바이트)
+
+## 4) 복구 A: NORECOVERY 를 빠뜨리고 전체 백업만 복원한다
+    RESTORE DATABASE successfully processed 498 pages in 0.021 seconds (185.081 MB/sec).
+    상태 ONLINE, 행 수 Changed database context to 'r_a'.
+  → 백업 시점(1000행)으로 열렸고, 이 뒤에 로그를 이어 붙일 수 없다
+    로그 적용 시도:
+      Msg 3117, Level 16, State 1, Server eeb734f36d7b, Line 1
+      Msg 3013, Level 16, State 1, Server eeb734f36d7b, Line 1
+
+## 5) 복구 B: NORECOVERY 로 복원한 뒤 STOPAT 을 사고 직전으로
+    RESTORE DATABASE successfully processed 498 pages in 0.019 seconds (204.564 MB/sec).
+    Processed 0 pages for database 'r_b', file 'spoon' on file 1.
+    Processed 26 pages for database 'r_b', file 'spoon_log' on file 1.
+    상태 ONLINE, 행 수 Changed database context to 'r_b'.
+
+## 6) 복구 C: STOPAT 을 사고 시각으로 (경계 포함 규칙)
+    RESTORE DATABASE successfully processed 498 pages in 0.016 seconds (242.919 MB/sec).
+    Processed 0 pages for database 'r_c', file 'spoon' on file 1.
+    Processed 26 pages for database 'r_c', file 'spoon_log' on file 1.
+    상태 RESTORING, 행 수 Msg 927, Level 14, State 2, Server eeb734f36d7b, Line 1
+
+## 정리
+  사고 전                               1500행
+  사고 후                               1000행
+  복구 A NORECOVERY 누락  → 로그를 이어 붙일 수 없음
+  복구 B STOPAT=사고 직전            1500행
+  복구 C STOPAT=사고 시각            Sqlcmd: Error: Microsoft ODBC Driver 18 for SQL Server : Cannot open database "r_c" requested by the login. The login failed..행
+
+  각 조건 1회 실행입니다.

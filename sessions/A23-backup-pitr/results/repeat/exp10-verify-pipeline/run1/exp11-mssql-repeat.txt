@@ -1,0 +1,42 @@
+# SQL Server 시점 복구를 3회 반복
+# MicrosoftSQLServer2022(RTM-CU26)(KB
+
+  이 컨테이너는 ARM 에뮬레이션으로 돕니다. 시간 수치는 그래서 안 적습니다.
+  대신 **판정이 회차마다 같은지**를 봅니다. 에뮬레이션이 시간을 흔들어도
+  판정이 안 흔들리면 결론은 인용할 수 있습니다.
+
+## 회차 1
+  사고 직전 / 사고 후     2001행 / 1501행
+  A NORECOVERY 누락            로그 적용 에러 2건, 상태 ONLINE
+  B STOPATMARK=safepoint         상태 ONLINE, 2001행
+  C STOPAT=사고 시각         상태 RESTORING, 행 -
+
+## 회차 2
+  사고 직전 / 사고 후     2001행 / 1501행
+  A NORECOVERY 누락            로그 적용 에러 2건, 상태 ONLINE
+  B STOPATMARK=safepoint         상태 ONLINE, 2001행
+  C STOPAT=사고 시각         상태 RESTORING, 행 -
+
+## 회차 3
+  사고 직전 / 사고 후     2001행 / 1501행
+  A NORECOVERY 누락            로그 적용 에러 2건, 상태 ONLINE
+  B STOPATMARK=safepoint         상태 ONLINE, 2001행
+  C STOPAT=사고 시각         상태 RESTORING, 행 -
+
+==================================================================
+## 정리
+==================================================================
+  조건                    회차별 값                             같은가
+  사고 전 행 수              ONLINE/2001, ONLINE/2001, ONLINE  같음
+  사고 후 행 수              ONLINE/1501, ONLINE/1501, ONLINE  같음
+  A NORECOVERY 누락       ONLINE/2, ONLINE/2, ONLINE/2      같음
+  B STOPATMARK=safepointONLINE/2001, ONLINE/2001, ONLINE  같음
+  C STOPAT=사고 시각        RESTORING/-, RESTORING/-, RESTOR  같음
+
+  **판정이 회차마다 같습니다.** 에뮬레이션이 시간을 흔들어도 이 셋은 안 흔들립니다.
+  그래서 시간 수치 없이도 이 절의 결론은 인용할 수 있습니다.
+    NORECOVERY 를 빠뜨리면 로그를 이어 붙일 수 없습니다.
+    STOPATMARK 로 사고 직전 지점을 가리키면 그 시점 행 수가 돌아옵니다.
+    STOPAT 이 로그 백업 끝보다 뒤면 데이터베이스가 RESTORING 에 남습니다.
+
+  시간은 재지 않았습니다. ARM 에뮬레이션이라 절대값이 이 호스트의 것도 아닙니다.

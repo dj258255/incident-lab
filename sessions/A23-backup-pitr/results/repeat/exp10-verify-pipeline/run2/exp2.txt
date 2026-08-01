@@ -1,0 +1,73 @@
+==============================================================
+함정 2. 사고 난 서버에 덤프를 되돌리면 첫 줄에서 막힌다
+==============================================================
+$ grep -m1 "GTID_PURGED" results/dump/full.sql
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '2695cd5d-8b13-11f1-bd5c-0242ac190002:1-5';
+
+$ docker exec -i a23-mysql mysql -uroot -plab < full.sql     # 원본 서버에 복원 시도
+ERROR 3546 (HY000) at line 24: @@GLOBAL.GTID_PURGED cannot be changed: the added gtid set must not overlap with @@GLOBAL.GTID_EXECUTED
+
+mysqldump가 기본으로 넣는 SET @@GLOBAL.GTID_PURGED가 이미 실행된 GTID와 겹쳐 중단된다.
+사고 복구는 대개 원본 서버에서 하려고 하므로, 문서의 PITR 절차만 따르면 여기서 막힌다.
+해법은 새 인스턴스에 복원하거나(권장), --set-gtid-purged=OFF로 덤프를 다시 뜨는 것이다.
+
+$ mysqldump ... --set-gtid-purged=OFF 로 다시 뜨면
+  GTID_PURGED 구문 없음 → 같은 서버에도 복원 가능
+
+==============================================================
+함정 3. 공식 mysql 이미지에 mysqlbinlog가 없다
+==============================================================
+$ docker exec a23-mysql ls /usr/bin | grep mysql
+mysql
+mysql-secret-store-login-path
+mysql_config
+mysql_migrate_keyring
+mysql_tzinfo_to_sql
+mysqladmin
+mysqldump
+mysqlsh
+
+$ docker exec a23-mysql mysqlbinlog --version
+bash: line 1: mysqlbinlog: command not found
+
+공식 문서의 PITR 절차는 전부 mysqlbinlog로 쓰여 있다.
+컨테이너로 운영하면서 이 사실을 사고 당일에 알면 복구가 그 자리에서 멈춘다.
+이 세션은 클라이언트 유틸이 들어 있는 별도 컨테이너(percona-server)로 우회했다.
+  대안: mysqlbinlog  Ver 8.4.10-10 for Linux on aarch64 (Percona Server (GPL), Release 10, Revision d76e81f4)
+
+==============================================================
+함정 4. 이미 적용한 구간을 다시 적용하면 조용히 스킵된다
+==============================================================
+재적용 전 행 수 1500
+재적용 전 gtid_executed 00f60e36-8b14-11f1-8c76-0242ac190003:1,\n2695cd5d-8b13-11f1-bd5c-0242ac190002:1-505
+
+$ mysql < recover.sql        # 방금 적용한 것과 똑같은 파일을 한 번 더
+종료 코드 0 (0이면 성공)
+재적용 후 행 수 1500  → 늘어난 행 0 건
+재적용 후 gtid_executed 00f60e36-8b14-11f1-8c76-0242ac190003:1,\n2695cd5d-8b13-11f1-bd5c-0242ac190002:1-505
+GTID 차집합(새로 실행된 트랜잭션) ''
+
+데이터는 한 건도 늘지 않았고 GTID 차집합도 비어 있다.
+공식 문서가 적은 그대로다. 같은 GTID의 트랜잭션은 무시되고 에러도 나지 않는다.
+운영자가 '복구했다'고 판단하기 딱 좋은 조건이다.
+
+==============================================================
+함정 5. binlog가 만료되면 PITR 창이 닫힌다
+==============================================================
+$ SELECT @@binlog_expire_logs_seconds        # 기본값
+  2592000
+  (2592000초 = 30일)
+
+만료는 시각이 되면 자동으로 일어나지 않는다. 서버 기동 시점과 binlog flush 시점에만 정리된다.
+그래서 만료를 짧게 잡고 FLUSH BINARY LOGS를 부르면 그 순간을 재현할 수 있다.
+
+$ SET GLOBAL binlog_expire_logs_seconds = 1; FLUSH BINARY LOGS;
+  binlog 파일 수 4개 → 2개
+  가장 오래된 파일 binlog.000001 → binlog.000004
+$ SHOW BINARY LOGS
+  binlog.000004	242	No
+  binlog.000005	198	No
+
+남은 파일의 첫 이벤트 시각이 곧 PITR 가능 하한이다.
+최신 풀백업이 그 하한보다 오래됐다면, 백업은 있는데 이어붙일 binlog가 없어 그 구간은 영구 유실이다.
+  (실험 후 기본값 복원)
