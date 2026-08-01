@@ -1,0 +1,4 @@
+condition,samples,active_total,classified,unclassified,pct
+소비자 켬 / 부하 행 락 대기,10,100,80,20,20
+소비자 끔 / 부하 행 락 대기,10,100,0,100,100
+소비자 켬 / 부하 CPU 만,10,100,0,100,100
