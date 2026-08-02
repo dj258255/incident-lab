@@ -1,0 +1,13 @@
+run,judgment,detail,verdict
+1,until_safe,"통과",통과
+1,until_after,"통과",통과
+1,old_after_resetlogs,"막힘(RMAN-20207)",막힘(RMAN-20207)
+1,snapshot_return,"통과",통과
+2,until_safe,"통과",통과
+2,until_after,"통과",통과
+2,old_after_resetlogs,"막힘(RMAN-20207)",막힘(RMAN-20207)
+2,snapshot_return,"통과",통과
+3,until_safe,"통과",통과
+3,until_after,"통과",통과
+3,old_after_resetlogs,"막힘(RMAN-20207)",막힘(RMAN-20207)
+3,snapshot_return,"통과",통과
