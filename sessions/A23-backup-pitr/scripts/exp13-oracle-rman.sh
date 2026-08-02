@@ -46,6 +46,22 @@ if ! ready; then
   ready || SQL "ALTER DATABASE OPEN RESETLOGS;" >/dev/null 2>&1
   ready || { SQL "SHUTDOWN ABORT;
 STARTUP;" >/dev/null 2>&1; }
+  # 그래도 안 열리면 데이터파일이 앞 회차의 불완전 복구 상태에 걸려 있는 것이다.
+  # 전체 복원으로 되돌린다. 앞 회차가 남긴 상태 때문에 다음 실행이 통째로
+  # 중단되는 것을 여러 번 겪었다.
+  if ! ready; then
+    # ORA-01190 으로 막히는 경우가 있다. 컨트롤 파일과 데이터 파일의 계보가 어긋난
+    # 상태이고, 데이터 파일만 복원해서는 안 풀린다. 컨트롤 파일부터 되돌린다.
+    echo "  컨트롤 파일부터 전체 복원으로 되돌리는 중"
+    RMAN "SHUTDOWN IMMEDIATE;
+STARTUP NOMOUNT;
+RESTORE CONTROLFILE FROM AUTOBACKUP;
+ALTER DATABASE MOUNT;
+RESTORE DATABASE;
+RECOVER DATABASE;
+ALTER DATABASE OPEN RESETLOGS;" >/dev/null 2>&1
+    open_pdb >/dev/null 2>&1 || true
+  fi
   for _ in $(seq 1 40); do ready && break; sleep 5; done
 fi
 ready || { echo "중단: a23-oracle 을 READ WRITE 로 못 엽니다" >&2; exit 2; }
@@ -96,14 +112,22 @@ CREATE TABLE c##sysbak.t (id NUMBER PRIMARY KEY, v NUMBER);")
   BEFORE=$(rows)
   [ "${BEFORE:-0}" -ne 500 ] && { echo "  회차 $r: 적재가 ${BEFORE:-0}행(기대 500). 버립니다"; continue; }
 
+  # 회차마다 **현재 인케네이션에서** 새로 백업한다. 앞 회차의 RESETLOGS 로 인케네이션이
+  # 갈린 상태에서 옛 백업을 쓰려 하면 RMAN-20207 로 막힌다.
+  BASE_INC=$(RMAN "LIST INCARNATION OF DATABASE;" | awk '/CURRENT/{print $2}' | tail -1)
   RMAN "BACKUP DATABASE PLUS ARCHIVELOG;" >/dev/null 2>&1
   SQL "BEGIN FOR i IN 501..700 LOOP INSERT INTO c##sysbak.t VALUES (i, i); END LOOP; COMMIT; END;
 /" >/dev/null 2>&1
-  # **백업 뒤에 생긴 리두를 아카이브해야 그 시점까지 복구할 수 있다.**
-  # 1차 시도에서 사고 전 복구가 500행(백업 시점)에 멈춘 이유가 이것이다.
+  # **RMAN 의 SET UNTIL TIME 은 초 단위이고 그 시각을 포함하지 않는다.**
+  # 커밋과 같은 초에 시각을 찍으면 그 커밋이 빠져서 백업 시점 그대로가 나온다.
+  # 사고 전 복구가 계속 500행(기대 700)이던 이유가 이것이었다. 같은 조건에서
+  # SET UNTIL SCN 으로 주면 700행이 나오는 것으로 확인했다.
+  # 커밋 뒤 몇 초 지난 시각을 잡는다.
+  sleep 4
   SQL "ALTER SYSTEM ARCHIVE LOG CURRENT;" >/dev/null 2>&1
   SAFE_N=$(rows)
   SAFE_T=$(SQL "SELECT TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI:SS') FROM dual;" | tr -d '\r' | xargs)
+  SAFE_SCN=$(num "$(SQL "SELECT current_scn FROM v\$database;")")
   sleep 12   # 초 단위 경계를 확실히 넘긴다
   SQL "DELETE FROM c##sysbak.t WHERE id > 500; COMMIT;" >/dev/null 2>&1
   SQL "ALTER SYSTEM ARCHIVE LOG CURRENT;" >/dev/null 2>&1
@@ -118,6 +142,12 @@ CREATE TABLE c##sysbak.t (id NUMBER PRIMARY KEY, v NUMBER);")
   R1=$(rows); V1=$([ "${R1:-0}" = "${SAFE_N:-x}" ] && echo 통과 || echo "걸림(${R1:-?})")
 
   # 2) 사고 이후 시점으로 복구하면 사고까지 함께 온다
+  #    **앞 단계의 RESETLOGS 로 인케네이션이 갈렸으므로 먼저 되돌린다.**
+  #    안 되돌리면 ACC_T 가 새 인케네이션의 RESETLOGS 시각보다 앞이라 RMAN-20207 이
+  #    나고, 그 실패가 다음 단계까지 연쇄로 끌고 간다. 1차 설계가 그랬다.
+  RMAN "SHUTDOWN IMMEDIATE;
+STARTUP MOUNT;
+RESET DATABASE TO INCARNATION ${BASE_INC:-1};" >/dev/null 2>&1
   RMAN "RUN { SHUTDOWN IMMEDIATE; STARTUP MOUNT;
   SET UNTIL TIME \"TO_DATE('$ACC_T','YYYY-MM-DD HH24:MI:SS')\";
   RESTORE DATABASE; RECOVER DATABASE; ALTER DATABASE OPEN RESETLOGS; }" >/dev/null 2>&1
@@ -130,10 +160,17 @@ CREATE TABLE c##sysbak.t (id NUMBER PRIMARY KEY, v NUMBER);")
   RESTORE DATABASE; }" | grep -cE "RMAN-2004[0-9]|RMAN-06004|RMAN-20207|not found")
   V3=$([ "${E3:-0}" -gt 0 ] && echo "막힘" || echo "안막힘")
 
-  # 4) 인케네이션을 되돌리면 갈 수 있다
-  INC=$(RMAN "LIST INCARNATION OF DATABASE;" | awk '/FREE/{print $2}' | head -1)
-  E4=$(RMAN "RESET DATABASE TO INCARNATION ${INC:-1};" | grep -ciE "RMAN-[0-9]+")
-  V4=$([ "${E4:-0}" -eq 0 ] && echo 통과 || echo 걸림)
+  # 4) 회차 시작 인케네이션으로 되돌린 뒤 같은 시점으로 다시 갈 수 있는가
+  #    3) 이 막힌 상태에서 출발한다. 되돌리는 것이 그 막힘을 푸는가가 질문이다.
+  R4=$(RMAN "SHUTDOWN IMMEDIATE;
+STARTUP MOUNT;
+RESET DATABASE TO INCARNATION ${BASE_INC:-1};
+RUN { SET UNTIL TIME \"TO_DATE('$SAFE_T','YYYY-MM-DD HH24:MI:SS')\";
+  RESTORE DATABASE; RECOVER DATABASE; ALTER DATABASE OPEN RESETLOGS; }")
+  E4=$(echo "$R4" | grep -c "database reset to incarnation")
+  open_pdb >/dev/null 2>&1 || true
+  R4N=$(rows)
+  V4=$([ "${E4:-0}" -gt 0 ] && [ "${R4N:-0}" = "${SAFE_N:-x}" ] && echo 통과 || echo "걸림(${R4N:-?})")
 
   SQL "ALTER DATABASE OPEN RESETLOGS;" >/dev/null 2>&1
   open_pdb >/dev/null 2>&1 || true
