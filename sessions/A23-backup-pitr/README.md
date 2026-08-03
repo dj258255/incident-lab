@@ -171,6 +171,8 @@ $ SHOW BINARY LOGS
 
 ### 5.1 recovery_target_action 기본값은 pause다
 
+![복구 목표에 닿은 뒤 pause 로 멈춰 있는 상태](results/fig-pg-pause.png)
+
 `recovery_target_time`만 주고 `recovery_target_action`을 지정하지 않은 결과입니다.
 
 ```console
@@ -187,6 +189,8 @@ spoon=# SELECT pg_is_in_recovery();     -- f
 복구는 끝났고 데이터도 맞는데 승격을 사람이 불러야 합니다. MySQL PITR에는 이 단계가 없습니다.
 
 ### 5.2 recovery_target_inclusive는 커밋 정각 한 건만 가른다
+
+![inclusive 가 커밋 정각 한 건을 가르는 지점](results/fig-pg-inclusive.png)
 
 처음에는 사고 직후 `now()`를 목표로 줬는데 `off`로 둬도 500행이 사라졌습니다. `now()`는 `DELETE`가
 커밋된 뒤 실행한 별도 쿼리의 시각이라 커밋보다 늦습니다. `track_commit_timestamp=on`으로 켜고
