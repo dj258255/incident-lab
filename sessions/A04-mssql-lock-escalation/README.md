@@ -2,6 +2,10 @@
 
 SQL Server 락 에스컬레이션 / SQL Server 2022 (RTM-CU26) 16.0.4265 / 근거 등급 **E2**
 
+> 이 글은 왜 그런지를 다룹니다. 무엇을 할 것인가는 [RUNBOOK.md](RUNBOOK.md) 에 절차로
+> 정리했습니다. 대량 보정 배치를 돌리기 전 확인, 배치 크기 결정, 작업 중 감시 쿼리,
+> 승격이 이미 일어났을 때의 대응 순서입니다.
+
 ## 1. 유명한 이유
 
 Microsoft Learn 의 [Transaction locking and row versioning guide](https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-transaction-locking-and-row-versioning-guide?view=sql-server-ver17)
