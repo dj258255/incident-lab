@@ -1,0 +1,18 @@
+# A04 재현 환경
+# SQL Server 의 락 에스컬레이션을 재현한다.
+#
+# 재현에 필요한 전제가 하나 있다. 조사 노트(research/A-01-11.md)가 적어 둔 대로
+# 최신 SQL Server 의 optimized locking 이 켜져 있으면 에스컬레이션이 잘 일어나지 않는다.
+# 2022 는 그 기능이 없지만(2025 에서 들어왔다), 켜져 있지 않다는 것을 스크립트가
+# 서버에 되물어 확인한다. 바꿨다고 믿는 값을 되묻는다는 CONVENTIONS §11 의 규칙이다.
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: a04-mssql
+    cpus: 4
+    mem_limit: 6g
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Lab_Passw0rd!"
+      MSSQL_PID: "Developer"
+    ports: ["11434:1433"]

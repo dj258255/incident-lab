@@ -1,0 +1,11 @@
+run,condition,table_x_lock,key_locks,page_locks,table_locks,escalation_events,escalated_lock_count
+1,no_stats,1,0,0,2,1,6248
+1,with_stats,0,6231,17,6249,0,-
+2,no_stats,1,0,0,2,1,6248
+2,with_stats,0,6231,17,6249,0,-
+3,no_stats,1,0,0,2,1,6248
+3,with_stats,0,6231,17,6249,0,-
+4,no_stats,1,0,0,2,1,6248
+4,with_stats,0,6231,17,6249,0,-
+5,no_stats,1,0,0,2,1,6248
+5,with_stats,0,6231,17,6249,0,-
