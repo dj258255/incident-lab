@@ -1,0 +1,5 @@
+method,found,hit,miss,false_positive,recall_pct
+A 참조 대사,60,60,0,0,100.0
+B 통계 이탈,100,60,0,40,100.0
+C 개봉 대사,60,60,0,0,100.0
+reclaim_accounts,60,60,360000,360000

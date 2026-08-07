@@ -122,7 +122,8 @@ run_case(){
   if [ "$ms" -gt 2000 ]; then blocked="막힘"; else blocked="안 막힘"; fi
   printf "  %-34s %-6s %-8s %-10s %s\n" "$label" \
          "$([ "${esc:-0}" -gt 0 ] && echo 있음 || echo 없음)" "$blocked" "${ms}ms" "$wt"
-  echo "$label,$rows,$rcsi,$esc,$ms,$blocked,$wt" >> "$OUT/blocking.csv"
+  # 라벨에 쉼표가 들어간다("A 3,000행 보정"). 감싸지 않으면 열이 밀린다.
+  echo "\"$label\",$rows,$rcsi,$esc,$ms,$blocked,$wt" >> "$OUT/blocking.csv"
 }
 
 run_case "A 3,000행 보정"        3000  OFF

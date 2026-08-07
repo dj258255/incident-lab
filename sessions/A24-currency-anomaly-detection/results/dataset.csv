@@ -1,0 +1,8 @@
+metric,value
+box_open_log_rows,10000000
+currency_ledger_rows,20002000
+ledger_size_mb,879
+truth_accounts,60
+extra_payout_rows,900
+window_start,2026-07-28 10:00:00
+window_end,2026-07-28 14:00:00

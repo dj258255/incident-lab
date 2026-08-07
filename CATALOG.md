@@ -79,6 +79,7 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 | A21 ★★ | **Figma식 수직 분할·논리 복제 이전** | **[E1]** 피크 CPU 65%(이미 r5.24xlarge) → 테이블 그룹 분리, 논리 복제로 이전. **무중단 아님 — 작업당 약 30초 부분 저하·요청 약 2% 드롭** (figma.com) | PG 2대 + logical replication으로 특정 테이블만 이전 → PgBouncer pause·권한 revoke·LSN 대기·승격·역방향 복제 | 중간 |
 | A22 ★★★ **완료** | **[인덱스는 있는데 쿼리가 못 쓴다](sessions/A22-index-not-used/)** | **[E2]** MySQL 공식 문서가 조건을 직접 명시(형변환·문자셋 불일치·선행 와일드카드). 실무 앵커는 LINE VOOM 비트 연산 30초 타임아웃 사례 | `[L]` 주문 300만 행에서 5조건 전후. EXPLAIN + Handler_read 실측, 함수형 인덱스(8.0.13)와 역순 생성 컬럼으로 해소 | 하 |
 | A23 ★★★ **완료** | **[백업은 있는데 복구가 안 된다(PITR)](sessions/A23-backup-pitr/)** | **[E1]** GitLab 2017 "five backup techniques, none working reliably" 원문 확인. MySQL 공식 PITR 절차와 GTID 조용한 스킵("No error is raised") | `[L]` mysqldump+binlog로 DROP 직전 복구. 백업만 복원 시 유실 500건 대 PITR 0건, RTO 3단 분해. GTID 겹침·도구 부재·조용한 스킵·binlog 만료 4함정 | 중 |
+| A24 ★★★ **완료** | **[셀 수 없으면 롤백 말고는 선택지가 없다](sessions/A24-currency-anomaly-detection/)** | **[E1·축소]** 로스트아크 2022-12 골드 복사(17분 차단·4시간 수정·선별 회수)와 2023-06 얼음 석상(공지 2432, 63계정 3,806회분 회수). 2014 리니지 오크 서버는 6일 롤백을 택했다 | `[L]` 재화 원장 2,000만 행에서 이상 지급 탐지 3안을 정답지와 대조. 참조·개봉 대사는 오탐 0, **통계 이탈은 어뷰저 60개를 다 잡으면서 정상 헤비 이용자 40개를 함께 지목**. 회수 대상을 계정·금액까지 정확히 산정. 조사 쿼리 논리 읽기 229,614 → 482 | 중간 |
 
 
 ---

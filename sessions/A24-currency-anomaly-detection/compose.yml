@@ -1,0 +1,17 @@
+# A24 재현 환경
+# 게임 재화 원장에서 이상 지급을 찾아내는 조사 쿼리를 다룬다.
+#
+# 이 세션의 지표는 시간이 아니라 **논리 읽기(페이지 수)** 다. 컨테이너가 ARM
+# 에뮬레이션으로 돌아 절대 시간은 이 호스트의 값이 아니지만, 논리 읽기와 실행
+# 계획은 하드웨어와 무관하다. A04 와 같은 원칙이다.
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: a24-mssql
+    cpus: 4
+    mem_limit: 6g
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Lab_Passw0rd!"
+      MSSQL_PID: "Developer"
+    ports: ["11435:1433"]

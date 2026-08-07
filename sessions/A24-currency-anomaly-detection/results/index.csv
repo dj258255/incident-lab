@@ -1,0 +1,8 @@
+index,logical_reads,index_pages,index_mb
+"없음 (클러스터드 PK 만)",229614,0,0
+"IX(ref_id)",229614,54567,426
+"IX(created_at)",227909,52135,407
+"IX(created_at, ref_id) 포함 account",228399,82024,640
+"IX(reason, created_at, ref_id) 포함 account",496,84428,659
+"필터드 (created_at, ref_id) WHERE reason=1",482,41026,320
+"  위와 같되 조회에 SET 옵션 없음",229614,41026,320
