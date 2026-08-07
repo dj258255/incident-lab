@@ -1,0 +1,19 @@
+# A25 재현 환경
+# A24 가 뽑은 회수 대상을 실제로 되돌리는 보정 프로시저를 다룬다.
+# 배치 크기와 커밋 간격은 A04 의 결론(승격은 테이블 락 6,250개, 배치는 5,000행 미만)을 따른다.
+# 보정 자체를 되돌리려면 로그 백업 체인이 필요하므로 복구 모델은 FULL 로 둔다.
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: a25-mssql
+    cpus: 4
+    mem_limit: 6g
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Lab_Passw0rd!"
+      MSSQL_PID: "Developer"
+    ports: ["11436:1433"]
+    volumes:
+      - a25backup:/var/opt/mssql/backup
+volumes:
+  a25backup:

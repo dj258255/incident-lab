@@ -1,0 +1,4 @@
+mode,rounds,reclaimed,target,match,escalations,negative_accounts,debt_accounts,audit_rows
+NEGATIVE,15,1839974000,1839974000,일치,0,20000,0,60000
+DEBT,15,1839974000,1839974000,일치,0,0,20000,60000
+audit,60000,60000,60000

@@ -1,0 +1,6 @@
+metric,value
+before_balance,67999983000
+after_wrong_reclaim,66394009600
+restored_stopatmark,67999983000
+wrong_accounts,600
+mark_time,2026-08-07 05:22:51.877
