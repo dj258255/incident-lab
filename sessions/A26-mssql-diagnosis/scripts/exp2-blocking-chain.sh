@@ -120,7 +120,7 @@ echo
 
 echo "## 2-3. 뿌리는 무엇을 하고 있었나"
 echo
-ROOTINFO=$(num "$(QD "SET NOCOUNT ON;
+ROOTINFO=$(numsp "$(QD "SET NOCOUNT ON;
 SELECT s.status + '|' + CONVERT(varchar(23), s.last_request_end_time, 121)
      + '|' + CAST((SELECT COUNT(*) FROM sys.dm_tran_session_transactions t
                     WHERE t.session_id = s.session_id) AS varchar(4))

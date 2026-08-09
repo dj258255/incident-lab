@@ -15,6 +15,12 @@ QF(){
   docker exec "$CT" "$SQLCMD" -S localhost -U sa -P "$PW" -C -h -1 -W -d "$DB" -i /tmp/a26q.sql 2>&1
 }
 num(){ echo "$1" | head -1 | tr -d ' \r'; }
+
+# 값 안의 공백을 살려야 하는 자리에 쓴다. num 은 내부 공백까지 지우므로
+# '2026-08-09 08:10:00.787' 이 '2026-08-0908:10:00.787' 이 된다.
+# A25 에서 이것 때문에 STOPAT 이 Msg 3217 로 죽었고 "시각 복원이 안 된다"고
+# 결론 낼 뻔했다. 여기서는 화면에만 나오지만 같은 함수를 쓰면 같은 자국이 남는다.
+numsp(){ echo "$1" | head -1 | sed 's/[[:space:]]*$//; s/\r//g'; }
 QDX(){
   local out; out=$(QD "$1")
   if echo "$out" | grep -qE '^(Msg|메시지) [0-9]+'; then
