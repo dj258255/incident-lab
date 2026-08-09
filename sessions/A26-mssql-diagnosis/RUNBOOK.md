@@ -142,6 +142,46 @@ SELECT TOP 10 c.wait_type,
 
 ---
 
+## 4-2. 락이 아니면 범인 쿼리를 찾는다
+
+차분이 `PAGEIOLATCH_*` 나 `SOS_SCHEDULER_YIELD` 를 가리키면 많이 읽는 쿼리를 찾습니다.
+
+```sql
+-- 계획 단위가 아니라 query_hash 로 묶어서 본다
+SELECT TOP 20
+       COUNT(*)                        AS plans,
+       SUM(qs.execution_count)         AS execs,
+       SUM(qs.total_logical_reads)     AS logical_reads,
+       SUM(qs.total_worker_time)/1000  AS cpu_ms,
+       MIN(t.text)                     AS sample_text
+  FROM sys.dm_exec_query_stats qs
+ CROSS APPLY sys.dm_exec_sql_text(qs.sql_handle) t
+ GROUP BY qs.query_hash
+ ORDER BY SUM(qs.total_logical_reads) DESC;
+```
+
+**계획 단위로만 보면 범인을 놓칩니다.** 값을 리터럴로 박아 던지는 쿼리는 값마다 다른
+계획으로 흩어져 각각 실행 1회에 소량으로 남습니다. 상위 N 에 안 옵니다.
+
+실측에서 같은 부하를 절반씩 나눠 걸었더니, 계획 단위 1위는 151,326 인데 `query_hash`
+로 묶으면 304,086 이었습니다. **묶기 전에는 실제 부하의 절반만 보였습니다.**
+
+| `plans` 열이 | 뜻 |
+|---|---|
+| 1 | 파라미터로 잘 넘기고 있다 |
+| 수십~수천 | 리터럴을 박고 있다. 캐시가 부풀고 매번 컴파일한다 |
+
+`plans` 가 큰 줄이 보이면 진단으로 끝낼 것이 아니라 **애플리케이션이 값을 파라미터로
+넘기게 고치는 것**이 근본 해소입니다.
+
+> 아주 단순한 쿼리는 엔진이 알아서 파라미터화해 줍니다(단순 매개 변수화). 조인이 하나만
+> 들어가도 안 해 주므로, 실무 쿼리는 대부분 흩어지는 쪽입니다.
+
+> `query_stats` 는 계획이 캐시에서 밀려나면 **통계도 함께 사라집니다.** 사고가 지나간
+> 뒤에 들여다보면 범인이 이미 없을 수 있습니다.
+
+---
+
 ## 5. 뿌리를 죽이기 전에
 
 - [ ] `program_name`, `host_name`, `login_name` 을 **기록했는가** (같은 일이 반복된다)

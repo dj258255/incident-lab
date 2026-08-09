@@ -143,6 +143,72 @@
      ]
     ]
    ]
+  },
+  {
+   "type": "term",
+   "out": "fig-plan-cache.png",
+   "font": 20,
+   "title": "순위에 안 잡히는 범인",
+   "lines": [
+    [
+     [
+      "-- 같은 부하 60회씩. 값을 넘기는 방법만 다르다.",
+      "dim"
+     ]
+    ],
+    "",
+    [
+     [
+      "                     계획 개수  총 실행 횟수",
+      "yellow"
+     ]
+    ],
+    [
+     [
+      "  A 파라미터     1개           60회",
+      "yellow"
+     ]
+    ],
+    [
+     [
+      "  B 리터럴        60개          60회",
+      "yellow"
+     ]
+    ],
+    "",
+    [
+     [
+      "-- total_logical_reads 상위를 보면",
+      "dim"
+     ]
+    ],
+    "",
+    "  정석대로 total_logical_reads 로 정렬해 상위 3개를 봅니다.",
+    "",
+    [
+     [
+      "    실행 60     논리읽기 151326       (@t INT)/*PARAM*/ SELECT COUNT(*)",
+      "green"
+     ]
+    ],
+    [
+     [
+      "    실행 1      논리읽기 2546         SET NOCOUNT ON;       /*LITERAL*/",
+      "red"
+     ]
+    ],
+    [
+     [
+      "    실행 1      논리읽기 2546         SET NOCOUNT ON;       /*LITERAL*/",
+      "red"
+     ]
+    ],
+    "",
+    [
+     "  묶기 전 상위 1위         151326",
+     "green"
+    ]
+   ]
   }
  ]
 }
