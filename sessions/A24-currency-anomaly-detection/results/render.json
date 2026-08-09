@@ -333,6 +333,90 @@
     }
    ],
    "note": "원래 표와 파티션 표를 바로 견주면 클러스터드 키 변경과 파티셔닝이 섞인다. 변수를 하나로 만들자 파티셔닝의 몫은 사실상 0"
+  },
+  {
+   "type": "term",
+   "out": "fig-online-cost.png",
+   "font": 20,
+   "title": "ONLINE = ON 의 대가",
+   "lines": [
+    [
+     [
+      "-- 2천만 행 표에 657MB 인덱스. 동시 쓰기 없음.",
+      "dim"
+     ]
+    ],
+    "",
+    [
+     [
+      "  복구모델 ONLINE   인덱스   로그(파일) 로그(트랜잭션) 결과",
+      "bold"
+     ]
+    ],
+    [
+     [
+      "  SIMPLE    OFF      657MB       11MB          2MB             성공",
+      "green"
+     ]
+    ],
+    [
+     [
+      "  SIMPLE    ON       700MB       99MB          못 잡음      성공",
+      "red"
+     ]
+    ],
+    [
+     [
+      "  FULL      OFF      657MB       712MB         655MB           성공",
+      "green"
+     ]
+    ],
+    [
+     [
+      "  FULL      ON       700MB       2621MB        못 잡음      성공",
+      "red"
+     ]
+    ],
+    "",
+    [
+     [
+      "인덱스 크기 대비 로그   SIMPLE 2% / 15%, FULL 108% / 399%",
+      "yellow"
+     ]
+    ],
+    "",
+    [
+     [
+      "-- tempdb 는 정렬 위치 옵션이 가른다",
+      "dim"
+     ]
+    ],
+    "",
+    [
+     [
+      "  조건                           tempdb 최대 그중 버전저장소 동시 쓰기",
+      "bold"
+     ]
+    ],
+    [
+     [
+      "  SORT_IN_TEMPDB OFF, 쓰기 없음 3MB           0MB              없음",
+      "green"
+     ]
+    ],
+    [
+     [
+      "  SORT_IN_TEMPDB ON, 쓰기 없음 699MB         0MB              없음",
+      "red"
+     ]
+    ],
+    [
+     [
+      "  SORT_IN_TEMPDB OFF, 쓰기 있음 3MB           0MB              228000행",
+      "green"
+     ]
+    ]
+   ]
   }
  ]
 }

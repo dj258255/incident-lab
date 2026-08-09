@@ -1,0 +1,8 @@
+part,recovery,online,sort_in_tempdb,writers,index_mb,log_mb,tx_log_mb,tempdb_peak_mb,version_store_mb,write_batches,result
+1,SIMPLE,OFF,OFF,N,657,11,2,3,0,0,성공
+1,SIMPLE,ON,OFF,N,700,99,0,3,0,0,성공
+1,FULL,OFF,OFF,N,657,712,655,3,0,0,성공
+1,FULL,ON,OFF,N,700,2621,0,3,0,0,성공
+2,FULL,ON,OFF,N,700,2621,0,3,0,0,성공
+2,FULL,ON,ON,N,700,2614,0,699,0,0,성공
+2,FULL,ON,OFF,Y,703,2691,1,3,0,114,성공
