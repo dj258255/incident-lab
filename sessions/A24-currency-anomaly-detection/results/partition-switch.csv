@@ -1,0 +1,8 @@
+method,rows_removed,log_mb,max_locks,lock_shape,note
+"A DELETE, 4000행씩",4666666,1031.4,6261,"IX Sch-S X","배치 분할"
+"B SWITCH",4666666,0.0,5,"Sch-M","메타데이터"
+"되돌리는 스위치","-","-","-","됨","양쪽 경계 CHECK"
+"CHECK 제약이 없으면","-","-","-","됨",""
+"클러스터드 인덱스가 다르면","-","-","-","Msg 4947","ALTER TABLE SWITCH statement failed. There is no identical index in sour"
+"컬럼이 하나 더 있으면","-","-","-","Msg 4943","ALTER TABLE SWITCH statement failed because table 'lostark_log.dbo.curre"
+"구조가 전부 같으면","-","-","-","됨",""

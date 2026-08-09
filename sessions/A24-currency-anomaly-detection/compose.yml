@@ -15,3 +15,18 @@ services:
       MSSQL_SA_PASSWORD: "Lab_Passw0rd!"
       MSSQL_PID: "Developer"
     ports: ["11435:1433"]
+
+  # 에디션 제약을 문서로만 알고 넘기지 않으려고 둔다. ONLINE = ON 은 Enterprise 와
+  # Developer 에서만 되는데, 그 "안 된다"가 실제로 어떤 오류인지 보려면 낮은 에디션이
+  # 필요하다. Express 는 무료라 컨테이너로 띄울 수 있다.
+  # 데이터는 안 옮긴다. 거부는 표 크기가 아니라 에디션이 정하므로 작은 표로 충분하다.
+  express:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: a24-express
+    cpus: 2
+    mem_limit: 2g
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Lab_Passw0rd!"
+      MSSQL_PID: "Express"
+    ports: ["11438:1433"]

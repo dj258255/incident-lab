@@ -1,0 +1,5 @@
+case,rcsi,vs_peak_mb,gen_peak_mb,note
+"A RCSI 끄고 30만 행 갱신",OFF,0,0,""
+"B RCSI 켜고 30만 행 갱신",ON,83,83,""
+"오프라인 인덱스 빌드",-,-,-,"파일 68.1MB / log_stats 68.1MB"
+"온라인 인덱스 빌드",-,-,-,"파일 101.4MB / log_stats 101.3MB"

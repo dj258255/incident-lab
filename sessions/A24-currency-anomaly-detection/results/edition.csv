@@ -1,0 +1,11 @@
+feature,developer,express,msg
+"CREATE INDEX (기본)","됨","됨"," "
+"CREATE INDEX WITH ONLINE = ON","됨","거부","Msg 1712 Online index operations can only be performed in Enterprise edition of"
+"CREATE INDEX WITH SORT_IN_TEMPDB = ON","됨","됨"," "
+"필터드 인덱스","됨","됨"," "
+"파티션 함수·스킴","됨","됨"," "
+"데이터 압축(PAGE)","됨","됨"," "
+"확장 이벤트 세션","됨","됨"," "
+"보이는 스케줄러","-","4",""
+"max server memory","-","2147483647 MB",""
+"버퍼 풀 현재 목표","-","141 MB",""

@@ -29,6 +29,11 @@ QF(){
 
 num(){ echo "$1" | head -1 | tr -d ' \r'; }
 
+# 내부 공백을 살려야 하는 값에 쓴다. num() 은 값 안의 공백까지 지워
+# 'Developer Edition (64-bit)' 가 'DeveloperEdition(64-bit)' 이 된다.
+# A25 에서는 같은 함수가 STOPAT 인자를 망가뜨려 Msg 3217 을 냈다.
+numsp(){ echo "$1" | head -1 | tr -d '\r' | sed -e 's/^ *//' -e 's/ *$//'; }
+
 # 실행하고 오류가 있으면 멈춘다.
 # QD "..." >/dev/null 로 던지면 sqlcmd 의 Msg 가 그대로 버려져서, SQL 이 한 줄도
 # 안 들어갔는데 스크립트는 다음 단계로 넘어간다. 실제로 그렇게 데이터셋이 조용히
