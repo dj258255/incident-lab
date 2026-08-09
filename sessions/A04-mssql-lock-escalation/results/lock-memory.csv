@@ -1,0 +1,5 @@
+rows,table_x,total_locks,lock_mem_mb,escalation_events
+200000,0,200545,76,0
+600000,0,1632,76,0
+1200000,0,3262,76,0
+2000000,0,5436,76,0
