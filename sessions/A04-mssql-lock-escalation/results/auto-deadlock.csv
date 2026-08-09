@@ -1,0 +1,7 @@
+mode,round,deadlocks
+TABLE,1,0
+TABLE,2,0
+TABLE,3,0
+AUTO,1,1
+AUTO,2,1
+AUTO,3,1

@@ -117,13 +117,19 @@ xe_reset(){
      ALTER EVENT SESSION a04_esc ON SERVER STATE = START;" >/dev/null
 }
 
-# 링버퍼에 쌓인 승격 이벤트를 한 줄씩 돌려준다. "escalated_lock_count|cause|mode"
+# 링버퍼에 쌓인 승격 이벤트를 한 줄씩 돌려준다.
+# "escalated_lock_count|cause|mode|hobt_lock_count"
+#
+# 마지막 값이 실험 9의 핵심이다. escalated_lock_count 는 문장이 그 시점까지 잡은
+# 락 전부이고, hobt_lock_count 는 승격 대상이 된 하나의 HoBT(인덱스) 에 걸린 락이다.
+# 인덱스가 여럿일 때 어느 쪽이 임계값을 재는 기준인지 이 둘을 견주면 갈린다.
 xe_events(){
   QF "SET QUOTED_IDENTIFIER ON;
 SET NOCOUNT ON;
 SELECT CAST(n.value('(data[@name=\"escalated_lock_count\"]/value)[1]','int') AS varchar(12))
      + '|' + n.value('(data[@name=\"escalation_cause\"]/text)[1]','varchar(40)')
      + '|' + n.value('(data[@name=\"mode\"]/text)[1]','varchar(10)')
+     + '|' + CAST(n.value('(data[@name=\"hobt_lock_count\"]/value)[1]','int') AS varchar(12))
 FROM (SELECT CAST(t.target_data AS xml) x
         FROM sys.dm_xe_sessions s
         JOIN sys.dm_xe_session_targets t ON t.event_session_address = s.address

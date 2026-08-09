@@ -1,0 +1,4 @@
+condition,nc_indexes,escalated_lock_count,hobt_lock_count
+"1) 인덱스 없음",0,6248,6247
+"2) 갱신 컬럼에 1개",1,7498,5003
+"3) 갱신 컬럼에 2개",2,12498,5007
