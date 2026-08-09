@@ -1,0 +1,199 @@
+#!/usr/bin/env bash
+# 실험 6. 인덱스가 늘면 임계값에 더 빨리 닿는다.
+#
+# 실험 1은 클러스터드 PK 만 있는 표에서 경계를 쟀다. 그 결과로 "배치는 5,000행
+# 미만"이라는 처방을 냈는데, 그 처방에는 조건이 빠져 있었다.
+#
+# 승격은 행 수가 아니라 **락 개수**로 갈린다(실험 1). 그런데 한 행을 갱신할 때
+# 잡히는 락 개수는 인덱스에 따라 달라진다. 갱신하는 컬럼에 보조 인덱스가 붙어
+# 있으면 그 인덱스의 행도 함께 바뀌므로 락이 하나 더 붙는다.
+#
+# 실제 게임 재화 표는 클러스터드 PK 하나로 끝나지 않는다. 그러면 5,000행 배치가
+# 안전하다는 말이 틀릴 수 있다. 이 실험은 그 조건을 밝힌다.
+#
+# 조건은 넷이다. 표와 갱신문은 같고 인덱스만 다르다.
+#   1) 없음                     클러스터드 PK 만
+#   2) 갱신 컬럼에 인덱스 1개   balance 에 NC 인덱스
+#   3) 갱신 안 하는 컬럼에 1개  currency_type 에 NC 인덱스
+#   4) 갱신 컬럼에 인덱스 2개   balance 를 담은 NC 인덱스 둘
+set -uo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+. "$ROOT/scripts/lib.sh"
+OUT="$ROOT/results"; mkdir -p "$OUT"
+ROUNDS=${ROUNDS:-3}
+FIXED_N=${FIXED_N:-3000}   # 배수를 직접 보기 위한 고정 행 수
+
+wait_ready || exit 2
+OPTLOCK=$(assert_env) || exit 2
+
+drop_nc(){
+  local names
+  names=$(QD "SET NOCOUNT ON;
+    SELECT name FROM sys.indexes
+     WHERE object_id = OBJECT_ID('$TBL') AND type_desc = 'NONCLUSTERED';")
+  echo "$names" | grep -E '^IX_' | while read -r n; do
+    [ -n "$n" ] && QD "DROP INDEX [$n] ON $TBL;" >/dev/null
+  done
+}
+
+# 조건을 세운다. reset_table 이 표를 다시 만들므로 인덱스는 그 뒤에 붙인다.
+setup(){
+  local mode=$1
+  reset_table 200000 || return 2
+  drop_nc
+  case "$mode" in
+    none) ;;
+    upd1) QD "CREATE INDEX IX_bal  ON $TBL (balance);" >/dev/null ;;
+    oth1) QD "CREATE INDEX IX_type ON $TBL (currency_type);" >/dev/null ;;
+    upd2) QD "CREATE INDEX IX_bal  ON $TBL (balance);" >/dev/null
+          QD "CREATE INDEX IX_bal2 ON $TBL (account_id, balance);" >/dev/null ;;
+  esac
+  QD "UPDATE STATISTICS $TBL WITH FULLSCAN;" >/dev/null
+  # 만들었다고 믿지 말고 되묻는다.
+  num "$(QD "SELECT COUNT(*) FROM sys.indexes
+              WHERE object_id = OBJECT_ID('$TBL') AND type_desc = 'NONCLUSTERED'")"
+}
+
+# 승격하지 않는 최대 행 수와 그때의 락 개수를 이분 탐색으로 찾는다.
+find_boundary(){
+  local lo=100 hi=10000 mid esc tot lo_tot=0
+  while [ $(( hi - lo )) -gt 1 ]; do
+    mid=$(( (lo + hi) / 2 ))
+    IFS=, read -r esc _ _ tot <<<"$(lock_shape "$mid")"
+    if [ "$esc" = 1 ]; then hi=$mid; else lo=$mid; lo_tot=$tot; fi
+  done
+  echo "$lo,$lo_tot"
+}
+
+{
+echo "# 실험 6. 인덱스가 늘면 임계값에 더 빨리 닿는다"
+echo "# $(num "$(Q "SELECT LEFT(@@VERSION, 46)")")  optimized locking: ${OPTLOCK}"
+echo
+echo "  갱신문은 넷 다 같습니다. UPDATE TOP (n) $TBL SET balance = balance - 1"
+echo "  다른 것은 인덱스뿐입니다."
+echo
+
+: > "$OUT/index-count.csv"
+echo "condition,nc_indexes,fixed_rows,key_locks,page_locks,table_locks,locks_per_row,boundary_rows,boundary_locks" >> "$OUT/index-count.csv"
+
+echo "## 6-1. 같은 ${FIXED_N}행을 갱신할 때 잡히는 락"
+echo
+printf "  %-30s %-8s %-10s %-10s %-10s %s\n" "조건" "NC개수" "KEY락" "PAGE락" "테이블락" "행당 락"
+# macOS 기본 bash 는 3.2 라 연관 배열(declare -A)이 없다. 파일로 넘긴다.
+: > "$OUT/.bound"
+for c in "none:1) 인덱스 없음" "upd1:2) 갱신 컬럼에 1개" "oth1:3) 갱신 안 하는 컬럼에 1개" "upd2:4) 갱신 컬럼에 2개"; do
+  mode=${c%%:*}; label=${c#*:}
+  nc=$(setup "$mode") || { echo "  ${label}: 준비 실패"; continue; }
+  IFS=, read -r esc key pg tot <<<"$(lock_shape "$FIXED_N")"
+  if [ "$esc" = 1 ]; then
+    printf "  %-30s %-8s %s\n" "$label" "$nc" "**${FIXED_N}행에서 이미 승격. 이 조건은 더 작은 수로 재야 합니다**"
+    per="-"
+  else
+    per=$(python3 -c "print(f'{${key}/${FIXED_N}:.2f}')")
+    printf "  %-30s %-8s %-10s %-10s %-10s %s\n" "$label" "$nc" "$key" "$pg" "$tot" "$per"
+  fi
+  IFS=, read -r b_rows b_locks <<<"$(find_boundary)"
+  echo "$mode $b_rows $b_locks" >> "$OUT/.bound"
+  echo "\"$label\",$nc,$FIXED_N,$key,$pg,$tot,$per,$b_rows,$b_locks" >> "$OUT/index-count.csv"
+done
+echo
+echo "  갱신하는 컬럼에 인덱스가 붙으면 그 인덱스의 행도 함께 바뀌므로 락이 더 붙습니다."
+echo "  갱신하지 않는 컬럼의 인덱스는 그 행이 안 바뀌므로 락도 안 붙습니다."
+echo
+
+echo "## 6-2. 락이 어느 인덱스에 붙는가"
+echo
+echo "  갱신 컬럼에 인덱스 하나를 붙이고 2,000행을 갱신했을 때, 락이 인덱스별로"
+echo "  어떻게 나뉘는지 봅니다."
+echo
+setup upd1 >/dev/null
+QD "SET NOCOUNT ON;
+BEGIN TRAN;
+UPDATE TOP (2000) $TBL SET balance = balance - 1;
+SELECT '    index_id ' + CAST(ISNULL(p.index_id,-1) AS varchar(4)) + '  '
+     + l.resource_type + ' ' + l.request_mode + '  ' + CAST(COUNT(*) AS varchar(10))
+  FROM sys.dm_tran_locks l
+  LEFT JOIN sys.partitions p ON p.hobt_id = l.resource_associated_entity_id
+                            AND p.object_id = OBJECT_ID('$TBL')
+ WHERE l.request_session_id = @@SPID AND l.resource_type IN ('KEY','PAGE')
+ GROUP BY p.index_id, l.resource_type, l.request_mode;
+ROLLBACK;" | grep -E 'index_id'
+echo
+echo "  index_id 1 이 클러스터드, 2 가 보조 인덱스입니다. 2,000행을 갱신했는데"
+echo "  보조 인덱스에는 **KEY 락이 4,000개** 잡혔습니다."
+echo
+echo "  갱신하는 컬럼이 보조 인덱스의 키이기 때문입니다. 값이 바뀌면 그 인덱스의"
+echo "  행은 제자리에서 못 바뀝니다. 옛 키 위치에서 지우고 새 키 위치에 넣어야 하고,"
+echo "  두 자리에 각각 락이 붙습니다. **행당 2개입니다.**"
+echo
+echo "  그래서 한 행이 잡는 락은 이렇게 됩니다."
+echo "    1 (클러스터드) + 2 x (갱신 컬럼을 키로 담은 보조 인덱스 수)"
+echo
+
+echo "## 6-3. 그래서 경계가 어디로 옮겨지는가"
+echo
+printf "  %-30s %-16s %-14s %s\n" "조건" "승격 안 하는 최대" "그때 락" "안전한 배치"
+for c in "none:1) 인덱스 없음" "upd1:2) 갱신 컬럼에 1개" "oth1:3) 갱신 안 하는 컬럼에 1개" "upd2:4) 갱신 컬럼에 2개"; do
+  mode=${c%%:*}; label=${c#*:}
+  r=$(awk -v m="$mode" '$1==m{print $2}' "$OUT/.bound"); r=${r:-0}
+  l=$(awk -v m="$mode" '$1==m{print $3}' "$OUT/.bound"); l=${l:-0}
+  # 실험 1의 처방(5,000)에 같은 여유 비율을 적용하면 얼마가 되는가
+  safe=$(python3 -c "print(int(${r} * 5000 / 6231)) if ${r} > 0 else print(0)")
+  printf "  %-30s %-16s %-14s %s\n" "$label" "${r}행" "${l}개" "${safe}행 이하"
+done
+echo
+echo "  \"안전한 배치\"는 실험 1의 처방(경계 6,231행에 5,000행을 잡던 여유 비율)을"
+echo "  각 조건의 경계에 그대로 적용한 값입니다."
+echo
+
+# 라벨을 손으로 쓰지 않는다. 결과에서 읽어 쓴다(CONVENTIONS §11).
+B_NONE=$(awk '$1=="none"{print $2}' "$OUT/.bound"); L_NONE=$(awk '$1=="none"{print $3}' "$OUT/.bound")
+B_UPD1=$(awk '$1=="upd1"{print $2}' "$OUT/.bound"); L_UPD1=$(awk '$1=="upd1"{print $3}' "$OUT/.bound")
+B_OTH1=$(awk '$1=="oth1"{print $2}' "$OUT/.bound")
+B_UPD2=$(awk '$1=="upd2"{print $2}' "$OUT/.bound"); L_UPD2=$(awk '$1=="upd2"{print $3}' "$OUT/.bound")
+rm -f "$OUT/.bound"
+echo "=================================================================="
+echo "## 정리"
+echo "=================================================================="
+echo
+echo "  **실험 1의 \"배치는 5,000행 미만\"에는 조건이 빠져 있었습니다.**"
+echo "  그 숫자는 클러스터드 PK 하나뿐인 표에서만 맞습니다."
+echo
+echo "  확인한 것은 둘입니다."
+echo
+echo "    1) 갱신하는 컬럼을 키로 담은 보조 인덱스는 행당 KEY 락을 2개 더 잡는다."
+echo "       인덱스 행이 옛 자리에서 지워지고 새 자리에 들어가기 때문이다."
+echo "    2) 갱신하지 않는 컬럼의 인덱스는 락을 하나도 더 잡지 않는다."
+echo "       그 인덱스의 행이 안 바뀌므로 건드릴 일이 없다."
+echo
+echo "  그 결과 승격하지 않는 최대 행 수가 ${B_NONE}행에서 ${B_UPD1}행으로, 인덱스를 하나"
+echo "  더 붙이면 ${B_UPD2}행으로 내려갑니다. 절반 아래입니다."
+echo "  갱신하지 않는 컬럼에 붙인 인덱스는 ${B_OTH1}행으로 기준과 같습니다."
+echo
+echo "  **다만 경계에서의 락 개수는 조건마다 달랐습니다.** ${L_NONE} / ${L_UPD1} / ${L_UPD2} 입니다."
+echo "  실험 1에서 찾은 \"테이블 락 6,250개\"가 인덱스가 여럿일 때도 그대로 적용되는"
+echo "  것은 아니라는 뜻입니다. 셋 다 1,250 의 배수 바로 아래이기는 한데, 왜 6,250 이"
+echo "  아니라 8,750 이나 12,500 에서 걸리는지는 이 실험으로 못 밝혔습니다."
+echo "  **그래서 정확한 공식을 세우지 않고 측정값만 씁니다.**"
+echo
+echo "  운영에서 쓸 처방은 이것입니다."
+echo
+echo "    갱신 컬럼에 보조 인덱스가 하나라도 붙어 있으면 배치를 2,000행 이하로 잡는다."
+echo "    붙어 있지 않으면 5,000행 미만이면 된다."
+echo
+echo "  2,000 은 인덱스 두 개 조건의 경계(${B_UPD2}행)에도 여유를 두는 값입니다."
+echo "  인덱스가 셋 이상이면 더 내려가겠지만 재지 않았습니다."
+echo
+echo "  보정문이 건드리는 컬럼을 먼저 확인하고 그 컬럼이 키로 들어간 인덱스를 세는"
+echo "  것이 순서입니다. 다음 쿼리가 그 목록을 냅니다."
+echo
+cat <<'SQL'
+    SELECT i.name, i.type_desc
+      FROM sys.indexes i
+      JOIN sys.index_columns ic ON ic.object_id = i.object_id AND ic.index_id = i.index_id
+      JOIN sys.columns c ON c.object_id = i.object_id AND c.column_id = ic.column_id
+     WHERE i.object_id = OBJECT_ID('<표>')
+       AND c.name IN ('<보정문이 갱신하는 컬럼들>')
+     GROUP BY i.name, i.type_desc;
+SQL
+} 2>&1 | tee "$OUT/exp6-index-count.txt"

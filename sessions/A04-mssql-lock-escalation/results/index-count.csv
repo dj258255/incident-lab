@@ -1,0 +1,5 @@
+condition,nc_indexes,fixed_rows,key_locks,page_locks,table_locks,locks_per_row,boundary_rows,boundary_locks
+"1) 인덱스 없음",0,3000,3000,9,3011,1.00,6230,6249
+"2) 갱신 컬럼에 1개",1,3000,0,0,2,-,2907,8747
+"3) 갱신 안 하는 컬럼에 1개",1,3000,3000,9,3011,1.00,6230,6249
+"4) 갱신 컬럼에 2개",2,3000,0,0,2,-,2491,12495
