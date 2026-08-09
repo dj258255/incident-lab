@@ -1,0 +1,5 @@
+method,found,hit,miss,false_positive
+A 참조 대사,0,0,40,0
+C 개봉 대사,0,0,40,0
+B 통계 이탈,40,40,0,0
+D 참조 결측,40,40,0,0
