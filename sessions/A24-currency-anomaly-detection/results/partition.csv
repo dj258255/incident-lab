@@ -1,0 +1,7 @@
+case,partitions_accessed,logical_reads
+"A created_at 범위 조건","확인 못 함",657
+"B created_at 을 CONVERT 로 감쌈","확인 못 함",7499
+"C 파티션 키 없이 account_id 로만","확인 못 함",112868
+"1) 파티션X + ledger_id 클러스터드",-,114353
+"2) 파티션X + created_at 클러스터드",-,638
+"3) 파티션O + created_at 클러스터드",-,657
