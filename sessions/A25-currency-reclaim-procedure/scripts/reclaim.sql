@@ -16,11 +16,18 @@ CREATE OR ALTER PROCEDURE usp_ReclaimCurrency
     @mode     VARCHAR(10)  = 'NEGATIVE',   -- NEGATIVE | DEBT
     @chunk    INT          = 4000,
     @fail_at  INT          = NULL,          -- 실패 주입: 이 회차에서 던진다
+    @max_retry INT         = 5,             -- 데드락 재시도 상한
+    @deadlocks INT         = NULL OUTPUT,   -- 몇 번 물러났는지
     @batch_id INT          = NULL OUTPUT    -- 주면 그 배치를 이어서 돈다
 AS
 BEGIN
     SET NOCOUNT ON;
     SET XACT_ABORT ON;   -- 오류가 나면 트랜잭션을 확실히 되돌린다
+
+    -- 보정 배치가 데드락 희생자가 되게 한다. 우선순위를 안 주면 엔진이 고르는데,
+    -- A04 실험 11 에서 9회 모두 게임 트래픽 쪽이 죽었다. 엔진의 기준은 되돌리는
+    -- 비용이지 서비스 영향이 아니다. 보정은 죽어도 재시도하면 그만이다.
+    SET DEADLOCK_PRIORITY LOW;
 
     IF @mode NOT IN ('NEGATIVE', 'DEBT')
         THROW 50010, N'@mode 는 NEGATIVE 또는 DEBT 여야 합니다', 1;
@@ -35,6 +42,9 @@ BEGIN
 
     DECLARE @lo INT = (SELECT last_done FROM correction_batch WHERE batch_id = @batch_id);
     DECLARE @round INT = 0;
+
+    DECLARE @try INT = 0, @done_batch INT = 0;
+    SET @deadlocks = 0;
 
     DECLARE @c   TABLE (account_id INT PRIMARY KEY, amount BIGINT);
     DECLARE @aud TABLE (account_id INT PRIMARY KEY, before_bal BIGINT, after_bal BIGINT,
@@ -59,6 +69,14 @@ BEGIN
 
         DELETE FROM @aud;
 
+        -- 배치 하나를 데드락 재시도로 감싼다. 재시도는 **트랜잭션 경계 밖**에 둔다.
+        -- 안에 두면 되돌린 것을 못 되돌린다(A04 실험 11).
+        SET @try = 0;
+        SET @done_batch = 0;
+        WHILE @try < @max_retry AND @done_batch = 0
+        BEGIN
+        SET @try = @try + 1;
+        BEGIN TRY
         BEGIN TRAN;
 
             IF @mode = 'NEGATIVE'
@@ -94,6 +112,30 @@ BEGIN
             UPDATE correction_batch SET last_done = @lo WHERE batch_id = @batch_id;
 
         COMMIT;
+        SET @done_batch = 1;
+        END TRY
+        BEGIN CATCH
+            IF @@TRANCOUNT > 0 ROLLBACK;
+            -- 1205 만 재시도한다. 나머지를 같이 삼키면 사고를 재시도로 덮는다.
+            IF ERROR_NUMBER() <> 1205 THROW;
+            SET @deadlocks = @deadlocks + 1;
+            -- 물러나는 간격에 흔들림을 준다. 같은 간격으로 물러나면 같은 순서로
+            -- 다시 만난다. RAND 는 배치 안에서 씨앗을 공유해 못 쓴다.
+            DECLARE @ms INT = 200 + ABS(CHECKSUM(NEWID())) % 1500;
+            DECLARE @d  VARCHAR(12) = '00:00:'
+                 + RIGHT('0'  + CAST(@ms / 1000 AS varchar(2)), 2) + '.'
+                 + RIGHT('00' + CAST(@ms % 1000 AS varchar(3)), 3);
+            WAITFOR DELAY @d;
+        END CATCH
+        END
+
+        -- 상한에 닿으면 멈추고 사람을 부른다. 조용히 넘어가면 그 배치가 빠진 채
+        -- 검산만 어긋난다.
+        IF @done_batch = 0
+        BEGIN
+            UPDATE correction_batch SET status = 'DEADLOCK' WHERE batch_id = @batch_id;
+            THROW 50003, N'데드락 재시도 상한 도달. 사람이 본다', 1;
+        END
     END
 
     -- 검산. 회수한 것과 회수해야 할 것이 맞는지 본다. 안 맞으면 배치를 실패로 남긴다.

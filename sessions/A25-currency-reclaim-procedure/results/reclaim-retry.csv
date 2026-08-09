@@ -1,0 +1,4 @@
+case,max_retry,completed,deadlocks,reclaimed,expected,status,msg
+"A 경쟁 없음",5,"완료",0,5692800,5692800,"DONE",""
+"B 경쟁 오래, 상한 20",20,"완료",7,5692800,5692800,"DONE",""
+"C 경쟁 오래, 상한 1",1,"**중단** Msg 50003",-,0,5692800,"DEADLOCK","Msg 50003"
