@@ -1,0 +1,4 @@
+case,blocker,escalation_events,escalated_lock_count,final_shape
+"A 옆 세션 없음","",1,6249,"테이블 X 락 하나로 접힘"
+"B 옆에서 한 행 갱신","UPDATE expedition_currency SET balance = balance WHERE account_id = 200000;",0,-,"행 락 20000개 그대로 유지"
+"C 옆에서 한 행 조회","SELECT balance FROM expedition_currency WITH (REPEATABLEREAD) WHERE account_id = 200000;",0,-,"행 락 20000개 그대로 유지"

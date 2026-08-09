@@ -12,15 +12,7 @@ $ sysctl -n hw.ncpu hw.memsize
 34359738368
 ```
 
-## 1. 환경 기동
-
-```console
-$ docker compose up -d
-[+] Running 1/1
- ✔ Container a25-mssql  Started
-```
-
-## 2. 실험 1. 스키마와 제약
+## 2. exp1-schema
 
 ```console
 $ ./scripts/exp1-schema.sh
@@ -59,7 +51,7 @@ $ ./scripts/exp1-schema.sh
   준비 완료. 회수 총액 1839974000, 배치 크기 4000.
 ```
 
-## 3. 실험 2. 회수 실행과 두 설계
+## 3. exp2-reclaim
 
 ```console
 $ ./scripts/exp2-reclaim.sh
@@ -115,7 +107,7 @@ $ ./scripts/exp2-reclaim.sh
   일이지만 무엇이 남았는지 셀 수 있습니다.
 ```
 
-## 4. 실험 3. 실패와 재시작, 동시성
+## 4. exp3-restart
 
 ```console
 $ ./scripts/exp3-restart.sh
@@ -179,7 +171,7 @@ $ ./scripts/exp3-restart.sh
   읽고 계산하고 쓰는 것을 나누면 그 사이의 사용이 조용히 사라집니다.
 ```
 
-## 5. 실험 4. 잘못된 보정 되돌리기
+## 5. exp4-undo
 
 ```console
 $ ./scripts/exp4-undo.sh
@@ -229,7 +221,7 @@ $ ./scripts/exp4-undo.sh
   있어야 합니다. 둘 중 하나라도 없으면 표시를 남겨도 쓸 수 없습니다.
 ```
 
-## 6. 실험 5. 조사 DB 에서 운영 DB 로 넘기기
+## 6. exp5-handoff
 
 ```console
 $ ./scripts/exp5-handoff.sh
@@ -273,7 +265,7 @@ $ ./scripts/exp5-handoff.sh
   옮겨진 것은 밖에서 볼 수 없습니다.**
 ```
 
-## 7. 실험 6. 회수에 승인을 붙인다
+## 7. exp6-approval
 
 ```console
 $ ./scripts/exp6-approval.sh
@@ -323,234 +315,71 @@ $ ./scripts/exp6-approval.sh
   건너올 때, 한 번은 시간을 건너올 때 씁니다.
 ```
 
-## 8. 프로시저
+## 8. exp7-restore-undo
 
-### scripts/reclaim.sql
+```console
+$ ./scripts/exp7-restore-undo.sh
+# 실험 7. 운영 DB 를 안 되돌리고 회수만 취소한다
 
-```sql
--- 재화 회수 프로시저.
---
--- 설계에서 정한 것 넷.
---   1) 배치마다 커밋한다. 전체를 한 트랜잭션으로 묶으면 락이 누적돼 승격하고,
---      그러면 보정 대상이 아닌 이용자의 조회까지 멈춘다(A04).
---   2) 배치 크기는 5,000 미만이다. 실측 발동 지점은 테이블 락 6,250개였다(A04).
---   3) 진행 지점을 배치와 같은 트랜잭션에서 기록한다. 중간에 죽어도 이어서 돈다.
---   4) 계정마다 전후 값을 남긴다. 이의 제기가 오면 이 기록이 근거가 된다.
---
--- 잔액이 모자란 계정의 처리는 두 가지다.
---   NEGATIVE  잔액을 음수로 내린다. 이후 획득분이 자연히 상계된다.
---   DEBT      잔액은 0 에서 멈추고 못 받은 만큼을 debt 에 적는다.
--- 어느 쪽이든 회수 총액은 같아야 한다. applied + debt = target.
-CREATE OR ALTER PROCEDURE usp_ReclaimCurrency
-    @reason   NVARCHAR(200),
-    @mode     VARCHAR(10)  = 'NEGATIVE',   -- NEGATIVE | DEBT
-    @chunk    INT          = 4000,
-    @fail_at  INT          = NULL,          -- 실패 주입: 이 회차에서 던진다
-    @batch_id INT          = NULL OUTPUT    -- 주면 그 배치를 이어서 돈다
-AS
-BEGIN
-    SET NOCOUNT ON;
-    SET XACT_ABORT ON;   -- 오류가 나면 트랜잭션을 확실히 되돌린다
+## 7-1. 보정 전 상태
+  보정 전 잔액 합계       67999983000
+  전체 백업과 표시 완료
 
-    IF @mode NOT IN ('NEGATIVE', 'DEBT')
-        THROW 50010, N'@mode 는 NEGATIVE 또는 DEBT 여야 합니다', 1;
-    IF @chunk >= 5000
-        THROW 50011, N'@chunk 는 5000 미만이어야 합니다. 락 승격을 피하기 위한 상한입니다', 1;
+## 7-2. 잘못된 목록으로 회수하고, 그 뒤 정상 활동이 이어진다
+  잘못 포함된 정상 계정 600개
+  잘못된 회수 뒤 잔액 합계 67994290200
+  그 뒤 정상 활동으로 늘어난 몫 300000000
 
-    IF @batch_id IS NULL
-    BEGIN
-        INSERT INTO correction_batch (reason) VALUES (@reason);
-        SET @batch_id = CAST(SCOPE_IDENTITY() AS INT);
-    END
+## 7-3. 복원본을 옆에 세운다
+  복원본 상태               ONLINE
+  복원본 잔액 합계        67999983000 (보정 전과 일치)
 
-    DECLARE @lo INT = (SELECT last_done FROM correction_batch WHERE batch_id = @batch_id);
-    DECLARE @round INT = 0;
+## 7-4. 복원본에서 원래 값을 읽어 되돌린다
 
-    DECLARE @c   TABLE (account_id INT PRIMARY KEY, amount BIGINT);
-    DECLARE @aud TABLE (account_id INT PRIMARY KEY, before_bal BIGINT, after_bal BIGINT,
-                        before_debt BIGINT, after_debt BIGINT);
+  운영 DB 를 통째로 되돌리지 않습니다. 잘못 회수한 계정만 골라, 복원본의
+  잔액과 지금 잔액의 차이를 되돌려 줍니다. 그 뒤의 정상 활동은 그대로 둡니다.
 
-    WHILE 1 = 1
-    BEGIN
-        DELETE FROM @c;
-        INSERT INTO @c (account_id, amount)
-        SELECT TOP (@chunk) account_id, extra_amount
-          FROM reclaim_target
-         WHERE account_id > @lo
-         ORDER BY account_id;
+  되돌린 뒤 잔액 합계    68299623000
+  정상 회수분 (그대로 둔다) 360000
+  기대값 (보정 전 - 정상 회수 + 정상 활동) 68299623000
 
-        IF NOT EXISTS (SELECT 1 FROM @c) BREAK;
+  **잘못된 회수만 취소되고, 정상 회수분과 그 뒤 활동은 살아 있습니다.**
 
-        SET @round += 1;
-        -- 실패 주입은 트랜잭션 밖에서 던진다. 앞 배치는 이미 커밋돼 있어야
-        -- "이어서 돌 수 있는가"를 볼 수 있다.
-        IF @fail_at IS NOT NULL AND @round = @fail_at
-            THROW 50001, N'주입한 실패', 1;
+==================================================================
+## 정리
+==================================================================
 
-        DELETE FROM @aud;
+  실험 4의 "못 한 것"에 적은 서술이 틀렸습니다. 운영 DB 를 통째로 되돌리는 것은
+  **하지 못한 것이 아니라 하면 안 되는 것**입니다. 보정 이후의 정상 활동이 전부
+  사라집니다. 이 실험에서 그 몫이 300000000 였습니다.
 
-        BEGIN TRAN;
+  실제 절차는 복원본을 옆에 세우고 거기서 원래 값을 읽어 **되돌리는 보정을 한 번
+  더 도는 것**입니다. 되돌리기도 보정이므로 같은 규칙을 지킵니다. 배치를 쪼개고,
+  감사 로그를 남기고, 끝나면 검산합니다.
 
-            IF @mode = 'NEGATIVE'
-                UPDATE a
-                   SET a.balance = a.balance - c.amount
-                OUTPUT inserted.account_id, deleted.balance, inserted.balance,
-                       deleted.debt, inserted.debt
-                  INTO @aud (account_id, before_bal, after_bal, before_debt, after_debt)
-                  FROM account_currency a
-                  JOIN @c c ON c.account_id = a.account_id;
-            ELSE
-                UPDATE a
-                   SET a.balance = CASE WHEN a.balance >= c.amount THEN a.balance - c.amount ELSE 0 END,
-                       a.debt    = a.debt + CASE WHEN a.balance >= c.amount THEN 0 ELSE c.amount - a.balance END
-                OUTPUT inserted.account_id, deleted.balance, inserted.balance,
-                       deleted.debt, inserted.debt
-                  INTO @aud (account_id, before_bal, after_bal, before_debt, after_debt)
-                  FROM account_currency a
-                  JOIN @c c ON c.account_id = a.account_id;
+  표시(WITH MARK)의 값은 여기서도 같습니다. 복원본을 어느 지점까지 되돌릴지
+  정확히 가리키기 위해서입니다. 운영 DB 는 그대로 두고 복원본만 그 지점으로 갑니다.
 
-            INSERT INTO correction_detail
-                (batch_id, account_id, target_amount, applied_amount, debt_amount,
-                 balance_before, balance_after)
-            SELECT @batch_id, c.account_id, c.amount,
-                   u.before_bal - u.after_bal,          -- 잔액에서 실제로 뺀 금액
-                   u.after_debt - u.before_debt,        -- 빚으로 남긴 금액
-                   u.before_bal, u.after_bal
-              FROM @c c JOIN @aud u ON u.account_id = c.account_id;
-
-            SET @lo = (SELECT MAX(account_id) FROM @c);
-            -- 진행 지점을 같은 트랜잭션에서 옮긴다. 밖에서 옮기면 커밋과 기록 사이에
-            -- 죽었을 때 같은 배치를 두 번 돌게 된다.
-            UPDATE correction_batch SET last_done = @lo WHERE batch_id = @batch_id;
-
-        COMMIT;
-    END
-
-    -- 검산. 회수한 것과 회수해야 할 것이 맞는지 본다. 안 맞으면 배치를 실패로 남긴다.
-    DECLARE @target BIGINT = (SELECT SUM(extra_amount) FROM reclaim_target);
-    DECLARE @done   BIGINT = (SELECT ISNULL(SUM(applied_amount + debt_amount), 0)
-                                FROM correction_detail WHERE batch_id = @batch_id);
-
-    IF @target <> @done
-    BEGIN
-        UPDATE correction_batch SET status = 'MISMATCH' WHERE batch_id = @batch_id;
-        THROW 50002, N'검산 불일치: 회수 합계가 대상 합계와 다릅니다', 1;
-    END
-
-    UPDATE correction_batch SET status = 'DONE' WHERE batch_id = @batch_id;
-    SELECT @batch_id AS batch_id, @round AS rounds, @done AS reclaimed;
-END
+  검산식을 한 번 틀렸습니다. 처음에 기대값을 (보정 전 + 정상 활동)으로 잡았는데
+  360000 이 어긋났습니다. 그것은 **제대로 회수한 몫**이고 되돌리면 안 되는
+  것이었습니다. 절차가 틀린 것이 아니라 검산식이 틀렸습니다. 되돌리기에서는
+  "무엇을 되돌리고 무엇을 두는가"를 먼저 정해야 검산도 세울 수 있습니다.
 ```
 
-### scripts/approval.sql
+## 결과 데이터
 
-```sql
--- 회수 승인 절차.
---
--- usp_ReclaimCurrency 는 실행하면 바로 돈다. 회수는 이용자 자산을 줄이는 작업인데
--- 한 사람이 마음먹으면 그대로 나간다. 승인 대기를 붙인다.
---
--- 승인만 붙이면 뚫리는 자리가 하나 있다. 승인은 "이 목록을 회수해도 된다"는 뜻인데,
--- 승인 뒤에 목록을 바꿔치기하면 승인은 그대로 유효하다. 그래서 **승인 시점의 대상
--- 지문을 저장해 두고 실행할 때 다시 대조한다.** 실험 5에서 이관 검증에 쓴 것과
--- 같은 지문이다.
-CREATE TABLE correction_request (
-    request_id   INT IDENTITY(1,1) PRIMARY KEY,
-    reason       NVARCHAR(200) NOT NULL,
-    target_rows  INT           NOT NULL,   -- 요청 시점 대상 건수
-    target_sum   BIGINT        NOT NULL,   -- 요청 시점 대상 합계
-    target_chk   BIGINT        NOT NULL,   -- 요청 시점 대상 체크섬
-    requested_by SYSNAME       NOT NULL,
-    requested_at DATETIME2(3)  NOT NULL DEFAULT SYSDATETIME(),
-    approved_by  SYSNAME       NULL,
-    approved_at  DATETIME2(3)  NULL,
-    status       VARCHAR(20)   NOT NULL DEFAULT 'PENDING',  -- PENDING|APPROVED|EXECUTED
-    batch_id     INT           NULL
-);
-GO
+### results/approval.csv
 
--- 대상 지문. 건수·합계·체크섬 셋을 함께 본다.
-CREATE OR ALTER FUNCTION dbo.fn_TargetFingerprint()
-RETURNS TABLE
-AS RETURN
-    SELECT COUNT(*) AS rows_,
-           ISNULL(SUM(extra_amount), 0) AS sum_,
-           ISNULL(CHECKSUM_AGG(BINARY_CHECKSUM(account_id, extra_rows, extra_amount)), 0) AS chk_
-      FROM reclaim_target;
-GO
-
--- 요청자(maker). 지금 대상 목록의 지문을 찍어 대기로 남긴다.
-CREATE OR ALTER PROCEDURE usp_RequestReclaim
-    @reason     NVARCHAR(200),
-    @request_id INT = NULL OUTPUT
-WITH EXECUTE AS OWNER
-AS
-BEGIN
-    SET NOCOUNT ON;
-    INSERT INTO correction_request (reason, target_rows, target_sum, target_chk, requested_by)
-    SELECT @reason, rows_, sum_, chk_, ORIGINAL_LOGIN()
-      FROM dbo.fn_TargetFingerprint();
-    SET @request_id = CAST(SCOPE_IDENTITY() AS INT);
-    SELECT @request_id AS request_id;
-END
-GO
-
--- 승인자(checker). 요청자와 같은 사람이면 거부한다.
-CREATE OR ALTER PROCEDURE usp_ApproveReclaim
-    @request_id INT
-WITH EXECUTE AS OWNER
-AS
-BEGIN
-    SET NOCOUNT ON;
-    DECLARE @status VARCHAR(20), @requester SYSNAME;
-    SELECT @status = status, @requester = requested_by
-      FROM correction_request WHERE request_id = @request_id;
-
-    IF @status IS NULL       THROW 50020, N'없는 요청입니다', 1;
-    IF @status <> 'PENDING'  THROW 50021, N'대기 상태가 아닙니다', 1;
-    IF @requester = ORIGINAL_LOGIN()
-        THROW 50022, N'요청자가 자기 요청을 승인할 수 없습니다', 1;
-
-    UPDATE correction_request
-       SET status = 'APPROVED', approved_by = ORIGINAL_LOGIN(), approved_at = SYSDATETIME()
-     WHERE request_id = @request_id;
-END
-GO
-
--- 승인을 확인한 뒤에만 회수를 돌린다.
-CREATE OR ALTER PROCEDURE usp_ReclaimCurrencyGated
-    @request_id INT,
-    @mode       VARCHAR(10) = 'DEBT',
-    @chunk      INT         = 4000
-WITH EXECUTE AS OWNER
-AS
-BEGIN
-    SET NOCOUNT ON;
-    DECLARE @status VARCHAR(20), @reason NVARCHAR(200),
-            @rows INT, @sum BIGINT, @chk BIGINT;
-    SELECT @status = status, @reason = reason,
-           @rows = target_rows, @sum = target_sum, @chk = target_chk
-      FROM correction_request WHERE request_id = @request_id;
-
-    IF @status IS NULL        THROW 50023, N'없는 요청입니다', 1;
-    IF @status = 'EXECUTED'   THROW 50024, N'이미 실행된 요청입니다', 1;
-    IF @status <> 'APPROVED'  THROW 50025, N'승인되지 않은 요청입니다', 1;
-
-    -- 승인 뒤에 목록이 바뀌지 않았는지 본다. 승인은 그 목록에 대한 승인이다.
-    DECLARE @now_rows INT, @now_sum BIGINT, @now_chk BIGINT;
-    SELECT @now_rows = rows_, @now_sum = sum_, @now_chk = chk_ FROM dbo.fn_TargetFingerprint();
-    IF @now_rows <> @rows OR @now_sum <> @sum OR @now_chk <> @chk
-        THROW 50026, N'승인 뒤에 회수 대상이 바뀌었습니다', 1;
-
-    DECLARE @b INT;
-    EXEC usp_ReclaimCurrency @reason = @reason, @mode = @mode, @chunk = @chunk, @batch_id = @b OUTPUT;
-
-    UPDATE correction_request SET status = 'EXECUTED', batch_id = @b WHERE request_id = @request_id;
-END
-GO
 ```
-
-## 9. 결과 데이터
+case,result,errno,reclaimed
+"A 요청→승인→실행","통과",0,360000
+"B 승인 없이 실행","**거부 — 승인되지 않은 요청**",50025,0
+"C 요청자가 자기 승인","**거부 — 자기 요청은 자기가 승인 못 함**",50022,0
+"D 승인 뒤 대상 추가","**거부 — 승인 뒤 대상이 바뀜**",50026,0
+"maker 가 승인 시도","",229,
+"checker 가 요청 시도","",229,
+"maker 가 직접 실행","",229,
+```
 
 ### results/dataset.csv
 
@@ -561,6 +390,15 @@ targets,60000
 short_targets,20000
 reclaim_total,1839974000
 chunk,4000
+```
+
+### results/handoff.csv
+
+```
+case,src_rows,src_sum,src_checksum,dst_rows,dst_sum,dst_checksum,verify,reclaim_result
+"A 정상 이관",60,360000,15844864,60,360000,15844864,통과,"정상 회수 360000"
+"B 파일이 절반에서 잘림",60,360000,15844864,30,181800,3143376,**막음**,"**181800 회수(원본 360000)**"
+"C 없는 계정이 섞임",60,360000,15844864,61,410000,-183371163,**막음**,"검산이 잡음"
 ```
 
 ### results/reclaim.csv
@@ -581,6 +419,18 @@ after_resume,60000,0,0,1839974000,DONE
 concurrency,60000,85000,73000,68000,0,0,17000,0
 ```
 
+### results/restore-undo.csv
+
+```
+metric,value
+before,67999983000
+after_wrong,67994290200
+play_delta,300000000
+snapshot,67999983000
+final,68299623000
+expected,68299623000
+```
+
 ### results/undo.csv
 
 ```
@@ -590,27 +440,5 @@ after_wrong_reclaim,66394009600
 restored_stopatmark,67999983000
 wrong_accounts,600
 mark_time,2026-08-07 05:22:51.877
-```
-
-### results/handoff.csv
-
-```
-case,src_rows,src_sum,src_checksum,dst_rows,dst_sum,dst_checksum,verify,reclaim_result
-"A 정상 이관",60,360000,15844864,60,360000,15844864,통과,"정상 회수 360000"
-"B 파일이 절반에서 잘림",60,360000,15844864,30,181800,3143376,**막음**,"**181800 회수(원본 360000)**"
-"C 없는 계정이 섞임",60,360000,15844864,61,410000,-183371163,**막음**,"검산이 잡음"
-```
-
-### results/approval.csv
-
-```
-case,result,errno,reclaimed
-"A 요청→승인→실행","통과",0,360000
-"B 승인 없이 실행","**거부 — 승인되지 않은 요청**",50025,0
-"C 요청자가 자기 승인","**거부 — 자기 요청은 자기가 승인 못 함**",50022,0
-"D 승인 뒤 대상 추가","**거부 — 승인 뒤 대상이 바뀜**",50026,0
-"maker 가 승인 시도","",229,
-"checker 가 요청 시도","",229,
-"maker 가 직접 실행","",229,
 ```
 

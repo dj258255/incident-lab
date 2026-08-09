@@ -21,6 +21,19 @@ QF(){ # $1=로컬 SQL 내용, $2=옵션
 
 num(){ echo "$1" | head -1 | tr -d ' \r'; }
 
+# 오류가 있으면 멈춘다. >/dev/null 로 던지면 sqlcmd 의 Msg 가 버려져서, SQL 이 한 줄도
+# 안 들어갔는데 스크립트가 다음 단계로 넘어간다. A24 에서 실제로 그렇게 데이터셋이
+# 조용히 빈 채로 끝까지 돌았다. 쓰기 질의는 이 함수로 던진다.
+QDX(){
+  local out; out=$(QD "$1")
+  if echo "$out" | grep -qE '^(Msg|메시지) [0-9]+'; then
+    echo "중단: SQL 오류" >&2
+    echo "$out" | grep -E '^(Msg|메시지)' | head -3 >&2
+    return 2
+  fi
+  return 0
+}
+
 wait_ready(){
   local i
   for i in $(seq 1 150); do

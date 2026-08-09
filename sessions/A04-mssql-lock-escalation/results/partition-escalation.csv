@@ -1,0 +1,3 @@
+mode,escalation_events,object_locks,hobt_locks,key_locks,verdict
+TABLE,1,1,0,0,"테이블 단위 승격"
+AUTO,1,1,1,0,"파티션(HoBT) 단위 승격"

@@ -12,15 +12,7 @@ $ sysctl -n hw.ncpu hw.memsize
 34359738368
 ```
 
-## 1. 환경 기동
-
-```console
-$ docker compose up -d
-[+] Running 1/1
- ✔ Container a04-mssql  Started
-```
-
-## 2. 실험 1. 락 에스컬레이션 임계값
+## 2. exp1-threshold
 
 ```console
 $ ./scripts/exp1-threshold.sh
@@ -106,7 +98,7 @@ $ ./scripts/exp1-threshold.sh
   기대지 않는 편이 낫습니다. 5,000 미만이면 어느 쪽이든 승격하지 않습니다.
 ```
 
-## 3. 실험 2. 승격이 무관한 행의 조회를 막는가
+## 3. exp2-blocking
 
 ```console
 $ ./scripts/exp2-blocking.sh
@@ -140,7 +132,7 @@ $ ./scripts/exp2-blocking.sh
   같은 테이블에 쓰기를 하려는 트랜잭션은 RCSI 와 무관하게 그대로 막힙니다.
 ```
 
-## 4. 실험 3. 보정을 서비스를 세우지 않고 끝내기
+## 4. exp3-mitigation
 
 ```console
 $ ./scripts/exp3-mitigation.sh
@@ -186,7 +178,7 @@ $ ./scripts/exp3-mitigation.sh
   상황의 임시 수단이고, 켜 두고 잊으면 다음 사고의 재료가 됩니다.
 ```
 
-## 5. 실험 4. 규모별 락 단위
+## 5. exp4-granularity
 
 ```console
 $ ./scripts/exp4-granularity.sh
@@ -223,7 +215,7 @@ $ ./scripts/exp4-granularity.sh
   5,000행 배치는 어느 쪽이든 행 락 5,000개 이하이고 승격 검사에 안 걸립니다.
 ```
 
-## 6. 실험 5. 통계가 없으면 같은 행 수에서 승격한다
+## 6. exp5-two-paths
 
 ```console
 $ ./scripts/exp5-two-paths.sh
@@ -271,7 +263,7 @@ $ ./scripts/exp5-two-paths.sh
   dm_tran_locks 만 보면 그 구분이 안 보이므로 확장 이벤트를 함께 봐야 합니다.
 ```
 
-## 7. 실험 6. 인덱스가 늘면 임계값에 더 빨리 닿는다
+## 7. exp6-index-count
 
 ```console
 $ ./scripts/exp6-index-count.sh
@@ -367,7 +359,132 @@ $ ./scripts/exp6-index-count.sh
      GROUP BY i.name, i.type_desc;
 ```
 
-## 8. 결과 데이터
+## 8. exp7-escalation-retry
+
+```console
+$ ./scripts/exp7-escalation-retry.sh
+# 실험 7. 승격이 실패하면
+# optimized locking: ABSENT
+
+  20000행을 한 트랜잭션에서 갱신합니다. 혼자면 승격합니다(실험 1).
+  옆 세션이 같은 표에 락을 들고 있으면 테이블 X 락을 못 잡습니다.
+
+  조건                       승격 이벤트 승격 시점 락수 갱신 뒤 락 모양
+  A 옆 세션 없음          1건           6249               테이블 X 락 하나로 접힘
+  B 옆에서 한 행 갱신   0건           -                  행 락 20000개 그대로 유지
+  C 옆에서 한 행 조회   0건           -                  행 락 20000개 그대로 유지
+
+==================================================================
+## 정리
+==================================================================
+
+  A 는 승격합니다. 실험 1에서 본 그대로입니다.
+
+  B 와 C 는 옆 세션이 같은 표에 락을 들고 있어 테이블 X 락을 못 잡습니다.
+  **승격이 실패하고 행 락을 그대로 들고 갑니다.** 문서가 말한 재시도 간격은
+  이 상태에서 락을 1,250개 더 잡을 때마다 다시 시도한다는 뜻입니다.
+
+  운영에서 이것이 좋은 소식은 아닙니다. 승격이 안 됐다는 것은 테이블이
+  안 잠겼다는 뜻이지만, 그 대가로 **행 락 수만 개를 끝까지 들고 있습니다.**
+  락 매니저 메모리를 그만큼 쓰고, 그 사이 다른 세션은 그 행들을 못 만집니다.
+
+  그리고 이 상태는 **조건이 사라지면 언제든 승격으로 바뀝니다.** 옆 세션이
+  커밋하는 순간 다음 재시도가 성공합니다. 배치를 안 쪼갠 채 "어제는 승격 안
+  났으니 괜찮다"고 넘기면, 옆 세션이 없는 날 그대로 테이블이 잠깁니다.
+```
+
+## 9. exp8-partition-escalation
+
+```console
+$ ./scripts/exp8-partition-escalation.sh
+# 실험 8. 파티션 테이블에서 AUTO 와 TABLE
+# optimized locking: ABSENT
+
+  계정 200000개를 4개 파티션으로 나눕니다. 갱신은 한 파티션 안의 20000행입니다.
+  승격이 나는 크기이고, 파티션 하나만 건드리는 크기입니다.
+
+  파티션 4개 생성, 200000행 적재
+
+  설정         승격 이벤트 OBJECT 락   HOBT 락     KEY 락      판정
+  TABLE          1건         1            0            0            테이블 단위 승격
+  AUTO           1건         1            1            0            파티션(HoBT) 단위 승격
+
+==================================================================
+## 정리
+==================================================================
+
+  파티션 테이블에서 AUTO 는 파티션 단위로 승격합니다. 잡히는 것이 OBJECT 락이
+  아니라 HoBT 락이고, 그 파티션 밖의 행은 안 막힙니다.
+
+  TABLE 은 파티션이 있어도 테이블 전체를 잠급니다. 기본값이 TABLE 이므로
+  **파티션을 나눠 두고도 기본값 그대로면 파티션의 값을 못 씁니다.**
+
+  다만 AUTO 가 공짜는 아닙니다. 파티션 단위 승격은 여러 파티션을 건드리는
+  트랜잭션에서 파티션마다 락을 잡아 데드락 가능성을 올립니다. 문서도 그 점을
+  경고합니다. 보정 배치가 한 파티션 안에서 끝나도록 짜는 것이 전제입니다.
+
+  A24 실험 7에서 파티션이 조사 속도에는 도움이 안 됐는데, 여기서는 락 범위를
+  좁히는 값이 있습니다. 파티션을 두는 이유가 하나 더 있는 셈입니다.
+```
+
+## 결과 데이터
+
+### results/blocking.csv
+
+```
+case,rows,rcsi,escalated,probe_ms,blocked,wait_type
+"A 3,000행 보정",3000,OFF,0,272,안 막힘,없음
+"B 10,000행 보정",10000,OFF,1,18560,막힘,LCK_M_IS
+"C 10,000행 보정 + RCSI",10000,ON,1,260,안 막힘,없음
+```
+
+### results/granularity.csv
+
+```
+rows,escalated,key_locks,page_locks,table_locks,escalation_events,granularity
+50000,1,0,0,2,1,테이블 (승격됨)
+100000,1,0,0,2,1,테이블 (승격됨)
+200000,1,0,0,2,1,테이블 (승격됨)
+400000,0,0,1087,1089,0,페이지
+600000,0,0,1631,1633,0,페이지
+1000000,0,0,2718,2720,0,페이지
+```
+
+### results/index-count.csv
+
+```
+condition,nc_indexes,fixed_rows,key_locks,page_locks,table_locks,locks_per_row,boundary_rows,boundary_locks
+"1) 인덱스 없음",0,3000,3000,9,3011,1.00,6230,6249
+"2) 갱신 컬럼에 1개",1,3000,0,0,2,-,2907,8747
+"3) 갱신 안 하는 컬럼에 1개",1,3000,3000,9,3011,1.00,6230,6249
+"4) 갱신 컬럼에 2개",2,3000,0,0,2,-,2491,12495
+```
+
+### results/mitigation.csv
+
+```
+method,escalations,probes,blocked_probes,max_probe_ms,held_locks,peak_locks_all,corrected/spared
+1) 한 방,1,2,1,6431,5,2204,200000/50000
+2) 4000행씩 배치,0,27,0,278,4015,4015,200000/50000
+3) 승격 끄고 한 방,0,26,0,295,200548,200548,200000/50000
+```
+
+### results/partition-escalation.csv
+
+```
+mode,escalation_events,object_locks,hobt_locks,key_locks,verdict
+TABLE,1,1,0,0,"테이블 단위 승격"
+AUTO,1,1,1,0,"파티션(HoBT) 단위 승격"
+```
+
+### results/retry.csv
+
+```
+case,blocker,escalation_events,escalated_lock_count,final_shape
+"A 옆 세션 없음","",1,6249,"테이블 X 락 하나로 접힘"
+"B 옆에서 한 행 갱신","UPDATE expedition_currency SET balance = balance WHERE account_id = 200000;",0,-,"행 락 20000개 그대로 유지"
+"C 옆에서 한 행 조회","SELECT balance FROM expedition_currency WITH (REPEATABLEREAD) WHERE account_id = 200000;",0,-,"행 락 20000개 그대로 유지"
+```
 
 ### results/threshold-sweep.csv
 
@@ -388,36 +505,6 @@ run,rows,escalated,key_locks,page_locks,total_locks
 3,boundary_lo,0,,,6249
 ```
 
-### results/blocking.csv
-
-```
-case,rows,rcsi,escalated,probe_ms,blocked,wait_type
-"A 3,000행 보정",3000,OFF,0,272,안 막힘,없음
-"B 10,000행 보정",10000,OFF,1,18560,막힘,LCK_M_IS
-"C 10,000행 보정 + RCSI",10000,ON,1,260,안 막힘,없음
-```
-
-### results/mitigation.csv
-
-```
-method,escalations,probes,blocked_probes,max_probe_ms,held_locks,peak_locks_all,corrected/spared
-1) 한 방,1,2,1,6431,5,2204,200000/50000
-2) 4000행씩 배치,0,27,0,278,4015,4015,200000/50000
-3) 승격 끄고 한 방,0,26,0,295,200548,200548,200000/50000
-```
-
-### results/granularity.csv
-
-```
-rows,escalated,key_locks,page_locks,table_locks,escalation_events,granularity
-50000,1,0,0,2,1,테이블 (승격됨)
-100000,1,0,0,2,1,테이블 (승격됨)
-200000,1,0,0,2,1,테이블 (승격됨)
-400000,0,0,1087,1089,0,페이지
-600000,0,0,1631,1633,0,페이지
-1000000,0,0,2718,2720,0,페이지
-```
-
 ### results/two-paths.csv
 
 ```
@@ -432,15 +519,5 @@ run,condition,table_x_lock,key_locks,page_locks,table_locks,escalation_events,es
 4,with_stats,0,6231,17,6249,0,-
 5,no_stats,1,0,0,2,1,6248
 5,with_stats,0,6231,17,6249,0,-
-```
-
-### results/index-count.csv
-
-```
-condition,nc_indexes,fixed_rows,key_locks,page_locks,table_locks,locks_per_row,boundary_rows,boundary_locks
-"1) 인덱스 없음",0,3000,3000,9,3011,1.00,6230,6249
-"2) 갱신 컬럼에 1개",1,3000,0,0,2,-,2907,8747
-"3) 갱신 안 하는 컬럼에 1개",1,3000,3000,9,3011,1.00,6230,6249
-"4) 갱신 컬럼에 2개",2,3000,0,0,2,-,2491,12495
 ```
 
