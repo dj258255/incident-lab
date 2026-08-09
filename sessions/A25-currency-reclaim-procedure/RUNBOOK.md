@@ -203,3 +203,50 @@ UPDATE a
   결정이고, 경로가 하나라도 빠지면 빚이 영원히 남습니다.
 - **소요 시간을 모릅니다.** 이 랩은 에뮬레이션이라 시간을 재지 않았습니다. 실제
   환경에서 한 번 재서 이 문서에 적어 두는 편이 좋습니다.
+
+---
+
+## 상계 규칙과 제약
+
+회수 뒤 이용자가 재화를 얻으면 빚이 먼저 갚혀야 합니다. **그 규칙은 DB 에 두고 집합으로
+짭니다.** 실측에서 네 가지를 견줬고 둘이 틀렸습니다(계정 5,000개 기준).
+
+| 규칙의 위치 | 어긋난 계정 |
+|---|---|
+| 앱 경로마다(넷 중 하나가 빠뜨림) | 1,250개 |
+| 트리거, 한 행 기준 | **4,996개** |
+| 트리거, 집합 기준 | 0개 |
+| 프로시저 강제(직접 UPDATE 를 DENY) | 0개 |
+
+```sql
+-- 이렇게 짜면 안 됩니다. inserted 가 여러 행이면 마지막 하나만 남습니다.
+DECLARE @acc INT, @gain BIGINT;
+SELECT @acc = i.account_id, @gain = i.balance - d.balance FROM inserted i JOIN deleted d ...;
+
+-- 변수에 담지 않고 조인합니다. 행이 몇 개든 같습니다.
+UPDATE t
+   SET debt    = t.debt    - CASE WHEN t.debt >= g.gain THEN g.gain ELSE t.debt END,
+       balance = t.balance - CASE WHEN t.debt >= g.gain THEN g.gain ELSE t.debt END
+  FROM account_currency t
+  JOIN (SELECT i.account_id, i.balance - d.balance AS gain
+          FROM inserted i JOIN deleted d ON d.account_id = i.account_id
+         WHERE i.balance > d.balance) g ON g.account_id = t.account_id
+ WHERE t.debt > 0;
+```
+
+**한 행씩 지급하는 동안에는 멀쩡하다가 지급을 묶는 순간 틀립니다.** 오류도 경고도
+없으므로 배포 뒤 한참 지나 총량 대사에서야 드러납니다.
+
+### `CHECK (balance >= 0)` 를 빼지 않습니다
+
+음수 잔액을 허용하면 회수는 편해지지만 셋이 깨집니다(계정 10만 개 기준 실측).
+
+| | NEGATIVE | DEBT |
+|---|---|---|
+| 유통 중인 재화 총량 | 2억 6,000만 | 2억 8,000만 |
+| 조건을 빠뜨린 대량 차감 | 통과 | **`Msg 547` 차단** |
+| 그 뒤 미회수 잔량 | 97억 | 1,999만 |
+
+**제약은 비용이 아니라 마지막 방어선입니다.** 회수 때문에 뺐는데 그 제약이 원래 막던
+다른 버그도 함께 풀립니다. 그리고 **한 번 음수가 들어간 표에는 다시 붙일 수 없습니다.**
+
