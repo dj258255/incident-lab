@@ -1,0 +1,14 @@
+# A26 재현 환경
+# 보정 배치가 도는 동안 서비스가 느려졌을 때, 원인을 좁히는 순서를 다룬다.
+# A04·A24·A25 에서 임시로 짜 쓴 진단 쿼리들을 재사용 가능한 도구로 정리한다.
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: a26-mssql
+    cpus: 4
+    mem_limit: 6g
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Lab_Passw0rd!"
+      MSSQL_PID: "Developer"
+    ports: ["11437:1433"]
