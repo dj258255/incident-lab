@@ -220,3 +220,52 @@ ALTER EVENT SESSION esc_watch ON SERVER STATE = START;
 - [ ] `LOCK_ESCALATION` 을 바꿨으면 되돌렸는가
 - [ ] 확장 이벤트 세션을 껐는가
 - [ ] 보정 내역을 문서로 남겼는가 (대상 조건, 건수, 시각, 실행자, 근거)
+
+---
+
+## 데드락 재시도 루프
+
+`LOCK_ESCALATION = AUTO` 를 쓰거나 보정 배치가 게임 트래픽과 같은 표를 건드리면
+데드락(1205)이 납니다. 재시도는 **트랜잭션 경계 밖**에 둡니다.
+
+```sql
+SET DEADLOCK_PRIORITY LOW;   -- 보정 배치가 진다. 게임 트래픽이 이긴다
+
+DECLARE @try INT = 0, @max INT = 5, @ok INT = 0;
+WHILE @try < @max AND @ok = 0
+BEGIN
+    SET @try = @try + 1;
+    BEGIN TRY
+        BEGIN TRAN;
+            /* 배치 하나. 진행 위치 갱신까지 같은 트랜잭션 안에 둔다 */
+        COMMIT;
+        SET @ok = 1;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0 ROLLBACK;
+        IF ERROR_NUMBER() <> 1205 THROW;   -- 1205 만 재시도한다
+        DECLARE @ms INT = 200 + ABS(CHECKSUM(NEWID())) % 1500;
+        DECLARE @d VARCHAR(12) = '00:00:'
+             + RIGHT('0'  + CAST(@ms / 1000 AS varchar(2)), 2) + '.'
+             + RIGHT('00' + CAST(@ms % 1000 AS varchar(3)), 3);
+        WAITFOR DELAY @d;
+    END CATCH
+END
+IF @ok = 0 THROW 50030, '재시도 상한 도달. 사람이 본다', 1;
+```
+
+| 항목 | 이유 |
+|---|---|
+| `SET DEADLOCK_PRIORITY LOW` | 안 주면 **엔진이 고른다.** 실측에서 9회 모두 게임 트래픽 쪽이 죽었다 |
+| `ROLLBACK` 을 CATCH 첫 줄에 | 희생자의 트랜잭션은 이미 되돌아갔지만 `@@TRANCOUNT` 는 남는다 |
+| `IF ERROR_NUMBER() <> 1205 THROW` | 나머지 오류를 같이 삼키면 사고를 재시도로 덮는다 |
+| 지터 백오프 | 같은 간격으로 물러나면 같은 순서로 다시 만난다 |
+| 시도 상한 | 상한에 닿으면 멈추고 사람을 부른다 |
+
+재시도가 안전한 것은 재시도 코드 때문이 아니라 **배치 경계** 때문입니다. 진행 위치를
+배치와 같은 트랜잭션에서 옮겨 두면 죽은 배치는 위치까지 함께 되돌아갑니다.
+실측에서 네 조건 모두 결과 정합이 어긋난 회차가 없었습니다.
+
+> `WAITFOR DELAY` 는 `'hh:mm:ss.mmm'` 만 받습니다. `CONVERT(..., 114)` 는 밀리초 앞에
+> 콜론을 넣어 `'00:00:01:234'` 가 되고 그 모양은 시간으로 안 읽힙니다. 문자열을 손으로
+> 만듭니다.
