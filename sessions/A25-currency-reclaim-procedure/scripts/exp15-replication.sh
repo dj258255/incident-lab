@@ -106,7 +106,7 @@ printf "  %-44s %s\n" "본체에서 바로 되는가" "안 됨. 에이전트를 
 printf "  %-44s %s\n" "추가로 필요한 인스턴스" "발행자 + 구독자 = 2대"
 printf "  %-44s %s\n" "그 둘을 띄우려고 내린 것" "본체 4대"
 printf "  %-44s %s\n" "발행자 메모리" "2g 로는 죽음. 4g 필요(배포 DB 포함)"
-printf "  %-44s %s\n" "인증서" "자체 서명이라 에이전트가 못 붙음"
+printf "  %-44s %s\n" "배포 DB 마스터 키" "없으면 구독자 비밀번호를 못 넣음"
 echo "\"0\",\"세우기 전 비용\",\"인스턴스 2대 추가, 본체 4대 중지\",\"에이전트 재생성 필요\"" >> "$OUT/replication.csv"
 echo
 
@@ -133,6 +133,12 @@ step "배포자를 세운다 (sp_adddistributor)" \
   "$(PQ "EXEC sp_adddistributor @distributor = N'$PUB', @password = N'$PW';")"
 step "배포 DB 를 만든다 (sp_adddistributiondb)" \
   "$(PQ "EXEC sp_adddistributiondb @database = N'distribution', @security_mode = 1;")"
+# 배포 DB 에 마스터 키가 없으면 구독자 비밀번호를 넣을 때 경고가 뜬다.
+#   WARNING: The database 'distribution' does not contain database master key.
+# 비밀번호는 여기에 암호화해 저장된다. 키가 없으면 저장할 자리가 없다.
+step "배포 DB 에 마스터 키를 만든다 (복제 비밀 저장용)" \
+  "$(PQ "IF NOT EXISTS (SELECT 1 FROM distribution.sys.symmetric_keys WHERE name = '##MS_DatabaseMasterKey##')
+           EXEC distribution.sys.sp_executesql N'CREATE MASTER KEY ENCRYPTION BY PASSWORD = ''$PW''';")"
 step "발행자를 배포자에 등록 (sp_adddistpublisher)" \
   "$(PQ "EXEC sp_adddistpublisher @publisher = N'$PUB', @distribution_db = N'distribution',
           @security_mode = 1, @working_directory = N'/var/opt/mssql/data/repldata';")"
@@ -151,20 +157,38 @@ step "표를 발행 목록에 넣는다 (sp_addarticle)" \
 step "구독을 만든다 (sp_addsubscription)" \
   "$(PQD "EXEC sp_addsubscription @publication = N'$PUBNAME', @subscriber = N'$SUB',
            @destination_db = N'$SDB', @subscription_type = N'push', @sync_type = N'automatic';")"
+# 배포 에이전트.
+#
+# **@publisher_security_mode 는 이 프로시저의 매개변수가 아니다.** 처음에 그것을
+# 넣었다가 EXEC 전체가 실패했고, 그래서 @subscriber_security_mode = 0 도 같이
+# 안 걸렸다. 에이전트는 sp_addsubscription 이 만든 기본값(모드 1 = 통합 인증)으로
+# 남았고, Linux 에는 Kerberos 가 없으니 붙을 때 "Cannot generate SSPI context" 로
+# 죽었다. **증상은 13단계 끝의 "구독자에 못 붙는다" 한 줄로만 나타났다.**
 step "배포 에이전트를 붙인다 (sp_addpushsubscription_agent)" \
   "$(PQD "EXEC sp_addpushsubscription_agent @publication = N'$PUBNAME', @subscriber = N'$SUB',
            @subscriber_db = N'$SDB', @subscriber_security_mode = 0,
-           @subscriber_login = N'sa', @subscriber_password = N'$PW',
-           @publisher_security_mode = 1;")"
+           @subscriber_login = N'sa', @subscriber_password = N'$PW';")"
 
+# **되읽어 확인한다.** 위 호출이 조용히 실패해도 다음 단계는 그대로 넘어간다.
+# 실제로 이 실험에서 세팅 단계가 두 번 조용히 죽었고(Msg 102, 매개변수 오류)
+# 둘 다 맨 끝에서 전혀 다른 얼굴로 나타났다.
+SECMODE=$(num "$(PQ "SET NOCOUNT ON;
+  SELECT TOP 1 CAST(subscriber_security_mode AS varchar(4))
+    FROM distribution.dbo.MSdistribution_agents
+   WHERE subscriber_db = N'$SDB' ORDER BY id DESC;")")
+step "그 에이전트가 SQL 인증으로 잡혔는지 되읽는다" \
+  "$([ "${SECMODE:-1}" = "0" ] && echo "subscriber_security_mode = 0" || echo "Msg 0 통합인증(모드 ${SECMODE:-?})으로 남았습니다")"
 
-# 13단계. 배포 에이전트가 구독자에 못 붙는다.
+# 인증서.
 #
-# SQL Server 2022 + ODBC 18 은 기본으로 서버 인증서를 검증하는데 컨테이너의
-# 인증서는 자체 서명이다. sqlcmd 는 -C 로 넘기지만 **배포 에이전트에는 그 옵션이
-# 없다.** 복제 에이전트의 -EncryptionLevel 로 낮춘다.
-#   0 암호화 안 함  1 필요하면  2 검증까지
-# 실무라면 구독자에 제대로 된 인증서를 넣는 것이 맞고, 이것은 랩에서만 쓰는 우회다.
+# ODBC 18 은 기본으로 서버 인증서를 검증하고 컨테이너의 인증서는 자체 서명이다.
+# sqlcmd 는 -C 로 넘기지만 **배포 에이전트에는 그 옵션이 없다.** -EncryptionLevel 로
+# 낮춘다.  0 암호화 안 함  1 필요하면  2 검증까지
+#
+# 처음에는 이것이 못 붙는 원인이라고 봤다. 구독자에 제대로 된 인증서를 만들어
+# 발행자의 신뢰 목록에 넣어 봤는데 **그래도 못 붙었다.** 반대로 진짜 원인(위의
+# 인증 방식)을 고친 뒤 신뢰를 도로 걷어냈더니 **전달은 그대로 됐다.**
+# 인증서는 원인이 아니었다. -EncryptionLevel 0 이면 검증 자체를 안 한다.
 DSTEP=$(numsp "$(PQ "SET NOCOUNT ON;
   SELECT TOP 1 j.name FROM msdb.dbo.sysjobs j
     JOIN msdb.dbo.syscategories c ON c.category_id = j.category_id
@@ -260,16 +284,24 @@ if [ "$ARRIVED" = 1 ]; then
   echo "  데이터가 도착하는 것 자체는 세 방법이 다르지 않습니다."
 else
   echo "  **도착을 못 확인했습니다.** 에이전트 작업이 안 돌았거나 실패했습니다."
-  echo "  배포 이력이 말하는 이유:"
+  echo
+  echo "  배포 이력(MSdistribution_history)이 말하는 것:"
   PQ "SET NOCOUNT ON;
       SELECT TOP 3 'ERR: ' + LEFT(REPLACE(REPLACE(comments, CHAR(13), ' '), CHAR(10), ' '), 100)
         FROM distribution.dbo.MSdistribution_history
        WHERE runstatus = 6 ORDER BY time DESC;" 2>/dev/null \
     | grep '^ERR' | sed 's/^/    /' || true
   echo
-  echo "  발행자에서 구독자로 직접 붙는 것은 됩니다(sqlcmd -C 로 확인). 에이전트만"
-  echo "  못 붙습니다. **자체 서명 인증서를 신뢰하는 설정이 에이전트 쪽에 따로**"
-  echo "  필요한 것으로 보이고, -EncryptionLevel 0 으로도 안 넘어갔습니다."
+  # 이력의 comments 는 한 줄로 요약돼 **진짜 이유가 잘려 있다.** 원문은 다른 표에 있다.
+  echo "  오류 원문(MSrepl_errors)이 말하는 것:"
+  PQ "SET NOCOUNT ON;
+      SELECT TOP 3 'RAW: ' + CAST(error_code AS varchar(12)) + ' | '
+                 + LEFT(REPLACE(REPLACE(error_text, CHAR(13), ' '), CHAR(10), ' '), 90)
+        FROM distribution.dbo.MSrepl_errors ORDER BY time DESC;" 2>/dev/null \
+    | grep '^RAW' | sed 's/^/    /' || true
+  echo
+  echo "  **두 표를 다 봐야 원인이 나옵니다.** 이력은 \"구독자에 못 붙는다\"까지만"
+  echo "  말하고, 왜 못 붙는지는 오류 표에만 있습니다."
   echo "\"-\",\"지문 대조\",\"확인 못 함\",\"에이전트 미완료\"" >> "$OUT/replication.csv"
 fi
 echo
@@ -310,8 +342,22 @@ echo "## 정리"
 echo "=================================================================="
 echo
 if [ "$ARRIVED" = 1 ]; then
-  echo "  **넘어가기는 합니다.** 지문이 맞고 bcp·링크드 서버와 결과가 같습니다."
-  echo "  갈리는 것은 그 앞뒤입니다."
+  echo "  **넘어갑니다.** 지문이 맞고 bcp·링크드 서버와 결과가 같습니다."
+  echo "  데이터가 도착하는 것 자체는 세 방법이 다르지 않습니다. 갈리는 것은 그 앞뒤입니다."
+  echo
+  echo "  다만 여기까지 오는 동안 **세팅 단계가 두 번 조용히 죽었습니다.**"
+  echo
+  printf "  %-40s %s\n" "무엇이" "어떻게 나타났나"
+  printf "  %-40s %s\n" "EXEC 매개변수에 식을 썼다(Msg 102)" "-EncryptionLevel 이 안 붙음"
+  printf "  %-40s %s\n" "없는 매개변수를 넘겼다" "SQL 인증이 안 걸림 -> SSPI 오류"
+  echo
+  echo "  둘 다 그 자리에서는 아무 표시가 없었고, **13단계 끝의 \"구독자에 못 붙는다\""
+  echo "  한 줄로만** 나타났습니다. 그 한 줄에서 진짜 원인까지 가려면"
+  echo "  MSdistribution_history 가 아니라 MSrepl_errors 를 봐야 합니다."
+  echo "  이력의 comments 는 요약이라 원인이 잘려 있습니다."
+  echo
+  echo "  그래서 이 실험은 각 단계를 **되읽어 확인**하도록 고쳤습니다."
+  echo "  단계가 많은 절차에서는 \"실행했다\"와 \"걸렸다\"가 다릅니다."
 else
   echo "  **이 랩에서는 전달까지 못 갔습니다.** 12단계를 다 통과하고 스냅샷도"
   echo "  만들어졌는데 구독자에 안 들어왔습니다. 그리고 그 사실을 알아내는 데도"

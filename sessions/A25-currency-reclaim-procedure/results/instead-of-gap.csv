@@ -1,0 +1,11 @@
+trigger,change,balance_sum,debt_sum,grade2_rows,note_rows,verdict
+"INSTEAD OF","지급 (balance +600)",0,400000,0,0,"반영됨"
+"INSTEAD OF","등급 변경 (grade=2)",0,400000,0,0,"**사라짐**"
+"INSTEAD OF","운영툴 메모 (note)",0,400000,0,0,"**사라짐**"
+"INSTEAD OF","빚 직접 조정 (debt -100)",0,400000,0,0,"**사라짐**"
+"AFTER","지급 (balance +600)",0,400000,0,0,"반영됨"
+"AFTER","등급 변경 (grade=2)",0,400000,1000,0,"반영됨"
+"AFTER","운영툴 메모 (note)",0,400000,1000,1000,"반영됨"
+"AFTER","빚 직접 조정 (debt -100)",0,300000,1000,1000,"반영됨"
+"guard_with","CHECK",0,0,0,0,"1개 / ([balance]>=(0))"
+"guard_without","CHECK",0,0,0,0,"0개 / 없음"

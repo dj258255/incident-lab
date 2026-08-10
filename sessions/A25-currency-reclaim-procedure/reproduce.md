@@ -892,7 +892,7 @@ $ ./scripts/exp15-replication.sh
   추가로 필요한 인스턴스             발행자 + 구독자 = 2대
   그 둘을 띄우려고 내린 것           본체 4대
   발행자 메모리                          2g 로는 죽음. 4g 필요(배포 DB 포함)
-  인증서                                    자체 서명이라 에이전트가 못 붙음
+  배포 DB 마스터 키                      없으면 구독자 비밀번호를 못 넣음
 
 ==================================================================
 ## 15-2. 세우는 단계
@@ -904,14 +904,16 @@ $ ./scripts/exp15-replication.sh
   3   회수 대상 표를 채운다               됨
   4   배포자를 세운다 (sp_adddistributor)   됨
   5   배포 DB 를 만든다 (sp_adddistributiondb) 됨
-  6   발행자를 배포자에 등록 (sp_adddistpublisher) 됨
-  7   발행 DB 에 복제를 켠다 (sp_replicationdboption) 됨
-  8   발행 항목을 만든다 (sp_addpublication) 됨
-  9   스냅샷 에이전트를 붙인다 (sp_addpublication_snapshot) 됨
-  10  표를 발행 목록에 넣는다 (sp_addarticle) 됨
-  11  구독을 만든다 (sp_addsubscription)     됨
-  12  배포 에이전트를 붙인다 (sp_addpushsubscription_agent) 됨
-  13  배포 에이전트에 -EncryptionLevel 0 을 붙인다 됨
+  6   배포 DB 에 마스터 키를 만든다 (복제 비밀 저장용) 됨
+  7   발행자를 배포자에 등록 (sp_adddistpublisher) 됨
+  8   발행 DB 에 복제를 켠다 (sp_replicationdboption) 됨
+  9   발행 항목을 만든다 (sp_addpublication) 됨
+  10  스냅샷 에이전트를 붙인다 (sp_addpublication_snapshot) 됨
+  11  표를 발행 목록에 넣는다 (sp_addarticle) 됨
+  12  구독을 만든다 (sp_addsubscription)     됨
+  13  배포 에이전트를 붙인다 (sp_addpushsubscription_agent) 됨
+  14  그 에이전트가 SQL 인증으로 잡혔는지 되읽는다 됨
+  15  배포 에이전트에 -EncryptionLevel 0 을 붙인다 됨
 
   **여기까지가 표 하나를 넘기기 위한 단계입니다.**
 
@@ -925,13 +927,12 @@ $ ./scripts/exp15-replication.sh
   스냅샷 생성       완료
   데이터가 도착할 때까지 기다립니다.
 
-  **도착을 못 확인했습니다.** 에이전트 작업이 안 돌았거나 실패했습니다.
-  배포 이력이 말하는 이유:
-    ERR: The process could not connect to Subscriber 'A25-REPL-SUB'.
+  발행자 지문     5000,30000000,1280000
+  구독자 지문     5000,30000000,1280000
+  대조               일치
 
-  발행자에서 구독자로 직접 붙는 것은 됩니다(sqlcmd -C 로 확인). 에이전트만
-  못 붙습니다. **자체 서명 인증서를 신뢰하는 설정이 에이전트 쪽에 따로**
-  필요한 것으로 보이고, -EncryptionLevel 0 으로도 안 넘어갔습니다.
+  **넘어갑니다.** bcp·링크드 서버와 마찬가지로 지문이 맞습니다.
+  데이터가 도착하는 것 자체는 세 방법이 다르지 않습니다.
 
 ==================================================================
 ## 15-4. 세운 뒤에 무엇이 묶이는가
@@ -952,17 +953,25 @@ $ ./scripts/exp15-replication.sh
 ## 정리
 ==================================================================
 
-  **이 랩에서는 전달까지 못 갔습니다.** 12단계를 다 통과하고 스냅샷도
-  만들어졌는데 구독자에 안 들어왔습니다. 그리고 그 사실을 알아내는 데도
-  distribution.dbo.MSdistribution_history 를 따로 봐야 했습니다.
+  **넘어갑니다.** 지문이 맞고 bcp·링크드 서버와 결과가 같습니다.
+  데이터가 도착하는 것 자체는 세 방법이 다르지 않습니다. 갈리는 것은 그 앞뒤입니다.
 
-  **그것 자체가 이 실험의 답입니다.** 단계가 많으면 어디서 막혔는지 찾는 것도
-  일이고, 사고 중에 그 일을 하고 있을 수는 없습니다.
+  다만 여기까지 오는 동안 **세팅 단계가 두 번 조용히 죽었습니다.**
 
-  아래 표는 전달을 뺀 나머지 비교입니다.
+  무엇이                                어떻게 나타났나
+  EXEC 매개변수에 식을 썼다(Msg 102) -EncryptionLevel 이 안 붙음
+  없는 매개변수를 넘겼다         SQL 인증이 안 걸림 -> SSPI 오류
+
+  둘 다 그 자리에서는 아무 표시가 없었고, **13단계 끝의 "구독자에 못 붙는다"
+  한 줄로만** 나타났습니다. 그 한 줄에서 진짜 원인까지 가려면
+  MSdistribution_history 가 아니라 MSrepl_errors 를 봐야 합니다.
+  이력의 comments 는 요약이라 원인이 잘려 있습니다.
+
+  그래서 이 실험은 각 단계를 **되읽어 확인**하도록 고쳤습니다.
+  단계가 많은 절차에서는 "실행했다"와 "걸렸다"가 다릅니다.
 
                          bcp            링크드 서버 복제
-  세우는 단계       0              3              13
+  세우는 단계       0              3              15
   필요한 인스턴스 1              2              3(배포자 포함)
   에이전트           불필요      불필요      **필요**
   끝난 뒤 남는 것  파일         경로         작업 2개 + 배포 DB
@@ -981,185 +990,74 @@ $ ./scripts/exp15-replication.sh
   만들어지므로 이관이라는 단계 자체가 없어집니다.
 ```
 
-## 결과 데이터
+## 16. exp16-instead-of-gap
 
-### results/approval-hardening.csv
+```console
+$ ./scripts/exp16-instead-of-gap.sh
+# 실험 16. INSTEAD OF 가 떠안는 것
 
+  실험 12는 INSTEAD OF 가 "그 표에 오는 모든 갱신을 책임진다"고 적고
+  **그것을 안 보였습니다.** 지급만 다루는 트리거를 걸고 다른 갱신을 던집니다.
+
+  표에 지급과 무관한 컬럼을 둘 뒀습니다. 등급(grade)과 운영툴 메모(note)입니다.
+  실제 표에는 늘 이런 컬럼이 있고, 그것을 고치는 경로도 따로 있습니다.
+
+  트리거        던진 갱신            잔액합    빚합       등급2    판정
+### 16-1. INSTEAD OF 를 걸고 여러 갱신을 던진다
+
+  INSTEAD OF       지급 (balance +600)    0            400000       0          반영됨
+  INSTEAD OF       등급 변경 (grade=2)  0            400000       0          **사라짐**
+  INSTEAD OF       운영툴 메모 (note)  0            400000       0          **사라짐**
+  INSTEAD OF       빚 직접 조정 (debt -100) 0            400000       0          **사라짐**
+
+  **오류가 하나도 안 났습니다.** 갱신이 성공했다고 돌려주고 아무 일도 안 일어납니다.
+  트리거가 다루는 조건(balance 가 늘어난 행)에 안 걸리면 그 갱신은 통째로 버려집니다.
+  등급을 바꾼 운영툴도, 메모를 남긴 사람도 성공했다고 알고 넘어갑니다.
+
+### 16-2. 같은 갱신을 AFTER 트리거에 던지면
+
+  AFTER            지급 (balance +600)    0            400000       0          반영됨
+  AFTER            등급 변경 (grade=2)  0            400000       1000       반영됨
+  AFTER            운영툴 메모 (note)  0            400000       1000       반영됨
+  AFTER            빚 직접 조정 (debt -100) 0            300000       1000       반영됨
+
+  **AFTER 는 원래 갱신을 안 건드립니다.** 자기가 볼 것만 보고(UPDATE(balance))
+  아니면 물러납니다. 다른 경로가 추가돼도 트리거를 안 고쳐도 됩니다.
+
+### 16-3. DB 가 클라이언트에 무엇을 보장할 수 있는가
+
+  음수 잔액을 읽는 **앱 코드**는 이 랩 밖입니다. 다만 DB 가 그 앱에 무엇을
+  알려 줄 수 있는지는 안에 있습니다. 제약은 **읽을 수 있는 메타데이터**입니다.
+
+  표                    CHECK 제약     클라이언트가 알 수 있는 것
+  guard_with             있음           ([balance]>=(0))
+  guard_without          없음           **음수가 올 수 있다는 것만 안다**
+
+  **제약이 있으면 그 사실이 카탈로그에 남습니다.** ORM 과 코드 생성기, 스키마
+  문서화 도구가 전부 이것을 읽습니다. 제약을 빼면 클라이언트 쪽은 "음수가 올 수
+  있다"만 알게 되고, 그것을 어떻게 다룰지는 각 코드가 알아서 정합니다.
+  **그 순간부터 통일된 규칙이 없어집니다.**
+
+  그래서 "클라이언트가 음수에 어떻게 반응하는가"는 DB 밖이지만
+  **"클라이언트가 음수를 예상해야 하는가"는 DB 가 정합니다.**
+
+==================================================================
+## 정리
+==================================================================
+
+  실험 12가 주장만 하고 안 보인 것을 보였습니다.
+
+  **INSTEAD OF 는 지급이 아닌 갱신 셋을 통째로 버렸습니다.** 오류도 경고도 없이
+  성공했다고 돌려줍니다. 등급을 바꾼 운영툴도, 메모를 남긴 사람도 그것이
+  반영된 줄 압니다. 표에 컬럼이 늘거나 갱신 경로가 추가될 때마다 트리거를
+  같이 고쳐야 하고, **안 고치면 그 경로가 조용히 죽습니다.**
+
+  AFTER 는 자기가 볼 것만 보고 아니면 물러납니다. 로그를 두 배 쓰는 대신
+  **원래 갱신을 안 건드립니다.** 실험 12에서 INSTEAD OF 가 로그는 싸고 락은
+  비쌌는데, 여기서 세 번째 대가가 나왔습니다.
+
+  세 가지를 놓고 보면 순서가 정해집니다.
+    프로시저 강제  지급 경로를 통제할 수 있으면 이것. 제일 싸고 단순하다
+    AFTER 트리거   경로를 통제 못 하면 이것. 대가는 로그 2배
+    INSTEAD OF     권하지 않는다. 락이 안 접히고 다른 갱신을 떠안는다
 ```
-check,actor,result,msg,detail
-"승인 기록을 지운다","maker","막힘","Msg 229","The DELETE permission was denied on the object 'approval_log', d"
-"승인자를 바꿔치기한다","maker","막힘","Msg 229","The UPDATE permission was denied on the object 'approval_log', d"
-"요청 금액을 승인 뒤에 키운다","maker","막힘","Msg 229","The UPDATE permission was denied on the object 'approval_req', d"
-"승인 상태를 직접 APPROVED 로","maker","막힘","Msg 229","The UPDATE permission was denied on the object 'approval_req', d"
-"이력을 읽는 것은 된다","maker","통과","","1"
-"한 명만 승인하고 실행","checker1","통과","",""
-"  그 상태로 실행하면","maker","막힘","Msg 50064","not enough approvals"
-"같은 사람이 또 승인","checker1","막힘","Msg 2627","Violation of UNIQUE KEY constraint 'UQ_approval'. Cannot insert "
-"두 번째 승인자가 승인","checker2","통과","",""
-"  이제 실행하면","maker","통과","","EXECUTED"
-"만료된 요청을 승인","checker1","막힘","Msg 50062","approval expired"
-"승인은 받았고 그 뒤 만료됨","maker","막힘","Msg 50065","approval expired at execution"
-"승인 없이 되돌리기 실행","maker","막힘","Msg 50064","not enough approvals"
-"둘이 승인한 뒤 실행","maker","통과","","EXECUTED"
-```
-
-### results/approval.csv
-
-```
-case,result,errno,reclaimed
-"A 요청→승인→실행","통과",0,360000
-"B 승인 없이 실행","**거부 — 승인되지 않은 요청**",50025,0
-"C 요청자가 자기 승인","**거부 — 자기 요청은 자기가 승인 못 함**",50022,0
-"D 승인 뒤 대상 추가","**거부 — 승인 뒤 대상이 바뀜**",50026,0
-"maker 가 승인 시도","",229,
-"checker 가 요청 시도","",229,
-"maker 가 직접 실행","",229,
-```
-
-### results/dataset.csv
-
-```
-metric,value
-accounts,1000000
-targets,60000
-short_targets,20000
-reclaim_total,1839974000
-chunk,4000
-```
-
-### results/handoff.csv
-
-```
-method,rows,sum,verified,note
-"링크드 서버(당겨오기)",5000,30000000,"일치","파일이 안 남는다"
-"bcp(파일 경유)",5000,30000000,"일치","파일이 남는다"
-"A 그냥 옮긴다",5300,31800000,"**어긋남**","원본이 자라는 중"
-"B 스냅샷을 뜨고 옮긴다",5000,30000000,"일치","스냅샷 기준"
-```
-
-### results/negative-risk.csv
-
-```
-check,negative,debt,same
-"실제로 뺀 금액",80000000,60000200,"**다름**"
-"미회수 잔량",19999800,19999800,"같음"
-"재화 보유 계정 수",66667,66667,"같음"
-"평균 보유량(전체)",2600,2800,"**다름**"
-"유통 중인 재화 총량",260001600,280001400,"**다름**"
-"잘못된 대량 차감","통과(오류 없음)","Msg 547","**다름**"
-"음수가 된 계정 수",100000,0,"**다름**"
-"이제 미회수 잔량은",9739998400,19999800,"**다름**"
-```
-
-### results/negative-shield.csv
-
-```
-check,through,value,note
-"기저 표를 직접 읽는다","기저 표","Msg 229","막혀야 한다"
-"뷰로 읽는다","보호 뷰","100000","되어야 한다"
-"가장 낮은 잔액","기저 표","-600","음수다"
-"가장 낮은 잔액","보호 뷰","0","0 이어야 한다"
-"유통 중인 재화 총량","기저 표","260001600","음수가 깎는다"
-"유통 중인 재화 총량","보호 뷰","280001400","실제 유통량"
-"미회수 잔량","보호 뷰","19999800","따로 셀 수 있다"
-"조건 빠뜨린 대량 차감","기저 표","통과(오류 없음)","제약이 없다"
-"그 뒤 미회수 잔량","보호 뷰","9739998400","버그분이 섞였다"
-"같은 대량 차감(DEBT)","기저 표","Msg 547","제약이 막는다"
-"그 뒤 미회수 잔량","보호 뷰","19999800","회수분만 남는다"
-```
-
-### results/offset-rule.csv
-
-```
-case,where,debt_sum,balance_sum,wrong_accounts,verdict
-"A 앱 경로마다","애플리케이션",1375000,1125000,1250,"**1250개 어긋남**"
-"B 트리거(행 단위)","DB",3248200,2998200,4996,"**4996개 어긋남**"
-"C 트리거(집합)","DB",1000000,750000,0,"맞음"
-"D 프로시저 강제","DB",1000000,750000,0,"맞음"
-```
-
-### results/reclaim-retry.csv
-
-```
-case,max_retry,completed,deadlocks,reclaimed,expected,status,msg
-"A 경쟁 없음",5,"완료",0,5692800,5692800,"DONE",""
-"B 경쟁 오래, 상한 20",20,"완료",7,5692800,5692800,"DONE",""
-"C 경쟁 오래, 상한 1",1,"**중단** Msg 50003",-,0,5692800,"DEADLOCK","Msg 50003"
-```
-
-### results/reclaim.csv
-
-```
-mode,rounds,reclaimed,target,match,escalations,negative_accounts,debt_accounts,audit_rows
-NEGATIVE,15,1839974000,1839974000,일치,0,20000,0,60000
-DEBT,15,1839974000,1839974000,일치,0,0,20000,60000
-audit,60000,60000,60000
-```
-
-### results/replication.csv
-
-```
-step,what,result,detail
-"0","세우기 전 비용","인스턴스 2대 추가, 본체 4대 중지","에이전트 재생성 필요"
-1,"발행 DB 와 대상 표를 만든다","됨",""
-2,"구독 DB 를 만든다","됨",""
-3,"회수 대상 표를 채운다","됨",""
-4,"배포자를 세운다 (sp_adddistributor)","됨",""
-5,"배포 DB 를 만든다 (sp_adddistributiondb)","됨","Configuration option 'allow updates' changed from 0 to 1. Ru"
-6,"발행자를 배포자에 등록 (sp_adddistpublisher)","됨","DBCC execution completed. If DBCC printed error messages, co"
-7,"발행 DB 에 복제를 켠다 (sp_replicationdboption)","됨",""
-8,"발행 항목을 만든다 (sp_addpublication)","됨",""
-9,"스냅샷 에이전트를 붙인다 (sp_addpublication_snapshot)","됨","DBCC execution completed. If DBCC printed error messages, co"
-10,"표를 발행 목록에 넣는다 (sp_addarticle)","됨","DBCC execution completed. If DBCC printed error messages, co"
-11,"구독을 만든다 (sp_addsubscription)","됨","DBCC execution completed. If DBCC printed error messages, co"
-12,"배포 에이전트를 붙인다 (sp_addpushsubscription_agent)","됨","HResult 0x1FD1, Level 16, State 1"
-13,"배포 에이전트에 -EncryptionLevel 0 을 붙인다","됨",""
-"-","지문 대조","확인 못 함","에이전트 미완료"
-"-","발행 중인 표에 컬럼을 지운다","됨",""
-"-","발행 중인 표를 통째로 지운다","Msg 3724","Cannot drop the table 'reclaim_target' because it is bei"
-"-","발행 중인 표에 컬럼을 더한다","됨",""
-"-","남는 것","작업 2개, 배포 DB 22MB",""
-```
-
-### results/restart.csv
-
-```
-phase,accounts,dup,missing,total,status
-after_fail,16000,,,490597000,RUNNING
-after_resume,60000,0,0,1839974000,DONE
-concurrency,60000,85000,73000,68000,0,0,17000,0
-```
-
-### results/restore-undo.csv
-
-```
-metric,value
-before,67999983000
-after_wrong,67994290200
-play_delta,300000000
-snapshot,67999983000
-final,68299623000
-expected,68299623000
-```
-
-### results/trigger-cost.csv
-
-```
-mode,wrong_accounts,log_mb,max_locks,note
-"N 규칙 없음",20000,2.1,1,"테이블 락으로 접힘 / 기준선"
-"A AFTER 트리거",0,4.5,1,"테이블 락으로 접힘 / 두 번 쓴다"
-"I INSTEAD OF 트리거",0,2.5,20120,"행 락 20000개 유지 / 한 번 쓴다"
-"P 프로시저(한 문장)",0,2.3,1,"테이블 락으로 접힘 / 한 번 쓴다"
-```
-
-### results/undo.csv
-
-```
-metric,value
-before_balance,67999983000
-after_wrong_reclaim,66394009600
-restored_stopatmark,67999983000
-wrong_accounts,600
-mark_time,2026-08-07 05:22:51.877
-```
-
