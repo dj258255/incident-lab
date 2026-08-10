@@ -3,8 +3,9 @@
 대상: 게임 재화·아이템의 비정상 지급이 의심될 때의 조사 절차
 근거: 같은 디렉토리의 [README.md](README.md) 실측. 수치는 전부 그 실험에서 나온 값입니다.
 
-회수 실행은 이 문서 밖입니다. 뽑은 대상을 안전하게 되돌리는 절차는
-[A04 운영 절차서](../A04-mssql-lock-escalation/RUNBOOK.md)를 따릅니다.
+회수 실행은 이 문서 밖입니다. 뽑은 대상을 실제로 되돌리는 절차는
+[A25 운영 절차서](../A25-currency-reclaim-procedure/RUNBOOK.md)이고, 그 배치를 몇 행으로
+쪼갤지의 근거는 [A04 운영 절차서](../A04-mssql-lock-escalation/RUNBOOK.md)에 있습니다.
 
 ---
 

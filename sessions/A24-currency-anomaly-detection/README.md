@@ -4,6 +4,9 @@
 
 > 이 글은 왜 그런지를 다룹니다. 무엇을 할 것인가는 [RUNBOOK.md](RUNBOOK.md) 에 절차로
 > 정리했습니다. 재화 이상 신고를 받은 뒤 회수 대상을 확정하기까지의 순서입니다.
+>
+> 다음 단계는 [A25 재화 회수 프로시저](../A25-currency-reclaim-procedure/)입니다.
+> **발행** — [통계로는 못 찾고 찾아도 뺄 잔액이 없다](https://dj258255.github.io/IT-Oasis/blog/incident/currency-reclaim) (시리즈 1편)의 **1부**. A25 와 한 편으로 묶여 있습니다.
 
 ## 1. 유명한 이유
 

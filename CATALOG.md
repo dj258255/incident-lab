@@ -54,6 +54,11 @@ Toxiproxy(지연·끊김 주입) · Pumba(컨테이너 kill/pause/netem) · dnsm
 
 ## 2. 트랙 A — DBA (21)
 
+> **A04·A24·A25·A26 은 세 편으로 발행됐습니다.** 세션과 편이 1:1 이 아닙니다.
+> A24(탐지)와 A25(회수)는 한 사고의 앞뒤라 [1편](https://dj258255.github.io/IT-Oasis/blog/incident/currency-reclaim) 한 편에
+> 1부·2부로 묶었고, A04 는 [2편](https://dj258255.github.io/IT-Oasis/blog/incident/mssql-lock-escalation),
+> A26 은 [3편](https://dj258255.github.io/IT-Oasis/blog/incident/mssql-diagnosis) 입니다.
+
 | # | 문제 | 근거·출처 | 재현 | 난이도 |
 |---|---|---|---|---|
 | A01 ★★★ **완료** | **[정수 PK 고갈](sessions/A01-int-pk-exhaustion/)** | **[E1]** Basecamp 2018 int 최대치로 5h 쓰기 중단, GitLab 전사 bigint 전환 (crunchydata.com) | 시퀀스를 21억 직전으로 → INSERT 에러 → 무중단 bigint 마이그레이션(신규 컬럼+백필+스왑). MySQL·PG 비교 | 쉬움 |

@@ -7,6 +7,8 @@
 >
 > 앞 단계는 [A24 재화 이상 탐지](../A24-currency-anomaly-detection/)이고,
 > 배치 크기의 근거는 [A04 락 에스컬레이션](../A04-mssql-lock-escalation/)입니다.
+>
+> **발행** — [통계로는 못 찾고 찾아도 뺄 잔액이 없다](https://dj258255.github.io/IT-Oasis/blog/incident/currency-reclaim) (시리즈 1편)의 **2부**. A24 와 한 편으로 묶여 있습니다.
 
 ## 1. 유명한 이유
 
