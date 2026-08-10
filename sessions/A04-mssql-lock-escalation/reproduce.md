@@ -12,15 +12,7 @@ $ sysctl -n hw.ncpu hw.memsize
 34359738368
 ```
 
-## 1. 환경 기동
-
-```console
-$ docker compose up -d
-[+] Running 1/1
- ✔ Container a04-mssql  Started
-```
-
-## 2. exp1-threshold
+## 1. exp1-threshold
 
 ```console
 $ ./scripts/exp1-threshold.sh
@@ -106,7 +98,7 @@ $ ./scripts/exp1-threshold.sh
   기대지 않는 편이 낫습니다. 5,000 미만이면 어느 쪽이든 승격하지 않습니다.
 ```
 
-## 3. exp2-blocking
+## 2. exp2-blocking
 
 ```console
 $ ./scripts/exp2-blocking.sh
@@ -140,7 +132,7 @@ $ ./scripts/exp2-blocking.sh
   같은 테이블에 쓰기를 하려는 트랜잭션은 RCSI 와 무관하게 그대로 막힙니다.
 ```
 
-## 4. exp3-mitigation
+## 3. exp3-mitigation
 
 ```console
 $ ./scripts/exp3-mitigation.sh
@@ -186,7 +178,7 @@ $ ./scripts/exp3-mitigation.sh
   상황의 임시 수단이고, 켜 두고 잊으면 다음 사고의 재료가 됩니다.
 ```
 
-## 5. exp4-granularity
+## 4. exp4-granularity
 
 ```console
 $ ./scripts/exp4-granularity.sh
@@ -223,7 +215,7 @@ $ ./scripts/exp4-granularity.sh
   5,000행 배치는 어느 쪽이든 행 락 5,000개 이하이고 승격 검사에 안 걸립니다.
 ```
 
-## 6. exp5-two-paths
+## 5. exp5-two-paths
 
 ```console
 $ ./scripts/exp5-two-paths.sh
@@ -271,7 +263,7 @@ $ ./scripts/exp5-two-paths.sh
   dm_tran_locks 만 보면 그 구분이 안 보이므로 확장 이벤트를 함께 봐야 합니다.
 ```
 
-## 7. exp6-index-count
+## 6. exp6-index-count
 
 ```console
 $ ./scripts/exp6-index-count.sh
@@ -367,7 +359,7 @@ $ ./scripts/exp6-index-count.sh
      GROUP BY i.name, i.type_desc;
 ```
 
-## 8. exp7-escalation-retry
+## 7. exp7-escalation-retry
 
 ```console
 $ ./scripts/exp7-escalation-retry.sh
@@ -401,7 +393,7 @@ $ ./scripts/exp7-escalation-retry.sh
   났으니 괜찮다"고 넘기면, 옆 세션이 없는 날 그대로 테이블이 잠깁니다.
 ```
 
-## 9. exp8-partition-escalation
+## 8. exp8-partition-escalation
 
 ```console
 $ ./scripts/exp8-partition-escalation.sh
@@ -435,7 +427,7 @@ $ ./scripts/exp8-partition-escalation.sh
   좁히는 값이 있습니다. 파티션을 두는 이유가 하나 더 있는 셈입니다.
 ```
 
-## 10. exp9-hobt-threshold
+## 9. exp9-hobt-threshold
 
 ```console
 $ ./scripts/exp9-hobt-threshold.sh
@@ -484,7 +476,7 @@ $ ./scripts/exp9-hobt-threshold.sh
   보조 인덱스는 행당 2개가 붙으므로 그 인덱스 기준으로는 2,500행이 상한입니다.
 ```
 
-## 11. exp10-auto-deadlock
+## 10. exp10-auto-deadlock
 
 ```console
 $ ./scripts/exp10-auto-deadlock.sh
@@ -528,7 +520,7 @@ $ ./scripts/exp10-auto-deadlock.sh
   작업이 다른 순서로 돌면 그 둘이 만납니다.
 ```
 
-## 12. exp11-deadlock-retry
+## 11. exp11-deadlock-retry
 
 ```console
 $ ./scripts/exp11-deadlock-retry.sh
@@ -595,7 +587,7 @@ $ ./scripts/exp11-deadlock-retry.sh
   **누가 죽고 누가 사는지는 따로 정해야 합니다.**
 ```
 
-## 13. exp12-index-depth
+## 12. exp12-index-depth
 
 ```console
 $ ./scripts/exp12-index-depth.sh
@@ -716,7 +708,7 @@ $ ./scripts/exp12-index-depth.sh
   경계를 계산할 때 매번 어긋납니다.
 ```
 
-## 14. exp13-retry-and-memory
+## 13. exp13-retry-and-memory
 
 ```console
 $ ./scripts/exp13-retry-and-memory.sh
@@ -794,7 +786,7 @@ $ ./scripts/exp13-retry-and-memory.sh
   **DISABLE 을 켜 두고 락을 무한정 쌓아도 된다고 읽으면 안 됩니다.**
 ```
 
-## 15. exp14-jitter-scale
+## 14. exp14-jitter-scale
 
 ```console
 $ ./scripts/exp14-jitter-scale.sh
@@ -845,6 +837,69 @@ $ ./scripts/exp14-jitter-scale.sh
   재시도 상한에 닿는 경우는 [A25 실험 12](../A25-currency-reclaim-procedure/)
   에서 밟았습니다. 거기서 상한을 1 로 낮추자 배치가 DEADLOCK 상태로 남고
   프로시저가 던졌습니다. **조용히 건너뛰지 않는 것**이 그 절의 요점입니다.
+```
+
+## 15. exp15-retry-and-jitter
+
+```console
+$ ./scripts/exp15-retry-and-jitter.sh
+# 실험 15. 설계를 바꿔 다시 잰다
+# optimized locking: ABSENT
+
+==================================================================
+## 15-1. 락 메모리 압박, 이번에는 행 락을 강제한다
+==================================================================
+
+  실험 13은 행을 늘려 락을 더 쌓으려다 실패했습니다. 규모가 커지자 엔진이
+  **처음부터 페이지 락**을 골라 락 개수가 오히려 줄었습니다(20만 → 1,632).
+
+  이번에는 ROWLOCK 힌트로 행 락을 강제합니다. 승격은 DISABLE 로 막습니다.
+  둘을 같이 걸면 **행 하나당 락 하나가 끝까지 유지**됩니다.
+
+  갱신 행   힌트     총 락 수    KEY          PAGE         락 메모리
+  1000000      없음     2719           0            2718         2MB
+  1000000      ROWLOCK    1002719        1000000      2718         188MB
+  2000000      ROWLOCK    2005436        2000000      5435         555MB
+
+  100만 행, 힌트 없이        락 2719개
+  100만 행, ROWLOCK              락 1002719개
+  가장 많이 쌓은 락         2005436개 (2000000행)
+  그때 락 매니저 메모리   555MB
+  메모리 압박 승격          없음
+
+  **힌트 하나로 락이 자릿수로 늘었습니다.** 실험 13이 못 만든 것은 규모가
+  모자라서가 아니라 **엔진이 굵은 단위로 잡았기 때문**이었습니다.
+
+  그런데 **2005436개를 들고 555MB 를 써도 승격이 안 났습니다.**
+  DISABLE 이 그만큼 단단합니다. 이 컨테이너(6g)에서는 락 매니저가 그 정도를
+  감당하고 메모리 압박 조건에 안 닿습니다.
+
+  **여기까지가 이 랩이 말할 수 있는 한계입니다.** 압박을 만들려면 서버 메모리를
+  더 조여야 하는데, A26 에서 버퍼 풀을 256MB 로 내렸다가 컨테이너가 죽었습니다.
+  DISABLE 을 켜 두고 락을 무한정 쌓아도 된다고 읽으면 안 된다는 것은 그대로입니다.
+
+==================================================================
+## 15-2. 지터, 이번에는 줄을 안 서게 한다
+==================================================================
+
+  실험 14는 세션을 20개까지 늘려도 안 갈렸습니다. 각 갱신이 승격을 일으켜
+  **테이블 락으로 줄을 서 버렸기** 때문입니다. 회차마다 데드락이 한 건씩만
+  났고, 물러난 세션이 한꺼번에 몰릴 무리가 안 생겼습니다.
+
+  이번에는 DISABLE 로 승격을 막고 ROWLOCK 으로 행 락을 강제합니다.
+  줄을 안 서므로 여럿이 동시에 뒤엉킵니다.
+
+  백오프      회차     데드락      완료
+  고정 0.5초  1          1건           16/16
+  고정 0.5초  2          1건           16/16
+  고정 0.5초  3          1건           16/16
+  지터         1          1건           16/16
+  지터         2          1건           16/16
+  지터         3          1건           16/16
+/Users/beomsu/Desktop/incident-lab/sessions/A04-mssql-lock-escalation/scripts/exp15-retry-and-jitter.sh: line 207: /Users/beomsu/Desktop/incident-lab/sessions/A04-mssql-lock-escalation/results/.js.f: No such file or directory
+/Users/beomsu/Desktop/incident-lab/sessions/A04-mssql-lock-escalation/scripts/exp15-retry-and-jitter.sh: line 207: /Users/beomsu/Desktop/incident-lab/sessions/A04-mssql-lock-escalation/results/.js.j: No such file or directory
+
+/Users/beomsu/Desktop/incident-lab/sessions/A04-mssql-lock-escalation/scripts/exp15-retry-and-jitter.sh: line 214: F_DL: unbound variable
 ```
 
 ## 결과 데이터
@@ -954,6 +1009,18 @@ mode,round,workers,deadlocks,completed,max_attempts
 "지터",3,20,0,20,1
 ```
 
+### results/jitter2.csv
+
+```
+mode,round,deadlocks,completed
+"고정 0.5초",1,1,16
+"고정 0.5초",2,1,16
+"고정 0.5초",3,1,16
+"지터",1,1,16
+"지터",2,1,16
+"지터",3,1,16
+```
+
 ### results/lock-memory.csv
 
 ```
@@ -962,6 +1029,15 @@ rows,table_x,total_locks,lock_mem_mb,escalation_events
 600000,0,1632,76,0
 1200000,0,3262,76,0
 2000000,0,5436,76,0
+```
+
+### results/lock-memory2.csv
+
+```
+rows,hint,table_x,total_locks,key_locks,page_locks,lock_mem_mb,events
+1000000,none,0,2719,0,2718,2,0
+1000000,ROWLOCK,0,1002719,1000000,2718,188,0
+2000000,ROWLOCK,0,2005436,2000000,5435,555,0
 ```
 
 ### results/mitigation.csv

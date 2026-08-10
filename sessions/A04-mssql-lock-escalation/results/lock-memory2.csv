@@ -1,0 +1,4 @@
+rows,hint,table_x,total_locks,key_locks,page_locks,lock_mem_mb,events
+1000000,none,0,2719,0,2718,2,0
+1000000,ROWLOCK,0,1002719,1000000,2718,188,0
+2000000,ROWLOCK,0,2005436,2000000,5435,555,0
