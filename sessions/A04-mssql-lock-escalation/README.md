@@ -6,7 +6,7 @@ SQL Server 락 에스컬레이션 / SQL Server 2022 (RTM-CU26) 16.0.4265 / 근�
 > 정리했습니다. 대량 보정 배치를 돌리기 전 확인, 배치 크기 결정, 작업 중 감시 쿼리,
 > 승격이 이미 일어났을 때의 대응 순서입니다.
 >
-> **발행** — [보정 대상이 아닌 계정까지 18초 멈췄다](https://dj258255.github.io/IT-Oasis/blog/incident/mssql-lock-escalation) (시리즈 2편)
+> **발행** — [데이터 수만 건을 한 번에 고쳤더니 상관없는 이용자까지 18초 멈췄다](https://dj258255.github.io/IT-Oasis/blog/incident/mssql-lock-escalation) (시리즈 2편)
 
 ## 1. 유명한 이유
 

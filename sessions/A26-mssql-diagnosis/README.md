@@ -7,7 +7,7 @@ SQL Server 장애 진단 / SQL Server 2022 (RTM-CU26) 16.0.4265 / 근거 등급 
 > [A04](../A04-mssql-lock-escalation/)·[A24](../A24-currency-anomaly-detection/)·[A25](../A25-currency-reclaim-procedure/)
 > 에서 임시로 짜 쓴 진단 쿼리들을 재사용 가능한 순서로 정리한 세션입니다.
 >
-> **발행** — [범인 쿼리가 상위 목록에 안 잡힌다](https://dj258255.github.io/IT-Oasis/blog/incident/mssql-diagnosis) (시리즈 3편)
+> **발행** — [느리다는 신고는 왔는데 느린 쿼리 목록은 멀쩡하다](https://dj258255.github.io/IT-Oasis/blog/incident/mssql-diagnosis) (시리즈 3편)
 
 ## 1. 왜 이 세션인가
 

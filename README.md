@@ -71,8 +71,8 @@ sessions/<트랙><번호>-<슬러그>/
 | 발행 편 | 세션 | 다루는 것 |
 |---|---|---|
 | [1편 통계로는 못 찾고 찾아도 뺄 잔액이 없다](https://dj258255.github.io/IT-Oasis/blog/incident/currency-reclaim) | A24 (1부) + A25 (2부) | 이상 지급을 찾는 것부터 실제로 되돌리기까지 |
-| [2편 보정 대상이 아닌 계정까지 18초 멈췄다](https://dj258255.github.io/IT-Oasis/blog/incident/mssql-lock-escalation) | A04 | 1편의 배치 크기(4,000행)가 어디서 나왔는지 |
-| [3편 범인 쿼리가 상위 목록에 안 잡힌다](https://dj258255.github.io/IT-Oasis/blog/incident/mssql-diagnosis) | A26 | 앞 두 편이 전제한 "원인을 아는 상태"를 걷어낸 진단 순서 |
+| [2편 데이터 수만 건을 한 번에 고쳤더니 상관없는 이용자까지 18초 멈췄다](https://dj258255.github.io/IT-Oasis/blog/incident/mssql-lock-escalation) | A04 | 1편의 배치 크기(4,000행)가 어디서 나왔는지 |
+| [3편 느리다는 신고는 왔는데 느린 쿼리 목록은 멀쩡하다](https://dj258255.github.io/IT-Oasis/blog/incident/mssql-diagnosis) | A26 | 앞 두 편이 전제한 "원인을 아는 상태"를 걷어낸 진단 순서 |
 
 <!-- 세션이 완료되면 아래에 추가 -->
 - [F01 한맥 0으로 나눈 값이 주문 검증을 뚫다](sessions/F01-hanmac-divide-by-zero/) — 주문 120건 중 NaN 10건이 상하한 비교를 뚫고 접수(Infinity 10건은 상한에 걸려 거부). 킬스위치를 끄고 재니 유한성 가드 단독으로 Infinity 10 + NaN 10을 전부 거부해 비정상 접수 0건, 킬스위치는 섞은 배치에서 19건째에 발동해 정상 84건을 함께 차단. 최소 재현과 Spring 주문접수 API 재현
