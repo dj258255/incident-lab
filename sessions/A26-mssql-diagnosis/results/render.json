@@ -209,6 +209,241 @@
      "green"
     ]
    ]
+  },
+  {
+   "type": "term",
+   "out": "fig-wait-types.png",
+   "font": 19,
+   "title": "대기 유형마다 가리키는 곳이 다르다",
+   "lines": [
+    [
+     [
+      "-- 같은 표에 네 가지 상황을 만들고 차분 상위를 본다",
+      "dim"
+     ]
+    ],
+    "",
+    [
+     [
+      "  만든 상황            차분 상위 대기           계열         무엇을 가리키나",
+      "bold"
+     ]
+    ],
+    [
+     [
+      "  A 옆에서 20만 행 갱신 LCK_M_IS 6135ms                락            누가 막고 있다",
+      "green"
+     ]
+    ],
+    [
+     [
+      "                             CXCONSUMER 2278ms",
+      "cyan"
+     ]
+    ],
+    [
+     [
+      "                             SLEEP_BPOOL_STEAL 341ms",
+      "cyan"
+     ]
+    ],
+    [
+     [
+      "  B 표가 버퍼 풀보다 큼 SLEEP_BPOOL_STEAL 361ms        메모리·디스크 메모리가 모자라 디스크를 오간다",
+      "green"
+     ]
+    ],
+    [
+     [
+      "                             MEMORY_ALLOCATION_EXT 105ms",
+      "cyan"
+     ]
+    ],
+    [
+     [
+      "                             SOS_SCHEDULER_YIELD 29ms",
+      "cyan"
+     ]
+    ],
+    [
+     [
+      "  C 작은 커밋 12,000회 WRITELOG 1984ms                로그         로그를 쓰고 기다린다",
+      "green"
+     ]
+    ],
+    [
+     [
+      "                             PREEMPTIVE_OS_AUTHENTICATIONOPS 12ms",
+      "cyan"
+     ]
+    ],
+    [
+     [
+      "                             PREEMPTIVE_OS_QUERYREGISTRY 8ms",
+      "cyan"
+     ]
+    ],
+    [
+     [
+      "  D 병렬 정렬          CXSYNC_PORT 383ms              병렬         병렬 처리 중이다",
+      "green"
+     ]
+    ],
+    [
+     [
+      "                             PAGEIOLATCH_SH 185ms",
+      "cyan"
+     ]
+    ],
+    [
+     [
+      "                             SLEEP_BPOOL_STEAL 87ms",
+      "cyan"
+     ]
+    ],
+    "",
+    [
+     [
+      "  락이 아닌 셋은 블로킹 사슬을 따라가 봐야 아무도 안 나온다.",
+      "dim"
+     ]
+    ]
+   ]
+  },
+  {
+   "type": "term",
+   "out": "fig-query-store.png",
+   "font": 20,
+   "title": "캐시가 비면 범인도 사라진다",
+   "lines": [
+    [
+     [
+      "-- 같은 부하를 두 곳에서 본다",
+      "dim"
+     ]
+    ],
+    "",
+    [
+     [
+      "  시점                         DMV 계획     DMV 논리읽기 QS 쿼리      QS 논리읽기",
+      "bold"
+     ]
+    ],
+    [
+     [
+      "  부하 직후                  3              187800           6              187805",
+      "green"
+     ]
+    ],
+    [
+     [
+      "",
+      "red"
+     ]
+    ],
+    "",
+    [
+     [
+      "  dm_exec_query_stats 는 캐시에 있는 계획의 통계다.",
+      "dim"
+     ]
+    ],
+    [
+     [
+      "  Query Store 는 디스크에 써서 남는다.",
+      "dim"
+     ]
+    ]
+   ]
+  },
+  {
+   "type": "term",
+   "out": "fig-collector.png",
+   "font": 20,
+   "title": "수집기가 있으면 지난 구간을 골라 볼 수 있다",
+   "lines": [
+    [
+     [
+      "  4회차와 5회차 사이(사고 구간):",
+      "bold"
+     ]
+    ],
+    [
+     [
+      "    LCK_M_IS 4782ms",
+      "red"
+     ]
+    ],
+    [
+     [
+      "    PREEMPTIVE_OS_AUTHENTICATIONOPS 30ms",
+      "red"
+     ]
+    ],
+    [
+     [
+      "    PAGEIOLATCH_SH 12ms",
+      "red"
+     ]
+    ],
+    "",
+    [
+     [
+      "  7회차와 8회차 사이(사고가 아닌 구간):",
+      "bold"
+     ]
+    ],
+    [
+     [
+      "    PREEMPTIVE_OS_AUTHENTICATIONOPS 17ms",
+      "green"
+     ]
+    ],
+    [
+     [
+      "    WRITELOG 2ms",
+      "green"
+     ]
+    ],
+    [
+     [
+      "    PREEMPTIVE_OS_NETVALIDATEPASSWORDPOLICY 1ms",
+      "green"
+     ]
+    ],
+    "",
+    [
+     [
+      "  전체 누적으로 보면(실험 1이 지적한 그 문제):",
+      "bold"
+     ]
+    ],
+    [
+     [
+      "    LCK_M_IS 37675ms",
+      "yellow"
+     ]
+    ],
+    [
+     [
+      "    SLEEP_BPOOL_STEAL 19287ms",
+      "yellow"
+     ]
+    ],
+    [
+     [
+      "    CXCONSUMER 12369ms",
+      "yellow"
+     ]
+    ],
+    "",
+    [
+     [
+      "  누적으로 보면 사고 구간이 6.7배로 부풀려 보인다.",
+      "dim"
+     ]
+    ]
+   ]
   }
  ]
 }
