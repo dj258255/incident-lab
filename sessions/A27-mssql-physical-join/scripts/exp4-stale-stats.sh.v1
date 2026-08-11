@@ -1,0 +1,138 @@
+#!/usr/bin/env bash
+# 실험 4. 통계가 낡으면 연산자를 잘못 고른다.
+#
+# 실험 3에서 추정이 정확한데도 최적이 아닌 것을 고르는 구간을 봤다.
+# 그러면 **추정 자체가 틀리면** 어떻게 되는가.
+#
+# 실무에서 이 상황이 나는 자리가 정해져 있다.
+#   보정 배치가 대상 표에 수십만 행을 넣은 직후
+#   임시 표(#temp)에 적재하고 바로 조인
+#   야간 적재 뒤 통계 갱신 전에 조회가 들어옴
+#
+# 옵티마이저는 표에 행이 몇 개인지 통계로 안다. 통계가 1,000행이라고
+# 말하는데 실제가 100만 행이면 **바깥이 작다고 믿고 Nested Loops 를 고른다.**
+# 그리고 그 루프가 100만 번 돈다.
+#
+# 자동 갱신을 꺼야 재현된다. 켜져 있으면 20% 근처에서 알아서 갱신해 버린다.
+set -uo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+. "$ROOT/scripts/lib.sh"
+OUT="$ROOT/results"; mkdir -p "$OUT"
+SEED=${SEED:-1000}
+GROWN=${GROWN:-1000000}
+
+wait_ready || exit 2
+
+probe(){ # $1=라벨 → 연산자·추정·실제·논리읽기
+  local label="$1"
+  local sql="SELECT COUNT(*) AS c, SUM(o.amount) AS s
+               FROM batch_target o JOIN grade g ON g.grade_id = o.grade_id;"
+  QD "DBCC FREEPROCCACHE; DBCC DROPCLEANBUFFERS;" >/dev/null 2>&1
+  local xml; xml=$(docker exec "$CT" "$SQLCMD" -S localhost -U sa -P "$PW" -C -d "$DB" -y 0 -Q "SET SHOWPLAN_XML ON;
+GO
+$sql
+GO" 2>/dev/null | tr '<' '\n<')
+  local op est
+  op=$(echo "$xml" | grep -oE 'PhysicalOp="(Nested Loops|Hash Match|Merge Join)"' | head -1 | sed 's/.*="//;s/"//')
+  est=$(echo "$xml" | grep -A2 -E 'PhysicalOp="(Nested Loops|Hash Match|Merge Join)"' \
+        | grep -oE 'EstimateRows="[0-9.e+]+"' | head -1 | sed 's/.*="//;s/"//')
+  local io; io=$(QD "SET STATISTICS IO ON; SET STATISTICS TIME ON;
+$sql")
+  local reads cpu
+  reads=$(echo "$io" | grep -oE 'logical reads [0-9]+' | grep -oE '[0-9]+' | paste -sd+ - | bc 2>/dev/null)
+  cpu=$(echo "$io" | grep -oE 'CPU time = [0-9]+' | tail -1 | grep -oE '[0-9]+')
+  local rows; rows=$(num "$(QD "SET NOCOUNT ON;
+    SELECT CAST(rows AS varchar(20)) FROM sys.partitions WHERE object_id=OBJECT_ID('batch_target') AND index_id IN (0,1);")")
+  # 통계가 마지막으로 갱신된 시점의 행 수
+  local statrows; statrows=$(num "$(QD "SET NOCOUNT ON;
+    SELECT TOP 1 CAST(rows AS varchar(20)) FROM sys.dm_db_stats_properties(OBJECT_ID('batch_target'), 1);")")
+
+  printf "  %-24s %-14s %12s %12s %12s %10s\n" \
+    "$label" "${op:-?}" "${statrows:-?}" "${est:-?}" "${rows:-?}" "${reads:-?}"
+  echo "\"$label\",\"${op:-?}\",\"${statrows:-0}\",\"${est:-0}\",\"${rows:-0}\",\"${reads:-0}\",\"${cpu:-0}\"" >> "$OUT/stale-stats.csv"
+}
+
+: > "$OUT/stale-stats.csv"
+echo "label,operator,stat_rows,est_rows,actual_rows,logical_reads,cpu_ms" >> "$OUT/stale-stats.csv"
+
+{
+echo "# 실험 4. 통계가 낡으면 연산자를 잘못 고른다"
+echo
+echo "  실험 3에서 추정이 정확한데도 최적이 아닌 것을 고르는 구간을 봤습니다."
+echo "  그러면 추정 자체가 틀리면 어떻게 되는지가 다음 질문입니다."
+echo
+echo "  보정 배치가 대상 표에 수십만 행을 넣은 직후 조회하는 상황을 만듭니다."
+echo "  자동 갱신을 꺼야 재현됩니다. 켜져 있으면 20% 근처에서 알아서 갱신합니다."
+echo
+
+# ── 1) 작은 표로 시작하고 통계를 정확히 만든다 ──────────────────────────
+QDX "SET NOCOUNT ON;
+ALTER DATABASE [$DB] SET AUTO_UPDATE_STATISTICS OFF;
+ALTER DATABASE [$DB] SET AUTO_CREATE_STATISTICS OFF;
+DROP TABLE IF EXISTS batch_target;
+CREATE TABLE batch_target (
+    order_id INT    NOT NULL PRIMARY KEY,
+    grade_id INT    NOT NULL,
+    amount   BIGINT NOT NULL);
+INSERT INTO batch_target (order_id, grade_id, amount)
+SELECT TOP ($SEED) i, (i % 1000) + 1, 1000 FROM nums_src;
+CREATE INDEX ix_bt_grade ON batch_target (grade_id) INCLUDE (amount);
+UPDATE STATISTICS batch_target WITH FULLSCAN;" 2>/dev/null || {
+  # nums_src 가 없으면 만든다
+  QDX "SET NOCOUNT ON;
+  DROP TABLE IF EXISTS nums_src;
+  CREATE TABLE nums_src (i INT NOT NULL PRIMARY KEY);
+  WITH n AS (SELECT TOP ($GROWN) ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS i
+               FROM sys.all_objects a CROSS JOIN sys.all_objects b)
+  INSERT INTO nums_src WITH (TABLOCK) (i) SELECT i FROM n;" || exit 2
+  QDX "SET NOCOUNT ON;
+  ALTER DATABASE [$DB] SET AUTO_UPDATE_STATISTICS OFF;
+  ALTER DATABASE [$DB] SET AUTO_CREATE_STATISTICS OFF;
+  DROP TABLE IF EXISTS batch_target;
+  CREATE TABLE batch_target (
+      order_id INT    NOT NULL PRIMARY KEY,
+      grade_id INT    NOT NULL,
+      amount   BIGINT NOT NULL);
+  INSERT INTO batch_target (order_id, grade_id, amount)
+  SELECT TOP ($SEED) i, (i % 1000) + 1, 1000 FROM nums_src;
+  CREATE INDEX ix_bt_grade ON batch_target (grade_id) INCLUDE (amount);
+  UPDATE STATISTICS batch_target WITH FULLSCAN;" || exit 2
+}
+
+echo "=================================================================="
+echo "## 통계가 맞을 때, 낡았을 때, 다시 맞췄을 때"
+echo "=================================================================="
+echo
+printf "  %-24s %-14s %12s %12s %12s %10s\n" "상태" "연산자" "통계상 행수" "추정행수" "실제행수" "논리읽기"
+probe "A 통계가 맞음 (${SEED}행)"
+
+# ── 2) 통계를 안 갱신한 채 행을 100만으로 늘린다 ────────────────────────
+QDX "SET NOCOUNT ON;
+INSERT INTO batch_target WITH (TABLOCK) (order_id, grade_id, amount)
+SELECT i, (i % 1000) + 1, 1000 FROM nums_src WHERE i > $SEED;" || exit 2
+probe "B 100만행인데 통계는 그대로"
+
+# ── 3) 통계만 갱신한다. 인덱스도 쿼리도 안 건드린다 ─────────────────────
+QDX "UPDATE STATISTICS batch_target WITH FULLSCAN;" || exit 2
+probe "C 통계만 갱신"
+
+echo
+echo "  B 와 C 는 **같은 데이터, 같은 쿼리, 같은 인덱스**입니다."
+echo "  바뀐 것은 통계 하나뿐입니다."
+echo
+
+echo "=================================================================="
+echo "## 정리"
+echo "=================================================================="
+echo
+echo "  통계가 낡으면 옵티마이저는 표가 작다고 믿습니다. 작은 표에는"
+echo "  Nested Loops 가 맞으므로 그것을 고르고, 그 루프가 실제 행 수만큼 돕니다."
+echo
+echo "  **인덱스를 더 만들어도 안 고쳐집니다.** 인덱스는 이미 있고 틀린 것은"
+echo "  행 수 추정이기 때문입니다. 고칠 것은 통계입니다."
+echo
+echo "  실무에서 이 상황이 나는 자리는 정해져 있습니다. 대량 적재 직후,"
+echo "  임시 표에 넣고 바로 조인, 야간 배치 뒤 통계 갱신 전 조회입니다."
+QDX "ALTER DATABASE [$DB] SET AUTO_UPDATE_STATISTICS ON;
+     ALTER DATABASE [$DB] SET AUTO_CREATE_STATISTICS ON;" >/dev/null 2>&1
+} 2>&1 | tee "$OUT/exp4-stale-stats.txt"

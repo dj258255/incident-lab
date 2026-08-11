@@ -1,0 +1,14 @@
+# A27 재현 환경
+# 옵티마이저가 물리 조인 연산자를 어떻게 고르고, 어디서 뒤집히고,
+# 강제하면 무엇을 대가로 내는지 잰다.
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: a27-mssql
+    cpus: 4
+    mem_limit: 6g
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Lab_Passw0rd!"
+      MSSQL_PID: "Developer"
+    ports: ["11441:1433"]

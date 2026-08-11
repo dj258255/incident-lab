@@ -1,0 +1,3 @@
+label,operator,est_rows,actual_rows,logical_reads,cpu_ms
+"A 통계를 안 갱신","Hash Match","1224.74","500000","1623","239"
+"B 통계만 갱신","Hash Match","500000","500000","1623","48"
