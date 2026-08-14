@@ -71,7 +71,7 @@ sessions/<트랙><번호>-<슬러그>/
 | 발행 편 | 세션 | 다루는 것 |
 |---|---|---|
 | [1편 통계로는 못 찾고 찾아도 뺄 잔액이 없다](https://dj258255.github.io/IT-Oasis/blog/incident/currency-reclaim) | A24 (1부) + A25 (2부) | 이상 지급을 찾는 것부터 실제로 되돌리기까지 |
-| [2편 데이터 수만 건을 한 번에 고쳤더니 상관없는 이용자까지 18초 멈췄다](https://dj258255.github.io/IT-Oasis/blog/incident/mssql-lock-escalation) | A04 | 1편의 배치 크기(4,000행)가 어디서 나왔는지 |
+| [2편 데이터 수만 건을 한 번에 고쳤더니 상관없는 이용자까지 배치 내내 멈췄다](https://dj258255.github.io/IT-Oasis/blog/incident/mssql-lock-escalation) | A04 | 1편의 배치 크기(4,000행)가 어디서 나왔는지 |
 | [3편 느리다는 신고는 왔는데 느린 쿼리 목록은 멀쩡하다](https://dj258255.github.io/IT-Oasis/blog/incident/mssql-diagnosis) | A26 | 앞 두 편이 전제한 "원인을 아는 상태"를 걷어낸 진단 순서 |
 
 <!-- 세션이 완료되면 아래에 추가 -->
