@@ -67,8 +67,6 @@ BEGIN
         IF @fail_at IS NOT NULL AND @round = @fail_at
             THROW 50001, N'주입한 실패', 1;
 
-        DELETE FROM @aud;
-
         -- 배치 하나를 데드락 재시도로 감싼다. 재시도는 **트랜잭션 경계 밖**에 둔다.
         -- 안에 두면 되돌린 것을 못 되돌린다(A04 실험 11).
         SET @try = 0;
@@ -76,6 +74,10 @@ BEGIN
         WHILE @try < @max_retry AND @done_batch = 0
         BEGIN
         SET @try = @try + 1;
+        -- 시도마다 비운다. 테이블 변수는 롤백에 안 딸려가므로, UPDATE 는 성공하고
+        -- 뒤 문장에서 데드락이 나면 재시도 때 OUTPUT 이 같은 account_id 를 또 넣어
+        -- PK 위반 2627 로 죽는다. 2627 은 1205 가 아니라 재시도도 안 된다.
+        DELETE FROM @aud;
         BEGIN TRY
         BEGIN TRAN;
 
