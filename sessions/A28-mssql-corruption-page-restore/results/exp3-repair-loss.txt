@@ -1,0 +1,19 @@
+# 실험 3. repair 의 값 — 사라진 행 수 실측
+
+## 3-1. 백업 없는 사본을 같은 방식으로 손상
+  30000행 적재, 페이지 1:450 손상, 백업은 없다
+
+## 3-2. 단일 사용자 모드에서 REPAIR_ALLOW_DATA_LOSS
+Msg 8945, Level 16, State 1, Server fbcf8a7de8c5, Line 1
+Msg 8928, Level 16, State 1, Server fbcf8a7de8c5, Line 1
+Msg 8939, Level 16, State 98, Server fbcf8a7de8c5, Line 1
+Msg 8976, Level 16, State 1, Server fbcf8a7de8c5, Line 1
+Msg 8978, Level 16, State 1, Server fbcf8a7de8c5, Line 1
+Repair: The Clustered index successfully rebuilt for the object "dbo.ledger" in database "corruption_lab_norepair".
+
+## 3-3. 무엇이 사라졌나
+  전: 30000행 → 후: 29923행  =  사라진 행 77
+  CHECKDB: 0 오류 (일관성은 회복됨)
+
+결론: repair 는 페이지를 지워서 일관성을 산다. 사라진 77행은 어디에도
+안 남는다 — 실험 2 의 페이지 복원(손실 0)과 이것의 차이가 로그 체인 하나다.

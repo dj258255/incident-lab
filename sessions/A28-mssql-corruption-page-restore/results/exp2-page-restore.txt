@@ -1,0 +1,31 @@
+# 실험 2. 페이지 복원 — 손실 0 을 세 가지로 검산
+
+대상 페이지: 1:450
+
+## 2-1. 전체 백업에서 그 페이지만 (NORECOVERY)
+Processed 1 pages for database 'corruption_lab', file 'corruption_lab' on file 1.
+RESTORE DATABASE ... FILE=<name> successfully processed 1 pages in 0.021 seconds (0.372 MB/sec).
+
+## 2-2. 기존 로그 백업 복원
+Processed 0 pages for database 'corruption_lab', file 'corruption_lab' on file 1.
+RESTORE LOG successfully processed 0 pages in 0.002 seconds (0.000 MB/sec).
+
+## 2-3. 꼬리 로그를 뜨고, 그것까지 복원해야 끝난다
+Processed 21 pages for database 'corruption_lab', file 'corruption_lab_log' on file 1.
+BACKUP LOG successfully processed 21 pages in 0.004 seconds (40.039 MB/sec).
+RESTORE LOG successfully processed 0 pages in 0.002 seconds (0.000 MB/sec).
+
+## 2-4. 검산 셋
+  총 행수           : 30010 (기대: 적재 + 10)
+  백업 이후 넣은 행   : 10 / 10  ← 로그 체인이 되살린 몫
+  금액 합계          : 16373070
+
+## 2-5. CHECKDB 재검
+  0 오류 (출력 없음 = 깨끗)
+
+## 2-6. suspect_pages 의 상태 전이
+450 4 3
+  (event_type 4 = 복원됨, 5 = 수리됨)
+
+결론: DB 를 내리지 않고 페이지 하나만 되돌렸고, 백업 이후의 쓰기까지 로그가
+따라잡아 손실 0. 전제는 FULL 복구 모델과 끊기지 않은 로그 체인이다(A23 과 같은 원리).

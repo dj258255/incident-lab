@@ -1,0 +1,51 @@
+# A28 손상은 조용하고, 복구는 체인이 정한다 (SQL Server 페이지 손상과 페이지 복원)
+
+## 1. 질문
+
+A23 과 DBTower 는 **백업이 온전한가**를 실복원으로 판정했다. 이 세션의 질문은 그 다음이다.
+**지금 돌고 있는 DB 가 조용히 손상됐다면** — 무엇이 언제 알려 주고, 어디까지 되돌릴 수 있는가.
+
+근거 등급은 **E2**다. 특정 회사의 공개 장애가 아니라, 벤더 문서가 조건을 명시해 경고하는
+함정이다. [DBCC CHECKDB](https://learn.microsoft.com/en-us/sql/t-sql/database-console-commands/dbcc-checkdb-transact-sql)
+문서는 `REPAIR_ALLOW_DATA_LOSS` 를 "백업에서 복원할 수 없을 때의 마지막 수단"으로 못 박고,
+[페이지 복원](https://learn.microsoft.com/en-us/sql/relational-databases/backup-restore/restore-pages-sql-server)
+문서는 FULL 복구 모델과 끊기지 않은 로그 체인을 전제로 요구한다. 이 세션은 그 두 길의
+차이를 같은 손상으로 실측한다.
+
+## 2. 실험
+
+| # | 스크립트 | 질문 | 판정 |
+|---|---|---|---|
+| 1 | `exp1-detect.sh` | 손상은 어떻게 드러나는가 | 읽기 오류 번호 · `suspect_pages` 기록 · CHECKDB 보고 |
+| 2 | `exp2-page-restore.sh` | 페이지만 되돌리면 잃는 것이 있는가 | 백업 이후 넣은 10행 생존 · 금액 합계 · CHECKDB 0 오류 |
+| 3 | `exp3-repair-loss.sh` | 백업이 없으면 repair 는 무엇을 지우는가 | 전/후 행 수 차이 |
+
+- 환경: SQL Server 2022 Developer · 로컬 Docker(ARM 에뮬레이션) · 원장 3만 행
+- 손상 방법: DB 를 OFFLINE 으로 내리고 `.mdf` 의 데이터 페이지 한 장에서 32바이트를
+  0 으로 덮는다(파일 오프셋 = 페이지 번호 × 8192). 페이지 검증이 기본값 CHECKSUM 이라
+  다음 읽기에서 체크섬 불일치로 드러난다
+- 판정은 시간이 아니라 **행 수·오류 번호·상태 전이**로만 한다(ARM 에뮬레이션이라 시간은 근거가 못 된다)
+- 컨테이너는 A26 것을 재사용한다. 새로 띄우면 메모리가 모자라다(실측 6.5GiB/7.7GiB).
+  랩 DB(`lostark_log`·`lostark_ops`)는 건드리지 않는다
+
+## 3. 결과 요약
+
+결과 원문은 `results/` 에 있다.
+
+1. **손상은 읽기 전까지 조용하다.** OFFLINE→손상→ONLINE 까지 아무 오류가 없다.
+   그 페이지(1:450)를 읽는 순간 **824** 로 죽고(`incorrect checksum (expected: 0x1124b6cf,
+   actual: 0x229cb5ef)`), 엔진이 `msdb.dbo.suspect_pages` 에 **event_type 2(잘못된 체크섬)** 로
+   스스로 적는다. CHECKDB 가 Msg 8939·8928·8976·8978 로 범위를 확정한다
+2. **페이지 복원은 DB 를 내리지 않는다.** `RESTORE DATABASE ... PAGE='1:450'` 이 그 한 장만
+   전체 백업 시점으로 되돌리고, 로그 백업 → 꼬리 로그까지 재생하니 **백업 이후에 쓴 10행이
+   전부 살았다**(총 30,010행, 금액 합계 검산 일치, CHECKDB 0 오류). `suspect_pages` 는
+   event_type **2 → 4(복원됨)** 로 전이. 마지막 꼬리 로그 복원이 절차의 급소다
+3. **repair 는 페이지를 지워서 일관성을 산다.** 같은 손상에 `REPAIR_ALLOW_DATA_LOSS` 를
+   쓰니 CHECKDB 는 깨끗해졌지만 **30,000행이 29,923행이 됐다 — 77행이 사라졌고 어디에도
+   안 남는다.** 실험 2 와 이것의 차이는 **로그 체인 하나**다
+
+## 4. 이 랩에서 정한 순서
+
+**발견(824·suspect_pages) → 범위 확정(CHECKDB) → 백업 체인이 있으면 페이지 복원 →
+없을 때만 repair.** 그리고 825(재시도 후 성공)는 아직 사고가 아니지만 디스크가 죽어 가는
+조기 경보라, 잡히는 즉시 사람을 부른다.

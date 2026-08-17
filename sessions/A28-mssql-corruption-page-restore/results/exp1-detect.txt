@@ -1,0 +1,33 @@
+# 실험 1. 손상 탐지 — 읽기 824, suspect_pages, CHECKDB
+
+## 1-1. 준비: FULL 복구 모델 + 원장 30000행 + 백업 체인
+  적재 30000행, 금액 합계 16365300
+  전체 백업 완료 (WITH CHECKSUM)
+  백업 뒤 10행 추가 → 총 30010행, 로그 백업 1개
+
+## 1-2. 손상시킬 페이지 고르기 (중간쯤의 데이터 페이지)
+  대상: 1:450 (파일 오프셋 3686400)
+
+## 1-3. 파일에서 직접 32바이트를 지운다 (OFFLINE 상태에서)
+  손상 완료, DB 는 다시 ONLINE — 겉보기로는 아무 일도 없다
+
+## 1-4. 그 페이지를 읽으면
+Msg 824, Level 24, State 2, Server fbcf8a7de8c5, Line 1
+SQL Server detected a logical consistency-based I/O error: incorrect checksum (expected: 0x1124b6cf; actual: 0x229cb5ef). It occurred during a read of page (1:450) in database ID 6 at offset 0x00000000384000 in file '/var/opt/mssql/data/corruption_lab.mdf'.  Additional messages in the SQL Server error log or operating system error log may provide more detail. This is a severe error condition that threatens database integrity and must be corrected immediately. Complete a full database consistency check (DBCC CHECKDB). This error can be caused by many factors; for more information, see https://go.microsoft.com/fwlink/?linkid=2252374.
+
+## 1-5. msdb.dbo.suspect_pages — 엔진이 스스로 적었다
+6 1 450 2 1
+  (event_type 1=823/824, 2=잘못된 체크섬, 3=찢어진 페이지)
+
+## 1-6. DBCC CHECKDB
+Msg 8939, Level 16, State 98, Server fbcf8a7de8c5, Line 1
+Table error: Object ID 901578250, index ID 1, partition ID 72057594045726720, alloc unit ID 72057594052476928 (type In-row data), page (1:450). Test (IS_OFF (BUF_IOERR, pBUF->bstat)) failed. Values are 133129 and -4.
+Msg 8928, Level 16, State 1, Server fbcf8a7de8c5, Line 1
+Object ID 901578250, index ID 1, partition ID 72057594045726720, alloc unit ID 72057594052476928 (type In-row data): Page (1:450) could not be processed.  See other errors for details.
+Msg 8976, Level 16, State 1, Server fbcf8a7de8c5, Line 1
+Table error: Object ID 901578250, index ID 1, partition ID 72057594045726720, alloc unit ID 72057594052476928 (type In-row data). Page (1:450) was not seen in the scan although its parent (1:344) and previous (1:449) refer to it. Check any previous errors.
+Msg 8978, Level 16, State 1, Server fbcf8a7de8c5, Line 1
+Table error: Object ID 901578250, index ID 1, partition ID 72057594045726720, alloc unit ID 72057594052476928 (type In-row data). Page (1:451) is missing a reference from previous page (1:450). Possible chain linkage problem.
+
+결론: 손상은 읽기 전까지 조용하다. 읽기가 824 로 죽고, suspect_pages 에 남고,
+CHECKDB 가 범위를 확정한다. 다음 실험이 그 페이지만 되돌린다.
