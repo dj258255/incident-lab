@@ -1,0 +1,24 @@
+# 실험 3. 고아 사용자 — SID 가 안 맞으면 접속이 없다
+
+## 3-1. 승격된 보조에 앱이 접속하면
+  app_login 접속: Sqlcmd: Error: Microsoft ODBC Driver 18 for SQL Server : Login failed 
+  — 로그인은 master 에 살아서 DB 백업을 안 따라온다
+
+## 3-2. 보조에 같은 이름의 로그인을 만들어도 (새 SID)
+  app_login 으로 shipping_lab 접속: Sqlcmd: Error: Microsoft ODBC Driver 18 for SQL Server : Cannot open d
+
+## 3-3. 진단 — DB 사용자와 서버 로그인의 SID 대조
+app_login 0x6C0C117656B66C40B5AD7682EF5386F4 0x4765BBB5AD919B4687075C55456DFD52 불일치
+
+## 3-4. 수리 — ALTER USER ... WITH LOGIN
+  수리 후 app_login 조회: 10014행 — 접속이 살았다
+정상 (SID 일치)
+
+## 3-5. 예방 — 처음부터 SID 째 만들었다면
+  주의 SID: 0x6C0C117656B66C40B5AD7682EF5386F4
+  보조에 CREATE LOGIN app_login WITH PASSWORD=..., SID = 0x6C0C117656B66C40B5AD7682EF5386F4 로 만들었으면
+  복원 즉시 일치했다. sp_help_revlogin 이 자동화하는 것이 정확히 이것이다.
+
+결론: 페일오버 절차의 마지막 줄은 DB 가 아니라 로그인이다. 복원·승격이 끝나도
+SID 가 안 맞으면 앱은 못 들어온다. 이관 전에 SID 째 옮기는 것이 예방이고,
+사후에는 ALTER USER ... WITH LOGIN 한 줄이 수리다.

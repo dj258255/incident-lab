@@ -1,0 +1,52 @@
+# A29 승격하면 무엇을 잃는가 (SQL Server 로그 전달·페일오버·고아 사용자)
+
+## 1. 질문
+
+A23 의 MySQL 반동기는 **강등된 채 승격해 성공 응답을 받은 커밋 334건을 잃었다.**
+같은 질문 — 승격하면 무엇을 잃는가 — 를 SQL Server 로그 전달에 묻는다.
+그리고 승격이 끝난 뒤에도 앱이 못 들어오는 마지막 관문(고아 사용자)까지가 한 절차다.
+
+근거 등급은 **E2**다. [로그 전달](https://learn.microsoft.com/en-us/sql/database-engine/log-shipping/about-log-shipping-sql-server)
+문서는 페일오버가 수동임을 명시하고, [꼬리 로그](https://learn.microsoft.com/en-us/sql/relational-databases/backup-restore/tail-log-backups-sql-server)
+문서는 `WITH NORECOVERY` 백업이 주를 복원 중 상태로 내린다고 적으며,
+[로그인 이관](https://learn.microsoft.com/en-us/troubleshoot/sql/database-engine/security/transfer-logins-passwords-between-instances)
+문서는 SID 불일치가 고아 사용자를 만든다고 경고한다. 셋을 한 흐름으로 실측했다.
+
+## 2. 실험
+
+| # | 스크립트 | 질문 | 판정 |
+|---|---|---|---|
+| 1 | `exp1-shipping.sh` | 로그 전달의 실체는 무엇인가 | 라운드별 주/보조 행 수 · 안 보낸 쓰기의 지연 |
+| 2 | `exp2-failover.sh` | 승격하면 무엇을 잃는가 | 꼬리 로그 복원 후 행 수 = 장애 직전 주 |
+| 3 | `exp3-orphan.sh` | 승격 뒤 앱은 바로 들어오는가 | 접속 실패 → SID 대조 → 수리 → 접속 |
+
+- 환경: SQL Server 2022 Developer 두 인스턴스(주 a25 · 보조 a26) · 로컬 Docker(ARM 에뮬레이션) · 원장 1만 행
+- 공유 스토리지가 없어 "복사" 단계는 호스트를 경유한다. `docker cp` 가 파일 소유를
+  root 로 바꿔 보조의 mssql 이 못 읽는 것(OS error 5)이 첫 함정이었다 — `chown` 한 줄
+- 판정은 시간이 아니라 **행 수·상태 전이(state_desc)·SID 값**으로만 한다(ARM 에뮬레이션)
+- 컨테이너는 기존 것을 재사용한다. 랩 DB(`lostark_log`·`lostark_ops`)는 건드리지 않는다
+
+## 3. 결과 요약
+
+결과 원문은 `results/` 에 있다.
+
+1. **로그 전달은 백업 체인의 자동화다.** 전체 백업 → STANDBY 복원으로 보조가 서고
+   (읽기 전용 10,000행), 쓰기 → 로그 백업 → 복사 → 복원 라운드마다 보조가 따라온다
+   (10,005 → 10,010). **아직 백업 안 된 쓰기 3행은 보조에 없다 — 그 차이가 RPO 다**
+2. **꼬리 로그가 유실 0 을 만든다.** 주에서 `BACKUP LOG ... WITH NORECOVERY` 를 뜨는
+   순간 주는 **RESTORING** 으로 내려가 쓰기를 거부하고, 보조가 그 꼬리까지 복원해 열면
+   **10,013행 — 장애 직전 주와 정확히 같다.** 백업 안 됐던 마지막 3행까지 꼬리가 날랐다.
+   MySQL 반동기의 334건 유실과의 차이는 **주가 살아 있는 한 꼬리를 뜰 수 있다**는 것이고,
+   주 디스크가 통째로 죽어 꼬리를 못 뜨면 유실 폭이 곧 로그 백업 주기다
+3. **승격의 마지막 관문은 로그인이다.** 사용자는 DB 를 따라왔지만 로그인은 master 에
+   남아 접속이 실패했고, 같은 이름으로 로그인을 만들어도 **SID 가 달라 고아**였다
+   (user 0x6C0C… vs login 0x4765…). `ALTER USER ... WITH LOGIN` 한 줄로 수리됐고,
+   예방은 이관 때 **SID 째 만드는 것**(`CREATE LOGIN ... WITH SID = …`,
+   sp_help_revlogin 이 자동화하는 것이 정확히 이것)이다
+
+## 4. 이 랩에서 정한 순서
+
+**페일오버 절차서: 꼬리 로그(WITH NORECOVERY) → 남은 로그 전부 → 꼬리까지 복원 →
+RECOVERY → 로그인 SID 확인 → 접속 전환.** 로그 전달의 페일오버는 수동이라
+이 절차서가 곧 가용성이고, 마지막 두 단계(로그인)를 빼먹으면 DB 는 살았는데
+서비스는 죽어 있다 — A23 이 잰 RTO(DB 복구 ≠ 서비스 복구)와 같은 자리다.
