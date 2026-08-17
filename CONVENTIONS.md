@@ -5,6 +5,7 @@
 ```
 sessions/A02-mdl-storm/
 ├── README.md        회고 본문
+├── RUNBOOK.md       운영 절차서 (사고 대응 세션에만. 시간 구간별 단계와 판정 기준)
 ├── reproduce.md     실행 명령과 출력 원문
 ├── compose.yml      재현 환경
 ├── scripts/         부하·주입·측정 스크립트
@@ -12,6 +13,10 @@ sessions/A02-mdl-storm/
 ```
 
 저장소 루트의 `tools/render/`는 실행 화면과 수치를 PNG로 만드는 공용 렌더러입니다.
+
+기존 컨테이너를 재사용하는 세션은 `compose.yml` 대신 README 의 실험 절에 어느 인스턴스를
+왜 재사용했는지 적습니다(메모리가 모자라 새로 못 띄우는 경우). `reproduce.md` 도 실행이
+`scripts/exp*.sh` 한 줄로 끝나고 출력 원문이 `results/*.txt` 에 그대로 남는 세션은 생략합니다.
 
 이름은 `<트랙><번호>-<영문-슬러그>` 입니다. 번호는 [CATALOG.md](CATALOG.md)를 따릅니다.
 
