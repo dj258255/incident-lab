@@ -3,6 +3,16 @@
 > 근거 등급: `E2`
 > 출처: [AWS, Reader endpoints for Amazon Aurora](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Endpoints.Reader.html) · [AWS, Amazon Aurora endpoint connections](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Overview.Endpoints.html) · [AWS SDK for Java, DNS caching](https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/java-dg-jvm-ttl.html) · [HikariCP #1247, Mass extinction of connections impacting AWS Aurora reader endpoint load balancing](https://github.com/brettwooldridge/HikariCP/issues/1247)
 
+## 결론부터
+
+| 지금 알면 되는 것 | 근거 |
+|---|---|
+| **분산 단위는 쿼리가 아니라 커넥션이다.** 리더 엔드포인트가 라운드로빈으로 돌려줘도 풀이 한 번 잡으면 그대로 고정된다 | 풀 12개가 최대 **100%** 한 인스턴스로 ([근거](#3-결과)) |
+| **JVM DNS 캐시 기본값이 쏠림을 굳힌다.** `ttl=0` 으로 최대 점유 83.5% → 47.9% | ([근거](#4-해소)) |
+| **쿼리 수로 세면 안 보인다.** 이 세션이 센 것은 커넥션 수다 | ([근거](#2-재현)) |
+| **`maxLifetime` 의 몫은 캐시를 켠 쪽에서만 보인다.** 캐시를 끄면 세 대에 퍼진다 | ([근거](#7-반복-3회-쿼리-축-maxlifetime-분리)) |
+| **RDS Proxy 는 DNS 캐시 문제를 없애지만 커넥션 고정을 없애지는 않는다** | ([근거](#5-rds와-aurora에서-달라지는-것)) |
+
 ## 1. 유명한 이유
 
 Aurora의 리더 엔드포인트는 읽기 부하를 리플리카들에 나눠 주는 장치입니다. 그런데 나누는 단위가 **커넥션**이지 쿼리가 아닙니다. AWS 문서가 그 자리에서 못을 박습니다.
@@ -148,7 +158,7 @@ R02에서 "커넥션 풀 설정을 만져도 안 나아진다"를 확인했는�
 
 처음 두 번의 측정이 100% 쏠림으로 나와 재현에 성공한 줄 알았습니다. 확인해 보니 dnsmasq가 순서를 안 돌리고 있었고, 제가 만든 환경이 리더 엔드포인트가 아니었습니다. **재현 대상을 재기 전에 재현 환경이 그 대상을 흉내 내는지부터 확인해야 합니다.** 100%라는 극적인 숫자가 나왔을 때 의심했어야 했습니다.
 
-## 7. 반복 3회, 쿼리 축, maxLifetime 분리 (2026-07-31)
+## 7. 반복 3회, 쿼리 축, maxLifetime 분리
 
 `scripts/exp-repeat-load.sh`, 결과는 `results/exp-repeat-load.txt` 입니다.
 조건마다 3회, 회차마다 3초 간격 40표본입니다.
@@ -222,7 +232,7 @@ R02에서 "커넥션 풀 설정을 만져도 안 나아진다"를 확인했는�
 **에러가 안 나므로 결과만 보면 알 수 없었습니다.** 6절이 `sun.net.inetaddr.ttl=0` 에서
 47.9%라고 적어 둔 덕에 어긋남을 잡았습니다.
 
-### maxLifetime을 다섯 점 더 찍으면 (2026-07-31)
+### maxLifetime을 다섯 점 더 찍으면
 
 `maxLifetime` 을 30초와 600초 두 값으로만 봤습니다. 그 사이가 계단인지 곡선인지 갈리지 않습니다. DNS 캐시를 끈 상태에서 다섯 점을 더 찍었습니다. 캐시가 켜져 있으면 재생성 시각이 흩어져도 같은 IP로 가므로 이 축이 안 보입니다.
 

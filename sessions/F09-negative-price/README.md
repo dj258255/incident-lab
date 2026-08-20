@@ -1,5 +1,16 @@
 # F09 IB 음수 유가 가격은 양수라는 가정이 계층마다 다르게 깨지다
 
+> 근거 등급: `E1`
+
+## 결론부터
+
+| 지금 알면 되는 것 | 근거 |
+|---|---|
+| **"가격은 양수"라는 가정이 계층마다 다르게 깨진다.** 음수 틱이 CHECK 제약에 막혀 최종가가 0.01 에 멈춘다 | ([근거](#2-재현)) |
+| **막았더니 더 나빠진다.** 멈춘 가격으로 계좌 평가액이 3,764만 달러 과대계상되고 자동 청산이 발동하지 않는다 | ([근거](#2-재현)) |
+| **요구증거금 붕괴는 0 근처가 아니라 8.00달러부터 시작한다** | 0.10달러에서 1,000계약까지 개설 가능 ([근거](#3-내부-원리)) |
+| **하우스 증거금을 고정하면 같은 자리에서 12계약으로 막힌다** | ([근거](#5-재계측)) |
+
 ## 1. 유명한 이유
 
 2020년 4월 20일 WTI 5월물은 배럴당 마이너스 37.63달러로 마감했습니다. CFTC는 이듬해 Interactive Brokers LLC를 상대로 한 명령서에서 그날의 종가를 "settling at negative $37.63 per barrel"로 적고, 같은 날 이 브로커에게 두 가지 시스템 문제가 있었다고 밝혔습니다. 원문 표현으로는 "(1) negative prices were not displayed to customers and customers were unable to place orders with negative-priced limit orders to buy or sell; and (2) internal minimum margin requirements were not correctly enforced prior to trade execution" 입니다. 근거 등급은 E1입니다. 출처는 [CFTC Docket No. 21-19, In the Matter of Interactive Brokers LLC, Order Instituting Proceedings(2021-09-28)](https://www.cftc.gov/media/6421/enfinteractivebrokersorder092821/download) 이고, 이 세션의 사실 관계는 그 문서에서만 가져왔습니다.

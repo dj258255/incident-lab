@@ -3,6 +3,16 @@
 > 근거 등급: `E2`
 > 출처: [MySQL 8.4 Reference, Metadata Locking](https://dev.mysql.com/doc/refman/8.4/en/metadata-locking.html), [Online DDL Performance, Concurrency, and Space Requirements](https://dev.mysql.com/doc/refman/8.4/en/innodb-online-ddl-performance.html), [Online DDL Operations](https://dev.mysql.com/doc/refman/8.4/en/innodb-online-ddl-operations.html), [Server System Variables, `lock_wait_timeout`](https://dev.mysql.com/doc/refman/8.4/en/server-system-variables.html#sysvar_lock_wait_timeout), [InnoDB Startup Options and System Variables, `innodb_lock_wait_timeout`](https://dev.mysql.com/doc/refman/8.4/en/innodb-parameters.html#sysvar_innodb_lock_wait_timeout)
 
+## 결론부터
+
+| 지금 알면 되는 것 | 근거 |
+|---|---|
+| **각각은 무해한데 겹칠 때만 장애가 된다.** 롱 트랜잭션 단독은 전면 정지 0초, DDL 단독은 0.09초에 성공 | 대조군 넷 ([근거](#2-재현)) |
+| **로그의 "ALTER 20초"를 보고 테이블이 커서라고 읽으면 틀린다.** DDL이 일한 시간은 0.09초이고 나머지 20초는 남의 트랜잭션을 기다린 시간 | ([근거](#7-예상과-달랐던-점)) |
+| **1205를 내는 타임아웃이 둘이다.** `lock_wait_timeout`(MDL·기본 1년)과 `innodb_lock_wait_timeout`(행 락·기본 50초). 뒤엣것을 줄이면 이 정지는 1초도 안 줄어든다 | ([근거](#4-해소)) |
+| **DDL이 건드리지도 않은 엔드포인트가 43%를 잃는다.** 커넥션 풀을 타고 번진다 | ([근거](#6-사고가-되는-구간-커넥션-풀-고갈)) |
+| **완료 0건인 초는 집계에서 통째로 사라진다.** 초당 버킷을 완료된 조회로만 만들면 정지 구간이 증발한다 | ([근거](#7-예상과-달랐던-점)) |
+
 ## 1. 유명한 이유
 
 **이 세션은 MySQL 사건의 공개 원문을 확보하지 못했습니다.** 컬럼 하나를 붙이려다 서비스가 섰다는 이야기는 흔히 오가지만, MySQL 메타데이터 락으로 그 인과 전체를 적어 둔 기업 보고서는 조사에서 못 찾았습니다. 그래서 이 글은 사건이 아니라 **구조**에서 시작합니다. 구조는 매뉴얼에 그대로 적혀 있고, 같은 구조의 공개 사례는 옆 엔진(PostgreSQL)에 둘 있습니다.
@@ -178,7 +188,7 @@ DDL은 실패하므로 재시도가 따라와야 합니다. 실무에서는 마�
 
 `results/case-*.json`의 원시값을 보면 더 분명합니다. 겹침 + 기본 타임아웃 조건은 측정이 시작된 0초부터 이미 초당 2,400~2,700건대였고 0~24초 평균이 2,473건입니다. 나머지 세 조건은 같은 구간 평균이 3,549건, 3,692건, 3,715건입니다. DDL 직전 5초만 떼어 보면 2,129건 대 3,537~3,580건으로 40% 차이입니다. 아무 일도 일어나지 않은 구간에서 벌어진 차이이므로 통제하지 못한 실행 간 편차로 보았습니다.
 
-### 그 편차를 반복 측정으로 확인했습니다 (2026-07-30)
+### 그 편차를 반복 측정으로 확인했습니다
 
 당시에는 "편차 말고 설명할 방법이 없다"고만 적어 두었습니다. 실재하는 차이라면 조건 비교
 자체가 흔들리므로, 세 회차를 더 돌려 확인했습니다. 12코어 맥에서 `tools/repeat-runs.sh`로 돌린 값입니다. **네 칸 모두 `timeline`의 0~24초 구간 평균, 곧 DDL이 들어오기 전 평시 기준선입니다**(`median_qps` 가 아닙니다). 이 절의 질문이 "아무 일도 없는 구간에서 조건끼리 갈리는가"라서 그 구간만 잘라 봅니다. run0은 2코어 호스트라 절대값이 낮고, 비교는 회차 안에서만 해야 합니다.
@@ -276,7 +286,7 @@ DDL 단독 조건이 기준선을 줍니다. 롱 트랜잭션이 없을 때 같�
 
 **DDL이 20.09초 걸렸다는 기록만 보면 원인을 잘못 짚습니다.** 로그에 남는 것은 "ALTER가 20초 걸렸다"입니다. 이 숫자를 보면 테이블이 커서 오래 걸렸다고 읽기 쉽고, 실제로는 DDL이 일한 시간이 0.09초입니다. 나머지 20초는 남의 트랜잭션을 기다린 시간입니다. 같은 DDL을 빈 시간에 돌리면 0.09초에 끝납니다.
 
-## 알고리즘을 명시한 세 DDL (2026-08-01)
+## 알고리즘을 명시한 세 DDL
 
 알고리즘을 명시한 셋을 3회씩 돌렸습니다. 지금까지 쟀던 DDL은 `ADD COLUMN` 하나였습니다. MySQL 8.4에서 그것은 `INSTANT` 라 실행 자체가 0.09초이고, 테이블을 다시 쓰는 DDL이 같은 MDL 대기 아래에서 어떻게 되는지는 안 봤습니다. 알고리즘을 명시한 셋을 3회씩 돌렸습니다. 명시하면 그 알고리즘으로 못 할 때 서버가 거부하므로 조건이 안 선 채로 지나가지 않습니다.
 

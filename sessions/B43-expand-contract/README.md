@@ -1,5 +1,18 @@
 # B43 빠른 DDL과 안전한 DDL은 다르다
 
+> 근거 등급: `E2`
+
+## 결론부터
+
+| 지금 알면 되는 것 | 근거 |
+|---|---|
+| **PG 11 이후 "대형 테이블 ADD COLUMN 조심"의 상당 부분은 옛 지식이다.** 300만 행에 상수 기본값은 재작성 없이 3ms | 기본값이 volatile 이면 얘기가 달라진다 ([근거](#2-재현)) |
+| **빠른 DDL 과 안전한 DDL 은 다르다.** 3ms 짜리가 12초 트랜잭션 뒤에 줄 서면 뒤따르는 SELECT 세 건을 7~9초 막는다 | 락 큐잉 ([근거](#2-재현)) |
+| **3단계 expand-contract 로 최대 락 보유가 3,000배 줄었다** | 11,316ms → **3.436ms** ([근거](#4-해소)) |
+| **`lock_timeout` 기본값이 0(무한)이다.** 대기를 끊지 않으면 DDL 의 인내심이 곧 장애 시간이 된다 | ([근거](#4-해소)) |
+| **expand-contract 는 공짜가 아니다.** 백필의 대가는 시간이 아니라 되찾기 어려운 공간이다. 죽은 튜플은 사라져도 파일 크기는 그대로다 | ([근거](#7-백필-중-지연의-양성-증거와-vacuum-회수)) |
+| **autovacuum 도 DDL 앞을 막는다.** 문턱을 5배로 넘겨도 60초를 기다린다 | ([근거](#autovacuum이-백필-뒤-언제-도는가)) |
+
 ## 1. 유명한 이유
 
 PostgreSQL 공식 문서 [ALTER TABLE](https://www.postgresql.org/docs/current/sql-altertable.html)은 첫머리에서 이렇게 못 박습니다. "Note that the lock level required may differ for each subform. An **ACCESS EXCLUSIVE** lock is acquired unless explicitly noted." 예외로 명시된 것은 `ADD FOREIGN KEY`, `SET STATISTICS`, `VALIDATE CONSTRAINT` 같은 몇 가지뿐이고 `ADD COLUMN`은 그 목록에 없습니다.
@@ -145,7 +158,7 @@ PostgreSQL 공식 문서 [ALTER TABLE](https://www.postgresql.org/docs/current/s
 
 **autovacuum도 DDL 앞을 막습니다.** 한 회차에서 밀리초여야 할 `ADD CONSTRAINT ... NOT VALID`가 1,010 ms 걸렸는데, 그중 1,003 ms가 락 대기였습니다. 백필이 남긴 죽은 튜플을 autovacuum이 청소하던 중이었고 서버가 `canceling autovacuum task`로 그것을 취소한 뒤에야 락을 줬습니다. 서버가 알아서 양보시켜 주기는 하지만 그 판단이 `deadlock_timeout`(기본 1초) 뒤에 일어나므로 1초는 그냥 나갑니다. 백필 직후에 DDL을 붙이는 순서라면 이 1초를 계산에 넣어야 합니다. 이 장면은 매 실행 재현되지 않아 해당 회차 로그를 [results/other-runs-excerpt.txt](results/other-runs-excerpt.txt)에 따로 남겼습니다.
 
-## 7. 백필 중 지연의 양성 증거와 VACUUM 회수 (2026-07-31)
+## 7. 백필 중 지연의 양성 증거와 VACUUM 회수
 
 `scripts/exp-backfill-evidence.sh`, 결과는 `results/exp-backfill-evidence.txt` 입니다.
 300만 행, 청크 10만 행, 3회 반복입니다.
@@ -200,7 +213,7 @@ VACUUM 소요 = 2.51초
 이 절이 잰 1.2~1.3배는 백필 구간이라 다른 값입니다. **35배 쪽은 여전히 5회차 한
 실행 안의 비율이고 기준선 계산 방식을 맞춘 반복은 하지 않았습니다.**
 
-## autovacuum이 백필 뒤 언제 도는가 (2026-08-01)
+## autovacuum이 백필 뒤 언제 도는가
 
 본문 6절에 백필 직후 `ADD CONSTRAINT ... NOT VALID` 가 락 대기로 1초를 잃은 장면을 적었습니다. 그 autovacuum이 백필 종료 후 언제 붙는지는 안 쟀습니다. 그 값이 있어야 "백필 뒤 몇 초를 비우고 DDL을 걸어야 하는가" 에 답할 수 있습니다.
 
@@ -228,7 +241,7 @@ VACUUM 소요 = 2.51초
 
 다만 이 값은 표 크기에 따라 달라집니다. 300만 행에 64.3초이므로 더 큰 표에서는 그만큼 길어집니다. **`autovacuum_naptime` 은 고정이고 vacuum 시간은 표에 비례하므로, 안전한 창의 위치는 고정이고 길이는 표마다 다릅니다.**
 
-## 5회 범위를 다시 잡고, 2절의 예고를 확인했습니다 (2026-08-01)
+## 5회 범위를 다시 잡고, 2절의 예고를 확인했습니다
 
 5절 표의 "5회 범위" 위쪽 끝은 원문이 없었습니다. `results/` 에 통째로 남긴 것은 마지막 회차 로그뿐이라 27,989.225ms 같은 값은 인용할 수 없는 상태였습니다. 같은 시나리오를 5회 다시 돌리고 회차마다 로그를 통째로 남겼습니다(`results/rerun1~5-full-run.txt`).
 

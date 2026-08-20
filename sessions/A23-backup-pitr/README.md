@@ -3,6 +3,16 @@
 > 근거 등급: `E1·축소`
 > 출처: [GitLab.com Database Incident (2017-01-31)](https://about.gitlab.com/blog/2017/02/01/gitlab-dot-com-database-incident/) · [Postmortem](https://about.gitlab.com/blog/2017/02/10/postmortem-of-database-outage-of-january-31/) · [MySQL 8.4, PITR Using Event Positions](https://dev.mysql.com/doc/refman/8.4/en/point-in-time-recovery-positions.html) · [GTID Concepts](https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-concepts.html) · [Google SRE Book, Data Integrity](https://sre.google/sre-book/data-integrity/)
 
+## 결론부터
+
+| 지금 알면 되는 것 | 근거 |
+|---|---|
+| **복원을 에러 없이 통과하고도 데이터가 없는 백업이 넷 중 둘이었다.** 성공 판정을 로그로 하면 사고 때 알게 된다 | ([근거](#4-복구를-가로막는-다섯-가지)) |
+| **백업 주기가 곧 RPO 상한이다.** 백업만 되돌리면 그 사이 500건이 통째로 사라지고, binlog 를 사고 직전까지 이으면 0건 | 1,000건 대 1,500건 ([근거](#3-결과-pitr은-실제로-듣는다)) |
+| **벽시계로 지점을 가리키면 어느 엔진에서든 샌다** | ([근거](#8-벽시계로-지점을-가리키면-어느-엔진에서든-샙니다)) |
+| **DB 가 복구돼도 앱은 20.9초 더 죽어 있었다.** RTO 는 DB 가 열린 시점이 아니라 앱이 읽기·쓰기를 둘 다 정상 처리한 시점으로 잰다 | JVM DNS 캐시 ([근거](#3-결과-pitr은-실제로-듣는다)) |
+| **같은 질문을 네 엔진에 물었다.** MySQL·PostgreSQL·SQL Server·Oracle 에서 막히는 자리가 각각 다르다 | ([근거](#6-sql-server-대조)) |
+
 ## 1. 유명한 이유
 
 2017년 1월 31일, GitLab 엔지니어가 복제가 밀린 상황을 수습하다 secondary인 줄 알고 primary의 PostgreSQL 데이터 디렉터리를 지웠습니다. 약 300GB가 사라졌습니다. 진짜 사건은 그다음입니다. 당시 라이브 문서에 이렇게 적혀 있습니다.

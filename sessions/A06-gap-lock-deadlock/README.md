@@ -3,6 +3,16 @@
 > 근거 등급: `E2`
 > 출처: [MySQL 8.4, InnoDB Locking (gap locks, insert intention locks)](https://dev.mysql.com/doc/refman/8.4/en/innodb-locking.html) · [Deadlocks in InnoDB](https://dev.mysql.com/doc/refman/8.4/en/innodb-deadlocks.html)
 
+## 결론부터
+
+| 지금 알면 되는 것 | 근거 |
+|---|---|
+| **"없으면 넣는다" 한 패턴이 교착을 만든다.** 갭 락 둘이 공존하고 그 위의 insert intention 이 서로를 막는다 | 원래 방식 30회 중 **30회** 데드락 ([근거](#2-재현)) |
+| **확인과 삽입을 한 문장으로 합치면 사라진다.** 갭 락을 먼저 잡는 단계 자체가 없어진다 | `ON DUPLICATE KEY UPDATE` **0회** ([근거](#3-해소)) |
+| **격리수준을 낮추는 것은 답이 아니다.** 데드락은 0회지만 다른 문제가 30회 나고, 바이너리 로그 형식과 UPDATE·DELETE 락 동작이 함께 바뀐다 | READ COMMITTED 0회 / 30회 ([근거](#3-해소)) |
+| **변수는 바뀐 값을 보여주는데 실행 중인 트랜잭션은 안 바뀐다.** 세션 설정은 다음 트랜잭션부터 적용된다 | ([근거](#6-예상과-달랐던-점)) |
+| **`SKIP LOCKED` 는 갭 락에 안 통하고 `INSERT IGNORE` 가 가장 위험하다.** 최종 금액을 맞춘 것은 재시도뿐이었다 | ([근거](#5-다른-선택지-넷과-그-대가)) |
+
 ## 1. 유명한 이유
 
 실무에서 흔한 데드락은 두 트랜잭션이 자원을 반대 순서로 잡는 고전적 형태만이 아닙니다. **같은 코드가 동시에 두 번 실행됐을 뿐인데** 나는 데드락입니다.
@@ -175,7 +185,7 @@ SELECT @@transaction_isolation;   →  READ-COMMITTED
 
 같은 증상(1213 Deadlock found)이라도 원인이 갭 락인지 레코드 락인지에 따라 해법이 달라지므로, `data_locks`의 `LOCK_MODE`를 보지 않고 증상만으로 진단하면 안 됩니다.
 
-## 1213을 넘어서 (2026-07-31)
+## 1213을 넘어서
 
 네 가지를 이어서 쟀습니다. `scripts/exp-extra.py`, 결과는 `results/extra.json` 입니다.
 

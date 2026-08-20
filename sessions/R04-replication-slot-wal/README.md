@@ -3,6 +3,16 @@
 > 근거 등급: `E2`
 > 출처: [PostgreSQL 17, Replication Slots](https://www.postgresql.org/docs/17/warm-standby.html#STREAMING-REPLICATION-SLOTS) · [pg_replication_slots (wal_status, safe_wal_size)](https://www.postgresql.org/docs/17/view-pg-replication-slots.html) · [max_slot_wal_keep_size](https://www.postgresql.org/docs/17/runtime-config-replication.html) · [RDS for PostgreSQL 복제 파라미터](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PostgreSQL.Replication.ReadReplicas.Mechanisms-versions.html) · [Aurora PostgreSQL 논리 복제](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Replication.Logical.html) · [Amazon Aurora storage](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Overview.StorageReliability.html) · [Increasing DB instance storage capacity](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.ModifyingExisting.html)
 
+## 결론부터
+
+| 지금 알면 되는 것 | 근거 |
+|---|---|
+| **죽은 CDC 컨슈머 하나가 프로덕션 디스크를 채운다.** 슬롯이 붙잡은 WAL 이 단조 증가한다 | 120.5초에 7.0MB → 125.8MB(초당 0.99MB) ([근거](#3-결과-슬롯이-붙잡은-wal)) |
+| **슬롯을 지우고 체크포인트를 돌리면 즉시 회수된다** | 128MB → 96MB ([근거](#5-해소)) |
+| **`max_slot_wal_keep_size` 는 디스크를 지키는 대신 CDC 를 버린다.** reserved → unreserved → lost 까지 41.7초 | 64MB 설정에서 슬롯 지연은 상한의 2.2배인 138MB 까지 갔다 ([근거](#4-안전장치는-무엇을-버리는가)) |
+| **하트비트가 답이 되는 조건이 따로 있다** | ([근거](#6-1-하트비트를-다시-재서-답을-얻었습니다)) |
+| **물리 복제 슬롯도 같은 방식으로 위험하다** | ([근거](#물리-복제-슬롯도-같은-방식으로-위험한가)) |
+
 ## 1. 유명한 이유
 
 CDC(Change Data Capture)는 이제 흔한 구성입니다. Debezium이든 자체 구현이든, PostgreSQL의 논리 복제 슬롯을 열어 변경분을 읽어 갑니다.
@@ -225,7 +235,7 @@ Debezium Server 3.0을 붙이는 데까지는 성공했지만 **그 질문에는
    슬롯이 64MB에서 무효화돼 지연이 리셋되고, 조건 C의 지연이 39MB에서 0으로 줄어드는
    이상한 값이 나옵니다. 이 실험은 상한을 풀고 돌려야 합니다.
 
-## 6-1. 하트비트를 다시 재서 답을 얻었습니다 (2026-07-31)
+## 6-1. 하트비트를 다시 재서 답을 얻었습니다
 
 6절에서 못 잰 것을 다시 쟀습니다. 두 가지가 나왔습니다. 하나는 6절이 "안 돈다"고 적은
 하트비트가 사실 돌고 있었다는 것이고, 다른 하나는 돌아도 소용없는 조건이 따로
@@ -327,7 +337,7 @@ debezium.source.heartbeat.action.query=INSERT INTO dbz_heartbeat (ts) VALUES (no
 
 원래 계획은 디스크를 채워 PostgreSQL이 쓰기를 거부하는 것까지 보이는 것이었습니다. Docker Desktop이 컨테이너별 블록 장치 쿼터를 지원하지 않아 볼륨 크기를 제한할 수 없었습니다. 대신 `max_slot_wal_keep_size`로 상한 도달을 재현했는데, **이건 디스크가 차는 것과 다른 사건**입니다. 전자는 PostgreSQL이 스스로 판단해 슬롯을 버리는 것이고 후자는 파일 시스템이 막는 것입니다. 후자는 재현하지 못했습니다.
 
-## 물리 복제 슬롯도 같은 방식으로 위험한가 (2026-07-31)
+## 물리 복제 슬롯도 같은 방식으로 위험한가
 
 물리 복제 슬롯도 WAL을 붙잡습니다. 이 세션은 논리 복제 슬롯(CDC)만 봤으므로, 슬롯 없음을 대조군으로 두고 같은 쓰기를 40초씩 돌려 나란히 놓았습니다. 슬롯 없음을 대조군으로 두고 40초씩 같은 쓰기를 돌렸습니다.
 

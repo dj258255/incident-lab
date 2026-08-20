@@ -1,5 +1,17 @@
 # B31 지우지 않은 ThreadLocal 하나가 클래스로더를 통째로 붙잡는다
 
+> 근거 등급: `E2`
+
+## 결론부터
+
+| 지금 알면 되는 것 | 근거 |
+|---|---|
+| **재배포 300회에 폐기됐어야 할 클래스로더 300개가 전부 살아 있다.** `try/finally` 의 `remove()` 한 줄로 0개 | ([근거](#5-재계측)) |
+| **GC 가 처리해 줄 것이라는 예상이 틀렸다.** `ThreadLocal` 의 키는 약참조인데 값이 강참조라 스레드가 살아 있는 한 안 끊긴다 | ([근거](#6-예상과-달랐던-점)) |
+| **전조가 없다.** 터지기 직전까지 응답 시간이 전혀 안 느려진다 | ([근거](#터지기-전에-얼마나-느려지는가)) |
+| **`OOMKilled=true` 인데 `OutOfMemoryError` 는 0회일 수 있다.** 커널이 먼저 죽이면 JVM 은 유언도 못 남긴다. `MaxMetaspaceSize` 의 값어치가 여기 있다 | ([근거](#실제-tomcat-재배포-커널-oom-kill-사이클-반복)) |
+| **워커 스레드를 갱신하면 이미 샌 것도 회수된다** | 300개 전부 ([근거](#5-재계측)) |
+
 ## 1. 유명한 이유
 
 Apache Tomcat은 웹앱을 정지할 때 워커 스레드에 남아 있는 `ThreadLocal`을 뒤져 전용 경고를 찍습니다. 메시지 원문이 Tomcat 소스의 `java/org/apache/catalina/loader/LocalStrings.properties`에 있습니다.
@@ -184,7 +196,7 @@ Tomcat 10.1의 `bin/catalina.sh`는 이 옵션을 기본으로 붙이지만, 기
 
 **`clearReferencesThreadLocals`의 역할도 예상과 달랐습니다.** 이 설정을 끄면 누수가 그대로 커진다고 봤는데, 소스를 열어 보니 그 설정이 끄는 것은 경고 로그이고 회수 경로가 아니었습니다. `true`일 때도 Tomcat은 살아 있는 엔트리를 지우지 않고 `log.error`만 찍습니다. 회수 쪽 스위치는 `renewThreadsWhenStoppingContext`와 `Executor`의 `threadRenewalDelay`이고, 자세한 것은 4절에 적었습니다. 이 세션의 초고는 두 스위치를 하나로 뭉개고 있었습니다.
 
-## 실제 Tomcat 재배포, 커널 OOM-Kill, 사이클 반복 (2026-07-31)
+## 실제 Tomcat 재배포, 커널 OOM-Kill, 사이클 반복
 
 `scripts/exp-tomcat-and-oomkill.sh`, 결과는 `results/exp-tomcat-and-oomkill.txt` 입니다.
 
@@ -249,7 +261,7 @@ JVM 의 OutOfMemoryError = 0회
 세 회차 모두 같은 구간에서 터진다는 것은 확인됐습니다. 다만 **3,773을 상수로
 인용하려면 진행 로그의 간격을 좁혀 다시 재야 합니다.**
 
-## 터지기 전에 얼마나 느려지는가 (2026-07-31)
+## 터지기 전에 얼마나 느려지는가
 
 `OutOfMemoryError` 까지 가는 것은 봤지만 그 앞에서 GC가 늘어 응답이 느려지는 구간은 안 쟀습니다. 사이클마다 같은 양의 일을 시키고 그 시간이 어떻게 가는지 봤습니다. `MaxMetaspaceSize=48m` 입니다.
 

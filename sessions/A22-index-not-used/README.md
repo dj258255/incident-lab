@@ -3,6 +3,16 @@
 > 근거 등급: `E2`
 > 출처: [MySQL 8.4, Type Conversion](https://dev.mysql.com/doc/refman/8.4/en/type-conversion.html) · [How MySQL Uses Indexes](https://dev.mysql.com/doc/refman/8.4/en/mysql-indexes.html) · [B-Tree Index Characteristics](https://dev.mysql.com/doc/refman/8.4/en/index-btree-hash.html) · [CREATE INDEX (functional key parts)](https://dev.mysql.com/doc/refman/8.4/en/create-index.html) · 실무 사례: [LINE, 함수형 인덱스로 비트 연산 쿼리 최적화](https://techblog.lycorp.co.jp/ko/solving-slow-queries-optimizing-bitwise-operation-queries-with-functional-indexes)
 
+## 결론부터
+
+| 지금 알면 되는 것 | 근거 |
+|---|---|
+| **인덱스는 그대로 두고 쿼리만 고쳐 최대 1,969배.** 형변환·문자셋·함수·선행 와일드카드·비트 연산 다섯 조건 | ([근거](#4-해소)) |
+| **읽은 행을 `EXPLAIN` 추정이 아니라 `Handler_read` 카운터로 실측했다** | ([근거](#2-재현)) |
+| **인덱스는 읽을 행을 찾는 비용을 줄이지, 읽어야 할 행 자체를 줄이지 않는다** | ([근거](#5-예상과-달랐던-점)) |
+| **배수를 인용할 때 결과 집합 크기를 함께 적어야 한다.** LIMIT 1 에서 1,034.5배, 50만 행에서 1.2배인데 스캔 타입은 내내 같다 | ([근거](#7-collate-임시-처방과-배수-곡선)) |
+| **`COLLATE` 로는 못 고친다.** 문자셋이 다르면 문법 자체가 성립하지 않아 에러 1253 이다. 스키마를 맞추는 것 말고 방법이 없다 | ([근거](#7-collate-임시-처방과-배수-곡선)) |
+
 ## 1. 유명한 이유
 
 슬로우 쿼리를 받아 들고 처음 하는 일은 인덱스 확인입니다. 그런데 `SHOW INDEX`를 찍어 보면 인덱스가 이미 있습니다. 이때부터가 진짜 문제입니다. **인덱스가 없어서 느린 게 아니라, 있는 인덱스를 쿼리가 쓰지 못하게 작성돼 있어서 느린 경우**가 실무 슬로우 쿼리의 큰 몫을 차지합니다.
@@ -276,7 +286,7 @@ ERROR 1253: COLLATION 'utf8mb4_0900_ai_ci' is not valid for CHARACTER SET 'latin
 `function-wrap` 이 2배로 작았던 것도 그 조건의 결과 집합이 커서였습니다. 인덱스를 못 타는
 것이 문제가 아니라고 읽으면 안 됩니다. 같은 조건에서 결과 집합을 좁히면 1,000배가 됩니다.
 
-## CONVERT 방향과 곡선과 와일드카드 재설계 (2026-07-31)
+## CONVERT 방향과 곡선과 와일드카드 재설계
 
 ### CONVERT를 조인 어느 쪽에 붙이는가
 
@@ -328,7 +338,7 @@ ERROR 1253: COLLATION 'utf8mb4_0900_ai_ci' is not valid for CHARACTER SET 'latin
 
 **"인덱스를 안 탄다" 와 "인덱스를 훑는다" 는 다릅니다.** `EXPLAIN` 의 `key` 칸에 인덱스 이름이 있다고 안심하면 안 되고 `type` 칸을 봐야 합니다.
 
-## OR 조건과 index merge (2026-07-31)
+## OR 조건과 index merge
 
 `OR` 은 옵티마이저 버전에 따라 동작이 갈려 별도 세션이 낫다고 미뤄 뒀습니다. 그런데 이 세션의 주제가 "인덱스가 있는데 안 탄다" 이고 `OR` 이 그 대표적인 자리입니다. `created_at` 과 `buyer_name` 에 각각 인덱스가 있는 조건으로 세 방식을 나란히 놓았습니다.
 

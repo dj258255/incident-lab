@@ -3,6 +3,16 @@
 > 근거 등급: `E2`
 > 출처: [AWS, Database load (Average Active Sessions)](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PerfInsights.Overview.ActiveSessions.html) · [AWS, Pricing and data retention for Performance Insights](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PerfInsights.Overview.cost.html) · [MySQL 8.4, Wait Event Summary Tables](https://dev.mysql.com/doc/refman/8.4/en/performance-schema-wait-summary-tables.html) · [MySQL 8.4, Pre-Filtering by Consumer](https://dev.mysql.com/doc/refman/8.4/en/performance-schema-consumer-filtering.html) · [Oracle 19c, V$ACTIVE_SESSION_HISTORY](https://docs.oracle.com/en/database/oracle/oracle-database/19/refrn/V-ACTIVE_SESSION_HISTORY.html)
 
+## 결론부터
+
+| 지금 알면 되는 것 | 근거 |
+|---|---|
+| **행 락 대기가 `lock` 으로 안 잡힌다.** `wait/io/table/sql/handler` 로 표면화되기 때문이다 | 핫 로우 구간 AAS 7.52 중 io_table 6.50, **lock 0.00** ([근거](#3-내부-원리-행-락은-왜-락으로-안-보이는가)) |
+| **`data_lock_waits` 를 함께 세면 갈린다** | 락 구간 평균 26.1, 콜드 IO 구간은 29샘플 전부 0 ([근거](#4-해소-data_lock_waits를-함께-센다)) |
+| **PI 의 1초 샘플링·wait 분해 루프를 직접 구현해 검증했다** | ([근거](#2-재현)) |
+| **CPU 구간은 검증하지 못했다.** 부하 생성기가 DB 를 못 채웠다 | 8스레드에 AAS 0.55 ([근거](#못-한-것)) |
+| **활성 세션의 21%가 미분류로 남았다.** 대기 이벤트 이름이 소스에 없으면 추정만 가능하다 | ([근거](#sql-차원-분해와-미분류-이벤트의-이름)) |
+
 ## 1. 유명한 이유
 
 RDS의 Performance Insights는 관리형 DB 관측의 표준 화면이었습니다. AWS는 콘솔을 2026년 7월 31일 자로 종료하고 CloudWatch Database Insights로 넘긴다고 공지했습니다. API는 그대로 유지되고, 7일 무료 보존과 1~24개월 유료 보존은 Database Insights의 Standard 모드로 같은 가격에 이어집니다. 화면이 어디로 가든 그 핵심 수식은 그대로입니다. AWS 문서가 서술하는 동작은 단순합니다. **매초, 쿼리를 실행 중인 세션을 샘플링해서 그 세션들이 무엇을 기다리는지(wait event)로 쪼갠다.** 그 평균이 DB Load(평균 활성 세션, AAS)입니다.
@@ -217,7 +227,7 @@ R16(배치 캐시 오염)은 호스트를 macOS·NVMe로 기록했지만, **이 
 
 **같은 함정을 같은 세션에서 두 번 밟았고, 두 번째는 그럴듯한 엔진 내부 설명으로 덮었습니다.** 이 자리는 재실행해야 합니다. 확인된 사실만 남기면, 대기 분해를 쓰려면 소비자가 켜져 있는지를 매 실행마다 확인해야 한다는 것입니다.
 
-## 락 판별 세 방법과 top SQL 반복 (2026-07-31)
+## 락 판별 세 방법과 top SQL 반복
 
 `scripts/exp-lock-alternatives.py`, 결과는 `results/lock-alternatives.json` 입니다.
 
@@ -244,7 +254,7 @@ R16(배치 캐시 오염)은 호스트를 macOS·NVMe로 기록했지만, **이 
 **1초 간격 샘플러에 넣을 것은 `data_lock_waits` 입니다.** 숫자를 바로 주고 가장 쌉니다.
 `sys` 뷰는 질의 텍스트가 필요할 때, `ENGINE STATUS` 는 데드락 원문이 필요할 때 씁니다.
 
-### 대기가 없을 때의 판별 비용 (2026-07-31)
+### 대기가 없을 때의 판별 비용
 
 앞 표는 락 경합이 있는 조건 하나입니다. 워커를 안 띄우고 같은 방법을 같은 횟수로 재 봤습니다.
 

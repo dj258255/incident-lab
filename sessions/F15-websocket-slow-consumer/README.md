@@ -3,6 +3,16 @@
 > 근거 등급: `E2`
 > 출처: [Spring Framework Reference, WebSocket/STOMP Performance](https://docs.spring.io/spring-framework/reference/web/websocket/stomp/configuration-performance.html), [Spring Javadoc, ConcurrentWebSocketSessionDecorator](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/socket/handler/ConcurrentWebSocketSessionDecorator.html), [Apache Tomcat 10.1 WebSocket How-To](https://tomcat.apache.org/tomcat-10.1-doc/web-socket-howto.html), [Netty 소스 `WriteBufferWaterMark.java`](https://github.com/netty/netty/blob/4.1/transport/src/main/java/io/netty/channel/WriteBufferWaterMark.java)
 
+## 결론부터
+
+| 지금 알면 되는 것 | 근거 |
+|---|---|
+| **무제한 큐는 86초에 OOM 이 난다.** 힙 128MB 중 95.6MB 가 느린 구독자 한 명 몫이다 | ([근거](#2-재현)) |
+| **OOM 보다 먼저, 더 조용히 무너지는 것이 있다.** 큐 없는 직접 전송은 힙이 45.5MB 로 멀쩡한 채 발행량만 2,909 에서 142/s 로 주저앉는다 | 정상 구독자 수신도 40분의 1 ([근거](#6-예상과-달랐던-점)) |
+| **conflation + 절단으로 2,936/s 에 느린 구독자도 유지된다** | ([근거](#5-재계측)) |
+| **끊는 것만으로는 안 끝난다.** 끊어도 계속 붙으면 결국 그만큼 보내 주게 된다 | ([근거](#재접속-폭풍)) |
+| **`direct` 는 느린 구독자 한 명에서 이미 바닥이고, `unbounded` 는 늘수록 나빠진다** | ([근거](#느린-구독자-수를-늘리면)) |
+
 ## 1. 유명한 이유
 
 시세를 WebSocket으로 뿌리는 서버는 구독자마다 속도가 다릅니다. 회선이 느린 사람, 브라우저 탭이 백그라운드로 내려간 사람, 디버거에 걸려 멈춘 사람이 섞입니다. 서버가 만드는 속도는 일정한데 받아 가는 속도가 제각각이면 그 차이는 어딘가에 쌓입니다.
@@ -190,7 +200,7 @@ Spring 데코레이터에 같은 512KB를 주면 4.3초에 끊고 p95 2ms입니�
 
 이 관찰은 조건마다 1회 실행이라 방향까지만 읽어야 합니다.
 
-## 느린 구독자 수를 늘리면 (2026-07-31)
+## 느린 구독자 수를 늘리면
 
 세 모드를 느린 구독자 1·2·4명으로 돌렸습니다. 지금까지는 정상 5명에 느린 1명 한 가지 구성이었습니다. 느린 구독자 비율이 올라가면 결과가 달라질 수 있는데 재지 않았습니다. 클라이언트가 느린 구독자를 하나만 만들 수 있게 짜여 있어 목록으로 고치고, 세 모드를 1·2·4명으로 돌렸습니다. 정상 구독자는 5명 고정입니다.
 

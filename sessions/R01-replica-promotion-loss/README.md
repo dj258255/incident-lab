@@ -3,6 +3,16 @@
 > 근거 등급: `E1·축소`
 > 출처: [GitHub, October 21 post-incident analysis](https://github.blog/2018-10-30-oct21-post-incident-analysis/) · [MySQL 8.4, Semisynchronous Replication](https://dev.mysql.com/doc/refman/8.4/en/replication-semisync.html) · [AWS, Working with DB instance read replicas](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html) · [AWS, Promoting a read replica](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.Promote.html)
 
+## 결론부터
+
+| 지금 알면 되는 것 | 근거 |
+|---|---|
+| **고객이 성공 응답을 받은 커밋이 승격본에 없다.** GTID 차집합으로 유실 집합을 정확히 특정했다 | 927건 중 **555건** ([근거](#2-재현)) |
+| **유실량은 분단 시간 × 커밋 속도다.** 37.09건/초 × 15초 = 556 이고 실측이 555 다 | ([근거](#2-재현)) |
+| **반동기는 유실 0 이지만 타임아웃 강등 창에서 되살아난다** | ([근거](#4-해소와-재계측)) |
+| **`AFTER_COMMIT` 은 보였다가 사라진다.** `AFTER_SYNC` 는 소스에 들어간 행이 0 인데 `AFTER_COMMIT` 은 8건이 노출된 뒤 없어진다 | ([근거](#after_commit을-부하-아래에서)) |
+| **`Seconds_Behind_Source` 는 분단 후 19초간 0 을 표시한다.** 지연 지표로 분단을 못 잡는다 | ([근거](#7-예상과-달랐던-점)) |
+
 ## 1. 유명한 이유
 
 2018년 10월 21일, GitHub의 데이터센터 간 광 링크가 장비 교체 중 43초 끊겼습니다. 그 사이 오케스트레이터가 서부 리전으로 페일오버했는데, 동부 프라이머리에는 서부로 복제되지 않은 몇 초 분량의 쓰기가 남아 있었습니다. 가장 바쁜 클러스터 기준 954건입니다. 서부가 약 40분간 새 쓰기를 받으면서 양쪽이 갈라졌고, 결국 4시간 주기 백업에서 복원해 총 24시간 11분이 걸렸습니다. 이것이 GitHub이 공개한 포스트모템의 골자입니다.
@@ -236,7 +246,7 @@ AWS 문서는 Multi-AZ DB 클러스터를 "a semisynchronous, high availability 
 
 `STOP REPLICA` 한 줄로 승격이 끝나는데, 그 간편함이 "유실 확인 없이 승격"을 쉽게 만듭니다. AWS가 승격 전에 쓰기를 멈추고 따라잡기를 기다리라고 적은 절차를 건너뛰면 바로 실험 A가 됩니다. 5절에 그 문장을 그대로 옮겨 두었습니다.
 
-## AFTER_COMMIT을 부하 아래에서 (2026-07-31)
+## AFTER_COMMIT을 부하 아래에서
 
 `AFTER_COMMIT` 대조는 관찰자 한 명, 커밋 한 건이었습니다. 한 건짜리 관측은 "이런 일이 가능하다" 까지만 말합니다. 쓰기 8개와 관찰자 4명을 두고 12초 창에서 다시 쟀습니다.
 

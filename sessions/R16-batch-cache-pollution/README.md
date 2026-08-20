@@ -3,6 +3,15 @@
 > 근거 등급: `E2`
 > 출처: [MySQL 8.4 Reference, Buffer Pool](https://dev.mysql.com/doc/refman/8.4/en/innodb-buffer-pool.html), [MySQL 8.4 Reference, Making the Buffer Pool Scan Resistant](https://dev.mysql.com/doc/refman/8.4/en/innodb-performance-midpoint_insertion.html), [Percona, How side load may massively impact your MySQL performance](https://www.percona.com/blog/side-load-may-massively-impact-your-mysql-performance/), [Amazon Aurora storage](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Overview.StorageReliability.html), [Amazon RDS DB instance storage](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html), [Amazon EBS I/O characteristics and monitoring](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-io-characteristics.html)
 
+## 결론부터
+
+| 지금 알면 되는 것 | 근거 |
+|---|---|
+| **히트율이 7%까지 떨어져도 NVMe 에서는 p95 가 안 무너진다.** 널리 쓰이는 "캐시 오염 = 지연 폭증" 서사가 이 하드웨어에서는 성립하지 않았다 | ([근거](#4-재계측)) |
+| **midpoint 방어의 실효는 지연이 아니라 워킹셋 회복 시간에서 갈린다** | 15.2초 대 0.7초 ([근거](#4-재계측)) |
+| **지연이 아니라 총 read I/O 로 봐야 스캔의 몫이 보인다** | ([근거](#지속-스캔의-총-read-io)) |
+| **`mysqldump` 로 바꾸면 같은 질문의 답이 달라진다** | ([근거](#mysqldump로-바꾸면)) |
+
 ## 1. 유명한 이유
 
 정산 배치, 통계 집계, mysqldump 백업. 전부 큰 테이블을 처음부터 끝까지 읽습니다. 그 풀 스캔이 버퍼 풀에서 실시간 트래픽의 워킹셋을 밀어내면, 배치가 도는 동안 멀쩡하던 점조회가 디스크로 떨어집니다.
@@ -129,7 +138,7 @@ midpoint insertion이 있으니 히트율도 지켜질 것으로 예상했는데
 
 공식 문서는 이 설정의 효과가 "비교적 작고 워크로드에 따라 다르다"고 적는데, 이 워크로드의 지연 지표에서는 문자 그대로 차이가 없었습니다. 차이는 히트율 회복에만 나타났습니다. 설정 하나의 효과를 검증하려면 어느 지표에 나타날지를 먼저 정해야 한다는 교훈으로 남깁니다.
 
-## 지속 스캔의 총 read I/O (2026-07-31)
+## 지속 스캔의 총 read I/O
 
 `exp-sustained.sh` 가 반복 횟수를 화면에만 찍고 파일로 안 남겨 총 read I/O를
 계산하지 못했습니다. 파일로 남기게 고치고 다시 돌렸습니다.
@@ -153,7 +162,7 @@ gp3의 기본값이 125MiB/s 이므로 **이 부하는 그 상한의 다섯 배�
 이 값은 테이블 크기 곱하기 스캔 횟수의 추정입니다. 프리페치나 스캔 도중의 버퍼 재사용은
 반영되지 않으므로 상한으로 읽어야 합니다.
 
-## mysqldump로 바꾸면 (2026-08-01)
+## mysqldump로 바꾸면
 
 지속 스캔을 순수 집계로만 만들었습니다. 원 사례(Percona 2011)는 `mysqldump` 였고, 그것은 읽은 것을 밖으로 내보내는 I/O가 겹칩니다. 같은 창에서 배치를 `mysqldump` 로 바꿔 두 조건을 더 넣었습니다.
 

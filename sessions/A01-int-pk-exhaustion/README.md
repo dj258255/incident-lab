@@ -3,6 +3,16 @@
 > 근거 등급: `E1·축소`
 > 출처: [Crunchy Data, The Integer at the End of the Universe](https://www.crunchydata.com/blog/the-integer-at-the-end-of-the-universe-integer-overflow-in-postgres) (Basecamp 2018, GitLab 전사 bigint 전환) · [MySQL 8.4, Online DDL Operations](https://dev.mysql.com/doc/refman/8.4/en/innodb-online-ddl-operations.html) · [MySQL 8.4, Server System Variables `lock_wait_timeout`](https://dev.mysql.com/doc/refman/8.4/en/server-system-variables.html#sysvar_lock_wait_timeout)
 
+## 결론부터
+
+| 지금 알면 되는 것 | 근거 |
+|---|---|
+| **상한에 닿으면 범위 초과가 아니라 중복 키 에러(1062)로 나타난다.** 값이 항상 같은 1062가 대량으로 뜨면 카운터 상한을 먼저 본다 | `Duplicate entry '2147483647'` ([근거](#2-재현-상한에-닿는-순간)) |
+| **실패 0건이 무중단은 아니다.** 한 방 ALTER 는 실패 0건인데 초당 통과가 66.5건에서 **0.9건**으로 주저앉고, 한 건은 12.6초를 매달렸다 | expand-contract 는 초당 70.6건·p95 3.8ms ([근거](#3-해소-쓰기가-들어오는-중에-옮기기)) |
+| **통과 건수를 그대로 비교하면 안 된다.** 관측 창이 12.8초와 119.4초로 달라 같은 축이 아니다. 같은 축은 초당 값이다 | ([근거](#3-해소-쓰기가-들어오는-중에-옮기기)) |
+| **PostgreSQL 은 고갈 에러가 선언 방식에 따라 셋으로 갈리고, MySQL 과 달리 사전 거부가 없다** | ([근거](#5-postgresql-대조)) |
+| **INT → BIGINT 의 증가분은 행당 4바이트로 끝나지 않는다.** 세컨더리 인덱스가 k 개면 그 몫이 k 배 붙는다 | 12,632,064바이트 ([근거](#int와-bigint의-크기-차이를-바이트로)) |
+
 ## 1. 유명한 이유
 
 2018년 11월, Basecamp가 5시간 동안 쓰기를 받지 못했습니다. `INT` 기본키가 21억(2,147,483,647)에 닿았기 때문입니다. GitLab도 같은 이유로 전사 차원의 bigint 전환 프로젝트를 진행했습니다.
@@ -296,7 +306,7 @@ Copy: 3000583/3000583 100.0%; Applied: 1167; Backlog: 0/1000; Time: 21s(total), 
    거부되고 Docker Hub 에도 없습니다. 소스에서 빌드했고 `go.mod` 가 Go 1.25.12 이상을
    요구해 1.24 로는 안 됩니다. 빌드 절차는 `tools/gh-ost/README.md` 에 적었습니다.
 
-## 8. 반복 측정 (2026-07-31)
+## 8. 반복 측정
 
 실험 2를 세 번 더 돌렸습니다. 회차 하나는 무효라 유효 관측이 방법 A는 3회, 방법 B는 4회입니다.
 
@@ -352,7 +362,7 @@ p95가 백분위수가 아니라 최댓값"이라고 적어 두었는데, 반복
 떨어지는 것이 방법 A의 대가입니다. 에러 카운터만 보는 모니터링이 이 구간을 정상으로
 기록한다는 4절의 서술도 유지됩니다.
 
-## INT와 BIGINT의 크기 차이를 바이트로 (2026-07-31)
+## INT와 BIGINT의 크기 차이를 바이트로
 
 6절의 104MB는 `information_schema` 추정치를 MB로 반올림한 값이라 `BIGINT` 의 4바이트 차이가 드러나지 않았습니다. 300만 행을 같은 스키마로 만들어 바이트로 읽고, 추정치와 별개로 컨테이너 안 `.ibd` 파일의 실제 크기도 함께 남겼습니다.
 

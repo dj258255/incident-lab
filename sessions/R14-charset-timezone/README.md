@@ -3,6 +3,16 @@
 > 근거 등급: `E2` (문자셋 절단은 WordPress 4.1.2 보안 릴리스라는 실제 사고가 있으나 운영 장애 포스트모템이 아니라 E2로 유지)
 > 출처: [MySQL 8.4, utf8mb3](https://dev.mysql.com/doc/refman/8.4/en/charset-unicode-utf8mb3.html) · [Time Zone Support](https://dev.mysql.com/doc/refman/8.4/en/time-zone-support.html) · [Online DDL Operations](https://dev.mysql.com/doc/refman/8.4/en/innodb-online-ddl-operations.html) · [WordPress 4.1.2 Security Release](https://wordpress.org/news/2015/04/wordpress-4-1-2/) · [RDS for MySQL 로컬 타임존](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MySQL.Concepts.LocalTimeZone.html) · [RDS for MySQL 역할 기반 권한 모델](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.MySQL.CommonDBATasks.privilege-model.html) · [RDS 스토리지 확장](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.ModifyingExisting.ScalingUp.html)
 
+## 결론부터
+
+| 지금 알면 되는 것 | 근거 |
+|---|---|
+| **utf8mb3 이모지는 8.4 에서 절단이 아니라 `?` 치환이다.** 널리 알려진 "절단"과 실제 동작이 다르다 | ([근거](#2-재현)) |
+| **`CONVERT_TZ` 가 일별 집계를 NULL 한 줄로 만든다.** 타임존 테이블이 비어 있으면 조용히 NULL 이 된다 | ([근거](#2-재현)) |
+| **비어 있는 타임존 테이블은 이 이미지의 기본값이 아니다.** 도커 이미지는 채워진 채로 온다 | ([근거](#7-예상과-달랐던-점)) |
+| **latin1 접속은 이중 인코딩 착시를 만든다.** 저장은 깨졌는데 조회는 멀쩡해 보인다 | ([근거](#2-재현)) |
+| **utf8mb4 전환 비용은 ALTER 소요만이 아니다.** 그 뒤로 매달 어느 크기의 볼륨을 쓰게 되는지까지 봐야 한다 | ([근거](#rds에서는-무엇이-달라지는가)) |
+
 ## 1. 유명한 이유
 
 먼저 이 세션의 성격부터 밝힙니다. **이것은 장애 하나를 재현한 기록이 아닙니다.** 사건 재현이라면 하나의 원인과 하나의 타임라인이 있어야 하는데, 여기 담은 것은 서로 독립된 함정 여섯 개입니다. 사건 재현이 아니라 **함정 카탈로그**라고 부르는 편이 정확합니다. 근거 등급을 E2로 둔 것도 그래서고, 뒤에 나오는 전후 수치가 지연이나 처리량이 아니라 각 함정의 실패 출력과 해소 출력의 대조인 것도 그래서입니다.
@@ -265,7 +275,7 @@ WordPress 사고 시절(MySQL 5.5·5.6)의 non-strict 동작은 이모지 지점
 
 처음 돌린 실험에서 이모지 절단이 재현되지 않았습니다. 원인은 docker exec로 띄운 mysql 클라이언트가 latin1로 접속한 것이었고, 그 착시를 지뢰 6으로 승격했습니다. 문자셋 실험은 실험 도구의 문자셋부터 고정해야 합니다.
 
-## 전환 중 쓰기, 두 tzdata, 자바의 DST (2026-07-31)
+## 전환 중 쓰기, 두 tzdata, 자바의 DST
 
 `scripts/exp-write-and-jdbc.sh`, 결과는 `results/exp-write-and-jdbc.txt` 입니다.
 
@@ -350,7 +360,7 @@ later -> LocalDateTime = 2026-11-01T01:30
 상태이고, `TIMESTAMP` 는 UTC로 저장해 구별합니다. 이 세션이 DB 쪽에서 본 것과
 애플리케이션 쪽에서 본 것이 같은 그림입니다.
 
-## JDBC를 거친 왕복 (2026-07-31)
+## JDBC를 거친 왕복
 
 8절은 자바 안에서 끝났습니다. 실무의 사고는 자바와 서버 사이에서 납니다. 같은 `LocalDateTime` 을 `connectionTimeZone` 만 바꿔 넣고 읽었습니다. JVM은 UTC, 서버 `time_zone` 은 SYSTEM(UTC)입니다.
 

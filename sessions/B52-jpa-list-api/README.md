@@ -3,6 +3,16 @@
 > 근거 등급: `E2`
 > 출처: [Hibernate, N+1 selects problem](https://docs.hibernate.org/orm/3.6/reference/en-US/html/performance.html) · [Vlad Mihalcea, The N+1 query problem](https://vladmihalcea.com/n-plus-1-query-problem/) · 실무 사례: [우아한형제들, Spring Batch와 Querydsl(NoOffset)](https://techblog.woowahan.com/2662/) · [컬리, BULK 처리 Write 개선](https://helloworld.kurly.com/blog/bulk-performance-tuning/) · [Shopify, Pagination with Relative Cursors](https://shopify.engineering/pagination-relative-cursors)
 
+## 결론부터
+
+| 지금 알면 되는 것 | 근거 |
+|---|---|
+| **N+1 은 쿼리 21개를 1개로 줄이면 끝난다.** 다만 집계 프로젝션이 fetch join 보다 더 빠르다 | 25ms/21개 → 7ms/1개 → **4ms**/1개 ([근거](#3-재계측)) |
+| **커서 페이지네이션의 표준 문법이 MySQL 에서 OFFSET 보다 느리다.** 튜플 비교가 range 최적화를 못 받는다 | ([근거](#4-해소)) |
+| **MySQL 에서 옳은 처방을 PostgreSQL 에 그대로 옮기면 117배 손해다** | ([근거](#6-postgresql-대조-처방이-반대다)) |
+| **`saveAll` 이 느린 이유가 둘이고 서로 다르다.** IDENTITY 는 INSERT 1만 회, merge 는 SELECT 1만 회 | ([근거](#7-대량-삽입-같은-조건에서-네-방식)) |
+| **`Persistable.isNew()` 를 구현하면 merge 의 SELECT 가 사라지고 배치가 묶인다** | 12.63초 → 0.53초(24배), 쿼리 20,092 → 87 ([근거](#8-대량-삽입을-네-번-재서)) |
+
 ## 1. 유명한 이유
 
 목록 API는 백엔드에서 가장 많이 만드는 화면이고, JPA로 만들면 같은 자리에서 같은 문제를 만납니다.
@@ -247,7 +257,7 @@ class SponsorPersistable implements Persistable<Long> {
 `GenerationType.IDENTITY` 는 INSERT를 보내고 생성된 키를 받아야 다음을 진행할 수 있으므로
 Hibernate가 배치를 비활성화합니다. **ID 전략이 배치 가능 여부를 정합니다.**
 
-## 8. 대량 삽입을 네 번 재서 (2026-07-31)
+## 8. 대량 삽입을 네 번 재서
 
 7절은 조건마다 한 번씩이었습니다. 세 번 더 돌렸습니다.
 
@@ -279,7 +289,7 @@ Hibernate가 배치를 비활성화합니다. **ID 전략이 배치 가능 여�
 인용 기준을 정리하면 이렇습니다. **쿼리 수는 그대로, 배수는 자릿수까지만, 절대 시간은
 이 호스트의 값으로만** 씁니다.
 
-## 9. batch_size 스윕, 큰 테이블, MySQL 타이브레이커 (2026-07-31)
+## 9. batch_size 스윕, 큰 테이블, MySQL 타이브레이커
 
 `scripts/exp-insert-extra.sh`, 결과는 `results/exp-insert-extra.txt` 입니다.
 
@@ -339,7 +349,7 @@ Hibernate가 배치를 비활성화합니다. **ID 전략이 배치 가능 여�
 에러는 나지 않습니다. 페이지도 9회로 정상적으로 끝납니다. **읽은 행 수를 세지 않으면
 알 수 없습니다.** 6절의 결론이 엔진과 무관하다는 것이 확인됐습니다.
 
-## 순증 id와 무작위 id (2026-07-31)
+## 순증 id와 무작위 id
 
 9절은 200만 행이 든 표에 넣어도 같은 비용임을 확인했는데, 그때 `id` 가 순증했습니다. 순증이면 새 행이 항상 오른쪽 끝 페이지에 붙어 기존 페이지를 안 건드립니다. 무작위면 아무 페이지나 열게 됩니다. 같은 표에 `id` 만 바꿔 20,000행을 넣었습니다.
 

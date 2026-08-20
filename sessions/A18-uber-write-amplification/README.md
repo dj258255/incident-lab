@@ -3,6 +3,15 @@
 > 근거 등급: `E1` (원문과 반론 전부 공개 문서로 실재)
 > 출처: [Uber, Why Uber Engineering Switched from Postgres to MySQL (2016)](https://www.uber.com/blog/postgres-to-mysql-migration/) · 반론: [Markus Winand](https://use-the-index-luke.com/blog/2016-07-29/on-ubers-choice-of-databases), [Simon Riggs](https://www.enterprisedb.com/blog/thoughts-on-ubers-list-of-postgres-limitations), [Robert Haas](http://rhaas.blogspot.com/2016/08/ubers-move-away-from-postgresql.html), [Christophe Pettus](https://thebuild.com/presentations/uber-perconalive-2017.pdf) · [PostgreSQL, Heap-Only Tuples](https://www.postgresql.org/docs/current/storage-hot.html)
 
+## 결론부터
+
+| 지금 알면 되는 것 | 근거 |
+|---|---|
+| **WAL 은 인덱스 수에 비례하지 않는다.** 고정비 위에 인덱스당 32~34MB 가 더해지는 구조다 | 인덱스 0·3·6·10 에서 267·364·462·595MB ([근거](#4-재계측)) |
+| **HOT 45.2%는 페이지 기하학으로 설명된다.** 페이지 정원 45행에 적재가 31행 | ([근거](#3-내부-원리)) |
+| **헤드라인이던 "정상 상태 1.4배"는 철회했다.** 두 조건의 갱신 이력이 달라 같은 축이 아니었다 | ([근거](#6-예상과-달랐던-점)) |
+| **WAL 을 레코드와 FPI 로 가르면 증폭의 정체가 보인다.** 압축 알고리즘까지 넷으로 갈라 쟀다 | ([근거](#wal을-레코드와-fpi로-가르고-압축까지)) |
+
 ## 1. 유명한 이유
 
 2016년 Uber가 PostgreSQL에서 MySQL로 옮긴 이유를 공개했고, DB 커뮤니티에서 손꼽히는 논쟁이 됐습니다. 핵심 주장은 이렇습니다. PostgreSQL의 세컨더리 인덱스는 행의 물리 위치(ctid)를 직접 가리키므로, **컬럼 하나만 바꿔도 새 행 버전이 생기고 모든 세컨더리 인덱스에 새 엔트리가 필요하다.** 인덱스가 많은 테이블에서는 이것이 막대한 비효율이고, 물리 WAL 복제를 타고 대역폭 문제로 번진다는 것입니다.
@@ -156,7 +165,7 @@ u10은 인덱스 걸린 컬럼을 갱신하는 조건에 한 번 더 동원돼�
 
 HOT이 83.5% 돌아도 나머지 16.5%의 non-HOT 갱신이 인덱스 10개를 끌고 갑니다. "HOT이 있으니 인덱스 수는 무관하다"는 반론의 강한 버전은 실측과 다릅니다. 증폭은 사라지는 게 아니라 HOT 비율만큼 희석됩니다. 다만 이 세션은 **정상 상태에서 남는 증폭이 몇 배인지 재지 못했습니다.** 그러려면 두 테이블에 같은 횟수의 갱신을 먹인 뒤 재야 하는데, 위에서 적었듯 그렇게 하지 않았습니다.
 
-## WAL을 레코드와 FPI로 가르고 압축까지 (2026-07-31)
+## WAL을 레코드와 FPI로 가르고 압축까지
 
 `scripts/exp2-waldump.sh`, 결과는 `results/exp2-waldump.txt` 입니다.
 호스트 macOS 26.3.1, Apple M2 Pro 12코어, 32GB. 컨테이너 `--cpus 4 --memory 4g`,
@@ -238,7 +247,7 @@ FPI 비중이 5.4%로 희석되기 때문입니다.
 `fillfactor=70` 조건에서 인덱스 0개가 압축을 켜면 0.79배에서 0.73배로 내려가는 것도
 같은 이유입니다. HOT이 45.2% 라 Btree 쪽이 작고 FPI 비중이 높아 압축이 잘 듭니다.
 
-## 압축 알고리즘 넷과 FPI 분해 (2026-07-31)
+## 압축 알고리즘 넷과 FPI 분해
 
 `wal_compression` 이 받는 네 값을 같은 워크로드로 돌렸습니다. 앞 절까지는 `on` 하나로만 봤습니다. PostgreSQL 15부터 `wal_compression` 은 `pglz`, `lz4`, `zstd` 를 받습니다. `on` 은 `pglz` 의 별칭입니다. 넷을 같은 워크로드로 돌렸습니다. 50만 행 `UPDATE`, 인덱스 0개, fillfactor 100 조건입니다.
 
