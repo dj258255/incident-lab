@@ -3,7 +3,8 @@
 -- 설계에서 정한 것 넷.
 --   1) 배치마다 커밋한다. 전체를 한 트랜잭션으로 묶으면 락이 누적돼 승격하고,
 --      그러면 보정 대상이 아닌 이용자의 조회까지 멈춘다(A04).
---   2) 배치 크기는 5,000 미만이다. 실측 발동 지점은 테이블 락 6,250개였다(A04).
+--   2) 배치 크기는 5,000 미만이다. 이 표에서는 6,231행(락 6,249개)까지 안 났고
+--      6,232행에서 났다. 6,250 은 1,250 배수라는 추정 검사 지점이지 실측이 아니다(A04).
 --   3) 진행 지점을 배치와 같은 트랜잭션에서 기록한다. 중간에 죽어도 이어서 돈다.
 --   4) 계정마다 전후 값을 남긴다. 이의 제기가 오면 이 기록이 근거가 된다.
 --
@@ -11,6 +12,10 @@
 --   NEGATIVE  잔액을 음수로 내린다. 이후 획득분이 자연히 상계된다.
 --   DEBT      잔액은 0 에서 멈추고 못 받은 만큼을 debt 에 적는다.
 -- 어느 쪽이든 회수 총액은 같아야 한다. applied + debt = target.
+--
+-- 전제: 도는 동안 reclaim_target 이 안 바뀐다고 봤다. 청크 조회와 최종 검산이
+-- 각각 그 표를 읽으므로, 중간에 행이 늘면 @lo 아래로 들어온 것은 누락되고
+-- 검산 기준도 같이 움직인다. 운영이면 배치를 만들 때 대상 스냅샷을 고정한다.
 CREATE OR ALTER PROCEDURE usp_ReclaimCurrency
     @reason   NVARCHAR(200),
     @mode     VARCHAR(10)  = 'NEGATIVE',   -- NEGATIVE | DEBT
@@ -32,7 +37,11 @@ BEGIN
     IF @mode NOT IN ('NEGATIVE', 'DEBT')
         THROW 50010, N'@mode 는 NEGATIVE 또는 DEBT 여야 합니다', 1;
     IF @chunk >= 5000
-        THROW 50011, N'@chunk 는 5000 미만이어야 합니다. 락 승격을 피하기 위한 상한입니다', 1;
+        THROW 50011, N'@chunk 는 5000 미만이어야 합니다. 이 표에서 잰 경계보다 낮게 잡은 값이고, 표마다 다시 잽니다', 1;
+    -- 대상이 비었으면 부른 쪽이 틀린 것이다. 그냥 돌리면 아래 검산에서 NULL 이 나와
+    -- 비교가 참도 거짓도 아니게 되고, 회수한 것 없는 배치가 DONE 으로 남는다.
+    IF NOT EXISTS (SELECT 1 FROM reclaim_target)
+        THROW 50012, N'reclaim_target 이 비었습니다. 대상 목록을 먼저 만듭니다', 1;
 
     IF @batch_id IS NULL
     BEGIN
@@ -141,7 +150,7 @@ BEGIN
     END
 
     -- 검산. 회수한 것과 회수해야 할 것이 맞는지 본다. 안 맞으면 배치를 실패로 남긴다.
-    DECLARE @target BIGINT = (SELECT SUM(extra_amount) FROM reclaim_target);
+    DECLARE @target BIGINT = (SELECT ISNULL(SUM(extra_amount), 0) FROM reclaim_target);
     DECLARE @done   BIGINT = (SELECT ISNULL(SUM(applied_amount + debt_amount), 0)
                                 FROM correction_detail WHERE batch_id = @batch_id);
 
