@@ -153,6 +153,7 @@ I(인프라·SRE) · S(검색엔진) · V(벡터·RAG) · L(LLM 서빙) · M(모
 | [CATALOG.md](CATALOG.md) | 전체 세션 설계와 근거 검증 로그 |
 | [CONVENTIONS.md](CONVENTIONS.md) | 세션 작성 규약과 문서 템플릿 |
 | [audit/LIMITS.md](audit/LIMITS.md) | 재현의 한계를 스스로 전수 점검한 기록 |
+| [tools/](tools/) | 문체·절 참조·링크를 검사하는 스크립트 |
 
 ## 주의
 

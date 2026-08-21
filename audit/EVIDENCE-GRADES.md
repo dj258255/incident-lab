@@ -16,38 +16,38 @@
 
 | 글 | 등급 | 회사 사례 출처 | 벤더·표준 | 출처 줄 |
 |---|---|---|---|---|
-| [backup-pitr](/blog/incident/backup-pitr) | `E1·축소` | about.gitlab.com | 2개 | 있음 |
-| [batch-cache-pollution](/blog/incident/batch-cache-pollution) | `E2` | 없음 | 3개 | 있음 |
-| [bigdecimal-money](/blog/incident/bigdecimal-money) | `E1·축소` | 없음 | 3개 | 본문 |
-| [buffer-pool-sizing](/blog/incident/buffer-pool-sizing) | `E2` | 없음 | 1개 | 있음 |
-| [charset-timezone](/blog/incident/charset-timezone) | `E2` | 없음 | 3개 | 있음 |
-| [expand-contract](/blog/incident/expand-contract) | `E2` | 없음 | 3개 | 본문 |
-| [failover-dns-cache](/blog/incident/failover-dns-cache) | `E2` | 없음 | 1개 | 있음 |
-| [gap-lock-deadlock](/blog/incident/gap-lock-deadlock) | `E2` | 없음 | 1개 | 있음 |
-| [hanmac-divide-by-zero](/blog/incident/hanmac-divide-by-zero) | `E1·축소` | 없음 | 1개 | 본문 |
-| [hikaricp-pool-deadlock](/blog/incident/hikaricp-pool-deadlock) | `E1·축소` | techblog.woowahan.com | 2개 | 있음 |
-| [index-not-used](/blog/incident/index-not-used) | `E2` | techblog.lycorp.co.jp | 1개 | 있음 |
-| [int-pk-exhaustion](/blog/incident/int-pk-exhaustion) | `E1·축소` | 없음 | 2개 | 있음 |
-| [jpa-list-api](/blog/incident/jpa-list-api) | `E2` | helloworld.kurly.com, shopify.engineering, techblog.woowahan.com | 2개 | 있음 |
-| [market-open-connection-storm](/blog/incident/market-open-connection-storm) | `E1·축소` | www.goodkyung.com, www.mt.co.kr, www.nspna.com | 1개 | 본문 |
-| [matching-engine-priority](/blog/incident/matching-engine-priority) | `E2` | 없음 | 2개 | 본문 |
-| [mdl-storm](/blog/incident/mdl-storm) | `E2` | 없음 | 1개 | 있음 |
-| [nasdaq-ipo-livelock](/blog/incident/nasdaq-ipo-livelock) | `E1·축소` | www.nasdaqtrader.com, www.sec.gov | 1개 | 본문 |
-| [negative-price](/blog/incident/negative-price) | `E1` | www.cftc.gov | 1개 | 본문 |
-| [perf-insights-clone](/blog/incident/perf-insights-clone) | `E2` | 없음 | 3개 | 있음 |
-| [planner-stats-flip](/blog/incident/planner-stats-flip) | `E1` | clerk.com, gocardless.com | 1개 | 본문 |
-| [reader-endpoint-skew](/blog/incident/reader-endpoint-skew) | `E2` | 없음 | 2개 | 있음 |
-| [replica-promotion-loss](/blog/incident/replica-promotion-loss) | `E1·축소` | github.blog | 2개 | 있음 |
-| [replication-slot-wal](/blog/incident/replication-slot-wal) | `E2` | 없음 | 2개 | 있음 |
-| [samsung-ghost-shares](/blog/incident/samsung-ghost-shares) | `E1·축소` | 없음 | 1개 | 본문 |
-| [slotted-counter](/blog/incident/slotted-counter) | `E2` | 없음 | 1개 | 있음 |
-| [subtransaction-slru](/blog/incident/subtransaction-slru) | `E1·축소` | about.gitlab.com | 2개 | 있음 |
-| [threadlocal-classloader-leak](/blog/incident/threadlocal-classloader-leak) | `E2` | 없음 | 3개 | 본문 |
-| [timeseries-partition](/blog/incident/timeseries-partition) | `E2` | 없음 | 1개 | 있음 |
-| [uber-write-amplification](/blog/incident/uber-write-amplification) | `E1` | www.uber.com | 5개 | 있음 |
-| [uuid-page-split](/blog/incident/uuid-page-split) | `E2` | 없음 | 3개 | 있음 |
-| [websocket-slow-consumer](/blog/incident/websocket-slow-consumer) | `E2` | 없음 | 3개 | 있음 |
-| [xid-wraparound](/blog/incident/xid-wraparound) | `E1·축소` | blog.sentry.io | 1개 | 있음 |
+| [backup-pitr](https://dj258255.github.io/IT-Oasis/blog/incident/backup-pitr) | `E1·축소` | about.gitlab.com | 2개 | 있음 |
+| [batch-cache-pollution](https://dj258255.github.io/IT-Oasis/blog/incident/batch-cache-pollution) | `E2` | 없음 | 3개 | 있음 |
+| [bigdecimal-money](https://dj258255.github.io/IT-Oasis/blog/incident/bigdecimal-money) | `E1·축소` | 없음 | 3개 | 본문 |
+| [buffer-pool-sizing](https://dj258255.github.io/IT-Oasis/blog/incident/buffer-pool-sizing) | `E2` | 없음 | 1개 | 있음 |
+| [charset-timezone](https://dj258255.github.io/IT-Oasis/blog/incident/charset-timezone) | `E2` | 없음 | 3개 | 있음 |
+| [expand-contract](https://dj258255.github.io/IT-Oasis/blog/incident/expand-contract) | `E2` | 없음 | 3개 | 본문 |
+| [failover-dns-cache](https://dj258255.github.io/IT-Oasis/blog/incident/failover-dns-cache) | `E2` | 없음 | 1개 | 있음 |
+| [gap-lock-deadlock](https://dj258255.github.io/IT-Oasis/blog/incident/gap-lock-deadlock) | `E2` | 없음 | 1개 | 있음 |
+| [hanmac-divide-by-zero](https://dj258255.github.io/IT-Oasis/blog/incident/hanmac-divide-by-zero) | `E1·축소` | 없음 | 1개 | 본문 |
+| [hikaricp-pool-deadlock](https://dj258255.github.io/IT-Oasis/blog/incident/hikaricp-pool-deadlock) | `E1·축소` | techblog.woowahan.com | 2개 | 있음 |
+| [index-not-used](https://dj258255.github.io/IT-Oasis/blog/incident/index-not-used) | `E2` | techblog.lycorp.co.jp | 1개 | 있음 |
+| [int-pk-exhaustion](https://dj258255.github.io/IT-Oasis/blog/incident/int-pk-exhaustion) | `E1·축소` | 없음 | 2개 | 있음 |
+| [jpa-list-api](https://dj258255.github.io/IT-Oasis/blog/incident/jpa-list-api) | `E2` | helloworld.kurly.com, shopify.engineering, techblog.woowahan.com | 2개 | 있음 |
+| [market-open-connection-storm](https://dj258255.github.io/IT-Oasis/blog/incident/market-open-connection-storm) | `E1·축소` | www.goodkyung.com, www.mt.co.kr, www.nspna.com | 1개 | 본문 |
+| [matching-engine-priority](https://dj258255.github.io/IT-Oasis/blog/incident/matching-engine-priority) | `E2` | 없음 | 2개 | 본문 |
+| [mdl-storm](https://dj258255.github.io/IT-Oasis/blog/incident/mdl-storm) | `E2` | 없음 | 1개 | 있음 |
+| [nasdaq-ipo-livelock](https://dj258255.github.io/IT-Oasis/blog/incident/nasdaq-ipo-livelock) | `E1·축소` | www.nasdaqtrader.com, www.sec.gov | 1개 | 본문 |
+| [negative-price](https://dj258255.github.io/IT-Oasis/blog/incident/negative-price) | `E1` | www.cftc.gov | 1개 | 본문 |
+| [perf-insights-clone](https://dj258255.github.io/IT-Oasis/blog/incident/perf-insights-clone) | `E2` | 없음 | 3개 | 있음 |
+| [planner-stats-flip](https://dj258255.github.io/IT-Oasis/blog/incident/planner-stats-flip) | `E1` | clerk.com, gocardless.com | 1개 | 본문 |
+| [reader-endpoint-skew](https://dj258255.github.io/IT-Oasis/blog/incident/reader-endpoint-skew) | `E2` | 없음 | 2개 | 있음 |
+| [replica-promotion-loss](https://dj258255.github.io/IT-Oasis/blog/incident/replica-promotion-loss) | `E1·축소` | github.blog | 2개 | 있음 |
+| [replication-slot-wal](https://dj258255.github.io/IT-Oasis/blog/incident/replication-slot-wal) | `E2` | 없음 | 2개 | 있음 |
+| [samsung-ghost-shares](https://dj258255.github.io/IT-Oasis/blog/incident/samsung-ghost-shares) | `E1·축소` | 없음 | 1개 | 본문 |
+| [slotted-counter](https://dj258255.github.io/IT-Oasis/blog/incident/slotted-counter) | `E2` | 없음 | 1개 | 있음 |
+| [subtransaction-slru](https://dj258255.github.io/IT-Oasis/blog/incident/subtransaction-slru) | `E1·축소` | about.gitlab.com | 2개 | 있음 |
+| [threadlocal-classloader-leak](https://dj258255.github.io/IT-Oasis/blog/incident/threadlocal-classloader-leak) | `E2` | 없음 | 3개 | 본문 |
+| [timeseries-partition](https://dj258255.github.io/IT-Oasis/blog/incident/timeseries-partition) | `E2` | 없음 | 1개 | 있음 |
+| [uber-write-amplification](https://dj258255.github.io/IT-Oasis/blog/incident/uber-write-amplification) | `E1` | www.uber.com | 5개 | 있음 |
+| [uuid-page-split](https://dj258255.github.io/IT-Oasis/blog/incident/uuid-page-split) | `E2` | 없음 | 3개 | 있음 |
+| [websocket-slow-consumer](https://dj258255.github.io/IT-Oasis/blog/incident/websocket-slow-consumer) | `E2` | 없음 | 3개 | 있음 |
+| [xid-wraparound](https://dj258255.github.io/IT-Oasis/blog/incident/xid-wraparound) | `E1·축소` | blog.sentry.io | 1개 | 있음 |
 
 ## 집계
 
